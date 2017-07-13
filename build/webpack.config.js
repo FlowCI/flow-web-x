@@ -111,6 +111,8 @@ webpackConfig.module.rules.push({
         options: {
           sourceMap: __DEV__,
           modules: true, // use css module
+          localIdentName: __DEV__ ? '[name]_[local]_[hash:base64:5]'
+            : '[hash:base64:5]',
           minimize: {
             autoprefixer: {
               add: true,
