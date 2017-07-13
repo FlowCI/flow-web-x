@@ -9,7 +9,7 @@
     [
       "babel-plugin-transform-object-rest-spread",
       {
-        useBuiltIns: true // we polyfill Object.assign in src/normalize.js
+        useBuiltIns: true
       }
     ]
   ],
