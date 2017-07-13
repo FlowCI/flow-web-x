@@ -1,0 +1,16 @@
+:global {
+
+  // Some best-practice CSS that's useful for most apps
+  // Just remove them if they're not what you want
+  html {
+    font-size: 40px;
+  }
+
+  html,
+  body {
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Helvetica Neue', 'PingFang SC', 'Open Sans', Helvetica, sans-serif;
+    height: 100%;
+  }
+
+}

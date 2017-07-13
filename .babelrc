@@ -1,0 +1,23 @@
+// NOTE: These options are overriden by the babel-loader configuration
+// for webpack, which can be found in ~/build/webpack.config.
+//
+{
+  plugins: [
+    "babel-plugin-transform-class-properties",
+    "babel-plugin-syntax-dynamic-import",
+    "babel-plugin-transform-runtime",
+    [
+      "babel-plugin-transform-object-rest-spread",
+      {
+        useBuiltIns: true // we polyfill Object.assign in src/normalize.js
+      }
+    ]
+  ],
+  presets: [
+    "babel-preset-react",
+    ["babel-preset-env", {
+      modules: false,
+      uglify: true
+    }],
+  ]
+}
