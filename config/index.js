@@ -21,7 +21,14 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   publicPath: '/',
-  vendors: [],
+  vendors: [
+    'react',
+    'react-dom',
+    'redux',
+    'react-redux',
+    'redux-thunk',
+    'react-router',
+  ],
   // Environment
   // ------------------------------------
   // N.B.: globals added here must _also_ be added to .eslintrc
