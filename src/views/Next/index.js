@@ -3,30 +3,30 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { replace } from 'react-router-redux'
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
-    redirect: push
+    redirect: replace
   }, dispatch)
 })
 
-class HomeView extends PureComponent {
+class NextView extends PureComponent {
   static propTypes = {
     redirect: PropTypes.func.isRequired
   }
 
   goNext = () => {
     const { redirect } = this.props
-    redirect('/next')
+    redirect('/')
   }
 
   render () {
     return <div>
-      hello world
-      <button onClick={this.goNext}>to next view</button>
+      this is next view, you can
+      <button onClick={this.goNext}>go home</button>
     </div>
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(HomeView)
+export default connect(undefined, mapDispatchToProps)(NextView)
