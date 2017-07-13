@@ -13,7 +13,7 @@ const webpackConfig = {
   entry: {
     main: [paths.src('main.js')],
   },
-  devtool: __DEV__ ? 'source-map' : false,
+  // devtool: __DEV__ ? 'source-map' : false,
   output: {
     path: paths.dist(),
     filename: '[name].[hash].js',
