@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+npm const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
@@ -72,7 +72,7 @@ webpackConfig.module.rules.push({
   test: /\.js$/,
   exclude: [
     /node_modules/,
-    /\.spec\.js/,
+    /tests/,
     /static/,
   ],
   use: [{
@@ -96,7 +96,7 @@ webpackConfig.module.rules.push({
 // Styles
 // ------------------------------------
 const extractStyles = new ExtractTextPlugin({
-  filename: 'styles/[name].[contenthash].css',
+  filename: '[name].[contenthash].css',
   allChunks: true,
   disable: __DEV__,
 })
