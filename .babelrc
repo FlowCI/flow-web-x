@@ -11,12 +11,16 @@
       {
         useBuiltIns: true
       }
-    ]
+    ],
+    "babel-plugin-transform-export-extensions"
   ],
   presets: [
     "babel-preset-react",
     ["babel-preset-env", {
       modules: false,
+      "targets": {
+        "browsers": ["last 2 versions"]
+      },
       uglify: true
     }],
   ]
