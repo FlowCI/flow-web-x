@@ -22,14 +22,12 @@
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.24.1",
-    "babel-core": "^6.25.0",
+    "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.1",
-    "babel-polyfill": "^6.23.0",
+    "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.6.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "compression": "^1.6.2",
     "cross-env": "^5.0.1",
     "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
@@ -49,6 +47,6 @@
     "rimraf": "^2.6.1",
     "sinon": "^2.3.6",
     "sinon-chai": "^2.11.0",
-    "webpack": "^3.1.0"
+    "webpack": "^2.7.0"
   }
 }

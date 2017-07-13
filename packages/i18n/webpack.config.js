@@ -7,12 +7,13 @@ const webpackConfig = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js',
+    filename: '[name].[hash].js',
     library: 'i18n',
     libraryTarget: "umd"
   },
   resolve: {
     modules: [
+      path.join(__dirname, 'src'),
       'node_modules'
     ],
     extensions: ['*', '.js', '.json']
