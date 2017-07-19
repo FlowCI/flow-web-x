@@ -1,0 +1,23 @@
+{
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard",
+  ],
+  "env"     : {
+    "browser" : true
+  },
+  "globals" : {
+    __TEST__: false,
+    __DEV__: false,
+    __PROD__: false
+  },
+  "rules": {
+    "comma-dangle": "off",
+    "camelcase": [2, { "properties": "never" }],
+    "semi" : [2, "never"],
+    "max-len": [2, 120, 2],
+    "generator-star-spacing": 0,
+    "no-return-assign": 0,
+    "arrow-parens": 0,
+  }
+}
