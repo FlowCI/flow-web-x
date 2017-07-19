@@ -1,4 +1,4 @@
-import makeCancelable from './promiseCancelable'
+import makeCancelable, { copyCancel } from './promiseCancelable'
 import HttpProvider from './network'
 import isCancel from './isCancel'
 
@@ -14,10 +14,11 @@ export default function (config = {}) {
       }
       const { name } = action
       const promiseWithCancel = makeCancelable(http(action))
+      let result = promiseWithCancel
       if (name) {
         // dispatch indicators
         dispatch({ type: `${name}/SEND` })
-        promiseWithCancel.then(function (v) {
+        result = promiseWithCancel.then(function (v) {
           dispatch({ type: `${name}/SUCCESS` })
           return v
         }, function (e) {
@@ -25,8 +26,11 @@ export default function (config = {}) {
           dispatch({ type: name + suffix })
           return Promise.reject(e)
         })
+        // copy cancel fn to result
+        // cancel fn is set promiseWithCancel to reject
+        copyCancel(result, promiseWithCancel)
       }
-      return promiseWithCancel
+      return result
     }
   }
 }

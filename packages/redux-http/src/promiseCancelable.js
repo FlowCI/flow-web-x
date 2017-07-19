@@ -23,6 +23,11 @@ export default function makeCancelable (promise) {
   return next
 }
 
+export function copyCancel (target, source) {
+  target.cancel = source.cancel
+  return target
+}
+
 export function createCancel (message) {
   return {
     __CANCEL__: true,
