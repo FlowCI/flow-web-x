@@ -1,4 +1,4 @@
-import cancel from 'index'
+import { cancel } from 'index'
 import create from 'middleware'
 import isCancel from 'isCancel'
 
@@ -56,7 +56,7 @@ describe('Redux Middleware test', function () {
   it('should no call next(action) when action is matched', function () {
     const next = sinon.spy()
     const handler = middleware({ dispatch: noop, getState })(next)
-    const result = handler({ url: '/somepath' })
+    const result = handler({ url: '/nomatched' })
     next.should.have.not.been.called
   })
 
@@ -111,10 +111,6 @@ describe('Redux Middleware test', function () {
 
   describe('handle action', function () {
     const actionHandler = middleware({ dispatch: noop, getState })(noop)
-    it ('should return an promise when action is matched', function () {
-      const result = actionHandler({ url: '/somepath' })
-      expect(result).to.be.a('promise')
-    })
 
     it ('result must can cancel', function () {
       _fakeServer.autoRespondAfter = 10000
@@ -123,15 +119,16 @@ describe('Redux Middleware test', function () {
       const handler = middleware({ dispatch, getState })(noop)
       const promise = handler({ url: '/sompath', name: 'getSomeThing' })
 
-      const p2 = promsie.catch((e) => {
+      const p2 = promise.catch((e) => {
+        return e // to set resolve
+      }).then((e) => {
         expect(isCancel(e)).to.be.true
-        return Promise.reject(e)
       })
 
       setTimeout(() => {
         cancel(promise)
       }, 100)
-      return p2.should.be.rejected
+      return p2.should.be.fulfilled
     })
 
     describe('disptach indicator action', function () {
@@ -139,7 +136,7 @@ describe('Redux Middleware test', function () {
       let _handler
       beforeEach(() => {
         _dispatch = sinon.spy()
-        _handler = middleware({ dispatch, getState })(noop)
+        _handler = middleware({ dispatch: _dispatch, getState })(noop)
       })
 
       it('should sync dispatch action with { type: ${name}/SEND } before send http request', function () {
@@ -173,23 +170,19 @@ describe('Redux Middleware test', function () {
       it('should dispatch { type: ${name}/CANCEL } on cancel', async function () {
         _fakeServer.autoRespondAfter = 10000
 
-        const handler = middleware({ dispatch, getState })(noop)
+        const handler = middleware({ dispatch: _dispatch, getState })(noop)
         const promise = handler({ url: '/sompath', name: 'getSomeThing' })
-
-        const p2 = promsie.catch((e) => {
-          expect(isCancel(e)).to.be.true
-          return Promise.reject(e)
-        })
 
         cancel(promise)
 
-        setTimeout(() => {
-          // wait p2 call catch method
+        return promise.catch((e) => {
+          return e // to resolve
+        }).then((e) => {
           _dispatch.should.have.been.calledWithMatch({
-            type: 'getSomeThing/FAILURE'
+            type: 'getSomeThing/CANCEL'
           })
-        }, 100)
-        return p2.should.be.rejected
+          expect(isCancel(e)).to.be.true
+        }).should.be.fulfilled
       })
     })
   })
