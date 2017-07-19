@@ -1,5 +1,5 @@
 {
-  "name": "i18n",
+  "name": "flowci-i18n",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -18,8 +18,16 @@
     "webpack",
     "i18n"
   ],
-  "author": "cy@fir.im",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flowci/flow-web.git"
+  },
+  "author": "dev@fir.im",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/flowci/flow-web/issues"
+  },
+  "homepage": "https://flow.ci",
   "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
