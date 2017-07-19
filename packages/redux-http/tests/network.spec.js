@@ -1,5 +1,5 @@
-import httpProvider from 'network'
-const http = new httpProvider().$get()
+import HttpProvider from 'network'
+const http = new HttpProvider().$get()
 // const http = httpClient.request.bind(httpClient)
 
 describe('network module', function () {
@@ -20,6 +20,20 @@ describe('network module', function () {
 
   afterEach(() => {
     _fakeServer.restore()
+  })
+
+  it('should extends axios config. etc baseURL', async function () {
+    const provider = new HttpProvider({
+      baseURL: 'http://api.some.domain'
+    })
+    const http = provider.$get()
+    await http({
+      url: '/somepath',
+      method: 'get',
+    })
+    const request = getRequest(0)
+    const { url } = request
+    expect(url).to.equal('http://api.some.domain/somepath')
   })
 
   ;['post', 'put', 'patch'].forEach((method) => {
