@@ -18,8 +18,8 @@ describe('Redux Middleware test', function () {
   beforeEach(() => {
     _fakeServer = sinon.fakeServer.create()
     _fakeServer.respond([200, {
-        'Content-Type': 'application/json; charset=utf-8'
-      }, JSON.stringify({ message: 'this is default response' })])
+      'Content-Type': 'application/json; charset=utf-8'
+    }, JSON.stringify({ message: 'this is default response' })])
     _fakeServer.autoRespond = true
   })
 
@@ -50,7 +50,6 @@ describe('Redux Middleware test', function () {
       url: '/somepath'
     })
     expect(hasTypeResult).to.be.eql('this is next result')
-
   })
 
   it('should no call next(action) when action is matched', function () {
@@ -116,9 +115,7 @@ describe('Redux Middleware test', function () {
   })
 
   describe('handle action', function () {
-    const actionHandler = middleware({ dispatch: noop, getState })(noop)
-
-    it ('result must can cancel', function () {
+    it('result must can cancel', function () {
       _fakeServer.autoRespondAfter = 10000
 
       const dispatch = sinon.spy()
@@ -164,10 +161,10 @@ describe('Redux Middleware test', function () {
           'Content-Type': 'application/json; charset=utf-8'
         }, JSON.stringify({ message: 'this is default response' })])
 
-        try{
+        try {
           await _handler({ url: '/sompath', name: 'getSomeThing' })
           expect(false).to.be.true // must not go here
-        } catch(e) {
+        } catch (e) {
           _dispatch.should.have.been.calledWithMatch({
             type: 'getSomeThing/FAILURE'
           })

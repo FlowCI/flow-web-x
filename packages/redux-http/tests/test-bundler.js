@@ -28,4 +28,3 @@ const changedTests = allTests.filter(path => {
 })
 
 ;(changedTests.length ? changedTests : allTests).forEach(testsContext)
-

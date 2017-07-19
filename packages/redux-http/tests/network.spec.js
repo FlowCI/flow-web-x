@@ -13,8 +13,8 @@ describe('network module', function () {
   beforeEach(() => {
     _fakeServer = sinon.fakeServer.create()
     _fakeServer.respond([200, {
-        'Content-Type': 'application/json; charset=utf-8'
-      }, JSON.stringify({ message: 'this is default response' })])
+      'Content-Type': 'application/json; charset=utf-8'
+    }, JSON.stringify({ message: 'this is default response' })])
     _fakeServer.autoRespond = true
   })
 

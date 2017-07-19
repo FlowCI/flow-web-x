@@ -1,5 +1,4 @@
 import makeCancelable, {
-  isPromise,
   cancel
 } from 'promiseCancelable'
 import isCancel from 'isCancel'
@@ -66,7 +65,7 @@ describe('Promise Cancelable', function () {
     }).then(() => {
       spy.should.have.not.been.called
     })
-    promiseCancelable.cancel()
+    cancel(promiseCancelable)
     return result.should.be.fulfilled
   })
 })
