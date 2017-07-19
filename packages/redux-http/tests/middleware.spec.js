@@ -58,6 +58,10 @@ describe('Redux Middleware test', function () {
     const handler = middleware({ dispatch: noop, getState })(next)
     const result = handler({ url: '/nomatched' })
     next.should.have.not.been.called
+    /**
+      must return the promise . due to the axios is async to open,send XMLHttpRequest, it will impact next test
+    **/
+    return result
   })
 
   describe('middleware config', function () {
@@ -87,6 +91,7 @@ describe('Redux Middleware test', function () {
           type: 'someType'
         })
         expect(p2).to.be.a('promise')
+        return p2
       })
 
       it('should only match action.type is config.type and has action.url when set config.type', async function () {
@@ -105,6 +110,7 @@ describe('Redux Middleware test', function () {
           type: '@@http/SEND',
         })
         expect(p2).to.be.a('promise')
+        return p2
       })
     })
   })
@@ -140,8 +146,9 @@ describe('Redux Middleware test', function () {
       })
 
       it('should sync dispatch action with { type: ${name}/SEND } before send http request', function () {
-        _handler({ url: '/sompath', name: 'getSomeThing' })
+        const promise = _handler({ url: '/sompath', name: 'getSomeThing' })
         _dispatch.should.have.been.calledWithMatch({ type: 'getSomeThing/SEND' })
+        return promise
       })
 
       it('should dispatch { type: ${name}/SUCCESS } on success', async function () {
