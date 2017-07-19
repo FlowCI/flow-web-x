@@ -18,8 +18,16 @@
     "axios",
     "redux"
   ],
-  "author": "cy@fir.im",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flowci/flow-web.git"
+  },
+  "author": "dev@fir.im",
+  "license": "Apache License, Version 2.0",
+  "bugs": {
+    "url": "https://github.com/flowci/flow-web/issues"
+  },
+  "homepage": "https://flow.ci",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
