@@ -11,6 +11,7 @@ describe('Promise Cancelable', function () {
     })
     const promiseCancelable = makeCancelable(promise)
     expect(promise).to.not.equal(promiseCancelable)
+    expect(promiseCancelable).to.be.a('promise')
   })
 
   it('should resolve promise when arg promise resolve and not cancel', function () {
@@ -18,16 +19,14 @@ describe('Promise Cancelable', function () {
     const promise = new Promise(function (resolve, reject) {
       resolve()
     })
-    promise.then(spy).then((v) => {
-      spy.should.have.been.calledOnce
-      return v
-    })
 
-    const promiseCancelable = makeCancelable(promise)
-    promiseCancelable.then(spy).then(() => {
+    const promiseCancelable = makeCancelable(promise.then(spy).then((v) => {
+      spy.should.have.been.calledOnce
+    }))
+
+    return promiseCancelable.then(spy).then(() => {
       spy.should.have.been.calledTwice
-    })
-    return promiseCancelable.should.be.fulfilled
+    }).should.be.fulfilled
   })
 
   it('should reject promise when arg promise reject and not cancel', function () {
@@ -35,21 +34,24 @@ describe('Promise Cancelable', function () {
     const promise = new Promise(function (resolve, reject) {
       reject()
     })
-    function onCatch(e) {
-      spy(e)
-      return Promise.reject(e)
-    }
-    promise.catch(onCatch).catch((e) => {
-      spy.should.have.been.calledOnce
-      return Promise.reject(e)
+    let _resolve
+    let _reject
+    const nextPromise = new Promise(function (resolve, reject) {
+      _resolve = resolve
+      _reject = reject
     })
 
-    const promiseCancelable = makeCancelable(promise)
-    promiseCancelable.catch(onCatch).catch((e) => {
-      spy.should.have.been.calledTwice
-      return Promise.reject(e)
+    promise.catch(spy).then(() => {
+      _reject() // set reject to nextPromise
+      spy.should.have.been.calledOnce
     })
-    return promiseCancelable.should.be.rejected
+
+
+    // must wait promise is done
+    const promiseCancelable = makeCancelable(nextPromise)
+    return promiseCancelable.catch(spy).then(() => {
+      spy.should.have.been.calledTwice
+    }).should.be.fulfilled
   })
 
   it('should reject promise with cancel object when call cancel', function () {
@@ -57,33 +59,14 @@ describe('Promise Cancelable', function () {
     const promise = new Promise(function (resolve, reject) {
       setTimeout(resolve, 1000)
     })
-    promise.then(spy) // should not call before it finish
-    const promiseCancelable = makeCancelable(promise)
-    promiseCancelable.then(() => {
-      expect(false).to.be.true
-    }).catch((e) => {
-      spy.should.have.not.been.called
+
+    const promiseCancelable = makeCancelable(promise.then(spy))
+    const result = promiseCancelable.catch((e) => {
       expect(isCancel(e)).to.be.true
-      return Promise.reject(e)
+    }).then(() => {
+      spy.should.have.not.been.called
     })
     promiseCancelable.cancel()
-    return promiseCancelable.should.be.rejected
-  })
-  it('should reject promise with cancel object when call cancel', function () {
-    const spy = sinon.spy()
-    const promise = new Promise(function (resolve, reject) {
-      setTimeout(resolve, 1000)
-    })
-    promise.then(spy) // should not call before it finish
-    const promiseCancelable = makeCancelable(promise)
-    promiseCancelable.then(() => {
-      expect(false).to.be.true
-    }).catch((e) => {
-      spy.should.have.not.been.called
-      expect(isCancel(e)).to.be.true
-      return Promise.reject(e)
-    })
-    cancel(promiseCancelable)
-    return promiseCancelable.should.be.rejected
+    return result.should.be.fulfilled
   })
 })
