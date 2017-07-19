@@ -13,7 +13,7 @@ export default function (config = {}) {
         return next(action)
       }
       const { name } = action
-      const promiseWithCancel = makeCancelable(http(config))
+      const promiseWithCancel = makeCancelable(http(action))
       if (name) {
         // dispatch indicators
         dispatch({ type: `${name}/SEND` })
