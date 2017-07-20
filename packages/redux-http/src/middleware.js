@@ -12,18 +12,27 @@ export default function (config = {}) {
       if (!url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
         return next(action)
       }
-      const { name } = action
+      const { name, indicator } = action
       const promiseWithCancel = makeCancelable(http(action))
       let result = promiseWithCancel
       if (name) {
         // dispatch indicators
-        dispatch({ type: `${name}/SEND` })
-        result = promiseWithCancel.then(function (v) {
-          dispatch({ type: `${name}/SUCCESS` })
-          return v
+        dispatch({ type: `${name}/SEND`, indicator: indicator })
+        result = promiseWithCancel.then(function (response) {
+          const data = response.data
+          dispatch({
+            type: `${name}/SUCCESS`,
+            indicator: indicator,
+            payload: data
+          })
+          return response
         }, function (e) {
           const suffix = isCancel(e) ? '/CANCEL' : '/FAILURE'
-          dispatch({ type: name + suffix })
+          dispatch({
+            type: name + suffix,
+            indicator: indicator,
+            payload: e
+          })
           return Promise.reject(e)
         })
         // copy cancel fn to result
