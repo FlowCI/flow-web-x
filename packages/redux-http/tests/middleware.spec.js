@@ -152,7 +152,7 @@ describe('Redux Middleware test', function () {
         })
         _dispatch.should.have.been.calledWithMatch({
           type: 'getSomeThing/SEND',
-          payload: { key: '1' }
+          indicator: { key: '1' }
         })
         return promise
       })
@@ -167,9 +167,7 @@ describe('Redux Middleware test', function () {
         })
         _dispatch.should.have.been.calledWithMatch({
           type: 'getSomeThing/SUCCESS',
-          payload: {
-            key: '1'
-          }
+          indicator: { key: '1' }
         })
       })
 
@@ -191,9 +189,7 @@ describe('Redux Middleware test', function () {
         } catch (e) {
           _dispatch.should.have.been.calledWithMatch({
             type: 'getSomeThing/FAILURE',
-            payload: {
-              key: '1'
-            }
+            indicator: { key: '1' }
           })
         }
       })
@@ -217,9 +213,7 @@ describe('Redux Middleware test', function () {
         }).then((e) => {
           _dispatch.should.have.been.calledWithMatch({
             type: 'getSomeThing/CANCEL',
-            payload: {
-              key: '1'
-            }
+            indicator: { key: '1' }
           })
           expect(isCancel(e)).to.be.true
         }).should.be.fulfilled
