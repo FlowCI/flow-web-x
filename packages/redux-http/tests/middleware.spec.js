@@ -192,7 +192,10 @@ describe('Redux Middleware test', function () {
         } catch (e) {
           _dispatch.should.have.been.calledWithMatch({
             type: 'getSomeThing/FAILURE',
-            indicator: { key: '1' }
+            indicator: { key: '1' },
+            payload: {
+              message: 'this is default response'
+            }
           })
         }
       })
