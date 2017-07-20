@@ -143,15 +143,33 @@ describe('Redux Middleware test', function () {
       })
 
       it('should sync dispatch action with { type: ${name}/SEND } before send http request', function () {
-        const promise = _handler({ url: '/sompath', name: 'getSomeThing' })
-        _dispatch.should.have.been.calledWithMatch({ type: 'getSomeThing/SEND' })
+        const promise = _handler({
+          url: '/sompath',
+          name: 'getSomeThing',
+          indicator: {
+            key: '1'
+          }
+        })
+        _dispatch.should.have.been.calledWithMatch({
+          type: 'getSomeThing/SEND',
+          payload: { key: '1' }
+        })
         return promise
       })
 
       it('should dispatch { type: ${name}/SUCCESS } on success', async function () {
-        await _handler({ url: '/sompath', name: 'getSomeThing' })
+        await _handler({
+          url: '/sompath',
+          name: 'getSomeThing',
+          indicator: {
+            key: '1'
+          }
+        })
         _dispatch.should.have.been.calledWithMatch({
-          type: 'getSomeThing/SUCCESS'
+          type: 'getSomeThing/SUCCESS',
+          payload: {
+            key: '1'
+          }
         })
       })
 
@@ -162,11 +180,20 @@ describe('Redux Middleware test', function () {
         }, JSON.stringify({ message: 'this is default response' })])
 
         try {
-          await _handler({ url: '/sompath', name: 'getSomeThing' })
+          await _handler({
+            url: '/sompath',
+            name: 'getSomeThing',
+            indicator: {
+              key: '1'
+            }
+          })
           expect(false).to.be.true // must not go here
         } catch (e) {
           _dispatch.should.have.been.calledWithMatch({
-            type: 'getSomeThing/FAILURE'
+            type: 'getSomeThing/FAILURE',
+            payload: {
+              key: '1'
+            }
           })
         }
       })
@@ -175,7 +202,13 @@ describe('Redux Middleware test', function () {
         _fakeServer.autoRespondAfter = 10000
 
         const handler = middleware({ dispatch: _dispatch, getState })(noop)
-        const promise = handler({ url: '/sompath', name: 'getSomeThing' })
+        const promise = handler({
+          url: '/sompath',
+          name: 'getSomeThing',
+          indicator: {
+            key: '1'
+          }
+        })
 
         cancel(promise)
 
@@ -183,7 +216,10 @@ describe('Redux Middleware test', function () {
           return e // to resolve
         }).then((e) => {
           _dispatch.should.have.been.calledWithMatch({
-            type: 'getSomeThing/CANCEL'
+            type: 'getSomeThing/CANCEL',
+            payload: {
+              key: '1'
+            }
           })
           expect(isCancel(e)).to.be.true
         }).should.be.fulfilled
