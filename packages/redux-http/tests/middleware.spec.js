@@ -194,7 +194,12 @@ describe('Redux Middleware test', function () {
             type: 'getSomeThing/FAILURE',
             indicator: { key: '1' },
             payload: {
-              message: 'this is default response'
+              response: {
+                status: 400,
+                data: {
+                  message: 'this is default response'
+                }
+              }
             }
           })
         }
