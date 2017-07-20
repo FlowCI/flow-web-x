@@ -167,7 +167,10 @@ describe('Redux Middleware test', function () {
         })
         _dispatch.should.have.been.calledWithMatch({
           type: 'getSomeThing/SUCCESS',
-          indicator: { key: '1' }
+          indicator: { key: '1' },
+          payload: {
+            message: 'this is default response'
+          }
         })
       })
 
