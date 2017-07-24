@@ -1,7 +1,10 @@
-export function spy (pack, source) {
+export function spy (...funcs) {
   return function (...args) {
-    pack(...args)
-    return source(...args)
+    let result
+    funcs.forEach((f) => {
+      result = f(...args)
+    })
+    return result
   }
 }
 
