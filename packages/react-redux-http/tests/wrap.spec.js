@@ -10,7 +10,6 @@ function noop () {}
 function getState () { return {} }
 
 describe('Promise Cancel Highter-Order Components', function () {
-  this.timeout(10000)
   let _fakeServer
   let _dispatch
   let http
