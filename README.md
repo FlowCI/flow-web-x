@@ -1,3 +1,6 @@
+## Use
+react redux react-redux react-router(^3) reselect immutable-js
+
 ## Require
 Node > 6
 
