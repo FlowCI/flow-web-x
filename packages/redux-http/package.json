@@ -1,7 +1,7 @@
 {
-  "name": "redux-axios",
+  "name": "redux-http",
   "version": "0.0.1",
-  "description": "redux axio middlware",
+  "description": "redux axios middlware",
   "main": "src/index.js",
   "module": "src/index.js",
   "scripts": {
@@ -23,7 +23,6 @@
     "url": "https://github.com/flowci/flow-web.git"
   },
   "author": "dev@fir.im",
-  "license": "Apache License, Version 2.0",
   "bugs": {
     "url": "https://github.com/flowci/flow-web/issues"
   },
@@ -34,6 +33,7 @@
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.0.0",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
