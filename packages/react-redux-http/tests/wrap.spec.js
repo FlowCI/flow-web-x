@@ -118,6 +118,15 @@ describe('Promise Cancel Highter-Order Components', function () {
     }).should.be.fulfilled
   })
 
+  it('should can getWrappedInstance when withRef is true', function () {
+    const WrapperComponent = autoCancel({ funcs: ['query'] }, { withRef: true })(TestComponent)
+
+    const component = mount(<WrapperComponent query={noop} />)
+
+    const instance = component.instance()
+    const wrapped = instance.getWrappedInstance()
+    expect(wrapped).to.be.an.instanceof(TestComponent)
+  })
   describe('create config', function () {
     class MultiTestComponent extends PureComponent {
       static propTypes = {
