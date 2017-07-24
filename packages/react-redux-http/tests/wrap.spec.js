@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import autoCancel from 'index'
 
-import httpMiddleware, { cancel, isCancel } from 'redux-http'
+import httpMiddleware, { isCancel } from 'redux-http'
 
 function noop () {}
 function getState () { return {} }
@@ -13,9 +13,6 @@ describe('Promise Cancel Highter-Order Components', function () {
   let _fakeServer
   let _dispatch
   let http
-  function getRequest (index) {
-    return _fakeServer.getRequest(index)
-  }
 
   beforeEach(() => {
     _fakeServer = sinon.fakeServer.create()
