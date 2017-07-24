@@ -6,12 +6,19 @@ import { compose, spy, done } from './util'
 
 /**
   args support:
+    - { funcs: [funcNames], trigger: '' }
     - [{ funcs: [funcNames], trigger: '' }]
   options: {
     withRef: boolean
   }
 **/
 export default function createHigherOrderComponent (settings, options) {
+  if (typeof settings !== 'object') {
+    throw new Error(`settings is type error, it will array or object, but now is ${typeof settings}`)
+  }
+  if (!Array.isArray(settings)) {
+    settings = [settings]
+  }
   const { withRef } = options || {}
   return function (WrappedComponent) {
     return class AutoCancelWrapper extends Component {

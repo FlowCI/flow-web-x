@@ -54,9 +54,28 @@ describe('Promise Cancel Highter-Order Components', function () {
     }
   }
 
-
   it('should cancel promise when componentWillUnmount by default', () => {
     const WrapperComponent = autoCancel([{ funcs: ['query'] }])(TestComponent)
+
+    const querySpy = sinon.spy(query)
+    const component = mount(<WrapperComponent query={querySpy} />)
+    querySpy.should.have.been.calledOnce
+
+    const comp = component.find(TestComponent)
+    const instance = comp.get(0)
+    expect(instance.promise).to.be.a('promise')
+
+    setTimeout(() => {
+      component.unmount() // must cancel query promise
+    }, 10)
+
+    return instance.promise.catch((e) => e).then((e) => {
+      expect(isCancel(e)).to.be.true
+    }).should.be.fulfilled
+  })
+
+  it('should support args[0] is object && not array', function () {
+    const WrapperComponent = autoCancel({ funcs: ['query'] })(TestComponent)
 
     const querySpy = sinon.spy(query)
     const component = mount(<WrapperComponent query={querySpy} />)
