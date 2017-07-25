@@ -36,7 +36,7 @@ describe('Redux Middlewares Headers', function () {
     const action = { type: 'someActionType', url: 'http://some.domain/url' }
     const result = actionHandler(action)
 
-    expect(result).to.equal(action))
+    expect(result).to.equal(action)
   })
 
   it('must auto append field to headers when url is relative', function () {
