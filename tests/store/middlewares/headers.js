@@ -17,7 +17,6 @@ describe('Redux Middlewares Headers', function () {
 
     const actionHandler = nextHandler(intact)
     expect(actionHandler).to.be.a('function')
-
   })
 
   it('should do nothing when action is not has url', function () {
@@ -28,6 +27,16 @@ describe('Redux Middlewares Headers', function () {
     const result = actionHandler(action)
 
     expect(result).to.equal(action)
+  })
+
+  it('should do nothing when url is not relative', function () {
+    const nextHandler = resquestHeaders({ dispatch, getState })
+    const actionHandler = nextHandler(intact)
+
+    const action = { type: 'someActionType', url: 'http://some.domain/url' }
+    const result = actionHandler(action)
+
+    expect(result).to.equal(action))
   })
 
   it('must auto append field to headers when url is relative', function () {
