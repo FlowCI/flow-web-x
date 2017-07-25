@@ -11,8 +11,13 @@ describe('Redux Middlewares Headers', function () {
   it('must export default func and export INVALID string', function () {
     expect(INVALID).to.be.a('string')
     expect(resquestHeaders).to.be.a('function')
+
     const nextHandler = resquestHeaders({ dispatch, getState })
     expect(nextHandler).to.be.a('function')
+
+    const actionHandler = nextHandler(intact)
+    expect(actionHandler).to.be.a('function')
+
   })
 
   it('should do nothing when action is not has url', function () {
