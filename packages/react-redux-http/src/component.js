@@ -48,7 +48,7 @@ export default function createHigherOrderComponent (settings, options) {
       }
 
       getWrappedInstance () {
-        return this.refs.wrappedInstance
+        return this.wrappedInstance
       }
 
       createFunc (name, trigger, store) {
@@ -89,7 +89,10 @@ export default function createHigherOrderComponent (settings, options) {
 
       render () {
         const mergedProps = { ...this.props, ...this.funcs }
-        const props = withRef ? { ...mergedProps, ref: 'wrappedInstance' } : mergedProps
+        const props = withRef ? {
+          ...mergedProps,
+          ref: (el) => { this.wrappedInstance = el }
+        } : mergedProps
         return React.createElement(WrappedComponent, props)
       }
     }
