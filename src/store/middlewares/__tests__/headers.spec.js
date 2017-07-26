@@ -55,7 +55,7 @@ describe('Redux Middlewares Headers', function () {
   })
 
   it('must append accessToken to headers when url is relative and state has accessToken', function () {
-    getState = function () { return { accessToken: 'someToken' }}
+    getState = function () { return { accessToken: 'someToken' } }
     const nextHandler = resquestHeaders({ dispatch, getState })
     const actionHandler = nextHandler(intact)
 
@@ -71,14 +71,14 @@ describe('Redux Middlewares Headers', function () {
     })
   })
 
-  it(`must dispatch type: ${INVALID} when inject accesstoken to header and promise catch with status 401`, async function () {
+  it(`must dispatch type: ${INVALID} when inject accesstoken to header and promise catch with status 401`, async function () { // eslint-disable-line max-len
     dispatch = sinon.spy()
-    getState = function () { return { accessToken: 'someToken' }}
+    getState = function () { return { accessToken: 'someToken' } }
     const nextHandler = resquestHeaders({ dispatch, getState })
     const next = function () {
       return new Promise(function (resolve, reject) {
         setTimeout(() => {
-          reject({ status: 401 })
+          reject({ status: 401 }) // eslint-disable-line prefer-promise-reject-errors
         }, 0) // also can sync
       })
     }

@@ -1,6 +1,6 @@
 import getI18n from '../i18n'
 
-describe('Views Home i18n Test', function(){
+describe('Views Home i18n Test', function () {
   const languages = LANGUAGES.split(',')
   languages.forEach((lang) => {
     it(`should has ${lang} resource`, function () {

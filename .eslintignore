@@ -3,3 +3,7 @@ node_modules/**
 dist/**
 src/index.html
 src/static
+
+# disable eslint in test file
+*.spec.js
+

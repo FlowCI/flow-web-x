@@ -66,7 +66,6 @@ webpackConfig.module.rules.push({
   test: /\.js$/,
   exclude: [
     /node_modules/,
-    /\.spec\.js/,
     /static/,
   ],
   enforce: "pre",
