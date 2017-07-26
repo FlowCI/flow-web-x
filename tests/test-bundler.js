@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import chai from 'chai'
 import sinon from 'sinon'
 import dirtyChai from 'dirty-chai'
