@@ -7,12 +7,20 @@ import thunk from 'redux-thunk'
 // import { browserHistory } from 'react-router'
 import makeRootReducer from './reducers'
 import { routerMiddleware } from 'react-router-redux'
-
+import httpMiddleware from 'redux-http'
+import { resquestHeaders } from './middlewares'
 const createStore = (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk, routerMiddleware(history)]
+  const middleware = [
+    thunk,
+    routerMiddleware(history),
+    resquestHeaders,
+    httpMiddleware({
+      baseURL: __API__
+    })
+  ]
 
   // ======================================================
   // Store Enhancers
