@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import createI18n from './i18n'
-import 'moment'
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     redirect: push
