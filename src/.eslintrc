@@ -10,6 +10,6 @@
     "browser" : true
   },
   "rules": {
-    "jsx-quotes"           : [2, "prefer-single"]
+    "jsx-quotes": [2, "prefer-single"]
   }
 }
