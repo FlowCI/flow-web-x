@@ -21,7 +21,7 @@ const webpackConfig = {
   // devtool: __DEV__ ? 'source-map' : false,
   output: {
     path: paths.dist(),
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
     publicPath: config.publicPath,
   },
   resolve: {
