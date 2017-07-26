@@ -14,7 +14,8 @@
     "__TEST__"     : false,
     "__PROD__"     : false,
     "__COVERAGE__" : false,
-    "__API__"      : false
+    "__API__"      : false,
+    "LANGUAGES"    : false
   },
   "rules": {
     "key-spacing"          : "off",

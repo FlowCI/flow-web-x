@@ -9,6 +9,11 @@ const __PROD__ = config.env === 'production'
 
 const paths = config.pathUtils
 
+const LOCALES = config.languages.map((lang) => {
+  return lang.replace(/[\-]/g, '\\$&')
+}).join('|')
+
+
 const webpackConfig = {
   entry: {
     main: [paths.src('main.js')],
@@ -37,7 +42,10 @@ const webpackConfig = {
       __TEST__,
       __PROD__,
     }, config.globals)),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh\-cn/),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/,
+      new RegExp(LOCALES)),
+    new webpack.ContextReplacementPlugin(/src[\/\\]views\S*[\/\\]locale$/,
+      new RegExp(LOCALES)),
   ],
 }
 
@@ -72,7 +80,6 @@ webpackConfig.module.rules.push({
   test: /\.js$/,
   exclude: [
     /node_modules/,
-    /tests/,
     /static/,
   ],
   use: [{
