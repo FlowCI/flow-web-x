@@ -1,7 +1,7 @@
 const path = require('path')
 const argv = require('yargs').argv
 
-const languages = ['zh-cn', 'en', 'de']
+const languages = ['zh-cn']
 
 const config = {
   env: process.env.NODE_ENV || 'development',
