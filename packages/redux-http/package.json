@@ -23,7 +23,7 @@
     "url": "https://github.com/flowci/flow-web.git"
   },
   "author": "dev@fir.im",
-  "license": "Apache Licence 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/flowci/flow-web/issues"
   },

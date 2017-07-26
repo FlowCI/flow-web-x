@@ -17,7 +17,7 @@
     "webpack"
   ],
   "author": "cy@fir.im",
-  "license": "Apache Licence 2.0",
+  "license": "Apache-2.0",
   "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
