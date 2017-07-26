@@ -31,6 +31,8 @@ const config = {
     'react-redux',
     'redux-thunk',
     'react-router',
+    'history',
+    'react-router-redux',
   ],
   // Environment
   // ------------------------------------
