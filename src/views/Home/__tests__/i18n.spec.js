@@ -1,4 +1,4 @@
-import getI18n from 'views/Home/i18n'
+import getI18n from '../i18n'
 
 describe('Views Home i18n Test', function(){
   const languages = LANGUAGES.split(',')

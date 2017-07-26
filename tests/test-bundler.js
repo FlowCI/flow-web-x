@@ -26,7 +26,7 @@ chai.use(sinonChai)
 // ------------------------------------
 // We use a Webpack global here as it is replaced with a string during compile.
 // Using a regular JS variable is not statically analyzable so webpack will throw warnings.
-const testsContext = require.context('./', true, /\.(spec|test)\.(js|ts|tsx)$/)
+const testsContext = require.context('../src', true, /\.(spec|test)\.(js|ts|tsx)$/)
 
 // When a test file changes, only rerun that spec file. If something outside of a
 // test file changed, rerun all tests.
