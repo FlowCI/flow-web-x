@@ -21,7 +21,11 @@ const webpackConfig = {
   // devtool: __DEV__ ? 'source-map' : false,
   output: {
     path: paths.dist(),
-    filename: '[name].[chunkhash].js',
+    /*
+      can't use chunkhash in webpack-dev-server with hot
+      more see https://github.com/webpack/webpack/issues/2393
+    */
+    filename: __DEV__ ? '[name].js' : '[name].[chunkhash].js',
     publicPath: config.publicPath,
   },
   resolve: {
@@ -177,7 +181,7 @@ webpackConfig.module.rules.push({
     test    : new RegExp(`\\.${extension}$`),
     loader  : 'url-loader',
     options : {
-      name  : 'fonts/[name][hash].[ext]',
+      name  : 'fonts/[name][contenthash].[ext]',
       limit : 10000,
       mimetype,
     },
