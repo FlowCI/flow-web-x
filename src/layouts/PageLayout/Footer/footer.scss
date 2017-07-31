@@ -1,0 +1,40 @@
+@import 'variables';
+.container{
+  padding: $layout-padding-vertical $layout-padding-horizontal;
+}
+.absBottom{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.content{
+  font-size: $footer-font-size;
+  color: $footer-default-color;
+
+  min-height: $footer-height;
+  line-height: $footer-line-height;
+  padding: $footer-padding;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.navs{
+  display: flex;
+  align-items: center;
+  >li:not(:last-child){
+    &:after{
+      content: '|';
+      margin: $footer-divier-padding;
+    }
+  }
+}
+.navItem{
+  color: $text-color;
+  &:hover, &:focus{
+    color: $link-hover-color;
+  }
+}
