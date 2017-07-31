@@ -6,7 +6,7 @@ import makeCancelable, {
 
 export default from './middleware'
 
-export handleAction from './handleAction'
+export handleHttpActions from './handleHttpActions'
 
 export HttpProvider from './network'
 

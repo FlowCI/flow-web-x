@@ -1,4 +1,4 @@
-export default function handleAction (name, reducers = {}) {
+export default function handleHttpActions (name, reducers = {}) {
   return {
     [`${name}/SEND`]: reducers.send,
     [`${name}/SUCCESS`]: reducers.success,
