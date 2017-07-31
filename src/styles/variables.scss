@@ -50,6 +50,17 @@ $font-family-base:  'Helvetica Neue', 'PingFang SC', 'Open Sans', Helvetica, san
 // default fonts for <code>, <pre> .code
 $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 
+// Components
+
+$padding-base-vertical: 1rem;
+$padding-base-vertical-computed: 10px;
+
+$padding-base-horizontal: 1rem;
+$padding-base-horizontal-computed: 10px;
+
+// Layout
+$layout-padding-vertical: 0;
+$layout-padding-horizontal: 4.5*$padding-base-horizontal;
 
 // Navbar
 $navbar-height: 60px!default;
@@ -64,8 +75,8 @@ $footer-height: 60px!default;
 $footer-line-height: 15px!default;
 $footer-font-size: $font-size-small!default;
 $footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
-$footer-divier-padding: 0px $footer-padding-base !default;
 $footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
+$footer-divier-padding: 0px $footer-padding-base !default;
 
-$footer-default-color: $color-muted!default;
+$footer-default-color: #676C72!default;
 $footer-default-border: $color-hr!default;
