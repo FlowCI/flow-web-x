@@ -5,6 +5,9 @@ import makeCancelable, {
 } from './promiseCancelable'
 
 export default from './middleware'
+
+export handleAction from './handleAction'
+
 export HttpProvider from './network'
 
 export isCancel from './isCancel'
