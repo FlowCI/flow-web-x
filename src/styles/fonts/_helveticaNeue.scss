@@ -1,0 +1,27 @@
+// Helvetica Neue
+// safari not support woff2
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-weight: 300;
+  font-style: normal;
+  src: local('Helvetica Neue Light'), local('HelveticaNeue-Light'),
+    url('static/fonts/HelveticaNeue/HelveticaNeue-Light.woff2') format('woff2'),
+    url('static/fonts/HelveticaNeue/HelveticaNeue-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Helvetica Neue'), local('HelveticaNeue'), url('static/fonts/HelveticaNeue/HelveticaNeue.woff2') format('woff2'),
+    url('static/fonts/HelveticaNeue/HelveticaNeue.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-weight: 600;
+  font-style: normal;
+  src: local('Helvetica Neue Bold'), local('HelveticaNeue-Bold'), url('static/fonts/HelveticaNeue/HelveticaNeue-Bold.woff2') format('woff2'),
+    url('static/fonts/HelveticaNeue/HelveticaNeue-Bold.woff') format('woff');
+}
+
