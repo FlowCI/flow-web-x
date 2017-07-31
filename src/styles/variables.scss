@@ -62,9 +62,10 @@ $navbar-card-default-active-bg: $text-color!default;
 // Footer
 $footer-height: 60px!default;
 $footer-font-size: $font-size-small!default;
-$footer-line-height: 15px!default;
-$footer-color: $color-muted!default;
-
 $footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
 $footer-divier-padding: 0px $footer-padding-base !default;
 $footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
+$footer-line-height: 15px!default;
+
+$footer-default-color: $color-muted!default;
+$footer-default-border: $color-hr!default;
