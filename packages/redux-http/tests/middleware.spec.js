@@ -1,4 +1,4 @@
-import { cancel } from 'index'
+import { cancel, STATUS } from 'index'
 import create from 'middleware'
 import isCancel from 'isCancel'
 
@@ -142,7 +142,7 @@ describe('Redux Middleware test', function () {
         _handler = middleware({ dispatch: _dispatch, getState })(noop)
       })
 
-      it('should sync dispatch action with { type: ${name}/SEND } before send http request', function () {
+      it(`should sync dispatch action with { type: name, status: ${STATUS.send} } before send http request`, function () {
         const promise = _handler({
           url: '/sompath',
           name: 'getSomeThing',
@@ -151,13 +151,14 @@ describe('Redux Middleware test', function () {
           }
         })
         _dispatch.should.have.been.calledWithMatch({
-          type: 'getSomeThing/SEND',
+          type: 'getSomeThing',
+          status: STATUS.send,
           indicator: { key: '1' }
         })
         return promise
       })
 
-      it('should dispatch { type: ${name}/SUCCESS } on success', async function () {
+      it(`should dispatch { type: name, status: ${STATUS.success} } on success`, async function () {
         await _handler({
           url: '/sompath',
           name: 'getSomeThing',
@@ -166,7 +167,8 @@ describe('Redux Middleware test', function () {
           }
         })
         _dispatch.should.have.been.calledWithMatch({
-          type: 'getSomeThing/SUCCESS',
+          type: 'getSomeThing',
+          status: STATUS.success,
           indicator: { key: '1' },
           payload: {
             message: 'this is default response'
@@ -174,7 +176,7 @@ describe('Redux Middleware test', function () {
         })
       })
 
-      it('should dispatch { type: ${name}/FAILURE } on failure', async function () {
+      it(`should dispatch { type: name, status: ${STATUS.failure} } on failure`, async function () {
 
         _fakeServer.respond([400, {
           'Content-Type': 'application/json; charset=utf-8'
@@ -191,7 +193,8 @@ describe('Redux Middleware test', function () {
           expect(false).to.be.true // must not go here
         } catch (e) {
           _dispatch.should.have.been.calledWithMatch({
-            type: 'getSomeThing/FAILURE',
+            type: 'getSomeThing',
+            status: STATUS.failure,
             indicator: { key: '1' },
             payload: {
               response: {
@@ -205,7 +208,7 @@ describe('Redux Middleware test', function () {
         }
       })
 
-      it('should dispatch { type: ${name}/CANCEL } on cancel', async function () {
+      it(`should dispatch { type: name, status: ${STATUS.cancel} } on cancel`, async function () {
         _fakeServer.autoRespondAfter = 10000
 
         const handler = middleware({ dispatch: _dispatch, getState })(noop)
@@ -223,7 +226,8 @@ describe('Redux Middleware test', function () {
           return e // to resolve
         }).then((e) => {
           _dispatch.should.have.been.calledWithMatch({
-            type: 'getSomeThing/CANCEL',
+            type: 'getSomeThing',
+            status: STATUS.cancel,
             indicator: { key: '1' }
           })
           expect(isCancel(e)).to.be.true
