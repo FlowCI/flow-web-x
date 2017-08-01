@@ -1,3 +1,4 @@
+@import 'variables';
 .container{
-  text-align: center;
+  padding: $layout-padding-vertical $layout-padding-horizontal;
 }
