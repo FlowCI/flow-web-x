@@ -27,12 +27,16 @@ const config = {
   vendors: [
     'react',
     'react-dom',
-    'redux',
     'react-redux',
-    'redux-thunk',
     'react-router',
-    'history',
     'react-router-redux',
+    'redux',
+    'redux-thunk',
+    'redux-actions',
+    'history',
+    'immutable',
+    'prop-types',
+    'reselect',
   ],
   // Environment
   // ------------------------------------
