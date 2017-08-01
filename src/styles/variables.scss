@@ -12,7 +12,7 @@ $text-color: $color-black!default;
 
 
 $link-color: #575FB7!default;
-$link-hover-color: darken($link-color, 15%) !default;
+$link-hover-color: darken($link-color, 10%) !default;
 
 $border-radius-base: 3px;
 
@@ -30,16 +30,16 @@ $screen-lg: 1200px !default;
 $screen-lg-desktop: $screen-lg !default;
 
 // FONT
-$font-size-root: 10px!default; // use for rem
+$font-size-root: 20px!default; // use for rem, chrome default mini size is 10px
 
 $font-size-base: 14px!default;
-$font-size-large: ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-large: ceil(($font-size-base * 1.14)) !default; // ~16px
 $font-size-small: ceil(($font-size-base * 0.85)) !default; // ~12px
 
 $font-size-h1: floor(($font-size-base * 2.6)) !default; // ~36px
 $font-size-h2: ceil(($font-size-base * 2)) !default; // 28px
 $font-size-h3: ceil(($font-size-base * 1.85)) !default; // ~26px
-$font-size-h4: ceil(($font-size-base * 1.25)) !default; // ~18px
+$font-size-h4: ceil(($font-size-base * 1.14)) !default; // ~16px
 $font-size-h5: $font-size-base!default;
 $font-size-h6: ceil(($font-size-base * 0.85)) !default; // ~12px
 
@@ -52,20 +52,30 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 
 // Components
 
-$padding-base-vertical: 1rem;
+$padding-base-vertical: 0.5rem;
 $padding-base-vertical-computed: 10px;
 
-$padding-base-horizontal: 1rem;
+$padding-base-horizontal: 0.5rem;
 $padding-base-horizontal-computed: 10px;
 
 // Layout
 $layout-padding-vertical: 0;
 $layout-padding-horizontal: 4.5*$padding-base-horizontal;
 
+// Z-index
+$zindex-navbar: 100;
+
 // Navbar
 $navbar-height: 60px!default;
 $navbar-default-bg: #F4F5F5!default;
 $navbar-default-color: $text-color!default;
+$navbar-default-border: $color-hr!default;
+
+$navbar-inverse-bg: $text-color!default;
+$navbar-inverse-color: #fff!default;
+
+$navbar-brand-padding-vertical: 0;
+$navbar-brand-padding-horizontal: 1.5*$padding-base-horizontal;
 
 $navbar-card-default-active-color: #fff!default;
 $navbar-card-default-active-bg: $text-color!default;
