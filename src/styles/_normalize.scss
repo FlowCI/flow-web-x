@@ -10,8 +10,7 @@
 a{
   color: $link-color;
   text-decoration: none;
-  &:hover,
-  &:focus {
+  &:hover, &:focus {
     color: $link-hover-color;
   }
 }
@@ -25,6 +24,9 @@ textarea {
   font-size: inherit;
   line-height: inherit;
   border-radius: $border-radius-base;
+  color: currentColor;
+  margin: 0;
+  padding: 0;
 }
 
 .code, code, pre{
