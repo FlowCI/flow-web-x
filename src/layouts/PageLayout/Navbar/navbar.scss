@@ -1,0 +1,114 @@
+@import 'variables';
+
+.navbar{
+  position: relative;
+  z-index: $zindex-navbar;
+  display: block;
+  background-color: $navbar-default-bg;
+  color: $navbar-default-color;
+  border-bottom: 1px solid $navbar-default-border;
+}
+
+.logo{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: $navbar-default-color;
+}
+
+.content{
+  // height: $navbar-height;
+  line-height: $navbar-height;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+
+%buttonCard {
+  // reset button css
+  color: currentColor;
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 0;
+
+  &:focus{
+    color: currentColor;
+  }
+  &:hover, &:active, &.active{
+    outline: 0;
+    background-color: $navbar-inverse-bg;
+    color: $navbar-inverse-color;
+  }
+}
+
+.flowsButton, .backButton{
+  @extend %buttonCard;
+
+  font-weight: bold;
+  font-size: $font-size-h4;
+  flex: 0 0 2*$navbar-height;
+
+  border-right: 1px solid $navbar-default-border;
+  padding: $navbar-brand-padding-vertical $navbar-brand-padding-horizontal;
+  position: relative;
+
+  >:global(.icon){
+    margin-right: $navbar-brand-padding-horizontal;
+  }
+}
+.backButton{
+  flex: 0 0 100px;
+}
+
+.arrow{
+  position: absolute;
+  right: $navbar-brand-padding-horizontal;
+  top: calc(50% - #{$navbar-brand-arrow/2});
+}
+.navs{
+  flex: 0 0 auto;
+  font-size: 20px;
+  display: inline-flex;
+  >li{
+    border-left: 1px solid $navbar-default-border;
+  }
+}
+.card{
+  @extend %buttonCard;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: $navbar-height;
+  height: $navbar-height; // 100% in safari is not $navbar-height
+}
+
+
+@media screen and (max-width: $screen-phone) {
+  .logo, .arrow{ display: none; }
+  .flowsButton, .backButton{
+    flex: 0 0 $navbar-height;
+    text-align: center;
+    >span { display: none; }
+    >:global(.icon){
+      margin: 0;
+    }
+  }
+  .content{
+    line-height: $navbar-phone-height;
+    height: $navbar-phone-height;
+  }
+  .navs{
+    font-size: 18px;
+  }
+  .card{
+    width: $navbar-phone-height;
+    height: $navbar-phone-height;
+  }
+}

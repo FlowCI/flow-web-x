@@ -1,0 +1,30 @@
+@import 'variables';
+@import './dropmenu.scss';
+
+.dropmenu{
+  right: 0;
+}
+.menus{
+  width: $navbar-dropmenu-width;
+
+  >li:not(:last-child){
+    border-bottom: 1px solid $navbar-dropmenu-item-border;
+  }
+}
+.item{
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  justify-content: space-between;
+  color: inherit;
+  height: $navbar-dropmenu-item-height;
+  padding: $navbar-dropmenu-item-vertical $navbar-dropmenu-item-horizontal;
+  cursor: pointer;
+  &:hover, &:active{
+    background-color: $color-hover-bg;
+    color: inherit;
+  }
+  >:global(.icon) {
+    font-size: 20px;
+  }
+}
