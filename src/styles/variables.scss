@@ -7,6 +7,8 @@ $color-primary: #575FB7!default;
 $color-hr: #D4DCE3!default;
 $color-black: #55575C!default;
 
+$color-hover-bg: #EDEDED!default;
+
 $body-bg: #fff!default;
 $text-color: $color-black!default;
 
@@ -30,7 +32,7 @@ $screen-lg: 1200px !default;
 $screen-lg-desktop: $screen-lg !default;
 
 // FONT
-$font-size-root: 20px!default; // use for rem, chrome default mini size is 10px
+$font-size-root: 100px!default; // use for rem, chrome default mini size is 10px
 
 $font-size-base: 14px!default;
 $font-size-large: ceil(($font-size-base * 1.14)) !default; // ~16px
@@ -52,21 +54,23 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 
 // Components
 
-$padding-base-vertical: 0.5rem;
+$padding-base-vertical: 0.1rem;
 $padding-base-vertical-computed: 10px;
 
-$padding-base-horizontal: 0.5rem;
+$padding-base-horizontal: 0.1rem;
 $padding-base-horizontal-computed: 10px;
 
 // Layout
 $layout-padding-vertical: 0;
-$layout-padding-horizontal: 4.5*$padding-base-horizontal;
+$layout-padding-horizontal: 4*$padding-base-horizontal;
 
 // Z-index
 $zindex-navbar: 100;
 
 // Navbar
 $navbar-height: 60px!default;
+$navbar-phone-height: 50px!default;
+
 $navbar-default-bg: #F4F5F5!default;
 $navbar-default-color: $text-color!default;
 $navbar-default-border: $color-hr!default;
@@ -74,19 +78,35 @@ $navbar-default-border: $color-hr!default;
 $navbar-inverse-bg: $text-color!default;
 $navbar-inverse-color: #fff!default;
 
+$navbar-brand-arrow: 5px!default;
 $navbar-brand-padding-vertical: 0;
-$navbar-brand-padding-horizontal: 1.5*$padding-base-horizontal;
+$navbar-brand-padding-horizontal: 1.5*$padding-base-horizontal-computed;
 
 $navbar-card-default-active-color: #fff!default;
 $navbar-card-default-active-bg: $text-color!default;
+
+$navbar-dropmenu-bg: #fff!default;
+$navbar-dropmenu-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
+
+$navbar-dropmenu-arrow: 8px!default;
+$navbar-dropmenu-width: 3*($navbar-height + 1px)!default;
+
+$navbar-dropmenu-item-height: 45px!default;
+$navbar-dropmenu-item-border: $color-hr;
+$navbar-dropmenu-item-vertical: 0!default;
+$navbar-dropmenu-item-horizontal: 1.5*$padding-base-horizontal-computed!default;
 
 // Footer
 $footer-height: 60px!default;
 $footer-line-height: 15px!default;
 $footer-font-size: $font-size-small!default;
+
 $footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
 $footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
-$footer-divier-padding: 0px $footer-padding-base !default;
+$footer-divier-padding: $footer-padding-base!default;
+
+$footer-xs-padding: 10px 0 20px;
+$footer-xs-divier-padding: 10px;
 
 $footer-default-color: #676C72!default;
 $footer-default-border: $color-hr!default;

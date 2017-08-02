@@ -12,7 +12,7 @@
   font-size: $footer-font-size;
   color: $footer-default-color;
 
-  min-height: $footer-height;
+  // min-height: $footer-height;
   line-height: $footer-line-height;
   padding: $footer-padding;
 
@@ -20,15 +20,25 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  @media screen and (max-width: $screen-phone) {
+    padding: $footer-xs-padding;
+  }
 }
 
 .navs{
   display: flex;
   align-items: center;
+  margin-right: $footer-divier-padding;
+  @media screen and (max-width: $screen-phone) {
+    margin-right: $footer-xs-divier-padding;
+  }
   >li:not(:last-child){
     &:after{
       content: '|';
-      margin: $footer-divier-padding;
+      margin: 0 $footer-divier-padding;
+      @media screen and (max-width: $screen-phone) {
+        margin: 0 $footer-xs-divier-padding;
+      }
     }
   }
 }

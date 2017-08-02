@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import { Footer, Container } from 'components/Layout'
+
 import classes from './footer.scss'
 
-export default class Footer extends PureComponent {
+export default class PageLayoutFooter extends PureComponent {
   static propTypes = {
     i18n: PropTypes.func.isRequired,
   }
@@ -14,8 +16,8 @@ export default class Footer extends PureComponent {
 
   render () {
     const { i18n } = this.props
-    return <footer className={classes.absBottom}>
-      <div className={classes.container}>
+    return <Footer>
+      <Container>
         <hr />
         <div className={classes.content}>
           <ul className={classes.navs}>
@@ -35,7 +37,7 @@ export default class Footer extends PureComponent {
             Version 1.0 beta
           </div>
         </div>
-      </div>
-    </footer>
+      </Container>
+    </Footer>
   }
 }
