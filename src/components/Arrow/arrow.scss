@@ -1,0 +1,16 @@
+@import 'variables';
+
+.arrow{
+  display: inline-block;
+  font-size: 0;
+  border: $arrow-size solid transparent;
+  border-bottom: none;
+  border-top-color: currentColor;
+  transition: transform linear .25s;
+}
+
+.up{
+  .arrow{
+    transform: rotate(180deg);
+  }
+}
