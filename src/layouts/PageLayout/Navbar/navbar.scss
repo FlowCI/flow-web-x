@@ -65,17 +65,21 @@
   flex: 0 0 100px;
 }
 
-.arrow{
-  position: absolute;
-  right: $navbar-brand-padding-horizontal;
-  top: calc(50% - #{$navbar-brand-arrow/2});
-}
 .navs{
   flex: 0 0 auto;
   font-size: 20px;
   display: inline-flex;
   >li{
     border-left: 1px solid $navbar-default-border;
+    >div{
+      height: $navbar-height;
+      width: $navbar-height;
+    }
+    a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 .card{

@@ -1,0 +1,17 @@
+@import 'variables';
+.card{
+  color: currentColor;
+  cursor: pointer;
+
+  height: 100%;
+  display: block;
+
+  &:focus{
+    color: currentColor;
+  }
+  &:hover, &:active, &.active{
+    outline: 0;
+    background-color: $navbar-inverse-bg;
+    color: $navbar-inverse-color;
+  }
+}

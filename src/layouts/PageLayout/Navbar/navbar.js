@@ -1,14 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import { actions } from 'redux/modules/session'
 
 import { Link } from 'react-router'
-import Arrow from 'components/Arrow'
 
-import UserDropMenus from './userMenus'
+import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
 import classes from './navbar.scss'
 
@@ -18,12 +14,6 @@ function mapStateToProps (state, props) {
     authored: !user,
     avatar: user ? user.avatar : '',
   }
-}
-
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    signOut: actions.signOut
-  }, dispatch)
 }
 
 export class Navbar extends PureComponent {
@@ -45,7 +35,6 @@ export class Navbar extends PureComponent {
     // onFlowIconClick: PropTypes.func.isRequired,
     // onAgentIconClick: PropTypes.func.isRequired,
 
-    signOut: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -55,10 +44,9 @@ export class Navbar extends PureComponent {
     openMenus: false
   }
 
-  createClickHandler (stateName) {
+  createOpenHandler (stateName) {
     return (e) => {
-      e.preventDefault() // stop redirect
-      this.setState({ [stateName]: !this.state[stateName] })
+      this.setState({ [stateName]: true })
     }
   }
 
@@ -68,31 +56,17 @@ export class Navbar extends PureComponent {
     }
   }
 
-  clickFlows = this.createClickHandler('openFlows')
+  openFlows = this.createOpenHandler('openFlows')
 
   closeFlows = this.createCloseHandler('openFlows')
 
-  clickAgents = this.createClickHandler('openAgents')
+  openAgents = this.createOpenHandler('openAgents')
 
   closeAgents = this.createCloseHandler('openAgents')
 
-  clickUserMenus = this.createClickHandler('openMenus')
+  openUserMenus = this.createOpenHandler('openMenus')
 
   closeUserMenus = this.createCloseHandler('openMenus')
-
-  renderFlowsButton () {
-    const { authored, i18n } = this.props
-    const { opened } = this.state
-    const cls = [classes.flowsButton]
-    !authored && cls.push('invisible')
-    opened && cls.push(classes.active)
-
-    return <a href='#' className={cls.join(' ')}>
-      <i className='icon icon-branches' />
-      <span>{i18n('Flow')}</span>
-      <Arrow up={opened} className={classes.arrow} />
-    </a>
-  }
 
   renderBackButton () {
     const { i18n, backUrl } = this.props
@@ -104,58 +78,42 @@ export class Navbar extends PureComponent {
     </Link>
   }
 
-  renderAgentsButton () {
-    const { authored } = this.props
-    if (authored) {
-      const opened = false
-      const cls = [classes.card]
-      opened && cls.push(classes.active)
-      return <li>
-        <a href='#' className={cls.join(' ')}>
-          <i className='icon icon-agents' />
-        </a>
-      </li>
-    }
-  }
-
-  renderUserButton () {
-    const { authored } = this.props
-    if (authored) {
-      const opened = this.state.userMenus
-      const cls = [classes.card]
-      opened && cls.push(classes.active)
-      return <li>
-        <a className={cls.join(' ')} >
-          <i className='icon icon-user' />
-        </a>
-      </li>
-    }
-  }
-
   render () {
-    const { backUrl } = this.props
-    const { userMenus } = this.state
+    const { backUrl, i18n } = this.props
+    const { openFlows, openAgents, openMenus } = this.state
+
     return <div className={classes.navbar}>
       <Link className={classes.logo} to='/'>
         <i className='icon icon-logo' />
       </Link>
       <div className={classes.content}>
-        {backUrl ? this.renderBackButton() : this.renderFlowsButton()}
+        {backUrl ? this.renderBackButton()
+          : <FlowCard i18n={i18n} active={openFlows}
+            onActive={this.openFlows}
+            onRequestClose={this.closeFlows}
+          />}
         <ul className={classes.navs}>
-          {this.renderAgentsButton()}
           <li>
-            <a className={classes.card} href='//docs.flow.ci'
-              target='_blank' rel='noopener'>
-              <i className='icon icon-question' />
-            </a>
+            <AgentsCard active={openAgents} i18n={i18n}
+              onActive={this.openAgents}
+              onRequestClose={this.closeAgents}
+            />
           </li>
-          {this.renderUserButton()}
+          <li>
+            <Card href='//docs.flow.ci' target='_blank'>
+              <i className='icon icon-question' />
+            </Card>
+          </li>
+          <li>
+            <UserCard active={openMenus} i18n={i18n}
+              onActive={this.openUserMenus}
+              onRequestClose={this.closeUserMenus}
+            />
+          </li>
         </ul>
       </div>
-      {userMenus && <UserDropMenus i18n={this.props.i18n}
-        signOut={this.props.signOut} onRequestClose={this.closeUserMenus} />}
     </div>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+export default connect(mapStateToProps)(Navbar)
