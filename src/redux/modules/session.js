@@ -1,4 +1,4 @@
-import { createAction, handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions'
 import { handleHttp } from '../util'
 import { STATUS } from 'redux-http'
 import Types from './sessionType'
@@ -19,7 +19,7 @@ export const actions = {
       }
     }
   },
-  signOut: createAction(Types.signOut),
+  signOut: function () { return { type: Types.signOut } },
 }
 
 export default handleActions({
