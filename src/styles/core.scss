@@ -36,4 +36,22 @@
   .invisible{
     visibility: hidden;
   }
+
+  @media screen and (max-width: $screen-desktop) {
+    html{
+      font-size: ceil($font-size-root * 0.8);
+    }
+  }
+
+  @media screen and (max-width: $screen-tablet) {
+    html{
+      font-size: ceil($font-size-root * 0.75);
+    }
+  }
+
+  @media screen and (max-width: $screen-phone) {
+    html{
+      font-size: ceil($font-size-root * 0.5);
+    }
+  }
 }
