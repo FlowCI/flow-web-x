@@ -1,0 +1,13 @@
+@import 'variables';
+.content{
+  left: 0;
+  width: 300px;
+}
+.arrow{
+  left: ($navbar-brand-width / 2) - $arrow-size;
+}
+@media screen and (max-width: $screen-phone) {
+  .arrow{
+    left: ($navbar-phone-height / 2) - $arrow-size;
+  }
+}

@@ -1,0 +1,36 @@
+@import 'variables';
+
+.dropmenu{
+  right: 0;
+}
+.arrow{
+  right: ($navbar-height / 2) - $arrow-size;
+  @media screen and (max-width: $screen-phone) {
+    right: ($navbar-phone-height / 2) - $arrow-size;
+  }
+}
+
+.menus{
+  font-size: $font-size-base;
+  width: $navbar-dropmenu-width;
+  line-height: $navbar-dropmenu-item-height;
+  >li:not(:last-child){
+    border-bottom: 1px solid $navbar-dropmenu-item-border;
+  }
+}
+.item{
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  justify-content: space-between;
+  color: inherit;
+  padding: $navbar-dropmenu-item-vertical $navbar-dropmenu-item-horizontal;
+  cursor: pointer;
+  &:hover, &:active{
+    background-color: $color-hover-bg;
+    color: inherit;
+  }
+  >:global(.icon) {
+    font-size: 20px;
+  }
+}

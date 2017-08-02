@@ -64,12 +64,11 @@ $padding-base-horizontal-computed: 10px;
 $layout-padding-vertical: 0;
 $layout-padding-horizontal: 4*$padding-base-horizontal;
 
-// Arrow
-
-$arrow-size: 6px!default;
-
 // Z-index
 $zindex-navbar: 100;
+
+// Arrow
+$arrow-size: 6px!default;
 
 // Navbar
 $navbar-height: 60px!default;
@@ -82,12 +81,13 @@ $navbar-default-border: $color-hr!default;
 $navbar-inverse-bg: $text-color!default;
 $navbar-inverse-color: #fff!default;
 
-$navbar-brand-arrow: 5px!default;
-$navbar-brand-padding-vertical: 0;
-$navbar-brand-padding-horizontal: 1.5*$padding-base-horizontal-computed;
+$navbar-base-padding-vertical: 0!default;
+$navbar-base-padding-horizontal: 1.5*$padding-base-horizontal-computed!default;
 
-$navbar-card-default-active-color: #fff!default;
-$navbar-card-default-active-bg: $text-color!default;
+$navbar-brand-width: 140px;
+$navbar-brand-arrow: 5px!default;
+$navbar-brand-padding-vertical: $navbar-base-padding-vertical!default;
+$navbar-brand-padding-horizontal: $navbar-base-padding-horizontal!default;
 
 $navbar-dropmenu-bg: #fff!default;
 $navbar-dropmenu-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
@@ -97,8 +97,8 @@ $navbar-dropmenu-width: 3*($navbar-height + 1px)!default;
 
 $navbar-dropmenu-item-height: 45px!default;
 $navbar-dropmenu-item-border: $color-hr;
-$navbar-dropmenu-item-vertical: 0!default;
-$navbar-dropmenu-item-horizontal: 1.5*$padding-base-horizontal-computed!default;
+$navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
+$navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
 
 // Footer
 $footer-height: 60px!default;

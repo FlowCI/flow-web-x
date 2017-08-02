@@ -1,0 +1,17 @@
+@import 'variables';
+.dropmenu{
+  position: absolute;
+  top: calc(100% + 1px); // show navbar border-bottom;
+
+  background-color: $navbar-dropmenu-bg;
+  box-shadow: $navbar-dropmenu-boxshadow;
+}
+.arrow{
+  position: absolute;
+  top: -$arrow-size;
+  color: $navbar-dropmenu-bg;
+}
+.content{
+  max-height: calc(100vh - #{$navbar-height});
+  overflow: auto;
+}
