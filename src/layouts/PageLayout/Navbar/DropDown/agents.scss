@@ -1,0 +1,20 @@
+@import 'variables';
+.dropdown{
+  right: 2*$navbar-height;
+  width: 460px;
+  max-width: 80vw;
+  @media screen and (max-width: $screen-phone) {
+    right: 2*$navbar-phone-height;
+  }
+}
+.arrow{
+  right: ($navbar-height / 2) - $arrow-size;
+  @media screen and (max-width: $screen-phone) {
+    right: ($navbar-phone-height / 2) - $arrow-size;
+  }
+}
+
+.header{
+  font-weight: bold;
+  padding: $navbar-dropmenu-item-vertical $navbar-dropmenu-item-horizontal;
+}
