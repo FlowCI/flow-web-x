@@ -43,7 +43,8 @@ export default class NavbarCard extends PureComponent {
     const cls = [classes.card, className]
     active && cls.push(classes.active)
 
-    return <ClickAwayListener onClickAway={active && onRequestClose}>
+    return <ClickAwayListener
+      onClickAway={active && !!dropDown && onRequestClose}>
       <div className={containerClass}>
         <a href={href || '#'} target={target}
           rel='noopener' className={cls.join(' ')}

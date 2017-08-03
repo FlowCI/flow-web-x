@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 
 import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
@@ -13,7 +16,14 @@ function mapStateToProps (state, props) {
   return {
     authored: !user,
     avatar: user ? user.avatar : '',
+    backUrl: 'urlToBack',
   }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    redirect: push,
+  }, dispatch)
 }
 
 export class Navbar extends PureComponent {
@@ -32,8 +42,7 @@ export class Navbar extends PureComponent {
     */
     backUrl: PropTypes.string,
 
-    // onFlowIconClick: PropTypes.func.isRequired,
-    // onAgentIconClick: PropTypes.func.isRequired,
+    redirect: PropTypes.func.isRequired,
 
     i18n: PropTypes.func.isRequired,
   }
@@ -68,14 +77,20 @@ export class Navbar extends PureComponent {
 
   closeUserMenus = this.createCloseHandler('openMenus')
 
-  renderBackButton () {
-    const { i18n, backUrl } = this.props
-    const cls = [classes.backButton]
+  handleBack = (e) => {
+    const { redirect, backUrl } = this.props
+    redirect(backUrl)
+  }
 
-    return <Link to={backUrl} className={cls.join(' ')}>
+  renderBackButton () {
+    const { i18n } = this.props
+
+    return <Card containerClass={classes.backButton}
+      className={classes.back}
+      onActive={this.handleBack}>
       <i className='icon icon-keyboard_arrow_left' />
       {i18n('back')}
-    </Link>
+    </Card>
   }
 
   render () {
@@ -119,4 +134,4 @@ export class Navbar extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

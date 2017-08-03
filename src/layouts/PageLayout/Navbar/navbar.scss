@@ -34,6 +34,22 @@
 .unauthored{
   justify-content: flex-end;
 }
+
+.backButton{
+  flex: 0 0 100px;
+  width: 100px;
+  font-size: $font-size-large;
+  font-weight: bold;
+  border-right: 1px solid $navbar-default-border;
+}
+.back{
+  display: flex;
+  align-items: center;
+  padding: $navbar-brand-padding-vertical $navbar-brand-padding-horizontal;
+  >:global(.icon){
+    margin-right: $padding-base-horizontal-computed;;
+  }
+}
 .navs{
   flex: 0 0 auto;
   font-size: 20px;
