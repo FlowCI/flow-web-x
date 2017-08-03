@@ -2,28 +2,29 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import { fromJS } from 'immutable'
-
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { STATUS } from 'redux-http'
+import autoCancel from 'react-redux-http'
+
+import { actions } from 'redux/modules/agent'
 
 import DropDown from './dropdown'
 
 import classes from './agents.scss'
 
 function mapStateToProps (state, props) {
+  const { agent } = state
   return {
-    agents: fromJS([{
-      id: '1',
-      status: 'success',
-      name: 'mac - mini',
-      job: 'xiaomi_ios_dev / #2 master',
-    }, {
-      id: '2',
-      status: 'failure',
-      name: 'mac - mini',
-      job: 'xiaomi_ios_dev_xxxxxxxx / #2 master',
-    }])
+    agents: agent.get('data'),
   }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    query: actions.query,
+  }, dispatch)
 }
 
 export class AgentsDropDown extends PureComponent {
@@ -35,7 +36,13 @@ export class AgentsDropDown extends PureComponent {
       job: PropTypes.string,
     })),
 
+    query: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
+  }
+
+  componentDidMount () {
+    const { query } = this.props
+    query()
   }
 
   renderAgents () {
@@ -71,4 +78,6 @@ export class AgentsDropDown extends PureComponent {
   }
 }
 
-export default connect(mapStateToProps)(AgentsDropDown)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  autoCancel({ funcs: ['query'] })(AgentsDropDown)
+)
