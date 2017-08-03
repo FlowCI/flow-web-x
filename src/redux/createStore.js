@@ -7,7 +7,7 @@ import thunk from 'redux-thunk'
 // import { browserHistory } from 'react-router'
 import makeRootReducer from './reducers'
 import { routerMiddleware } from 'react-router-redux'
-import httpMiddleware from 'redux-http'
+import httpMiddleware from 'redux-http/src/mock'
 import { resquestHeaders } from './middlewares'
 const createStore = (initialState = {}, history) => {
   // ======================================================
