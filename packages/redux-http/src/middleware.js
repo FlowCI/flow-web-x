@@ -1,7 +1,6 @@
 import makeCancelable, { copyCancel } from './promiseCancelable'
 import HttpProvider from './network'
-import isCancel from './isCancel'
-import STATUS from './status'
+import makeIndicator from './indicator'
 
 export default function (config = {}) {
   const http = new HttpProvider(config).$get()
@@ -17,27 +16,8 @@ export default function (config = {}) {
       const promiseWithCancel = makeCancelable(http(action))
       let result = promiseWithCancel
       if (name) {
-        // dispatch indicators
-        dispatch({ type: name, status: STATUS.send, indicator: indicator })
-        result = promiseWithCancel.then(function (response) {
-          const data = response.data
-          dispatch({
-            type: name,
-            status: STATUS.success,
-            indicator: indicator,
-            payload: data
-          })
-          return response
-        }, function (e) {
-          const status = isCancel(e) ? 'cancel' : 'failure'
-          dispatch({
-            type: name,
-            status: STATUS[status],
-            indicator: indicator,
-            payload: e
-          })
-          return Promise.reject(e)
-        })
+        const action = { type: name, indicator }
+        result = makeIndicator(dispatch, promiseWithCancel, action)
         // copy cancel fn to result
         // cancel fn is set promiseWithCancel to reject
         copyCancel(result, promiseWithCancel)
