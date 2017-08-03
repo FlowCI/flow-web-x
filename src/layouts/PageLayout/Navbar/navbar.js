@@ -15,7 +15,7 @@ function mapStateToProps (state, props) {
   const { session } = state
   return {
     authored: session.has('user'),
-    avatar: session.get('user.avatar'),
+    avatar: session.getIn(['user', 'avatar']),
     backUrl: '',
   }
 }
