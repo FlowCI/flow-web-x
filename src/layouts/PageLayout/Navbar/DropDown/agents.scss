@@ -16,6 +16,10 @@ $width: 460px;
   // }
 }
 
+.paddingWrap{
+  text-align: center;
+  padding: 50px 0;
+}
 .header{
   font-weight: bold;
   padding: $navbar-dropmenu-item-vertical $navbar-dropmenu-item-horizontal;

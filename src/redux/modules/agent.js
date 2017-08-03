@@ -16,15 +16,18 @@ export const actions = {
     return {
       url: '/agents',
       name: Types.query,
+      // response: [],
       response: [{
         id: 'sss',
         name: 'xiaomi_ios_dev',
         status: 'success',
+        job: 'xiaomi_ios_dev / #2 master',
       }, {
         id: 'xxxx',
         name: 'xiaomi_ios_ent',
         status: 'failure',
-      }]
+        job: 'xiaomi_ios_dev / #2 master',
+      }],
     }
   },
 }
