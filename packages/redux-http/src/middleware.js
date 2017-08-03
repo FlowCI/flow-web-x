@@ -16,8 +16,8 @@ export default function (config = {}) {
       const promiseWithCancel = makeCancelable(http(action))
       let result = promiseWithCancel
       if (name) {
-        const action = { type: name, indicator }
-        result = makeIndicator(dispatch, promiseWithCancel, action)
+        const indicatorAction = { type: name, indicator }
+        result = makeIndicator(dispatch, promiseWithCancel, indicatorAction)
         // copy cancel fn to result
         // cancel fn is set promiseWithCancel to reject
         copyCancel(result, promiseWithCancel)
