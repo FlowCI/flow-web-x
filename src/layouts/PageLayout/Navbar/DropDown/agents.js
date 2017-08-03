@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+
+import { fromJS } from 'immutable'
 
 import { connect } from 'react-redux'
 
@@ -9,7 +12,7 @@ import classes from './agents.scss'
 
 function mapStateToProps (state, props) {
   return {
-    agents: [{
+    agents: fromJS([{
       id: '1',
       status: 'success',
       name: 'mac - mini',
@@ -19,13 +22,18 @@ function mapStateToProps (state, props) {
       status: 'failure',
       name: 'mac - mini',
       job: 'xiaomi_ios_dev_xxxxxxxx / #2 master',
-    }]
+    }])
   }
 }
 
 export class AgentsDropDown extends PureComponent {
   static propTypes = {
-    agents: PropTypes.array,
+    agents: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      job: PropTypes.string,
+    })),
 
     i18n: PropTypes.func.isRequired,
   }
@@ -41,12 +49,12 @@ export class AgentsDropDown extends PureComponent {
         </tr>
       </thead>
       <tbody>
-        {agents.map((agent) => <tr key={agent.id}>
+        {agents.map((agent) => <tr key={agent.get('id')}>
           <td className={classes.statusCell}>
-            <span className={`${classes.circle} ${agent.status}`} />
+            <span className={`${classes.circle} ${agent.get('status')}`} />
           </td>
-          <td>{agent.name}</td>
-          <td>{agent.job}</td>
+          <td>{agent.get('name')}</td>
+          <td>{agent.get('job')}</td>
         </tr>)}
       </tbody>
     </table>
