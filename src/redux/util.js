@@ -7,6 +7,7 @@ function createUIHandler (key) {
 }
 
 export function combine (...fns) {
+  fns = fns.filter((f) => f)
   return function (state, action) {
     return fns.reduceRight((s, fn) => fn(s, action), state)
   }
