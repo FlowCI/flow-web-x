@@ -31,7 +31,9 @@
     line-height: $navbar-phone-height;
   }
 }
-
+.unauthored{
+  justify-content: flex-end;
+}
 .navs{
   flex: 0 0 auto;
   font-size: 20px;

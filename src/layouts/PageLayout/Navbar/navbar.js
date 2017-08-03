@@ -79,37 +79,40 @@ export class Navbar extends PureComponent {
   }
 
   render () {
-    const { backUrl, i18n } = this.props
+    const { authored, backUrl, i18n } = this.props
     const { openFlows, openAgents, openMenus } = this.state
+
+    const contentClass = [classes.content]
+    !authored && contentClass.push(classes.unauthored)
 
     return <div className={classes.navbar}>
       <Link className={classes.logo} to='/'>
         <i className='icon icon-logo' />
       </Link>
-      <div className={classes.content}>
-        {backUrl ? this.renderBackButton()
+      <div className={contentClass.join(' ')}>
+        {authored && (backUrl ? this.renderBackButton()
           : <FlowCard i18n={i18n} active={openFlows}
             onActive={this.openFlows}
             onRequestClose={this.closeFlows}
-          />}
+          />)}
         <ul className={classes.navs}>
-          <li>
+          {authored && <li>
             <AgentsCard active={openAgents} i18n={i18n}
               onActive={this.openAgents}
               onRequestClose={this.closeAgents}
             />
-          </li>
+          </li>}
           <li>
             <Card href='//docs.flow.ci' target='_blank'>
               <i className='icon icon-question' />
             </Card>
           </li>
-          <li>
+          {authored && <li>
             <UserCard active={openMenus} i18n={i18n}
               onActive={this.openUserMenus}
               onRequestClose={this.closeUserMenus}
             />
-          </li>
+          </li>}
         </ul>
       </div>
     </div>
