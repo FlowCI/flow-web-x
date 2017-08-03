@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 
 import createI18n from './i18n'
 
-// import Navbar from './Navbar'
+import Navbar from './Navbar'
 import Footer from './Footer'
 
 import classes from './PageLayout.scss'
 
 export const PageLayout = ({ children, i18n }) => (
   <div>
+    <Navbar i18n={i18n.createChild('navbar')} />
     <div className={classes.container}>
       {children}
     </div>
