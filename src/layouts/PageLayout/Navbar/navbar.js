@@ -12,11 +12,11 @@ import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 import classes from './navbar.scss'
 
 function mapStateToProps (state, props) {
-  const { session: { user } } = state
+  const { session } = state
   return {
-    authored: !user,
-    avatar: user ? user.avatar : '',
-    backUrl: 'urlToBack',
+    authored: session.has('user'),
+    avatar: session.get('user.avatar'),
+    backUrl: '',
   }
 }
 

@@ -4,7 +4,15 @@ import { STATUS } from 'redux-http'
 import Types from './sessionType'
 import { fromJS } from 'immutable'
 
-const initialState = fromJS({ user: undefined, ui: {} })
+const initialState = fromJS({
+  user: {
+    id: 'sss',
+    name: 'wcy',
+    email: 'cy@fir.im',
+    avatar: '//flow.ci/logo.svg',
+  },
+  ui: {},
+})
 
 export const actions = {
   signIn: function (user) {
