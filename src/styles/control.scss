@@ -77,7 +77,7 @@ button{
     outline: none;
   }
   &:hover, &:focus, &.active, &.focus{
-    background-color: $btn-default-color;
+    background-color: $btn-default-bg;
   }
 }
 
@@ -100,19 +100,6 @@ button{
   }
 }
 
-// size
-.btn-sm{
-  font-size: $font-size-small;
-  height: $control-sm-size;
-
-  padding: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2  $padding-base-horizontal-computed / 2;
-}
-.btn-lg{
-  font-size: $font-size-large;
-  height: $control-lg-size;
-
-  padding: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2  1.5*$padding-base-horizontal-computed;
-}
 
 // colors
 .btn-default{
@@ -133,4 +120,40 @@ button{
 
 .btn-inverse-primary{
   @include button-inverse-variant($btn-default-inverse-color, $btn-default-inverse-bg);
+}
+
+/*
+  Input
+*/
+input::placeholder{
+  color: $input-placeholder-color;
+}
+input{
+  outline: none;
+  border-radius: $border-radius-base;
+  border: 1px solid $input-border;
+
+  height: $control-base-size;
+  padding: ($control-base-size - $line-height-computed - 2px)/2  $padding-base-horizontal-computed;
+  &:focus{
+    box-shadow: 0 0 8px rgba(82,168,236,.6);
+  }
+  &[disabled] {
+    cursor: not-allowed;
+    background-color: $input-bg-disabled;
+  }
+}
+
+// Size
+.btn-sm, .input-sm{
+  font-size: $font-size-small;
+  height: $control-sm-size;
+
+  padding: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2  $padding-base-horizontal-computed / 2;
+}
+.btn-lg, .input-lg{
+  font-size: $font-size-large;
+  height: $control-lg-size;
+
+  padding: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2  1.5*$padding-base-horizontal-computed;
 }

@@ -83,7 +83,7 @@ $control-border-base: $color-hr!default;
 // button
 $btn-font-weight: bold!default;
 
-$btn-default-color: $color-hover-bg!default;
+$btn-default-color: $color-black!default;
 $btn-default-bg: #fff!default;
 $btn-default-border: $control-border-base!default;
 
@@ -101,6 +101,10 @@ $btn-danger-border: darken($btn-danger-bg, 5%) !default;
 
 $btn-default-inverse-color: $color-black!default;
 $btn-default-inverse-bg: #fff!default;
+
+$input-placeholder-color: $color-muted!default;
+$input-border: #C3C8CE!default;
+$input-bg-disabled: #eee!default;
 
 // Navbar
 $navbar-height: 60px!default;
