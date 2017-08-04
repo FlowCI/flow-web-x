@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions'
 import { handleHttp } from '../util'
 import { STATUS } from 'redux-http'
 
-import { fromJS, List } from 'immutable'
+import { fromJS } from 'immutable'
 
 import Types from './flowType'
 
@@ -18,11 +18,11 @@ export const actions = {
       type: Types.query,
       status: STATUS.success,
       payload: [{
-        id: 'sss',
+        path: 'sss',
         name: 'xiaomi_ios_dev',
         status: 'success',
       }, {
-        id: 'xxxx',
+        path: 'xxxx',
         name: 'xiaomi_ios_ent',
         status: 'failure',
       }]
@@ -33,9 +33,7 @@ export const actions = {
 export default handleActions({
   [Types.query]: handleHttp('query', {
     success: function (state, { payload }) {
-      return state.update('data', (data) => {
-        return data.concat(new List(payload))
-      })
+      return state.set('data', fromJS(payload))
     },
   }),
   [Types.freedAll]: function (state) {
