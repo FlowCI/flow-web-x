@@ -1,0 +1,136 @@
+@import './variables';
+@mixin button-variant($color, $background, $border) {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  &:focus,
+  &.focus {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 25%);
+  }
+  &:hover {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 12%);
+  }
+  &:active,
+  &.active {
+    color: $color;
+    background-color: darken($background, 10%);
+        border-color: darken($border, 12%);
+  }
+  &.disabled,
+  &[disabled] {
+    &:hover,
+    &:focus,
+    &.focus {
+      background-color: $background;
+          border-color: $border;
+    }
+  }
+}
+
+@mixin button-inverse-variant($color, $background) {
+  color: $color;
+  background-color: $background;
+  border-color: $color;
+  &:focus,
+  &.focus,
+  &:hover,
+  &:active,
+  &.active {
+    color: $background;
+    background-color: $color;
+        border-color: $color;
+  }
+}
+
+/*
+  Button
+*/
+button{
+  box-shadow: none;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+}
+.btn{
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+
+  font-size: $font-size-base;
+  font-weight: $btn-font-weight;
+  white-space: nowrap;
+  height: $control-base-size;
+
+  background: none;
+  border: 1px solid $control-border-base;
+  border-radius: $border-radius-base;
+
+  cursor: pointer;
+
+  padding: ($control-base-size - $line-height-computed - 2px)/2  $padding-base-horizontal-computed;
+  &:active, &.active{
+    outline: none;
+  }
+  &:hover, &:focus, &.active, &.focus{
+    background-color: $btn-default-color;
+  }
+}
+
+.btn-block{
+  display: block;
+  width: 100%;
+}
+
+.btn-link{
+  border-color: transparent;
+  background-color: transparent;
+  color: $link-color;
+  &:focus,
+  &.focus,
+  &:hover,
+  &:active,
+  &.active {
+    color: $link-hover-color;
+    background-color: transparent;
+  }
+}
+
+// size
+.btn-sm{
+  font-size: $font-size-small;
+  height: $control-sm-size;
+
+  padding: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2  $padding-base-horizontal-computed / 2;
+}
+.btn-lg{
+  font-size: $font-size-large;
+  height: $control-lg-size;
+
+  padding: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2  1.5*$padding-base-horizontal-computed;
+}
+
+// colors
+.btn-default{
+  @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border);
+}
+
+.btn-primary {
+  @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border);
+}
+
+.btn-success{
+  @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border);
+}
+
+.btn-danger{
+  @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-border);
+}
+
+.btn-inverse-primary{
+  @include button-inverse-variant($btn-default-inverse-color, $btn-default-inverse-bg);
+}

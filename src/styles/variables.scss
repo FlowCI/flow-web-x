@@ -45,8 +45,9 @@ $font-size-h4: ceil(($font-size-base * 1.14)) !default; // ~16px
 $font-size-h5: $font-size-base!default;
 $font-size-h6: ceil(($font-size-base * 0.85)) !default; // ~12px
 
-$line-height-base:        1.2857142 !default; // 18/14
-$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~20px
+$line-height-base: 1.29;
+// $line-height-computed: 18px!default;
+$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~18px
 
 $font-family-base:  'Helvetica Neue', 'PingFang SC', 'Open Sans', Helvetica, sans-serif!default;
 // default fonts for <code>, <pre> .code
@@ -54,21 +55,52 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 
 // Components
 
-$padding-base-vertical: 0.1rem;
-$padding-base-vertical-computed: 10px;
+$padding-base-vertical: 0.1rem!default;
+$padding-base-vertical-computed: 10px!default;
 
-$padding-base-horizontal: 0.1rem;
-$padding-base-horizontal-computed: 10px;
+$padding-base-horizontal: 0.1rem!default;
+$padding-base-horizontal-computed: 10px!default;
 
 // Layout
-$layout-padding-vertical: 0;
+$layout-padding-vertical: 0!default;
 $layout-padding-horizontal: 4*$padding-base-horizontal;
 
 // Z-index
-$zindex-navbar: 100;
+$zindex-navbar: 100!default;
 
 // Arrow
 $arrow-size: 6px!default;
+
+// Control
+
+$control-radius-base: $border-radius-base!default;
+$control-sm-size: 22px!default;
+$control-base-size: 34px!default;
+$control-lg-size: 40px!default;
+
+$control-border-base: $color-hr!default;
+
+// button
+$btn-font-weight: bold!default;
+
+$btn-default-color: $color-hover-bg!default;
+$btn-default-bg: #fff!default;
+$btn-default-border: $control-border-base!default;
+
+$btn-primary-color: #fff!default;
+$btn-primary-bg: #6668D3!default;
+$btn-primary-border: darken($btn-primary-bg, 5%) !default;
+
+$btn-success-color: #fff!default;
+$btn-success-bg: $color-success!default;
+$btn-success-border: darken($btn-success-bg, 5%) !default;
+
+$btn-danger-color: #fff!default;
+$btn-danger-bg: $color-danger!default;
+$btn-danger-border: darken($btn-danger-bg, 5%) !default;
+
+$btn-default-inverse-color: $color-black!default;
+$btn-default-inverse-bg: #fff!default;
 
 // Navbar
 $navbar-height: 60px!default;
@@ -95,7 +127,7 @@ $navbar-dropmenu-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
 $navbar-dropmenu-arrow: 8px!default;
 $navbar-dropmenu-width: 3*($navbar-height + 1px)!default;
 
-$navbar-dropmenu-item-height: 45px!default;
+$navbar-dropmenu-item-height: 40px!default;
 $navbar-dropmenu-item-border: $color-hr;
 $navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
 $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
@@ -114,3 +146,5 @@ $footer-xs-divier-padding: 10px;
 
 $footer-default-color: #676C72!default;
 $footer-default-border: $color-hr!default;
+
+

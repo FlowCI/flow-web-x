@@ -1,5 +1,4 @@
 @import '~normalize.css/normalize';
-@import './variables';
 
 *,
 *:before,
@@ -21,9 +20,8 @@ button,
 select,
 textarea {
   font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  border-radius: $border-radius-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
   color: currentColor;
   margin: 0;
   padding: 0;
