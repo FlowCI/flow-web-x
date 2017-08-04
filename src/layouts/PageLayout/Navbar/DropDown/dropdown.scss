@@ -3,6 +3,8 @@
   position: absolute;
   top: calc(100% + 1px); // show navbar border-bottom;
 
+  z-index: $zindex-navbar;
+
   background-color: $navbar-dropmenu-bg;
   box-shadow: $navbar-dropmenu-boxshadow;
   font-size: $font-size-base;
