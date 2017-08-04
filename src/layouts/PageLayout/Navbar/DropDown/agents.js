@@ -33,9 +33,15 @@ export class AgentsDropDown extends PureComponent {
   static propTypes = {
     agents: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-      job: PropTypes.string,
+      path: ImmutablePropTypes.contains({
+        zone: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }).isRequired,
+      agentStatus: PropTypes.string.isRequired,
+
+      flowName: PropTypes.string,
+      number: PropTypes.number,
+      branch: PropTypes.string,
     })),
     loaded: PropTypes.bool,
 
@@ -46,6 +52,23 @@ export class AgentsDropDown extends PureComponent {
   componentDidMount () {
     const { query } = this.props
     query()
+  }
+
+  renderAgent (agent) {
+    const path = agent.get('path')
+
+    const flow = agent.get('flowName')
+    const number = agent.get('number')
+    const branch = agent.get('branch')
+
+    const job = flow ? `${flow} / #${number} ${branch}` : ''
+    return <tr key={agent.get('id')}>
+      <td className={classes.statusCell}>
+        <span className={`${classes.circle} ${agent.get('agentStatus')}`} />
+      </td>
+      <td>{path.get('zone')} - {path.get('name')}</td>
+      <td>{job}</td>
+    </tr>
   }
 
   renderAgents () {
@@ -63,13 +86,7 @@ export class AgentsDropDown extends PureComponent {
           </tr>
         </thead>
         <tbody>
-          {agents.map((agent) => <tr key={agent.get('id')}>
-            <td className={classes.statusCell}>
-              <span className={`${classes.circle} ${agent.get('status')}`} />
-            </td>
-            <td>{agent.get('name')}</td>
-            <td>{agent.get('job')}</td>
-          </tr>)}
+          {agents.map(this.renderAgent.bind(this))}
         </tbody>
       </table>
     </div>

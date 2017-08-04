@@ -18,15 +18,23 @@ export const actions = {
       name: Types.query,
       // response: [],
       response: [{
-        id: 'sss',
-        name: 'xiaomi_ios_dev',
-        status: 'success',
-        job: 'xiaomi_ios_dev / #2 master',
+        'path': {
+          'zone': 'Mac',
+          'name': 'Mini'
+        },
+        'flowName': 'xiaomi_ios_dev',
+        'agentStatus': 'BUSY',
+        'number': 10,
+        'branch': 'master',
       }, {
-        id: 'xxxx',
-        name: 'xiaomi_ios_ent',
-        status: 'failure',
-        job: 'xiaomi_ios_dev / #2 master',
+        'path': {
+          'zone': 'Mac',
+          'name': 'Mini2'
+        },
+        'flowName': 'xiaomi_ios_dev',
+        'agentStatus': 'BUSY',
+        'number': 10,
+        'branch': 'master',
       }],
     }
   },
@@ -35,6 +43,9 @@ export const actions = {
 export default handleActions({
   [Types.query]: handleHttp('query', {
     success: function (state, { payload }) {
+      payload.forEach((agent) => {
+        agent.id = agent.path.zone + agent.path.name
+      })
       return state.set('data', fromJS(payload))
     },
   }),
