@@ -72,7 +72,7 @@ button{
 
   cursor: pointer;
 
-  padding: ($control-base-size - $line-height-computed - 2px)/2  $padding-base-horizontal-computed;
+  padding: $control-base-padding-vertical $control-base-padding-horizontal;
   &:active, &.active{
     outline: none;
   }
@@ -128,13 +128,18 @@ button{
 input::placeholder{
   color: $input-placeholder-color;
 }
+
+
 input{
   outline: none;
-  border-radius: $border-radius-base;
   border: 1px solid $input-border;
 
   height: $control-base-size;
-  padding: ($control-base-size - $line-height-computed - 2px)/2  $padding-base-horizontal-computed;
+  padding: $control-base-padding-vertical $control-base-padding-horizontal;
+}
+
+.input{
+  border-radius: $border-radius-base;
   &:focus{
     box-shadow: 0 0 8px rgba(82,168,236,.6);
   }
@@ -143,17 +148,16 @@ input{
     background-color: $input-bg-disabled;
   }
 }
-
 // Size
 .btn-sm, .input-sm{
   font-size: $font-size-small;
   height: $control-sm-size;
 
-  padding: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2  $padding-base-horizontal-computed / 2;
+  padding: $control-sm-padding-vertical $control-sm-padding-horizontal;
 }
 .btn-lg, .input-lg{
   font-size: $font-size-large;
   height: $control-lg-size;
 
-  padding: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2  1.5*$padding-base-horizontal-computed;
+  padding: $control-lg-padding-vertical $control-lg-padding-horizontal;
 }

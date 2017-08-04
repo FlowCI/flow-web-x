@@ -1,0 +1,68 @@
+@import 'variables';
+
+@mixin icon-wrapper ($size) {
+  height: $size;
+  .left, .right{
+    width: $size;
+  }
+}
+
+@mixin group-padding ($padding) {
+  padding: 0 $padding;
+  .left{
+    margin-left: -$padding;
+  }
+  .right{
+    margin-right: -$padding;
+  }
+}
+
+.wrapper{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  border: 1px solid $input-border;
+  border-radius: $border-radius-base;
+  height: $control-base-size;
+  >input{
+    border: none;
+    height: auto;
+  }
+  >:global(.divider){
+    flex: 0 0 1px;
+    height: 50%;
+    border-right: 1px solid $input-border;
+  }
+}
+
+.left, .right{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 0 0 auto;
+  width: $control-base-size;
+}
+
+.lg{
+  @include icon-wrapper($control-lg-size);
+}
+
+.sm{
+  @include icon-wrapper($control-sm-size);
+}
+
+.noDivider{
+  >input{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  @include group-padding($control-base-padding-horizontal)
+  &.lg{
+    @include group-padding($control-lg-padding-horizontal);
+  }
+  &.sm{
+    @include group-padding($control-sm-padding-horizontal);
+  }
+}

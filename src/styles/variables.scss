@@ -72,11 +72,19 @@ $zindex-navbar: 100!default;
 $arrow-size: 6px!default;
 
 // Control
-
 $control-radius-base: $border-radius-base!default;
+
 $control-sm-size: 22px!default;
+$control-sm-padding-vertical: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2!default;
+$control-sm-padding-horizontal: 0.5*$padding-base-horizontal-computed!default;
+
 $control-base-size: 34px!default;
+$control-base-padding-vertical: ($control-base-size - $line-height-computed - 2px)/2!default;
+$control-base-padding-horizontal: $padding-base-horizontal-computed!default;
+
 $control-lg-size: 40px!default;
+$control-lg-padding-vertical: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2!default;
+$control-lg-padding-horizontal: 1.5*$padding-base-horizontal-computed !default;
 
 $control-border-base: $color-hr!default;
 
