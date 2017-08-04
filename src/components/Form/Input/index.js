@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import keycode from 'keycode'
 
 import classes from './input.scss'
 
-export default class Input extends PureComponent {
+export default class Input extends Component {
   static propTypes = {
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
