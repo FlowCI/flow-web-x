@@ -87,6 +87,7 @@ $control-lg-padding-vertical: ($control-lg-size - floor($font-size-large * $line
 $control-lg-padding-horizontal: 1.5*$padding-base-horizontal-computed !default;
 
 $control-border-base: $color-hr!default;
+$control-base-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
 
 // button
 $btn-font-weight: bold!default;
@@ -124,6 +125,17 @@ $checkbox-unchecked-color: $color-muted!default;
 $radio-checked-color: $color-black!default;
 $radio-unchecked-color: $color-muted!default;
 
+// select
+$select-hovered-bg: #ecf6fd!default;
+$select-selected-color: $color-black!default;
+$select-selected-bg: $color-hover-bg!default;
+$select-selected-font-weight: bold!default;
+
+$select-dropdown-offset: 5px!default;
+$select-dropdown-radius: $border-radius-base!default;
+$select-dropdown-border: $control-border-base!default;
+$select-dropdown-boxshadow: $control-base-boxshadow;
+
 // Navbar
 $navbar-height: 60px!default;
 $navbar-phone-height: 50px!default;
@@ -144,7 +156,7 @@ $navbar-brand-padding-vertical: $navbar-base-padding-vertical!default;
 $navbar-brand-padding-horizontal: $navbar-base-padding-horizontal!default;
 
 $navbar-dropmenu-bg: #fff!default;
-$navbar-dropmenu-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
+$navbar-dropmenu-boxshadow: $control-base-boxshadow!default;
 
 $navbar-dropmenu-arrow: 8px!default;
 $navbar-dropmenu-width: 3*($navbar-height + 1px)!default;

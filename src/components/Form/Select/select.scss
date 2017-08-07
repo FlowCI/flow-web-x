@@ -1,0 +1,68 @@
+@import 'variables.scss';
+
+.select {
+  position: relative;
+  display: inline-flex;
+}
+
+.input{
+  cursor: pointer;
+  >input[readonly] {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: inherit;
+  }
+}
+
+.dropdown{
+  position: absolute;
+  top: calc(100% + #{$select-dropdown-offset});
+  left: 0px;
+  width: 100%;
+  border: 1px solid $select-dropdown-border;
+  box-shadow: $select-dropdown-boxshadow;
+  border-radius: $select-dropdown-radius;
+}
+
+.options{
+  margin: 0;
+  padding: 0;
+}
+
+.option{
+  display: block;
+  line-height: $control-base-size;
+  padding: 0px $control-base-padding-horizontal;
+  cursor: pointer;
+  &:hover{
+    background-color: $select-hovered-bg;
+  }
+}
+
+.disabled{
+  opacity: .25;
+  cursor: not-allowed;
+  background-color: none;
+}
+
+.selected{
+  color: $select-selected-color;
+  background-color: $select-selected-bg;
+  font-weight: $select-selected-font-weight;
+  &:hover{
+    background-color: $select-selected-bg;
+  }
+}
+
+// size
+.sm{
+  .option{
+    padding: 0px $control-sm-padding-horizontal;
+  }
+}
+.lg{
+  .option{
+    padding: 0px $control-lg-padding-horizontal;
+  }
+}
