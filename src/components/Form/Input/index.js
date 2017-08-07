@@ -11,7 +11,7 @@ export default class Input extends Component {
     rightIcon: PropTypes.node,
     divider: PropTypes.bool,
 
-    size: PropTypes.oneOf(['', 'lg', 'sm']).isRequired,
+    size: PropTypes.oneOf(['lg', 'sm']),
 
     className: PropTypes.string,
 

@@ -13,9 +13,11 @@
 .checkbox{
   display: inline-flex;
   align-items: center;
-  height: $control-base-size;
   cursor: pointer;
   padding: 0px $padding-base-horizontal-computed;
+  height: $control-base-size;
+  font-size: $font-size-base;
+
   @include icon-variant($font-size-base, $control-base-padding-horizontal);
   >:global(.checked){
     color: $checkbox-checked-color;

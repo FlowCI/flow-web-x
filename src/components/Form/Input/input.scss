@@ -24,8 +24,11 @@
 
   border: 1px solid $input-border;
   border-radius: $border-radius-base;
+
+  font-size: $font-size-base;
   height: $control-base-size;
   width: $input-default-width;
+
   >input{
     border: none;
     height: auto;
@@ -49,10 +52,12 @@
 }
 
 .lg{
+  font-size: $font-size-large;
   @include icon-wrapper($control-lg-size);
 }
 
 .sm{
+  font-size: $font-size-small;
   @include icon-wrapper($control-sm-size);
 }
 
