@@ -1,0 +1,6 @@
+@import 'variables';
+@import '../Checkbox/checkbox.scss';
+
+.radio{
+  @extend .checkbox;
+}
