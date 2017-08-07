@@ -95,7 +95,7 @@ export default class Input extends Component {
     readOnly && cls.push(classNames.readonly)
 
     return <label className={cls.join(' ')}
-      tabIndex={disabled ? -1 : undefined}>
+      tabIndex={disabled ? undefined : -1}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
       {divider && !!leftIcon && <span className={classNames.divider} />}
       <input {...other}
