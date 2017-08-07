@@ -18,15 +18,21 @@ export default class Input extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
 
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+
     onKeyUp: PropTypes.func,
     onPressEnter: PropTypes.func,
     onPressEsc: PropTypes.func,
   }
 
   static defaultProps = {
-    size: '',
     className: '',
     divider: false,
+  }
+
+  state = {
+    focus: false
   }
 
   handleKeyUp = (e) => {
@@ -45,11 +51,23 @@ export default class Input extends Component {
     }
   }
 
+  handleFocus = (e) => {
+    this.setState({ focus: true })
+    const { onFocus } = this.props
+    onFocus && onFocus(e)
+  }
+
+  handleBlur = (e) => {
+    this.setState({ focus: false })
+    const { onBlur } = this.props
+    onBlur && onBlur(e)
+  }
+
   render () {
     const {
       disabled, readOnly,
     } = this.props
-
+    const { focus } = this.state
     const {
       leftIcon, rightIcon,
       className, size,
@@ -72,13 +90,17 @@ export default class Input extends Component {
 
     disabled && cls.push('disabled')
     readOnly && cls.push('readonly')
+    focus && cls.push('focus')
 
     return <label className={cls.join(' ')}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
       {divider && !!leftIcon && <span className='divider' />}
       <input {...other}
         className={inputCls.join(' ')}
-        onKeyUp={this.handleKeyUp} />
+        onKeyUp={this.handleKeyUp}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+      />
       {divider && !!rightIcon && <span className='divider' />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
     </label>

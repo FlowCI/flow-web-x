@@ -129,7 +129,6 @@ input::placeholder{
   color: $input-placeholder-color;
 }
 
-
 input{
   outline: none;
   border: 1px solid $input-border;
@@ -138,24 +137,14 @@ input{
   padding: $control-base-padding-vertical $control-base-padding-horizontal;
 }
 
-.input{
-  border-radius: $border-radius-base;
-  &:focus{
-    box-shadow: 0 0 8px rgba(82,168,236,.6);
-  }
-  &[disabled] {
-    cursor: not-allowed;
-    background-color: $input-bg-disabled;
-  }
-}
 // Size
-.btn-sm, .input-sm{
+.btn-sm{
   font-size: $font-size-small;
   height: $control-sm-size;
 
   padding: $control-sm-padding-vertical $control-sm-padding-horizontal;
 }
-.btn-lg, .input-lg{
+.btn-lg{
   font-size: $font-size-large;
   height: $control-lg-size;
 
