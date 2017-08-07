@@ -58,8 +58,7 @@ export default class Checkbox extends Component {
       {rightLabel}
     </span> : icon
 
-    return <label className={cls.join(' ')} tabIndex='0'
-      onKeyUp={this.handleKeyUp}>
+    return <label className={cls.join(' ')}>
       <input {...other} className='hide'
         checked={checked} readOnly={readOnly} />
       {left}
