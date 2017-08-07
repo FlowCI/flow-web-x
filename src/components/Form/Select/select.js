@@ -176,9 +176,11 @@ export default class Select extends PureComponent {
 
   renderNotFound () {
     const { notFoundContent, classNames } = this.props
-    return <div className={classNames.notFound}>
-      {notFoundContent}
-    </div>
+    if (notFoundContent) {
+      return <div className={classNames.notFound}>
+        {notFoundContent}
+      </div>
+    }
   }
 
   renderLoading () {
@@ -193,11 +195,13 @@ export default class Select extends PureComponent {
     const content = loading ? this.renderLoading()
       : (options.length ? this.renderOptions(selected, options)
         : this.renderNotFound())
-    return <DropDown className={classNames.dropdown}
-      onRequestClose={this.close}
-    >
-      {content}
-    </DropDown>
+    if (content) {
+      return <DropDown className={classNames.dropdown}
+        onRequestClose={this.close}
+      >
+        {content}
+      </DropDown>
+    }
   }
 
   render () {
