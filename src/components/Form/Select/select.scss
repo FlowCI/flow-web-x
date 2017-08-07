@@ -1,5 +1,13 @@
 @import 'variables.scss';
 
+@mixin select-option ($font-size, $padding) {
+  font-size: $font-size;
+  .option{
+    padding-left: $padding;
+    padding-right: $padding;
+  }
+}
+
 .select {
   position: relative;
   display: inline-flex;
@@ -21,6 +29,8 @@
   top: calc(100% + #{$select-dropdown-offset});
   left: 0px;
   width: 100%;
+  max-height: 250px;
+  overflow: auto;
   border: 1px solid $select-dropdown-border;
   box-shadow: $select-dropdown-boxshadow;
   border-radius: $select-dropdown-radius;
@@ -36,40 +46,32 @@
   line-height: $control-base-size;
   padding: 0px $control-base-padding-horizontal;
   cursor: pointer;
-  &:hover{
+  &:hover, &:global(.focus) {
     background-color: $select-hovered-bg;
   }
-}
+  &.disabled{
+    opacity: .25;
+    cursor: not-allowed;
+    background-color: transparent!important;
+  }
 
-.disabled{
-  opacity: .25;
-  cursor: not-allowed;
-  background-color: transparent!important;
-}
-
-.selected{
-  color: $select-selected-color;
-  background-color: $select-selected-bg;
-  font-weight: $select-selected-font-weight;
-  &:hover{
+  &.selected{
+    color: $select-selected-color;
     background-color: $select-selected-bg;
+    font-weight: $select-selected-font-weight;
+    &:hover{
+      background-color: $select-selected-bg;
+    }
   }
 }
+
 
 // size
 .sm{
-  font-size: $font-size-small;
-  .option{
-    padding-left: $control-sm-padding-horizontal;
-    padding-right: $control-sm-padding-horizontal;
-  }
+  @include select-option($font-size-small, $control-sm-padding-horizontal);
 }
 .lg{
-  font-size: $font-size-large;
-  .option{
-    padding-left: $control-lg-padding-horizontal;
-    padding-right: $control-lg-padding-horizontal;
-  }
+  @include select-option($font-size-large, $control-lg-padding-horizontal);
 }
 
 // notfound, loading

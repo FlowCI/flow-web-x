@@ -16,7 +16,11 @@ export { classes }
 export default class Select extends PureComponent {
   static propTypes = {
     placeholder: PropTypes.string,
+    /*
+      if true it will unabled to selects
+    */
     disabled: PropTypes.bool,
+    /* if true it will show circle loading in dropdown */
     loading: PropTypes.bool,
 
     /* if true can input value to search and not show rightIcon */
@@ -72,7 +76,7 @@ export default class Select extends PureComponent {
 
   state = {
     title: '',
-    opened: true,
+    opened: false,
   }
 
   componentWillMount () {
@@ -102,9 +106,11 @@ export default class Select extends PureComponent {
   }
 
   handleClick = (e) => {
-    const { onClick } = this.props
-    onClick && onClick(e)
-    this.setState({ opened: !this.state.opened })
+    const { disabled, onClick } = this.props
+    if (!disabled) {
+      onClick && onClick(e)
+      this.setState({ opened: !this.state.opened })
+    }
   }
 
   close = (e) => {
@@ -152,6 +158,7 @@ export default class Select extends PureComponent {
       leftIcon={leftIcon}
       className={classNames.input}
       readOnly={!searchabled || disabled}
+      disabled={disabled}
       placeholder={placeholder}
       onChange={this.handleSearchChange}
       onClick={this.handleClick}
@@ -208,7 +215,7 @@ export default class Select extends PureComponent {
     const {
       classNames, className,
       children, value,
-      disabled, size,
+      size,
     } = this.props
 
     const { title, opened } = this.state
@@ -219,8 +226,11 @@ export default class Select extends PureComponent {
     const cls = [classNames.select, className]
 
     size && cls.push(classNames[size])
-    opened && cls.push(classNames.active)
-    disabled && cls.push(classNames.disabled)
+    /*
+      input component will add disabled class,
+      so there is no need to add disabled
+    */
+    // disabled && cls.push(classNames.disabled)
 
     return <div className={cls.join(' ')}>
       {this.renderInputFeild(title, opened)}
