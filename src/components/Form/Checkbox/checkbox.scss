@@ -25,11 +25,17 @@
   >:global(.unchecked){
     color: $checkbox-unchecked-color;
   }
-  &:hover, &:focus{
-    >:global(.unchecked){
-      color: $checkbox-checked-color;
+  &:not(.readonly) {
+    &:hover, &:global(.focus){
+      >:global(.unchecked){
+        color: $checkbox-checked-color;
+      }
     }
   }
+}
+
+.readonly{
+  cursor: default;
 }
 .sm{
   height: $control-sm-size;

@@ -10,6 +10,8 @@ export default class Checkbox extends Component {
     checked: PropTypes.bool,
     readOnly: PropTypes.bool,
     className: PropTypes.string,
+    classNames: PropTypes.object.isRequired,
+
     size: PropTypes.oneOf(['sm', 'lg']),
 
     leftLabel: PropTypes.node,
@@ -23,6 +25,7 @@ export default class Checkbox extends Component {
 
   static defaultProps = {
     className: '',
+    classNames: classes,
     type: 'checkbox',
     checkedIcon: <i className='icon checked icon-checkbox-checked' />,
     unCheckedIcon: <i className='icon unchecked icon-checkbox-unchecked' />,
@@ -40,27 +43,30 @@ export default class Checkbox extends Component {
     const {
       size, readOnly,
       checked, className,
+      classNames,
       leftLabel, rightLabel,
       checkedIcon, unCheckedIcon,
       ...other
     } = this.props
     const icon = checked ? checkedIcon : unCheckedIcon
 
-    const cls = [classes.checkbox, className]
-    size && cls.push(classes[size])
-    readOnly && cls.push('readonly')
+    const cls = [classNames.checkbox, className]
+    size && cls.push(classNames[size])
+    readOnly && cls.push(classNames.readonly)
 
     let left = icon
     if (leftLabel) {
-      left = <span className={classes.left}>{leftLabel}</span>
+      left = <span className={classNames.left}>{leftLabel}</span>
     }
-    const right = left === icon ? <span className={classes.right}>
+    const right = left === icon ? <span className={classNames.right}>
       {rightLabel}
     </span> : icon
 
     return <label className={cls.join(' ')}>
       <input {...other} className='hide'
-        checked={checked} readOnly={readOnly} />
+        checked={checked}
+        disabled={readOnly}
+      />
       {left}
       {right}
     </label>
