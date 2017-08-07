@@ -73,7 +73,8 @@ export default class Input extends Component {
     return <span className={cls.join(' ')}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
       {divider && !!leftIcon && <span className='divider' />}
-      <input {...other} className={inputCls.join(' ')}
+      <input {...other} readOnly={readOnly} disabled={disabled}
+        className={inputCls.join(' ')}
         onKeyUp={this.handleKeyUp} />
       {divider && !!rightIcon && <span className='divider' />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
