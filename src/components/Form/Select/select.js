@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import keycode from 'keycode'
 
+import ClickAwayListener from 'components/ClickAwayListener'
 import Arrow from 'components/Arrow'
 import Loading from 'components/Loading'
 
@@ -106,6 +107,7 @@ export default class Select extends PureComponent {
   }
 
   handleClick = (e) => {
+    console.log('click')
     const { disabled, onClick } = this.props
     if (!disabled) {
       onClick && onClick(e)
@@ -114,6 +116,7 @@ export default class Select extends PureComponent {
   }
 
   close = (e) => {
+    console.log('close')
     this.setState({ opened: false })
   }
 
@@ -129,6 +132,7 @@ export default class Select extends PureComponent {
         e.preventDefault()
         break
     }
+    console.log(keycode(e))
   }
 
   handleSearchChange = (e) => {
@@ -162,8 +166,8 @@ export default class Select extends PureComponent {
       placeholder={placeholder}
       onChange={this.handleSearchChange}
       onClick={this.handleClick}
+      onKeyDown={this.handleKeyDown}
     />
-    // onKeyDown={this.handleKeyDown}
   }
 
   cloneOption (selected, option, index) {
@@ -232,9 +236,11 @@ export default class Select extends PureComponent {
     */
     // disabled && cls.push(classNames.disabled)
 
-    return <div className={cls.join(' ')}>
-      {this.renderInputFeild(title, opened)}
-      {opened && this.renderDropdown(selected, options)}
-    </div>
+    return <ClickAwayListener onClickAway={opened && this.close}>
+      <div className={cls.join(' ')}>
+        {this.renderInputFeild(title, opened)}
+        {opened && this.renderDropdown(selected, options)}
+      </div>
+    </ClickAwayListener>
   }
 }
