@@ -16,7 +16,7 @@ export default class Checkbox extends Component {
     rightLabel: PropTypes.node,
     onChange: PropTypes.func,
 
-    type: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['checkbox', 'radio']).isRequired,
     checkedIcon: PropTypes.node.isRequired,
     unCheckedIcon: PropTypes.node.isRequired,
   }
