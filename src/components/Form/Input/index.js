@@ -47,9 +47,12 @@ export default class Input extends Component {
 
   render () {
     const {
+      disabled, readOnly,
+    } = this.props
+
+    const {
       leftIcon, rightIcon,
       className, size,
-      disabled, readOnly,
       divider,
       onKeyUp, // eslint-disable-line no-unused-vars
       onPressEnter, // eslint-disable-line no-unused-vars
@@ -70,14 +73,14 @@ export default class Input extends Component {
     disabled && cls.push('disabled')
     readOnly && cls.push('readonly')
 
-    return <span className={cls.join(' ')}>
+    return <label className={cls.join(' ')}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
       {divider && !!leftIcon && <span className='divider' />}
-      <input {...other} readOnly={readOnly} disabled={disabled}
+      <input {...other}
         className={inputCls.join(' ')}
         onKeyUp={this.handleKeyUp} />
       {divider && !!rightIcon && <span className='divider' />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
-    </span>
+    </label>
   }
 }
