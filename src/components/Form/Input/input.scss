@@ -1,6 +1,7 @@
 @import 'variables';
 
-@mixin icon-wrapper ($size) {
+@mixin icon-wrapper ($font-size, $size) {
+  font-size: $font-size;
   height: $size;
   .left, .right{
     width: $size;
@@ -36,18 +37,18 @@
     flex: 1 1 auto;
     width: 0;
   }
-  >:global(.divider){
-    flex: 0 0 1px;
-    height: 50%;
-    border-right: 1px solid $input-border;
-  }
   &:global(.focus){
     box-shadow: 0 0 8px rgba(82,168,236,.6);
   }
-  &:global(.disabled) {
-    cursor: not-allowed;
-    background-color: $input-bg-disabled;
-  }
+}
+.disabled {
+  cursor: not-allowed;
+  background-color: $input-bg-disabled;
+}
+.divider{
+  flex: 0 0 1px;
+  height: 50%;
+  border-right: 1px solid $input-border;
 }
 
 .left, .right{
@@ -60,13 +61,11 @@
 }
 
 .lg{
-  font-size: $font-size-large;
-  @include icon-wrapper($control-lg-size);
+  @include icon-wrapper($font-size-large, $control-lg-size);
 }
 
 .sm{
-  font-size: $font-size-small;
-  @include icon-wrapper($control-sm-size);
+  @include icon-wrapper($font-size-small, $control-sm-size);
 }
 
 .noDivider{

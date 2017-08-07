@@ -14,6 +14,7 @@ export default class Input extends Component {
     size: PropTypes.oneOf(['lg', 'sm']),
 
     className: PropTypes.string,
+    classNames: PropTypes.object.isRequired,
 
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
@@ -28,6 +29,7 @@ export default class Input extends Component {
 
   static defaultProps = {
     className: '',
+    classNames: classes,
     divider: false,
   }
 
@@ -70,39 +72,39 @@ export default class Input extends Component {
     const { focus } = this.state
     const {
       leftIcon, rightIcon,
-      className, size,
-      divider,
+      className,
+      classNames,
+      size, divider,
       onKeyUp, // eslint-disable-line no-unused-vars
       onPressEnter, // eslint-disable-line no-unused-vars
       onPressEsc, // eslint-disable-line no-unused-vars
       ...other
     } = this.props
 
-    const cls = [classes.wrapper, className]
+    const cls = [classNames.wrapper, className]
     const inputCls = []
 
     if (size) {
-      cls.push(classes[size] || '')
-      inputCls.push(`input-${size}`)
+      cls.push(classNames[size] || '')
     }
 
-    !divider && cls.push(classes.noDivider)
+    !divider && cls.push(classNames.noDivider)
 
-    disabled && cls.push('disabled')
-    readOnly && cls.push('readonly')
     focus && cls.push('focus')
+    disabled && cls.push(classNames.disabled)
+    readOnly && cls.push(classNames.readonly)
 
     return <label className={cls.join(' ')}
       tabIndex={disabled ? -1 : undefined}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
-      {divider && !!leftIcon && <span className='divider' />}
+      {divider && !!leftIcon && <span className={classNames.divider} />}
       <input {...other}
         className={inputCls.join(' ')}
         onKeyUp={this.handleKeyUp}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
       />
-      {divider && !!rightIcon && <span className='divider' />}
+      {divider && !!rightIcon && <span className={classNames.divider} />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
     </label>
   }
