@@ -106,7 +106,6 @@ export default class Select extends PureComponent {
   }
 
   handleClick = (e) => {
-    console.log('click')
     const { disabled, onClick } = this.props
     if (!disabled) {
       onClick && onClick(e)
@@ -115,7 +114,6 @@ export default class Select extends PureComponent {
   }
 
   close = (e) => {
-    console.log('close')
     this.setState({ opened: false })
   }
 
@@ -131,7 +129,6 @@ export default class Select extends PureComponent {
         e.preventDefault()
         break
     }
-    console.log(keycode(e))
   }
 
   handleSearchChange = (e) => {
