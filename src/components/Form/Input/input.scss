@@ -25,9 +25,12 @@
   border: 1px solid $input-border;
   border-radius: $border-radius-base;
   height: $control-base-size;
+  width: 200px; // default input width
   >input{
     border: none;
     height: auto;
+    flex: 1 1 auto;
+    width: 0;
   }
   >:global(.divider){
     flex: 0 0 1px;
