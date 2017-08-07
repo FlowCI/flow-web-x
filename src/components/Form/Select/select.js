@@ -8,7 +8,6 @@ import Arrow from 'components/Arrow'
 import Loading from 'components/Loading'
 
 import Input from '../Input'
-import DropDown from './dropdown'
 
 import classes from './select.scss'
 
@@ -207,11 +206,9 @@ export default class Select extends PureComponent {
       : (options.length ? this.renderOptions(selected, options)
         : this.renderNotFound())
     if (content) {
-      return <DropDown className={classNames.dropdown}
-        onRequestClose={this.close}
-      >
+      return <div className={classNames.dropdown}>
         {content}
-      </DropDown>
+      </div>
     }
   }
 
