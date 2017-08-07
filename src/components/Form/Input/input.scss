@@ -25,7 +25,7 @@
   border: 1px solid $input-border;
   border-radius: $border-radius-base;
   height: $control-base-size;
-  width: 200px; // default input width
+  width: $input-default-width;
   >input{
     border: none;
     height: auto;
