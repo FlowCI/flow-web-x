@@ -134,7 +134,6 @@ export default class Select extends PureComponent {
     const { onChange } = this.props
     onChange && onChange(v)
     this.close()
-    console.log('select', v)
   }
 
   renderInputFeild (v, opened) {
