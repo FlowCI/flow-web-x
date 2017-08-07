@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import keycode from 'keycode'
-
 import classes from './checkbox.scss'
 
 export default class Checkbox extends Component {
@@ -29,14 +27,6 @@ export default class Checkbox extends Component {
     type: 'checkbox',
     checkedIcon: <i className='icon checked icon-checkbox-checked' />,
     unCheckedIcon: <i className='icon unchecked icon-checkbox-unchecked' />,
-  }
-
-  handleKeyUp = (e) => {
-    if (keycode(e) === 'enter') {
-      const { onChange, checked } = this.props
-      e.target.checked = !checked
-      onChange && onChange(e)
-    }
   }
 
   render () {
