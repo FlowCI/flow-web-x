@@ -1,0 +1,39 @@
+@import 'variables';
+
+@mixin icon-variant ($font-size, $padding) {
+  font-size: $font-size;
+  .left{
+    margin-right: $padding;
+  }
+  .right{
+    margin-left: $padding;
+  }
+}
+
+.checkbox{
+  display: inline-flex;
+  align-items: center;
+  height: $control-base-size;
+  cursor: pointer;
+  padding: 0px $padding-base-horizontal-computed;
+  @include icon-variant($font-size-base, $control-base-padding-horizontal);
+  >:global(.checked){
+    color: $checkbox-checked-color;
+  }
+  >:global(.unchecked){
+    color: $checkbox-unchecked-color;
+  }
+  &:hover, &:focus{
+    >:global(.unchecked){
+      color: $checkbox-checked-color;
+    }
+  }
+}
+.sm{
+  height: $control-sm-size;
+  @include icon-variant($font-size-small, $control-sm-padding-horizontal);
+}
+.lg{
+  height: $control-lg-size;
+  @include icon-variant($font-size-large, $control-lg-padding-horizontal);
+}

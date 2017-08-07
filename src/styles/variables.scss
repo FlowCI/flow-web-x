@@ -110,9 +110,14 @@ $btn-danger-border: darken($btn-danger-bg, 5%) !default;
 $btn-default-inverse-color: $color-black!default;
 $btn-default-inverse-bg: #fff!default;
 
+// input
 $input-placeholder-color: $color-muted!default;
 $input-border: #C3C8CE!default;
 $input-bg-disabled: #eee!default;
+
+// input checkbox
+$checkbox-checked-color: $color-black!default;
+$checkbox-unchecked-color: $color-muted!default;
 
 // Navbar
 $navbar-height: 60px!default;
