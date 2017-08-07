@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import keycode from 'keycode'
 
 import Arrow from 'components/Arrow'
+import Loading from 'components/Loading'
+
 import Input from '../Input'
 import DropDown from './dropdown'
 
@@ -35,6 +37,7 @@ export default class Select extends PureComponent {
     /*
       classNames can include: .container, .select, .placeholder, .sm, .lg
         .error, .active, .disabled, .loading,
+      see more in './select.scss'
     */
     classNames: PropTypes.object.isRequired,
     className: PropTypes.string,
@@ -178,13 +181,22 @@ export default class Select extends PureComponent {
     </div>
   }
 
-  renderDropdown (selected, options) {
+  renderLoading () {
     const { classNames } = this.props
+    return <div className={classNames.loading}>
+      <Loading size={20} />
+    </div>
+  }
+
+  renderDropdown (selected, options) {
+    const { classNames, loading } = this.props
+    const content = loading ? this.renderLoading()
+      : (options.length ? this.renderOptions(selected, options)
+        : this.renderNotFound())
     return <DropDown className={classNames.dropdown}
       onRequestClose={this.close}
     >
-      {options.length ? this.renderOptions(selected, options)
-        : this.renderNotFound()}
+      {content}
     </DropDown>
   }
 

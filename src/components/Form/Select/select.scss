@@ -72,8 +72,8 @@
   }
 }
 
-// notfound
-.notFound{
+// notfound, loading
+.notFound, .loading{
   @extend .option;
   cursor: default;
   line-height: inherit;
