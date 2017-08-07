@@ -46,9 +46,9 @@ export default class Checkbox extends Component {
 
     let left = icon
     if (leftLabel) {
-      left = <span className={classNames.left}>{leftLabel}</span>
+      left = <span className={classNames.label}>{leftLabel}</span>
     }
-    const right = left === icon ? <span className={classNames.right}>
+    const right = left === icon ? <span className={classNames.label}>
       {rightLabel}
     </span> : icon
 
