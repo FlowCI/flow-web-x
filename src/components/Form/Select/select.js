@@ -18,7 +18,7 @@ export default class Select extends PureComponent {
     loading: PropTypes.bool,
 
     /* if true can input value to search and not show rightIcon */
-    showSearch: PropTypes.bool,
+    searchabled: PropTypes.bool,
 
     leftIcon: PropTypes.node,
 
@@ -47,15 +47,10 @@ export default class Select extends PureComponent {
     value: PropTypes.any,
 
     /*
-      true to show or not
-      when is func it while call with (inputValue, value: Option.value)
-    */
-    filterOption: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-    /*
       trigger by input value
       type: function (value) {}
     */
-    onSearch: PropTypes.func,
+    onFilterChange: PropTypes.func,
     /*
       type: function (value: Option.value) {}
     */
@@ -73,16 +68,27 @@ export default class Select extends PureComponent {
   }
 
   state = {
-    editValue: '',
+    title: '',
     opened: true,
   }
 
   componentWillMount () {
-
+    this.state.title = this.getTitle()
   }
 
   componentWillReceiveProps (nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({
+        title: this.getTitle(nextProps)
+      })
+    }
+  }
 
+  getTitle (props = this.props) {
+    const { value, children } = props
+    const options = React.Children.toArray(children)
+    const selected = this.getSelected(value, options)
+    return selected ? (selected.props.title || selected.props.children) : value
   }
 
   getSelected (value, options) {
@@ -91,16 +97,6 @@ export default class Select extends PureComponent {
     }
     return options.find((opt) => opt.props.value === value)
   }
-
-  getShowValue (value, selected) {
-    return selected ? (selected.props.title || selected.props.children) : value
-  }
-
-  // handleBlur = (e) => {
-  //   this.setState({ opened: false })
-  //   const { onBlur } = this.props
-  //   onBlur && onBlur(e)
-  // }
 
   handleClick = (e) => {
     const { onClick } = this.props
@@ -126,8 +122,11 @@ export default class Select extends PureComponent {
     }
   }
 
-  handleSearchChange = () => {
-
+  handleSearchChange = (e) => {
+    const { onFilterChange } = this.props
+    const value = e.target.value
+    this.setState({ title: value })
+    onFilterChange && onFilterChange(value)
   }
 
   handleSelect = (v) => {
@@ -140,16 +139,16 @@ export default class Select extends PureComponent {
     const {
       classNames, placeholder,
       leftIcon, size,
-      showSearch, disabled
+      searchabled, disabled
     } = this.props
-    const rightIcon = <Arrow up={opened} />
+    const rightIcon = searchabled ? undefined : <Arrow up={opened} />
 
     return <Input
-      value={v} size={size}
+      value={v || ''} size={size}
       rightIcon={rightIcon}
       leftIcon={leftIcon}
       className={classNames.input}
-      readOnly={!showSearch || disabled}
+      readOnly={!searchabled || disabled}
       placeholder={placeholder}
       onChange={this.handleSearchChange}
       onClick={this.handleClick}
@@ -164,15 +163,28 @@ export default class Select extends PureComponent {
     })
   }
 
-  renderDropdown (selected, options) {
+  renderOptions (selected, options) {
     const { classNames } = this.props
     const iterator = this.cloneOption.bind(this, selected)
+    return <ul className={classNames.options}>
+      {options.map(iterator)}
+    </ul>
+  }
+
+  renderNotFound () {
+    const { notFoundContent, classNames } = this.props
+    return <div className={classNames.notFound}>
+      {notFoundContent}
+    </div>
+  }
+
+  renderDropdown (selected, options) {
+    const { classNames } = this.props
     return <DropDown className={classNames.dropdown}
       onRequestClose={this.close}
     >
-      <ul className={classNames.options}>
-        {options.map(iterator)}
-      </ul>
+      {options.length ? this.renderOptions(selected, options)
+        : this.renderNotFound()}
     </DropDown>
   }
 
@@ -183,11 +195,10 @@ export default class Select extends PureComponent {
       disabled, size,
     } = this.props
 
-    const { opened } = this.state
+    const { title, opened } = this.state
 
     const options = React.Children.toArray(children)
     const selected = this.getSelected(value, options)
-    const v = this.getShowValue(value, selected) || ''
 
     const cls = [classNames.select, className]
 
@@ -196,7 +207,7 @@ export default class Select extends PureComponent {
     disabled && cls.push(classNames.disabled)
 
     return <div className={cls.join(' ')}>
-      {this.renderInputFeild(v, opened)}
+      {this.renderInputFeild(title, opened)}
       {opened && this.renderDropdown(selected, options)}
     </div>
   }

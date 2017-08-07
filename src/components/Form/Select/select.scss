@@ -3,6 +3,7 @@
 .select {
   position: relative;
   display: inline-flex;
+  font-size: $font-size-base;
 }
 
 .input{
@@ -43,7 +44,7 @@
 .disabled{
   opacity: .25;
   cursor: not-allowed;
-  background-color: none;
+  background-color: transparent!important;
 }
 
 .selected{
@@ -57,12 +58,28 @@
 
 // size
 .sm{
+  font-size: $font-size-small;
   .option{
-    padding: 0px $control-sm-padding-horizontal;
+    padding-left: $control-sm-padding-horizontal;
+    padding-right: $control-sm-padding-horizontal;
   }
 }
 .lg{
+  font-size: $font-size-large;
   .option{
-    padding: 0px $control-lg-padding-horizontal;
+    padding-left: $control-lg-padding-horizontal;
+    padding-right: $control-lg-padding-horizontal;
+  }
+}
+
+// notfound
+.notFound{
+  @extend .option;
+  cursor: default;
+  line-height: inherit;
+  padding-top: $control-base-padding-vertical;
+  padding-bottom: $control-base-padding-vertical;
+  &:hover{
+    background-color: transparent;
   }
 }
