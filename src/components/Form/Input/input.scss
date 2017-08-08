@@ -85,4 +85,7 @@
   &.sm{
     @include group-padding($control-sm-padding-horizontal);
   }
+  &.hg{
+    @include group-padding(2*$control-base-padding-horizontal);
+  }
 }
