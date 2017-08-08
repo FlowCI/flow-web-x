@@ -11,8 +11,10 @@ import autoCancel from 'react-redux-http'
 import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
+import Input from 'components/Form/Input'
 
 import DropDown from './dropdown'
+import FlowTab from '../internal/flowtab'
 
 import classes from './flows.scss'
 
@@ -47,24 +49,41 @@ export class NavbarFlowsDropdown extends PureComponent {
     query()
   }
 
+  handleSearch = (e) => {
+    const { target: { value } } = e
+    console.log('search flow', value)
+  }
+
+  getFlows () {
+    const { flows } = this.props
+    return flows
+  }
+
   renderFlows () {
-    const { i18n, flows } = this.props
-    return <div>
-      <div className={classes.header}>
-        {i18n('我的 Flow')}
-      </div>
-      {flows.map((flow) => <div key={flow.get('path')}>
-        {flow.get('name')}
-      </div>)}
-    </div>
+    const flows = this.getFlows()
+    return flows.map((flow) => <FlowTab key={flow.get('path')}
+      name={flow.get('name')} status={flow.get('status')}
+      path={flow.get('path')}
+    />)
   }
 
   renderContent () {
     const { i18n } = this.props
     return <div>
-      <input placeholder={i18n('输入关键词搜索')} />
+      <div className={classes.search}>
+        <Input className='block'
+          onPressEnter={this.handleSearch}
+          leftIcon={<i className='icon icon-search' />}
+          placeholder={i18n('输入关键词搜索')}
+        />
+      </div>
       <hr />
-      {this.renderFlows()}
+      <div className={classes.header}>
+        {i18n('我的 Flow')}
+      </div>
+      <div className={classes.flows}>
+        {this.renderFlows()}
+      </div>
     </div>
   }
 

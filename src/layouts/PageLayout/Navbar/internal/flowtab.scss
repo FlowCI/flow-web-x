@@ -1,0 +1,44 @@
+@import 'variables';
+
+$tab-size: 40px;
+
+@mixin tab-color($color) {
+  border-color: $color;
+  &:global(.active), &:hover {
+    background-color: $color;
+    color: #fff;
+    .icon{
+      color: #fff;
+    }
+  }
+  .icon{
+    color: $color;
+  }
+}
+
+.tab{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  height: $tab-size;
+  color: inherit;
+  margin-bottom: $padding-base-horizontal-computed;
+  &:hover, &:focus{
+    color: inherit;
+  }
+}
+.icon{
+  flex: 0 0 auto;
+  width: $tab-size;
+  text-align: center;
+  font-size: 18px;
+}
+
+.success{
+  @include tab-color($color-success);
+}
+.failure{
+  @include tab-color($color-danger);
+}

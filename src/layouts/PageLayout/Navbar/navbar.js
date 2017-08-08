@@ -48,7 +48,7 @@ export class Navbar extends PureComponent {
   }
 
   state = {
-    openFlows: false,
+    openFlows: true,
     openAgents: false,
     openMenus: false,
   }

@@ -1,7 +1,12 @@
 @import 'variables';
+
+$padding-vertical: 1.5*$padding-base-vertical-computed;
+$padding-horizontal: 1.5*$padding-base-horizontal-computed;
+
 .content{
   left: 0;
   width: 300px;
+  line-height: $line-height-base;
 }
 .arrow{
   left: ($navbar-brand-width / 2) - $arrow-size;
@@ -10,4 +15,19 @@
   .arrow{
     left: ($navbar-phone-height / 2) - $arrow-size;
   }
+}
+.paddingWrap{
+  padding: 3*$padding-vertical $padding-horizontal;
+}
+
+.search{
+  padding: $padding-vertical $padding-horizontal;
+}
+.header{
+  padding: $padding-vertical $padding-horizontal;
+  font-weight: bold;
+}
+.flows{
+  padding: 0 $padding-horizontal;
+  font-weight: bold;
 }
