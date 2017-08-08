@@ -1,7 +1,7 @@
 @import 'variables';
 .container{
   margin-top: $navbar-height + 1px;
-  padding: $layout-padding-vertical $layout-padding-horizontal;
+  margin-bottom: $footer-height + 1px;
   @media screen and (max-width: $screen-phone) {
     margin-top: $navbar-phone-height + 1px;
   }
