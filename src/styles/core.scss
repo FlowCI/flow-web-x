@@ -23,6 +23,9 @@
     display: block;
     width: 100%;
   }
+  .block + .block{
+    margin-top: $padding-base-vertical-computed;
+  }
 
   .text-success{
     color: $color-success;
