@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import keycode from 'keycode'
@@ -13,7 +13,7 @@ import classes from './select.scss'
 
 export { classes }
 
-export default class Select extends PureComponent {
+export default class Select extends Component {
   static propTypes = {
     placeholder: PropTypes.string,
     /*
