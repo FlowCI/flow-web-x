@@ -1,5 +1,21 @@
 @import 'variables';
-@import './mixin';
+@mixin icon-wrapper ($font-size, $size) {
+  font-size: $font-size;
+  height: $size;
+  .left, .right{
+    width: $size;
+  }
+}
+
+@mixin group-padding ($padding) {
+  padding: 0 $padding;
+  .left{
+    margin-left: -$padding;
+  }
+  .right{
+    margin-right: -$padding;
+  }
+}
 
 .wrapper{
   display: inline-flex;
