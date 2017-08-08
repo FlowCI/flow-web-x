@@ -40,6 +40,10 @@
   &:global(.focus){
     box-shadow: 0 0 8px rgba(82,168,236,.6);
   }
+  &:global(.block) {
+    display: flex;
+    width: 100%;
+  }
 }
 .disabled {
   cursor: not-allowed;
