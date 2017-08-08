@@ -5,13 +5,18 @@ import keycode from 'keycode'
 
 import classes from './input.scss'
 
+export const className = classes
+
 export default class Input extends Component {
   static propTypes = {
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
     divider: PropTypes.bool,
 
-    size: PropTypes.oneOf(['lg', 'sm']),
+    /*
+    * only this component support hg,
+    */
+    size: PropTypes.oneOf(['lg', 'sm', 'hg']),
 
     className: PropTypes.string,
     classNames: PropTypes.object.isRequired,

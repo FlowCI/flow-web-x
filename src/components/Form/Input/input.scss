@@ -1,22 +1,5 @@
 @import 'variables';
-
-@mixin icon-wrapper ($font-size, $size) {
-  font-size: $font-size;
-  height: $size;
-  .left, .right{
-    width: $size;
-  }
-}
-
-@mixin group-padding ($padding) {
-  padding: 0 $padding;
-  .left{
-    margin-left: -$padding;
-  }
-  .right{
-    margin-right: -$padding;
-  }
-}
+@import './mixin';
 
 .wrapper{
   display: inline-flex;
@@ -63,7 +46,9 @@
   flex: 0 0 auto;
   width: $control-base-size;
 }
-
+.hg{
+  @include icon-wrapper(20px, 50px);
+}
 .lg{
   @include icon-wrapper($font-size-large, $control-lg-size);
 }
@@ -77,7 +62,7 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-  @include group-padding($control-base-padding-horizontal)
+  @include group-padding($control-base-padding-horizontal);
   &.lg{
     @include group-padding($control-lg-padding-horizontal);
   }
