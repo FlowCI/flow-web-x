@@ -27,6 +27,30 @@ textarea {
   padding: 0;
 }
 
+input::placeholder{
+  color: $input-placeholder-color;
+}
+
+input{
+  outline: none;
+  border: 1px solid $input-border;
+
+  height: $control-base-size;
+  padding: $control-base-padding-vertical $control-base-padding-horizontal;
+}
+
+button{
+  box-shadow: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-weight: $btn-font-weight;
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+}
+
 .code, code, pre{
   display: block;
   overflow: auto;

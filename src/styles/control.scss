@@ -49,28 +49,18 @@
 /*
   Button
 */
-button{
-  box-shadow: none;
-  &[disabled] {
-    cursor: not-allowed;
-    opacity: .6;
-  }
-}
+
 .btn{
   display: inline-block;
   text-align: center;
   vertical-align: middle;
 
   font-size: $font-size-base;
-  font-weight: $btn-font-weight;
-  white-space: nowrap;
   height: $control-base-size;
 
   background: none;
   border: 1px solid $control-border-base;
   border-radius: $border-radius-base;
-
-  cursor: pointer;
 
   padding: $control-base-padding-vertical $control-base-padding-horizontal;
   &:active, &.active{
@@ -120,21 +110,6 @@ button{
 
 .btn-inverse{
   @include button-inverse-variant($btn-default-inverse-color, $btn-default-inverse-bg);
-}
-
-/*
-  Input
-*/
-input::placeholder{
-  color: $input-placeholder-color;
-}
-
-input{
-  outline: none;
-  border: 1px solid $input-border;
-
-  height: $control-base-size;
-  padding: $control-base-padding-vertical $control-base-padding-horizontal;
 }
 
 // Size

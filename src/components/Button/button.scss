@@ -1,0 +1,47 @@
+@import 'variables.scss';
+@mixin button-size($size, $padding-vertical, $padding-horizontal) {
+  .content{
+    padding: $padding-vertical $padding-horizontal;
+  }
+  .left, .right{
+    width: $size;
+  }
+  .left{
+    margin-right: -$padding-horizontal;
+  }
+  .right{
+    margin-left: -$padding-horizontal;
+  }
+}
+
+.btn{
+  padding: 0;
+}
+
+.wrapper{
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.content{
+  flex: 1 1 auto;
+  width: auto;
+}
+@include button-size($control-base-size, $control-base-padding-vertical, $control-base-padding-horizontal);
+
+.left, .right{
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+:global(.btn-block){
+  .wrapper{
+    display: flex;
+  }
+}
+:global(.btn-sm) {
+  @include button-size($control-sm-size, $control-sm-padding-vertical, $control-sm-padding-horizontal);
+}
+:global(.btn-lg) {
+  @include button-size($control-lg-size, $control-lg-padding-vertical, $control-lg-padding-horizontal);
+}
