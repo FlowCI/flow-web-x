@@ -59,7 +59,7 @@ export class Button extends Component {
     const cls = ['btn', classNames.btn]
 
     className && cls.push(className)
-    size && cls.push(classNames[size])
+    size && cls.push(`btn-${size}`)
     loading && cls.push(classNames.loading)
 
     let left = leftIcon
