@@ -35,7 +35,7 @@ function mapDispatchToProps (dispatch) {
 export class NavbarFlowsDropdown extends PureComponent {
   static propTypes = {
     flows: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
-      path: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     })),
     loaded: PropTypes.bool,
@@ -61,9 +61,9 @@ export class NavbarFlowsDropdown extends PureComponent {
 
   renderFlows () {
     const flows = this.getFlows()
-    return flows.map((flow) => <FlowTab key={flow.get('path')}
+    return flows.map((flow) => <FlowTab key={flow.get('id')}
       name={flow.get('name')} status={flow.get('status')}
-      path={flow.get('path')}
+      id={flow.get('id')}
     />)
   }
 
