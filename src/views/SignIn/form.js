@@ -1,0 +1,53 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
+import { reduxForm } from 'redux-form'
+
+import Button from 'components/Button'
+import { ReduxFormInput } from 'components/Form/reduxForm'
+
+import classes from './form.scss'
+
+export function validate (values) {
+  const errors = {}
+  if (!values.username) {
+    errors.username = 'Required'
+  }
+  if (!values.password) {
+    errors.password = 'Required'
+  }
+  return errors
+}
+
+export class SignInForm extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    // error: PropTypes.object,
+    i18n: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func,
+  }
+
+  render () {
+    const { className, i18n, handleSubmit } = this.props
+    return <form onSubmit={handleSubmit}
+      className={`${classes.form} ${className}`}>
+      <div className={classes.logo}>
+        <i className='icon icon-logo' />
+      </div>
+      <ReduxFormInput type='text' name='username'
+        leftIcon={<i className='icon icon-user' />}
+        divider size='hg' className='block' />
+      <ReduxFormInput type='password' name='password'
+        leftIcon={<i className='icon icon-key' />}
+        divider size='hg' className='block' />
+      <Button className={`block btn-primary`} size='lg' type='submit'>
+        {i18n('登录')}
+      </Button>
+    </form>
+  }
+}
+
+export default reduxForm({
+  validate,
+  form: 'signIn'
+})(SignInForm)

@@ -1,0 +1,9 @@
+@import 'variables';
+
+.form{
+  height: calc(100vh - #{$navbar-height + $footer-height + 2px});
+  min-height: 500px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0px auto;
+}

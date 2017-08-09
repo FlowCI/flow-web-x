@@ -1,0 +1,27 @@
+@import 'variables';
+
+.form{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  >button{
+    &:global(.block){
+      margin-top: 3*$padding-base-horizontal;
+      margin-bottom: 5*$padding-base-horizontal; // 将 form 向上移
+    }
+  }
+}
+.logo{
+  font-size: 43px;
+  margin-bottom: 8.5*$padding-base-horizontal;
+}
+.control{
+  height: 50px;
+}
+label.control{
+  >:nth-child(1) {
+    width: 50px;
+  }
+}
