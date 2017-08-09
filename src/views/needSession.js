@@ -14,7 +14,7 @@ function mapStateToProps (state) {
   const { session } = state
   return {
     authored: session.has('user'),
-    authoring: true || session.getIn(['ui', 'signIn']) === STATUS.send,
+    authoring: session.getIn(['ui', 'signIn']) === STATUS.send,
   }
 }
 
