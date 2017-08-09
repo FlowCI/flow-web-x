@@ -18,10 +18,12 @@ export const actions = {
       type: Types.query,
       status: STATUS.success,
       payload: [{
+        id: 'xiaomi_ios_dev',
         path: 'sss',
         name: 'xiaomi_ios_dev',
         status: 'success',
       }, {
+        id: 'xiaomi_ios_ent',
         path: 'xxxx',
         name: 'xiaomi_ios_ent',
         status: 'failure',
