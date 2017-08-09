@@ -1,0 +1,23 @@
+@import 'variables';
+
+$circle-size: 8px;
+$circle-bg: #676C72;
+
+.list{
+
+}
+.item{
+  position: relative;
+  padding-left: 16px;
+  &:before{
+    position: absolute;
+    content: ' ';
+    top: 5px;
+    left: 2px;
+    display: inline-block;
+    border-radius: 50%;
+    width: $circle-size;
+    height: $circle-size;
+    background-color: $circle-bg;
+  }
+}

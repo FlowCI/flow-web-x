@@ -1,0 +1,16 @@
+@import 'variables';
+
+.guide{
+  max-width: 960px;
+  width: 90%;
+  margin: 0px auto;
+  margin-bottom: 8*$padding-base-vertical;
+  padding-top: 6*$padding-base-vertical;
+  p{
+    margin-bottom: 5px;
+  }
+}
+.header{
+  margin-bottom: 5*$padding-base-vertical;
+  text-align: center;
+}
