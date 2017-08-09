@@ -12,7 +12,7 @@ import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
 
-import Guide from './guide'
+import Guide from '../BuildGuide'
 
 function mapStateToProps (state) {
   const { flow } = state
