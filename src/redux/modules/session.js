@@ -4,7 +4,6 @@ import Types from './sessionType'
 import { fromJS } from 'immutable'
 
 const initialState = fromJS({
-  user: undefined,
   ui: {},
 })
 
