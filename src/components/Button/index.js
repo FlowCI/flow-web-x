@@ -38,7 +38,7 @@ export class Button extends Component {
 
   handleClick = (e) => {
     const { onClick } = this.props
-    const r = onClick && onClick(e)
+    const r = onClick(e)
     if (is.promise(r)) {
       const button = e.currentTarget
       // only to stop quickly click，it will set props.diabled when next render
@@ -52,7 +52,7 @@ export class Button extends Component {
       leftIcon, rightIcon,
       useSpinner, spinner,
       size, loading, disabled,
-      onClick, // eslint-disable-line no-unused-vars
+      onClick,
       ...other,
     } = this.props
 
@@ -71,7 +71,7 @@ export class Button extends Component {
     return <button {...other}
       className={cls.join(' ')}
       disabled={disabled || loading}
-      onClick={this.handleClick}>
+      onClick={!!onClick && this.handleClick}>
       <span className={classNames.wrapper}>
         {!!left && <span className={classNames.left}>{left}</span>}
         <span className={classNames.content}>{children}</span>
