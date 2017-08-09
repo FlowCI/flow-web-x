@@ -60,7 +60,7 @@ $step-margin-left: $thumbnail-width + $step-padding-vertical + $number-left-abs-
 
   width: $number-size;
   height: $number-size;
-  // line-height: $number-size;
+  line-height: $number-size;
   display: inline-block;
   font-size: $number-font-szie;
   font-weight: $number-font-weight;
@@ -74,19 +74,15 @@ $step-margin-left: $thumbnail-width + $step-padding-vertical + $number-left-abs-
 
 // @media screen and (max-width: $screen-tablet) {
 //   .step{
-//     position: static;
-//     border-left: none!important;
+//     // position: static;
 //     margin-left: 0;
-//     padding-left: 0;
-//   }
-//   .thumbnail, .number{
-//     position: static;
+//     // padding-left: 0;
 //   }
 //   .thumbnail{
-//     margin: 0 auto 10px;
+//     position: static;
 //     display: block;
 //     // width: 520px;
-//     // max-width: 100%;
-//     // height: 340px;
+//     // width: 100%;
+//     // height: auto;
 //   }
 // }

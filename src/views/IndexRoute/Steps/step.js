@@ -18,11 +18,11 @@ export default class GuideStep extends PureComponent {
   render () {
     const { index, title, children, thumbnail } = this.props
     return <li className={classes.step}>
-      <img src={thumbnail} className={classes.thumbnail} />
+      <span className={classes.number}>{index}</span>
       <h4 className={classes.title}>
-        <span className={classes.number}>{index}</span>
         {title}
       </h4>
+      <img src={thumbnail} className={classes.thumbnail} />
       {children}
     </li>
   }

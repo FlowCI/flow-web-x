@@ -8,7 +8,7 @@ $circle-bg: #676C72;
 }
 .item{
   position: relative;
-  padding-left: 16px;
+  padding-left: 16px; // header font-size
   &:before{
     position: absolute;
     content: ' ';
