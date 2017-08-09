@@ -16,6 +16,7 @@
     line-height: $line-height-base;
     font-size: $font-size-base;
     position: relative;
+    min-height: 100vh;
     color: $text-color;
     background-color: $body-bg;
   }
