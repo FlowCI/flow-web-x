@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
-
 import createI18n from './i18n'
 import language from 'util/language'
 
@@ -13,20 +9,9 @@ import { List, Item } from './List'
 
 import classes from './guide.scss'
 
-function mapStateToProps (state) {
-  return {}
-}
-
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    redirect: push,
-  }, dispatch)
-}
-
-export class BuildGuide extends Component {
+export default class BuildGuide extends Component {
   static propTypes = {
     i18n: PropTypes.func.isRequired,
-    redirect: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -92,5 +77,3 @@ export class BuildGuide extends Component {
     </div>
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(BuildGuide)
