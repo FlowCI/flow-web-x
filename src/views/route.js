@@ -4,15 +4,15 @@ import { Route, IndexRoute } from 'react-router'
 import PageLayout from 'layouts/PageLayout'
 import NeedSession from './needSession'
 
-import Home from './Home'
+import Index from './IndexRoute'
 import Next from './Next'
 import SignInRoute from './SignIn/route'
 
 export default function (store) {
   return <Route path='/' component={PageLayout}>
-    <IndexRoute component={Home} />
     <Route path='/signin' {...SignInRoute(store)} />
     <Route component={NeedSession}>
+      <IndexRoute component={Index} />
       <Route path='/next' component={Next} />
     </Route>
   </Route>
