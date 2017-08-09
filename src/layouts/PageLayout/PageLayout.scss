@@ -1,8 +1,8 @@
 @import 'variables';
 .container{
-  margin-top: $navbar-height + 1px;
-  margin-bottom: $footer-height + 1px;
+  padding-top: $navbar-height + 1px;
+  padding-bottom: $footer-height + 1px;
   @media screen and (max-width: $screen-phone) {
-    margin-top: $navbar-phone-height + 1px;
+    padding-top: $navbar-phone-height + 1px;
   }
 }
