@@ -13,6 +13,7 @@ export default class Input extends Component {
     rightIcon: PropTypes.node,
     divider: PropTypes.bool,
 
+    meta: PropTypes.object,
     /*
     * only this component support hg,
     */
@@ -80,6 +81,7 @@ export default class Input extends Component {
       className,
       classNames,
       size, divider,
+      meta, // eslint-disable-line no-unused-vars
       onKeyUp, // eslint-disable-line no-unused-vars
       onPressEnter, // eslint-disable-line no-unused-vars
       onPressEsc, // eslint-disable-line no-unused-vars

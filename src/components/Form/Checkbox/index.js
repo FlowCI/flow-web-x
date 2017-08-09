@@ -11,6 +11,7 @@ export default class Checkbox extends Component {
     classNames: PropTypes.object.isRequired,
 
     size: PropTypes.oneOf(['sm', 'lg']),
+    meta: PropTypes.bool,
 
     leftLabel: PropTypes.node,
     rightLabel: PropTypes.node,
@@ -36,6 +37,7 @@ export default class Checkbox extends Component {
       classNames,
       leftLabel, rightLabel,
       checkedIcon, unCheckedIcon,
+      meta, // eslint-disable-line no-unused-vars
       ...other
     } = this.props
     const icon = checked ? checkedIcon : unCheckedIcon
