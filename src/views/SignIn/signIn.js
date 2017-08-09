@@ -7,6 +7,8 @@ import language from 'util/language'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { push } from 'react-router-redux'
+
 import { actions } from 'redux/modules/session'
 
 import Form from './form'
@@ -17,7 +19,7 @@ function mapStateToProps (state, props) {
   const { session } = state
   const { location } = props
   return {
-    unauthored: !session.has('user'),
+    unauthored: !session.includes('user'),
     email: location.query.email,
   }
 }
@@ -25,6 +27,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     signIn: actions.signIn,
+    redirect: push,
   }, dispatch)
 }
 
@@ -36,6 +39,7 @@ export class SignIn extends PureComponent {
     classNames: PropTypes.object.isRequired,
 
     signIn: PropTypes.func.isRequired,
+    redirect: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -44,15 +48,26 @@ export class SignIn extends PureComponent {
     i18n: createI18n(language),
   }
 
+  componentDidMount () {
+    const { redirect, unauthored } = this.props
+    !unauthored && redirect('/')
+  }
+
+  componentWillUpdate (nextProps, nextState) {
+    const { redirect, unauthored } = nextProps
+    !unauthored && redirect('/')
+  }
+
   submit = (values) => {
     // print the form values to the console
     console.info(values)
   }
 
   render () {
-    const { i18n, classNames, signIn } = this.props
+    const { i18n, classNames, signIn, email } = this.props
 
-    return <Form i18n={i18n} className={classNames.form} onSubmit={signIn} />
+    return <Form i18n={i18n} className={classNames.form}
+      initialValues={{ username: email }} onSubmit={signIn} />
   }
 }
 

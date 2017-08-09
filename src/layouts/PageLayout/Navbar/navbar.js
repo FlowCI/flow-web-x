@@ -14,7 +14,7 @@ import classes from './navbar.scss'
 function mapStateToProps (state, props) {
   const { session } = state
   return {
-    authored: session.has('user'),
+    authored: session.includes('user'),
     avatar: session.getIn(['user', 'avatar']),
     backUrl: '',
   }
