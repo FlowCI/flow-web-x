@@ -1,19 +1,19 @@
-import CoreLayout from 'layouts/PageLayout'
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
+
+import PageLayout from 'layouts/PageLayout'
+import NeedSession from './needSession'
+
 import Home from './Home'
 import Next from './Next'
 import SignInRoute from './SignIn/route'
 
-export const createRoutes = (store) => ({
-  path        : '/',
-  component   : CoreLayout,
-  indexRoute  : { component: Home },
-  childRoutes: [{
-    path: '/signin',
-    ...SignInRoute(store),
-  }, {
-    path: '/next',
-    component: Next
-  }]
-})
-
-export default createRoutes
+export default function (store) {
+  return <Route path='/' component={PageLayout}>
+    <IndexRoute component={Home} />
+    <Route path='/signin' {...SignInRoute(store)} />
+    <Route component={NeedSession}>
+      <Route path='/next' component={Next} />
+    </Route>
+  </Route>
+}
