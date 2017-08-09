@@ -22,13 +22,14 @@ export function validate (values) {
 export class SignInForm extends Component {
   static propTypes = {
     className: PropTypes.string,
+    submitting: PropTypes.bool,
     // error: PropTypes.object,
     i18n: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func,
   }
 
   render () {
-    const { className, i18n, handleSubmit } = this.props
+    const { className, i18n, submitting, handleSubmit } = this.props
     return <form onSubmit={handleSubmit}
       className={`${classes.form} ${className}`}>
       <div className={classes.logo}>
@@ -40,7 +41,9 @@ export class SignInForm extends Component {
       <ReduxFormInput type='password' name='password'
         leftIcon={<i className='icon icon-key' />}
         divider size='hg' className='block' />
-      <Button className={`block btn-primary`} size='lg' type='submit'>
+      <Button className={`block btn-primary`}
+        loading={submitting}
+        size='lg' type='submit'>
         {i18n('登录')}
       </Button>
     </form>
