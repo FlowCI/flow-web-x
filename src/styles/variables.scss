@@ -181,4 +181,29 @@ $footer-xs-divier-padding: 10px;
 $footer-default-color: #676C72!default;
 $footer-default-border: $color-hr!default;
 
+// Build Guide
 
+$build-guide-step-padding-vertical: 24px;
+$build-guide-step-padding-bottom: 60px;
+
+$build-guide-step-divider-width: 2px;
+$build-guide-step-divider-color: #D4DCE3;
+
+$build-guide-step-number-size: 36px;
+$build-guide-step-number-font-szie: 20px;
+$build-guide-step-number-font-weight: bold;
+$build-guide-step-number-bg: $color-primary;
+$build-guide-step-number-color: #fff;
+$build-guide-step-number-left-abs-offset: ($build-guide-step-number-size
+    + $build-guide-step-divider-width)/2;
+
+$build-guide-thumbnail-border-radius: 5px;
+$build-guide-thumbnail-width: 260px;
+$build-guide-thumbnail-height: 170px;
+
+$build-guide-step-margin-left: $build-guide-thumbnail-width
+  + $build-guide-step-padding-vertical
+  + $build-guide-step-number-left-abs-offset;
+
+$build-guide-list-disc-size: 8px;
+$build-guide-list-disc-bg: #676C72;

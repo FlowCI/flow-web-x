@@ -33,6 +33,15 @@ export class BuildGuide extends Component {
     i18n: createI18n(language),
   }
 
+  renderFooter () {
+    return <div className={classes.footer}>
+      <hr />
+      <p>如果上面几步你已完成，触发构建时本页面会自动刷新，</p>
+      <p>你可以静静的等待或者 <a>阅读我们的文档</a></p>
+      <p>工作愉快</p>
+    </div>
+  }
+
   renderSteps () {
     const { i18n } = this.props
     return <Steps>
@@ -79,6 +88,7 @@ export class BuildGuide extends Component {
     return <div className={classes.guide}>
       <h3 className={classes.header}>{i18n('如何快速开始一次构建？')}</h3>
       {this.renderSteps()}
+      {this.renderFooter()}
     </div>
   }
 }

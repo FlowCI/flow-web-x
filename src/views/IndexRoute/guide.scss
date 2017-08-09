@@ -14,3 +14,12 @@
   margin-bottom: 5*$padding-base-vertical;
   text-align: center;
 }
+.footer{
+  margin-left: $build-guide-step-margin-left - $build-guide-step-number-size/2;
+  >hr{
+    width: 65px;
+    border-width: 4px;
+    border-color: currentColor;
+    margin-bottom: 1.5*$padding-base-vertical-computed;
+  }
+}

@@ -1,78 +1,57 @@
 @import 'variables';
 
-$step-padding-vertical: 24px;
-$step-padding-bottom: 60px;
-
-$step-border-left-width: 2px;
-$step-border-left-color: #D4DCE3;
-
-$number-size: 36px;
-$number-font-szie: 20px;
-$number-font-weight: bold;
-$number-bg: $color-primary;
-$number-color: #fff;
-$number-left-abs-offset: ($number-size + $step-border-left-width)/2;
-
-$thumbnail-border-radius: 5px;
-$thumbnail-width: 260px;
-$thumbnail-height: 170px;
-
-$step-margin-left: $thumbnail-width + $step-padding-vertical + $number-left-abs-offset;
-
-.steps{
-  margin: 0;
-  padding: 0;
-}
-
 .step{
   position: relative;
-  min-height: $thumbnail-height + $step-padding-bottom;
-  padding-bottom: $step-padding-bottom;
+  min-height: $build-guide-thumbnail-height + $build-guide-step-padding-bottom;
+  padding-bottom: $build-guide-step-padding-bottom;
 
   // 空出 thumbnail
-  margin-left: $step-margin-left;
+  margin-left: $build-guide-step-margin-left;
   // 空出 number
-  padding-left: $number-size/2 + $step-padding-vertical;
+  padding-left: $build-guide-step-number-size/2 + $build-guide-step-padding-vertical;
 
   &:not(:last-child) {
-    border-left: $step-border-left-width solid $step-border-left-color;
+    border-left: $build-guide-step-divider-width solid $build-guide-step-divider-color;
   }
 }
 
 .thumbnail{
   position: absolute;
   top: 0px;
-  left: -$step-margin-left - $step-border-left-width;
+  left: -$build-guide-step-margin-left - $build-guide-step-divider-width;
 
-  width: $thumbnail-width;
-  height: $thumbnail-height;
+  width: $build-guide-thumbnail-width;
+  height: $build-guide-thumbnail-height;
 
   background-color: #E8EAEC;
-  border-radius: $thumbnail-border-radius;
+  border-radius: $build-guide-thumbnail-border-radius;
 }
 
 .number{
   position: absolute;
   top: 0px;
-  left: -$number-left-abs-offset;
+  left: -$build-guide-step-number-left-abs-offset;
   text-align: center;
   border-radius: 50%;
 
-  width: $number-size;
-  height: $number-size;
-  line-height: $number-size;
+  width: $build-guide-step-number-size;
+  height: $build-guide-step-number-size;
+  line-height: $build-guide-step-number-size;
   display: inline-block;
-  font-size: $number-font-szie;
-  font-weight: $number-font-weight;
-  background-color: $number-bg;
-  color: $number-color;
+  font-size: $build-guide-step-number-font-szie;
+  font-weight: $build-guide-step-number-font-weight;
+  background-color: $build-guide-step-number-bg;
+  color: $build-guide-step-number-color;
 }
 .title{
-  line-height: $number-size;
+  line-height: $build-guide-step-number-size;
 }
 
 
 // @media screen and (max-width: $screen-tablet) {
+//   .steps{
+//     margin-left: $build-guide-step-number-size/2;
+//   }
 //   .step{
 //     // position: static;
 //     margin-left: 0;

@@ -1,10 +1,7 @@
 @import 'variables';
 
-$circle-size: 8px;
-$circle-bg: #676C72;
-
 .list{
-
+  margin: 0;
 }
 .item{
   position: relative;
@@ -16,8 +13,8 @@ $circle-bg: #676C72;
     left: 2px;
     display: inline-block;
     border-radius: 50%;
-    width: $circle-size;
-    height: $circle-size;
-    background-color: $circle-bg;
+    width: $build-guide-list-disc-size;
+    height: $build-guide-list-disc-size;
+    background-color: $build-guide-list-disc-bg;
   }
 }
