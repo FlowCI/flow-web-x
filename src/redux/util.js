@@ -24,3 +24,26 @@ export function handleHttp (uiName, reducers = {}) {
     failure: combine(createUIHandler(uiName), reducers.failure),
   })
 }
+
+/*
+ only can use in state = { ...other, ids: List, data: Map,  }
+*/
+/*
+  set array[index].id to state.ids, and array[index] to state.data
+*/
+export function mergeArray (state, array, idKey = 'id') {
+  return array.reduce((s, d) => merge(s, d, idKey), state)
+}
+
+export function merge (state, item, idKey = 'id') {
+  const id = item[idKey]
+  return state.update('ids', (ids) => ids.push(id))
+    .update('data', (data) => data.set(id, item)) // maybe use merge
+}
+
+export function remove (state, id) {
+  return state.update('ids', (ids) => {
+    const i = ids.indexOf(id)
+    i > -1 && ids.delete(i)
+  }).update('data', (data) => data.delete(id))
+}
