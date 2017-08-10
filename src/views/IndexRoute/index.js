@@ -18,9 +18,8 @@ function mapStateToProps (state) {
   const { flow } = state
   const status = flow.getIn(['ui', 'query'])
   return {
-    flowId: undefined, // flow.getIn(['data', 0, 'id']),
+    flowId: undefined, // flow.get('data').first(),
     loaded: status > STATUS.send,
-    queryed: status >= STATUS.send,
   }
 }
 
@@ -35,25 +34,36 @@ export class HomeWrapper extends Component {
   static propTypes = {
     flowId: PropTypes.string,
     loaded: PropTypes.bool,
-    queryed: PropTypes.bool,
 
     query: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
   }
 
+  state = {
+    // tofix: 每次触发 flow query 时, Guide 都将重新 didMount
+    loaded: this.props.loaded,
+  }
+
   componentDidMount () {
-    const { flowId, queryed, query } = this.props
-    !queryed && query()
-    flowId && this.props.redirect(`/flows/${flowId}`)
+    const { flowId, query } = this.props
+    if (flowId) {
+      this.props.redirect(`/flows/${flowId}`)
+    } else {
+      query()
+    }
   }
 
   componentWillReceiveProps (nextProps) {
-    const { flowId, redirect } = nextProps
-    flowId && redirect(`/flows/${flowId}`)
+    const { flowId, redirect, loaded } = nextProps
+    if (flowId) {
+      redirect(`/flows/${flowId}`)
+    } else if (!this.state.loaded && loaded) {
+      this.setState({ loaded: true })
+    }
   }
 
   render () {
-    const { loaded } = this.props
+    const { loaded } = this.state
     if (!loaded) {
       return <div><Loading /></div>
     }
