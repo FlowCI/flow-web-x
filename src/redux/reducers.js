@@ -12,11 +12,18 @@ export const makeRootReducer = (asyncReducers) => {
   })
 }
 
-export const injectReducer = (store, { key, reducer }) => {
-  if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
+export const injectReducer = (store, reducers) => {
+  const keys = Object.keys(reducers)
 
-  store.asyncReducers[key] = reducer
-  store.replaceReducer(makeRootReducer(store.asyncReducers))
+  let mustReplace = false
+  keys.forEach((key) => {
+    if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
+
+    mustReplace = true
+    store.asyncReducers[key] = reducers[key]
+  })
+
+  mustReplace && store.replaceReducer(makeRootReducer(store.asyncReducers))
 }
 
 export default makeRootReducer
