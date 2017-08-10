@@ -39,7 +39,7 @@ export const defaultInitState = new Map({
   ui: new Map(),
 })
 
-export function mergeArray (state, array, option = {}) {
+export function mergeArray (state, { payload: array }, option = {}) {
   const idKey = option.id || 'id'
   const f = array.reduce((s, item) => {
     const id = item[idKey]
@@ -48,10 +48,10 @@ export function mergeArray (state, array, option = {}) {
     return s
   }, { ids: [], data: {} })
   return state.update('ids', (ids) => ids.concat(f.ids))
-    .updata('data', (data) => data.merge(new Map(f.data)))
+    .update('data', (data) => data.merge(new Map(f.data)))
 }
 
-export function merge (state, obj, option = {}) {
+export function merge (state, { payload: obj }, option = {}) {
   const idKey = option.id || 'id'
   const id = obj[idKey]
 
@@ -61,7 +61,7 @@ export function merge (state, obj, option = {}) {
     : nextState.update('ids', (ids) => ids.add(id))
 }
 
-export function remove (state, id) {
+export function remove (state, { payload: id }) {
   return state.update('ids', (ids) => ids.delete(id))
     .update('data', (data) => data.delete(id))
 }
