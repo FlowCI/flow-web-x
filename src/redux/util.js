@@ -1,4 +1,5 @@
 import { handleHttpActions } from 'redux-http'
+import { fromJS, OrderedSet, Map } from 'immutable'
 
 function createUIHandler (key) {
   return function (state, { status, id }) {
@@ -30,22 +31,37 @@ export function handleHttp (uiName, reducers = {}) {
 /*
  only can use in state = { ...other, ids: List, data: Map,  }
 */
-/*
-  set array[index].id to state.ids, and array[index] to state.data
-*/
-export function mergeArray (state, array, idKey = 'id') {
-  return array.reduce((s, d) => merge(s, d, idKey), state)
+
+// set array[index].id to state.ids, and array[index] to state.data
+export const defaultInitState = new Map({
+  ids: new OrderedSet(), // use in list, some data maybe want not show in list view
+  data: new Map(),
+  ui: new Map(),
+})
+
+export function mergeArray (state, array, option = {}) {
+  const idKey = option.id || 'id'
+  const f = array.reduce((s, item) => {
+    const id = item[idKey]
+    !option.skipIds && s.ids.push(id)
+    s.data[id] = item
+    return s
+  }, { ids: [], data: {} })
+  return state.update('ids', (ids) => ids.concat(f.ids))
+    .updata('data', (data) => data.merge(new Map(f.data)))
 }
 
-export function merge (state, item, idKey = 'id') {
-  const id = item[idKey]
-  return state.update('ids', (ids) => ids.push(id))
-    .update('data', (data) => data.set(id, item)) // maybe use merge
+export function merge (state, obj, option = {}) {
+  const idKey = option.id || 'id'
+  const id = obj[idKey]
+
+  // maybe use merge
+  const nextState = state.update('data', (data) => data.set(id, fromJS(obj)))
+  return option.skipIds ? nextState
+    : nextState.update('ids', (ids) => ids.add(id))
 }
 
 export function remove (state, id) {
-  return state.update('ids', (ids) => {
-    const i = ids.indexOf(id)
-    i > -1 && ids.delete(i)
-  }).update('data', (data) => data.delete(id))
+  return state.update('ids', (ids) => ids.delete(id))
+    .update('data', (data) => data.delete(id))
 }
