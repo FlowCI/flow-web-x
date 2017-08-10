@@ -83,14 +83,10 @@ export const actions = {
 
 export default handleActions({
   [Types.query]: handleHttp('query', {
-    success: function (state, { payload }) {
-      return mergeArray(state, payload)
-    },
+    success: mergeArray,
   }),
   [Types.get]: handleHttp('get', {
-    success: function (state, { payload }) {
-      return merge(state, payload, { skipIds: true })
-    },
+    success: merge,
   }),
   [Types.freedAll]: function (state) {
     return initialState
