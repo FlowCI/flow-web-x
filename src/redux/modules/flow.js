@@ -1,23 +1,18 @@
 import { handleActions } from 'redux-actions'
 
-import { handleHttp } from '../util'
-import { STATUS } from 'redux-http'
-
-import { fromJS } from 'immutable'
+import { defaultInitState, handleHttp, mergeArray, merge } from 'redux/util'
 
 import Types from './flowType'
 
-const initialState = fromJS({
-  list: [],
-  ui: {},
-})
+const initialState = defaultInitState
 
 export const actions = {
   query: function () {
     return {
-      type: Types.query,
-      status: STATUS.success,
-      payload: [{
+      url: '/flows',
+      name: Types.query,
+
+      response: [{
         id: 'xiaomi_ios_dev',
         path: 'sss',
         name: 'xiaomi_ios_dev',
@@ -30,13 +25,34 @@ export const actions = {
       }]
     }
   },
+  get: function (flowId) {
+    return {
+      url: '/flows/:path',
+      name: Types.get,
+      params: {
+        path: flowId,
+      },
+      indicator: {
+        id: flowId,
+      },
+      response: {
+        id: flowId,
+        path: flowId,
+        name: 'xiaomi_ios_dev',
+        status: 'success',
+      }
+    }
+  }
 }
 
 export default handleActions({
   [Types.query]: handleHttp('query', {
-    success: function (state, { payload }) {
-      return state.set('list', fromJS(payload))
+    success: function (state, action) {
+      return mergeArray(state, action)
     },
+  }),
+  [Types.get]: handleHttp('get', {
+    success: merge,
   }),
   [Types.freedAll]: function (state) {
     return initialState
