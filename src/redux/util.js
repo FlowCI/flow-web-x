@@ -3,7 +3,7 @@ import { handleHttpActions } from 'redux-http'
 function createUIHandler (key) {
   return function (state, { status, id }) {
     return state.update('ui', (ui) => {
-      id ? ui.setIn([key, id], status) : ui.set(key, status)
+      return id ? ui.setIn([key, id], status) : ui.set(key, status)
     })
   }
 }
