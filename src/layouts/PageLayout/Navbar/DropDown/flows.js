@@ -40,7 +40,10 @@ function mapDispatchToProps (dispatch) {
 
 export class NavbarFlowsDropdown extends PureComponent {
   static propTypes = {
-    flows: ImmutablePropTypes.list.isRequired,
+    flows: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })).isRequired,
     loaded: PropTypes.bool,
 
     query: PropTypes.func.isRequired,
