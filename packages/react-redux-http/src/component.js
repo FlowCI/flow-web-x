@@ -12,6 +12,10 @@ import { compose, spy, done } from './util'
     withRef: boolean
   }
 **/
+function getName (Comp) {
+  return Comp.displayName || Comp.name
+}
+
 export default function createHigherOrderComponent (settings, options) {
   if (typeof settings !== 'object') {
     throw new Error(`settings is type error, it will array or object, but now is ${typeof settings}`)
@@ -21,7 +25,7 @@ export default function createHigherOrderComponent (settings, options) {
   }
   const { withRef } = options || {}
   return function (WrappedComponent) {
-    return class AutoCancelWrapper extends Component {
+    class AutoCancelWrapper extends Component {
       constructor (props, context) {
         super(props, context)
 
@@ -96,5 +100,7 @@ export default function createHigherOrderComponent (settings, options) {
         return React.createElement(WrappedComponent, props)
       }
     }
+    AutoCancelWrapper.displayName = `AutoCancelWrapper(${getName(WrappedComponent)})`
+    return AutoCancelWrapper
   }
 }
