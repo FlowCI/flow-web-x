@@ -42,6 +42,8 @@ export class Navbar extends PureComponent {
     */
     backUrl: PropTypes.string,
 
+    locatonKey: PropTypes.any,
+
     redirect: PropTypes.func.isRequired,
 
     i18n: PropTypes.func.isRequired,
@@ -51,6 +53,12 @@ export class Navbar extends PureComponent {
     openFlows: false,
     openAgents: false,
     openMenus: false,
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.locatonKey !== nextProps.locatonKey) {
+      this.setState({ openFlows: false, openAgents: false, openMenus: false })
+    }
   }
 
   createOpenHandler (stateName) {
