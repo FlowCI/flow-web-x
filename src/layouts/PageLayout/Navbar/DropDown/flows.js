@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -19,15 +18,16 @@ import FlowTab from '../internal/flowtab'
 
 import classes from './flows.scss'
 
-const getFlowsSelector = createSelector(
+const getFlowIdsSelector = createSelector(
   (state) => state.flow.get('data'),
-  (map) => map.toList()
+  (state) => state.flow.getIn(['ui', 'filter']),
+  (map, filter) => map.keySeq()
 )
 
 function mapStateToProps (state, props) {
   const { flow } = state
   return {
-    flows: getFlowsSelector(state),
+    flowIds: getFlowIdsSelector(state),
     loaded: flow.getIn(['ui', 'query']) > STATUS.send,
   }
 }
@@ -40,10 +40,7 @@ function mapDispatchToProps (dispatch) {
 
 export class NavbarFlowsDropdown extends PureComponent {
   static propTypes = {
-    flows: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })).isRequired,
+    flowIds: PropTypes.array.isRequired,
     loaded: PropTypes.bool,
 
     query: PropTypes.func.isRequired,
@@ -60,17 +57,9 @@ export class NavbarFlowsDropdown extends PureComponent {
     console.log('search flow', value)
   }
 
-  getFlows () {
-    const { flows } = this.props
-    return flows
-  }
-
   renderFlows () {
-    const flows = this.getFlows()
-    return flows.map((flow) => <FlowTab key={flow.get('id')}
-      name={flow.get('name')} status={flow.get('status')}
-      id={flow.get('id')}
-    />)
+    const { flowIds } = this.props
+    return flowIds.map((id) => <FlowTab key={id} id={id} />)
   }
 
   renderContent () {
