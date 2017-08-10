@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -40,7 +41,7 @@ function mapDispatchToProps (dispatch) {
 
 export class NavbarFlowsDropdown extends PureComponent {
   static propTypes = {
-    flowIds: PropTypes.array.isRequired,
+    flowIds: ImmutablePropTypes.seq.isRequired,
     loaded: PropTypes.bool,
 
     query: PropTypes.func.isRequired,
