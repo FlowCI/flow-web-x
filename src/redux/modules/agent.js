@@ -16,7 +16,6 @@ export const actions = {
     return {
       url: '/agents',
       name: Types.query,
-      // response: [],
       response: [{
         'path': {
           'zone': 'Mac',
