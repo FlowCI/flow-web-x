@@ -7,7 +7,7 @@ import { fromJS } from 'immutable'
 import Types from './agentType'
 
 const initialState = fromJS({
-  data: [],
+  list: [],
   ui: {},
 })
 
@@ -46,7 +46,7 @@ export default handleActions({
       payload.forEach((agent) => {
         agent.id = agent.path.zone + agent.path.name
       })
-      return state.set('data', fromJS(payload))
+      return state.set('list', fromJS(payload))
     },
   }),
   [Types.freedAll]: function (state) {

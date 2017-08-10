@@ -21,7 +21,7 @@ import classes from './flows.scss'
 function mapStateToProps (state, props) {
   const { flow } = state
   return {
-    flows: flow.get('data'),
+    flows: flow.get('list'),
     loaded: flow.getIn(['ui', 'query']) > STATUS.send,
   }
 }

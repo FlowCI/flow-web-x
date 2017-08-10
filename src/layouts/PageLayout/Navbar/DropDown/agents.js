@@ -18,7 +18,7 @@ import classes from './agents.scss'
 function mapStateToProps (state, props) {
   const { agent } = state
   return {
-    agents: agent.get('data'),
+    agents: agent.get('list'),
     loaded: agent.getIn(['ui', 'query']) > STATUS.send,
   }
 }

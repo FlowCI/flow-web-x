@@ -8,7 +8,7 @@ import { fromJS } from 'immutable'
 import Types from './flowType'
 
 const initialState = fromJS({
-  data: [],
+  list: [],
   ui: {},
 })
 
@@ -35,7 +35,7 @@ export const actions = {
 export default handleActions({
   [Types.query]: handleHttp('query', {
     success: function (state, { payload }) {
-      return state.set('data', fromJS(payload))
+      return state.set('list', fromJS(payload))
     },
   }),
   [Types.freedAll]: function (state) {
