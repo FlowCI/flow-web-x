@@ -42,7 +42,13 @@ export const actions = {
         status: 'success',
       }
     }
-  }
+  },
+  freed: function (flowId) {
+    return {
+      type: Types.freed,
+      id: flowId,
+    }
+  },
 }
 
 export default handleActions({
