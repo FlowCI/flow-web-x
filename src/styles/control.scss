@@ -56,7 +56,12 @@
   vertical-align: middle;
 
   font-size: $font-size-base;
+  font-weight: $btn-font-weight;
   height: $control-base-size;
+
+  box-shadow: none;
+  white-space: nowrap;
+  cursor: pointer;
 
   background: none;
   border: 1px solid $control-border-base;
@@ -68,6 +73,11 @@
   }
   &:hover, &:focus, &.active, &.focus{
     background-color: $btn-default-bg;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: .6;
   }
 }
 

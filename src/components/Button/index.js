@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import toProps from 'promise-to-props'
 import is from 'util/is'
 
+import { Link } from 'react-router'
 import LoadingIcon from 'components/Icon/Loading'
 
 import classes from './button.scss'
@@ -15,6 +16,9 @@ export class Button extends Component {
     children: PropTypes.node,
     className: PropTypes.string,
     classNames: PropTypes.object,
+
+    href: PropTypes.string,
+    to: PropTypes.string,
 
     size: PropTypes.oneOf(['sm', 'lg']),
     loading: PropTypes.bool,
@@ -48,12 +52,17 @@ export class Button extends Component {
 
   render () {
     const {
-      className, classNames, children,
+      className, classNames,
       leftIcon, rightIcon,
       useSpinner, spinner,
-      size, loading, disabled,
-      onClick,
+      children, size,
+      loading, onClick,
       ...other,
+    } = this.props
+
+    const {
+      to, href,
+      disabled,
     } = this.props
 
     const cls = ['btn', classNames.btn]
@@ -68,16 +77,24 @@ export class Button extends Component {
       right ? (right = spinner) : (left = spinner)
     }
 
-    return <button {...other}
-      className={cls.join(' ')}
-      disabled={disabled || loading}
-      onClick={!!onClick && this.handleClick}>
-      <span className={classNames.wrapper}>
-        {!!left && <span className={classNames.left}>{left}</span>}
-        <span className={classNames.content}>{children}</span>
-        {!!right && <span className={classNames.right}>{right}</span>}
-      </span>
-    </button>
+    const isLink = !!(to || href)
+    const props = {
+      ...other,
+      className: cls.join(' '),
+      disabled: disabled || loading,
+      onClick: !!onClick && this.handleClick,
+    }
+    isLink && (props.type = undefined)
+
+    const buttonChild = <span className={classNames.wrapper}>
+      {!!left && <span className={classNames.left}>{left}</span>}
+      <span className={classNames.content}>{children}</span>
+      {!!right && <span className={classNames.right}>{right}</span>}
+    </span>
+
+    const elementClass = !isLink ? 'button' : (to ? Link : 'a')
+
+    return React.createElement(elementClass, props, buttonChild)
   }
 }
 

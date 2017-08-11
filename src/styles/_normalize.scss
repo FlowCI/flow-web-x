@@ -39,17 +39,17 @@ input{
   padding: $control-base-padding-vertical $control-base-padding-horizontal;
 }
 
-button{
-  box-shadow: none;
-  white-space: nowrap;
-  cursor: pointer;
-  font-weight: $btn-font-weight;
+// button{
+//   box-shadow: none;
+//   white-space: nowrap;
+//   cursor: pointer;
+//   font-weight: $btn-font-weight;
 
-  &[disabled] {
-    cursor: not-allowed;
-    opacity: .6;
-  }
-}
+//   &[disabled] {
+//     cursor: not-allowed;
+//     opacity: .6;
+//   }
+// }
 
 .code, code, pre{
   display: block;
