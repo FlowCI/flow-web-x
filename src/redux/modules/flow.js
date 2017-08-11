@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
-import { defaultInitState, handleHttp, mergeArray, merge } from 'redux/util'
-
+import { handleHttp } from 'redux/util'
+import { defaultInitState, handlers } from 'redux/handler'
 import Types from './flowType'
 
 const initialState = defaultInitState
@@ -53,13 +53,13 @@ export const actions = {
 
 export default handleActions({
   [Types.query]: handleHttp('query', {
-    success: function (state, action) {
-      return mergeArray(state, action)
-    },
+    success: handlers.saveAll,
   }),
+
   [Types.get]: handleHttp('get', {
-    success: merge,
+    success: handlers.save,
   }),
+
   [Types.freedAll]: function (state) {
     return initialState
   }
