@@ -96,7 +96,7 @@ export class Navbar extends PureComponent {
     return <Card containerClass={classes.backButton}
       className={classes.back}
       onActive={this.handleBack}>
-      <i className='icon icon-keyboard_arrow_left' />
+      <i className='icon icon-arrow-left' />
       {i18n('back')}
     </Card>
   }
