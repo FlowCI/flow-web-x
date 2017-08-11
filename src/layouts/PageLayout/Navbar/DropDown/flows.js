@@ -14,7 +14,7 @@ import Loading from 'components/Loading'
 import Input from 'components/Form/Input'
 
 import DropDown from './dropdown'
-import FlowTab from '../internal/flowtab'
+import FlowTab from '../components/flowtab'
 
 import classes from './flows.scss'
 
