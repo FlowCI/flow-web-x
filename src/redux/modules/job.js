@@ -1,5 +1,7 @@
 import { handleActions } from 'redux-actions'
-import { defaultInitState, handleHttp, mergeArray, merge } from 'redux/util'
+import { handleHttp } from 'redux/util'
+import { defaultInitState, handlers } from 'redux/handler'
+
 import Types from './jobType'
 import FlowTypes from './flowType'
 
@@ -80,15 +82,14 @@ export const actions = {
       response: { ...job, id: jobId },
     }
   },
-
 }
 
 export default handleActions({
   [Types.query]: handleHttp('query', {
-    success: mergeArray,
+    success: handlers.saveAll,
   }),
   [Types.get]: handleHttp('get', {
-    success: merge,
+    success: handlers.save,
   }),
   [FlowTypes.freed]: function (state) {
     return initialState
