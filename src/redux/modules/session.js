@@ -26,7 +26,7 @@ export const actions = {
 }
 
 export default handleActions({
-  [Types.signIn]: handleHttp('signIn', {
+  [Types.signIn]: handleHttp('SIGNIN', {
     success: function (state, { payload }) {
       return state.set('user', payload)
     },

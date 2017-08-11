@@ -16,7 +16,7 @@ import Guide from '../BuildGuide'
 
 function mapStateToProps (state) {
   const { flow } = state
-  const status = flow.getIn(['ui', 'query'])
+  const status = flow.getIn(['ui', 'QUERY'])
   return {
     flowId: undefined, // flow.get('data').first(),
     loaded: status > STATUS.send,

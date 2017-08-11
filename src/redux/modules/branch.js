@@ -32,7 +32,7 @@ export const actions = {
 }
 
 export default handleActions({
-  [Types.query]: handleHttp('query', {
+  [Types.query]: handleHttp('QUERY', {
     success: function (state, { id, payload }) {
       return state.update('data', (data) => data.setIn(id, fromJS(payload)))
     },

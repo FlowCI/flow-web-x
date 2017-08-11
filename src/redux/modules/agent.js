@@ -40,7 +40,7 @@ export const actions = {
 }
 
 export default handleActions({
-  [Types.query]: handleHttp('query', {
+  [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
       payload.forEach((agent) => {
         agent.id = agent.path.zone + agent.path.name

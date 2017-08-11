@@ -52,11 +52,11 @@ export const actions = {
 }
 
 export default handleActions({
-  [Types.query]: handleHttp('query', {
+  [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
 
-  [Types.get]: handleHttp('get', {
+  [Types.get]: handleHttp('GET', {
     success: handlers.save,
   }),
 

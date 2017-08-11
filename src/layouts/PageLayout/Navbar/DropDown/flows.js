@@ -22,7 +22,7 @@ function mapStateToProps (state, props) {
   const { flow } = state
   return {
     flowIds: flow.get('list'),
-    loaded: flow.getIn(['ui', 'query']) > STATUS.send,
+    loaded: flow.getIn(['ui', 'QUERY']) > STATUS.send,
   }
 }
 

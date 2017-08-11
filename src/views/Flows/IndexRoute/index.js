@@ -14,7 +14,7 @@ import Guide from 'views/BuildGuide'
 function mapStateToProps (state, props) {
   const { job } = state
   const { location } = props
-  const status = job.getIn(['ui', 'query'])
+  const status = job.getIn(['ui', 'QUERY'])
   return {
     hasJob: job.get('data').size > 0,
     loaded: status > STATUS.send,

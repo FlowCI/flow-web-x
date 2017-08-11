@@ -19,7 +19,7 @@ function mapStateToProps (state, props) {
   const { agent } = state
   return {
     agents: agent.get('list'),
-    loaded: agent.getIn(['ui', 'query']) > STATUS.send,
+    loaded: agent.getIn(['ui', 'QUERY']) > STATUS.send,
   }
 }
 

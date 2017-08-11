@@ -55,12 +55,13 @@ function cloneAndRepeat (obj, size) {
 }
 
 export const actions = {
-  query: function (flowId) {
+  query: function (flowId, lastest) {
     return {
       url: '/flows/:flow_id/flowId',
       name: Types.query,
       params: {
         flow_id: flowId,
+        create_at: lastest ? lastest.create_at : undefined, // 用于分页
       },
       response: cloneAndRepeat(job, 10).map((j, i) => {
         j.id = `jobxxxxx${i}`
@@ -85,10 +86,10 @@ export const actions = {
 }
 
 export default handleActions({
-  [Types.query]: handleHttp('query', {
+  [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
-  [Types.get]: handleHttp('get', {
+  [Types.get]: handleHttp('GET', {
     success: handlers.save,
   }),
   [FlowTypes.freed]: function (state) {
