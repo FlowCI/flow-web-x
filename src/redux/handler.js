@@ -83,6 +83,12 @@ export function composeHandler (...funcs) {
   }
 }
 
+export function bindOptionsCompose (options, ...funcs) {
+  return function (state, action) {
+    return funcs.reduce((s, f) => f(s, action, options), state)
+  }
+}
+
 export const handlers = {
   save: saveToData,
   saveAll: composeHandler(saveAllToList, saveAllToData),
