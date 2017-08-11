@@ -4,7 +4,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createSelector } from 'reselect'
 
 import { STATUS } from 'redux-http'
 import autoCancel from 'react-redux-http'
@@ -19,16 +18,10 @@ import FlowTab from '../internal/flowtab'
 
 import classes from './flows.scss'
 
-const getFlowIdsSelector = createSelector(
-  (state) => state.flow.get('data'),
-  (state) => state.flow.getIn(['ui', 'filter']),
-  (map, filter) => map.keySeq()
-)
-
 function mapStateToProps (state, props) {
   const { flow } = state
   return {
-    flowIds: getFlowIdsSelector(state),
+    flowIds: flow.get('list'),
     loaded: flow.getIn(['ui', 'query']) > STATUS.send,
   }
 }
@@ -41,7 +34,7 @@ function mapDispatchToProps (dispatch) {
 
 export class NavbarFlowsDropdown extends PureComponent {
   static propTypes = {
-    flowIds: ImmutablePropTypes.seq.isRequired,
+    flowIds: ImmutablePropTypes.iterable.isRequired,
     loaded: PropTypes.bool,
 
     query: PropTypes.func.isRequired,
