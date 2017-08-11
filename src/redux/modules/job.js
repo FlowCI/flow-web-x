@@ -9,6 +9,7 @@ const initialState = defaultInitState
 
 const job = {
   'id': '17080916210140717520056',
+  'number': 1,
   'status': 'SUCCESS',
   'startedAt': 1502266861,
   'finishedAt': 1502266861,
@@ -63,8 +64,12 @@ export const actions = {
         flow_id: flowId,
         create_at: lastest ? lastest.create_at : undefined, // 用于分页
       },
+      indicator: {
+        reverse: !!lastest, // 正序还是倒叙
+      },
       response: cloneAndRepeat(job, 10).map((j, i) => {
-        j.id = `jobxxxxx${i}`
+        j.number = (lastest ? lastest.number + i : i) + 1
+        j.id = `jobxxxxx${j.number}`
         return j
       }),
     }
