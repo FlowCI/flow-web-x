@@ -12,10 +12,12 @@
   position: relative;
   display: inline-flex;
   font-size: $font-size-base;
+  z-index: 1000;
 }
 
 .input{
   cursor: pointer;
+  width: 100%;
   >input[readonly] {
     white-space: nowrap;
     overflow: hidden;
@@ -27,6 +29,7 @@
 .dropdown{
   position: absolute;
   top: calc(100% + #{$select-dropdown-offset});
+  background-color: #fff;
   left: 0px;
   width: 100%;
   max-height: 250px;
