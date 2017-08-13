@@ -1,0 +1,31 @@
+@import 'variables';
+
+.container{
+  padding: 3*$padding-base-vertical 3*$padding-base-horizontal;
+}
+
+.flow{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 2.5*$padding-base-vertical-computed;
+}
+.brand{
+  font-size: $font-size-large;
+  font-weight: bold;
+  margin-right: 3*$padding-base-horizontal-computed;
+  >:global(.icon) {
+    font-size: 20px;
+    margin-right: $padding-base-horizontal-computed;
+  }
+}
+.actions{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-bottom: 3*$padding-base-vertical-computed;
+}
+.jobs{
+  margin-bottom: 5*$padding-base-vertical-computed;
+}
