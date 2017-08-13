@@ -5,6 +5,7 @@ import createStore from './store'
 import { compose, spy, done } from './util'
 
 /**
+  trigger: 'unique', 'unmount', default is unmount
   args support:
     - { funcs: [funcNames], trigger: '' }
     - [{ funcs: [funcNames], trigger: '' }]
