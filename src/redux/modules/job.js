@@ -88,6 +88,17 @@ export const actions = {
       response: { ...job, id: jobId },
     }
   },
+  setFilter: function (filter) {
+    return {
+      type: Types.updateFilter,
+      payload: filter,
+    }
+  },
+  freedFilter: function () {
+    return {
+      type: Types.freedFilter,
+    }
+  }
 }
 
 export default handleActions({
@@ -97,6 +108,12 @@ export default handleActions({
   [Types.get]: handleHttp('GET', {
     success: handlers.save,
   }),
+  [Types.updateFilter]: function (state, { payload }) {
+    return state.update('ui', (ui) => ui.set('filter', payload))
+  },
+  [Types.freedFilter]: function (state) {
+    return state.update('ui', (ui) => ui.delete('filter'))
+  },
   [FlowTypes.freed]: function (state) {
     return initialState
   }

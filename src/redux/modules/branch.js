@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions'
+import FlowTypes from './flowType'
 
 import { handleHttp } from '../util'
 
@@ -31,13 +32,17 @@ export const actions = {
   },
 }
 
+function freedHanlder (state, { id }) {
+  return state.update('data', (data) => data.delete(id))
+    .update('ui', (ui) => ui.delete(id))
+}
+
 export default handleActions({
   [Types.query]: handleHttp('QUERY', {
-    success: function (state, { id, payload }) {
-      return state.update('data', (data) => data.setIn(id, fromJS(payload)))
+    success: function (state, { indicator: { id }, payload }) {
+      return state.update('data', (data) => data.set(id, fromJS(payload)))
     },
   }),
-  [Types.freed]: function (state, { id }) {
-    return state.update('data', (data) => data.delete(id))
-  },
+  [Types.freed]: freedHanlder,
+  [FlowTypes.freed]: freedHanlder,
 }, initialState)
