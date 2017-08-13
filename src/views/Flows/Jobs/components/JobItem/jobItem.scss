@@ -1,0 +1,56 @@
+@import 'variables';
+
+.job{
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 2*$padding-base-vertical-computed
+    2*$padding-base-horizontal-computed;
+  border-bottom: 1px solid $color-hr;
+  cursor: pointer;
+}
+.icon{
+  flex: 0 2 300px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+}
+.info{
+  flex: 1 1 600px;
+  margin-right: 3*$padding-base-vertical-computed;
+  border-right: 1px solid $color-hr;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  >small{
+    color: $color-muted;
+  }
+}
+.detail{
+  flex: 0 0 240px;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-small;
+}
+.itemRow{
+  display: flex;
+  align-items: center;
+}
+.item{
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  >span{
+    overflow: hidden;
+  }
+}
+.name{
+  flex: 0 0 60px;
+  color: $color-muted;
+}
+.value{
+  flex: 1 1 auto;
+}
