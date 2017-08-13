@@ -139,8 +139,10 @@ export default class Select extends Component {
   }
 
   handleSelect = (v) => {
-    const { onChange } = this.props
-    onChange && onChange(v)
+    const { onChange, value } = this.props
+    if (value !== v) {
+      onChange && onChange(v)
+    }
     this.close()
   }
 
