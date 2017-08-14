@@ -58,11 +58,6 @@ export class SignIn extends PureComponent {
     !unauthored && redirect('/')
   }
 
-  submit = (values) => {
-    // print the form values to the console
-    console.info(values)
-  }
-
   render () {
     const { i18n, classNames, signIn, email } = this.props
 
