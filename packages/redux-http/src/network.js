@@ -1,4 +1,5 @@
 import { Axios } from 'axios'
+import defaults from 'axios/lib/defaults'
 
 function isString (v) {
   return typeof v === 'string'
@@ -32,6 +33,19 @@ export default class HttpProvider extends Axios {
     if (conf.params && ['post', 'put', 'patch'].includes(conf.method)) {
       conf.data = { ...conf.data, ...conf.params }
       conf.params = undefined
+    }
+    const { transformResponse, transformRequest } = conf
+    if (transformResponse) {
+      conf.transformResponse = [
+        ...defaults.transformResponse,
+        ...transformResponse
+      ]
+    }
+    if (transformRequest) {
+      conf.transformRequest = [
+        ...defaults.transformRequest,
+        ...transformRequest
+      ]
     }
     return super.request(conf)
   }
