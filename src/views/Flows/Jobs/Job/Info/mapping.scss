@@ -1,0 +1,47 @@
+@import 'variables';
+
+$col-height: 40px;
+
+.table{
+  width: 100%;
+  font-weight: bold;
+  color: $color-black;
+  margin-bottom: 2*$padding-base-horizontal-computed;
+  // table-layout: fixed;
+  >tbody{
+    >tr{
+      border-bottom: 1px solid $color-hr;
+      >td{
+        // height: $control-lg-size;
+        line-height: $col-height - 2*1.5*$padding-base-vertical-computed;
+        padding: 1.5*$padding-base-vertical-computed
+          3*$padding-base-horizontal-computed;
+      }
+    }
+    >.legend{
+      border: none;
+      >td{
+        height: $col-height;
+        line-height: $col-height;
+        padding: 0 2*$padding-base-horizontal-computed;
+        background-color: #EDEDED;
+      }
+    }
+  }
+}
+.name{
+  width: 300px;
+}
+
+.value{
+  font-weight: normal;
+  >a[href^='http']{
+    text-decoration: underline;
+  }
+}
+.between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}

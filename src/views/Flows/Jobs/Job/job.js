@@ -75,10 +75,15 @@ export class JobContainer extends Component {
   }
 
   renderContent () {
-    const { id, i18n, location, params: { flowId, jobId } } = this.props
+    const {
+      id, i18n, location,
+      params: { flowId, jobId },
+      children
+    } = this.props
     const base = { ...location, pathname: `/flows/${flowId}/jobs/${jobId}` }
     return <div className={classes.content}>
       <JobNavbar id={id} i18n={i18n} base={base} />
+      {children}
     </div>
   }
 
