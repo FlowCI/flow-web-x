@@ -11,14 +11,23 @@ export default function (config = {}) {
   const HANDLE_TYPE = config.type
   return function ({ dispatch, getState }) {
     return (next) => (action) => {
-      const { url, type } = action
-      if (!url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
+      const { mock, url, type } = action
+      if (!mock || !url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
         return next(action)
       }
-      const { name, indicator, delay, response } = action
+
+      const {
+        name, indicator,
+        delay, transformResponse, response
+      } = action
+
       const promise = makeCancelable(new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve({ status: 200, data: response })
+          let result = response
+          if (transformResponse) {
+            result = transformResponse.reduce((data, f) => f(data), result)
+          }
+          resolve({ status: 200, data: result })
         }, delay || 100)
       }))
       let result = promise
