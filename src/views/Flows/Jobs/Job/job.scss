@@ -1,1 +1,6 @@
 @import 'variables';
+.container{
+  padding: 2*$padding-base-vertical-computed
+    2*$padding-base-horizontal-computed;
+  margin-bottom: 4*$padding-base-horizontal-computed;
+}
