@@ -42,7 +42,7 @@ export class JobItem extends Component {
     const outputs = job.get('outputs', new Map())
     return <div className={classes.job} onClick={this.handleClick}>
       <span className={classes.icon}>
-        <i className='icon icon-checked' />
+        <i className='icon icon-check' />
         {i18n('构建成功')}
       </span>
       <div className={classes.info}>
