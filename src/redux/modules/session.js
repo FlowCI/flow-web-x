@@ -4,6 +4,12 @@ import Types from './sessionType'
 import { fromJS } from 'immutable'
 
 const initialState = fromJS({
+  user: {
+    id: '123123123123',
+    name: 'wcy',
+    email: 'cy@fir.im',
+    avatar: 'https://avatars0.githubusercontent.com/u/5201638'
+  },
   ui: {},
 })
 
