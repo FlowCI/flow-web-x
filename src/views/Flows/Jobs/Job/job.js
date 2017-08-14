@@ -11,6 +11,7 @@ import autoCancel from 'react-redux-http'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/job'
+import { actions as uiActions } from 'redux/modules/ui'
 
 import Loading from 'components/Loading'
 
@@ -38,7 +39,9 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    get: actions.get
+    get: actions.get,
+    setBackUrl: uiActions.setBackUrl,
+    freedBackUrl: uiActions.freedBackUrl
   }, dispatch)
 }
 
@@ -53,6 +56,8 @@ export class JobContainer extends Component {
     children: PropTypes.node,
 
     get: PropTypes.func.isRequired,
+    setBackUrl: PropTypes.func.isRequired,
+    freedBackUrl: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired
   }
 
@@ -64,8 +69,16 @@ export class JobContainer extends Component {
   }
 
   componentDidMount () {
-    const { get, id } = this.props
+    const {
+      get, id, setBackUrl,
+      location, params: { flowId } } = this.props
     get(id)
+    setBackUrl({ ...location, pathname: `/flows/${flowId}/jobs` })
+  }
+
+  componentWillUnmount () {
+    const { freedBackUrl } = this.props
+    freedBackUrl()
   }
 
   renderLoading () {

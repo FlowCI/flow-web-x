@@ -61,8 +61,8 @@ export class JobsView extends Component {
 
     loading: PropTypes.bool,
 
-    location: PropTypes.object.isRequred,
-    params: PropTypes.object.isRequred,
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
 
     children: PropTypes.node,
 

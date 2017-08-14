@@ -12,11 +12,11 @@ import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 import classes from './navbar.scss'
 
 function mapStateToProps (state, props) {
-  const { session } = state
+  const { session, ui } = state
   return {
     authored: session.has('user'),
     avatar: session.getIn(['user', 'avatar']),
-    backUrl: '',
+    backUrl: ui.get('backUrl'),
   }
 }
 
@@ -40,7 +40,7 @@ export class Navbar extends PureComponent {
     /*
       if backUrl isnt empty, the brand will hide and show back button
     */
-    backUrl: PropTypes.string,
+    backUrl: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 
     locatonKey: PropTypes.any,
 
