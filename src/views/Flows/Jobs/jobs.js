@@ -127,7 +127,7 @@ export class JobsView extends Component {
     </div>
   }
 
-  render () {
+  renderContent () {
     const { i18n, flowId, loading } = this.props
     return <div className={classes.container}>
       {this.renderFlowHeader()}
@@ -138,6 +138,11 @@ export class JobsView extends Component {
       {this.renderJobs()}
       {loading && this.renderLoading()}
     </div>
+  }
+
+  render () {
+    const { children } = this.props
+    return children || this.renderContent()
   }
 }
 
