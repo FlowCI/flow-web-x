@@ -1,0 +1,28 @@
+@import 'variables';
+
+$height: 50px;
+
+.header{
+  display: flex;
+  align-items: center;
+  color: #fff;
+  height: $height;
+  border-radius: $border-radius-base;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+  margin-bottom: 2*$padding-base-horizontal-computed;
+  &:global(.SUCCESS) {
+    background-color: $color-success;
+  }
+}
+.icon{
+  flex: 0 0 120px;
+}
+.list{
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  >li{
+    padding: 0px 1.5*$padding-base-horizontal-computed;
+    border-left: 1px solid;
+  }
+}
