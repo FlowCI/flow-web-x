@@ -4,3 +4,8 @@
     2*$padding-base-horizontal-computed;
   margin-bottom: 4*$padding-base-horizontal-computed;
 }
+
+.content{
+  border: 1px solid $color-hr;
+  border-radius: $border-radius-base;
+}

@@ -14,7 +14,7 @@ import { actions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
 
-// import JobNavbar from './components/JobNavbar'
+import JobNavbar from './components/JobNavbar'
 import JobStatusHeader from './components/JobStatusHeader'
 
 import classes from './job.scss'
@@ -48,6 +48,8 @@ export class JobContainer extends Component {
     isNotFound: PropTypes.bool,
     loaded: PropTypes.bool,
 
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
     children: PropTypes.node,
 
     get: PropTypes.func.isRequired,
@@ -73,9 +75,10 @@ export class JobContainer extends Component {
   }
 
   renderContent () {
-    // const { children } = this.props
-    return <div>
-      Hello world
+    const { id, i18n, location, params: { flowId, jobId } } = this.props
+    const base = { ...location, pathname: `/flows/${flowId}/jobs/${jobId}` }
+    return <div className={classes.content}>
+      <JobNavbar id={id} i18n={i18n} base={base} />
     </div>
   }
 
