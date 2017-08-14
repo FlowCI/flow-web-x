@@ -5,7 +5,7 @@ function isReturnUndefined (options) {
 }
 
 function getResource (resource, paths) {
-  if (!is.object(resource)) {
+  if (!is.object(resource) || is.undefined(paths)) {
     return undefined
   }
   const array = paths.split('.')
