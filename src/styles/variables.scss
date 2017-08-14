@@ -67,6 +67,7 @@ $layout-padding-horizontal: 4*$padding-base-horizontal;
 
 // Z-index
 $zindex-navbar: 100!default;
+$zindex-select: $zindex-navbar - 1;
 
 // Arrow
 $arrow-size: 6px!default;

@@ -12,7 +12,7 @@
   position: relative;
   display: inline-flex;
   font-size: $font-size-base;
-  z-index: 1000;
+  z-index: $zindex-select;
 }
 
 .input{
