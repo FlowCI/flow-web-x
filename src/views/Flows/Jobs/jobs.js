@@ -7,8 +7,10 @@ import language from 'util/language'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import autoCancel from 'react-redux-http'
 
+import { push } from 'react-router-redux'
+
+import autoCancel from 'react-redux-http'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/flow'
@@ -41,6 +43,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    redirect: push
   }, dispatch)
 }
 
@@ -58,9 +61,13 @@ export class JobsView extends Component {
 
     loading: PropTypes.bool,
 
+    location: PropTypes.object.isRequred,
+    params: PropTypes.object.isRequred,
+
     children: PropTypes.node,
 
     i18n: PropTypes.func.isRequired,
+    redirect: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired,
   }
 
@@ -79,6 +86,14 @@ export class JobsView extends Component {
   query (props = this.props, preJob) {
     const { filter, query, flowId } = props
     query(flowId, filter, preJob)
+  }
+
+  handleClick = (id, job) => {
+    const { redirect, location, params } = this.props
+    redirect({
+      ...location,
+      pathname: `/flows/${params.flowId}/jobs/${id}`
+    })
   }
 
   renderFlowHeader () {
@@ -100,7 +115,8 @@ export class JobsView extends Component {
     if (jobIds.size) {
       return <div className={classes.jobs}>
         <hr />
-        {jobIds.map((id) => <JobItem id={id} key={id} i18n={i18n} />)}
+        {jobIds.map((id) => <JobItem id={id} key={id}
+          i18n={i18n} onClick={this.handleClick} />)}
       </div>
     }
   }

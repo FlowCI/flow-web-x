@@ -5,8 +5,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Map } from 'immutable'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
 
 import classes from './jobItem.scss'
 
@@ -18,23 +16,18 @@ function mapStateToProps (state, { id }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    redirect: push
-  }, dispatch)
-}
-
 export class JobItem extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     job: ImmutablePropTypes.map.isRequired,
 
+    onClick: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
-    redirect: PropTypes.func.isRequired,
   }
 
-  renderItems () {
-
+  handleClick = () => {
+    const { onClick, id, job } = this.props
+    onClick(id, job)
   }
 
   renderItem (name, value) {
@@ -45,12 +38,12 @@ export class JobItem extends Component {
   }
 
   render () {
-    const { job } = this.props
+    const { job, i18n } = this.props
     const outputs = job.get('outputs', new Map())
-    return <div className={classes.job}>
+    return <div className={classes.job} onClick={this.handleClick}>
       <span className={classes.icon}>
         <i className='icon icon-checked' />
-        构建成功
+        {i18n('构建成功')}
       </span>
       <div className={classes.info}>
         <h4>
@@ -63,16 +56,16 @@ export class JobItem extends Component {
       </div>
       <div className={classes.detail}>
         <div className={classes.itemRow}>
-          {this.renderItem('Commit', '-')}
-          {this.renderItem('Compare', '-')}
+          {this.renderItem(i18n('Commit'), '-')}
+          {this.renderItem(i18n('Compare'), '-')}
         </div>
         <div className={classes.itemRow}>
-          {this.renderItem('Builded', '1小时前')}
-          {this.renderItem('Duration', '20秒')}
+          {this.renderItem(i18n('Builded'), '1小时前')}
+          {this.renderItem(i18n('Duration'), '20秒')}
         </div>
       </div>
     </div>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobItem)
+export default connect(mapStateToProps)(JobItem)
