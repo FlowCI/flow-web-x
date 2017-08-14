@@ -28,6 +28,7 @@
     "express": "^4.14.0",
     "immutable": "^3.8.1",
     "keycode": "^2.1.9",
+    "moment": "^2.18.1",
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
