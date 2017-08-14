@@ -16,24 +16,22 @@ export const actions = {
     return {
       url: '/agents',
       name: Types.query,
+      transformResponse: [function (data) {
+        return data.map((d) => {
+          d.id = d.zoneWithName
+          return d
+        })
+      }],
       response: [{
-        'path': {
-          'zone': 'Mac',
-          'name': 'Mini'
-        },
-        'flowName': 'xiaomi_ios_dev',
-        'agentStatus': 'BUSY',
-        'number': 10,
-        'branch': 'master',
+        'name': 'defaultp',
+        'zone': 'default',
+        'agentStatus': 'IDLE',
+        'zoneWithName': 'defaultp - default'
       }, {
-        'path': {
-          'zone': 'Mac',
-          'name': 'Mini2'
-        },
-        'flowName': 'xiaomi_ios_dev',
-        'agentStatus': 'BUSY',
-        'number': 10,
-        'branch': 'master',
+        'name': 'fir-machine-1',
+        'zone': 'default',
+        'agentStatus': 'IDLE',
+        'zoneWithName': 'fir-machine-1 - default'
       }],
     }
   },
@@ -42,9 +40,6 @@ export const actions = {
 export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
-      payload.forEach((agent) => {
-        agent.id = agent.path.zone + agent.path.name
-      })
       return state.set('list', fromJS(payload))
     },
   }),

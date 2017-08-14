@@ -55,36 +55,59 @@ function cloneAndRepeat (obj, size) {
   return array
 }
 
-export const actions = {
-  query: function (flowId, lastest) {
-    return {
-      url: '/flows/:flow_id/flowId',
-      name: Types.query,
-      params: {
-        flow_id: flowId,
-        create_at: lastest ? lastest.create_at : undefined, // 用于分页
-      },
-      indicator: {
-        reverse: !!lastest, // 正序还是倒叙
-      },
-      response: cloneAndRepeat(job, 10).map((j, i) => {
-        j.number = (lastest ? lastest.number + i : i) + 1
-        j.id = `jobxxxxx${j.number}`
-        return j
-      }),
+function queryAfterLastest (flowId, filter, lastestId) {
+  return function ({ getState, dispatch }) {
+    const state = getState()
+    const job = state.job.getIn(['data', lastestId])
+    if (!job) {
+      return query(flowId, filter)
     }
+    // do something other
+  }
+}
+
+function query (flowId, filter) {
+  return {
+    url: '/jobs',
+    name: Types.query,
+    params: {
+      flowName: flowId,
+    },
+    transformResponse: [function (data) {
+      return data.map((d) => {
+        d.id = `${d.number}`
+        return d
+      })
+    }],
+    response: cloneAndRepeat(job, 10).map((j, i) => {
+      j.number = i + 1
+      j.id = `jobxxxxx${j.number}`
+      return j
+    }),
+  }
+}
+
+export const actions = {
+  query: function (flowId, filter, lastestId) {
+    const fn = lastestId ? queryAfterLastest : query
+    return fn(flowId, filter, lastestId)
   },
-  get: function (jobId) {
+  get: function (flowId, jobId) {
     return {
       name: Types.get,
-      url: 'jobs/:job_id',
+      url: 'jobs/:flow_id/:job_id',
       params: {
+        flow_id: flowId,
         job_id: jobId,
       },
       indicator: {
         jobId,
         id: jobId,
       },
+      transformResponse: [function (d) {
+        d.id = `${d.number}`
+        return d
+      }],
       response: { ...job, id: jobId },
     }
   },

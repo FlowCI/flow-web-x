@@ -11,37 +11,51 @@ export const actions = {
     return {
       url: '/flows',
       name: Types.query,
-
+      transformResponse: [function (data) {
+        return data.map((d) => {
+          d.id = d.name
+          return d
+        })
+      }],
       response: [{
-        id: 'xiaomi_ios_dev',
-        path: 'sss',
-        name: 'xiaomi_ios_dev',
-        status: 'success',
+        'path': '/flow',
+        'name': 'flow',
+        'createdAt': 1502418628,
+        'updatedAt': 1502418628
       }, {
-        id: 'xiaomi_ios_ent',
-        path: 'xxxx',
-        name: 'xiaomi_ios_ent',
-        status: 'failure',
+        'path': '/flow-a',
+        'name': 'flow-a',
+        'createdAt': 1502691673,
+        'updatedAt': 1502691686
+      }, {
+        'path': '/flow-test',
+        'name': 'flow-test',
+        'createdAt': 1502691156,
+        'updatedAt': 1502691269
       }]
     }
   },
   get: function (flowId) {
+    // 暂时没有
     return {
-      url: '/flows/:path',
-      name: Types.get,
-      params: {
-        path: flowId,
-      },
-      indicator: {
-        id: flowId,
-      },
-      response: {
-        id: flowId,
-        path: flowId,
-        name: 'xiaomi_ios_dev',
-        status: 'success',
-      }
+      type: 'UNSUPPORTED'
     }
+    // return {
+    //   url: '/flows/:path',
+    //   name: Types.get,
+    //   params: {
+    //     path: flowId,
+    //   },
+    //   indicator: {
+    //     id: flowId,
+    //   },
+    //   response: {
+    //     id: flowId,
+    //     path: flowId,
+    //     name: 'xiaomi_ios_dev',
+    //     status: 'success',
+    //   }
+    // }
   },
   freed: function (flowId) {
     return {

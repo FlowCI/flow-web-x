@@ -27,11 +27,12 @@ import classes from './job.scss'
 
 function mapStateToProps (state, props) {
   const { job } = state
-  const { params: { jobId } } = props
+  const { params: { jobId, flowId, } } = props
   const status = job.getIn(['ui', jobId, 'GET'])
   return {
     key: jobId,
     id: jobId,
+    flowId: flowId,
     // isNotFound: false,
     loaded: status === STATUS.success,
   }
@@ -48,6 +49,7 @@ function mapDispatchToProps (dispatch) {
 export class JobContainer extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
+    flowId: PropTypes.string.isRequired,
     // isNotFound: PropTypes.bool,
     loaded: PropTypes.bool,
 
@@ -70,9 +72,10 @@ export class JobContainer extends Component {
 
   componentDidMount () {
     const {
-      get, id, setBackUrl,
-      location, params: { flowId } } = this.props
-    get(id)
+      get, flowId, id,
+      setBackUrl, location
+    } = this.props
+    get(flowId, id)
     setBackUrl({ ...location, pathname: `/flows/${flowId}/jobs` })
   }
 

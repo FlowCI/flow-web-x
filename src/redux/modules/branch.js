@@ -13,6 +13,7 @@ export const actions = {
   query: function (flowId) {
     return {
       url: '/branches',
+      mock: true,
       name: Types.query,
       indicator: {
         id: flowId,

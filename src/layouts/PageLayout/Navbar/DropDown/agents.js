@@ -33,10 +33,7 @@ export class AgentsDropDown extends PureComponent {
   static propTypes = {
     agents: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
       id: PropTypes.string.isRequired,
-      path: ImmutablePropTypes.contains({
-        zone: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-      }).isRequired,
+      zoneWithName: PropTypes.string.isRequired,
       agentStatus: PropTypes.string.isRequired,
 
       flowName: PropTypes.string,
@@ -55,8 +52,6 @@ export class AgentsDropDown extends PureComponent {
   }
 
   renderAgent (agent) {
-    const path = agent.get('path')
-
     const flow = agent.get('flowName')
     const number = agent.get('number')
     const branch = agent.get('branch')
@@ -66,7 +61,7 @@ export class AgentsDropDown extends PureComponent {
       <td className={classes.statusCell}>
         <span className={`${classes.circle} ${agent.get('agentStatus')}`} />
       </td>
-      <td>{path.get('zone')} - {path.get('name')}</td>
+      <td>{agent.get('zoneWithName')}</td>
       <td>{job}</td>
     </tr>
   }
