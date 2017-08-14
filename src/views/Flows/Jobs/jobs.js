@@ -68,7 +68,7 @@ export class JobsView extends Component {
 
     i18n: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
-    query: PropTypes.func.isRequired,
+    query: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
   }
 
   static defaultProps = {
@@ -79,13 +79,17 @@ export class JobsView extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.filter !== nextProps.filter) {
-      this.query(nextProps)
+      this.queryWithFilter(nextProps)
     }
   }
 
-  query (props = this.props, preJob) {
+  queryWithFilter (props = this.props, preJob) {
     const { filter, query, flowId } = props
     query(flowId, filter, preJob)
+  }
+
+  handleMore = (e) => {
+    this.queryWithFilter(this.props)
   }
 
   handleClick = (id, job) => {

@@ -32,7 +32,7 @@ function mapStateToProps (state, props) {
   return {
     key: jobId,
     id: jobId,
-    isNotFound: false,
+    // isNotFound: false,
     loaded: status === STATUS.success,
   }
 }
@@ -48,7 +48,7 @@ function mapDispatchToProps (dispatch) {
 export class JobContainer extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    isNotFound: PropTypes.bool,
+    // isNotFound: PropTypes.bool,
     loaded: PropTypes.bool,
 
     location: PropTypes.object.isRequired,
