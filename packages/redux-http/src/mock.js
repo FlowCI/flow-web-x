@@ -9,34 +9,40 @@ import makeIndicator from './indicator'
 
 export default function (config = {}) {
   const HANDLE_TYPE = config.type
+  const database = config.database
+
   return function ({ dispatch, getState }) {
     return (next) => (action) => {
-      const { mock, url, type } = action
-      if (!mock || !url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
+      const { name, url, type } = action
+      if (!name || !url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
         return next(action)
       }
 
       const {
-        name, indicator,
-        delay, transformResponse, response
+        indicator, delay,
+        transformResponse
       } = action
 
-      const promise = makeCancelable(new Promise((resolve, reject) => {
-        setTimeout(() => {
-          let result = response
-          if (transformResponse) {
-            result = transformResponse.reduce((data, f) => f(data), result)
-          }
-          resolve({ status: 200, data: result })
-        }, delay || 100)
-      }))
-      let result = promise
-      if (name) {
+      const responseHandle = database(name)
+      if (responseHandle) {
+        let response = responseHandle(action)
+        if (transformResponse) {
+          response = transformResponse.reduce((data, f) => f(data), response)
+        }
+
+        const promise = makeCancelable(new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve({ status: 200, data: response })
+          }, delay || 100)
+        }))
+
         const indicatorAction = { type: name, indicator }
-        result = makeIndicator(dispatch, promise, indicatorAction)
+        const result = makeIndicator(dispatch, promise, indicatorAction)
+
         copyCancel(result, promise)
+        return result
       }
-      return result
+      console.error('unfound response', action)
     }
   }
 }

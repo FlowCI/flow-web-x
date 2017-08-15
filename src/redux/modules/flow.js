@@ -13,75 +13,43 @@ export const actions = {
     return {
       url: '/flows',
       name: Types.query,
-      mock: true,
       transformResponse: [function (data) {
         return data.map((d) => {
           d.id = d.name
           return d
         })
-      }],
-      response: [{
-        'path': '/flow',
-        'name': 'flow',
-        'createdAt': 1502418628,
-        'updatedAt': 1502418628
-      }, {
-        'path': '/flow-a',
-        'name': 'flow-a',
-        'createdAt': 1502691673,
-        'updatedAt': 1502691686
-      }, {
-        'path': '/flow-test',
-        'name': 'flow-test',
-        'createdAt': 1502691156,
-        'updatedAt': 1502691269
       }]
     }
   },
   get: function (flowId) {
-    // 暂时没有
     return {
-      type: 'UNSUPPORTED'
+      url: '/flows/:path',
+      name: Types.get,
+      params: {
+        path: flowId,
+      },
+      indicator: {
+        id: flowId,
+      },
+      response: {
+        id: flowId,
+        path: flowId,
+        name: 'xiaomi_ios_dev',
+        status: 'success',
+      }
     }
-    // return {
-    //   url: '/flows/:path',
-    //   name: Types.get,
-    //   params: {
-    //     path: flowId,
-    //   },
-    //   indicator: {
-    //     id: flowId,
-    //   },
-    //   response: {
-    //     id: flowId,
-    //     path: flowId,
-    //     name: 'xiaomi_ios_dev',
-    //     status: 'success',
-    //   }
-    // }
   },
   queryLastJob: function (flowIds) {
     return {
       name: JobTypes.queryLastest,
       url: 'jobs/status/latest',
       method: 'post',
-      mock: true,
       data: flowIds,
       transformResponse: [function (data) {
         return data.reduce(function (s, d) {
           s[d.nodeName] = d
           return s
         }, {})
-      }],
-      response: [{
-        'nodeName': 'flow',
-        status: 'SUCCESS',
-      }, {
-        'nodeName': 'flow-a',
-        status: 'SUCCESS',
-      }, {
-        'nodeName': 'flow-test',
-        status: 'SUCCESS',
       }]
     }
   },

@@ -21,18 +21,7 @@ export const actions = {
           d.id = d.zoneWithName
           return d
         })
-      }],
-      response: [{
-        'name': 'defaultp',
-        'zone': 'default',
-        'agentStatus': 'IDLE',
-        'zoneWithName': 'defaultp - default'
-      }, {
-        'name': 'fir-machine-1',
-        'zone': 'default',
-        'agentStatus': 'IDLE',
-        'zoneWithName': 'fir-machine-1 - default'
-      }],
+      }]
     }
   },
 }

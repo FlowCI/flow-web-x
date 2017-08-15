@@ -7,54 +7,6 @@ import FlowTypes from './flowType'
 
 const initialState = defaultInitState
 
-const job = {
-  'id': '17080916210140717520056',
-  'number': 1,
-  'status': 'SUCCESS',
-  'startedAt': 1502266861,
-  'finishedAt': 1502266861,
-  'createdAt': 1502266861,
-  'updatedAt': 1502266878,
-  'outputs': {
-    'FLOW_GIT_COMMIT_ID': {
-      desc: '提交的Id',
-      value: 'beccde0305127640974dc96ffdfc490febe0e7bf',
-    },
-    'FLOW_WORKSPACE': {
-      desc: '',
-      value: '~/flow-platform/test/id/1/1/3',
-    },
-    'FLOW_GIT_CHANGELOG': {
-      desc: '描述的信息',
-      value: 'Merge branch \'hotfix/artifact\'',
-    },
-    'FLOW_VERSION': {
-      desc: '',
-      value: '1.0.0',
-    },
-    'FLOW_GIT_COMPARE_ID': {
-      desc: '变更对比',
-      value: 'a16b3512e93d...beccde030512',
-    },
-    'FLOW_GIT_BRANCH': {
-      desc: '分支',
-      value: 'master',
-    },
-    'FLOW_GIT_COMMITER':{
-      desc: '提交者',
-      value: 'WILL',
-    }
-  }
-}
-
-function cloneAndRepeat (obj, size) {
-  const array = []
-  for (let i = 0; i < size; i++) {
-    array.push({ ...obj })
-  }
-  return array
-}
-
 function queryAfterLastest (flowId, filter, lastestId) {
   return function ({ getState, dispatch }) {
     const state = getState()
@@ -78,12 +30,7 @@ function query (flowId, filter) {
         d.id = `${d.number}`
         return d
       })
-    }],
-    response: cloneAndRepeat(job, 10).map((j, i) => {
-      j.number = i + 1
-      j.id = `jobxxxxx${j.number}`
-      return j
-    }),
+    }]
   }
 }
 
@@ -95,20 +42,18 @@ export const actions = {
   get: function (flowId, jobId) {
     return {
       name: Types.get,
-      url: 'jobs/:flow_id/:job_id',
+      url: 'jobs/:flowId/:jobId',
       params: {
-        flow_id: flowId,
-        job_id: jobId,
+        flowId: flowId,
+        jobId: jobId,
       },
       indicator: {
-        jobId,
         id: jobId,
       },
       transformResponse: [function (d) {
         d.id = `${d.number}`
         return d
       }],
-      response: { ...job, id: jobId },
     }
   },
   setFilter: function (filter) {

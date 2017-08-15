@@ -20,13 +20,6 @@ export const actions = {
       method: 'post',
       params: user,
       name: Types.signIn,
-      mock: true,
-      response: {
-        id: '123123123123',
-        name: 'wcy',
-        email: 'cy@fir.im',
-        avatar: 'https://avatars0.githubusercontent.com/u/5201638'
-      }
     }
   },
   signOut: function () { return { type: Types.signOut } },
