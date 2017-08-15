@@ -70,7 +70,7 @@ export class AgentsDropDown extends PureComponent {
     const { i18n, agents } = this.props
     return <div>
       <div className={classes.header}>
-        {i18n('Agent 状态机')}
+        {i18n('Agent 状态')}
       </div>
       <table className={classes.table}>
         <thead>
