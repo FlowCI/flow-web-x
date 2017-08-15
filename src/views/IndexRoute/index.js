@@ -8,8 +8,6 @@ import { push } from 'react-router-redux'
 import autoCancel from 'react-redux-http'
 import { STATUS } from 'redux-http'
 
-import { actions } from 'redux/modules/flow'
-
 import Loading from 'components/Loading'
 
 import Guide from '../BuildGuide'
@@ -25,7 +23,6 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    query: actions.query,
     redirect: push,
   }, dispatch)
 }
@@ -35,7 +32,6 @@ export class HomeWrapper extends Component {
     flowId: PropTypes.string,
     loaded: PropTypes.bool,
 
-    query: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
   }
 
@@ -45,11 +41,9 @@ export class HomeWrapper extends Component {
   }
 
   componentDidMount () {
-    const { flowId, query } = this.props
+    const { flowId } = this.props
     if (flowId) {
       this.props.redirect(`/flows/${flowId}`)
-    } else {
-      query()
     }
   }
 

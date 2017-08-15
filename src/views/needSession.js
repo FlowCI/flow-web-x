@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import { STATUS } from 'redux-http'
 
 import { push } from 'react-router-redux'
+import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
 
@@ -21,6 +22,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     redirect: push,
+    queryFlows: actions.query
   }, dispatch)
 }
 
@@ -30,13 +32,16 @@ export class NeedSession extends Component {
     authoring: PropTypes.bool,
     children: PropTypes.node,
 
-    redirect: PropTypes.func.isRequired
+    redirect: PropTypes.func.isRequired,
+    queryFlows: PropTypes.func.isRequired,
   }
 
   componentDidMount () {
-    const { authored, authoring } = this.props
+    const { authored, queryFlows, authoring } = this.props
     if (!authored && !authoring) {
       this.toSignIn()
+    } else {
+      queryFlows()
     }
   }
 
@@ -57,7 +62,7 @@ export class NeedSession extends Component {
     if (authored) {
       return children
     } else if (authoring) {
-      return <div>
+      return <div className='text-center'>
         <p className='hide'>正在登录中,请稍后</p>
         <Loading />
       </div>
