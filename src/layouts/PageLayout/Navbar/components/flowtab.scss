@@ -35,10 +35,12 @@ $tab-size: 40px;
   text-align: center;
   font-size: 18px;
 }
+.ENQUEUE{
 
-.success{
+}
+.SUCCESS{
   @include tab-color($color-success);
 }
-.failure{
+.FAILURE{
   @include tab-color($color-danger);
 }
