@@ -79,9 +79,9 @@ export class NavbarFlowsDropdown extends PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { flowIds } = this.props
+    const { flowIds, loaded } = this.props
     const { flowIds: nextFlowIds } = nextProps
-    if (!flowIds.size && nextFlowIds.size) {
+    if (!loaded && !flowIds.size && nextFlowIds.size) {
       this.queryJobs(nextProps)
     }
   }
