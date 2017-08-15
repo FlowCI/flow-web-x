@@ -10,11 +10,10 @@ import classes from './flowtab.scss'
 
 function mapStateToProps (state, { id }) {
   const { flow } = state
-  const f = flow.getIn(['data', id])
-  return f ? {
-    name: f.get('name'),
-    status: f.get('status'),
-  } : {}
+  return {
+    name: flow.getIn(['data', id, 'name']),
+    status: flow.getIn(['status', id, 'status']),
+  }
 }
 
 export class FlowTab extends PureComponent {
