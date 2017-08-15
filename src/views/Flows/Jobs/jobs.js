@@ -18,7 +18,7 @@ import { actions } from 'redux/modules/flow'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 
-import Filter from './components/filter'
+import Filter from './components/Filter'
 import JobItem from './components/JobItem'
 
 import classes from './jobs.scss'
