@@ -1,10 +1,12 @@
 import { handleActions } from 'redux-actions'
+import { Map, fromJS } from 'immutable'
 
 import { handleHttp } from 'redux/util'
 import { defaultInitState, handlers } from 'redux/handler'
 import Types from './flowType'
+import JobTypes from './jobType'
 
-const initialState = defaultInitState
+const initialState = defaultInitState.set('status', new Map())
 
 export const actions = {
   query: function () {
@@ -57,6 +59,21 @@ export const actions = {
     //   }
     // }
   },
+  getLatestJob: function (flowIds) {
+    return {
+      name: JobTypes.getLatest,
+      url: 'jobs/status/latest',
+      method: 'post',
+      data: flowIds,
+      transformResponse: [function (data) {
+        data[0].status = 'FAILURE'
+        return data.reduce(function (s, d) {
+          s[d.nodeName] = d
+          return s
+        }, {})
+      }]
+    }
+  },
   freed: function (flowId) {
     return {
       type: Types.freed,
@@ -69,7 +86,11 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
-
+  [JobTypes.getLatest]: handleHttp('QUERY_JOBS', {
+    success: function (state, { payload }) {
+      return state.set('status', fromJS(payload))
+    }
+  }),
   [Types.get]: handleHttp('GET', {
     success: handlers.save,
   }),
