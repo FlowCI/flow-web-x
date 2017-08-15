@@ -8,8 +8,7 @@ import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
 import { routerMiddleware } from 'react-router-redux'
 // import httpMiddleware from 'redux-http'
-import httpMockMiddleware from 'redux-http/src/mock'
-import database from 'database'
+import httpMockMiddleware from 'mock'
 
 import { resquestHeaders, log } from './middlewares'
 
@@ -22,7 +21,7 @@ const createStore = (initialState = {}, history) => {
     routerMiddleware(history),
     log,
     resquestHeaders,
-    httpMockMiddleware({ database: database }),
+    httpMockMiddleware(),
     // httpMiddleware({
     //   baseURL: __API__
     // }),

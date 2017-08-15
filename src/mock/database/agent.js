@@ -10,7 +10,7 @@ export default {
     }, {
       'name': 'fir-machine-1',
       'zone': 'default',
-      'agentStatus': 'IDLE',
+      'agentStatus': 'BUSY',
       'zoneWithName': 'fir-machine-1 - default'
     }]
   },
