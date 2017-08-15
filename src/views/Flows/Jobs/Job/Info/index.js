@@ -59,7 +59,9 @@ export class JobInfo extends Component {
       <Entry name='Compare' value={<a target='_blank'>
         {outputs.getIn(['FLOW_GIT_COMPARE_ID', 'value'])}
       </a>} />
-
+      <Legend name={i18n('Agent 信息')} />
+      <Entry name='Agent'
+        value={outputs.getIn(['FLOW_AGENT_ZONE', 'value'])} />
     </Mapping>
   }
 
