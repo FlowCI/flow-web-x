@@ -54,23 +54,7 @@ $lh: 20px;
 }
 
 .statusCell{
-  font-size: 0;
   text-align: center;
-}
-.circle{
-  display: block;
-  width: 10px;
-  height: 10px;
-  margin: 5px auto;
-  border-radius: 50%;
-  background-color: $color-primary;
-
-  &:global(.success) {
-    background-color: $color-success;
-  }
-  &:global(.failure) {
-    background-color: $color-danger;
-  }
 }
 
 @media screen and (max-width: #{$width + 2*$navbar-height}) {

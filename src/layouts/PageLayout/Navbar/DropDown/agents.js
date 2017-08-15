@@ -11,6 +11,8 @@ import autoCancel from 'react-redux-http'
 import { actions } from 'redux/modules/agent'
 
 import Loading from 'components/Loading'
+import AgentIcon from 'components/Icon/Agent'
+
 import DropDown from './dropdown'
 
 import classes from './agents.scss'
@@ -59,7 +61,7 @@ export class AgentsDropDown extends PureComponent {
     const job = flow ? `${flow} / #${number} ${branch}` : ''
     return <tr key={agent.get('id')}>
       <td className={classes.statusCell}>
-        <span className={`${classes.circle} ${agent.get('agentStatus')}`} />
+        <AgentIcon status={agent.get('agentStatus')} />
       </td>
       <td>{agent.get('zoneWithName')}</td>
       <td>{job}</td>
