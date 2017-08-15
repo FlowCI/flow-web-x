@@ -20,6 +20,7 @@ export const actions = {
       method: 'post',
       params: user,
       name: Types.signIn,
+      mock: true,
       response: {
         id: '123123123123',
         name: 'wcy',
