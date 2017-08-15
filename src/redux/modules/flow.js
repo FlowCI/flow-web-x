@@ -13,6 +13,7 @@ export const actions = {
     return {
       url: '/flows',
       name: Types.query,
+      mock: true,
       transformResponse: [function (data) {
         return data.map((d) => {
           d.id = d.name
@@ -59,19 +60,40 @@ export const actions = {
     //   }
     // }
   },
-  getLatestJob: function (flowIds) {
+  queryLastJob: function (flowIds) {
     return {
-      name: JobTypes.getLatest,
+      name: JobTypes.queryLastest,
       url: 'jobs/status/latest',
       method: 'post',
+      mock: true,
       data: flowIds,
       transformResponse: [function (data) {
-        data[0].status = 'FAILURE'
         return data.reduce(function (s, d) {
           s[d.nodeName] = d
           return s
         }, {})
+      }],
+      response: [{
+        'nodeName': 'flow',
+        status: 'SUCCESS',
+      }, {
+        'nodeName': 'flow-a',
+        status: 'SUCCESS',
+      }, {
+        'nodeName': 'flow-test',
+        status: 'SUCCESS',
       }]
+    }
+  },
+  setDropDownFilter: function (filter) {
+    return {
+      type: Types.setDropDownFilter,
+      payload: filter,
+    }
+  },
+  freedDropDownFilter: function () {
+    return {
+      type: Types.freedDropDownFilter,
     }
   },
   freed: function (flowId) {
@@ -86,7 +108,7 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
-  [JobTypes.getLatest]: handleHttp('QUERY_JOBS', {
+  [JobTypes.queryLastest]: handleHttp('QUERY_JOBS', {
     success: function (state, { payload }) {
       return state.set('status', fromJS(payload))
     }
@@ -94,8 +116,14 @@ export default handleActions({
   [Types.get]: handleHttp('GET', {
     success: handlers.save,
   }),
-
+  [Types.setDropDownFilter]: function (state, { payload }) {
+    return state.update('ui', (ui) => ui.set('dropDownFilter', payload))
+  },
+  [Types.freedDropDownFilter]: function (state) {
+    return state.update('ui', (ui) => ui.delete('dropDownFilter'))
+  },
   [Types.freedAll]: function (state) {
     return initialState
-  }
+  },
+
 }, initialState)
