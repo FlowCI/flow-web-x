@@ -4,10 +4,12 @@ import PropTypes from 'prop-types'
 export default function FlowIcon ({ status, className }) {
   let iconName = ''
   switch (status) {
-    case 'success':
+    case 'ENQUEUE':
+      break
+    case 'SUCCESS':
       iconName = 'icon-check'
       break
-    case 'failure':
+    case 'FAILURE':
       iconName = 'icon-warning'
       break
   }
