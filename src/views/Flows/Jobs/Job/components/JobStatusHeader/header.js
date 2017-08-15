@@ -28,9 +28,7 @@ export class JobStatusHeader extends Component {
       <ul className={classes.list}>
         <li>{i18n('构建于4小时前', { time: job.get('startedAt') })}</li>
         <li>
-          {i18n('花费43秒', { start: job.get('startedAt'),
-            finish: job.get('finishedAt')
-          })}
+          {i18n('花费43秒', { duration: job.get('duration') })}
         </li>
         <li>{i18n('手动构建')}</li>
       </ul>
