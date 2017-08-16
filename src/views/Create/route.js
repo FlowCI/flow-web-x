@@ -1,17 +1,13 @@
 import React from 'react'
 
-import Component, { reducers } from './index'
-import { injectReducer } from 'redux/reducers'
+import Component from './index'
 
 const NoopComponent = function () {
   return <div />
 }
 
 export const createRoutes = (store) => ({
-  getComponent: function (state, callback) {
-    injectReducer(store, reducers)
-    callback(null, Component)
-  },
+  component: Component,
   indexRoute: {
     step: 0,
     component: NoopComponent,
