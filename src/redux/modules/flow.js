@@ -1,6 +1,8 @@
 import { handleActions } from 'redux-actions'
 import { Map, fromJS } from 'immutable'
 
+import is from 'util/is'
+
 import { handleHttp } from 'redux/util'
 import { defaultInitState, handlers } from 'redux/handler'
 import Types from './flowType'
@@ -8,37 +10,38 @@ import JobTypes from './jobType'
 
 const initialState = defaultInitState.set('status', new Map())
 
+const transformResponse = function (data) {
+  if (is.array(data)) {
+    data.forEach((d) => {
+      d.id = d.name
+    })
+  } else if (is.object(data) && data.name) {
+    data.id = data.name
+  }
+  return data
+}
 export const actions = {
   query: function () {
     return {
       url: '/flows',
       name: Types.query,
-      transformResponse: [function (data) {
-        return data.map((d) => {
-          d.id = d.name
-          return d
-        })
-      }]
+      transformResponse,
     }
   },
   get: function (flowId) {
     return {
       url: '/flows/:path',
       name: Types.get,
+      transformResponse,
       params: {
         path: flowId,
       },
       indicator: {
         id: flowId,
-      },
-      response: {
-        id: flowId,
-        path: flowId,
-        name: 'xiaomi_ios_dev',
-        status: 'success',
       }
     }
   },
+
   queryLastJob: function (flowIds) {
     return {
       name: JobTypes.queryLastest,
