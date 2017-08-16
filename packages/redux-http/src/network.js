@@ -5,6 +5,10 @@ function isString (v) {
   return typeof v === 'string'
 }
 
+function isFunction (v) {
+  return typeof v === 'function'
+}
+
 function getConfig (url, config) {
   // merge in config, not immutable
   const conf = isString(url) ? { ...(config || {}), url } : url
@@ -35,16 +39,16 @@ export default class HttpProvider extends Axios {
       conf.params = undefined
     }
     const { transformResponse, transformRequest } = conf
-    if (transformResponse) {
+    if (transformResponse && isFunction(transformResponse)) {
       conf.transformResponse = [
         ...defaults.transformResponse,
-        ...transformResponse
+        transformResponse
       ]
     }
-    if (transformRequest) {
+    if (transformRequest && isFunction(transformRequest)) {
       conf.transformRequest = [
         ...defaults.transformRequest,
-        ...transformRequest
+        transformRequest
       ]
     }
     return super.request(conf)
