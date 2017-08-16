@@ -22,11 +22,7 @@ export class CreateFlowContainer extends Component {
     params: PropTypes.object,
 
     activeStep: PropTypes.number.isRequired,
-    steps: PropTypes.arrayOf(PropTypes.shape({
-      icon: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      component: PropTypes.any,
-    })).isRequired,
+    steps: PropTypes.array.isRequired,
   }
 
   static defaultProps = {
@@ -37,7 +33,12 @@ export class CreateFlowContainer extends Component {
   render () {
     const { activeStep, steps, params } = this.props
     return <Stepper activeStep={activeStep} className={classes.container}>
-      {steps.map((step, i) => <Step key={i} step={step} params={params} />)}
+      {steps.map((step, i) => <Step key={i}
+        step={step} params={params}
+        activeButton={<button className={`btn ${classes.cancel}`}>
+          取消创建
+        </button>}
+      />)}
     </Stepper>
   }
 }

@@ -1,13 +1,14 @@
+import React from 'react'
 import CreateView, { Thumnail as CreateThumnailView } from './Create'
 import ConfigView from './Config'
 
 export default [{
   name: '创建Flow',
-  icon: 'icon-branches',
+  icon: <i className='icon icon-branches' style={{ marginRight: 5 }} />,
   component: CreateView,
   thumnail: CreateThumnailView,
 }, {
   name: '配置Git仓库',
-  icon: 'icon-code',
+  icon: <i className='icon icon-code' />,
   component: ConfigView,
 }]
