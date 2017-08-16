@@ -7,6 +7,10 @@
 import makeCancelable, { copyCancel } from './promiseCancelable'
 import makeIndicator from './indicator'
 
+function isFunction (v) {
+  return typeof v === 'function'
+}
+
 export default function (config = {}) {
   const HANDLE_TYPE = config.type
   const database = config.database
@@ -27,7 +31,11 @@ export default function (config = {}) {
       if (responseHandle) {
         let response = responseHandle(action)
         if (transformResponse) {
-          response = transformResponse.reduce((data, f) => f(data), response)
+          if (isFunction(transformResponse)) {
+            response = transformResponse()
+          } else {
+            response = transformResponse.reduce((data, f) => f(data), response)
+          }
         }
 
         const promise = makeCancelable(new Promise((resolve, reject) => {
