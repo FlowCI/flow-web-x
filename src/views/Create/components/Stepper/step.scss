@@ -1,0 +1,68 @@
+@import 'variables';
+
+@mixin step-color($color, $bgc) {
+  .icon, .header{
+    color: $color;
+    background-color: $bgc;
+  }
+}
+
+.step{
+  position: relative;
+  padding-left: $create-flow-step-icon-size + $create-flow-step-icon-padding-left;
+  &:not(:last-child) {
+    margin-bottom: $create-flow-step-padding-bottom;
+    &:before{
+      content: ' ';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background-color: $create-flow-step-cable-color;
+      display: inline-block;
+      top: $create-flow-step-icon-size;
+      left: ($create-flow-step-icon-size - 2px)/2;
+    }
+  }
+}
+
+@include step-color($create-flow-step-header-color,
+  $create-flow-step-header-bgc);
+
+.active{
+  @include step-color($create-flow-step-header-active-color,
+  $create-flow-step-header-active-bgc);
+}
+.icon{
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+
+  width: $create-flow-step-icon-size;
+  text-align: center;
+  line-height: $create-flow-step-icon-size;
+
+  font-size: $create-flow-step-icon-font-size;
+  border-radius: 50%;
+  box-shadow: $create-flow-step-icon-boxshadow;
+
+}
+.container{
+  border-radius: $create-flow-step-border-raduis;
+  border: 1px solid $create-flow-step-border-color;
+  box-shadow: $create-flow-step-boxshadow;
+  overflow: hidden;
+}
+.header{
+  height: $create-flow-step-header-height;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px $create-flow-step-header-horizontal-padding;
+}
+
+.content{
+
+}

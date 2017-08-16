@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 export default class Stepper extends Component {
   static propTypes = {
+    className: PropTypes.string,
     activeStep: PropTypes.number.isRequired,
     children: PropTypes.node,
   }
@@ -15,8 +16,8 @@ export default class Stepper extends Component {
   }
 
   render () {
-    const { children } = this.props
-    return <div>
+    const { children, className } = this.props
+    return <div className={className}>
       {React.Children.map(children, this.cloneChild)}
     </div>
   }
