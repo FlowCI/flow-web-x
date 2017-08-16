@@ -32,7 +32,7 @@ export default function (config = {}) {
         let response = responseHandle(action)
         if (transformResponse) {
           if (isFunction(transformResponse)) {
-            response = transformResponse()
+            response = transformResponse(response)
           } else {
             response = transformResponse.reduce((data, f) => f(data), response)
           }
