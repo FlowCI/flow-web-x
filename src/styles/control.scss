@@ -45,7 +45,6 @@
         border-color: $color;
   }
 }
-
 /*
   Button
 */
@@ -58,6 +57,7 @@
   font-size: $font-size-base;
   font-weight: $btn-font-weight;
   height: $control-base-size;
+  color: $btn-default-color;
 
   box-shadow: none;
   white-space: nowrap;
