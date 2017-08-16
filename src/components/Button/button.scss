@@ -19,7 +19,7 @@
 }
 
 .wrapper{
-  display: inline-flex;
+  display: flex;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
@@ -32,11 +32,11 @@
   text-align: center;
 }
 
-:global(.block){
-  .wrapper{
-    display: flex;
-  }
-}
+// :global(.block){
+//   .wrapper{
+//     display: flex;
+//   }
+// }
 :global(.btn-sm) {
   @include button-size($control-sm-size, $control-sm-padding-vertical, $control-sm-padding-horizontal);
 }
