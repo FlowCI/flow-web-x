@@ -8,6 +8,10 @@ const is = {
   string (v) {
     return typeof v === 'string'
   },
+  object (v) {
+    return typeof v === 'object'
+  },
+  array: Array.isArray,
 }
 
 export default is
