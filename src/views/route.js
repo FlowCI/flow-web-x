@@ -8,6 +8,7 @@ import Index from './IndexRoute'
 // import Next from './Next'
 import SignInRoute from './SignIn/route'
 import FlowsRoute from './Flows/route'
+import CreateRoute from './Create/route'
 
 export default function (store) {
   return {
@@ -24,6 +25,9 @@ export default function (store) {
       childRoutes: [{
         ...FlowsRoute(store),
         path: 'flows/:flowId',
+      }, {
+        ...CreateRoute(store),
+        path: 'create'
       }]
     }]
   }
