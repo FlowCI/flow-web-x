@@ -20,6 +20,7 @@ const transformResponse = function (data) {
   }
   return data
 }
+
 export const actions = {
   query: function () {
     return {
@@ -39,21 +40,6 @@ export const actions = {
       indicator: {
         id: flowId,
       }
-    }
-  },
-
-  queryLastJob: function (flowIds) {
-    return {
-      name: JobTypes.queryLastest,
-      url: 'jobs/status/latest',
-      method: 'post',
-      data: flowIds,
-      transformResponse: [function (data) {
-        return data.reduce(function (s, d) {
-          s[d.nodeName] = d
-          return s
-        }, {})
-      }]
     }
   },
   setDropDownFilter: function (filter) {
@@ -79,9 +65,13 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
-  [JobTypes.queryLastest]: handleHttp('QUERY_JOBS', {
-    success: function (state, { payload }) {
-      return state.set('status', fromJS(payload))
+  [JobTypes.queryLastest]: handleHttp('QUERY_LAST_JOBS', {
+    success: function (state, { payload: jobs }) {
+      const f = jobs.reduce((s, job) => {
+        s[job.nodeName] = job
+        return s
+      }, {})
+      return state.set('status', fromJS(f))
     }
   }),
   [Types.get]: handleHttp('GET', {

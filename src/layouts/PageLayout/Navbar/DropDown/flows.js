@@ -10,6 +10,7 @@ import autoCancel from 'react-redux-http'
 import { createSelector } from 'reselect'
 
 import { actions } from 'redux/modules/flow'
+import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
 import IconButton from 'components/IconButton'
@@ -43,7 +44,7 @@ const filterFlowsSelector = createSelector(
 )
 function mapStateToProps (state, props) {
   const { flow } = state
-  const status = flow.getIn(['ui', 'QUERY_JOBS'])
+  const status = flow.getIn(['ui', 'QUERY_LAST_JOBS'])
 
   const flows = flowsSelector(state)
   const filter = flow.getIn(['ui', 'dropDownFilter'])
@@ -55,7 +56,7 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    queryLastJob: actions.queryLastJob,
+    queryLastJob: jobActions.queryLastest,
     setDropDownFilter: actions.setDropDownFilter,
     freedDropDownFilter: actions.freedDropDownFilter,
   }, dispatch)

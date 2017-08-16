@@ -1,11 +1,24 @@
 import { handleActions } from 'redux-actions'
 import { handleHttp } from 'redux/util'
+
 import { defaultInitState, handlers } from 'redux/handler'
+import is from 'util/is'
 
 import Types from './jobType'
 import FlowTypes from './flowType'
 
 const initialState = defaultInitState
+
+function transformResponse (data) {
+  if (is.array(data)) {
+    data.forEach((d) => {
+      d.id = `${d.number}`
+    })
+  } else if (is.object(data) && data.number > -1) {
+    data.id = `${data.number}`
+  }
+  return data
+}
 
 function queryAfterLastest (flowId, filter, lastestId) {
   return function ({ getState, dispatch }) {
@@ -25,12 +38,7 @@ function query (flowId, filter) {
     params: {
       flowName: flowId,
     },
-    transformResponse: [function (data) {
-      return data.map((d) => {
-        d.id = `${d.number}`
-        return d
-      })
-    }]
+    transformResponse: transformResponse,
   }
 }
 
@@ -38,6 +46,15 @@ export const actions = {
   query: function (flowId, filter, lastestId) {
     const fn = lastestId ? queryAfterLastest : query
     return fn(flowId, filter, lastestId)
+  },
+  queryLastest: function (flowIds) {
+    return {
+      name: Types.queryLastest,
+      url: 'jobs/status/latest',
+      method: 'post',
+      data: flowIds,
+      transformResponse,
+    }
   },
   get: function (flowId, jobId) {
     return {
@@ -50,10 +67,7 @@ export const actions = {
       indicator: {
         id: jobId,
       },
-      transformResponse: [function (d) {
-        d.id = `${d.number}`
-        return d
-      }],
+      transformResponse,
     }
   },
   setFilter: function (filter) {
