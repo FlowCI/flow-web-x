@@ -55,11 +55,9 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 
 // Components
 
-$padding-base-vertical: 0.1rem!default;
-$padding-base-vertical-computed: 10px!default;
+$padding-base-vertical: 10px!default;
 
-$padding-base-horizontal: 0.1rem!default;
-$padding-base-horizontal-computed: 10px!default;
+$padding-base-horizontal: 10px!default;
 
 // Layout
 $layout-padding-vertical: 0!default;
@@ -149,7 +147,7 @@ $navbar-inverse-bg: $text-color!default;
 $navbar-inverse-color: #fff!default;
 
 $navbar-base-padding-vertical: 0!default;
-$navbar-base-padding-horizontal: 1.5*$padding-base-horizontal-computed!default;
+$navbar-base-padding-horizontal: 1.5*$padding-base-horizontal!default;
 
 $navbar-brand-width: 140px;
 $navbar-brand-arrow: 5px!default;
@@ -176,35 +174,61 @@ $footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
 $footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
 $footer-divier-padding: $footer-padding-base!default;
 
-$footer-xs-padding: 10px 0 20px;
-$footer-xs-divier-padding: 10px;
+$footer-xs-padding: 10px 0 20px!default;
+$footer-xs-divier-padding: 10px!default;
 
 $footer-default-color: #676C72!default;
 $footer-default-border: $color-hr!default;
 
 // Build Guide
 
-$build-guide-step-padding-vertical: 24px;
-$build-guide-step-padding-bottom: 60px;
+$build-guide-step-padding-vertical: 24px!default;
+$build-guide-step-padding-bottom: 60px!default;
 
-$build-guide-step-divider-width: 2px;
-$build-guide-step-divider-color: #D4DCE3;
+$build-guide-step-divider-width: 2px!default;
+$build-guide-step-divider-color: #D4DCE3!default;
 
-$build-guide-step-number-size: 36px;
-$build-guide-step-number-font-szie: 20px;
-$build-guide-step-number-font-weight: bold;
-$build-guide-step-number-bg: $color-primary;
-$build-guide-step-number-color: #fff;
+$build-guide-step-number-size: 36px!default;
+$build-guide-step-number-font-szie: 20px!default;
+$build-guide-step-number-font-weight: bold!default;
+$build-guide-step-number-bg: $color-primary!default;
+$build-guide-step-number-color: #fff!default;
 $build-guide-step-number-left-abs-offset: ($build-guide-step-number-size
-    + $build-guide-step-divider-width)/2;
+    + $build-guide-step-divider-width)/2!default;
 
-$build-guide-thumbnail-border-radius: 5px;
-$build-guide-thumbnail-width: 260px;
-$build-guide-thumbnail-height: 170px;
+$build-guide-thumbnail-border-radius: 5px!default;
+$build-guide-thumbnail-width: 260px!default;
+$build-guide-thumbnail-height: 170px!default;
 
 $build-guide-step-margin-left: $build-guide-thumbnail-width
   + $build-guide-step-padding-vertical
-  + $build-guide-step-number-left-abs-offset;
+  + $build-guide-step-number-left-abs-offset!default;
 
-$build-guide-list-disc-size: 8px;
-$build-guide-list-disc-bg: #676C72;
+$build-guide-list-disc-size: 8px!default;
+$build-guide-list-disc-bg: #676C72!default;
+
+// Create Flow
+$create-flow-step-color: $color-black!default;
+$create-flow-step-bgc: #fff!default;
+$create-flow-step-border-color: $color-hr;
+
+$create-flow-step-padding-bottom: 4*$padding-base-vertical;
+
+$create-flow-step-border-raduis: $border-radius-base!default;
+$create-flow-step-boxshadow: $control-base-boxshadow!default;
+
+$create-flow-step-header-height: 60px!default;
+$create-flow-step-header-horizontal-padding: 2*$padding-base-horizontal!default;
+$create-flow-step-header-color: #fff!default;
+$create-flow-step-header-bgc: #C3C8CE!default;
+
+$create-flow-step-header-active-bgc: #6668D3!default;
+$create-flow-step-header-active-color: $create-flow-step-header-color!default;
+
+$create-flow-step-icon-font-size: 25px!default;
+$create-flow-step-icon-size: 60px!default;
+$create-flow-step-icon-boxshadow: $control-base-boxshadow!default;
+$create-flow-step-icon-padding-left: 4*$padding-base-horizontal;
+
+$create-flow-step-cable-color: #C3C8CE!default;
+

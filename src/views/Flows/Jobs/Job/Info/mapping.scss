@@ -6,16 +6,16 @@ $col-height: 40px;
   width: 100%;
   font-weight: bold;
   color: $color-black;
-  margin-bottom: 2*$padding-base-horizontal-computed;
+  margin-bottom: 2*$padding-base-horizontal;
   // table-layout: fixed;
   >tbody{
     >tr{
       border-bottom: 1px solid $color-hr;
       >td{
         // height: $control-lg-size;
-        line-height: $col-height - 2*1.5*$padding-base-vertical-computed;
-        padding: 1.5*$padding-base-vertical-computed
-          3*$padding-base-horizontal-computed;
+        line-height: $col-height - 2*1.5*$padding-base-vertical;
+        padding: 1.5*$padding-base-vertical
+          3*$padding-base-horizontal;
       }
     }
     >.legend{
@@ -23,7 +23,7 @@ $col-height: 40px;
       >td{
         height: $col-height;
         line-height: $col-height;
-        padding: 0 2*$padding-base-horizontal-computed;
+        padding: 0 2*$padding-base-horizontal;
         background-color: #EDEDED;
       }
     }

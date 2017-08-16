@@ -9,7 +9,7 @@ $height: 50px;
   height: $height;
   border-radius: $border-radius-base;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
-  margin-bottom: 2*$padding-base-horizontal-computed;
+  margin-bottom: 2*$padding-base-horizontal;
   &:global(.SUCCESS) {
     background-color: $color-success;
   }
@@ -22,7 +22,7 @@ $height: 50px;
   display: flex;
   align-items: center;
   >li{
-    padding: 0px 1.5*$padding-base-horizontal-computed;
+    padding: 0px 1.5*$padding-base-horizontal;
     border-left: 1px solid;
   }
 }

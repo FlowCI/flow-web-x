@@ -50,7 +50,7 @@
   align-items: center;
   padding: $navbar-brand-padding-vertical $navbar-brand-padding-horizontal;
   >:global(.icon){
-    margin-right: $padding-base-horizontal-computed;;
+    margin-right: $padding-base-horizontal;;
   }
 }
 .navs{

@@ -24,7 +24,7 @@ $tab-size: 40px;
   border-radius: $border-radius-base;
   height: $tab-size;
   color: inherit;
-  margin-bottom: $padding-base-horizontal-computed;
+  margin-bottom: $padding-base-horizontal;
   &:hover, &:focus{
     color: inherit;
   }

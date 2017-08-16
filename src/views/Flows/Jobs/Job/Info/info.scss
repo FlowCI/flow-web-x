@@ -1,14 +1,14 @@
 @import 'variables';
 
 .loading{
-  padding: 10*$padding-base-vertical-computed 0;
+  padding: 10*$padding-base-vertical 0;
   text-align: center;
 }
 
 .header{
   height: 60px;
   background-color: $color-black;
-  padding: $padding-base-vertical-computed 2*$padding-base-horizontal-computed;
+  padding: $padding-base-vertical 2*$padding-base-horizontal;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,7 +36,7 @@
     background-color: #fff;
     font-weight: bold;
     color: $color-black;
-    min-width: 9*$padding-base-vertical-computed;
+    min-width: 9*$padding-base-vertical;
   }
 }
 .btn-stop{

@@ -1,7 +1,7 @@
 @import 'variables';
 
-$padding-vertical: 1.5*$padding-base-vertical-computed;
-$padding-horizontal: 1.5*$padding-base-horizontal-computed;
+$padding-vertical: 1.5*$padding-base-vertical;
+$padding-horizontal: 1.5*$padding-base-horizontal;
 
 .content{
   left: 0;
@@ -28,7 +28,7 @@ $padding-horizontal: 1.5*$padding-base-horizontal-computed;
   font-weight: bold;
 }
 .plus{
-  margin-left: $padding-base-horizontal-computed;
+  margin-left: $padding-base-horizontal;
   border: 2px solid currentColor;
   border-radius: 50%;
   &:hover{

@@ -1,8 +1,8 @@
 @import 'variables';
 .container{
-  padding: 2*$padding-base-vertical-computed
-    2*$padding-base-horizontal-computed;
-  margin-bottom: 4*$padding-base-horizontal-computed;
+  padding: 2*$padding-base-vertical
+    2*$padding-base-horizontal;
+  margin-bottom: 4*$padding-base-horizontal;
 }
 
 .content{

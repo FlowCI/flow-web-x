@@ -8,15 +8,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 2.5*$padding-base-vertical-computed;
+  margin-bottom: 2.5*$padding-base-vertical;
 }
 .brand{
   font-size: $font-size-large;
   font-weight: bold;
-  margin-right: 3*$padding-base-horizontal-computed;
+  margin-right: 3*$padding-base-horizontal;
   >:global(.icon) {
     font-size: 20px;
-    margin-right: $padding-base-horizontal-computed;
+    margin-right: $padding-base-horizontal;
   }
 }
 .actions{
@@ -24,8 +24,8 @@
   justify-content: space-between;
   flex-direction: row-reverse;
   align-items: center;
-  margin-bottom: 3*$padding-base-vertical-computed;
+  margin-bottom: 3*$padding-base-vertical;
 }
 .jobs{
-  margin-bottom: 5*$padding-base-vertical-computed;
+  margin-bottom: 5*$padding-base-vertical;
 }

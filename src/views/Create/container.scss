@@ -1,6 +1,17 @@
 @import 'variables';
 
 .container{
-  padding: 5*$padding-base-vertical-computed 18*$padding-base-horizontal-computed;
-  padding-left: 6*$padding-base-horizontal-computed;
+  padding: 5*$padding-base-vertical 18*$padding-base-horizontal;
+  padding-left: 6*$padding-base-horizontal;
+}
+.cancel{
+  color: $create-flow-step-header-active-color;
+  background-color: $create-flow-step-header-active-bgc;
+  border-color: currentColor!important;
+  padding-left: 15px;
+  padding-right: 15px;
+  &:hover, &:focus{
+    color: $create-flow-step-header-active-bgc;
+    background-color: $create-flow-step-header-active-color;
+  }
 }
