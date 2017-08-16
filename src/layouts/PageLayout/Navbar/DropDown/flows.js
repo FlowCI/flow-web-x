@@ -12,6 +12,7 @@ import { createSelector } from 'reselect'
 import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
+import IconButton from 'components/IconButton'
 import Input from 'components/Form/Input'
 
 import DropDown from './dropdown'
@@ -119,7 +120,10 @@ export class NavbarFlowsDropdown extends PureComponent {
       </div>
       <hr />
       <div className={classes.header}>
-        {i18n('我的 Flow')}
+        {i18n('我的 Flow')}<IconButton className={classes.plus}
+          size='sm' to='/flows/create'>
+          <i className='icon icon-plus-sm' />
+        </IconButton>
       </div>
       <div className={classes.flows}>
         {this.renderFlows()}

@@ -27,6 +27,16 @@ $padding-horizontal: 1.5*$padding-base-horizontal-computed;
   padding: $padding-vertical $padding-horizontal;
   font-weight: bold;
 }
+.plus{
+  margin-left: $padding-base-horizontal-computed;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  &:hover{
+    color: #fff;
+    background-color: $btn-primary-bg;
+    border-color: $btn-primary-bg;
+  }
+}
 .flows{
   padding: 0 $padding-horizontal;
   font-weight: bold;
