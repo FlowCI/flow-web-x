@@ -1,17 +1,17 @@
 @import 'variables';
 
 .section{
-  margin-bottom: 20px;
+  margin-bottom: $create-flow-config-section-vertical-padding;
 }
 .title{
   line-height: 20px;
-  margin-bottom: 10px;
+  margin-bottom: $create-flow-config-vertical-padding;
 }
 .question{
   width: 20px;
   height: 20px;
   font-size: 20px;
-  margin-left: 5px;
+  margin-left: $create-flow-config-horizontal-padding/2;
 }
 .subTitle{
   color: #8B8C9B;
@@ -23,22 +23,22 @@
   max-width: 580px;
 }
 .code{
-  background-color: #EDEFF1;
-  border-radius: 3px;
-  padding: 10px;
+  background-color: $create-flow-config-code-bgc;
+  border-radius: $border-radius-base;
+  padding: $create-flow-config-vertical-padding $create-flow-config-horizontal-padding;
   line-height: 20px;
 }
 .copy{
-  margin-left: 10px;
-  padding: 0px 10px;
+  margin-left: $create-flow-config-horizontal-padding;
+  padding: 0px $create-flow-config-horizontal-padding;
   line-height: inherit;
   height: auto;
   border: none;
 }
 .actions{
-  margin-top: 30px;
+  margin-top: $create-flow-config-action-spacing;
   >:global(.btn){
-    margin-right: 10px;
+    margin-right: $create-flow-config-horizontal-padding;
     min-width: 100px;
   }
 }
