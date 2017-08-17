@@ -1,6 +1,7 @@
 export default {
   query: 'FLOWS_QUERY',
   get: 'FLOWS_GET',
+  create: 'FLOW_CREATE',
   freed: 'FLOW_FREED',
   freedAll: 'FLOW_FREED_ALL',
 

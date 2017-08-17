@@ -23,4 +23,11 @@ export default {
       'updatedAt': 1502418628
     }
   },
+  [types.create]: function ({ params: { flowName } }) {
+    return {
+      name: flowName,
+      'createdAt': (new Date().getTime()) / 1000,
+      'updatedAt': 1502418628
+    }
+  }
 }

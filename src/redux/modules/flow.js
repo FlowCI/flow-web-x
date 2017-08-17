@@ -42,6 +42,16 @@ export const actions = {
       }
     }
   },
+  create: function (flowName) {
+    return {
+      url: '/flows/:flowName',
+      name: Types.create,
+      params: {
+        flowName: flowName,
+      },
+      transformResponse,
+    }
+  },
   setDropDownFilter: function (filter) {
     return {
       type: Types.setDropDownFilter,
@@ -65,16 +75,10 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: handlers.saveAll,
   }),
-  [JobTypes.queryLastest]: handleHttp('QUERY_LAST_JOBS', {
-    success: function (state, { payload: jobs }) {
-      const f = jobs.reduce((s, job) => {
-        s[job.nodeName] = job
-        return s
-      }, {})
-      return state.set('status', fromJS(f))
-    }
-  }),
   [Types.get]: handleHttp('GET', {
+    success: handlers.save,
+  }),
+  [Types.create]: handleHttp('GET', {
     success: handlers.save,
   }),
   [Types.setDropDownFilter]: function (state, { payload }) {
@@ -87,4 +91,14 @@ export default handleActions({
     return initialState
   },
 
+  // Job Type
+  [JobTypes.queryLastest]: handleHttp('QUERY_LAST_JOBS', {
+    success: function (state, { payload: jobs }) {
+      const f = jobs.reduce((s, job) => {
+        s[job.nodeName] = job
+        return s
+      }, {})
+      return state.set('status', fromJS(f))
+    }
+  }),
 }, initialState)
