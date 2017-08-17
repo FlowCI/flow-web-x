@@ -18,6 +18,7 @@ export const createRoutes = (store) => ({
     component: NoopComponent,
     childRoutes: [{
       path: ':git',
+      step: 1,
       component: NoopComponent,
     }]
   }]
