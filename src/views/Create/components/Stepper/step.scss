@@ -63,8 +63,3 @@
   padding: $create-flow-step-header-vertical-padding $create-flow-step-header-horizontal-padding;
 }
 
-.content{
-  &:not(:empty){
-    padding: $create-flow-step-header-vertical-padding $create-flow-step-header-horizontal-padding;
-  }
-}
