@@ -8,7 +8,7 @@
   color: $create-flow-title-color;
   >small{
     color: $create-flow-subtitle-color;
-    font-weight: normal;
+    font-weight: $create-flow-subtitle-font-weight;
   }
 }
 .input{
