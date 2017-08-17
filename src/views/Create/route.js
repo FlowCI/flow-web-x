@@ -16,6 +16,10 @@ export const createRoutes = (store) => ({
     path: ':flowId',
     step: 1,
     component: NoopComponent,
+    childRoutes: [{
+      path: ':git',
+      component: NoopComponent,
+    }]
   }]
 })
 

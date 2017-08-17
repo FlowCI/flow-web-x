@@ -1,0 +1,28 @@
+@import 'variables';
+.wrapper{
+  padding: $create-flow-wrapper-vertical-padding
+    $create-flow-wrapper-horizontal-padding;
+}
+.title{
+  line-height: 30px;
+  color: $create-flow-title-color;
+  >small{
+    color: $create-flow-subtitle-color;
+    font-weight: normal;
+  }
+}
+.input{
+  width: 80%;
+  max-width: 580px;
+}
+.gits{
+  margin-bottom: 30px;
+  >li{
+    margin-bottom: 10px;
+  }
+}
+.next{
+  padding-left: 15px;
+  padding-right: 15px;
+  min-width: 120px;
+}
