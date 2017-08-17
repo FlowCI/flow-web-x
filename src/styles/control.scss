@@ -44,6 +44,16 @@
     background-color: $color;
         border-color: $color;
   }
+  &.disabled,
+  &[disabled] {
+    &:hover,
+    &:focus,
+    &.focus {
+      color: $color;
+      background-color: $background;
+      border-color: $color;
+    }
+  }
 }
 /*
   Button
