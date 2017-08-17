@@ -31,6 +31,7 @@ $padding-horizontal: 1.5*$padding-base-horizontal;
   margin-left: $padding-base-horizontal;
   border: 2px solid currentColor;
   border-radius: 50%;
+  font-size: 12px!important;
   &:hover{
     color: #fff;
     background-color: $btn-primary-bg;

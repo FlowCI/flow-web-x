@@ -1,18 +1,19 @@
 @import 'variables.scss';
 
-@mixin button-size ($size, $font-size) {
+@mixin button-size ($size) {
   width: $size;
   height: $size;
-  font-size: $font-size;
+  font-size: $size;
 }
 .btn {
   padding: 0;
-  @include button-size($control-base-size, $font-size-base);
+  border: none;
+  @include button-size($control-base-size);
   &:global(.btn-sm) {
-    @include button-size($control-sm-size, $font-size-small);
+    @include button-size($control-sm-size);
   }
   &:global(.btn-lg) {
-    @include button-size($control-lg-size, $font-size-large);
+    @include button-size($control-lg-size);
   }
 }
 .wrapper{
