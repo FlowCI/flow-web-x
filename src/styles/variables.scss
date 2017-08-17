@@ -212,12 +212,13 @@ $create-flow-step-color: $color-black!default;
 $create-flow-step-bgc: #fff!default;
 $create-flow-step-border-color: $color-hr;
 
-$create-flow-step-padding-bottom: 4*$padding-base-vertical;
+$create-flow-step-spacing: 4*$padding-base-vertical;
 
 $create-flow-step-border-raduis: $border-radius-base!default;
 $create-flow-step-boxshadow: $control-base-boxshadow!default;
 
 $create-flow-step-header-height: 60px!default;
+$create-flow-step-header-vertical-padding: 1.5*$padding-base-vertical!default;
 $create-flow-step-header-horizontal-padding: 2*$padding-base-horizontal!default;
 $create-flow-step-header-color: #fff!default;
 $create-flow-step-header-bgc: #C3C8CE!default;
