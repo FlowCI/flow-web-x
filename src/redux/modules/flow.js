@@ -52,6 +52,11 @@ export const actions = {
       transformResponse,
     }
   },
+  updateEnv: function () {
+    return {
+      type: 'UPDATE_ENV'
+    }
+  },
   setDropDownFilter: function (filter) {
     return {
       type: Types.setDropDownFilter,
