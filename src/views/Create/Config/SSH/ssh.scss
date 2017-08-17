@@ -1,0 +1,29 @@
+@import 'variables';
+
+.section{
+  margin-bottom: 20px;
+}
+.title{
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+.question{
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  margin-left: 5px;
+}
+.subTitle{
+  color: #8B8C9B;
+  display: block;
+  font-weight: $create-flow-subtitle-font-weight;
+}
+.addr{
+  width: 90%;
+  max-width: 580px;
+}
+.code{
+  background-color: #EDEFF1;
+  border-radius: 3px;
+  padding: 10px;
+}
