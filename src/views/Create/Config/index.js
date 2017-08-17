@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import createI18n from './i18n'
+import language from 'util/language'
+
 import HTTPConfig from './HTTP'
 import SSHConfig from './SSH'
 
@@ -17,7 +20,13 @@ export default class ConfigFlowView extends Component {
     params: PropTypes.shape({
       flowId: PropTypes.string.isRequired,
     }).isRequired,
+    i18n: PropTypes.func.isRequired,
   }
+
+  static defaultProps = {
+    i18n: createI18n(language),
+  }
+
   state = {
     choose: EnumKeys[0]
   }
@@ -41,16 +50,16 @@ export default class ConfigFlowView extends Component {
   }
 
   render () {
-    const { params: { flowId } } = this.props
+    const { params: { flowId }, i18n } = this.props
     const { choose } = this.state
 
-    const child = Enums[choose] || Enums[EnumKeys[0]]
+    const child = Enums[choose]
 
     return <div className={classes.container}>
       <div className={classes.navbar}>
         {EnumKeys.map(this.renderNav)}
       </div>
-      {React.createElement(child, { flowId })}
+      {React.createElement(child, { flowId, i18n: i18n.createChild(choose) })}
     </div>
   }
 }
