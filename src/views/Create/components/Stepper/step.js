@@ -35,9 +35,7 @@ export default class Step extends Component {
           <span>{name}</span>
           {active && activeButton}
         </div>
-        <div className={classes.content}>
-          {!!childComponent && React.createElement(childComponent, { params })}
-        </div>
+        {!!childComponent && React.createElement(childComponent, { params })}
       </div>
     </div>
   }
