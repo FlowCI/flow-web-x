@@ -2,18 +2,24 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import clipboard from 'clipboard'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
 
+import ClipboardButton from 'react-clipboard.js'
+
 import Input from 'components/Form/Input'
 import IconButton from 'components/IconButton'
+import Button from 'components/Button'
 import Loading from 'components/Loading'
 
 import classes from './ssh.scss'
 
+const supportCopy = clipboard.isSupported
 function mapStateToProps (state, { flowId }) {
   const { flow } = state
   return {
@@ -41,6 +47,7 @@ export class SSHConfig extends Component {
 
   renderContent () {
     const { i18n, flow } = this.props
+    const webhook = flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])
     return <div>
       <section className={classes.section}>
         <h5 className={classes.title}>
@@ -60,7 +67,12 @@ export class SSHConfig extends Component {
           </IconButton>
         </h5>
         <code className={classes.code}>
-          {flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])}
+          {webhook}
+          {supportCopy && <ClipboardButton
+            className={`btn btn-link ${classes.copy}`}
+            data-clipboard-text={webhook}>
+            {i18n('复制地址')}
+          </ClipboardButton>}
         </code>
       </section>
       <section className={classes.section}>
@@ -74,6 +86,14 @@ export class SSHConfig extends Component {
           </small>
         </h5>
       </section>
+      <div className={classes.actions}>
+        <Button className='btn-primary'>
+          {i18n('完成')}
+        </Button>
+        <Button className='btn-inverse' loading>
+          {i18n('连接测试')}
+        </Button>
+      </div>
     </div>
   }
 

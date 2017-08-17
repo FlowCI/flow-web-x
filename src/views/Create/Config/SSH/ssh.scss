@@ -26,4 +26,19 @@
   background-color: #EDEFF1;
   border-radius: 3px;
   padding: 10px;
+  line-height: 20px;
+}
+.copy{
+  margin-left: 10px;
+  padding: 0px 10px;
+  line-height: inherit;
+  height: auto;
+  border: none;
+}
+.actions{
+  margin-top: 30px;
+  >:global(.btn){
+    margin-right: 10px;
+    min-width: 100px;
+  }
 }

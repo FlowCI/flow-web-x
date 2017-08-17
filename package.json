@@ -24,6 +24,7 @@
   "homepage": "https://flow.ci",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "clipboard": "^1.7.1",
     "compression": "^1.6.2",
     "express": "^4.14.0",
     "immutable": "^3.8.1",
@@ -32,6 +33,7 @@
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
+    "react-clipboard.js": "^1.1.2",
     "react-dom": "^15.5.4",
     "react-event-listener": "^0.4.5",
     "react-immutable-proptypes": "^2.1.0",
