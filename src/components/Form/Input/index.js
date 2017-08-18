@@ -28,6 +28,7 @@ export default class Input extends Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
 
+    onChange: PropTypes.func,
     onKeyUp: PropTypes.func,
     onPressEnter: PropTypes.func,
     onPressEsc: PropTypes.func,
@@ -49,12 +50,11 @@ export default class Input extends Component {
     switch (keycode(e)) {
       case 'enter':
         const { onPressEnter } = this.props
-        // const { target: { value } } = e
-        onPressEnter && onPressEnter(e)
+        onPressEnter && onPressEnter(e.target.value)
         break
       case 'esc':
         const { onPressEsc } = this.props
-        onPressEsc && onPressEsc(e)
+        onPressEsc && onPressEsc(e.target.value)
         break
     }
   }
@@ -71,6 +71,11 @@ export default class Input extends Component {
     onBlur && onBlur(e)
   }
 
+  handleChange = (e) => {
+    const { onChange } = this.props
+    return onChange(e.target.value)
+  }
+
   render () {
     const {
       disabled, readOnly,
@@ -81,6 +86,7 @@ export default class Input extends Component {
       className,
       classNames,
       size, divider,
+      onChange,
       meta, // eslint-disable-line no-unused-vars
       onKeyUp, // eslint-disable-line no-unused-vars
       onPressEnter, // eslint-disable-line no-unused-vars
@@ -109,6 +115,7 @@ export default class Input extends Component {
         onKeyUp={this.handleKeyUp}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
+        onChange={!!onChange && this.handleChange}
       />
       {divider && !!rightIcon && <span className={classNames.divider} />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}

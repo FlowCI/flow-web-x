@@ -98,8 +98,7 @@ export class NavbarFlowsDropdown extends PureComponent {
     queryLastJob(flowIds.toArray())
   }
 
-  handleSearch = (e) => {
-    const { target: { value } } = e
+  handleSearch = (value) => {
     const { setDropDownFilter } = this.props
     setDropDownFilter(value)
   }

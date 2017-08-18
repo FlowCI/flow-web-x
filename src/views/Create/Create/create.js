@@ -47,8 +47,8 @@ export class CreateFlowView extends Component {
     git: '',
   }
 
-  handleNameChange = (e) => {
-    this.setState({ name: e.target.value })
+  handleNameChange = (value) => {
+    this.setState({ name: value })
   }
 
   selectGit = (git) => {
