@@ -260,13 +260,14 @@ $create-flow-config-navbar-color: #AEB7BE!default;
 $create-flow-config-navbar-active-color: $color-black!default;
 $create-flow-config-navbar-item-horizontal-padding: $padding-base-horizontal!default;
 // Create Flow SSH/HTTP Config
+$create-flow-config-code-bgc: #EDEFF1!default;
+$create-flow-config-code-border-radius: $border-radius-base!default;
+$create-flow-config-copy-color: $create-flow-well-active-color!default;
+
 $create-flow-config-section-vertical-padding: 2*$padding-base-vertical!default;
 $create-flow-config-vertical-padding: $padding-base-vertical!default;
 $create-flow-config-horizontal-padding: $padding-base-horizontal!default;
 $create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;
-$create-flow-config-code-bgc: #EDEFF1!default;
-$create-flow-config-code-border-radius: $border-radius-base!default;
-$create-flow-config-copy-color: $create-flow-well-active-color!default;
 
 
 

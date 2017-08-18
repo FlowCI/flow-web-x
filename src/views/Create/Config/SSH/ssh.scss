@@ -3,20 +3,6 @@
   width: 90%;
   max-width: 580px;
 }
-.code{
-  background-color: $create-flow-config-code-bgc;
-  border-radius: $border-radius-base;
-  padding: $create-flow-config-vertical-padding $create-flow-config-horizontal-padding;
-  line-height: 20px;
-}
-.copy{
-  margin-left: $create-flow-config-horizontal-padding;
-  padding: 0px $create-flow-config-horizontal-padding;
-  line-height: inherit;
-  height: auto;
-  border: none;
-  color: $create-flow-config-copy-color;
-}
 .actions{
   margin-top: $create-flow-config-action-spacing;
   >:global(.btn){
