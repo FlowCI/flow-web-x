@@ -263,7 +263,10 @@ $create-flow-config-navbar-item-horizontal-padding: $padding-base-horizontal!def
 $create-flow-config-section-vertical-padding: 2*$padding-base-vertical!default;
 $create-flow-config-vertical-padding: $padding-base-vertical!default;
 $create-flow-config-horizontal-padding: $padding-base-horizontal!default;
-$create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding;
-$create-flow-config-code-bgc: #EDEFF1;
-$create-flow-config-code-border-radius: $border-radius-base;
+$create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;
+$create-flow-config-code-bgc: #EDEFF1!default;
+$create-flow-config-code-border-radius: $border-radius-base!default;
+$create-flow-config-copy-color: $create-flow-well-active-color!default;
+
+
 
