@@ -15,7 +15,6 @@ import ClipboardButton from 'react-clipboard.js'
 import Input from 'components/Form/Input'
 import IconButton from 'components/IconButton'
 import Button from 'components/Button'
-import Loading from 'components/Loading'
 
 import classes from './ssh.scss'
 
@@ -45,7 +44,7 @@ export class SSHConfig extends Component {
     i18n: PropTypes.func.isRequired,
   }
 
-  renderContent () {
+  render () {
     const { i18n, flow } = this.props
     const webhook = flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])
     return <div>
@@ -94,13 +93,6 @@ export class SSHConfig extends Component {
           {i18n('连接测试')}
         </Button>
       </div>
-    </div>
-  }
-
-  render () {
-    const { flow } = this.props
-    return flow ? this.renderContent() : <div>
-      <Loading />
     </div>
   }
 }

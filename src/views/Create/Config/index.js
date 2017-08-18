@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { string, func, bool } from 'prop-types'
 
 import createI18n from './i18n'
 import language from 'util/language'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { push } from 'react-router-redux'
+
+import { actions } from 'redux/modules/flow'
+
+import Loading from 'components/Loading'
 
 import HTTPConfig from './HTTP'
 import SSHConfig from './SSH'
@@ -15,12 +23,30 @@ const Enums = {
 }
 const EnumKeys = Object.keys(Enums)
 
-export default class ConfigFlowView extends Component {
+function mapStateToProps (state, { params: { flowId } }) {
+  const { flow } = state
+  return {
+    flowId,
+    loaded: flow.hasIn(['data', flowId]),
+    // isNotFound: flow.getIn(['ui', flowId]),
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    get: actions.get,
+    redirect: push,
+  }, dispatch)
+}
+
+export class ConfigFlowView extends Component {
   static propTypes = {
-    params: PropTypes.shape({
-      flowId: PropTypes.string.isRequired,
-    }).isRequired,
-    i18n: PropTypes.func.isRequired,
+    loaded: bool,
+    flowId: string.isRequired,
+
+    get: func.isRequired,
+    redirect: func.isRequired,
+    i18n: func.isRequired,
   }
 
   static defaultProps = {
@@ -29,6 +55,18 @@ export default class ConfigFlowView extends Component {
 
   state = {
     choose: EnumKeys[0]
+  }
+
+  componentDidMount () {
+    const { loaded, get, flowId } = this.props
+    if (!loaded) {
+      get(flowId)
+    }
+  }
+
+  redirectToNotFound () {
+    const { redirect } = this.props
+    redirect('/notfound')
   }
 
   createHandle (path) {
@@ -49,17 +87,27 @@ export default class ConfigFlowView extends Component {
     </a>
   }
 
-  render () {
-    const { params: { flowId }, i18n } = this.props
+  renderChild () {
+    const { flowId, i18n } = this.props
     const { choose } = this.state
-
     const child = Enums[choose]
+    return React.createElement(child, {
+      flowId,
+      i18n: i18n.createChild(choose),
+    })
+  }
 
+  render () {
+    const { loaded } = this.props
     return <div className={classes.container}>
       <div className={classes.navbar}>
         {EnumKeys.map(this.renderNav)}
       </div>
-      {React.createElement(child, { flowId, i18n: i18n.createChild(choose) })}
+      {loaded ? this.renderChild() : <div>
+        <Loading />
+      </div>}
     </div>
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfigFlowView)
