@@ -42,8 +42,8 @@ class HomeView extends PureComponent {
     redirect('/next')
   }
 
-  handleCheck = (e) => {
-    this.setState({ checked: e.target.checked })
+  handleCheck = (checked) => {
+    this.setState({ checked: checked })
   }
 
   handleRadio = (e) => {

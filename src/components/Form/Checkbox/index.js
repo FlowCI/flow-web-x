@@ -30,6 +30,11 @@ export default class Checkbox extends Component {
     unCheckedIcon: <i className='icon unchecked icon-checkbox-unchecked' />,
   }
 
+  handleChange = (e) => {
+    const { onChange } = this.props
+    return onChange(e.target.checked)
+  }
+
   render () {
     const {
       size, readOnly,
@@ -37,6 +42,7 @@ export default class Checkbox extends Component {
       classNames,
       leftLabel, rightLabel,
       checkedIcon, unCheckedIcon,
+      onChange,
       meta, // eslint-disable-line no-unused-vars
       ...other
     } = this.props
@@ -58,6 +64,7 @@ export default class Checkbox extends Component {
       <input {...other} className='hide'
         checked={checked}
         disabled={readOnly}
+        onChange={!!onChange && this.handleChange}
       />
       {left}
       {right}

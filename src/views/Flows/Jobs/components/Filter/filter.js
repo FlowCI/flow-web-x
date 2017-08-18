@@ -86,13 +86,11 @@ export class JobsFilter extends Component {
     this.saveFilter('branch', v)
   }
 
-  handleOnlySelfCheck = (e) => {
-    const { target: { checked } } = e
+  handleOnlySelfCheck = (checked) => {
     this.saveFilter('onlySelf', checked)
   }
 
-  handlePullRequestCheck = (e) => {
-    const { target: { checked } } = e
+  handlePullRequestCheck = (checked) => {
     this.saveFilter('pullRequest', checked)
   }
 
