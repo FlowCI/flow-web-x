@@ -13,8 +13,9 @@ import { actions } from 'redux/modules/flow'
 import ClipboardButton from 'react-clipboard.js'
 
 import Input from 'components/Form/Input'
-import IconButton from 'components/IconButton'
 import Button from 'components/Button'
+
+import { Section, SectionTitle } from '../components/Section'
 
 import classes from './ssh.scss'
 
@@ -97,30 +98,24 @@ export class SSHConfig extends Component {
   renderGitUrl () {
     const { i18n } = this.props
     const { url } = this.state
-    return <section className={classes.section}>
-      <h5 className={classes.title}>
-        {i18n('输入 Git 仓库地址')}
-        <IconButton className={classes.question}>
-          <i className='icon icon-question-thin' />
-        </IconButton>
-      </h5>
+    return <Section>
+      <SectionTitle title={i18n('输入 Git 仓库地址')}
+        question='link for doc'
+      />
       <Input className={classes.addr} value={url}
         type='url' onChange={this.handleUrlChange}
         placeholder={i18n('例：git@github.com:FlowCI/flow-platform.git')} />
-    </section>
+    </Section>
   }
 
   renderWebhook () {
     const { i18n, flow } = this.props
     const { copied } = this.state
     const webhook = flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])
-    return <section className={classes.section}>
-      <h5 className={classes.title}>
-        {i18n('手动添加 WebHook 地址到你的 Git 仓库')}
-        <IconButton className={classes.question}>
-          <i className='icon icon-question-thin' />
-        </IconButton>
-      </h5>
+    return <Section>
+      <SectionTitle title={i18n('手动添加 WebHook 地址到你的 Git 仓库')}
+        question='link for doc'
+      />
       <code className={classes.code}>
         {webhook}
         {supportCopy && <ClipboardButton
@@ -134,22 +129,17 @@ export class SSHConfig extends Component {
           </span>
         </ClipboardButton>}
       </code>
-    </section>
+    </Section>
   }
 
   renderDeploy () {
     const { i18n } = this.props
-    return <section className={classes.section}>
-      <h5 className={classes.title}>
-        {i18n('Deploy Key（可选）')}
-        <IconButton className={classes.question}>
-          <i className='icon icon-question-thin' />
-        </IconButton>
-        <small className={classes.subTitle}>
-          {i18n('如没有 Git 仓库访问权限，请添加 Deploy Key 到 Git 仓库的项目或者用户设置')}
-        </small>
-      </h5>
-    </section>
+    return <Section>
+      <SectionTitle title={i18n('Deploy Key（可选）')}
+        question='link for doc'
+        subTitle={i18n('如没有 Git 仓库访问权限，请添加 Deploy Key 到 Git 仓库的项目或者用户设置')}
+      />
+    </Section>
   }
 
   renderActions () {

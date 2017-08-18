@@ -1,23 +1,4 @@
 @import 'variables';
-
-.section{
-  margin-bottom: $create-flow-config-section-vertical-padding;
-}
-.title{
-  line-height: 20px;
-  margin-bottom: $create-flow-config-vertical-padding;
-}
-.question{
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
-  margin-left: $create-flow-config-horizontal-padding/2;
-}
-.subTitle{
-  color: #8B8C9B;
-  display: block;
-  font-weight: $create-flow-subtitle-font-weight;
-}
 .addr{
   width: 90%;
   max-width: 580px;
