@@ -45,7 +45,8 @@ export class SSHConfig extends Component {
   }
 
   state = {
-    url: ''
+    url: '',
+    copied: false
   }
 
   componentWillReceiveProps (nextProps) {
@@ -56,8 +57,19 @@ export class SSHConfig extends Component {
     }
   }
 
+  componentWillUnmount () {
+    clearTimeout(this.copyTimer)
+  }
+
   handleUrlChange = (value) => {
     this.setState({ url: value })
+  }
+
+  handleCopySuccess = () => {
+    this.setState({ copied: true })
+    this.copyTimer = setTimeout(() => {
+      this.setState({ copied: false })
+    }, 3000)
   }
 
   handleDoneCick = () => {
@@ -100,6 +112,7 @@ export class SSHConfig extends Component {
 
   renderWebhook () {
     const { i18n, flow } = this.props
+    const { copied } = this.state
     const webhook = flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])
     return <section className={classes.section}>
       <h5 className={classes.title}>
@@ -112,8 +125,13 @@ export class SSHConfig extends Component {
         {webhook}
         {supportCopy && <ClipboardButton
           className={`btn btn-link ${classes.copy}`}
-          data-clipboard-text={webhook}>
-          {i18n('复制地址')}
+          data-clipboard-text={webhook}
+          onSuccess={this.handleCopySuccess}
+        >
+          <span>
+            {i18n('复制地址')}
+            {copied && <i className='icon icon-check text-success' />}
+          </span>
         </ClipboardButton>}
       </code>
     </section>
