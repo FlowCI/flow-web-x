@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { replace } from 'react-router-redux'
 
 import { STATUS } from 'redux-http'
 
@@ -24,7 +24,7 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    redirect: push,
+    redirect: replace,
   }, dispatch)
 }
 
