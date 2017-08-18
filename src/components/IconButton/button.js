@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 
 import classes from './button.scss'
 
-export const className = classes
+export { classes }
 
 export default class IconButton extends Component {
   static propTypes = {

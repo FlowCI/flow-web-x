@@ -9,7 +9,7 @@ import LoadingIcon from 'components/Icon/Loading'
 
 import classes from './button.scss'
 
-export const className = classes
+export { classes }
 
 export class Button extends Component {
   static propTypes = {

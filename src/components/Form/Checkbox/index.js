@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import classes from './checkbox.scss'
 
+export { classes }
+
 export default class Checkbox extends Component {
   static propTypes = {
     checked: PropTypes.bool,

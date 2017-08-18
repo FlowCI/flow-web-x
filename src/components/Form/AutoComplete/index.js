@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import Select, { Option } from '../Select'
+import Select, { Option, classes } from '../Select'
 
+export { classes }
 export default class AutoComplete extends PureComponent {
   static propTypes = {
     /*

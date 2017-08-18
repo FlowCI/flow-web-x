@@ -7,4 +7,4 @@ export {
   Select,
 }
 
-export const className = classes
+export { classes }

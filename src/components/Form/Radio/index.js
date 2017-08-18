@@ -4,6 +4,8 @@ import Checkbox from '../Checkbox'
 const checkedIcon = <i className='icon checked icon-radio-checked' />
 const unCheckedIcon = <i className='icon unchecked icon-radio-unchecked' />
 
+export { classes } from '../Checkbox'
+
 export default function Radio (props) {
   return <Checkbox {...props} type='radio'
     checkedIcon={checkedIcon}

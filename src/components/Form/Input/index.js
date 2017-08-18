@@ -5,7 +5,7 @@ import keycode from 'keycode'
 
 import classes from './input.scss'
 
-export const className = classes
+export { classes }
 
 export default class Input extends Component {
   static propTypes = {
