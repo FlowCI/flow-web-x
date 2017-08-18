@@ -42,19 +42,30 @@ export const actions = {
       }
     }
   },
-  create: function (flowName) {
+  create: function (flowId) {
     return {
       url: '/flows/:flowName',
       name: Types.create,
       params: {
-        flowName: flowName,
+        flowName: flowId,
+      },
+      indicator: {
+        id: flowId,
       },
       transformResponse,
     }
   },
-  updateEnv: function () {
+  updateEnv: function (flowId, env) {
     return {
-      type: 'UPDATE_ENV'
+      url: '/flows/:flowName',
+      name: Types.updateEnv,
+      params: {
+        flowName: flowId,
+      },
+      indicator: {
+        id: flowId,
+      },
+      transformResponse,
     }
   },
   setDropDownFilter: function (filter) {
@@ -84,6 +95,9 @@ export default handleActions({
     success: handlers.save,
   }),
   [Types.create]: handleHttp('GET', {
+    success: handlers.save,
+  }),
+  [Types.updateEnv]: handleHttp('UPDATE', {
     success: handlers.save,
   }),
   [Types.setDropDownFilter]: function (state, { payload }) {
