@@ -18,7 +18,7 @@ import Button from 'components/Button'
 
 import classes from './ssh.scss'
 
-const supportCopy = clipboard.isSupported
+const supportCopy = clipboard.isSupported()
 function mapStateToProps (state, { flowId }) {
   const { flow } = state
   return {
