@@ -31,11 +31,11 @@ export const actions = {
   },
   get: function (flowId) {
     return {
-      url: '/flows/:path',
+      url: '/flows/:flowName',
       name: Types.get,
       transformResponse,
       params: {
-        path: flowId,
+        flowName: flowId,
       },
       indicator: {
         id: flowId,
