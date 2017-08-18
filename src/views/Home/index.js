@@ -46,8 +46,8 @@ class HomeView extends PureComponent {
     this.setState({ checked: checked })
   }
 
-  handleRadio = (e) => {
-    this.setState({ radio: e.target.value })
+  handleRadio = (v) => {
+    this.setState({ radio: v })
   }
 
   handleSelect = (v) => {
