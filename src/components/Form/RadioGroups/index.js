@@ -9,11 +9,10 @@ export default class RadioGroups extends PureComponent {
     className: PropTypes.string,
   }
 
-  handleChange = (e) => {
-    const { target: { value: v } } = e
+  handleChange = (v) => {
     const { value, onChange } = this.props
     if (value !== v) {
-      onChange && onChange(e)
+      onChange && onChange(v)
     }
   }
 
