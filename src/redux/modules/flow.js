@@ -61,6 +61,7 @@ export const actions = {
       name: Types.updateEnv,
       params: {
         flowName: flowId,
+        ...env,
       },
       indicator: {
         id: flowId,

@@ -44,5 +44,17 @@ export default {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
       },
     }
+  },
+  [types.updateEnv]: function ({ params }) {
+    const { flowName, ...other } = params
+    return {
+      name: flowName,
+      'createdAt': 1502418628,
+      'updatedAt': 1502418628,
+      env: {
+        FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        ...other,
+      }
+    }
   }
 }
