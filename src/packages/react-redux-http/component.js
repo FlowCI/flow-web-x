@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { isPromise, cancel as defaultCancel } from 'redux-http'
 
 import createStore from './store'
-import { compose, spy, done } from './util'
+import { compose, spy, done } from './helper'
 
 /**
   trigger: 'unique', 'unmount', default is unmount
