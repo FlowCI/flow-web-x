@@ -6,10 +6,7 @@
 */
 import makeCancelable, { copyCancel } from './promiseCancelable'
 import makeIndicator from './indicator'
-
-function isFunction (v) {
-  return typeof v === 'function'
-}
+import is from 'util/is'
 
 export default function (config = {}) {
   const HANDLE_TYPE = config.type
@@ -31,7 +28,7 @@ export default function (config = {}) {
 
       let response = responseHandle(action)
       if (transformResponse) {
-        if (isFunction(transformResponse)) {
+        if (is.func(transformResponse)) {
           response = transformResponse(response)
         } else {
           response = transformResponse.reduce((data, f) => f(data), response)

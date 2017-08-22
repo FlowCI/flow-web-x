@@ -18,4 +18,13 @@ const is = {
   array: Array.isArray,
 }
 
+export function setIsType (name, checkFn) {
+  if (!is[name]) {
+    is[name] = checkFn
+  } else {
+    console.error('it\'s already set up with name: ', name)
+  }
+  return is
+}
+
 export default is

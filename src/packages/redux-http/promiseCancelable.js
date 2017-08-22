@@ -1,14 +1,7 @@
-function isFunction (v) {
-  return typeof v === 'function'
-}
-
-export function isPromise (v) {
-  // return v instanceOf Promise
-  return !!v && isFunction(v.then) && isFunction(v.catch)
-}
+import is from 'util/is'
 
 export default function makeCancelable (promise) {
-  if (!isPromise(promise)) {
+  if (!is.promise(promise)) {
     return promise
   }
   let _reject
@@ -36,7 +29,7 @@ export function createCancel (message) {
   }
 }
 export function cancel (promise, message) {
-  if (promise && isFunction(promise.cancel)) {
+  if (promise && is.func(promise.cancel)) {
     promise.cancel(message)
   } else if (!__PROD__) {
     console.warn('only call makeCancelable(promise) can cancel')

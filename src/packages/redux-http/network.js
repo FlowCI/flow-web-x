@@ -1,17 +1,10 @@
 import { Axios } from 'axios'
 import defaults from 'axios/lib/defaults'
-
-function isString (v) {
-  return typeof v === 'string'
-}
-
-function isFunction (v) {
-  return typeof v === 'function'
-}
+import is from 'util/is'
 
 function getConfig (url, config) {
   // merge in config, not immutable
-  const conf = isString(url) ? { ...(config || {}), url } : url
+  const conf = is.string(url) ? { ...(config || {}), url } : url
   return conf
 }
 
@@ -39,13 +32,13 @@ export default class HttpProvider extends Axios {
       conf.params = undefined
     }
     const { transformResponse, transformRequest } = conf
-    if (transformResponse && isFunction(transformResponse)) {
+    if (transformResponse && is.func(transformResponse)) {
       conf.transformResponse = [
         ...defaults.transformResponse,
         transformResponse
       ]
     }
-    if (transformRequest && isFunction(transformRequest)) {
+    if (transformRequest && is.func(transformRequest)) {
       conf.transformRequest = [
         ...defaults.transformRequest,
         transformRequest
