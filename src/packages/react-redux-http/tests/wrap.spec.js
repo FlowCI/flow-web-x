@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { mount } from 'enzyme'
-import autoCancel from 'packages/react-redux-http'
+import autoCancel from '../index'
 
 import httpMiddleware, { isCancel, cancel } from 'packages/redux-http'
 

@@ -1,4 +1,4 @@
-import HttpProvider from 'packages/redux-http/network'
+import HttpProvider from '../network'
 const http = new HttpProvider().$get()
 // const http = httpClient.request.bind(httpClient)
 

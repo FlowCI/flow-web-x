@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import toProps from 'packages/promise-to-props'
+import toProps from '../index'
 import { mount } from 'enzyme'
 
 class TestComponent extends Component {

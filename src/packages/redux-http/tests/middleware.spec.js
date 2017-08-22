@@ -1,6 +1,6 @@
 import { cancel, STATUS } from 'packages/redux-http'
-import create from 'packages/redux-http/middleware'
-import isCancel from 'packages/redux-http/isCancel'
+import create from '../middleware'
+import isCancel from '../isCancel'
 
 const middleware = create()
 function noop () {}
