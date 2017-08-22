@@ -1,14 +1,6 @@
 import React, { Component } from 'react'
-import compose from './compose'
-
-function isFunction (v) {
-  return typeof v === 'function'
-}
-
-export function isPromise (v) {
-  // return v instanceOf Promise
-  return !!v && isFunction(v.then) && isFunction(v.catch)
-}
+import compose from 'util/compose'
+import is from 'util/is'
 
 export default function createHigherOrderComponent (config) {
   return function (WrappedComponent) {
@@ -62,7 +54,7 @@ export default function createHigherOrderComponent (config) {
 
       createWrapperFunc (name, toPropName) {
         const toProps = (obj) => {
-          if (isPromise(obj)) {
+          if (is.promise(obj)) {
             this.safeSetState({ [toPropName]: true })
 
             const then = this.createSetState(toPropName, false)
