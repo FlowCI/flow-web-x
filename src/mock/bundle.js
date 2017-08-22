@@ -1,9 +1,8 @@
-const ignore = []
-const ignoreReg = new RegExp(`${ignore.join('|')}.js`)
+const ignoreFiles = []
+const ignoreReg = new RegExp(`^${ignoreFiles.join('|')}.js$`)
 
 const context = require.context('./database', false, /\.js$/)
-let keys = context.keys()
-keys = ignore.length ? keys.filter((key) => !ignoreReg.test(key)) : keys
+let keys = context.keys().filter((key) => !ignoreReg.test(key))
 
 const datas = keys.map((key) => context(key).default)
 
