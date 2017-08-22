@@ -90,10 +90,13 @@ export function bindOptionsCompose (options, ...funcs) {
 }
 
 export const handlers = {
-  save: saveToData,
+  save: composeHandler(saveToData, saveToList),
   saveAll: composeHandler(saveAllToList, saveAllToData),
+  saveData: saveToData,
+
   unshift: composeHandler(unshiftToList, saveToData),
   unshiftAll: composeHandler(unshiftAllToList, saveAllToData),
+
   remove: composeHandler(removeFromList, removeFromData),
   removeAll: composeHandler(removeAllFromList, removeAllFromData),
 }

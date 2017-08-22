@@ -94,13 +94,13 @@ export default handleActions({
     success: handlers.saveAll,
   }),
   [Types.get]: handleHttp('GET', {
-    success: handlers.save,
+    success: handlers.saveData,
   }),
   [Types.create]: handleHttp('GET', {
     success: handlers.save,
   }),
   [Types.updateEnv]: handleHttp('UPDATE', {
-    success: handlers.save,
+    success: handlers.saveData,
   }),
   [Types.setDropDownFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('dropDownFilter', payload))

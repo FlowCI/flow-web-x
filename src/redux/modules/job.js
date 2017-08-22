@@ -88,7 +88,7 @@ export default handleActions({
     success: handlers.saveAll,
   }),
   [Types.get]: handleHttp('GET', {
-    success: handlers.save,
+    success: handlers.saveData,
   }),
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
