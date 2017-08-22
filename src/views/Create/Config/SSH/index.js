@@ -25,7 +25,7 @@ function mapStateToProps (state, { flowId }) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    done: actions.updateEnv,
+    done: actions.doCreate,
     test: function () {},
     redirect: push,
   }, dispatch)
@@ -45,14 +45,6 @@ export class SSHConfig extends Component {
     url: '',
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { flow } = nextProps
-    if (flow.getIn(['envs', 'FLOW_STATUS']) === 'READY') {
-      const { redirect } = nextProps
-      redirect(`/flows/${flow.get('id')}`)
-    }
-  }
-
   handleUrlChange = (value) => {
     this.setState({ url: value })
   }
@@ -60,10 +52,7 @@ export class SSHConfig extends Component {
   handleDoneCick = () => {
     const { done, flow } = this.props
     const { url } = this.state
-    return done(flow.get('id'), {
-      FLOW_STATUS: 'READY',
-      FLOW_GIT_URL: url
-    })
+    return done(flow.get('id'), url)
   }
 
   handleTestClick = () => {

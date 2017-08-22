@@ -25,9 +25,11 @@ const EnumKeys = Object.keys(Enums)
 
 function mapStateToProps (state, { params: { flowId } }) {
   const { flow } = state
+  const f = flow.getIn(['data', flowId])
   return {
     flowId,
-    loaded: flow.hasIn(['data', flowId]),
+    loaded: !!f,
+    status: f && f.getIn(['envs', 'FLOW_STATUS'])
     // isNotFound: flow.getIn(['ui', flowId]),
   }
 }
@@ -43,6 +45,7 @@ export class ConfigFlowView extends Component {
   static propTypes = {
     loaded: bool,
     flowId: string.isRequired,
+    status: string,
 
     get: func.isRequired,
     redirect: func.isRequired,
@@ -61,6 +64,13 @@ export class ConfigFlowView extends Component {
     const { loaded, get, flowId } = this.props
     if (!loaded) {
       get(flowId)
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { status } = nextProps
+    if (status === 'READY') {
+      console.log('redirect to flow indexRoute')
     }
   }
 

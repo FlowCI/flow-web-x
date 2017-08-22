@@ -47,14 +47,6 @@ export class HTTPConfig extends Component {
     password: '',
   }
 
-  componentWillReceiveProps (nextProps) {
-    const { flow } = nextProps
-    if (flow.getIn(['envs', 'FLOW_STATUS']) === 'READY') {
-      const { redirect } = nextProps
-      redirect(`/flows/${flow.get('id')}`)
-    }
-  }
-
   handleUrlChange = (value) => {
     this.setState({ url: value })
   }

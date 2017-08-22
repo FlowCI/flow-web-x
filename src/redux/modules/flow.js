@@ -58,8 +58,9 @@ export const actions = {
   },
   updateEnv: function (flowId, env) {
     return {
-      url: '/flows/:flowName',
+      url: '/flows/:flowName/env',
       name: Types.updateEnv,
+      method: 'post',
       params: {
         flowName: flowId,
         ...env,
@@ -69,6 +70,12 @@ export const actions = {
       },
       transformResponse,
     }
+  },
+  doCreate: function (flowId, git, deployId) {
+    return actions.updateEnv(flowId, {
+      FLOW_STATUS: 'READY',
+      FLOW_GIT_URL: git,
+    })
   },
   setDropDownFilter: function (filter) {
     return {
