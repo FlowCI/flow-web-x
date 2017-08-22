@@ -47,7 +47,7 @@ export class SSHConfig extends Component {
 
   componentWillReceiveProps (nextProps) {
     const { flow } = nextProps
-    if (flow.getIn(['env', 'FLOW_STATUS']) === 'READY') {
+    if (flow.getIn(['envs', 'FLOW_STATUS']) === 'READY') {
       const { redirect } = nextProps
       redirect(`/flows/${flow.get('id')}`)
     }
@@ -94,7 +94,7 @@ export class SSHConfig extends Component {
 
   renderWebhook () {
     const { i18n, flow } = this.props
-    const webhook = flow.getIn(['env', 'FLOW_GIT_WEBHOOK'])
+    const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
     return <WebhookSection i18n={i18n} webhook={webhook} />
   }
 
