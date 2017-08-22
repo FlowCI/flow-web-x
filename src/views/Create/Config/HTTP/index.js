@@ -4,7 +4,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
 
@@ -25,9 +24,8 @@ function mapStateToProps (state, { flowId }) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    done: actions.updateEnv,
+    done: actions.doneCreate,
     test: function () {},
-    redirect: push,
   }, dispatch)
 }
 
@@ -37,7 +35,6 @@ export class HTTPConfig extends Component {
 
     done: PropTypes.func.isRequired,
     test: PropTypes.func.isRequired,
-    redirect: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -54,10 +51,7 @@ export class HTTPConfig extends Component {
   handleDoneCick = () => {
     const { done, flow } = this.props
     const { url } = this.state
-    return done(flow.get('id'), {
-      FLOW_STATUS: 'READY',
-      FLOW_GIT_URL: url
-    })
+    return done(flow.get('id'), url)
   }
 
   handleTestClick = () => {
