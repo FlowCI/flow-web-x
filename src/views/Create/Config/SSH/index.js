@@ -4,7 +4,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
 
@@ -25,9 +24,8 @@ function mapStateToProps (state, { flowId }) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    done: actions.doCreate,
+    done: actions.doneCreate,
     test: function () {},
-    redirect: push,
   }, dispatch)
 }
 
@@ -37,7 +35,6 @@ export class SSHConfig extends Component {
 
     done: PropTypes.func.isRequired,
     test: PropTypes.func.isRequired,
-    redirect: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
