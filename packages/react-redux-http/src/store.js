@@ -1,5 +1,3 @@
-import { cancel } from 'redux-http'
-
 export default function createStore () {
   return {
     unmount: {
@@ -12,8 +10,8 @@ export default function createStore () {
         const index = array.indexOf(promise)
         index > -1 && array.splice(index, 1)
       },
-      destroy () {
-        this.data.forEach(cancel)
+      destroy (fn) {
+        this.data.forEach(fn)
       }
     },
     unique: {
@@ -27,9 +25,9 @@ export default function createStore () {
           this.data[name] = undefined
         }
       },
-      destroy () {
+      destroy (fn) {
         Object.keys(this.data).forEach((k) => {
-          cancel(this.data[k])
+          fn(this.data[k])
         })
       }
     }

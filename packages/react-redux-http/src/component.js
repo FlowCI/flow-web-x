@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { isPromise, cancel } from 'redux-http'
+import { isPromise, cancel as defaultCancel } from 'redux-http'
 
 import createStore from './store'
 import { compose, spy, done } from './util'
@@ -17,14 +17,16 @@ function getName (Comp) {
   return Comp.displayName || Comp.name
 }
 
-export default function createHigherOrderComponent (settings, options) {
+export default function createHigherOrderComponent (settings, options = {}) {
   if (typeof settings !== 'object') {
     throw new Error(`settings is type error, it will array or object, but now is ${typeof settings}`)
   }
   if (!Array.isArray(settings)) {
     settings = [settings]
   }
-  const { withRef } = options || {}
+  const { withRef } = options
+  const cancel = options.cancel || defaultCancel
+
   return function (WrappedComponent) {
     class AutoCancelWrapper extends Component {
       constructor (props, context) {
@@ -48,7 +50,7 @@ export default function createHigherOrderComponent (settings, options) {
       componentWillUnmount () {
         const keys = Object.keys(this.stores)
         keys.forEach((key) => {
-          this.stores[key].destroy()
+          this.stores[key].destroy(cancel)
         })
       }
 

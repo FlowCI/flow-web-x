@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { mount } from 'enzyme'
 import autoCancel from 'index'
+import { cancel } from 'redux-http'
 
 import httpMiddleware, { isCancel } from 'redux-http'
 
@@ -124,6 +125,31 @@ describe('Promise Cancel Highter-Order Components', function () {
     const wrapped = instance.getWrappedInstance()
     expect(wrapped).to.be.an.instanceof(TestComponent)
   })
+
+  it('should call custom cancel when willUnount and option.cancel is func', function () {
+    const cancelSpy = sinon.spy(cancel)
+    const WrapperComponent = autoCancel([{ funcs: ['query'] }], {
+      cancel: cancelSpy
+    })(TestComponent)
+
+    const querySpy = sinon.spy(query)
+    const component = mount(<WrapperComponent query={querySpy} />)
+    querySpy.should.have.been.calledOnce
+
+    const comp = component.find(TestComponent)
+    const instance = comp.get(0)
+    expect(instance.promise).to.be.a('promise')
+
+    setTimeout(() => {
+      component.unmount() // must cancel query promise
+    }, 10)
+
+    return instance.promise.catch((e) => e).then((e) => {
+      cancelSpy.should.have.been.calledOnce
+      expect(isCancel(e)).to.be.true
+    }).should.be.fulfilled
+  })
+
   describe('create config', function () {
     class MultiTestComponent extends PureComponent {
       static propTypes = {
