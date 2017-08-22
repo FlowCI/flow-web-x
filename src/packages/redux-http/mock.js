@@ -13,7 +13,7 @@ function isFunction (v) {
 
 export default function (config = {}) {
   const HANDLE_TYPE = config.type
-  const { database, all = false } = config.database
+  const { database, all = false } = config
   return function ({ dispatch, getState }) {
     return (next) => (action) => {
       const { name, url, type } = action
