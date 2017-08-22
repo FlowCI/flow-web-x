@@ -19,6 +19,7 @@ export function compose (...funcs) {
 
   const last = funcs[funcs.length - 1]
   const rest = funcs.slice(0, -1)
+  // diff from 'util/compose'
   return (...args) => rest.reduceRight((composed, f) => f(composed), last(...args))
 }
 
