@@ -45,6 +45,7 @@ export const actions = {
   create: function (flowId) {
     return {
       url: '/flows/:flowName',
+      method: 'post',
       name: Types.create,
       params: {
         flowName: flowId,
