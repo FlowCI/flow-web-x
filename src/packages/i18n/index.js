@@ -1,4 +1,4 @@
-import is from './is'
+import is from 'util/is'
 
 function isReturnUndefined (options) {
   return options && !is.undefined(options.default) && !options.default

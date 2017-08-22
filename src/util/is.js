@@ -1,4 +1,8 @@
 const is = {
+  undefined (v) {
+    return v === undefined
+  },
+
   func (v) {
     return typeof v === 'function'
   },
