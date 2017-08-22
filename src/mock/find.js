@@ -11,7 +11,7 @@ if (module.hot) {
 export default function find (name) {
   let handler
   mapping.some((ds) => {
-    handler = ds[name]
+    handler = ds && ds[name]
     return !!handler
   })
   return handler
