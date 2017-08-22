@@ -2,7 +2,7 @@ import makeCancelable, {
   cloneCancel,
   cancel,
   isCancel,
-} from 'index'
+} from 'packages/promise-cancelable'
 
 describe('Make Promsie Cancelable', function () {
   it ('should reject an cancel object when promise cancel', () => {

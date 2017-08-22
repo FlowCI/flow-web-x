@@ -31,6 +31,7 @@ const webpackConfig = {
   resolve: {
     modules: [
       paths.src(),
+      paths.src('packages'),
       'node_modules',
     ],
     extensions: ['*', '.js', '.jsx', '.json'],

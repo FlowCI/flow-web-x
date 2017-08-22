@@ -1,4 +1,4 @@
-import createResource from 'index'
+import createResource from 'packages/i18n'
 
 describe('i18n function', function () {
 

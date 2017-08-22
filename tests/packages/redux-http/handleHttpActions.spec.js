@@ -1,5 +1,5 @@
-import handleHttpActions from 'handleHttpActions'
-import STATUS from 'status'
+import handleHttpActions from 'packages/redux-http/handleHttpActions'
+import STATUS from 'packages/redux-http/status'
 
 describe('HandleHttpActions module', function () {
   it('should do nothing when no handler', function () {

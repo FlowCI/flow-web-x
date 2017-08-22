@@ -1,7 +1,7 @@
 import makeCancelable, {
   cancel
-} from 'promiseCancelable'
-import isCancel from 'isCancel'
+} from 'packages/redux-http/promiseCancelable'
+import isCancel from 'packages/redux-http/isCancel'
 
 describe('Promise Cancelable', function () {
   it('should return next promise', function () {

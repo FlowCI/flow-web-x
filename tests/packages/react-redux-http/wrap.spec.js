@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { mount } from 'enzyme'
-import autoCancel from 'index'
-import { cancel } from 'redux-http'
+import autoCancel from 'packages/react-redux-http'
 
-import httpMiddleware, { isCancel } from 'redux-http'
+import httpMiddleware, { isCancel, cancel } from 'packages/redux-http'
 
 function noop () {}
 function getState () { return {} }
