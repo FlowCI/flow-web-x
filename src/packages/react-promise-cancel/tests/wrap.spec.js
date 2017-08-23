@@ -63,6 +63,31 @@ describe('React Redux Http Promise Cancel Highter-Order Components', function ()
     }).should.be.fulfilled
   })
 
+  it('support custom cancel function with config.cancel', function () {
+    const cancelSpy = sinon.spy(cancel)
+    const WrapperComponent = autoCancel({
+      funcs: ['query'],
+      cancel: cancelSpy
+    })(TestComponent)
+
+    const querySpy = sinon.spy(query)
+    const component = mount(<WrapperComponent query={querySpy} />)
+    querySpy.should.have.been.calledOnce
+
+    const comp = component.find(TestComponent)
+    const instance = comp.get(0)
+    expect(instance.promise).to.be.a('promise')
+
+    setTimeout(() => {
+      component.unmount() // must cancel query promise
+    }, 100)
+
+    return instance.promise.catch((e) => e).then((e) => {
+      expect(isCancel(e)).to.be.true
+      cancelSpy.should.have.been.callOnce
+    }).should.be.fulfilled
+  })
+
   it('should support args[0] is object && not array', function () {
     const WrapperComponent = autoCancel({ funcs: ['query'] })(TestComponent)
 
