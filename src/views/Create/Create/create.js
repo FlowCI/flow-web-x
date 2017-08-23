@@ -59,7 +59,6 @@ export class CreateFlowView extends Component {
     const { name, git } = this.state
     const { location, create, redirect } = this.props
     const { data: flow } = await create(name)
-    console.log(flow)
     const next = git === 'custom' ? '' : git
     redirect({
       ...location,

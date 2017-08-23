@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+import { func, string } from 'prop-types'
+import { map } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -31,17 +31,23 @@ function mapDispatchToProps (dispatch) {
 
 export class HTTPConfig extends Component {
   static propTypes = {
-    flow: ImmutablePropTypes.map,
+    flow: map.isRequired,
+    git: string,
 
-    done: PropTypes.func.isRequired,
-    test: PropTypes.func.isRequired,
-    i18n: PropTypes.func.isRequired,
+    done: func.isRequired,
+    test: func.isRequired,
+    i18n: func.isRequired,
   }
 
   state = {
-    url: '',
+    url: this.props.flow.getIn(['envs', 'FLOW_GIT_URL'], ''),
     username: '',
     password: '',
+  }
+
+  getGitSource () {
+    const { git } = this.props
+    return git ? git.toUpperCase() : 'UNDEFINED_HTTP'
   }
 
   handleUrlChange = (value) => {
@@ -51,17 +57,16 @@ export class HTTPConfig extends Component {
   handleDoneCick = () => {
     const { done, flow } = this.props
     const { url } = this.state
-    return done(flow.get('id'), url)
+    const source = this.getGitSource()
+    return done(flow.get('id'), source, url)
   }
 
   handleTestClick = () => {
     const { test, flow } = this.props
     const { url } = this.state
-    return test(flow.get('id'), {
-      FLOW_GIT_URL: url
-    })
+    const source = this.getGitSource()
+    return test(flow.get('id'), source, url)
   }
-
   valid (values) {
     const { url } = values
     return /^git@\w+\.\w+/.test(url)

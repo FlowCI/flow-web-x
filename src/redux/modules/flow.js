@@ -1,10 +1,13 @@
 import { handleActions } from 'redux-actions'
 import { Map, fromJS } from 'immutable'
-
 import is from 'util/is'
+
+import polling from 'polling'
+import { setCancel, cancel } from 'promise-cancelable'
 
 import { handleHttp } from 'redux/util'
 import { defaultInitState, handlers } from 'redux/handler'
+
 import Types from './flowType'
 import JobTypes from './jobType'
 
@@ -19,6 +22,56 @@ const transformResponse = function (data) {
     data.id = data.name
   }
   return data
+}
+
+function notifyLoadYml (flowId) {
+  return {
+    url: '/flows/:flowName/yml/load',
+    params: {
+      flowName: flowId,
+    }
+  }
+}
+
+function getYml (flowId) {
+  return function (dispatch, getState) {
+    function get () {
+      return dispatch({
+        url: '/flows/:flowName/yml',
+        params: {
+          flowName: flowId,
+        }
+      })
+    }
+    function check (response) {
+      return !!response.data
+    }
+    return polling(get, check)
+  }
+}
+
+function verifyYml (flowId) {
+  function verify (yml) {
+    return {
+      url: `/flows/${flowId}/yml/verify`,
+      name: 'xxx',
+      data: yml,
+    }
+  }
+  return function (dispatch) {
+    const promise = dispatch(getYml(flowId))
+    let p2
+    const resultPromise = promise.then((response) => {
+      const yml = response.data
+      p2 = dispatch(verify(yml))
+      return p2
+    })
+    setCancel(resultPromise, function (message) {
+      cancel(promise, message)
+      p2 && cancel(p2, message)
+    })
+    return resultPromise
+  }
 }
 
 export const actions = {
@@ -71,12 +124,24 @@ export const actions = {
       transformResponse,
     }
   },
-  doCreate: function (flowId, git, deployId) {
+  doneCreate: function (flowId, gitSource, url, deployId) {
     return actions.updateEnv(flowId, {
       FLOW_STATUS: 'READY',
-      FLOW_GIT_URL: git,
+      FLOW_GIT_SOURCE: gitSource,
+      FLOW_GIT_URL: url,
     })
   },
+  doCreateTest: function (flowId, gitSource, url, deployId) {
+    return async function (dispatch) {
+      await dispatch(actions.updateEnv(flowId, {
+        FLOW_GIT_URL: url,
+        FLOW_GIT_SOURCE: gitSource,
+      }))
+      await dispatch(notifyLoadYml(flowId))
+    }
+  },
+  getCreateTestResult: verifyYml,
+
   setDropDownFilter: function (filter) {
     return {
       type: Types.setDropDownFilter,

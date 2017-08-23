@@ -3,6 +3,7 @@ import { string, func, bool } from 'prop-types'
 
 import createI18n from './i18n'
 import language from 'util/language'
+import { STATUS } from 'redux-http'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -23,12 +24,13 @@ const Enums = {
 }
 const EnumKeys = Object.keys(Enums)
 
-function mapStateToProps (state, { params: { flowId } }) {
+function mapStateToProps (state, { params: { flowId, git } }) {
   const { flow } = state
   const f = flow.getIn(['data', flowId])
   return {
     flowId,
-    loaded: !!f,
+    git,
+    loaded: flow.getIn(['ui', flowId, 'GET']) === STATUS.success,
     status: f && f.getIn(['envs', 'FLOW_STATUS'])
     // isNotFound: flow.getIn(['ui', flowId]),
   }
@@ -45,6 +47,7 @@ export class ConfigFlowView extends Component {
   static propTypes = {
     loaded: bool,
     flowId: string.isRequired,
+    git: string,
     status: string,
 
     get: func.isRequired,
@@ -98,11 +101,12 @@ export class ConfigFlowView extends Component {
   }
 
   renderChild () {
-    const { flowId, i18n } = this.props
+    const { flowId, git, i18n } = this.props
     const { choose } = this.state
     const child = Enums[choose]
     return React.createElement(child, {
       flowId,
+      git,
       i18n: i18n.createChild(choose),
     })
   }
