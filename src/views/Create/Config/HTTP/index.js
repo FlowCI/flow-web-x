@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { func, string } from 'prop-types'
-import { map } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -17,8 +16,10 @@ import classes from './http.scss'
 
 function mapStateToProps (state, { flowId }) {
   const { flow } = state
+  const f = flow.getIn(['data', flowId])
   return {
-    flow: flow.getIn(['data', flowId]),
+    webhook: f.getIn(['envs', 'FLOW_GIT_WEBHOOK']),
+    defaultGitUrl: f.getIn(['envs', 'FLOW_GIT_URL'], ''),
   }
 }
 
@@ -31,7 +32,9 @@ function mapDispatchToProps (dispatch) {
 
 export class HTTPConfig extends Component {
   static propTypes = {
-    flow: map.isRequired,
+    flowId: string.isRequired,
+    webhook: string.isRequired,
+    defaultGitUrl: string,
     git: string,
 
     done: func.isRequired,
@@ -40,7 +43,7 @@ export class HTTPConfig extends Component {
   }
 
   state = {
-    url: this.props.flow.getIn(['envs', 'FLOW_GIT_URL'], ''),
+    url: this.props.defaultGitUrl,
     username: '',
     password: '',
   }
@@ -55,17 +58,17 @@ export class HTTPConfig extends Component {
   }
 
   handleDoneCick = () => {
-    const { done, flow } = this.props
+    const { done, flowId } = this.props
     const { url } = this.state
     const source = this.getGitSource()
-    return done(flow.get('id'), source, url)
+    return done(flowId, source, url)
   }
 
   handleTestClick = () => {
-    const { test, flow } = this.props
+    const { test, flowId } = this.props
     const { url } = this.state
     const source = this.getGitSource()
-    return test(flow.get('id'), source, url)
+    return test(flowId, source, url)
   }
   valid (values) {
     const { url } = values
@@ -113,8 +116,7 @@ export class HTTPConfig extends Component {
   }
 
   renderWebhook () {
-    const { i18n, flow } = this.props
-    const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
+    const { i18n, webhook } = this.props
     return <WebhookSection i18n={i18n} webhook={webhook} />
   }
 
