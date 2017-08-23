@@ -1,14 +1,7 @@
-function isFunction (v) {
-  return typeof v === 'function'
-}
-
-export function isPromise (v) {
-  // return v instanceOf Promise
-  return !!v && isFunction(v.then) && isFunction(v.catch)
-}
+import is from 'util/is'
 
 export default function makeCancelable (promise) {
-  if (!isPromise(promise)) {
+  if (!is.promise(promise)) {
     return promise
   }
   let _reject
@@ -33,7 +26,7 @@ export function getCancel (promise) {
   return function () {}
 }
 
-export function cloneCancel (target, source) {
+export function copyCancel (target, source) {
   target.cancel = getCancel(source)
   return target
 }

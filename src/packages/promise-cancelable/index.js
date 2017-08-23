@@ -1,16 +1,5 @@
-import makeCancelable, {
-  getCancel,
-  cloneCancel,
-  isPromise,
-  cancel
-} from './makeCancelable'
-import isCancel from './isCancel'
+import makeCancelable from './makeCancelable'
 
 export default makeCancelable
-export {
-  getCancel,
-  cloneCancel,
-  isPromise,
-  cancel,
-  isCancel,
-}
+export * from './makeCancelable'
+export isCancel from './isCancel'
