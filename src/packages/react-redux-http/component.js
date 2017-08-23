@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { isPromise, cancel as defaultCancel } from 'redux-http'
+import is from 'util/is'
+import { cancel as defaultCancel } from 'promise-cancelable'
 
 import createStore from './store'
 import { compose, spy, done } from './helper'
@@ -79,7 +80,7 @@ export default function createHigherOrderComponent (settings, options = {}) {
 
       createWatcher (name, store) {
         return function (result) {
-          if (isPromise(result)) {
+          if (is.promise(result)) {
             store.push(name, result)
             done(result, function () { store.remove(name, result) })
           }

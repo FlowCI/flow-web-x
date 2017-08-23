@@ -10,8 +10,8 @@ export default function createStore () {
         const index = array.indexOf(promise)
         index > -1 && array.splice(index, 1)
       },
-      destroy (fn) {
-        this.data.forEach(fn)
+      destroy (cancel) {
+        this.data.forEach(cancel)
       }
     },
     unique: {
@@ -25,9 +25,10 @@ export default function createStore () {
           this.data[name] = undefined
         }
       },
-      destroy (fn) {
+      destroy (cancel) {
         Object.keys(this.data).forEach((k) => {
-          fn(this.data[k])
+          const f = this.data[k]
+          f && cancel(f)
         })
       }
     }

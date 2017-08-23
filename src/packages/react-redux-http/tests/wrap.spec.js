@@ -4,34 +4,26 @@ import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import autoCancel from '../index'
 
-import httpMiddleware, { isCancel, cancel } from 'packages/redux-http'
+import httpMiddleware from 'packages/redux-http/mock'
+import { isCancel, cancel } from 'packages/promise-cancelable'
 
 function noop () {}
 function getState () { return {} }
 
-describe('Promise Cancel Highter-Order Components', function () {
-  let _fakeServer
+describe('React Redux Http Promise Cancel Highter-Order Components', function () {
   let _dispatch
   let http
-
+  this.timeout(200000)
   beforeEach(() => {
-    _fakeServer = sinon.fakeServer.create()
-    _fakeServer.respond([200, {
-      'Content-Type': 'application/json; charset=utf-8'
-    }, JSON.stringify({ message: 'this is default response' })])
-    _fakeServer.autoRespond = true
-    _fakeServer.autoRespondAfter = 1000
-
     _dispatch = sinon.spy()
-    http = httpMiddleware()({ dispatch: _dispatch, getState })(noop)
-  })
-
-  afterEach(() => {
-    _fakeServer.restore()
+    http = httpMiddleware({
+      autoRespond: true,
+      respondAfter: 500,
+    })({ dispatch: _dispatch, getState })(noop)
   })
 
   const query = function () {
-    return http({ url: '/somepath' })
+    return http({ url: '/querySometh' })
   }
 
   class TestComponent extends PureComponent {
@@ -64,7 +56,7 @@ describe('Promise Cancel Highter-Order Components', function () {
 
     setTimeout(() => {
       component.unmount() // must cancel query promise
-    }, 10)
+    }, 100)
 
     return instance.promise.catch((e) => e).then((e) => {
       expect(isCancel(e)).to.be.true
@@ -84,7 +76,7 @@ describe('Promise Cancel Highter-Order Components', function () {
 
     setTimeout(() => {
       component.unmount() // must cancel query promise
-    }, 10)
+    }, 100)
 
     return instance.promise.catch((e) => e).then((e) => {
       expect(isCancel(e)).to.be.true
@@ -108,7 +100,7 @@ describe('Promise Cancel Highter-Order Components', function () {
     setTimeout(() => {
       instance.props.query() // must cancel prev query promise
       querySpy.should.have.been.calledTwice
-    }, 10)
+    }, 100)
 
     return instance.promise.catch((e) => e).then((e) => {
       expect(isCancel(e)).to.be.true
@@ -141,7 +133,7 @@ describe('Promise Cancel Highter-Order Components', function () {
 
     setTimeout(() => {
       component.unmount() // must cancel query promise
-    }, 10)
+    }, 100)
 
     return instance.promise.catch((e) => e).then((e) => {
       cancelSpy.should.have.been.calledOnce
@@ -194,7 +186,7 @@ describe('Promise Cancel Highter-Order Components', function () {
 
       setTimeout(() => {
         props.search() // call second, it must cancel pre promise
-      }, 10)
+      }, 100)
 
       instance.searchPromise.catch((e) => e).then((e) => {
         expect(isCancel(e)).to.be.true
