@@ -1,7 +1,7 @@
 import handleHttpActions from '../handleHttpActions'
 import STATUS from '../status'
 
-describe('HandleHttpActions module', function () {
+describe('Redux Http handleHttpActions', function () {
   it('should do nothing when no handler', function () {
     const state = {}
     const reducer = handleHttpActions({})

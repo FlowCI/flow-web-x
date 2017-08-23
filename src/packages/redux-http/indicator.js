@@ -1,5 +1,5 @@
 import STATUS from './status'
-import isCancel from './isCancel'
+import { isCancel } from 'packages/promise-cancelable'
 
 export default function makeIndicator (dispatch, promise, action) {
   dispatch({ ...action, status: STATUS.send })

@@ -2,7 +2,7 @@ import HttpProvider from '../network'
 const http = new HttpProvider().$get()
 // const http = httpClient.request.bind(httpClient)
 
-describe('network module', function () {
+describe('Redux Http network module', function () {
   let _fakeServer
 
   function getRequest (index) {
@@ -95,5 +95,34 @@ describe('network module', function () {
       })
     }
     expect(fnWithParamsIsNoValue).to.throws(Error)
+  })
+
+  it('should call default.transformResponse when transformResponse is an function', async function () {
+    const message = 'this is an transform response result'
+    const transformResponse = sinon.spy(function (data) {
+      expect(data).to.be.a('object')
+      expect(data.message).to.be.not.undefined
+      return data
+    })
+    await http({
+      url: '/some',
+      method: 'get',
+      transformResponse,
+    })
+    transformResponse.should.have.called
+  })
+
+  it('should reduce transformResponse', async function () {
+    const message = 'this is an transform response result'
+    const transformResponse = sinon.spy(function (data) {
+      return 'this is an transform response result'
+    })
+    const { data: result } = await http({
+      url: '/some',
+      method: 'get',
+      transformResponse,
+    })
+    transformResponse.should.have.called
+    expect(result).to.equal(message)
   })
 })

@@ -1,15 +1,14 @@
-import makeCancelable, { copyCancel } from './promiseCancelable'
+import makeCancelable, { copyCancel } from 'packages/promise-cancelable'
 import HttpProvider from './network'
 import makeIndicator from './indicator'
+import isMatch from './match'
 
 export default function (config = {}) {
   const http = new HttpProvider(config).$get()
-  const HANDLE_TYPE = config.type
 
   return function ({ dispatch, getState }) {
     return (next) => (action) => {
-      const { url, type } = action
-      if (!url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
+      if (!isMatch(config, action)) {
         return next(action)
       }
       const { name, indicator } = action
