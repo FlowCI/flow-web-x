@@ -1,5 +1,8 @@
 import is from 'util/is'
 
+/*
+  it will return true when options.default is null、0、false
+*/
 function isReturnUndefined (options) {
   return options && !is.undefined(options.default) && !options.default
 }

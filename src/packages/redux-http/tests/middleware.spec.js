@@ -1,13 +1,13 @@
-import { cancel, STATUS } from 'packages/redux-http'
-import create from 'packages/redux-http/middleware'
-import isCancel from 'packages/redux-http/isCancel'
+import STATUS from '../status'
+import create from '../middleware'
+import { cancel, isCancel } from 'packages/promise-cancelable'
 
 const middleware = create()
 function noop () {}
 function getState () {
   return {}
 }
-describe('Redux Middleware test', function () {
+describe('Redux Http middleware test', function () {
   let _fakeServer
 
   function getRequest (index) {
@@ -63,7 +63,7 @@ describe('Redux Middleware test', function () {
     return result
   })
 
-  describe('middleware config', function () {
+  describe('Middleware config', function () {
     it('extends config option from axios', async function () {
       const middle = create({ baseURL: 'http://api.domain.com' })
       const actionHandler = middle({ dispatch: noop, getState })(noop)

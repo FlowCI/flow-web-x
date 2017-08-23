@@ -4,36 +4,49 @@
    status: 200,
   })
 */
-import makeCancelable, { copyCancel } from './promiseCancelable'
+import makeCancelable, { copyCancel } from 'packages/promise-cancelable'
 import makeIndicator from './indicator'
+import is from 'util/is'
+import isMatch from './match'
 
-function isFunction (v) {
-  return typeof v === 'function'
+function noop () {}
+
+const defaultConfig = {
+  database: noop,
+  // if set false, when no handle it will call next(action),
+  // if true, it will throw an error
+  strict: false,
+  // if not find handle in database and autoRespond is true, it will this fn
+  respond: noop,
+  // if set true is will auto repsond every no handle request
+  autoRespond: false,
+  // after timeout to respond
+  respondAfter: 100
 }
+export default function (c) {
+  const config = { ...defaultConfig, ...c }
+  const { database, strict, respond, autoRespond, respondAfter } = config
 
-export default function (config = {}) {
-  const HANDLE_TYPE = config.type
-  const { database, all = false } = config
   return function ({ dispatch, getState }) {
     return (next) => (action) => {
-      const { name, url, type } = action
-      if (!name || !url || (HANDLE_TYPE && type !== HANDLE_TYPE)) {
+      if (!isMatch(config, action)) {
         return next(action)
       }
-      const responseHandle = database(name)
+      const { name } = action
+      const responseHandle = database(name) || (autoRespond ? respond : undefined)
       if (!responseHandle) {
-        return all ? console.error('unfound response', action) : next(action)
+        if (strict) {
+          throw new Error(`not found an handle with ${name}`)
+        }
+        return next(action)
       }
-      const {
-        indicator, delay,
-        transformResponse
-      } = action
+      const { transformResponse } = action
 
       let response = responseHandle(action)
       if (transformResponse) {
-        if (isFunction(transformResponse)) {
+        if (is.func(transformResponse)) {
           response = transformResponse(response)
-        } else {
+        } else if (is.array(transformResponse)) {
           response = transformResponse.reduce((data, f) => f(data), response)
         }
       }
@@ -41,13 +54,14 @@ export default function (config = {}) {
       const promise = makeCancelable(new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve({ status: 200, data: response })
-        }, delay || 100)
+        }, action.respondAfter || respondAfter)
       }))
-
-      const indicatorAction = { type: name, indicator }
-      const result = makeIndicator(dispatch, promise, indicatorAction)
-
-      copyCancel(result, promise)
+      let result = promise
+      if (name) {
+        const indicatorAction = { type: name, indicator: action.indicator }
+        result = makeIndicator(dispatch, promise, indicatorAction)
+        copyCancel(result, promise)
+      }
       return result
     }
   }

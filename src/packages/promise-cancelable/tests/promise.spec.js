@@ -1,5 +1,5 @@
 import makeCancelable, {
-  cloneCancel,
+  copyCancel,
   cancel,
   isCancel,
 } from 'packages/promise-cancelable'
@@ -34,7 +34,7 @@ describe('Make Promsie Cancelable', function () {
         expect(false).to.be.true // the p1 must be rejected
       })
 
-      cloneCancel(p2, p1)
+      copyCancel(p2, p1)
       cancel(p2) // it will cancel p1
 
       return p2.then(() => {

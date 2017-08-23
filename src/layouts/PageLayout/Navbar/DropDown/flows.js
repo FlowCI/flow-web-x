@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { STATUS } from 'redux-http'
-import autoCancel from 'react-redux-http'
+import autoCancel from 'react-promise-cancel'
 import { createSelector } from 'reselect'
 
 import { actions } from 'redux/modules/flow'
