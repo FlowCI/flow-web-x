@@ -19,10 +19,10 @@ function getName (Comp) {
 }
 
 export default function createHigherOrderComponent (settings, options = {}) {
-  if (typeof settings !== 'object') {
+  if (!is.object(settings)) {
     throw new Error(`settings is type error, it will array or object, but now is ${typeof settings}`)
   }
-  if (!Array.isArray(settings)) {
+  if (!is.array(settings)) {
     settings = [settings]
   }
   const { withRef } = options
