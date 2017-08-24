@@ -53,15 +53,21 @@ export class HTTPConfig extends Component {
     return git ? git.toUpperCase() : 'UNDEFINED_HTTP'
   }
 
+  getValues () {
+    const { url } = this.state
+    return {
+      source: this.getGitSource(),
+      url: url
+    }
+  }
+
   handleUrlChange = (value) => {
     this.setState({ url: value })
   }
 
   handleDoneCick = () => {
     const { done, flowId } = this.props
-    const { url } = this.state
-    const source = this.getGitSource()
-    return done(flowId, source, url)
+    return done(flowId, this.getValues())
   }
 
   handleTestClick = () => {
@@ -122,7 +128,7 @@ export class HTTPConfig extends Component {
 
   renderActions () {
     const { i18n } = this.props
-    const enabled = this.valid(this.state)
+    const enabled = this.valid(this.getValues())
 
     return <div className={classes.actions}>
       <Button className='btn-primary'

@@ -8,9 +8,9 @@ import { actions } from 'redux/modules/flow'
 
 import Input from 'components/Form/Input'
 import Button from 'components/Button'
-
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
+import TestButton from '../components/TestButton'
 
 import classes from './ssh.scss'
 
@@ -38,7 +38,6 @@ export class SSHConfig extends Component {
     git: string,
 
     done: func.isRequired,
-    test: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -51,22 +50,21 @@ export class SSHConfig extends Component {
     return git ? git.toUpperCase() : 'UNDEFINED_SSH'
   }
 
+  getValues () {
+    const { url } = this.state
+    return {
+      source: this.getGitSource(),
+      url: url
+    }
+  }
+
   handleUrlChange = (value) => {
     this.setState({ url: value })
   }
 
   handleDoneCick = () => {
     const { done, flowId } = this.props
-    const { url } = this.state
-    const source = this.getGitSource()
-    return done(flowId, source, url)
-  }
-
-  handleTestClick = () => {
-    const { test, flowId } = this.props
-    const { url } = this.state
-    const source = this.getGitSource()
-    return test(flowId, source, url)
+    return done(flowId, this.getValues())
   }
 
   valid (values) {
@@ -103,8 +101,9 @@ export class SSHConfig extends Component {
   }
 
   renderActions () {
-    const { i18n } = this.props
-    const enabled = this.valid(this.state)
+    const { i18n, flowId } = this.props
+    const values = this.getValues()
+    const enabled = this.valid(values)
 
     return <div className={classes.actions}>
       <Button className='btn-primary'
@@ -113,12 +112,11 @@ export class SSHConfig extends Component {
       >
         {i18n('完成')}
       </Button>
-      <Button className='btn-inverse'
-        disabled={!enabled}
-        onClick={this.handleTestClick}
-      >
-        {i18n('连接测试')}
-      </Button>
+      <TestButton
+        envs={values}
+        i18n={i18n} disabled={!enabled}
+        flowId={flowId}
+      />
     </div>
   }
 
