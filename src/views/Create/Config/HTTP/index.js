@@ -76,6 +76,7 @@ export class HTTPConfig extends Component {
     const source = this.getGitSource()
     return test(flowId, source, url)
   }
+
   valid (values) {
     const { url } = values
     return /^git@\w+\.\w+/.test(url)
