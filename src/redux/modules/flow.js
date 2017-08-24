@@ -6,6 +6,7 @@ import polling from 'polling'
 import { setCancel, cancel } from 'promise-cancelable'
 
 import { handleHttp } from 'redux/util'
+import { handleHttpActions } from 'redux-http'
 import { defaultInitState, handlers } from 'redux/handler'
 
 import Types from './flowType'
@@ -29,7 +30,9 @@ function notifyLoadYml (flowId) {
     url: '/flows/:flowName/yml/load',
     params: {
       flowName: flowId,
-    }
+    },
+    name: Types.loadYml,
+    transformResponse,
   }
 }
 
@@ -74,6 +77,13 @@ function verifyYml (flowId) {
   }
 }
 
+function getCreateEnv ({ source, url }) {
+  return {
+    FLOW_GIT_SOURCE: source,
+    FLOW_GIT_URL: url,
+  }
+}
+
 export const actions = {
   query: function () {
     return {
@@ -109,6 +119,20 @@ export const actions = {
       transformResponse,
     }
   },
+  remove: function (flowId) {
+    return {
+      url: '/flows/:flowName/delete',
+      method: 'post',
+      name: Types.remove,
+      params: {
+        flowName: flowId,
+      },
+      indicator: {
+        id: flowId,
+      },
+      transformResponse,
+    }
+  },
   updateEnv: function (flowId, env) {
     return {
       url: '/flows/:flowName/env',
@@ -124,19 +148,15 @@ export const actions = {
       transformResponse,
     }
   },
-  doneCreate: function (flowId, gitSource, url, deployId) {
+  doneCreate: function (flowId, params) {
     return actions.updateEnv(flowId, {
       FLOW_STATUS: 'READY',
-      FLOW_GIT_SOURCE: gitSource,
-      FLOW_GIT_URL: url,
+      ...getCreateEnv(params)
     })
   },
-  doCreateTest: function (flowId, gitSource, url, deployId) {
+  doCreateTest: function (flowId, params) {
     return async function (dispatch) {
-      await dispatch(actions.updateEnv(flowId, {
-        FLOW_GIT_URL: url,
-        FLOW_GIT_SOURCE: gitSource,
-      }))
+      await dispatch(actions.updateEnv(flowId, getCreateEnv(params)))
       await dispatch(notifyLoadYml(flowId))
     }
   },
@@ -171,9 +191,18 @@ export default handleActions({
   [Types.create]: handleHttp('GET', {
     success: handlers.save,
   }),
+  [Types.remove]: handleHttp('REMOVE', {
+    success: handlers.remove,
+  }),
   [Types.updateEnv]: handleHttp('UPDATE', {
     success: handlers.saveData,
   }),
+
+  [Types.loadYml]: handleHttpActions({
+    success: handlers.saveData,
+  }),
+
+  // UI
   [Types.setDropDownFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('dropDownFilter', payload))
   },
