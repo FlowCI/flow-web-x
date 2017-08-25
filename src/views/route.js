@@ -35,8 +35,11 @@ export default function (store) {
         }]
       }]
     }, {
-      path: 'admin',
-      component: AdminLayout
+      component: NeedSession,
+      childRoutes: [{
+        path: 'admin',
+        component: AdminLayout,
+      }]
     }]
   }
   // return <Route path='/' component={PageLayout}>
