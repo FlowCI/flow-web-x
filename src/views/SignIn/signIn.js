@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import createI18n from './i18n'
@@ -31,7 +31,7 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-export class SignIn extends PureComponent {
+export class SignIn extends Component {
   static propTypes = {
     unauthored: PropTypes.bool,
     email: PropTypes.string,
