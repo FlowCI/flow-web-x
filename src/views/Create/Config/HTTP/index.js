@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+import { func, string } from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -17,8 +16,10 @@ import classes from './http.scss'
 
 function mapStateToProps (state, { flowId }) {
   const { flow } = state
+  const f = flow.getIn(['data', flowId])
   return {
-    flow: flow.getIn(['data', flowId]),
+    webhook: f.getIn(['envs', 'FLOW_GIT_WEBHOOK']),
+    defaultGitUrl: f.getIn(['envs', 'FLOW_GIT_URL'], ''),
   }
 }
 
@@ -31,17 +32,33 @@ function mapDispatchToProps (dispatch) {
 
 export class HTTPConfig extends Component {
   static propTypes = {
-    flow: ImmutablePropTypes.map,
+    flowId: string.isRequired,
+    webhook: string.isRequired,
+    defaultGitUrl: string,
+    git: string,
 
-    done: PropTypes.func.isRequired,
-    test: PropTypes.func.isRequired,
-    i18n: PropTypes.func.isRequired,
+    done: func.isRequired,
+    test: func.isRequired,
+    i18n: func.isRequired,
   }
 
   state = {
-    url: '',
+    url: this.props.defaultGitUrl,
     username: '',
     password: '',
+  }
+
+  getGitSource () {
+    const { git } = this.props
+    return git ? git.toUpperCase() : 'UNDEFINED_HTTP'
+  }
+
+  getValues () {
+    const { url } = this.state
+    return {
+      source: this.getGitSource(),
+      url: url
+    }
   }
 
   handleUrlChange = (value) => {
@@ -49,17 +66,15 @@ export class HTTPConfig extends Component {
   }
 
   handleDoneCick = () => {
-    const { done, flow } = this.props
-    const { url } = this.state
-    return done(flow.get('id'), url)
+    const { done, flowId } = this.props
+    return done(flowId, this.getValues())
   }
 
   handleTestClick = () => {
-    const { test, flow } = this.props
+    const { test, flowId } = this.props
     const { url } = this.state
-    return test(flow.get('id'), {
-      FLOW_GIT_URL: url
-    })
+    const source = this.getGitSource()
+    return test(flowId, source, url)
   }
 
   valid (values) {
@@ -108,14 +123,13 @@ export class HTTPConfig extends Component {
   }
 
   renderWebhook () {
-    const { i18n, flow } = this.props
-    const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
+    const { i18n, webhook } = this.props
     return <WebhookSection i18n={i18n} webhook={webhook} />
   }
 
   renderActions () {
     const { i18n } = this.props
-    const enabled = this.valid(this.state)
+    const enabled = this.valid(this.getValues())
 
     return <div className={classes.actions}>
       <Button className='btn-primary'

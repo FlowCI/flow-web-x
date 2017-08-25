@@ -10,10 +10,14 @@ export default function makeCancelable (promise) {
     // maybe check isCancel to reject
     promise.then(resolve, reject)
   })
-  next.cancel = function (message) {
+  setCancel(next, function (message) {
     _reject(createCancelMessage(message || 'Cancel Promise'))
-  }
+  })
   return next
+}
+
+export function setCancel (promise, cancel) {
+  promise.cancel = cancel
 }
 
 export function getCancel (promise) {
