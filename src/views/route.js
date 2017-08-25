@@ -11,6 +11,7 @@ import Index from './IndexRoute'
 import SignInRoute from './SignIn/route'
 import FlowsRoute from './Flows/route'
 import CreateRoute from './Create/route'
+import AdminRoute from './Admin/route'
 
 export default function (store) {
   return {
@@ -37,8 +38,11 @@ export default function (store) {
     }, {
       component: NeedSession,
       childRoutes: [{
-        path: 'admin',
         component: AdminLayout,
+        childRoutes: [{
+          path: 'admin',
+          ...AdminRoute(store),
+        }]
       }]
     }]
   }
