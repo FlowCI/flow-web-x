@@ -1,7 +1,9 @@
 // import React from 'react'
 // import { Route, IndexRoute } from 'react-router'
 
+import CoreLayout from 'layouts/CoreLayout'
 import PageLayout from 'layouts/PageLayout'
+import AdminLayout from 'layouts/AdminLayout'
 import NeedSession from './needSession'
 
 import Index from './IndexRoute'
@@ -13,22 +15,32 @@ import CreateRoute from './Create/route'
 export default function (store) {
   return {
     path: '/',
-    component: PageLayout,
+    component: CoreLayout,
     childRoutes: [{
-      ...SignInRoute(store),
-      path: 'signin',
+      component: PageLayout,
+      childRoutes: [
+        {
+          ...SignInRoute(store),
+          path: 'signin',
+        }, {
+          component: NeedSession,
+          indexRoute: {
+            component: Index
+          },
+          childRoutes: [
+            {
+              ...FlowsRoute(store),
+              path: 'flows/:flowId',
+            }, {
+              ...CreateRoute(store),
+              path: 'create'
+            }
+          ]
+        }
+      ]
     }, {
-      component: NeedSession,
-      indexRoute: {
-        component: Index
-      },
-      childRoutes: [{
-        ...FlowsRoute(store),
-        path: 'flows/:flowId',
-      }, {
-        ...CreateRoute(store),
-        path: 'create'
-      }]
+      path: 'admin',
+      component: AdminLayout
     }]
   }
   // return <Route path='/' component={PageLayout}>
