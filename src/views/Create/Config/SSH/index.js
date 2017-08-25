@@ -114,7 +114,7 @@ export class SSHConfig extends Component {
       </Button>
       <TestButton
         envs={values}
-        i18n={i18n} disabled={!enabled}
+        i18n={i18n.createChild('test')} disabled={!enabled}
         flowId={flowId}
       />
     </div>

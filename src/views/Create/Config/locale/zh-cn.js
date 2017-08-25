@@ -1,8 +1,9 @@
 export default {
   SSH: {
-    LOADING: '正在测试',
-    GIT_CONNECTED: '连接 git 仓库成功',
-    YML_VERIFIING: '连接 git 仓库成功， 正在检测 .flow.yml 配置文件',
-    YML_VERIFIED: '测试成功'
+    test: {
+      // GIT_CONNECTED: '连接 git 仓库成功，正在下载文件...', // 连接成功
+      // GIT_LOADING: '连接 git 仓库成功，正在下载文件...', // 下载 git 仓库
+      // GIT_LOADED: '连接 git 仓库成功，正在检测 .flow.yml 配置文件...',
+    },
   },
 }

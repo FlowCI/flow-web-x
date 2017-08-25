@@ -19,10 +19,12 @@
   height: $control-base-size;
   display: inline-flex;
   align-items: center;
+  vertical-align: middle;
   >:global(.icon) {
-    width: $control-base-size;
+    margin-right: 10px;
     text-align: center;
     display: inline-block;
+    font-size: 18px;
   }
 }
 .loading{

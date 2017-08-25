@@ -3,7 +3,6 @@ import { Map, fromJS } from 'immutable'
 import is from 'util/is'
 
 import polling from 'polling'
-import { setCancel, cancel } from 'promise-cancelable'
 
 import { handleHttp } from 'redux/util'
 import { handleHttpActions } from 'redux-http'
@@ -36,44 +35,26 @@ function notifyLoadYml (flowId) {
   }
 }
 
-function getYml (flowId) {
+function pollingTestResult (flowId) {
   return function (dispatch, getState) {
     function get () {
       return dispatch({
-        url: '/flows/:flowName/yml',
+        url: '/flows/env',
+        name: Types.pollingEnv,
         params: {
-          flowName: flowId,
+          pathOrName: flowId,
+        },
+        indicator: {
+          id: flowId,
         }
       })
     }
     function check (response) {
-      return !!response.data
+      const envs = response.data
+      return envs.FLOW_YML_STATUS === 'FOUND' ||
+        envs.FLOW_YML_STATUS === 'ERROR'
     }
     return polling(get, check)
-  }
-}
-
-function verifyYml (flowId) {
-  function verify (yml) {
-    return {
-      url: `/flows/${flowId}/yml/verify`,
-      name: 'xxx',
-      data: yml,
-    }
-  }
-  return function (dispatch) {
-    const promise = dispatch(getYml(flowId))
-    let p2
-    const resultPromise = promise.then((response) => {
-      const yml = response.data
-      p2 = dispatch(verify(yml))
-      return p2
-    })
-    setCancel(resultPromise, function (message) {
-      cancel(promise, message)
-      p2 && cancel(p2, message)
-    })
-    return resultPromise
   }
 }
 
@@ -160,7 +141,7 @@ export const actions = {
       await dispatch(notifyLoadYml(flowId))
     }
   },
-  getCreateTestResult: verifyYml,
+  getTestResult: pollingTestResult,
 
   setDropDownFilter: function (filter) {
     return {
@@ -200,6 +181,11 @@ export default handleActions({
 
   [Types.loadYml]: handleHttpActions({
     success: handlers.saveData,
+  }),
+  [Types.pollingEnv]: handleHttpActions({
+    success: function (state, { indicator: { id }, payload: envs }) {
+      return handlers.saveData(state, { payload: { id, envs } })
+    },
   }),
 
   // UI

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, string, object } from 'prop-types'
+import { func, bool, string, object } from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -9,63 +9,82 @@ import { actions } from 'redux/modules/flow'
 
 import Button from 'components/Button'
 
+import Mapping from './mapping'
 import classes from './button.scss'
 
-const LOADING = 'LOADING'
-
 function mapStateToProps (state, { flowId }) {
-  // const { flow } = state
-  // const f = flow.getIn(['data', flowId])
+  const { flow } = state
+  const f = flow.getIn(['data', flowId])
+  const status = f.getIn(['envs', 'FLOW_YML_STATUS'])
+  const n = Mapping[status]
   return {
-    // LOADING GIT_CONNECTING GIT_CONNECTED YML_VERIFIING YML_VERIFIED
-    status: 'ERROR' // f.getIn(['envs', 'FLOW_YML_STATUS'])
+    loading: n > 0 && n < Mapping.FOUND,
+    status,
+    message: f.getIn(['envs', 'FLOW_YML_ERROR_MSG']),
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     test: actions.doCreateTest,
-    getTestResult: actions.getCreateTestResult,
+    getTestResult: actions.getTestResult,
   }, dispatch)
 }
 
 export class TestButton extends Component {
   static propTypes = {
+    loading: bool,
     flowId: string.isRequired,
     status: string,
+    message: string,
 
     envs: object,
 
     i18n: func.isRequired,
     test: func.isRequired,
     getTestResult: func.isRequired,
+
+    // event callback
+    onTest: func,
+    onTestFinish: func,
   }
 
   state = {
-    loading: false
+    locked: this.props.loading,
+    checked: false
   }
 
   componentDidMount () {
-    if (this.props.status === LOADING) {
+    if (this.props.loading) {
       const { getTestResult, flowId } = this.props
       getTestResult(flowId)
-      this.setState({ loading: true })
+      this.setState({ checked: true })
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    const { status } = this.props
-    const { status: nextStatus } = nextProps
-    if (status !== nextStatus && nextStatus === LOADING) {
-      const { getTestResult, flowId } = nextProps
-      getTestResult(flowId)
-      this.setState({ loading: true })
+    const { loading } = this.props
+    const { loading: nextLoading } = nextProps
+    if (loading !== nextLoading) {
+      if (nextLoading) {
+        const { getTestResult, flowId } = nextProps
+        getTestResult(flowId)
+        this.setState({ checked: true, locked: true })
+      } else {
+        const { onTestFinish } = this.props
+        onTestFinish && onTestFinish()
+      }
     }
   }
 
+  componentWillUnmount () {
+    this._mount = false
+  }
+
   handleClick = () => {
-    this.setState({ loading: true })
-    const { envs, test, flowId } = this.props
+    this.setState({ locked: true })
+    const { envs, test, flowId, onTest } = this.props
+    onTest && onTest()
     return test(flowId, envs)
   }
 
@@ -87,17 +106,20 @@ export class TestButton extends Component {
   }
 
   renderError () {
-    const { i18n } = this.props
+    const { i18n, message } = this.props
     return <span className={`${classes.text} text-danger`}>
       <i className='icon icon-warning' />
-      {i18n('测试失败: 无git访问权限')}
-      <Button className='btn-link'>
+      测试失败: {message}
+      <Button className='btn-link' loading={false} onClick={this.handleClick}>
         {i18n('重新测试')}
       </Button>
     </span>
   }
 
-  renderSuccess (status) {
+  renderStatus (status) {
+    if (status === 'ERROR') {
+      return this.renderError()
+    }
     const { i18n } = this.props
     return <span className={classes.text}>
       <i className='icon icon-check text-success' />
@@ -106,26 +128,17 @@ export class TestButton extends Component {
   }
 
   render () {
-    const { status } = this.props
-    const { loading } = this.state
-
-    let dom
-    switch (status) {
-      case 'ERROR':
-        dom = this.renderError()
-        break
-      case 'GIT_CONNECTED':
-      case 'YML_VERIFIING':
-      case 'YML_VERIFIED':
-        dom = this.renderSuccess(status)
-        break
-      case 'GIT_CONNECTING':
-        dom = this.renderLoading()
-        break
-      default:
-        dom = loading ? this.renderLoading() : this.renderButton()
+    const { locked, checked } = this.state
+    if (!locked) {
+      return this.renderButton()
     }
-    return dom
+    if (checked) {
+      const { status } = this.props
+      if (status !== 'GIT_CONNECTING') {
+        return this.renderStatus(status)
+      }
+    }
+    return this.renderLoading()
   }
 }
 
