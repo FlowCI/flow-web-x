@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 
 import { push } from 'react-router-redux'
 
-import autoCancel from 'react-redux-http'
+import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/flow'

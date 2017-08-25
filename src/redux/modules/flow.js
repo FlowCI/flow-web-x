@@ -1,10 +1,13 @@
 import { handleActions } from 'redux-actions'
 import { Map, fromJS } from 'immutable'
-
 import is from 'util/is'
 
+import polling from 'polling'
+
 import { handleHttp } from 'redux/util'
+import { handleHttpActions } from 'redux-http'
 import { defaultInitState, handlers } from 'redux/handler'
+
 import Types from './flowType'
 import JobTypes from './jobType'
 
@@ -19,6 +22,47 @@ const transformResponse = function (data) {
     data.id = data.name
   }
   return data
+}
+
+function notifyLoadYml (flowId) {
+  return {
+    url: '/flows/:flowName/yml/load',
+    params: {
+      flowName: flowId,
+    },
+    name: Types.loadYml,
+    transformResponse,
+  }
+}
+
+function pollingTestResult (flowId) {
+  return function (dispatch, getState) {
+    function get () {
+      return dispatch({
+        url: '/flows/env',
+        name: Types.pollingEnv,
+        params: {
+          pathOrName: flowId,
+        },
+        indicator: {
+          id: flowId,
+        }
+      })
+    }
+    function check (response) {
+      const envs = response.data
+      return envs.FLOW_YML_STATUS === 'FOUND' ||
+        envs.FLOW_YML_STATUS === 'ERROR'
+    }
+    return polling(get, check)
+  }
+}
+
+function getCreateEnv ({ source, url }) {
+  return {
+    FLOW_GIT_SOURCE: source,
+    FLOW_GIT_URL: url,
+  }
 }
 
 export const actions = {
@@ -56,6 +100,20 @@ export const actions = {
       transformResponse,
     }
   },
+  remove: function (flowId) {
+    return {
+      url: '/flows/:flowName/delete',
+      method: 'post',
+      name: Types.remove,
+      params: {
+        flowName: flowId,
+      },
+      indicator: {
+        id: flowId,
+      },
+      transformResponse,
+    }
+  },
   updateEnv: function (flowId, env) {
     return {
       url: '/flows/:flowName/env',
@@ -71,12 +129,20 @@ export const actions = {
       transformResponse,
     }
   },
-  doCreate: function (flowId, git, deployId) {
+  doneCreate: function (flowId, params) {
     return actions.updateEnv(flowId, {
       FLOW_STATUS: 'READY',
-      FLOW_GIT_URL: git,
+      ...getCreateEnv(params)
     })
   },
+  doCreateTest: function (flowId, params) {
+    return async function (dispatch) {
+      await dispatch(actions.updateEnv(flowId, getCreateEnv(params)))
+      await dispatch(notifyLoadYml(flowId))
+    }
+  },
+  getTestResult: pollingTestResult,
+
   setDropDownFilter: function (filter) {
     return {
       type: Types.setDropDownFilter,
@@ -106,9 +172,23 @@ export default handleActions({
   [Types.create]: handleHttp('GET', {
     success: handlers.save,
   }),
+  [Types.remove]: handleHttp('REMOVE', {
+    success: handlers.remove,
+  }),
   [Types.updateEnv]: handleHttp('UPDATE', {
     success: handlers.saveData,
   }),
+
+  [Types.loadYml]: handleHttpActions({
+    success: handlers.saveData,
+  }),
+  [Types.pollingEnv]: handleHttpActions({
+    success: function (state, { indicator: { id }, payload: envs }) {
+      return handlers.saveData(state, { payload: { id, envs } })
+    },
+  }),
+
+  // UI
   [Types.setDropDownFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('dropDownFilter', payload))
   },

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+import { string, func } from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -9,37 +8,54 @@ import { actions } from 'redux/modules/flow'
 
 import Input from 'components/Form/Input'
 import Button from 'components/Button'
-
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
+import TestButton from '../components/TestButton'
 
 import classes from './ssh.scss'
 
 function mapStateToProps (state, { flowId }) {
   const { flow } = state
+  const f = flow.getIn(['data', flowId])
   return {
-    flow: flow.getIn(['data', flowId]),
+    webhook: f.getIn(['envs', 'FLOW_GIT_WEBHOOK']),
+    defaultGitUrl: f.getIn(['envs', 'FLOW_GIT_URL'], ''),
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     done: actions.doneCreate,
-    test: function () {},
+    test: actions.doCreateTest,
   }, dispatch)
 }
 
 export class SSHConfig extends Component {
   static propTypes = {
-    flow: ImmutablePropTypes.map,
+    flowId: string.isRequired,
+    webhook: string.isRequired,
+    defaultGitUrl: string,
+    git: string,
 
-    done: PropTypes.func.isRequired,
-    test: PropTypes.func.isRequired,
-    i18n: PropTypes.func.isRequired,
+    done: func.isRequired,
+    i18n: func.isRequired,
   }
 
   state = {
-    url: '',
+    url: this.props.defaultGitUrl,
+  }
+
+  getGitSource () {
+    const { git } = this.props
+    return git ? git.toUpperCase() : 'UNDEFINED_SSH'
+  }
+
+  getValues () {
+    const { url } = this.state
+    return {
+      source: this.getGitSource(),
+      url: url
+    }
   }
 
   handleUrlChange = (value) => {
@@ -47,17 +63,8 @@ export class SSHConfig extends Component {
   }
 
   handleDoneCick = () => {
-    const { done, flow } = this.props
-    const { url } = this.state
-    return done(flow.get('id'), url)
-  }
-
-  handleTestClick = () => {
-    const { test, flow } = this.props
-    const { url } = this.state
-    return test(flow.get('id'), {
-      FLOW_GIT_URL: url
-    })
+    const { done, flowId } = this.props
+    return done(flowId, this.getValues())
   }
 
   valid (values) {
@@ -79,8 +86,7 @@ export class SSHConfig extends Component {
   }
 
   renderWebhook () {
-    const { i18n, flow } = this.props
-    const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
+    const { i18n, webhook } = this.props
     return <WebhookSection i18n={i18n} webhook={webhook} />
   }
 
@@ -95,8 +101,9 @@ export class SSHConfig extends Component {
   }
 
   renderActions () {
-    const { i18n } = this.props
-    const enabled = this.valid(this.state)
+    const { i18n, flowId } = this.props
+    const values = this.getValues()
+    const enabled = this.valid(values)
 
     return <div className={classes.actions}>
       <Button className='btn-primary'
@@ -105,12 +112,11 @@ export class SSHConfig extends Component {
       >
         {i18n('完成')}
       </Button>
-      <Button className='btn-inverse'
-        disabled={!enabled}
-        onClick={this.handleTestClick}
-      >
-        {i18n('连接测试')}
-      </Button>
+      <TestButton
+        envs={values}
+        i18n={i18n.createChild('test')} disabled={!enabled}
+        flowId={flowId}
+      />
     </div>
   }
 

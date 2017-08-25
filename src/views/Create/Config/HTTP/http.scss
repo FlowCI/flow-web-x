@@ -7,3 +7,10 @@
   width: 50%;
   max-width: 300px;
 }
+.actions{
+  margin-top: $create-flow-config-action-spacing;
+  >:global(.btn){
+    margin-right: $create-flow-config-horizontal-padding;
+    min-width: 100px;
+  }
+}

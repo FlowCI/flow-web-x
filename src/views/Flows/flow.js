@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import autoCancel from 'react-redux-http'
+import autoCancel from 'react-promise-cancel'
 
 import { actions } from 'redux/modules/flow'
 import { actions as jobActions } from 'redux/modules/job'

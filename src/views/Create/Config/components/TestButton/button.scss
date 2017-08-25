@@ -1,0 +1,38 @@
+@import './variables';
+.button{
+  border-color: #A7ABB1;
+  &:focus, &:hover{
+    background-color: darken(#fff, 10%);
+  }
+  &:global(.loading) {
+    border-color: transparent;
+    &:focus, &:hover{
+      background-color: #fff;
+    }
+    &[disabled] {
+      opacity: 1;
+    }
+  }
+}
+.text{
+  font-weight: bold;
+  height: $control-base-size;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  >:global(.icon) {
+    margin-right: 10px;
+    text-align: center;
+    display: inline-block;
+    font-size: 18px;
+  }
+}
+.loading{
+  display: inline-block;
+  animation: rotating linear 1s infinite;
+}
+
+@keyframes rotating {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
+}

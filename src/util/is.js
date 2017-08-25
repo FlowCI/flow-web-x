@@ -1,4 +1,8 @@
 const is = {
+  undefined (v) {
+    return v === undefined
+  },
+
   func (v) {
     return typeof v === 'function'
   },
@@ -12,6 +16,15 @@ const is = {
     return typeof v === 'object'
   },
   array: Array.isArray,
+}
+
+export function setIsType (name, checkFn) {
+  if (!is[name]) {
+    is[name] = checkFn
+  } else {
+    console.error('it\'s already set up with name: ', name)
+  }
+  return is
 }
 
 export default is
