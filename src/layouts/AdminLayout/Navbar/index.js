@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 import Navbar from '../../components/Navbar'
 import classes from './navbar.scss'
 
-export default class AdminNavbar extends Component {
+export default class AdminLayoutNavbar extends Component {
   render () {
     return <Navbar>
       <div className={classes.content}>

@@ -1,3 +1,7 @@
 export default function (store) {
-  return {}
+  return {
+    icon: 'icon-bookmark',
+    text: 'Credentials',
+    navbar: true,
+  }
 }

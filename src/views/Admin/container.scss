@@ -1,0 +1,18 @@
+@import 'variables';
+.container{
+  padding: 20px 0px;
+  display: flex;
+  align-items: flex-start;
+}
+.navbar{
+  margin: 0px 30px;
+  flex: 0 0 auto;
+  width: 200px;
+  border: 1px solid #DFDFE5;
+  box-shadow: $control-base-boxshadow;
+  border-radius: $border-radius-base;
+}
+.content{
+  flex: 1 1 auto;
+  margin-right: 10vw;
+}

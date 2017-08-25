@@ -1,3 +1,7 @@
 export default function (store) {
-  return {}
+  return {
+    icon: 'icon-users',
+    text: 'Member',
+    navbar: true,
+  }
 }
