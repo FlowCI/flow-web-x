@@ -18,26 +18,22 @@ export default function (store) {
     component: CoreLayout,
     childRoutes: [{
       component: PageLayout,
-      childRoutes: [
-        {
-          ...SignInRoute(store),
-          path: 'signin',
+      childRoutes: [{
+        ...SignInRoute(store),
+        path: 'signin',
+      }, {
+        component: NeedSession,
+        indexRoute: {
+          component: Index
+        },
+        childRoutes: [{
+          ...FlowsRoute(store),
+          path: 'flows/:flowId',
         }, {
-          component: NeedSession,
-          indexRoute: {
-            component: Index
-          },
-          childRoutes: [
-            {
-              ...FlowsRoute(store),
-              path: 'flows/:flowId',
-            }, {
-              ...CreateRoute(store),
-              path: 'create'
-            }
-          ]
-        }
-      ]
+          ...CreateRoute(store),
+          path: 'create'
+        }]
+      }]
     }, {
       path: 'admin',
       component: AdminLayout
