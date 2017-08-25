@@ -6,6 +6,7 @@ export default {
   updateEnv: 'FLOW_ENV_UPDATE',
 
   loadYml: 'FLOW_LOAD_YML',
+  pollingEnv: 'FLOW_POLLING_ENV',
 
   freed: 'FLOW_FREED',
   freedAll: 'FLOW_FREED_ALL',
