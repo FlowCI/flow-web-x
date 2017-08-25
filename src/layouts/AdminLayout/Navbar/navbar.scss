@@ -1,0 +1,44 @@
+@import 'variables';
+
+.content{
+  // height: $navbar-height;
+  line-height: $navbar-height;
+
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: $screen-phone) {
+    line-height: $navbar-phone-height;
+  }
+}
+
+.card{
+  color: currentColor;
+  cursor: pointer;
+
+  height: 100%;
+  display: block;
+
+  flex: 0 0 auto;
+  width: $navbar-height + 1px;
+
+  font-size: 20px;
+  text-align: center;
+  border-right: 1px solid $navbar-default-border;
+
+  &:focus{
+    color: currentColor;
+  }
+  &:hover, &:active, &.active{
+    outline: 0;
+    background-color: $navbar-inverse-bg;
+    color: $navbar-inverse-color;
+  }
+  @media screen and (max-width: $screen-phone) {
+    width: $navbar-phone-height;
+  }
+}
+
+.user{
+  padding: 0 $navbar-base-padding-horizontal;
+  font-weight: $navbar-font-weight;
+}

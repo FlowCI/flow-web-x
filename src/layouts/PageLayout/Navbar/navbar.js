@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Link } from 'react-router'
 import { push } from 'react-router-redux'
+
+import Navbar from '../../components/Navbar'
 
 import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
@@ -26,7 +27,7 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-export class Navbar extends PureComponent {
+export class PageLayoutNavbar extends PureComponent {
   static propTypes = {
     /*
       if false, it will only show question icon
@@ -101,45 +102,53 @@ export class Navbar extends PureComponent {
     </Card>
   }
 
+  renderLeft () {
+    const { backUrl, i18n } = this.props
+    const { openFlows } = this.state
+    return backUrl ? this.renderBackButton()
+      : <FlowCard i18n={i18n} active={openFlows}
+        onActive={this.openFlows}
+        onRequestClose={this.closeFlows}
+      />
+  }
+
+  renderNavs () {
+    const { authored, i18n } = this.props
+    const { openAgents, openMenus } = this.state
+    return <ul className={classes.navs}>
+      {authored && <li>
+        <AgentsCard active={openAgents} i18n={i18n}
+          onActive={this.openAgents}
+          onRequestClose={this.closeAgents}
+        />
+      </li>}
+      <li>
+        <Card href='//docs.flow.ci' target='_blank'>
+          <i className='icon icon-question' />
+        </Card>
+      </li>
+      {authored && <li>
+        <UserCard active={openMenus} i18n={i18n}
+          onActive={this.openUserMenus}
+          onRequestClose={this.closeUserMenus}
+        />
+      </li>}
+    </ul>
+  }
+
   render () {
-    const { authored, backUrl, i18n } = this.props
-    const { openFlows, openAgents, openMenus } = this.state
+    const { authored } = this.props
 
-    const contentClass = [classes.content]
-    !authored && contentClass.push(classes.unauthored)
+    const cls = [classes.content]
+    !authored && cls.push(classes.unauthored)
 
-    return <div className={classes.navbar}>
-      <Link className={classes.logo} to='/'>
-        <i className='icon icon-logo' />
-      </Link>
-      <div className={contentClass.join(' ')}>
-        {authored && (backUrl ? this.renderBackButton()
-          : <FlowCard i18n={i18n} active={openFlows}
-            onActive={this.openFlows}
-            onRequestClose={this.closeFlows}
-          />)}
-        <ul className={classes.navs}>
-          {authored && <li>
-            <AgentsCard active={openAgents} i18n={i18n}
-              onActive={this.openAgents}
-              onRequestClose={this.closeAgents}
-            />
-          </li>}
-          <li>
-            <Card href='//docs.flow.ci' target='_blank'>
-              <i className='icon icon-question' />
-            </Card>
-          </li>
-          {authored && <li>
-            <UserCard active={openMenus} i18n={i18n}
-              onActive={this.openUserMenus}
-              onRequestClose={this.closeUserMenus}
-            />
-          </li>}
-        </ul>
+    return <Navbar>
+      <div className={cls.join(' ')}>
+        {authored && this.renderLeft()}
+        {this.renderNavs()}
       </div>
-    </div>
+    </Navbar>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+export default connect(mapStateToProps, mapDispatchToProps)(PageLayoutNavbar)
