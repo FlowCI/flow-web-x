@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
-// import { node } from 'prop-types'
+import { node } from 'prop-types'
 
 import Navbar from './Navbar'
-export default class CoreLayout extends Component {
+
+import classes from './AdminLayout.scss'
+
+export default class AdminLayout extends Component {
   static propTypes = {
-    // children: node.isRequired,
+    children: node,
   }
 
   render () {
-    return <div>
+    const { children } = this.props
+    return <div className={classes.container}>
       <Navbar />
-      Hello World
+      {children}
     </div>
   }
 }
