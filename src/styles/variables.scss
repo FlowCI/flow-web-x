@@ -271,5 +271,38 @@ $create-flow-config-vertical-padding: $padding-base-vertical!default;
 $create-flow-config-horizontal-padding: $padding-base-horizontal!default;
 $create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;
 
+// Admin
+$admin-vertical-padding: 2*$padding-base-vertical!default;
+$admin-horizontal-padding: 0!default;
 
+// Admin Navbar
+$admin-navbar-height: 50px!default;
+$admin-navbar-width: 200px!default;
+
+$admin-navbar-font-weight: bold!default;
+$admin-navbar-border: #DFDFE5!default;
+$admin-navbar-border-radius: $border-radius-base!default;
+$admin-navbar-base-boxshadow: $control-base-boxshadow!default;
+
+$admin-navbar-vertical-padding: 0!default;
+$admin-navbar-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-navbar-icon-horizontal-padding: $padding-base-horizontal!default;
+$admin-navbar-icon-font-size: 18px!default;
+
+$admin-navbar-divier: #D7D9DC!default;
+$admin-navbar-color: $color-black!default;
+$admin-navbar-bgc: #fff!default;
+
+$admin-navbar-hover-color: currentColor!default;
+$admin-navbar-hover-bgc: #EEF0F3!default;
+
+$admin-navbar-active-color: #fff!default;
+$admin-navbar-active-bgc: $color-black!default;
+
+$admin-navbar-arraw-horizontal-size: 6px!default;
+$admin-navbar-arraw-vertical-size: 10px!default;
+$admin-navbar-arraw-color: $admin-navbar-active-color!default;
+
+$admin-navbar-horizontal-padding: 3*$padding-base-horizontal!default;
 

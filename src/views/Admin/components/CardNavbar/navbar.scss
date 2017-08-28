@@ -2,41 +2,42 @@
 .navbar{
   margin: 0;
   padding: 0;
-  font-weight: bold;
+  font-weight: $admin-navbar-font-weight;
   >li{
     &:not(:last-child) {
-      border-bottom: 1px solid $color-hr;
+      border-bottom: 1px solid $admin-navbar-divier;
     }
   }
 }
 .nav{
-  line-height: 50px;
-  color: $color-black;
+  line-height: $admin-navbar-height;
+  color: $admin-navbar-color;
+  background-color: $admin-navbar-bgc;
   display: flex;
   align-item: center;
   &:hover, &:focus{
-    background-color: #EEF0F3;
-    color: currentColor;
+    background-color: $admin-navbar-hover-bgc;
+    color: $admin-navbar-hover-color;
   }
 }
 .icon{
-  flex: 0 0 50px;
-  margin-right: 10px;
+  flex: 0 0 $admin-navbar-height;
+  margin-right: $admin-navbar-icon-horizontal-padding;
   text-align: center;
-  font-size: 18px;
+  font-size: $admin-navbar-icon-font-size;
 }
 .active, .active:hover, .active:focus{
   position: relative;
-  background-color: $color-black;
-  color: #fff;
+  background-color: $admin-navbar-active-bgc;
+  color: $admin-navbar-active-color;
   &:after{
     content: ' ';
     display: inline-block;
-    border-left: 6px solid #fff;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-left: $admin-navbar-arraw-horizontal-size solid #fff;
+    border-top: $admin-navbar-arraw-vertical-size/2 solid transparent;
+    border-bottom: $admin-navbar-arraw-vertical-size/2 solid transparent;
     position: absolute;
     right: 15px;
-    top: (50px - 5px*2) / 2;
+    top: ($admin-navbar-height - $admin-navbar-arraw-vertical-size) / 2;
   }
 }

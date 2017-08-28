@@ -1,16 +1,16 @@
 @import 'variables';
 .container{
-  padding: 20px 0px;
+  padding: $admin-vertical-padding $admin-horizontal-padding;
   display: flex;
   align-items: flex-start;
 }
 .navbar{
-  margin: 0px 30px;
+  margin: $admin-navbar-vertical-padding $admin-navbar-horizontal-padding;
   flex: 0 0 auto;
-  width: 200px;
-  border: 1px solid #DFDFE5;
-  box-shadow: $control-base-boxshadow;
-  border-radius: $border-radius-base;
+  width: $admin-navbar-width;
+  border: 1px solid $admin-navbar-border;
+  box-shadow: $admin-navbar-base-boxshadow;
+  border-radius: $admin-navbar-border-radius;
 }
 .content{
   flex: 1 1 auto;
