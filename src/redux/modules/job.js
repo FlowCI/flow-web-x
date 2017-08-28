@@ -70,6 +70,11 @@ export const actions = {
       transformResponse,
     }
   },
+  stop: function (flowId, jobId) {
+    return {
+      type: 'STOP_JOB',
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.updateFilter,

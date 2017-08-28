@@ -1,0 +1,44 @@
+@import 'variables';
+
+.navs{
+  margin-bottom: 15px;
+}
+.agents{
+  width: 100%;
+  // table-layout: fixed;
+  text-align: left;
+  >thead{
+    >tr{
+      background-color: $admin-agent-list-header-bgc;
+      >th{
+        height: $admin-agent-list-header;
+        line-height: $admin-agent-list-header;
+        font-weight: bold;
+        padding: 0px $admin-agent-list-header-horizontal-padding;
+      }
+    }
+  }
+}
+.agent{
+  border-bottom: 1px solid $admin-agent-divier-color;
+  >td{
+    line-height: ($admin-agent-item-height - 2*$admin-agent-item-vertical-padding);
+    padding: $admin-agent-item-vertical-padding $admin-agent-item-horizontal-padding;
+    &:first-child{
+      text-align: center;
+    }
+  }
+}
+.status{
+  width: 1%;
+  white-space: nowrap;
+}
+.name{
+  width: 30%;
+}
+.job{
+  width: 40%;
+}
+.actions{
+  width: 200px;
+}

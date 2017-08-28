@@ -168,10 +168,9 @@ $navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
 $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
 
 // NavTabs
-// Create Flow Config
 $navtabs-default-border: $color-black!default;
 $navtabs-default-bottom: 3*$padding-base-vertical!default;
-$navtabs-default-font-size: 18px!default;
+$navtabs-default-font-size: 20px!default;
 $navtabs-default-font-weight: bold!default;
 $navtabs-default-color: #AEB7BE!default;
 $navtabs-default-active-color: $color-black!default;
@@ -309,3 +308,12 @@ $admin-menus-arraw-color: $admin-menus-active-color!default;
 
 $admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
 
+// Admin Agent
+$admin-agent-list-header: 30px!default;
+$admin-agent-list-header-bgc: #EDEFF1!default;
+$admin-agent-list-header-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-agent-item-height: 50px;
+$admin-agent-item-vertical-padding: $padding-base-vertical!default;
+$admin-agent-item-horizontal-padding: $admin-agent-list-header-horizontal-padding!default;
+$admin-agent-divier-color: $admin-menus-divier!default;
