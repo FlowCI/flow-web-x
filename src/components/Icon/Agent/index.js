@@ -5,14 +5,14 @@ import classes from './icon.scss'
 
 export default class AgentIcon extends Component {
   static propTypes = {
-    status: PropTypes.oneOf(['OFF', 'IDLE', 'RUNNING']).isRequired,
+    status: PropTypes.oneOf(['OFFLINE', 'IDLE', 'RUNNING']).isRequired,
   }
 
   render () {
     const { status } = this.props
     let content = <i className={classes.line} />
     switch (status) {
-      case 'OFF':
+      case 'OFFLINE':
         content = <i className='icon icon-off' />
         break
       case 'RUNNING':
