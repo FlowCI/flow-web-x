@@ -1,0 +1,34 @@
+@import 'variables';
+.navs{
+  display: flex;
+  border-bottom: 4px solid $navtabs-default-border;
+  line-height: 40px;
+  margin-bottom: $navtabs-default-bottom;
+}
+.nav{
+  color: $navtabs-default-color;
+  font-weight: $navtabs-default-font-weight;
+  font-size: $navtabs-default-font-size;
+  margin-right: 2*$navtabs-default-item-horizontal-padding;
+  padding: 0px $navtabs-default-item-horizontal-padding;
+  position: relative;
+  &:first-child{
+    margin-left: -$navtabs-default-item-horizontal-padding;
+  }
+  &:after{
+    content: " ";
+    width: 4px;
+    background-color: $color-black;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 2px);
+    transition: height .15s ease-in-out;
+  }
+  &:hover, &.active{
+    color: $navtabs-default-active-color;
+    &:after{
+      height: 8px;
+    }
+  }
+}

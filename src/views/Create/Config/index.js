@@ -12,6 +12,7 @@ import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
+import { NavTabs, Nav } from 'components/NavTabs'
 
 import HTTPConfig from './HTTP'
 import SSHConfig from './SSH'
@@ -91,13 +92,13 @@ export class ConfigFlowView extends Component {
 
   renderNav = (path) => {
     const { choose } = this.state
-    const cls = [classes.nav]
-    choose === path && cls.push(classes.active)
-    return <a href='#' key={path} className={cls.join(' ')}
+    return <Nav href='#' key={path}
+      component='a'
+      active={choose === path}
       onClick={this.createHandle(path)}
     >
       {path}
-    </a>
+    </Nav>
   }
 
   renderChild () {
@@ -114,9 +115,9 @@ export class ConfigFlowView extends Component {
   render () {
     const { loaded } = this.props
     return <div className={classes.container}>
-      <div className={classes.navbar}>
+      <NavTabs>
         {EnumKeys.map(this.renderNav)}
-      </div>
+      </NavTabs>
       {loaded ? this.renderChild() : <div>
         <Loading />
       </div>}

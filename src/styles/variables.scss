@@ -167,6 +167,17 @@ $navbar-dropmenu-item-border: $color-hr;
 $navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
 $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
 
+// NavTabs
+// Create Flow Config
+$navtabs-default-border: $color-black!default;
+$navtabs-default-bottom: 3*$padding-base-vertical!default;
+$navtabs-default-font-size: 18px!default;
+$navtabs-default-font-weight: bold!default;
+$navtabs-default-color: #AEB7BE!default;
+$navtabs-default-active-color: $color-black!default;
+$navtabs-default-item-horizontal-padding: $padding-base-horizontal!default;
+
+
 // Footer
 $footer-height: 60px!default;
 $footer-line-height: 15px!default;
@@ -253,14 +264,6 @@ $create-flow-well-active-color: #6668D3!default;
 $create-flow-wrapper-vertical-padding: 4*$padding-base-vertical!default;
 $create-flow-wrapper-horizontal-padding: 4*$padding-base-horizontal!default;
 
-// Create Flow Config
-$create-flow-config-navbar-border: $color-black!default;
-$create-flow-config-navbar-bottom: 3*$padding-base-vertical!default;
-$create-flow-config-navbar-font-size: 18px!default;
-$create-flow-config-navbar-font-weight: bold!default;
-$create-flow-config-navbar-color: #AEB7BE!default;
-$create-flow-config-navbar-active-color: $color-black!default;
-$create-flow-config-navbar-item-horizontal-padding: $padding-base-horizontal!default;
 // Create Flow SSH/HTTP Config
 $create-flow-config-code-bgc: #EDEFF1!default;
 $create-flow-config-code-border-radius: $border-radius-base!default;
