@@ -4,6 +4,8 @@ import { handleHttp } from '../util'
 
 import { fromJS } from 'immutable'
 
+import is from 'util/is'
+
 import Types from './agentType'
 
 const initialState = fromJS({
@@ -11,17 +13,21 @@ const initialState = fromJS({
   ui: {},
 })
 
+const transformResponse = function (data) {
+  if (is.array(data)) {
+    data.forEach((d) => {
+      d.id = d.zoneWithName
+    })
+  }
+  return data
+}
+
 export const actions = {
   query: function () {
     return {
       url: '/agents',
       name: Types.query,
-      transformResponse: [function (data) {
-        return data.map((d) => {
-          d.id = d.zoneWithName
-          return d
-        })
-      }]
+      transformResponse
     }
   },
 }
