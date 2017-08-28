@@ -3,18 +3,18 @@ import { array, func } from 'prop-types'
 
 import { Link } from 'react-router'
 
-import classes from './navbar.scss'
+import classes from './menus.scss'
 
-export default class AdminCardNavbars extends PureComponent {
+export default class AdminMenus extends PureComponent {
   static propTypes = {
-    navbars: array.isRequired,
+    menus: array.isRequired,
     i18n: func.isRequired,
   }
 
   render () {
-    const { navbars, i18n } = this.props
+    const { menus, i18n } = this.props
     return <ul className={classes.navbar}>
-      {navbars.map((nav) => <li key={nav.path}>
+      {menus.map((nav) => <li key={nav.path}>
         <Link to={`/admin/${nav.path}`}
           className={classes.nav}
           activeClassName={classes.active}>

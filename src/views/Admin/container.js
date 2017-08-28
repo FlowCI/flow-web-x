@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import { createSelector } from 'reselect'
 
-import Navbars from './components/CardNavbar'
+import Menus from './components/Menus'
 
 import classes from './container.scss'
 
@@ -20,13 +20,13 @@ const navbarSelectors = createSelector(
 function mapStateToProps (state, props) {
   const navbars = navbarSelectors(props)
   return {
-    navbars,
+    menus: navbars,
   }
 }
 
 export class AdminContainer extends Component {
   static propTypes = {
-    navbars: array.isRequired,
+    menus: array.isRequired,
 
     children: node,
     i18n: func.isRequired,
@@ -37,10 +37,10 @@ export class AdminContainer extends Component {
   }
 
   render () {
-    const { i18n, navbars, children } = this.props
+    const { i18n, menus, children } = this.props
     return <div className={classes.container}>
       <div className={classes.navbar}>
-        <Navbars navbars={navbars} i18n={i18n} />
+        <Menus menus={menus} i18n={i18n} />
       </div>
       <div className={classes.content}>
         this is child content panel
