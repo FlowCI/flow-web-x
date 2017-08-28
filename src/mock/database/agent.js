@@ -6,12 +6,18 @@ export default {
       'name': 'default',
       'zone': 'default',
       'agentStatus': 'IDLE',
-      'zoneWithName': 'defaultp - default'
+      'zoneWithName': 'defaultp - default',
+      'flowName': 'xiaomi_ios_dev',
+      'number': 2,
+      'branch': 'master',
     }, {
       'name': 'fir-machine-1',
       'zone': 'default',
-      'agentStatus': 'BUSY',
-      'zoneWithName': 'fir-machine-1 - default'
+      'agentStatus': 'RUNNING',
+      'zoneWithName': 'fir-machine-1 - default',
+      'flowName': 'xiaomi_ios_dev',
+      'number': 2,
+      'branch': 'master',
     }]
   },
 }
