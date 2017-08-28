@@ -2,42 +2,42 @@
 .navbar{
   margin: 0;
   padding: 0;
-  font-weight: $admin-navbar-font-weight;
+  font-weight: $admin-menus-font-weight;
   >li{
     &:not(:last-child) {
-      border-bottom: 1px solid $admin-navbar-divier;
+      border-bottom: 1px solid $admin-menus-divier;
     }
   }
 }
 .nav{
-  line-height: $admin-navbar-height;
-  color: $admin-navbar-color;
-  background-color: $admin-navbar-bgc;
+  line-height: $admin-menus-height;
+  color: $admin-menus-color;
+  background-color: $admin-menus-bgc;
   display: flex;
   align-item: center;
   &:hover, &:focus{
-    background-color: $admin-navbar-hover-bgc;
-    color: $admin-navbar-hover-color;
+    background-color: $admin-menus-hover-bgc;
+    color: $admin-menus-hover-color;
   }
 }
 .icon{
-  flex: 0 0 $admin-navbar-height;
-  margin-right: $admin-navbar-icon-horizontal-padding;
+  flex: 0 0 $admin-menus-height;
+  margin-right: $admin-menus-icon-horizontal-padding;
   text-align: center;
-  font-size: $admin-navbar-icon-font-size;
+  font-size: $admin-menus-icon-font-size;
 }
 .active, .active:hover, .active:focus{
   position: relative;
-  background-color: $admin-navbar-active-bgc;
-  color: $admin-navbar-active-color;
+  background-color: $admin-menus-active-bgc;
+  color: $admin-menus-active-color;
   &:after{
     content: ' ';
     display: inline-block;
-    border-left: $admin-navbar-arraw-horizontal-size solid #fff;
-    border-top: $admin-navbar-arraw-vertical-size/2 solid transparent;
-    border-bottom: $admin-navbar-arraw-vertical-size/2 solid transparent;
+    border-left: $admin-menus-arraw-horizontal-size solid #fff;
+    border-top: $admin-menus-arraw-vertical-size/2 solid transparent;
+    border-bottom: $admin-menus-arraw-vertical-size/2 solid transparent;
     position: absolute;
     right: 15px;
-    top: ($admin-navbar-height - $admin-navbar-arraw-vertical-size) / 2;
+    top: ($admin-menus-height - $admin-menus-arraw-vertical-size) / 2;
   }
 }

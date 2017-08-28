@@ -5,12 +5,12 @@
   align-items: flex-start;
 }
 .navbar{
-  margin: $admin-navbar-vertical-padding $admin-navbar-horizontal-padding;
+  margin: $admin-menus-vertical-padding $admin-menus-horizontal-padding;
   flex: 0 0 auto;
-  width: $admin-navbar-width;
-  border: 1px solid $admin-navbar-border;
-  box-shadow: $admin-navbar-base-boxshadow;
-  border-radius: $admin-navbar-border-radius;
+  width: $admin-menus-width;
+  border: 1px solid $admin-menus-border;
+  box-shadow: $admin-menus-base-boxshadow;
+  border-radius: $admin-menus-border-radius;
 }
 .content{
   flex: 1 1 auto;
