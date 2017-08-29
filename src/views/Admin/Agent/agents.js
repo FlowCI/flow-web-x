@@ -16,7 +16,8 @@ import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
 import { NavTabs } from 'components/NavTabs'
-import AgentIcon from 'components/Icon/Agent'
+
+import Agent from './agent'
 
 import classes from './agents.scss'
 
@@ -32,6 +33,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
     stop: jobActions.stop,
+    shutdown: actions.shutdown,
   }, dispatch)
 }
 
@@ -42,6 +44,7 @@ export class AdminAgentView extends Component {
 
     query: func.isRequired,
     stop: func.isRequired,
+    shutdown: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -55,30 +58,10 @@ export class AdminAgentView extends Component {
   }
 
   renderAgent = (agent) => {
-    const flow = agent.get('flowName')
-    const number = agent.get('number')
-    const branch = agent.get('branch')
-
-    const job = flow ? `${flow} / #${number} ${branch}` : ''
-    return <tr key={agent.get('zoneWithName')} className={classes.agent}>
-      <td>
-        <AgentIcon status={agent.get('agentStatus')} />
-      </td>
-      <td>
-        {agent.get('zoneWithName')}
-      </td>
-      <td>
-        {!!job && <a>{job}</a>}
-      </td>
-      <td>
-        <button className='btn btn-sm'>
-          停止任务
-        </button>&nbsp;&nbsp;
-        <button className='btn btn-sm'>
-          关机
-        </button>
-      </td>
-    </tr>
+    const { stop, shutdown } = this.props
+    return <Agent key={agent.get('id')} agent={agent}
+      stop={stop} shutdown={shutdown}
+    />
   }
 
   renderAgents () {
@@ -119,11 +102,11 @@ export class AdminAgentView extends Component {
       shutdown: 0,
     })
     cate.all = agents.size
-    return <ul>
-      <li>全部({cate.all})</li>
-      <li>运行中({cate.running})</li>
-      <li>已停止({cate.stop})</li>
-      <li>已关机({cate.shutdown})</li>
+    return <ul className={classes.filters}>
+      <li><a>全部 ( {cate.all} )</a></li>
+      <li><a>运行中 ( {cate.running} )</a></li>
+      <li><a>已停止 ( {cate.stop} )</a></li>
+      <li><a>已关机 ( {cate.shutdown} )</a></li>
     </ul>
   }
 

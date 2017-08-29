@@ -1,7 +1,23 @@
 @import 'variables';
 
 .navs{
-  margin-bottom: 15px;
+  margin-bottom: $admin-navtabs-horizontal-padding;
+}
+.filters{
+  display: flex;
+  align-items: center;
+  margin-bottom: $admin-agent-bar-horizontal-padding;
+  >li{
+    &:not(:last-child) {
+      &:after{
+        content: '|';
+        margin: 0px 10px;
+      }
+    }
+    >a{
+      color: currentColor;
+    }
+  }
 }
 .agents{
   width: 100%;
@@ -27,6 +43,10 @@
     &:first-child{
       text-align: center;
     }
+    &.actions{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }
 .status{
@@ -41,4 +61,12 @@
 }
 .actions{
   width: 200px;
+  >:global(.btn-sm){
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+  >button+button{
+    margin-left: 10px;
+  }
 }
