@@ -52,9 +52,29 @@ export class AdminAgentView extends Component {
     i18n: createI18n(language),
   }
 
+  state = {
+    category: 'ALL',
+  }
+
   componentDidMount () {
     const { query } = this.props
     query()
+  }
+
+  selectCategory (category, event) {
+    event.preventDefault()
+    this.setState({ category })
+  }
+
+  createSelected = (category) => {
+    return this.selectCategory.bind(this, category)
+  }
+
+  getAgents () {
+    const { agents } = this.props
+    const { category } = this.state
+    return agents.filter((agent) => category === 'ALL' ||
+      agent.get('agentStatus') === category)
   }
 
   renderAgent = (agent) => {
@@ -65,7 +85,8 @@ export class AdminAgentView extends Component {
   }
 
   renderAgents () {
-    const { agents, i18n } = this.props
+    const { i18n } = this.props
+    const agents = this.getAgents()
     return <table className={classes.agents}>
       <thead>
         <tr>
@@ -81,32 +102,45 @@ export class AdminAgentView extends Component {
     </table>
   }
 
+  renderFilterItem (category, cate) {
+    const { i18n } = this.props
+    const { category: selected } = this.state
+    const text = i18n(category, { count: cate[category] })
+    return <li>
+      <a href='#' className={category === selected ? classes.active : ''}
+        title={text} onClick={this.createSelected(category)}
+      >
+        {text}
+      </a>
+    </li>
+  }
+
   renderFilter () {
     const { agents } = this.props
     const cate = agents.reduce((cat, agent) => {
       switch (agent.get('agentStatus')) {
         case 'RUNNING':
-          cat.running++
+          cat.RUNNING++
           break
         case 'IDLE':
-          cat.stop++
+          cat.IDLE++
           break
         case 'OFFLINE':
-          cat.shutdown++
+          cat.OFFLINE++
           break
       }
       return cat
     }, {
-      running: 0,
-      stop: 0,
-      shutdown: 0,
+      RUNNING: 0,
+      IDLE: 0,
+      OFFLINE: 0,
     })
-    cate.all = agents.size
+    cate.ALL = agents.size
     return <ul className={classes.filters}>
-      <li><a>全部 ( {cate.all} )</a></li>
-      <li><a>运行中 ( {cate.running} )</a></li>
-      <li><a>已停止 ( {cate.stop} )</a></li>
-      <li><a>已关机 ( {cate.shutdown} )</a></li>
+      {this.renderFilterItem('ALL', cate)}
+      {this.renderFilterItem('RUNNING', cate)}
+      {this.renderFilterItem('IDLE', cate)}
+      {this.renderFilterItem('OFFLINE', cate)}
     </ul>
   }
 

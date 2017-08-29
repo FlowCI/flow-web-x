@@ -16,6 +16,24 @@
     }
     >a{
       color: currentColor;
+      cursor: pointer;
+      display: inline-block;
+      text-align:center;
+      vertical-align: middle;
+      &.active, &:hover{
+        font-weight: bold;
+      }
+      &:after {
+        // 防止加粗从而引起抖动
+        display: block;
+        content: attr(title);
+        font-weight: bold;
+        height: 1px;
+        color: transparent;
+        overflow: hidden;
+        visibility: hidden;
+        margin-bottom: -1px;
+      }
     }
   }
 }
