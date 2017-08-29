@@ -19,7 +19,7 @@ describe('i18n function', function () {
       e: {
         a: 2
       },
-      f: 'hello ${name}'
+      f: 'hello :name'
     }
     beforeEach(() => {
       i18n = createResource(resource)
@@ -42,7 +42,7 @@ describe('i18n function', function () {
       expect(i18n('e.a')).to.equal(2)
     })
 
-    it ('should replace ${argument} value by params when resource[name] is string template', () => {
+    it ('should replace `:argument` value by params when resource[name] is string template', () => {
       expect(i18n('f', { name: 'world' })).to.equal('hello world')
       expect(i18n('f')).to.equal('hello ')
     })
@@ -180,5 +180,4 @@ describe('i18n function', function () {
       })
     })
   }
-  usePerformanceTest()
 })
