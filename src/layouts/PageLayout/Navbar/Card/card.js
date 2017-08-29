@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import ClickAwayListener from 'components/ClickAwayListener'
+import { Link } from 'react-router'
 
 import classes from './card.scss'
 
@@ -12,6 +13,8 @@ export default class NavbarCard extends PureComponent {
     active: PropTypes.bool,
 
     href: PropTypes.string,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
     target: PropTypes.string,
 
     onActive: PropTypes.func,
@@ -27,15 +30,15 @@ export default class NavbarCard extends PureComponent {
   }
 
   handleCardClick = (e) => {
-    const { active, href } = this.props
-    !href && e.preventDefault()
+    const { active, href, to } = this.props
+    !href && !to && e.preventDefault()
     const handle = active ? this.props.onRequestClose : this.props.onActive
     return handle && handle(e)
   }
 
   render () {
     const {
-      href, target, active,
+      href, to, target, active,
       containerClass, className,
       children, onRequestClose, dropDown
     } = this.props
@@ -43,14 +46,19 @@ export default class NavbarCard extends PureComponent {
     const cls = [classes.card, className]
     active && cls.push(classes.active)
 
+    const content = React.createElement(to ? Link : 'a', {
+      href: to ? undefined : (href || '#'),
+      to,
+      target,
+      rel: 'noopener',
+      className: cls.join(' '),
+      onClick: this.handleCardClick
+    }, children)
+
     return <ClickAwayListener
       onClickAway={active && !!dropDown && onRequestClose}>
       <div className={containerClass}>
-        <a href={href || '#'} target={target}
-          rel='noopener' className={cls.join(' ')}
-          onClick={this.handleCardClick}>
-          {children}
-        </a>
+        {content}
         {active && dropDown}
       </div>
     </ClickAwayListener>

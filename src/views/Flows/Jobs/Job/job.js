@@ -76,7 +76,15 @@ export class JobContainer extends Component {
       setBackUrl, location
     } = this.props
     get(flowId, id)
-    setBackUrl({ ...location, pathname: `/flows/${flowId}/jobs` })
+    const { query: { from } } = location
+    if (from && /^\/\w+/.test(from)) {
+      // 存在并且是相对路径
+      setBackUrl(from)
+    } else {
+      const l = { ...location, pathname: `/flows/${flowId}/jobs` }
+      l.query.from = undefined // remove from params
+      setBackUrl(l)
+    }
   }
 
   componentWillUnmount () {
