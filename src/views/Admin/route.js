@@ -1,6 +1,6 @@
 import Component from './index'
 
-import AgentRoute from './Agent/route'
+import AgentsRoute from './Agents/route'
 import CredentialsRoute from './Credentials/route'
 import FlowRoute from './Flow/route'
 import MemberRoute from './Member/route'
@@ -23,11 +23,11 @@ export const createRoutes = (store) => ({
     navbar: true,
     ...MemberRoute(store),
   }, {
-    path: 'agent',
+    path: 'agents',
     icon: 'icon-agents',
     text: 'Agent',
     navbar: true,
-    ...AgentRoute(store),
+    ...AgentsRoute(store),
   }, {
     path: 'flow',
     icon: 'icon-branches',

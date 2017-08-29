@@ -39,7 +39,7 @@ export default class Agent extends PureComponent {
     const canShutDown = status !== 'OFFLINE'
     const canStop = status === 'BUSY'
 
-    const encodeForm = encodeURIComponent('/admin/agent')
+    const encodeForm = encodeURIComponent('/admin/agents')
 
     return <tr className={classes.agent}>
       <td>
