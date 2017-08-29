@@ -53,11 +53,6 @@ export default handleActions({
       return state.set('list', fromJS(payload))
     },
   }),
-  [Types.shutdown]: handleHttp('SHUTDOWN', {
-    success: function (state, { payload }) {
-
-    },
-  }),
   [Types.freedAll]: function (state) {
     return initialState
   }
