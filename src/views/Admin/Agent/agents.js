@@ -105,7 +105,7 @@ export class AdminAgentView extends Component {
   renderFilterItem (category, cate) {
     const { i18n } = this.props
     const { category: selected } = this.state
-    const text = i18n(category, { count: cate[category] })
+    const text = i18n(`filter.${category}`, { count: cate[category] })
     return <li>
       <a href='#' className={category === selected ? classes.active : ''}
         title={text} onClick={this.createSelected(category)}
