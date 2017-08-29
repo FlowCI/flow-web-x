@@ -26,7 +26,7 @@ function getResource (resource, paths) {
 }
 
 function compile (template, params) {
-  const reg = /\${(\w+)}/g
+  const reg = /:(\w+)/g
   return template.replace(reg, function (match, word) {
     if (params) {
       return params[word] || ''
