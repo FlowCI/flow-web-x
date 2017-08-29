@@ -59,9 +59,9 @@ export const actions = {
   get: function (flowId, jobId) {
     return {
       name: Types.get,
-      url: 'jobs/:flowId/:jobId',
+      url: 'jobs/:flowName/:jobId',
       params: {
-        flowId: flowId,
+        flowName: flowId,
         jobId: jobId,
       },
       indicator: {
@@ -72,7 +72,12 @@ export const actions = {
   },
   stop: function (flowId, jobId) {
     return {
-      type: 'STOP_JOB',
+      url: '/jobs/:flowName/:number/stop',
+      method: 'post',
+      params: {
+        flowName: flowId,
+        number: jobId,
+      }
     }
   },
   setFilter: function (filter) {
