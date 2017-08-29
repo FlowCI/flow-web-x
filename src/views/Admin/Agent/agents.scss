@@ -1,0 +1,90 @@
+@import 'variables';
+
+.navs{
+  margin-bottom: $admin-navtabs-horizontal-padding;
+}
+.filters{
+  display: flex;
+  align-items: center;
+  margin-bottom: $admin-agent-bar-horizontal-padding;
+  >li{
+    &:not(:last-child) {
+      &:after{
+        content: '|';
+        margin: 0px 10px;
+      }
+    }
+    >a{
+      color: currentColor;
+      cursor: pointer;
+      display: inline-block;
+      text-align:center;
+      vertical-align: middle;
+      &.active, &:hover{
+        font-weight: bold;
+      }
+      &:after {
+        // 防止加粗从而引起抖动
+        display: block;
+        content: attr(title);
+        font-weight: bold;
+        height: 1px;
+        color: transparent;
+        overflow: hidden;
+        visibility: hidden;
+        margin-bottom: -1px;
+      }
+    }
+  }
+}
+.agents{
+  width: 100%;
+  // table-layout: fixed;
+  text-align: left;
+  >thead{
+    >tr{
+      background-color: $admin-agent-list-header-bgc;
+      >th{
+        height: $admin-agent-list-header;
+        line-height: $admin-agent-list-header;
+        font-weight: bold;
+        padding: 0px $admin-agent-list-header-horizontal-padding;
+      }
+    }
+  }
+}
+.agent{
+  border-bottom: 1px solid $admin-agent-divier-color;
+  >td{
+    line-height: ($admin-agent-item-height - 2*$admin-agent-item-vertical-padding);
+    padding: $admin-agent-item-vertical-padding $admin-agent-item-horizontal-padding;
+    &:first-child{
+      text-align: center;
+    }
+    &.actions{
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+.status{
+  width: 1%;
+  white-space: nowrap;
+}
+.name{
+  width: 30%;
+}
+.job{
+  width: 40%;
+}
+.actions{
+  width: 200px;
+  >:global(.btn-sm){
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+  >button+button{
+    margin-left: 10px;
+  }
+}

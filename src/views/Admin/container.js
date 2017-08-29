@@ -43,7 +43,6 @@ export class AdminContainer extends Component {
         <Menus menus={menus} i18n={i18n} />
       </div>
       <div className={classes.content}>
-        this is child content panel
         {children}
       </div>
     </div>
