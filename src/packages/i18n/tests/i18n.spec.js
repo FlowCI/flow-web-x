@@ -47,6 +47,10 @@ describe('i18n function', function () {
       expect(i18n('f')).to.equal('hello ')
     })
 
+    it ('should replace `:argument` with value is number 0', () => {
+      expect(i18n('f', { name: 0 })).to.equal('hello 0')
+    })
+
     describe('not match resource', () => {
       const name = 'something not match'
       it ('should return name argumnet by default', () => {
