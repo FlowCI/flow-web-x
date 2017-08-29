@@ -313,14 +313,15 @@ $admin-content-horizontal-padding: $padding-base-horizontal!default;
 
 $admin-navtabs-horizontal-padding: 3*$padding-base-horizontal!default;
 
+$admin-list-header: 30px!default;
+$admin-list-header-bgc: #EDEFF1!default;
+$admin-list-header-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-item-height: 50px;
+$admin-item-vertical-padding: $padding-base-vertical!default;
+$admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
+$admin-list-divier-color: $admin-menus-divier!default;
+
 // Admin Agent
 $admin-agent-bar-horizontal-padding: 2*$padding-base-horizontal!default;
 
-$admin-agent-list-header: 30px!default;
-$admin-agent-list-header-bgc: #EDEFF1!default;
-$admin-agent-list-header-horizontal-padding: 3*$padding-base-horizontal!default;
-
-$admin-agent-item-height: 50px;
-$admin-agent-item-vertical-padding: $padding-base-vertical!default;
-$admin-agent-item-horizontal-padding: $admin-agent-list-header-horizontal-padding!default;
-$admin-agent-divier-color: $admin-menus-divier!default;

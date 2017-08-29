@@ -43,21 +43,21 @@
   text-align: left;
   >thead{
     >tr{
-      background-color: $admin-agent-list-header-bgc;
+      background-color: $admin-list-header-bgc;
       >th{
-        height: $admin-agent-list-header;
-        line-height: $admin-agent-list-header;
+        height: $admin-list-header;
+        line-height: $admin-list-header;
         font-weight: bold;
-        padding: 0px $admin-agent-list-header-horizontal-padding;
+        padding: 0px $admin-list-header-horizontal-padding;
       }
     }
   }
 }
 .agent{
-  border-bottom: 1px solid $admin-agent-divier-color;
+  border-bottom: 1px solid $admin-list-divier-color;
   >td{
-    line-height: ($admin-agent-item-height - 2*$admin-agent-item-vertical-padding);
-    padding: $admin-agent-item-vertical-padding $admin-agent-item-horizontal-padding;
+    line-height: ($admin-item-height - 2*$admin-item-vertical-padding);
+    padding: $admin-item-vertical-padding $admin-item-horizontal-padding;
     &:first-child{
       text-align: center;
     }
