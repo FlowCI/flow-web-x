@@ -2,11 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
-import { push } from 'react-router-redux'
-
-import Navbar from '../../components/Navbar'
+import { Link } from 'react-router'
 
 import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
@@ -21,13 +18,7 @@ function mapStateToProps (state, props) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    redirect: push,
-  }, dispatch)
-}
-
-export class PageLayoutNavbar extends PureComponent {
+export class Navbar extends PureComponent {
   static propTypes = {
     /*
       if false, it will only show question icon
@@ -44,8 +35,6 @@ export class PageLayoutNavbar extends PureComponent {
     backUrl: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 
     locatonKey: PropTypes.any,
-
-    redirect: PropTypes.func.isRequired,
 
     i18n: PropTypes.func.isRequired,
   }
@@ -86,69 +75,55 @@ export class PageLayoutNavbar extends PureComponent {
 
   closeUserMenus = this.createCloseHandler('openMenus')
 
-  handleBack = (e) => {
-    const { redirect, backUrl } = this.props
-    redirect(backUrl)
-  }
-
   renderBackButton () {
-    const { i18n } = this.props
+    const { i18n, backUrl } = this.props
 
     return <Card containerClass={classes.backButton}
-      className={classes.back}
-      onActive={this.handleBack}>
+      className={classes.back} to={backUrl}>
       <i className='icon icon-arrow-left' />
       {i18n('back')}
     </Card>
   }
 
-  renderLeft () {
-    const { backUrl, i18n } = this.props
-    const { openFlows } = this.state
-    return backUrl ? this.renderBackButton()
-      : <FlowCard i18n={i18n} active={openFlows}
-        onActive={this.openFlows}
-        onRequestClose={this.closeFlows}
-      />
-  }
-
-  renderNavs () {
-    const { authored, i18n } = this.props
-    const { openAgents, openMenus } = this.state
-    return <ul className={classes.navs}>
-      {authored && <li>
-        <AgentsCard active={openAgents} i18n={i18n}
-          onActive={this.openAgents}
-          onRequestClose={this.closeAgents}
-        />
-      </li>}
-      <li>
-        <Card href='//docs.flow.ci' target='_blank'>
-          <i className='icon icon-question' />
-        </Card>
-      </li>
-      {authored && <li>
-        <UserCard active={openMenus} i18n={i18n}
-          onActive={this.openUserMenus}
-          onRequestClose={this.closeUserMenus}
-        />
-      </li>}
-    </ul>
-  }
-
   render () {
-    const { authored } = this.props
+    const { authored, backUrl, i18n } = this.props
+    const { openFlows, openAgents, openMenus } = this.state
 
-    const cls = [classes.content]
-    !authored && cls.push(classes.unauthored)
+    const contentClass = [classes.content]
+    !authored && contentClass.push(classes.unauthored)
 
-    return <Navbar>
-      <div className={cls.join(' ')}>
-        {authored && this.renderLeft()}
-        {this.renderNavs()}
+    return <div className={classes.navbar}>
+      <Link className={classes.logo} to='/'>
+        <i className='icon icon-logo' />
+      </Link>
+      <div className={contentClass.join(' ')}>
+        {authored && (backUrl ? this.renderBackButton()
+          : <FlowCard i18n={i18n} active={openFlows}
+            onActive={this.openFlows}
+            onRequestClose={this.closeFlows}
+          />)}
+        <ul className={classes.navs}>
+          {authored && <li>
+            <AgentsCard active={openAgents} i18n={i18n}
+              onActive={this.openAgents}
+              onRequestClose={this.closeAgents}
+            />
+          </li>}
+          <li>
+            <Card href='//docs.flow.ci' target='_blank'>
+              <i className='icon icon-question' />
+            </Card>
+          </li>
+          {authored && <li>
+            <UserCard active={openMenus} i18n={i18n}
+              onActive={this.openUserMenus}
+              onRequestClose={this.closeUserMenus}
+            />
+          </li>}
+        </ul>
       </div>
-    </Navbar>
+    </div>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageLayoutNavbar)
+export default connect(mapStateToProps)(Navbar)
