@@ -30,23 +30,32 @@ export const actions = {
       transformResponse
     }
   },
-  shutdown: function (zone, name, password) {
+  shutdown: function (agent, password) {
+    // wait for socket
     return {
       url: '/agents/shutdown',
       method: 'post',
+      indicator: {
+        id: agent.get('id'),
+      },
       params: {
-        zone,
-        name,
+        zone: agent.get('zone'),
+        name: agent.get('name'),
         password,
       },
     }
-  }
+  },
 }
 
 export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
       return state.set('list', fromJS(payload))
+    },
+  }),
+  [Types.shutdown]: handleHttp('SHUTDOWN', {
+    success: function (state, { payload }) {
+
     },
   }),
   [Types.freedAll]: function (state) {

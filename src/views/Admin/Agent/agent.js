@@ -24,8 +24,7 @@ export default class Agent extends PureComponent {
 
   handleShutDown = () => {
     const { shutdown, agent } = this.props
-    return shutdown(agent.get('zone'), agent.get('name'),
-      'dialog password result')
+    return shutdown(agent, 'dialog password result')
   }
 
   render () {
