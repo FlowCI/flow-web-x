@@ -39,6 +39,8 @@ export default class Agent extends PureComponent {
     const canShutDown = status !== 'OFFLINE'
     const canStop = status === 'BUSY'
 
+    const encodeForm = encodeURIComponent('/admin/agent')
+
     return <tr className={classes.agent}>
       <td>
         <AgentIcon status={status} />
@@ -47,7 +49,11 @@ export default class Agent extends PureComponent {
         {agent.get('zoneWithName')}
       </td>
       <td>
-        {!!job && <Link to={`/flows/${flow}/jobs/${number}`}>{job}</Link>}
+        {!!job && <Link
+          to={`/flows/${flow}/jobs/${number}?from=${encodeForm}`}
+        >
+          {job}
+        </Link>}
       </td>
       <td className={classes.actions}>
         <Button size='sm' className='btn-inverse'
