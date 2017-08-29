@@ -2,7 +2,7 @@ import Component from './index'
 
 import AgentsRoute from './Agents/route'
 import CredentialsRoute from './Credentials/route'
-import FlowRoute from './Flow/route'
+import FlowsRoute from './Flows/route'
 import MemberRoute from './Member/route'
 import NotifyRoute from './Notify/route'
 import PluginRoute from './Plugin/route'
@@ -29,11 +29,11 @@ export const createRoutes = (store) => ({
     navbar: true,
     ...AgentsRoute(store),
   }, {
-    path: 'flow',
+    path: 'flows',
     icon: 'icon-branches',
     text: 'Flow',
     navbar: true,
-    ...FlowRoute(store),
+    ...FlowsRoute(store),
   }, {
     path: 'credentials',
     icon: 'icon-bookmark',
