@@ -30,6 +30,17 @@ export const actions = {
       transformResponse
     }
   },
+  shutdown: function (zone, name, password) {
+    return {
+      url: '/agents/shutdown',
+      method: 'post',
+      params: {
+        zone,
+        name,
+        password,
+      },
+    }
+  }
 }
 
 export default handleActions({
