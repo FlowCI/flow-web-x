@@ -5,7 +5,7 @@ import classes from './icon.scss'
 
 export default class AgentIcon extends Component {
   static propTypes = {
-    status: PropTypes.oneOf(['OFFLINE', 'IDLE', 'RUNNING']).isRequired,
+    status: PropTypes.oneOf(['OFFLINE', 'IDLE', 'BUSY']).isRequired,
   }
 
   render () {
@@ -17,7 +17,7 @@ export default class AgentIcon extends Component {
         content = <i className='icon icon-off' />
         colorClass = classes.black
         break
-      case 'RUNNING':
+      case 'BUSY':
         colorClass = classes.green
         content = <span className={classes.dots}>
           <i />

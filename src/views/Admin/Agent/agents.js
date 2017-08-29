@@ -119,8 +119,8 @@ export class AdminAgentView extends Component {
     const { agents } = this.props
     const cate = agents.reduce((cat, agent) => {
       switch (agent.get('agentStatus')) {
-        case 'RUNNING':
-          cat.RUNNING++
+        case 'BUSY':
+          cat.BUSY++
           break
         case 'IDLE':
           cat.IDLE++
@@ -131,14 +131,14 @@ export class AdminAgentView extends Component {
       }
       return cat
     }, {
-      RUNNING: 0,
+      BUSY: 0,
       IDLE: 0,
       OFFLINE: 0,
     })
     cate.ALL = agents.size
     return <ul className={classes.filters}>
       {this.renderFilterItem('ALL', cate)}
-      {this.renderFilterItem('RUNNING', cate)}
+      {this.renderFilterItem('BUSY', cate)}
       {this.renderFilterItem('IDLE', cate)}
       {this.renderFilterItem('OFFLINE', cate)}
     </ul>

@@ -13,7 +13,7 @@ export default {
     }, {
       'name': 'fir-machine-1',
       'zone': 'default',
-      'agentStatus': 'RUNNING',
+      'agentStatus': 'BUSY',
       'zoneWithName': 'fir-machine-1 - default',
       'flowName': 'xiaomi_ios_dev',
       'number': 2,

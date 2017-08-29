@@ -37,7 +37,7 @@ export default class Agent extends PureComponent {
     const job = flow ? `${flow} / #${number} ${branch}` : ''
 
     const canShutDown = status !== 'OFFLINE'
-    const canStop = status === 'RUNNING'
+    const canStop = status === 'BUSY'
 
     return <tr className={classes.agent}>
       <td>
