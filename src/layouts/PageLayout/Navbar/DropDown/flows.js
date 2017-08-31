@@ -48,8 +48,8 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     queryLastJob: jobActions.queryLastest,
-    setDropDownFilter: actions.setDropDownFilter,
-    freedDropDownFilter: actions.freedDropDownFilter,
+    setFilter: actions.setFilter,
+    freedFilter: actions.freedFilter,
   }, dispatch)
 }
 
@@ -59,8 +59,8 @@ export class NavbarFlowsDropdown extends PureComponent {
     loaded: PropTypes.bool,
 
     queryLastJob: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
-    setDropDownFilter: PropTypes.func.isRequired,
-    freedDropDownFilter: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
+    freedFilter: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -80,8 +80,8 @@ export class NavbarFlowsDropdown extends PureComponent {
   }
 
   componentWillUnmount () {
-    const { freedDropDownFilter } = this.props
-    freedDropDownFilter()
+    const { freedFilter } = this.props
+    freedFilter()
   }
 
   queryJobs (props = this.props) {
@@ -90,8 +90,8 @@ export class NavbarFlowsDropdown extends PureComponent {
   }
 
   handleSearch = (value) => {
-    const { setDropDownFilter } = this.props
-    setDropDownFilter(value)
+    const { setFilter } = this.props
+    setFilter(value)
   }
 
   renderFlows () {
