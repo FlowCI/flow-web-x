@@ -115,7 +115,7 @@ export default class Input extends Component {
         onKeyUp={this.handleKeyUp}
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
-        onChange={!!onChange && this.handleChange}
+        onChange={onChange ? this.handleChange : undefined}
       />
       {divider && !!rightIcon && <span className={classNames.divider} />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
