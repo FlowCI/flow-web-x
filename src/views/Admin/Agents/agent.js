@@ -7,6 +7,8 @@ import { Link } from 'react-router'
 import Button from 'components/Button'
 import AgentIcon from 'components/Icon/Agent'
 
+import { ListRow, ListCol } from '../components/List'
+
 import classes from './agents.scss'
 
 export default class Agent extends PureComponent {
@@ -41,21 +43,21 @@ export default class Agent extends PureComponent {
 
     const encodeForm = encodeURIComponent('/admin/agents')
 
-    return <tr className={classes.agent}>
-      <td>
+    return <ListRow>
+      <ListCol className={classes.status}>
         <AgentIcon status={status} />
-      </td>
-      <td>
+      </ListCol>
+      <ListCol className={classes.name}>
         {agent.get('zoneWithName')}
-      </td>
-      <td>
+      </ListCol>
+      <ListCol className={classes.job}>
         {!!job && <Link
           to={`/flows/${flow}/jobs/${number}?from=${encodeForm}`}
         >
           {job}
         </Link>}
-      </td>
-      <td className={classes.actions}>
+      </ListCol>
+      <ListCol className={classes.actions}>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleStop} disabled={!canStop}>
           停止任务
@@ -64,7 +66,7 @@ export default class Agent extends PureComponent {
           onClick={this.handleShutDown} disabled={!canShutDown}>
           关机
         </Button>
-      </td>
-    </tr>
+      </ListCol>
+    </ListRow>
   }
 }

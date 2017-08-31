@@ -14,6 +14,7 @@
 }
 .content{
   flex: 1 1 auto;
+  overflow: hidden;
   margin-right: 10vw;
   margin-left: $admin-content-horizontal-padding;
 }

@@ -1,0 +1,26 @@
+@import 'variables';
+.table{
+  width: 100%;
+  table-layout: fixed;
+  text-align: left;
+}
+.thead{
+  background-color: $admin-list-header-bgc;
+  .tr{
+    border-bottom: none;
+  }
+}
+.th{
+  height: $admin-list-header;
+  line-height: $admin-list-header;
+  font-weight: bold;
+  padding: 0px $admin-list-header-horizontal-padding;
+}
+.tr{
+  border-bottom: 1px solid $admin-list-divier-color;
+}
+.td{
+  line-height: ($admin-item-height - 2*$admin-item-vertical-padding);
+  padding: $admin-item-vertical-padding $admin-item-horizontal-padding;
+  word-break: break-word;
+}
