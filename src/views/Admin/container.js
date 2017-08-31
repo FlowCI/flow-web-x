@@ -40,7 +40,7 @@ export class AdminContainer extends Component {
     const { i18n, menus, children } = this.props
     return <div className={classes.container}>
       <div className={classes.navbar}>
-        <Menus menus={menus} i18n={i18n} />
+        <Menus menus={menus} i18n={i18n} base='/admin' />
       </div>
       <div className={classes.content}>
         {children}
