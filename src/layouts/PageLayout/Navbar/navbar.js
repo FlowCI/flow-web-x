@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
-import { Link } from 'react-router'
-
+import Navbar from '../../components/Navbar'
 import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
 import classes from './navbar.scss'
@@ -18,7 +17,7 @@ function mapStateToProps (state, props) {
   }
 }
 
-export class Navbar extends PureComponent {
+export class PageLayoutNavbar extends PureComponent {
   static propTypes = {
     /*
       if false, it will only show question icon
@@ -92,10 +91,7 @@ export class Navbar extends PureComponent {
     const contentClass = [classes.content]
     !authored && contentClass.push(classes.unauthored)
 
-    return <div className={classes.navbar}>
-      <Link className={classes.logo} to='/'>
-        <i className='icon icon-logo' />
-      </Link>
+    return <Navbar>
       <div className={contentClass.join(' ')}>
         {authored && (backUrl ? this.renderBackButton()
           : <FlowCard i18n={i18n} active={openFlows}
@@ -122,8 +118,8 @@ export class Navbar extends PureComponent {
           </li>}
         </ul>
       </div>
-    </div>
+    </Navbar>
   }
 }
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps)(PageLayoutNavbar)

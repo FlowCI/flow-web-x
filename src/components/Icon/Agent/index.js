@@ -5,25 +5,31 @@ import classes from './icon.scss'
 
 export default class AgentIcon extends Component {
   static propTypes = {
-    status: PropTypes.oneOf(['OFF', 'IDLE', 'BUSY']).isRequired,
+    status: PropTypes.oneOf(['OFFLINE', 'IDLE', 'BUSY']).isRequired,
   }
 
   render () {
     const { status } = this.props
     let content = <i className={classes.line} />
+    let colorClass = ''
     switch (status) {
-      case 'OFF':
+      case 'OFFLINE':
         content = <i className='icon icon-off' />
+        colorClass = classes.black
         break
       case 'BUSY':
+        colorClass = classes.green
         content = <span className={classes.dots}>
           <i />
           <i />
           <i />
         </span>
         break
+      case 'IDLE':
+        colorClass = classes.yellow
     }
-    const cls = [classes.icon, classes[status]]
+    const cls = [classes.icon, status]
+    colorClass && cls.push(colorClass)
     return <span className={cls.join(' ')}>
       {content}
     </span>

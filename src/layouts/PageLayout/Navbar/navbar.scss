@@ -1,29 +1,5 @@
 @import 'variables';
 
-.navbar{
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  z-index: $zindex-navbar;
-  display: block;
-  background-color: $navbar-default-bg;
-  color: $navbar-default-color;
-  border-bottom: 1px solid $navbar-default-border;
-}
-
-.logo{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
-  color: $navbar-default-color;
-  @media screen and (max-width: $screen-phone) {
-    display: none;
-  }
-}
-
 .content{
   // height: $navbar-height;
   line-height: $navbar-height;
@@ -34,6 +10,7 @@
     line-height: $navbar-phone-height;
   }
 }
+
 .unauthored{
   justify-content: flex-end;
 }
@@ -42,7 +19,7 @@
   flex: 0 0 100px;
   width: 100px;
   font-size: $font-size-large;
-  font-weight: bold;
+  font-weight: $navbar-font-weight;
   border-right: 1px solid $navbar-default-border;
 }
 .back{

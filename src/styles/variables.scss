@@ -139,6 +139,8 @@ $select-dropdown-boxshadow: $control-base-boxshadow;
 $navbar-height: 60px!default;
 $navbar-phone-height: 50px!default;
 
+$navbar-font-weight: bold!default;
+
 $navbar-default-bg: #F4F5F5!default;
 $navbar-default-color: $text-color!default;
 $navbar-default-border: $color-hr!default;
@@ -164,6 +166,16 @@ $navbar-dropmenu-item-height: 40px!default;
 $navbar-dropmenu-item-border: $color-hr;
 $navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
 $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
+
+// NavTabs
+$navtabs-default-border: $color-black!default;
+$navtabs-default-bottom: 3*$padding-base-vertical!default;
+$navtabs-default-font-size: 20px!default;
+$navtabs-default-font-weight: bold!default;
+$navtabs-default-color: #AEB7BE!default;
+$navtabs-default-active-color: $color-black!default;
+$navtabs-default-item-horizontal-padding: $padding-base-horizontal!default;
+
 
 // Footer
 $footer-height: 60px!default;
@@ -251,14 +263,6 @@ $create-flow-well-active-color: #6668D3!default;
 $create-flow-wrapper-vertical-padding: 4*$padding-base-vertical!default;
 $create-flow-wrapper-horizontal-padding: 4*$padding-base-horizontal!default;
 
-// Create Flow Config
-$create-flow-config-navbar-border: $color-black!default;
-$create-flow-config-navbar-bottom: 3*$padding-base-vertical!default;
-$create-flow-config-navbar-font-size: 18px!default;
-$create-flow-config-navbar-font-weight: bold!default;
-$create-flow-config-navbar-color: #AEB7BE!default;
-$create-flow-config-navbar-active-color: $color-black!default;
-$create-flow-config-navbar-item-horizontal-padding: $padding-base-horizontal!default;
 // Create Flow SSH/HTTP Config
 $create-flow-config-code-bgc: #EDEFF1!default;
 $create-flow-config-code-border-radius: $border-radius-base!default;
@@ -269,5 +273,57 @@ $create-flow-config-vertical-padding: $padding-base-vertical!default;
 $create-flow-config-horizontal-padding: $padding-base-horizontal!default;
 $create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;
 
+// Admin
+$admin-vertical-padding: 2*$padding-base-vertical!default;
+$admin-horizontal-padding: 0!default;
 
+// Admin Navbar
+$admin-menus-height: 50px!default;
+$admin-menus-width: 200px!default;
+
+$admin-menus-font-weight: bold!default;
+$admin-menus-border: #DFDFE5!default;
+$admin-menus-border-radius: $border-radius-base!default;
+$admin-menus-base-boxshadow: $control-base-boxshadow!default;
+
+$admin-menus-vertical-padding: 0!default;
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-menus-icon-horizontal-padding: $padding-base-horizontal!default;
+$admin-menus-icon-font-size: 18px!default;
+
+$admin-menus-divier: #D7D9DC!default;
+$admin-menus-color: $color-black!default;
+$admin-menus-bgc: #fff!default;
+
+$admin-menus-hover-color: currentColor!default;
+$admin-menus-hover-bgc: #EEF0F3!default;
+
+$admin-menus-active-color: #fff!default;
+$admin-menus-active-bgc: $color-black!default;
+
+$admin-menus-arraw-horizontal-size: 6px!default;
+$admin-menus-arraw-vertical-size: 10px!default;
+$admin-menus-arraw-color: $admin-menus-active-color!default;
+
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+// Admin Content
+$admin-content-horizontal-padding: $padding-base-horizontal!default;
+
+$admin-navtabs-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-list-header: 30px!default;
+$admin-list-header-bgc: #EDEFF1!default;
+$admin-list-header-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-item-height: 50px;
+$admin-item-vertical-padding: $padding-base-vertical!default;
+$admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
+$admin-list-divier-color: $admin-menus-divier!default;
+
+// Admin TabBars
+$admin-tabbars-height: $control-base-size;
+$admin-tabbars-horizontal-padding: 1.5*$padding-base-horizontal!default;
+$admin-tabbars-item-spacing: $padding-base-vertical!default;
 

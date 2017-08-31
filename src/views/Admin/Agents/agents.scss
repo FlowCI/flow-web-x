@@ -1,0 +1,25 @@
+@import 'variables';
+
+.navs{
+  margin-bottom: $admin-navtabs-horizontal-padding;
+}
+.scroller{
+  overflow: auto;
+}
+.agents{
+}
+.status{
+  width: 100px;
+  text-align: center;
+}
+.actions{
+  width: 200px;
+  >:global(.btn-sm){
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+  }
+  >button+button{
+    margin-left: 10px;
+  }
+}

@@ -31,21 +31,20 @@ export class UserDropMenus extends PureComponent {
   }
 
   render () {
-    const { i18n, onRequestClose } = this.props
+    const { i18n } = this.props
     return <DropDown className={classes.dropmenu} arrowClass={classes.arrow}>
       <ul className={classes.menus}>
         <li>
-          <Link className={classes.item} to='/settings/user'
-            onClick={onRequestClose}>
+          <Link className={classes.item} to='/settings/user'>
             <i className='icon icon-user' />
             <span>{i18n('个人设置')}</span>
           </Link>
         </li>
         <li>
-          <a className={classes.item} href='#' onClick={onRequestClose}>
+          <Link className={classes.item} to='/admin'>
             <i className='icon icon-settings' />
             <span>{i18n('系统管理')}</span>
-          </a>
+          </Link>
         </li>
         <li>
           <a className={classes.item} onClick={this.handleSignOutClick}>
