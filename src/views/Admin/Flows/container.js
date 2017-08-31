@@ -45,7 +45,7 @@ export class AdminFlowsContainer extends PureComponent {
           activeClassName={navClasses.active}
           to={`${base}/${menu.path}`}
         >
-          {i18n(menu.path)}
+          {i18n(`${menu.path}.title`)}
         </Nav>)}
       </NavTabs>
       {children}
