@@ -21,35 +21,26 @@ import FlowTab from '../components/flowtab'
 
 import classes from './flows.scss'
 
-const flowsSelector = createSelector(
-  (state) => state.flow.get('list'),
-  (state) => state.flow.get('data'),
-  (ids, data) => ids.map((id) => data.get(id))
-)
-
 const filterFlowsSelector = createSelector(
-  (flows, filter) => flows,
-  (flows, filter) => filter,
-  (flows, filter) => {
-    let filted = flows
-    if (filter !== undefined && filter !== '') {
+  (ids, filter) => ids,
+  (ids, filter) => filter,
+  (ids, filter) => {
+    let filted = ids
+    if (filter) {
       const reg = new RegExp(filter.replace('\\', '\\\\'), 'i')
-      filted = flows.filter((flow) => {
-        const name = flow.get('name')
-        return reg.test(name)
-      })
+      filted = ids.filter((id) => reg.test(id))
     }
-    return filted.map((f) => f.get('id'))
+    return filted
   }
 )
 function mapStateToProps (state, props) {
   const { flow } = state
   const status = flow.getIn(['ui', 'QUERY_LAST_JOBS'])
 
-  const flows = flowsSelector(state)
+  const list = flow.get('list')
   const filter = flow.getIn(['ui', 'dropDownFilter'])
   return {
-    flowIds: filterFlowsSelector(flows, filter),
+    flowIds: filterFlowsSelector(list, filter),
     loaded:  status === STATUS.success,
   }
 }
