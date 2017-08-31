@@ -24,6 +24,11 @@ import {
   ListBody,
   ListRow,
 } from '../components/List'
+import {
+  TabBars,
+  Tab
+} from '../components/TabBars'
+
 import Agent from './agent'
 import classes from './agents.scss'
 
@@ -67,19 +72,14 @@ export class AdminAgentView extends Component {
     query()
   }
 
-  selectCategory (category, event) {
-    event.preventDefault()
+  selectCategory = (category) => {
     this.setState({ category })
-  }
-
-  createSelected = (category) => {
-    return this.selectCategory.bind(this, category)
   }
 
   getAgents () {
     const { agents } = this.props
     const { category } = this.state
-    return agents.filter((agent) => category === 'ALL' ||
+    return category === 'ALL' ? agents : agents.filter((agent) =>
       agent.get('agentStatus') === category)
   }
 
@@ -120,19 +120,13 @@ export class AdminAgentView extends Component {
 
   renderFilterItem (category, cate) {
     const { i18n } = this.props
-    const { category: selected } = this.state
     const text = i18n(`filter.${category}`, { count: cate[category] })
-    return <li>
-      <a href='#' className={category === selected ? classes.active : ''}
-        title={text} onClick={this.createSelected(category)}
-      >
-        {text}
-      </a>
-    </li>
+    return <Tab value={category} text={text} />
   }
 
   renderFilter () {
     const { agents } = this.props
+    const { category } = this.state
     const cate = agents.reduce((cat, agent) => {
       switch (agent.get('agentStatus')) {
         case 'BUSY':
@@ -152,12 +146,12 @@ export class AdminAgentView extends Component {
       OFFLINE: 0,
     })
     cate.ALL = agents.size
-    return <ul className={classes.filters}>
+    return <TabBars value={category} onChange={this.selectCategory}>
       {this.renderFilterItem('ALL', cate)}
       {this.renderFilterItem('BUSY', cate)}
       {this.renderFilterItem('IDLE', cate)}
       {this.renderFilterItem('OFFLINE', cate)}
-    </ul>
+    </TabBars>
   }
 
   renderLoading () {
