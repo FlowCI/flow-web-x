@@ -277,7 +277,7 @@ $create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!defau
 $admin-vertical-padding: 2*$padding-base-vertical!default;
 $admin-horizontal-padding: 0!default;
 
-// Admin Navbar
+// Admin Menus
 $admin-menus-height: 50px!default;
 $admin-menus-width: 200px!default;
 
@@ -322,8 +322,15 @@ $admin-item-vertical-padding: $padding-base-vertical!default;
 $admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
 $admin-list-divier-color: $admin-menus-divier!default;
 
+// Admin Sub Navbar
+$admin-content-single-navbar-font-size: 20px!default;
+
 // Admin TabBars
 $admin-tabbars-height: $control-base-size;
 $admin-tabbars-horizontal-padding: 1.5*$padding-base-horizontal!default;
 $admin-tabbars-item-spacing: $padding-base-vertical!default;
+
+// Admin Agents
+$admin-agents-actoins-button-spacing: $padding-base-horizontal!default;
+
 

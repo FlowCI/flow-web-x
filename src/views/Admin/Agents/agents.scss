@@ -2,7 +2,7 @@
 
 .navs{
   margin-bottom: $admin-navtabs-horizontal-padding;
-  font-size: 20px;
+  font-size: $admin-content-single-navbar-font-size;
 }
 .scroller{
   overflow: auto;
@@ -21,6 +21,6 @@
     font-weight: normal;
   }
   >button+button{
-    margin-left: 10px;
+    margin-left: $admin-agents-actoins-button-spacing;
   }
 }
