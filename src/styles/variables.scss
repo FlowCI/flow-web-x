@@ -325,9 +325,10 @@ $admin-list-divier-color: $admin-menus-divier!default;
 // Admin Sub Navbar
 $admin-content-single-navbar-font-size: 20px!default;
 
+$admin-toolbar-vertical-padding: 1.5*$padding-base-vertical!default;
+
 // Admin TabBars
 $admin-tabbars-height: $control-base-size;
-$admin-tabbars-horizontal-padding: 1.5*$padding-base-horizontal!default;
 $admin-tabbars-item-spacing: $padding-base-vertical!default;
 
 // Admin Agents

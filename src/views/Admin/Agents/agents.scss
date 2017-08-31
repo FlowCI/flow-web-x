@@ -4,6 +4,10 @@
   margin-bottom: $admin-navtabs-horizontal-padding;
   font-size: $admin-content-single-navbar-font-size;
 }
+.toolbars{
+  margin-bottom: $admin-toolbar-vertical-padding;
+}
+
 .scroller{
   overflow: auto;
 }
