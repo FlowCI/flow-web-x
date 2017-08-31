@@ -37,45 +37,14 @@
     }
   }
 }
-.agents{
-  width: 100%;
-  // table-layout: fixed;
-  text-align: left;
-  >thead{
-    >tr{
-      background-color: $admin-list-header-bgc;
-      >th{
-        height: $admin-list-header;
-        line-height: $admin-list-header;
-        font-weight: bold;
-        padding: 0px $admin-list-header-horizontal-padding;
-      }
-    }
-  }
+.scroller{
+  overflow: auto;
 }
-.agent{
-  border-bottom: 1px solid $admin-list-divier-color;
-  >td{
-    line-height: ($admin-item-height - 2*$admin-item-vertical-padding);
-    padding: $admin-item-vertical-padding $admin-item-horizontal-padding;
-    &:first-child{
-      text-align: center;
-    }
-    &.actions{
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
+.agents{
 }
 .status{
-  width: 1%;
-  white-space: nowrap;
-}
-.name{
-  width: 30%;
-}
-.job{
-  width: 40%;
+  width: 100px;
+  text-align: center;
 }
 .actions{
   width: 200px;

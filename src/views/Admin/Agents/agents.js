@@ -17,8 +17,14 @@ import { actions as jobActions } from 'redux/modules/job'
 import Loading from 'components/Loading'
 import { NavTabs } from 'components/NavTabs'
 
+import {
+  List,
+  ListHead,
+  ListHeadCol,
+  ListBody,
+  ListRow,
+} from '../components/List'
 import Agent from './agent'
-
 import classes from './agents.scss'
 
 function mapStateToProps (state, props) {
@@ -87,19 +93,29 @@ export class AdminAgentView extends Component {
   renderAgents () {
     const { i18n } = this.props
     const agents = this.getAgents()
-    return <table className={classes.agents}>
-      <thead>
-        <tr>
-          <th className={classes.status}>{i18n('运行状态')}</th>
-          <th className={classes.name}>{i18n('Agent')}</th>
-          <th className={classes.job}>{i18n('任务')}</th>
-          <th className={classes.actions}>{i18n('操作')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {agents.map(this.renderAgent)}
-      </tbody>
-    </table>
+    return <div className={classes.scroller}>
+      <List className={classes.agents}>
+        <ListHead>
+          <ListRow>
+            <ListHeadCol className={classes.status}>
+              {i18n('运行状态')}
+            </ListHeadCol>
+            <ListHeadCol className={classes.name}>
+              {i18n('Agent')}
+            </ListHeadCol>
+            <ListHeadCol className={classes.job}>
+              {i18n('任务')}
+            </ListHeadCol>
+            <ListHeadCol className={classes.actions}>
+              {i18n('操作')}
+            </ListHeadCol>
+          </ListRow>
+        </ListHead>
+        <ListBody>
+          {agents.map(this.renderAgent)}
+        </ListBody>
+      </List>
+    </div>
   }
 
   renderFilterItem (category, cate) {
