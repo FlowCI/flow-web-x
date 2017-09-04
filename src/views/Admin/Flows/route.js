@@ -1,5 +1,6 @@
 import Component from './index'
 import ListComponent from './List'
+import MembersComponent from './Members'
 
 export default function (store) {
   return {
@@ -14,6 +15,7 @@ export default function (store) {
     }, {
       path: 'members',
       navbar: true,
+      component: MembersComponent,
     }],
   }
 }

@@ -9,5 +9,8 @@ export default {
   },
   members: {
     title: 'Flow 成员管理',
+    toolbar: {
+      all: '全部 ( :count ) '
+    },
   },
 }

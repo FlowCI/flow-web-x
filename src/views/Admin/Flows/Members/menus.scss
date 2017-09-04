@@ -1,0 +1,36 @@
+@import 'variables';
+.menus{
+  flex: 0 1 200px;
+  border-right: 1px solid $admin-flows-member-border;
+  background-color: $admin-flows-member-menus-bgc;
+  padding-bottom: 60px;
+}
+.item{
+  line-height: $admin-flows-member-menus-item-height;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-bottom: 1px solid $admin-flows-member-border;
+  padding: 0px
+    ($admin-flows-member-menus-horizontal-padding +
+      2*$admin-flows-member-menus-arrow-width )
+    0px $admin-flows-member-menus-horizontal-padding;
+  position: relative;
+  cursor: pointer;
+  &:hover{
+    font-weight: bold;
+  }
+}
+.active{
+  font-weight: bold;
+  &:after{
+    content: ' ';
+    display: inline-block;
+    border: $admin-flows-member-menus-arrow-height/2 solid transparent;
+    border-right: none;
+    border-left: $admin-flows-member-menus-arrow-width solid;
+    position: absolute;
+    right: 15px;
+    top: ($admin-flows-member-menus-item-height - $admin-flows-member-menus-arrow-height) /2;
+  }
+}
