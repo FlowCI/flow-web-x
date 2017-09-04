@@ -1,4 +1,5 @@
 import Component from './index'
+import ListComponent from './List'
 
 export default function (store) {
   return {
@@ -9,6 +10,7 @@ export default function (store) {
     childRoutes: [{
       path: 'list',
       navbar: true,
+      component: ListComponent,
     }, {
       path: 'members',
       navbar: true,
