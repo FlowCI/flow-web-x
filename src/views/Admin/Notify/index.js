@@ -7,6 +7,7 @@ import language from 'util/language'
 import { connect } from 'react-redux'
 
 import Title from '../components/Title'
+import Form from './form'
 
 function mapStateToProps (state, props) {
   return {
@@ -26,6 +27,7 @@ export class AdminNotifyEmail extends Component {
     const { i18n } = this.props
     return <div>
       <Title title={i18n('title')} subTitle={i18n('subTitle')} />
+      <Form i18n={i18n} />
     </div>
   }
 }
