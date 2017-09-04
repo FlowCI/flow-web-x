@@ -11,5 +11,8 @@
   font-size: $admin-content-single-navbar-font-size;
 }
 .small{
-
+  font-size: $admin-content-subtitle-font-size;
+  color: $admin-content-subtitle-color;
+  margin-left: $padding-base-horizontal;
+  font-weight: normal;
 }
