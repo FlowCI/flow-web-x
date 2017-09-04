@@ -190,10 +190,10 @@ export default handleActions({
 
   // UI
   [Types.setFilter]: function (state, { payload }) {
-    return state.update('ui', (ui) => ui.set('dropDownFilter', payload))
+    return state.update('ui', (ui) => ui.set('filter', payload))
   },
   [Types.freedFilter]: function (state) {
-    return state.update('ui', (ui) => ui.delete('dropDownFilter'))
+    return state.update('ui', (ui) => ui.delete('filter'))
   },
   [Types.freedAll]: function (state) {
     return initialState

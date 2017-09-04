@@ -38,7 +38,7 @@ function mapStateToProps (state, props) {
   const status = flow.getIn(['ui', 'QUERY_LAST_JOBS'])
 
   const list = flow.get('list')
-  const filter = flow.getIn(['ui', 'dropDownFilter'])
+  const filter = flow.getIn(['ui', 'filter'])
   return {
     flowIds: filterFlowsSelector(list, filter),
     loaded:  status === STATUS.success,
