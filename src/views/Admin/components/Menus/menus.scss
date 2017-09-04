@@ -33,11 +33,11 @@
   &:after{
     content: ' ';
     display: inline-block;
-    border-left: $admin-menus-arraw-horizontal-size solid #fff;
-    border-top: $admin-menus-arraw-vertical-size/2 solid transparent;
-    border-bottom: $admin-menus-arraw-vertical-size/2 solid transparent;
+    border-left: $admin-menus-arraw-width solid #fff;
+    border-top: $admin-menus-arraw-height/2 solid transparent;
+    border-bottom: $admin-menus-arraw-height/2 solid transparent;
     position: absolute;
     right: 15px;
-    top: ($admin-menus-height - $admin-menus-arraw-vertical-size) / 2;
+    top: ($admin-menus-height - $admin-menus-arraw-height) / 2;
   }
 }
