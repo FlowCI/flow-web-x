@@ -115,10 +115,10 @@ export class AdminFlowList extends Component {
   }
 
   renderToolBars () {
-    const { i18n, filter } = this.props
+    const { i18n, filter, flowIds } = this.props
     return <div className={classes.toolbar}>
       <TabBars value='all'>
-        <Tab text={i18n('toolbar.all', { count: 10 })} value='all' />
+        <Tab text={i18n('toolbar.all', { count: flowIds.size })} value='all' />
       </TabBars>
       <Input className={classes.search} placeholder='搜索'
         leftIcon={<i className='icon icon-search2' />}
