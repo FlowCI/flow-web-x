@@ -15,8 +15,8 @@ import { actions } from 'redux/modules/agent'
 import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
-import { NavTabs } from 'components/NavTabs'
 
+import Title from '../components/Title'
 import {
   List,
   ListHead,
@@ -164,9 +164,7 @@ export class AdminAgentView extends Component {
   render () {
     const { loading } = this.props
     return <div className={classes.container}>
-      <NavTabs className={classes.navs}>
-        Agent
-      </NavTabs>
+      <Title title='Agent' />
       {!loading && this.renderFilter()}
       {loading ? this.renderLoading() : this.renderAgents()}
     </div>

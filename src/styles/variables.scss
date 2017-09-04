@@ -168,7 +168,9 @@ $navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
 $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
 
 // NavTabs
+$navtabs-default-height: 40px!default;
 $navtabs-default-border: $color-black!default;
+$navtabs-default-border-width: 4px!default;
 $navtabs-default-bottom: 3*$padding-base-vertical!default;
 $navtabs-default-font-size: 16px!default;
 $navtabs-default-font-weight: bold!default;
