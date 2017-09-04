@@ -170,7 +170,7 @@ $navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
 // NavTabs
 $navtabs-default-border: $color-black!default;
 $navtabs-default-bottom: 3*$padding-base-vertical!default;
-$navtabs-default-font-size: 20px!default;
+$navtabs-default-font-size: 16px!default;
 $navtabs-default-font-weight: bold!default;
 $navtabs-default-color: #AEB7BE!default;
 $navtabs-default-active-color: $color-black!default;
@@ -277,7 +277,7 @@ $create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!defau
 $admin-vertical-padding: 2*$padding-base-vertical!default;
 $admin-horizontal-padding: 0!default;
 
-// Admin Navbar
+// Admin Menus
 $admin-menus-height: 50px!default;
 $admin-menus-width: 200px!default;
 
@@ -302,8 +302,8 @@ $admin-menus-hover-bgc: #EEF0F3!default;
 $admin-menus-active-color: #fff!default;
 $admin-menus-active-bgc: $color-black!default;
 
-$admin-menus-arraw-horizontal-size: 6px!default;
-$admin-menus-arraw-vertical-size: 10px!default;
+$admin-menus-arraw-width: 6px!default;
+$admin-menus-arraw-height: 10px!default;
 $admin-menus-arraw-color: $admin-menus-active-color!default;
 
 $admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
@@ -322,8 +322,28 @@ $admin-item-vertical-padding: $padding-base-vertical!default;
 $admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
 $admin-list-divier-color: $admin-menus-divier!default;
 
+// Admin Sub Navbar
+$admin-content-single-navbar-font-size: 20px!default;
+
+$admin-toolbar-vertical-padding: 1.5*$padding-base-vertical!default;
+
 // Admin TabBars
 $admin-tabbars-height: $control-base-size;
-$admin-tabbars-horizontal-padding: 1.5*$padding-base-horizontal!default;
 $admin-tabbars-item-spacing: $padding-base-vertical!default;
 
+// Admin Agents
+$admin-agents-actoins-button-spacing: $padding-base-horizontal!default;
+
+// Admin Flow List
+$admin-flows-list-copy-color: #6668D3!default;
+
+// Admin Flow Members
+$admin-flows-member-border: #D7D9DC!default;
+$admin-flows-member-border-radius: $border-radius-base!default;
+$admin-flows-member-menus-bgc: #F3F6F7!default;
+
+$admin-flows-member-menus-arrow-width: $admin-menus-arraw-width!default;
+$admin-flows-member-menus-arrow-height: $admin-menus-arraw-height!default;
+
+$admin-flows-member-menus-item-height: 40px!default;
+$admin-flows-member-menus-horizontal-padding: 1.5*$padding-base-horizontal!default;

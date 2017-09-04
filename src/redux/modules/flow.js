@@ -143,15 +143,15 @@ export const actions = {
   },
   getTestResult: pollingTestResult,
 
-  setDropDownFilter: function (filter) {
+  setFilter: function (filter) {
     return {
-      type: Types.setDropDownFilter,
+      type: Types.setFilter,
       payload: filter,
     }
   },
-  freedDropDownFilter: function () {
+  freedFilter: function () {
     return {
-      type: Types.freedDropDownFilter,
+      type: Types.freedFilter,
     }
   },
   freed: function (flowId) {
@@ -189,11 +189,11 @@ export default handleActions({
   }),
 
   // UI
-  [Types.setDropDownFilter]: function (state, { payload }) {
-    return state.update('ui', (ui) => ui.set('dropDownFilter', payload))
+  [Types.setFilter]: function (state, { payload }) {
+    return state.update('ui', (ui) => ui.set('filter', payload))
   },
-  [Types.freedDropDownFilter]: function (state) {
-    return state.update('ui', (ui) => ui.delete('dropDownFilter'))
+  [Types.freedFilter]: function (state) {
+    return state.update('ui', (ui) => ui.delete('filter'))
   },
   [Types.freedAll]: function (state) {
     return initialState

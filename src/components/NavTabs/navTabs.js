@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { string, object, node } from 'prop-types'
 
 import classes from './nav.scss'
-
+export { classes }
 export default class NavTabs extends Component {
   static propTypes = {
     classNames: object.isRequired,

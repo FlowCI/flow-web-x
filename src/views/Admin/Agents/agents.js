@@ -146,7 +146,8 @@ export class AdminAgentView extends Component {
       OFFLINE: 0,
     })
     cate.ALL = agents.size
-    return <TabBars value={category} onChange={this.selectCategory}>
+    return <TabBars className={classes.toolbars}
+      value={category} onChange={this.selectCategory}>
       {this.renderFilterItem('ALL', cate)}
       {this.renderFilterItem('BUSY', cate)}
       {this.renderFilterItem('IDLE', cate)}

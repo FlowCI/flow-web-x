@@ -1,0 +1,11 @@
+@import 'variables';
+.toolbar{
+  margin-bottom: $admin-toolbar-vertical-padding;
+}
+
+.panel{
+  border: 1px solid $admin-flows-member-border;
+  border-radius: $admin-flows-member-border-radius;
+  display: flex;
+  align-items: stretch;
+}

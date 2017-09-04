@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { node, any, func } from 'prop-types'
+import { string, node, any, func } from 'prop-types'
 
 import classes from './bars.scss'
 
 export default class TabBars extends Component {
   static propTypes = {
+    className: string,
     children: node,
     value: any,
     onChange: func,
@@ -26,8 +27,10 @@ export default class TabBars extends Component {
   }
 
   render () {
-    const { children } = this.props
-    return <ul className={classes.bars}>
+    const { className, children } = this.props
+    const cls = [classes.bars]
+    className && cls.push(className)
+    return <ul className={cls.join(' ')}>
       {React.Children.map(children, this.cloneChild)}
     </ul>
   }

@@ -12,6 +12,6 @@ export default {
   freedAll: 'FLOW_FREED_ALL',
 
   // UI
-  setDropDownFilter: 'SET_FLOW_DROPDOWN_FILTER',
-  freedDropDownFilter: 'FREED_FLOW_DROPDOWN_FILTER',
+  setFilter: 'SET_FLOW_FILTER',
+  freedFilter: 'FREED_FLOW_FILTER',
 }
