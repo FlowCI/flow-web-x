@@ -1,5 +1,6 @@
 import Component from './index'
 import ListComponent from './List'
+import CeateComponent from './Create'
 
 export default function (store) {
   return {
@@ -14,6 +15,7 @@ export default function (store) {
     }, {
       path: 'create',
       navbar: true,
+      component: CeateComponent,
     }]
   }
 }
