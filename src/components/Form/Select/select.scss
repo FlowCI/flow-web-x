@@ -13,6 +13,7 @@
   display: inline-flex;
   font-size: $font-size-base;
   z-index: $zindex-select;
+  width: $input-default-width;
 }
 
 .input{
