@@ -1,4 +1,4 @@
-const ignoreFiles = ['flow']
+const ignoreFiles = []
 const ignoreReg = new RegExp(`${ignoreFiles.join('|')}.js$`)
 
 const context = require.context('./database', false, /\.js$/)
