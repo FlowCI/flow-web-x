@@ -22,7 +22,7 @@ export default class EmailSettingForm extends Component {
 
   render () {
     return <form onSubmit={this.handleSubmit} className={classes.form}>
-      <tabel>
+      <table>
         <tbody>
           <tr>
             <td className={classes.name}>SMTP 服务器</td>
@@ -76,7 +76,7 @@ export default class EmailSettingForm extends Component {
             </td>
           </tr>
         </tbody>
-      </tabel>
+      </table>
     </form>
   }
 }
