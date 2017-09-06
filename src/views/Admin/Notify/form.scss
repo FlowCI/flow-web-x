@@ -5,10 +5,7 @@
   input{
     font-size: $font-size-base;
   }
-  button{
-    padding-left: 2*$padding-base-horizontal;
-    padding-right: 2*$padding-base-horizontal;
-  }
+
   td{
     padding: 5px 10px;
     vertical-align: middle;
@@ -27,4 +24,11 @@
 .desc{
   margin-left: 2*$padding-base-horizontal;
   color: $color-muted;
+}
+.test{
+  margin-left: $padding-base-horizontal;
+}
+.save{
+  padding-left: 2*$padding-base-horizontal;
+  padding-right: 2*$padding-base-horizontal;
 }

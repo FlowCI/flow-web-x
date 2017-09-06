@@ -21,27 +21,32 @@ export default class EmailSettingForm extends Component {
   }
 
   render () {
+    const { i18n } = this.props
     return <form onSubmit={this.handleSubmit} className={classes.form}>
       <table>
         <tbody>
           <tr>
-            <td className={classes.name}>SMTP 服务器</td>
+            <td className={classes.name}>{i18n('smtpUrl')}</td>
             <td>
               <Input className={classes.input} size='lg'
-                placeholder='SMTP 服务器地址' />
+                placeholder={i18n('smtpUrlPlaceholder')} />
             </td>
           </tr>
           <tr>
-            <td className={classes.name}>SMTP 端口</td>
+            <td className={classes.name}>{i18n('smtpPort')}</td>
             <td>
               <Input className={classes.port} size='lg' />
-              <span className={classes.desc}>默认不需要修改</span>
+              <span className={classes.desc}>
+                {i18n('smtpPortPlaceholder')}
+              </span>
             </td>
           </tr>
           <tr>
-            <td className={classes.name}>发信人邮箱</td>
+            <td className={classes.name}>{i18n('sender')}</td>
             <td>
-              <Input className={classes.input} size='lg' type='email' />
+              <Input className={classes.input} size='lg' type='email'
+                placeholder={i18n('senderPlaceholder')}
+              />
             </td>
           </tr>
           <tr>
@@ -54,24 +59,30 @@ export default class EmailSettingForm extends Component {
             </td>
           </tr>
           <tr>
-            <td className={classes.name}>验证用户名</td>
+            <td className={classes.name}>
+              {i18n('username')}
+            </td>
             <td>
               <Input className={classes.input}
-                size='lg' placeholder='SMTP 用户名' />
+                placeholder={i18n('usernamePlaceholder')}
+                size='lg' />
             </td>
           </tr>
           <tr>
-            <td className={classes.name}>验证密码</td>
+            <td className={classes.name}>{i18n('password')}</td>
             <td>
               <Input className={classes.input}
-                size='lg' placeholder='SMTP 密码' />
+                size='lg' placeholder={i18n('passwordPlaceholder')} />
+              <Button className={`btn-default ${classes.test}`}>
+                {i18n('test')}
+              </Button>
             </td>
           </tr>
           <tr>
             <td className={classes.name}>&nbsp;</td>
             <td>
-              <Button className='btn-primary' size='lg' type='submit'>
-                保存
+              <Button className={`btn-primary ${classes.save}`} size='lg' type='submit'>
+                {i18n('save')}
               </Button>
             </td>
           </tr>
