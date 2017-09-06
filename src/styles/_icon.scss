@@ -1,5 +1,15 @@
 @import "./fonts/iconVariables.scss";
 
+@font-face {
+  font-family: 'flowci';
+  src:
+    url('#{$icomoon-font-path}/flowci.ttf?94c6bb') format('truetype'),
+    url('#{$icomoon-font-path}/flowci.woff?94c6bb') format('woff'),
+    url('#{$icomoon-font-path}/flowci.svg?94c6bb#flowci') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'flowci' !important;
@@ -15,6 +25,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-logo {
+  &:before {
+    content: $icon-logo;
+  }
+}
 .icon-bookmark {
   &:before {
     content: $icon-bookmark;
@@ -168,11 +183,6 @@
 .icon-checkbox-unchecked {
   &:before {
     content: $icon-checkbox-unchecked;
-  }
-}
-.icon-logo {
-  &:before {
-    content: $icon-logo;
   }
 }
 .icon-logout {
