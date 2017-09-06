@@ -1,7 +1,5 @@
 @import 'variables';
 
-$toggle-circle-margin: 4px;
-
 @mixin toggle-circle-size ($toggleSize) {
   width: $toggleSize;
   height: $toggleSize;
@@ -29,7 +27,7 @@ $toggle-circle-margin: 4px;
   display: inline-block;
   position: relative;
   transition: background-color .3s;
-  color: #fff;
+  color: $toggle-color;
   cursor: pointer;
   top: 0px;
   @include toggle-size($control-base-size, $font-size-base);
@@ -41,7 +39,7 @@ $toggle-circle-margin: 4px;
   transition: left .3s;
   z-index: 1;
   padding: $toggle-circle-margin;
-  background-color: #fff;
+  background-color: $toggle-circle-color;
   background-clip: content-box;
 }
 .onLabel, .offLabel{
@@ -53,13 +51,13 @@ $toggle-circle-margin: 4px;
   transition: opacity .3s;
 }
 .on{
-  background-color: #F8BA0B;
+  background-color: $toggle-on-bgc;
   .offLabel{
     opacity: 0;
   }
 }
 .off{
-  background-color: $color-black;
+  background-color: $toggle-off-bgc;
   .onLabel{
     opacity: 0;
   }
