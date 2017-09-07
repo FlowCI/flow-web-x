@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { Map, fromJS } from 'immutable'
+import { fromJS } from 'immutable'
 
 import { handleHttpActions } from 'redux-http'
 
