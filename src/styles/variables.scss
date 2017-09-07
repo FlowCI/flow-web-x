@@ -135,6 +135,14 @@ $select-dropdown-radius: $border-radius-base!default;
 $select-dropdown-border: $control-border-base!default;
 $select-dropdown-boxshadow: $control-base-boxshadow;
 
+// Toggle
+$toggle-color: #fff!default;
+$toggle-circle-color: $toggle-color!default;
+
+$toggle-on-bgc: #F8BA0B!default;
+$toggle-off-bgc: $color-black!default;
+$toggle-circle-margin: 4px!default;
+
 // Navbar
 $navbar-height: 60px!default;
 $navbar-phone-height: 50px!default;
