@@ -8,6 +8,7 @@ export default class Toggle extends Component {
     onLabel: string.isRequired,
     offLabel: string.isRequired,
     checked: bool,
+    disabled: bool,
 
     size: oneOf(['sm', 'lg']),
     className: string,
@@ -30,13 +31,15 @@ export default class Toggle extends Component {
     const {
       onLabel, offLabel,
       classNames, className,
-      size, checked,
+      size, checked, disabled,
     } = this.props
     const cls = [classNames.toggle, checked ? classNames.on : classNames.off]
     className && cls.push(className)
     size && cls.push(classNames[size])
+    disabled && cls.push(classNames.disabled)
 
-    return <div className={cls.join(' ')} onClick={this.handleClick}>
+    return <div className={cls.join(' ')}
+      onClick={disabled ? undefined : this.handleClick}>
       <i className={classNames.circle} />
       <span className={classNames.onLabel}>{onLabel}</span>
       <span className={classNames.offLabel}>{offLabel}</span>
