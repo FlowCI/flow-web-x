@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { object, func } from 'prop-types'
+import { func } from 'prop-types'
+import { map } from 'react-immutable-proptypes'
 
 import Input from 'components/Form/Input'
 import RadioGroups from 'components/Form/RadioGroups'
@@ -10,14 +11,67 @@ import classes from './form.scss'
 
 export default class EmailSettingForm extends Component {
   static propTypes = {
-    initValues: object,
+    initValues: map,
     i18n: func.isRequired,
+    onSubmit: func.isRequired,
+    onTest: func.isRequired,
   }
 
-  state = this.props.initValues || {}
+  state = {}
+
+  componentWillMount () {
+    const { initValues } = this.props
+    this.state = {
+      values: initValues ? initValues.toJSON() : {}
+    }
+  }
+
+  validate (values) {
+    const { smtpUrl, smtpPort } = values
+    // 暂时先只校验非空
+    return !!(smtpUrl && smtpPort)
+  }
 
   handleSubmit = (e) => {
     e.preventDefault()
+    const { values } = this.state
+    const { onSubmit } = this.props
+    if (this.validate(values)) {
+      return onSubmit(values)
+    }
+  }
+
+  handleTest = () => {
+    const { onTest } = this.props
+    const { values } = this.state
+    if (this.validate(values)) {
+      return onTest(values)
+    }
+  }
+
+  handleSmtpUrlChange = (v) => {
+    const { values } = this.state
+    this.setState({ values: { ...values, smtpUrl: v } })
+  }
+
+  handleSmtpPortChange = (v) => {
+    const { values } = this.state
+    this.setState({ values: { ...values, smtpPort: v } })
+  }
+
+  handleSenderChange = (v) => {
+    const { values } = this.state
+    this.setState({ values: { ...values, sender: v } })
+  }
+
+  handleUserNameChange = (v) => {
+    const { values } = this.state
+    this.setState({ values: { ...values, username: v } })
+  }
+
+  handlePasswordChange = (v) => {
+    const { values } = this.state
+    this.setState({ values: { ...values, passowrd: v } })
   }
 
   render () {
@@ -28,17 +82,19 @@ export default class EmailSettingForm extends Component {
           <tr>
             <td className={classes.name}>{i18n('smtpUrl')}</td>
             <td>
-              <Input className={classes.input} size='lg'
-                placeholder={i18n('smtpUrlPlaceholder')} />
+              <Input className={classes.input} size='lg' required
+                placeholder={i18n('smtpUrlPlaceholder')}
+                onChange={this.handleSmtpUrlChange}
+              />
             </td>
           </tr>
           <tr>
             <td className={classes.name}>{i18n('smtpPort')}</td>
             <td>
-              <Input className={classes.port} size='lg' />
-              <span className={classes.desc}>
-                {i18n('smtpPortPlaceholder')}
-              </span>
+              <Input className={classes.port} size='lg' required
+                placeholder={i18n('smtpPortPlaceholder')}
+                onChange={this.handleSmtpPortChange}
+              />
             </td>
           </tr>
           <tr>
@@ -46,6 +102,7 @@ export default class EmailSettingForm extends Component {
             <td>
               <Input className={classes.input} size='lg' type='email'
                 placeholder={i18n('senderPlaceholder')}
+                onChange={this.handleSenderChange}
               />
             </td>
           </tr>
@@ -63,17 +120,21 @@ export default class EmailSettingForm extends Component {
               {i18n('username')}
             </td>
             <td>
-              <Input className={classes.input}
+              <Input className={classes.input} size='lg'
                 placeholder={i18n('usernamePlaceholder')}
-                size='lg' />
+                onChange={this.handleUserNameChange}
+              />
             </td>
           </tr>
           <tr>
             <td className={classes.name}>{i18n('password')}</td>
             <td>
-              <Input className={classes.input}
-                size='lg' placeholder={i18n('passwordPlaceholder')} />
-              <Button className={`btn-default ${classes.test}`}>
+              <Input className={classes.input} type='password'
+                size='lg' placeholder={i18n('passwordPlaceholder')}
+                onChange={this.handlePasswordChange}
+              />
+              <Button className={`btn-default ${classes.test}`}
+                onClick={this.handleTest}>
                 {i18n('test')}
               </Button>
             </td>
