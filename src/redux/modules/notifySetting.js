@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 import { fromJS } from 'immutable'
 
-import { handleHttpActions } from 'redux-http'
+import { handleHttp } from 'redux/util'
 
 import types from './notifySettingType'
 
@@ -33,12 +33,12 @@ export const actions = {
 }
 
 export default handleActions({
-  [types.getEmail]: handleHttpActions('GET_EMAIL', {
+  [types.getEmail]: handleHttp('GET_EMAIL', {
     success: function (state, { payload }) {
       return state.set('email', fromJS(payload))
     }
   }),
-  [types.saveEmail]: handleHttpActions('SAVE_EMAIL', {
+  [types.saveEmail]: handleHttp('SAVE_EMAIL', {
     success: function (state, { payload }) {
       return state.set('email', fromJS(payload))
     }
