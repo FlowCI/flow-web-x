@@ -41,9 +41,18 @@ export function createReduxFormField (Component) {
   return ReduxFormFieldWrapper
 }
 
-export const ReduxFormAutoComplete = createReduxFormField(AutoCompleteAdapter)
-export const ReduxFormCheckbox = createReduxFormField(CheckboxAdapter)
-export const ReduxFormInput = createReduxFormField(InputAdapter)
-export const ReduxFormRadio = createReduxFormField(RadioAdapter)
-export const ReduxFormRadioGroups = createReduxFormField(RadioGroupsAdapter)
-export const ReduxFormSelect = createReduxFormField(SelectAdapter)
+const ReduxFormAutoComplete = createReduxFormField(AutoCompleteAdapter)
+const ReduxFormCheckbox = createReduxFormField(CheckboxAdapter)
+const ReduxFormInput = createReduxFormField(InputAdapter)
+const ReduxFormRadio = createReduxFormField(RadioAdapter)
+const ReduxFormRadioGroups = createReduxFormField(RadioGroupsAdapter)
+const ReduxFormSelect = createReduxFormField(SelectAdapter)
+
+export {
+  ReduxFormAutoComplete as AutoComplete,
+  ReduxFormCheckbox as Checkbox,
+  ReduxFormInput as Input,
+  ReduxFormRadio as Radio,
+  ReduxFormRadioGroups as RadioGroups,
+  ReduxFormSelect as Select,
+}
