@@ -18,7 +18,7 @@ export default class RadioGroups extends PureComponent {
 
   cloneChild = (child) => {
     return React.cloneElement(child, {
-      onChange: this.handleChange,
+      onSelect: this.handleChange,
       checked: child.props.value === this.props.value,
     })
   }
