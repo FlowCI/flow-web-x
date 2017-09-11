@@ -3,9 +3,9 @@
 @font-face {
   font-family: 'flowci';
   src:
-    url('#{$icomoon-font-path}/flowci.ttf?94c6bb') format('truetype'),
-    url('#{$icomoon-font-path}/flowci.woff?94c6bb') format('woff'),
-    url('#{$icomoon-font-path}/flowci.svg?94c6bb#flowci') format('svg');
+    url('#{$icomoon-font-path}/flowci.ttf?a8k8m0') format('truetype'),
+    url('#{$icomoon-font-path}/flowci.woff?a8k8m0') format('woff'),
+    url('#{$icomoon-font-path}/flowci.svg?a8k8m0#flowci') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +25,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-cross {
+  &:before {
+    content: $icon-cross;
+  }
+}
 .icon-logo {
   &:before {
     content: $icon-logo;
@@ -85,11 +90,6 @@
     content: $icon-off;
   }
 }
-.icon-search2 {
-  &:before {
-    content: $icon-search2;
-  }
-}
 .icon-code {
   &:before {
     content: $icon-code;
@@ -113,6 +113,11 @@
 .icon-circle-check {
   &:before {
     content: $icon-circle-check;
+  }
+}
+.icon-search2 {
+  &:before {
+    content: $icon-search2;
   }
 }
 .icon-search {
