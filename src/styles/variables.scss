@@ -143,6 +143,24 @@ $toggle-on-bgc: #F8BA0B!default;
 $toggle-off-bgc: $color-black!default;
 $toggle-circle-margin: 4px!default;
 
+// Alert
+$alert-border-radius: $border-radius-base!default;
+$alert-padding-vertical: $padding-base-vertical!default;
+$alert-padding-horizontal: 1.5*$padding-base-horizontal!default;
+$alert-box-shadow: 0 3px 6px 0px rgba(0,0,0, 0.1)!default;
+
+$alert-info-color: $color-black!default;
+$alert-info-bgc: #EDEFF1!default;
+
+$alert-success-color: #fff!default;
+$alert-success-bgc: #6CB6AA!default;
+
+$alert-error-color: #fff!default;
+$alert-error-bgc: $color-danger!default;
+
+$alert-warning-color: #fff!default;
+$alert-warning-bgc: #F8BA0B!default;
+
 // Navbar
 $navbar-height: 60px!default;
 $navbar-phone-height: 50px!default;

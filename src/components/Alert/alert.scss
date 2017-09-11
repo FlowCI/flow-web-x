@@ -1,0 +1,36 @@
+@import 'variables';
+
+@mixin alert-color ($color, $bgc) {
+  color: $color;
+  background-color: $bgc;
+}
+
+.alert{
+  position: relative;
+  border-radius: $alert-border-radius;
+  line-height: 20px;
+  padding: $alert-padding-vertical $alert-padding-horizontal;
+  box-shadow: $alert-box-shadow;
+  font-weight: bold;
+}
+.flat{
+  box-shadow: none;
+}
+.close{
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: currentColor;
+}
+.success{
+  @include alert-color($alert-success-color, $alert-success-bgc);
+}
+.info{
+  @include alert-color($alert-info-color, $alert-info-bgc);
+}
+.warning{
+  @include alert-color($alert-warning-color, $alert-warning-bgc);
+}
+.error{
+  @include alert-color($alert-error-color, $alert-error-bgc);
+}
