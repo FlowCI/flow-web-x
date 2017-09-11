@@ -15,6 +15,9 @@
   &:global(.btn-lg) {
     @include button-size($control-lg-size, $font-size-large);
   }
+  &:hover{
+    background: none;
+  }
 }
 .wrapper{
   display: flex;
