@@ -4,10 +4,12 @@ import session from './session'
 import agent from './agent'
 import flow from './flow'
 import ui from './ui'
+import notifySetting from './notifySetting'
 
 export default {
   session,
   agent,
   flow,
   ui,
+  notifySetting,
 }

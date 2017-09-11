@@ -1,0 +1,18 @@
+@import 'variables';
+
+.navs{
+  // same with nav-tabs component
+  line-height: $navtabs-default-height;
+  border-bottom: $navtabs-default-border-width solid $navtabs-default-border;
+  font-weight: $navtabs-default-font-weight;
+
+  // diff
+  margin-bottom: $admin-navtabs-horizontal-padding;
+  font-size: $admin-content-single-navbar-font-size;
+}
+.small{
+  font-size: $admin-content-subtitle-font-size;
+  color: $admin-content-subtitle-color;
+  margin-left: $padding-base-horizontal;
+  font-weight: normal;
+}
