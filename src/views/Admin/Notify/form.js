@@ -1,89 +1,61 @@
 import React, { Component } from 'react'
-import { func } from 'prop-types'
-import { map } from 'react-immutable-proptypes'
+import { object, bool, func } from 'prop-types'
 
-import Input from 'components/Form/Input'
-import RadioGroups from 'components/Form/RadioGroups'
-import Radio from 'components/Form/Radio'
+import { connect } from 'react-redux'
+import { reduxForm, getFormValues } from 'redux-form'
+
+import {
+  Input,
+  RadioGroups,
+  Radio,
+} from 'components/Form/reduxForm'
 import Button from 'components/Button'
 
 import classes from './form.scss'
 
-export default class EmailSettingForm extends Component {
+function validate (values) {
+  const error = {}
+  const { smtpUrl, smtpPort } = values
+  // 暂时先只校验非空
+  if (!smtpUrl) {
+    error.smtpUrl = 'required'
+  }
+  if (!smtpPort) {
+    error.smtpPort = 'required'
+  }
+  return error
+}
+
+export const formName = 'emailSetting'
+function mapStateToProps (state, props) {
+  return {
+    values: getFormValues(formName)(state)
+  }
+}
+export class EmailSettingForm extends Component {
   static propTypes = {
-    initValues: map,
+    values: object.isRequired,
+    valid: bool,
     i18n: func.isRequired,
-    onSubmit: func.isRequired,
+    handleSubmit: func.isRequired,
     onTest: func.isRequired,
   }
 
-  state = {}
-
-  componentWillMount () {
-    const { initValues } = this.props
-    this.state = {
-      values: initValues ? initValues.toJSON() : {}
-    }
-  }
-
-  validate (values) {
-    const { smtpUrl, smtpPort } = values
-    // 暂时先只校验非空
-    return !!(smtpUrl && smtpPort)
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
-    const { values } = this.state
-    const { onSubmit } = this.props
-    if (this.validate(values)) {
-      return onSubmit(values)
-    }
-  }
-
   handleTest = () => {
-    const { onTest } = this.props
-    const { values } = this.state
-    if (this.validate(values)) {
-      return onTest(values)
-    }
-  }
-
-  handleSmtpUrlChange = (v) => {
-    const { values } = this.state
-    this.setState({ values: { ...values, smtpUrl: v } })
-  }
-
-  handleSmtpPortChange = (v) => {
-    const { values } = this.state
-    this.setState({ values: { ...values, smtpPort: v } })
-  }
-
-  handleSenderChange = (v) => {
-    const { values } = this.state
-    this.setState({ values: { ...values, sender: v } })
-  }
-
-  handleUserNameChange = (v) => {
-    const { values } = this.state
-    this.setState({ values: { ...values, username: v } })
-  }
-
-  handlePasswordChange = (v) => {
-    const { values } = this.state
-    this.setState({ values: { ...values, passowrd: v } })
+    const { onTest, values } = this.props
+    return onTest && onTest(values)
   }
 
   render () {
-    const { i18n } = this.props
-    return <form onSubmit={this.handleSubmit} className={classes.form}>
+    const { i18n, valid, handleSubmit } = this.props
+    return <form onSubmit={handleSubmit} className={classes.form}>
       <table>
         <tbody>
           <tr>
             <td className={classes.name}>{i18n('smtpUrl')}</td>
             <td>
               <Input className={classes.input} size='lg' required
-                placeholder={i18n('smtpUrlPlaceholder')}
+                name='smtpUrl' placeholder={i18n('smtpUrlPlaceholder')}
                 onChange={this.handleSmtpUrlChange}
               />
             </td>
@@ -92,7 +64,7 @@ export default class EmailSettingForm extends Component {
             <td className={classes.name}>{i18n('smtpPort')}</td>
             <td>
               <Input className={classes.port} size='lg' required
-                placeholder={i18n('smtpPortPlaceholder')}
+                name='smtpPort' placeholder={i18n('smtpPortPlaceholder')}
                 onChange={this.handleSmtpPortChange}
               />
             </td>
@@ -101,7 +73,7 @@ export default class EmailSettingForm extends Component {
             <td className={classes.name}>{i18n('sender')}</td>
             <td>
               <Input className={classes.input} size='lg' type='email'
-                placeholder={i18n('senderPlaceholder')}
+                name='sender' placeholder={i18n('senderPlaceholder')}
                 onChange={this.handleSenderChange}
               />
             </td>
@@ -109,7 +81,7 @@ export default class EmailSettingForm extends Component {
           <tr>
             <td className={classes.name}>SMTP 用户身份验证</td>
             <td>
-              <RadioGroups>
+              <RadioGroups name='isAuthored'>
                 <Radio rightLabel='开启' value='1' />
                 <Radio rightLabel='关闭' value='0' />
               </RadioGroups>
@@ -121,7 +93,7 @@ export default class EmailSettingForm extends Component {
             </td>
             <td>
               <Input className={classes.input} size='lg'
-                placeholder={i18n('usernamePlaceholder')}
+                name='username' placeholder={i18n('usernamePlaceholder')}
                 onChange={this.handleUserNameChange}
               />
             </td>
@@ -130,11 +102,12 @@ export default class EmailSettingForm extends Component {
             <td className={classes.name}>{i18n('password')}</td>
             <td>
               <Input className={classes.input} type='password'
-                size='lg' placeholder={i18n('passwordPlaceholder')}
+                size='lg' name='password'
+                placeholder={i18n('passwordPlaceholder')}
                 onChange={this.handlePasswordChange}
               />
               <Button className={`btn-default ${classes.test}`}
-                onClick={this.handleTest}>
+                disabled={!valid} onClick={this.handleTest}>
                 {i18n('test')}
               </Button>
             </td>
@@ -142,7 +115,8 @@ export default class EmailSettingForm extends Component {
           <tr>
             <td className={classes.name}>&nbsp;</td>
             <td>
-              <Button className={`btn-primary ${classes.save}`} size='lg' type='submit'>
+              <Button className={`btn-primary ${classes.save}`}
+                size='lg' type='submit' disabled={!valid}>
                 {i18n('save')}
               </Button>
             </td>
@@ -152,3 +126,8 @@ export default class EmailSettingForm extends Component {
     </form>
   }
 }
+
+export default reduxForm({
+  validate,
+  form: formName
+})(connect(mapStateToProps)(EmailSettingForm))

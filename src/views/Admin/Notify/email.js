@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { bool, func } from 'prop-types'
-import { map } from 'react-immutable-proptypes'
-
-import { Map } from 'immutable'
+import { record } from 'react-immutable-proptypes'
 
 import createI18n from './i18n'
 import language from 'util/language'
@@ -20,8 +18,8 @@ import Form from './form'
 function mapStateToProps (state, props) {
   const { notifySetting } = state
   return {
-    loading: false && notifySetting.getIn(['ui', 'GET_EMAIL']) !== STATUS.success,
-    setting: notifySetting.get('email', new Map())
+    loading: notifySetting.getIn(['ui', 'GET_EMAIL']) !== STATUS.success,
+    setting: notifySetting.get('email')
   }
 }
 
@@ -36,7 +34,7 @@ function mapDispatchToProps (dispatch) {
 export class AdminNotifyEmail extends Component {
   static propTypes = {
     loading: bool,
-    setting: map.isRequired,
+    setting: record,
 
     get: func.isRequired,
     test: func.isRequired,
@@ -58,7 +56,7 @@ export class AdminNotifyEmail extends Component {
     return <div>
       <Title title={i18n('title')} subTitle={i18n('subTitle')} />
       {loading ? <Loading />
-        : <Form initValues={setting} i18n={i18n}
+        : <Form initialValues={setting.toJSON()} i18n={i18n}
           onSubmit={save} onTest={test} />
       }
     </div>

@@ -1,9 +1,17 @@
 import { handleActions } from 'redux-actions'
-import { fromJS } from 'immutable'
+import { fromJS, Record } from 'immutable'
 
 import { handleHttp } from 'redux/util'
 
 import types from './notifySettingType'
+
+const EmailSettingRecord = Record({
+  'smtpUrl': '',
+  'smtpPort': '',
+  'username': '',
+  'password': '',
+  'sender': '',
+})
 
 const initialState = fromJS({ ui: {} })
 
@@ -35,12 +43,12 @@ export const actions = {
 export default handleActions({
   [types.getEmail]: handleHttp('GET_EMAIL', {
     success: function (state, { payload }) {
-      return state.set('email', fromJS(payload))
+      return state.set('email', new EmailSettingRecord(payload || {}))
     }
   }),
   [types.saveEmail]: handleHttp('SAVE_EMAIL', {
     success: function (state, { payload }) {
-      return state.set('email', fromJS(payload))
+      return state.set('email', new EmailSettingRecord(payload || {}))
     }
   })
 }, initialState)
