@@ -7,35 +7,14 @@ const job = {
   'finishedAt': 1502266861,
   'createdAt': 1502266861,
   'updatedAt': 1502266878,
-  'outputs': {
-    'FLOW_GIT_COMMIT_ID': {
-      desc: '提交的Id',
-      value: 'beccde0305127640974dc96ffdfc490febe0e7bf',
-    },
-    'FLOW_WORKSPACE': {
-      desc: '',
-      value: '~/flow-platform/test/id/1/1/3',
-    },
-    'FLOW_GIT_CHANGELOG': {
-      desc: '描述的信息',
-      value: 'Merge branch \'hotfix/artifact\'',
-    },
-    'FLOW_VERSION': {
-      desc: '',
-      value: '1.0.0',
-    },
-    'FLOW_GIT_COMPARE_ID': {
-      desc: '变更对比',
-      value: 'a16b3512e93d...beccde030512',
-    },
-    'FLOW_GIT_BRANCH': {
-      desc: '分支',
-      value: 'master',
-    },
-    'FLOW_GIT_COMMITER':{
-      desc: '提交者',
-      value: 'WILL',
-    }
+  'envs': {
+    'FLOW_GIT_COMMIT_ID': 'beccde0305127640974dc96ffdfc490febe0e7bf',
+    'FLOW_WORKSPACE': '~/flow-platform/test/id/1/1/3',
+    'FLOW_GIT_CHANGELOG': 'Merge branch \'hotfix/artifact\'',
+    'FLOW_VERSION': '1.0.0',
+    'FLOW_GIT_COMPARE_ID': 'a16b3512e93d...beccde030512',
+    'FLOW_GIT_BRANCH': 'master',
+    'FLOW_GIT_COMMITER': 'WILL',
   }
 }
 
@@ -47,15 +26,42 @@ function cloneAndRepeat (obj, size) {
   return array
 }
 
+function getJobWithChildrenResult () {
+  return {
+    ...job,
+    childrenResult: [{
+      duration: 0,
+      status: 'PENDING',
+      cmdId: 'xxx',
+      outputs: {
+        FLOW_ENV_OUT_1: 'xx'
+      },
+      order: 0
+    }, {
+      duration: 0,
+      status: 'PENDING',
+      cmdId: 'xxx2',
+      outputs: {
+        FLOW_ENV_OUT_1: 'xx'
+      },
+      order: 1
+    }]
+  }
+}
+
 export default {
   [types.query]: function ({ params: { flowName } }) {
-    const j = { ...job, nodeName: flowName }
+    const j = { ...job, nodeName: flowName, nodePath: flowName }
     return cloneAndRepeat(j, 10)
   },
-  [types.get]: function ({ params: { flowId, jobId } }) {
-    return { ...job, nodeName: flowId, number: jobId }
+  [types.get]: function ({ params: { flowName, jobId } }) {
+    const j = getJobWithChildrenResult()
+    return { ...j, nodeName: flowName, nodePath: flowName, number: jobId }
   },
   [types.queryLastest]: function ({ data: flowNames }) {
-    return flowNames.map((name) => Object.assign({}, job, { nodeName: name }))
+    return flowNames.map((name) => Object.assign({}, job, {
+      nodeName: name,
+      nodePath: name
+    }))
   },
 }
