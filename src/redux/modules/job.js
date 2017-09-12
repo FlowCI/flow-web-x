@@ -9,13 +9,17 @@ import FlowTypes from './flowType'
 
 const initialState = defaultInitState
 
+export function generatorJobId (flowId, jobNumber) {
+  return `${flowId}-${jobNumber}`
+}
+
 function transformResponse (data) {
   if (is.array(data)) {
     data.forEach((d) => {
-      d.id = `${d.number}`
+      d.id = generatorJobId(d.nodePath, d.number)
     })
   } else if (is.object(data) && data.number > -1) {
-    data.id = `${data.number}`
+    data.id = generatorJobId(data.nodePath, data.number)
   }
   return data
 }
@@ -33,7 +37,7 @@ function queryAfterLastest (flowId, filter, lastestId) {
 
 function query (flowId, filter) {
   return {
-    url: '/jobs',
+    url: '/jobs/:flowName',
     name: Types.query,
     params: {
       flowName: flowId,
@@ -56,16 +60,16 @@ export const actions = {
       transformResponse,
     }
   },
-  get: function (flowId, jobId) {
+  get: function (flowId, jobNumber) {
     return {
       name: Types.get,
-      url: 'jobs/:flowName/:jobId',
+      url: 'jobs/:flowName/:jobNumber',
       params: {
         flowName: flowId,
-        jobId: jobId,
+        jobNumber: jobNumber,
       },
       indicator: {
-        id: jobId,
+        id: generatorJobId(flowId, jobNumber),
       },
       transformResponse,
     }

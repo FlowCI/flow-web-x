@@ -36,7 +36,7 @@ function mapStateToProps (state, props) {
     jobIds: job.get('list'),
 
     filter: job.getIn(['ui', 'filter']),
-    loading: status === STATUS.send,
+    loading: status !== STATUS.success,
   }
 }
 
@@ -72,7 +72,6 @@ export class JobsView extends Component {
   }
 
   static defaultProps = {
-    loading: true,
     filter: {},
     i18n: createI18n(language),
   }
@@ -92,11 +91,11 @@ export class JobsView extends Component {
     this.queryWithFilter(this.props)
   }
 
-  handleClick = (id, job) => {
+  handleClick = (job) => {
     const { redirect, location, params } = this.props
     redirect({
       ...location,
-      pathname: `/flows/${params.flowId}/jobs/${id}`
+      pathname: `/flows/${params.flowId}/jobs/${job.get('number')}`
     })
   }
 

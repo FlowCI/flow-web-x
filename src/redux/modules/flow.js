@@ -13,6 +13,10 @@ import JobTypes from './jobType'
 
 const initialState = defaultInitState.set('status', new Map())
 
+/**
+ * 后端以 name 为 flow 的唯一标识，为统一将 name 值转至 id 字段
+ * @param {object or array} data
+ */
 const transformResponse = function (data) {
   if (is.array(data)) {
     data.forEach((d) => {
