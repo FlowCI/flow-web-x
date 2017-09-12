@@ -6,10 +6,10 @@ import { connect } from 'react-redux'
 
 import classes from './header.scss'
 
-function mapStateToProps (state, { id }) {
+function mapStateToProps (state, { jobId }) {
   const { job } = state
   return {
-    job: job.getIn(['data', id])
+    job: job.getIn(['data', jobId])
   }
 }
 
