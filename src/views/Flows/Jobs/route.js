@@ -9,7 +9,7 @@ export default function (store) {
     component: Component,
     childRoutes: [{
       ...JobRoute(store),
-      path: ':jobId'
+      path: ':jobNumber'
     }]
   }
 }

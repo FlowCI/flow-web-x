@@ -20,7 +20,6 @@ function mapStateToProps (state, { id }) {
 
 export class JobItem extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     job: ImmutablePropTypes.map.isRequired,
 
     onClick: PropTypes.func.isRequired,
@@ -28,8 +27,8 @@ export class JobItem extends Component {
   }
 
   handleClick = () => {
-    const { onClick, id, job } = this.props
-    onClick(id, job)
+    const { onClick, job } = this.props
+    onClick(job)
   }
 
   renderItem (name, value) {
@@ -41,7 +40,7 @@ export class JobItem extends Component {
 
   render () {
     const { job, i18n } = this.props
-    const outputs = job.get('outputs', new Map())
+    const envs = job.get('envs', new Map())
     const startedAt = job.get('startedAt')
 
     return <div className={classes.job} onClick={this.handleClick}>
@@ -52,19 +51,19 @@ export class JobItem extends Component {
       <div className={classes.info}>
         <h4>
           #{job.get('number')}&nbsp;&nbsp;
-          {outputs.getIn(['FLOW_GIT_BRANCH', 'value'])}
+          {envs.get('FLOW_GIT_BRANCH')}
         </h4>
         <small>
-          {outputs.getIn(['FLOW_GIT_CHANGELOG', 'value'])}
+          {envs.get('FLOW_GIT_CHANGELOG')}
         </small>
       </div>
       <div className={classes.detail}>
         <div className={classes.itemRow}>
           {this.renderItem(i18n('Commit'),
-            outputs.getIn(['FLOW_GIT_COMMIT_ID', 'value'], '-'))}
+            envs.get('FLOW_GIT_COMMIT_ID', '-'))}
 
           {this.renderItem(i18n('Compare'),
-            outputs.getIn(['FLOW_GIT_COMPARE_ID', 'value'], '-'))}
+            envs.get('FLOW_GIT_COMPARE_ID', '-'))}
         </div>
         <div className={classes.itemRow}>
           {this.renderItem(i18n('Builded'),
