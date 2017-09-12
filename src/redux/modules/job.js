@@ -33,7 +33,7 @@ function queryAfterLastest (flowId, filter, lastestId) {
 
 function query (flowId, filter) {
   return {
-    url: '/jobs',
+    url: '/jobs/:flowName',
     name: Types.query,
     params: {
       flowName: flowId,
