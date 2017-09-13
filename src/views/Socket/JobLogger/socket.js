@@ -2,16 +2,15 @@ import { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import SockJS from 'sockjs-client'
-import Stomp from 'stompjs'
+import { Stomp } from 'stompjs/lib/stomp'
 
+const url = `${__API__}/ws/web`
 export default class JobLoggerSocket extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    url: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
-    url: `${__API__}/ws/web`
   }
 
   static childContextTypes = {
@@ -25,7 +24,6 @@ export default class JobLoggerSocket extends Component {
   }
 
   componentDidMount () {
-    const { url } = this.props
     const socket = new SockJS(url)
     this.socket = socket
     this.stompClient = Stomp.over(socket)

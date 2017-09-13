@@ -51,6 +51,9 @@ export class JobLoggerSubscriber extends Component {
     const { jobLoggerClient: client } = this.context
     const { node, dispatchMessage } = this.props
     const { cmdId } = node
+    if (!client) {
+      console.error('con\'t find socket in context, it must in <Socket>')
+    }
     this.subscription = client.subscribe(`${basePath}/${cmdId}`, function (data) {
       dispatchMessage(node, data.body)
     })
