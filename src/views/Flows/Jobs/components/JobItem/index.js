@@ -10,11 +10,11 @@ import moment from 'moment'
 
 import classes from './jobItem.scss'
 
-function mapStateToProps (state, { id }) {
+function mapStateToProps (state, { jobId }) {
   const { job } = state
 
   return {
-    job: job.getIn(['data', id])
+    job: job.getIn(['data', jobId])
   }
 }
 

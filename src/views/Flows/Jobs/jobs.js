@@ -118,7 +118,7 @@ export class JobsView extends Component {
     if (jobIds.size) {
       return <div className={classes.jobs}>
         <hr />
-        {jobIds.map((id) => <JobItem id={id} key={id}
+        {jobIds.map((id) => <JobItem jobId={id} key={id}
           i18n={i18n} onClick={this.handleClick} />)}
       </div>
     }
