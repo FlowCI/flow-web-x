@@ -136,7 +136,7 @@ export class JobsView extends Component {
       {this.renderFlowHeader()}
       <div className={classes.actions}>
         <button className='btn btn-primary'>{i18n('运行工作流')}</button>
-        <Filter id={flowId} i18n={i18n} />
+        <Filter flowId={flowId} i18n={i18n} />
       </div>
       {this.renderJobs()}
       {loading && this.renderLoading()}
