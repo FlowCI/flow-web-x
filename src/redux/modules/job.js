@@ -102,7 +102,10 @@ export default handleActions({
     success: handlers.saveAll,
   }),
   [Types.get]: handleHttp('GET', {
-    success: handlers.saveData,
+    success: function (state, { payload }) {
+      const job = { ...payload, childrenResult: undefined }
+      return handlers.saveData(state, { payload: job })
+    },
   }),
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
