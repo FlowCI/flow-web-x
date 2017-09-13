@@ -11,13 +11,26 @@ import { defaultInitState, createHandlers } from 'redux/handler'
 import types from './jobType'
 
 /**
- * type: { [jobId]: { ids: [], data: {} } }
+ * type: { [jobId]: { ids: [], data: {}, log: { [nodeId]: 'string' } } }
  */
 const initState = new Map()
 const handlers = createHandlers({ id: 'order' })
 
 function createState () {
-  return defaultInitState
+  return defaultInitState.set('log', new Map())
+}
+
+export const acionts = {
+  getLog: function (flowName, jobNumber, nodeOrder) {
+    return {
+      type: 'GET_JOBNODE_LOG',
+      params: {
+        flowName,
+        jobNumber,
+        nodeOrder,
+      }
+    }
+  }
 }
 
 export default handleActions({
