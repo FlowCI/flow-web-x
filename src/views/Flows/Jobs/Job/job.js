@@ -39,6 +39,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     get: actions.get,
+    freedResource: actions.freedResource,
     setBackUrl: uiActions.setBackUrl,
     freedBackUrl: uiActions.freedBackUrl
   }, dispatch)
@@ -56,6 +57,7 @@ export class JobContainer extends Component {
     children: PropTypes.node,
 
     get: PropTypes.func.isRequired,
+    freedResource: PropTypes.func.isRequired,
     setBackUrl: PropTypes.func.isRequired,
     freedBackUrl: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired
@@ -83,8 +85,9 @@ export class JobContainer extends Component {
   }
 
   componentWillUnmount () {
-    const { freedBackUrl } = this.props
+    const { freedBackUrl, freedResource, jobId } = this.props
     freedBackUrl()
+    freedResource(jobId)
   }
 
   renderLoading () {

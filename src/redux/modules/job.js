@@ -74,13 +74,13 @@ export const actions = {
       transformResponse,
     }
   },
-  stop: function (flowId, jobId) {
+  stop: function (flowId, jobNumber) {
     return {
       url: '/jobs/:flowName/:number/stop',
       method: 'post',
       params: {
         flowName: flowId,
-        number: jobId,
+        number: jobNumber,
       }
     }
   },
@@ -93,6 +93,12 @@ export const actions = {
   freedFilter: function () {
     return {
       type: Types.freedFilter,
+    }
+  },
+  freedResource: function (jobId) {
+    return {
+      type: Types.freedResource,
+      id: jobId,
     }
   }
 }
