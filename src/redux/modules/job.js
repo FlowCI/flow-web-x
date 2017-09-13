@@ -20,6 +20,11 @@ function transformResponse (data) {
     })
   } else if (is.object(data) && data.number > -1) {
     data.id = generatorJobId(data.nodePath, data.number)
+    if (data.childrenResult) {
+      data.childrenResult.forEach((node) => {
+        node.jobId = data.id
+      })
+    }
   }
   return data
 }

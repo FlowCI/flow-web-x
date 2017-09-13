@@ -23,8 +23,7 @@ function createState () {
 export default handleActions({
   [types.get]: handleHttpActions({
     success: function (state, { payload }) {
-      const jobId = payload.id
-      const nodes = payload.childrenResult
+      const { id: jobId, childrenResult: nodes } = payload
       return state.update(jobId, (s) =>
         handlers.saveAll(createState(), { payload: nodes })
       )
