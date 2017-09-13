@@ -43,7 +43,7 @@ export class JobNode extends Component {
     const { expended } = this.state
     return <Subscribe node={node}>
       <div>
-        <Header active={expended} name={node.get('name')}
+        <Header expended={expended} name={node.get('name')}
           status={node.get('status')} onClick={this.toggle}
         />
         {expended && <Content />}
