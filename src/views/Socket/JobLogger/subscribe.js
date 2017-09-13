@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import PropTypes from 'prop-types'
+import { contains } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -29,8 +30,10 @@ export class JobLoggerSubscriber extends Component {
     /**
      * job node module
      */
-    node: PropTypes.shape({
-      cmdId: PropTypes.string.isRequired
+    node: contains({
+      cmdId: PropTypes.string.isRequired,
+      jobId: PropTypes.string.isRequired,
+      order: PropTypes.number.isRequired,
     }).isRequired,
 
     children: PropTypes.node.isRequired,
@@ -41,20 +44,17 @@ export class JobLoggerSubscriber extends Component {
   }
 
   static contextTypes = {
-    jobLoggerClient: PropTypes.object,
+    subscribe: PropTypes.func.isRequired,
   }
 
   /**
    * 暂时先 didmount 时发起订阅，等之后加上状态推送后改为根据状态来订阅
    */
   componentDidMount () {
-    const { jobLoggerClient: client } = this.context
+    const { subscribe } = this.context
     const { node, dispatchMessage } = this.props
-    const { cmdId } = node
-    if (!client) {
-      console.error('con\'t find socket in context, it must in <Socket>')
-    }
-    this.subscription = client.subscribe(`${basePath}/${cmdId}`, function (data) {
+    const cmdId = node.get('cmdId')
+    this.subscription = subscribe(`${basePath}/${cmdId}`, function (data) {
       dispatchMessage(node, data.body)
     })
   }
@@ -69,4 +69,4 @@ export class JobLoggerSubscriber extends Component {
   }
 }
 
-connect(undefined, mapDispatchToProps)(JobLoggerSubscriber)
+export default connect(undefined, mapDispatchToProps)(JobLoggerSubscriber)
