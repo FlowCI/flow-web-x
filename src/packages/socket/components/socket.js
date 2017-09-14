@@ -20,6 +20,14 @@ export default class Socket extends Component {
     }
   }
 
+  componentDidMount () {
+    /**
+     * 考虑到如果未有订阅情况下不会主动开启连接，所以在 didmount 时调用保证
+     * didmount 时一定建立连接
+     */
+    this.getSocket()
+  }
+
   componentWillUnmount () {
     if (this.socket) {
       this.socket.disconnect()
