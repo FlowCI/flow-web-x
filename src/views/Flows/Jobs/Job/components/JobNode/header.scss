@@ -1,0 +1,45 @@
+@import 'variables';
+@mixin header-color ($color) {
+  .icon{
+    color: $color;
+  }
+  &.expended, &:hover{
+    background-color: $color;
+    color: #fff;
+    .icon{
+      color: #fff;
+    }
+  }
+
+}
+
+.header{
+  line-height: 50px;
+  color: $color-black;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  cursor: pointer;
+  // border-bottom: 1px solid $color-hr;
+}
+.icon{
+  margin-right: 10px;
+  color: $color-success;
+}
+.SUCCESS{
+  @include header-color($color-success);
+}
+.RUNNING{
+  @include header-color($color-primary);
+}
+.STOPPED{
+  @include header-color($color-muted);
+}
+.FAILURE{
+  @include header-color($color-danger);
+}
+.TIMEOUT{
+  @include header-color($color-danger);
+}

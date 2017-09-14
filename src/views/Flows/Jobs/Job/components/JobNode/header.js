@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import Arrow from 'components/Arrow'
+
 import classes from './header.scss'
 
 export default class JobNodeHeader extends Component {
@@ -15,9 +17,10 @@ export default class JobNodeHeader extends Component {
     const { expended, status, name, onClick } = this.props
     const cls = [classes.header]
     expended && cls.push(classes.expended)
-    status && cls.push(classes.status)
-    return <div className={cls.join(' ')} onClick={onClick}>
-      {name}
-    </div>
+    status && cls.push(classes[status])
+    return <h5 className={cls.join(' ')} onClick={onClick}>
+      <span><i className={`icon icon-check ${classes.icon}`} />{name}</span>
+      <Arrow up={expended} />
+    </h5>
   }
 }
