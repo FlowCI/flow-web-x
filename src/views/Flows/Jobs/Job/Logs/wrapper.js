@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { Socket } from 'views/Socket/JobLogger'
+import { JobSocket } from '../Socket'
 import Logs from './logs'
 
 export default function JobLogWrapper (props) {
-  return <Socket>
+  return <JobSocket>
     <Logs {...props} />
-  </Socket>
+  </JobSocket>
 }

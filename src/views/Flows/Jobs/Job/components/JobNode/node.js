@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import { STATUS } from 'redux-http'
 
-import { Subscribe } from 'views/Socket/JobLogger'
+import { JobLogSubscriber } from '../../Socket'
 import Header from './header'
 import Content from './content'
 
@@ -48,7 +48,7 @@ export class JobNode extends Component {
   render () {
     const { node, fetching, log } = this.props
     const { expended } = this.state
-    return <Subscribe node={node}>
+    return <JobLogSubscriber node={node}>
       <div>
         <Header expended={expended} name={node.get('name')}
           status={node.get('status')} onClick={this.toggle}
@@ -57,7 +57,7 @@ export class JobNode extends Component {
           fetching={fetching} />}
         <hr />
       </div>
-    </Subscribe>
+    </JobLogSubscriber>
   }
 }
 
