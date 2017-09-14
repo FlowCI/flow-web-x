@@ -100,7 +100,7 @@ export class TestButton extends Component {
   renderLoading () {
     const { i18n } = this.props
     return <span className={classes.text}>
-      <i className={`icon icon-sync ${classes.loading}`} />
+      <i className={`icon icon-running ${classes.loading}`} />
       {i18n('正在测试')}
     </span>
   }

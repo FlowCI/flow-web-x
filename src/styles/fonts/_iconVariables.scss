@@ -1,5 +1,9 @@
 $icomoon-font-path: "static/fonts" !default;
 
+$icon-timeout: "\e91a";
+$icon-stopped: "\e93a";
+$icon-failure: "\e947";
+$icon-running: "\e949";
 $icon-cross: "\ea0f";
 $icon-logo: "\e907";
 $icon-bookmark: "\e916";
@@ -7,7 +11,6 @@ $icon-jigsaw: "\e917";
 $icon-notification: "\e918";
 $icon-users: "\e919";
 $icon-question-thin: "\e914";
-$icon-sync: "\e915";
 $icon-plus-sm: "\e913";
 $icon-equalizer: "\e90d";
 $icon-git-branch: "\e90e";
@@ -37,3 +40,4 @@ $icon-logout: "\e908";
 $icon-question: "\e909";
 $icon-settings: "\e90a";
 $icon-warning: "\e90b";
+
