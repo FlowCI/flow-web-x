@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { string, func } from 'prop-types'
+import { string, func, bool } from 'prop-types'
 import { contains } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
+
+import { STATUS } from 'redux-http'
 
 import { Subscribe } from 'views/Socket/JobLogger'
 import Header from './header'
@@ -11,8 +13,11 @@ import Content from './content'
 function mapStateToProps (state, props) {
   const { node } = state
   const { jobId, nodeId } = props
+  const nodeState = node.get(jobId)
   return {
-    node: node.getIn([jobId, 'data', `${nodeId}`])
+    node: nodeState.getIn(['data', nodeId]),
+    log: nodeState.getIn(['log', nodeId]),
+    fetching: nodeState.getIn(['ui', 'GET_LOG']) !== STATUS.success,
   }
 }
 
@@ -22,6 +27,8 @@ export class JobNode extends Component {
       status: string.isRequired,
       name: string.isRequired,
     }).isRequired,
+    log: string,
+    fetching: bool,
     onExpended: func,
   }
 
@@ -33,20 +40,22 @@ export class JobNode extends Component {
     const { onExpended } = this.props
     const { expended } = this.state
     if (!expended) {
-      onExpended()
+      onExpended && onExpended()
     }
     this.setState({ expended: !expended })
   }
 
   render () {
-    const { node } = this.props
+    const { node, fetching, log } = this.props
     const { expended } = this.state
     return <Subscribe node={node}>
       <div>
         <Header expended={expended} name={node.get('name')}
           status={node.get('status')} onClick={this.toggle}
         />
-        {expended && <Content />}
+        {expended && <Content onClose={this.toggle} log={log}
+          fetching={fetching} />}
+        <hr />
       </div>
     </Subscribe>
   }
