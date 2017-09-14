@@ -21,6 +21,12 @@ $height: 50px;
   &:global(.ERROR) {
     @include header-color($color-danger);
   }
+  &:global(.STOPPED){
+    @include header-color($color-muted);
+  }
+  &:global(.CREATED), &:global(.SESSION_CREATING) {
+    color: $color-muted;
+  }
 }
 .icon{
   flex: 0 0 120px;
