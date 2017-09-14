@@ -23,6 +23,7 @@ function transformResponse (data) {
     if (data.childrenResult) {
       data.childrenResult.forEach((node) => {
         node.jobId = data.id
+        node.id = `${node.order}`
       })
     }
   }
