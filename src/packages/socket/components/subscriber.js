@@ -5,6 +5,9 @@ export default class Subscriber extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     chanel: PropTypes.string.isRequired,
+    /**
+     * @param {object} data { body: string }
+     */
     onMessage: PropTypes.func.isRequired,
   }
 
