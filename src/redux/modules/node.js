@@ -52,6 +52,12 @@ export default handleActions({
       )
     },
   }),
+  [jobTypes.socketRecived]: function (state, { payload }) {
+    const { id: jobId, childrenResult: nodes } = payload
+    return state.update(jobId, (s) =>
+      handlers.saveAll(createState(), { payload: nodes })
+    )
+  },
   [jobTypes.freedResource]: function (state, { id }) {
     return state.delete(id)
   },

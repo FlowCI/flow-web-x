@@ -106,6 +106,12 @@ export const actions = {
       type: Types.freedResource,
       id: jobId,
     }
+  },
+  storeJob: function (job) {
+    return {
+      type: Types.socketRecived,
+      payload: transformResponse(job),
+    }
   }
 }
 
@@ -119,6 +125,10 @@ export default handleActions({
       return handlers.saveData(state, { payload: job })
     },
   }),
+  [Types.socketRecived]: function (state, { payload }) {
+    const job = { ...payload, childrenResult: undefined }
+    return handlers.saveData(state, { payload: job })
+  },
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
   },
