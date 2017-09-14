@@ -6,7 +6,7 @@ import { handleActions } from 'redux-actions'
 import { handleHttpActions } from 'redux-http'
 import { Map } from 'immutable'
 
-import { defaultInitState, createHandlers } from 'redux/handler'
+import { defaultInitState, handlers } from 'redux/handler'
 
 import types from './jobType'
 
@@ -14,7 +14,6 @@ import types from './jobType'
  * type: { [jobId]: { ids: [], data: {}, log: { [nodeId]: 'string' } } }
  */
 const initState = new Map()
-const handlers = createHandlers({ id: 'order' })
 
 function createState () {
   return defaultInitState.set('log', new Map())
