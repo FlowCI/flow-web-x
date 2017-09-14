@@ -8,7 +8,8 @@ import { Map } from 'immutable'
 
 import { defaultInitState, handlers } from 'redux/handler'
 
-import types from './jobType'
+import jobTypes from './jobType'
+import types from './nodeType'
 
 /**
  * type: { [jobId]: { ids: [], data: {}, log: { [nodeId]: 'string' } } }
@@ -19,7 +20,7 @@ function createState () {
   return defaultInitState.set('log', new Map())
 }
 
-export const acionts = {
+export const actions = {
   getLog: function (flowName, jobNumber, nodeOrder) {
     return {
       type: 'GET_JOBNODE_LOG',
@@ -29,11 +30,21 @@ export const acionts = {
         nodeOrder,
       }
     }
+  },
+  storeLog: function (node /** Map */, log) {
+    return {
+      type: types.storeLog,
+      payload: {
+        jobId: node.get('jobId'),
+        id: node.get('id'),
+        log,
+      }
+    }
   }
 }
 
 export default handleActions({
-  [types.get]: handleHttpActions({
+  [jobTypes.get]: handleHttpActions({
     success: function (state, { payload }) {
       const { id: jobId, childrenResult: nodes } = payload
       return state.update(jobId, (s) =>
@@ -41,7 +52,13 @@ export default handleActions({
       )
     },
   }),
-  [types.freedResource]: function (state, { id }) {
+  [jobTypes.freedResource]: function (state, { id }) {
     return state.delete(id)
+  },
+  [types.storeLog]: function (state, { payload }) {
+    const { jobId, id, log } = payload
+    return state.updateIn([jobId, 'log', id], (old) => {
+      return log + (old || '')
+    })
   }
 }, initState)

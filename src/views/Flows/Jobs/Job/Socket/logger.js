@@ -4,25 +4,16 @@ import { contains } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+import { actions } from 'redux/modules/node'
+
 import { Subscriber } from 'packages/socket'
 
 const baseChanel = '/topic/cmd'
 
-/**
- *
- * @param {object} node job node module
- * @param {string} message 日志内容
- */
-function log (node, message) {
-  console.log(node.get('id'), message)
-  return {
-    type: 'onmessage'
-  }
-}
-
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    onMessage: log,
+    onMessage: actions.storeLog,
   }, dispatch)
 }
 
