@@ -2,6 +2,10 @@
 
 $height: 50px;
 
+@mixin header-color ($color) {
+  background-color: $color;
+}
+
 .header{
   display: flex;
   align-items: center;
@@ -10,8 +14,12 @@ $height: 50px;
   border-radius: $border-radius-base;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
   margin-bottom: 2*$padding-base-horizontal;
+  @include header-color($color-primary); // default color
   &:global(.SUCCESS) {
-    background-color: $color-success;
+    @include header-color($color-success);
+  }
+  &:global(.ERROR) {
+    @include header-color($color-danger);
   }
 }
 .icon{
