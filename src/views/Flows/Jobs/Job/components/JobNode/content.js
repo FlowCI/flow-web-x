@@ -6,10 +6,11 @@ import Loading from 'components/Loading'
 
 import classes from './node.scss'
 export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
+  const show = !!log || !fetching
   return <code className={classes.code}>
-    {fetching && <Loading size={20} />}
-    {!fetching && (log || emptyText)}
-    {!fetching && !!log && <Button className={`btn-primary ${classes.close}`}
+    {!show && <Loading size={20} />}
+    {show && (log || emptyText)}
+    {show && !!log && <Button className={`btn-primary ${classes.close}`}
       size='sm' useSpinner={false} onClick={onClose}
     >
       Close
