@@ -38,6 +38,7 @@ export default class JobLoggerSocket extends Component {
       this.connected = true
       this.refreshSubscribe()
     })
+    this.stompClient.debug = function () {}
   }
 
   componentWillUnmount () {
