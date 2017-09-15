@@ -19,6 +19,9 @@
   >:global(.icon-running) {
     animation: rotating linear 1.5s infinite;
   }
+  >:global(.icon-stopped){
+    color: $color-black;
+  }
 }
 
 @keyframes rotating {

@@ -8,6 +8,8 @@ import { connect } from 'react-redux'
 
 import moment from 'moment'
 
+import JobIcon from 'components/Icon/Job'
+
 import classes from './jobItem.scss'
 
 function mapStateToProps (state, { id }) {
@@ -44,8 +46,8 @@ export class JobItem extends Component {
     const startedAt = job.get('startedAt')
 
     return <div className={classes.job} onClick={this.handleClick}>
-      <span className={classes.icon}>
-        <i className='icon icon-check' />
+      <span className={classes.iconWrapper}>
+        <JobIcon status={job.get('status')} className={classes.icon} />
         {i18n('构建成功')}
       </span>
       <div className={classes.info}>
@@ -58,17 +60,16 @@ export class JobItem extends Component {
         </small>
       </div>
       <div className={classes.detail}>
-        <div className={classes.itemRow}>
+        <div className={`${classes.itemCol} ${classes.firstCol}`}>
           {this.renderItem(i18n('Commit'),
             envs.get('FLOW_GIT_COMMIT_ID', '-'))}
-
+          {this.renderItem(i18n('Duration'), job.get('duration', ''))}
+        </div>
+        <div className={classes.itemCol}>
           {this.renderItem(i18n('Compare'),
             envs.get('FLOW_GIT_COMPARE_ID', '-'))}
-        </div>
-        <div className={classes.itemRow}>
           {this.renderItem(i18n('Builded'),
             startedAt ? moment(startedAt * 1000).fromNow() : '-')}
-          {this.renderItem(i18n('Duration'), job.get('duration', ''))}
         </div>
       </div>
     </div>

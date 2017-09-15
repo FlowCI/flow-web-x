@@ -26,11 +26,16 @@ export const IconMapping = {
 export default class JobIcon extends Component {
   static propTypes = {
     status: PropTypes.oneOf(STATUS).isRequired,
+    className: PropTypes.string,
+  }
+
+  static defaultProps = {
+    className: ''
   }
 
   render () {
-    const { status } = this.props
+    const { status, className } = this.props
     const icon = IconMapping[status]
-    return <span className={classes.icon}>{icon}</span>
+    return <span className={`${classes.icon} ${className}`}>{icon}</span>
   }
 }

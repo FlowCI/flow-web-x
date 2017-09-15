@@ -12,10 +12,13 @@
     background-color: $color-hover-bg;
   }
 }
-.icon{
-  flex: 0 0 120px;
+.iconWrapper{
+  flex: 0 0 140px;
   display: flex;
   align-items: center;
+}
+.icon{
+  margin-right: 2*$padding-base-horizontal;
 }
 .info{
   flex: 1 1 auto;
@@ -30,21 +33,20 @@
 }
 .detail{
   flex: 0 0 240px;
+  width: 240px;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   font-size: $font-size-small;
+  justify-content: space-between;
 }
-.itemRow{
-  display: flex;
-  align-items: center;
+.itemCol{
+  display: inline-block;
+  width: 49%;
 }
 .item{
-  flex: 0 0 50%;
   display: flex;
   align-items: center;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   >span{
     overflow: hidden;
   }
@@ -55,4 +57,12 @@
 }
 .value{
   flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.firstCol{
+  .name{
+    flex: 0 0 50px;
+  }
 }
