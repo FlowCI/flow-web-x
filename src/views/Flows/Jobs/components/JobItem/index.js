@@ -44,11 +44,11 @@ export class JobItem extends Component {
     const { job, i18n } = this.props
     const envs = job.get('envs', new Map())
     const startedAt = job.get('startedAt')
-
+    const status = job.get('status')
     return <div className={classes.job} onClick={this.handleClick}>
       <span className={classes.iconWrapper}>
-        <JobIcon status={job.get('status')} className={classes.icon} />
-        {i18n('构建成功')}
+        <JobIcon status={status} className={classes.icon} />
+        {i18n(`STATUS.${status}`)}
       </span>
       <div className={classes.info}>
         <h4>
