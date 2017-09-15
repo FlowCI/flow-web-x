@@ -2,12 +2,14 @@ import { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import SocketClient from '../socket'
+import SocketClientMock from '../mock'
 
 export default class Socket extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     url: PropTypes.string.isRequired,
     headers: PropTypes.object,
+    mock: PropTypes.bool,
   }
 
   static childContextTypes = {
@@ -36,7 +38,9 @@ export default class Socket extends Component {
 
   getSocket () {
     if (!this.socket) {
-      this.socket = new SocketClient(this.props.url, this.props.headers)
+      const { mock } = this.props
+      const X = mock ? SocketClientMock : SocketClient
+      this.socket = new X(this.props.url, this.props.headers)
     }
     return this.socket
   }
