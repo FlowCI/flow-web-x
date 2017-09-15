@@ -17,11 +17,20 @@ const job = {
     'FLOW_GIT_COMMITER': 'WILL',
   }
 }
+const STATUS = [
+  'CREATED',
+  'SESSION_CREATING',
+  'RUNNING',
+  'SUCCESS',
+  'FAILURE',
+  'STOPPED',
+]
 
 function cloneAndRepeat (obj, size) {
   const array = []
   for (let i = 0; i < size; i++) {
-    array.push({ ...obj })
+    const status = STATUS[i % STATUS.length]
+    array.push({ ...obj, number: i + 1, status })
   }
   return array
 }
