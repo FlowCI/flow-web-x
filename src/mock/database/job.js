@@ -63,9 +63,9 @@ export default {
     const j = { ...job, nodeName: flowName, nodePath: flowName }
     return cloneAndRepeat(j, 10)
   },
-  [types.get]: function ({ params: { flowName, jobId } }) {
+  [types.get]: function ({ params: { flowName, jobNumber } }) {
     const j = getJobWithChildrenResult()
-    return { ...j, nodeName: flowName, nodePath: flowName, number: jobId }
+    return { ...j, nodeName: flowName, nodePath: flowName, number: jobNumber }
   },
   [types.queryLastest]: function ({ data: flowNames }) {
     return flowNames.map((name) => Object.assign({}, job, {
