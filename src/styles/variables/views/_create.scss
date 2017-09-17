@@ -7,7 +7,7 @@ $create-flow-step-border-color: $color-hr;
 $create-flow-step-spacing: 4*$padding-base-vertical;
 
 $create-flow-step-border-raduis: $border-radius-base!default;
-$create-flow-step-boxshadow: $control-base-boxshadow!default;
+$create-flow-step-boxshadow: $base-boxshadow!default;
 
 $create-flow-step-header-height: 60px!default;
 $create-flow-step-header-vertical-padding: 1.5*$padding-base-vertical!default;
@@ -20,7 +20,7 @@ $create-flow-step-header-active-color: $create-flow-step-header-color!default;
 
 $create-flow-step-icon-font-size: 25px!default;
 $create-flow-step-icon-size: 60px!default;
-$create-flow-step-icon-boxshadow: $control-base-boxshadow!default;
+$create-flow-step-icon-boxshadow: $create-flow-step-boxshadow!default;
 $create-flow-step-icon-padding-left: 4*$padding-base-horizontal;
 
 $create-flow-step-cable-color: #C3C8CE!default;
