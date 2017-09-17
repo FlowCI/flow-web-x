@@ -1,4 +1,5 @@
-@import 'variables';
+@import 'variables/navbar';
+@import 'variables/footer';
 
 .form{
   height: calc(100vh - #{$navbar-height + $footer-height + 2px});

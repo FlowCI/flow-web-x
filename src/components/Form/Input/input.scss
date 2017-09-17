@@ -1,4 +1,5 @@
-@import 'variables';
+@import 'variables/components/control';
+
 @mixin icon-wrapper ($font-size, $size) {
   font-size: $font-size;
   height: $size;
