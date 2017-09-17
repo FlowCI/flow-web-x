@@ -1,0 +1,74 @@
+// need base variables
+
+// Control
+$control-radius-base: $border-radius-base!default;
+
+$control-sm-size: 22px!default;
+$control-sm-padding-vertical: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2!default;
+$control-sm-padding-horizontal: ($control-sm-size - $font-size-small - 2px)/2!default;
+
+$control-base-size: 34px!default;
+$control-base-padding-vertical: ($control-base-size - $line-height-computed - 2px)/2!default;
+$control-base-padding-horizontal: ($control-base-size - $font-size-base - 2px)/2!default;
+
+$control-lg-size: 40px!default;
+$control-lg-padding-vertical: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2!default;
+$control-lg-padding-horizontal: ($control-lg-size - $font-size-large - 2px)/2!default;
+
+$control-border-base: $color-hr!default;
+$control-base-boxshadow: $base-boxshadow!default;
+
+// button
+$btn-font-weight: bold!default;
+
+$btn-default-color: $color-black!default;
+$btn-default-bg: #fff!default;
+$btn-default-border: $control-border-base!default;
+
+$btn-primary-color: #fff!default;
+$btn-primary-bg: #6668D3!default;
+$btn-primary-border: darken($btn-primary-bg, 5%) !default;
+
+$btn-success-color: #fff!default;
+$btn-success-bg: $color-success!default;
+$btn-success-border: darken($btn-success-bg, 5%) !default;
+
+$btn-danger-color: #fff!default;
+$btn-danger-bg: $color-danger!default;
+$btn-danger-border: darken($btn-danger-bg, 5%) !default;
+
+$btn-default-inverse-color: $color-black!default;
+$btn-default-inverse-bg: #fff!default;
+
+// input
+$input-placeholder-color: $color-muted!default;
+$input-border: #C3C8CE!default;
+$input-bg-disabled: #eee!default;
+$input-default-width: 200px!default;
+
+// input checkbox
+$checkbox-checked-color: $color-black!default;
+$checkbox-unchecked-color: $color-muted!default;
+
+// input checkbox
+$radio-checked-color: $color-black!default;
+$radio-unchecked-color: $color-muted!default;
+
+// select
+$select-hovered-bg: #ecf6fd!default;
+$select-selected-color: $color-black!default;
+$select-selected-bg: $color-hover-bg!default;
+$select-selected-font-weight: bold!default;
+
+$select-dropdown-offset: 5px!default;
+$select-dropdown-radius: $border-radius-base!default;
+$select-dropdown-border: $control-border-base!default;
+$select-dropdown-boxshadow: $control-base-boxshadow;
+
+// Toggle
+$toggle-color: #fff!default;
+$toggle-circle-color: $toggle-color!default;
+
+$toggle-on-bgc: #F8BA0B!default;
+$toggle-off-bgc: $color-black!default;
+$toggle-circle-margin: 4px!default;

@@ -1,0 +1,55 @@
+// Admin Menus
+$admin-menus-height: 50px!default;
+$admin-menus-width: 200px!default;
+
+$admin-menus-font-weight: bold!default;
+$admin-menus-border: #DFDFE5!default;
+$admin-menus-border-radius: $border-radius-base!default;
+$admin-menus-base-boxshadow: $control-base-boxshadow!default;
+
+$admin-menus-vertical-padding: 0!default;
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-menus-icon-horizontal-padding: $padding-base-horizontal!default;
+$admin-menus-icon-font-size: 18px!default;
+
+$admin-menus-divier: #D7D9DC!default;
+$admin-menus-color: $color-black!default;
+$admin-menus-bgc: #fff!default;
+
+$admin-menus-hover-color: currentColor!default;
+$admin-menus-hover-bgc: #EEF0F3!default;
+
+$admin-menus-active-color: #fff!default;
+$admin-menus-active-bgc: $color-black!default;
+
+$admin-menus-arraw-width: 6px!default;
+$admin-menus-arraw-height: 10px!default;
+$admin-menus-arraw-color: $admin-menus-active-color!default;
+
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+// Admin Content
+$admin-content-horizontal-padding: $padding-base-horizontal!default;
+
+$admin-navtabs-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-list-header: 30px!default;
+$admin-list-header-bgc: #EDEFF1!default;
+$admin-list-header-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-item-height: 50px;
+$admin-item-vertical-padding: $padding-base-vertical!default;
+$admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
+$admin-list-divier-color: $admin-menus-divier!default;
+
+// Admin Sub Navbar
+$admin-content-single-navbar-font-size: 20px!default;
+$admin-content-subtitle-font-size: 14px!default;
+$admin-content-subtitle-color: $color-muted!default;
+
+$admin-toolbar-vertical-padding: 1.5*$padding-base-vertical!default;
+
+// Admin TabBars
+$admin-tabbars-height: $control-base-size;
+$admin-tabbars-item-spacing: $padding-base-vertical!default;

@@ -1,0 +1,14 @@
+// Footer
+$footer-height: 60px!default;
+$footer-line-height: 15px!default;
+$footer-font-size: $font-size-small!default;
+
+$footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
+$footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
+$footer-divier-padding: $footer-padding-base!default;
+
+$footer-xs-padding: 10px 0 20px!default;
+$footer-xs-divier-padding: 10px!default;
+
+$footer-default-color: #676C72!default;
+$footer-default-border: $color-hr!default;
