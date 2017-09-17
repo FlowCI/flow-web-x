@@ -1,4 +1,4 @@
-@import 'variables.scss';
+@import 'variables/components/control';
 
 @mixin button-size ($size, $font-size) {
   width: $size;

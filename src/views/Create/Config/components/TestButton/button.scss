@@ -1,4 +1,5 @@
-@import './variables';
+@import 'variables/views/create';
+@import 'variables/components/control';
 .button{
   border-color: #A7ABB1;
   &:focus, &:hover{
