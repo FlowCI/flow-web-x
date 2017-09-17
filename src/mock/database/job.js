@@ -45,6 +45,7 @@ function getJobWithChildrenResult () {
       outputs: {
         FLOW_ENV_OUT_1: 'xx'
       },
+      name: 'step1',
       order: 0
     }, {
       duration: 0,
@@ -53,6 +54,7 @@ function getJobWithChildrenResult () {
       outputs: {
         FLOW_ENV_OUT_1: 'xx'
       },
+      name: 'step2',
       order: 1
     }]
   }
