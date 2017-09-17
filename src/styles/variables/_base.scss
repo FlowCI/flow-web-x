@@ -1,32 +1,5 @@
-// Colors
-$color-danger: #E56065!default;
-$color-success: #8BB73E!default;
-$color-muted: #A2A8B1!default;
-$color-primary: #575FB7!default;
-
-$color-hr: #D4DCE3!default;
-$color-black: #55575C!default;
-
-$color-hover-bg: #EDEDED!default;
-
-$body-bg: #fff!default;
-$text-color: $color-black!default;
-
-$link-color: #575FB7!default;
-$link-hover-color: darken($link-color, 10%) !default;
-
-// Media
-$screen-xs: 480px!default;
-$screen-phone: $screen-xs!default;
-
-$screen-sm: 768px!default;
-$screen-tablet: $screen-sm!default;
-
-$screen-md: 992px !default;
-$screen-desktop: $screen-md !default;
-
-$screen-lg: 1200px !default;
-$screen-lg-desktop: $screen-lg !default;
+@import './_colors.scss';
+@import './_media.scss';
 
 // FONT
 $font-size-root: 100px!default; // use for rem, chrome default mini size is 10px

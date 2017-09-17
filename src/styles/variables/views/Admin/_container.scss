@@ -1,3 +1,9 @@
+@import '../../_base.scss';
+@import '../../components/_control.scss';
+// Admin
+$admin-vertical-padding: 2*$padding-base-vertical!default;
+$admin-horizontal-padding: 0!default;
+
 // Admin Menus
 $admin-menus-height: 50px!default;
 $admin-menus-width: 200px!default;
@@ -5,7 +11,7 @@ $admin-menus-width: 200px!default;
 $admin-menus-font-weight: bold!default;
 $admin-menus-border: #DFDFE5!default;
 $admin-menus-border-radius: $border-radius-base!default;
-$admin-menus-base-boxshadow: $control-base-boxshadow!default;
+$admin-menus-base-boxshadow: $base-boxshadow!default;
 
 $admin-menus-vertical-padding: 0!default;
 $admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
