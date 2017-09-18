@@ -5,6 +5,7 @@ import BallPulse from './BallPulse'
 
 import classes from './jobIcon.scss'
 
+export { classes }
 export const STATUS = [
   'CREATED',
   'SESSION_CREATING',
@@ -27,15 +28,15 @@ export default class JobIcon extends Component {
   static propTypes = {
     status: PropTypes.oneOf(STATUS).isRequired,
     className: PropTypes.string,
-  }
-
-  static defaultProps = {
-    className: ''
+    colored: PropTypes.bool,
   }
 
   render () {
-    const { status, className } = this.props
+    const { status, className, colored } = this.props
     const icon = IconMapping[status]
-    return <span className={`${classes.icon} ${className}`}>{icon}</span>
+    const cls = [classes.icon]
+    className && cls.push(className)
+    colored && cls.push(classes.colored)
+    return <span className={cls.join(' ')}>{icon}</span>
   }
 }

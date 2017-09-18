@@ -47,7 +47,7 @@ export class JobItem extends Component {
     const status = job.get('status')
     return <div className={classes.job} onClick={this.handleClick}>
       <span className={classes.iconWrapper}>
-        <JobIcon status={status} className={classes.icon} />
+        <JobIcon status={status} colored className={classes.icon} />
         {i18n(`STATUS.${status}`)}
       </span>
       <div className={classes.info}>

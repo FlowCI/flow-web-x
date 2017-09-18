@@ -7,6 +7,8 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+}
+.colored{
   >:global(.icon) {
     color: $color-primary;
   }
@@ -23,7 +25,6 @@
     color: $color-black;
   }
 }
-
 @keyframes rotating {
   0%    { transform: rotate(0deg); }
   100%  { transform: rotate(360deg); }
