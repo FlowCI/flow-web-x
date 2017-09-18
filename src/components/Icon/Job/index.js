@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import BallPulse from './BallPulse'
+import BallPulse from '../Loading/BallPulse'
 
 import classes from './jobIcon.scss'
 
