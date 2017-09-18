@@ -1,4 +1,6 @@
 @import 'variables/colors';
+@import 'variables/modules/node';
+
 @mixin header-color ($color) {
   .icon{
     color: $color;
@@ -10,7 +12,6 @@
       color: #fff;
     }
   }
-
 }
 
 .header{
@@ -24,22 +25,26 @@
   cursor: pointer;
   // border-bottom: 1px solid $color-hr;
 }
+.disabled{
+  cursor: default;
+  color: $color-muted;
+}
 .icon{
-  margin-right: 10px;
-  color: $color-success;
+  margin-right: 20px;
+}
+
+.RUNNING{
+  @include header-color($node-color-running);
 }
 .SUCCESS{
-  @include header-color($color-success);
-}
-.RUNNING{
-  @include header-color($color-primary);
+  @include header-color($node-color-success);
 }
 .STOPPED{
-  @include header-color($color-muted);
+  cursor: not-allowed;
 }
 .FAILURE{
-  @include header-color($color-danger);
+  @include header-color($node-color-failure);
 }
 .TIMEOUT{
-  @include header-color($color-danger);
+  @include header-color($node-color-timeout);
 }

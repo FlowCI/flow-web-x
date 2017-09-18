@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { has } from 'util/nodeStatus'
+
 import Arrow from 'components/Arrow'
+import NodeIcon from 'components/Icon/Node'
 
 import classes from './header.scss'
 
@@ -10,16 +13,34 @@ export default class JobNodeHeader extends Component {
     expended: PropTypes.bool,
     name: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
+    toggle: PropTypes.func,
+  }
+
+  handleClick = () => {
+    const { toggle } = this.props
+    toggle && toggle()
   }
 
   render () {
-    const { expended, status, name, onClick } = this.props
+    const { expended, status, name } = this.props
+
     const cls = [classes.header]
     expended && cls.push(classes.expended)
-    status && cls.push(classes[status])
+
+    const disabled = !has.log(status)
+
+    if (disabled) {
+      cls.push(classes.disabled)
+    } else {
+      classes[status] && cls.push(classes[status])
+    }
+    const onClick = !disabled ? this.handleClick : undefined
+
     return <h5 className={cls.join(' ')} onClick={onClick}>
-      <span><i className={`icon icon-check ${classes.icon}`} />{name}</span>
+      <span>
+        <NodeIcon status={status} className={classes.icon} />
+        {name}
+      </span>
       <Arrow up={expended} />
     </h5>
   }

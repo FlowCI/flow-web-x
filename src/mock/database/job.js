@@ -26,6 +26,16 @@ const STATUS = [
   'STOPPED',
 ]
 
+const NodeStatus = [
+  'PENDING',
+  'ENQUEUE',
+  'RUNNING',
+  'SUCCESS',
+  'STOPPED',
+  'FAILURE',
+  'TIMEOUT',
+]
+
 function cloneAndRepeat (obj, size) {
   const array = []
   for (let i = 0; i < size; i++) {
@@ -36,28 +46,22 @@ function cloneAndRepeat (obj, size) {
 }
 
 function getJobWithChildrenResult (number) {
+  const chilren = NodeStatus.map((s, i) => {
+    return {
+      duration: 10,
+      status: s,
+      cmdId: `xxxx-${s}-${i}`,
+      outputs: {
+        FLOW_ENV_OUT_1: 'xx'
+      },
+      name: `step${i}`,
+      order: i
+    }
+  })
   return {
     ...job,
     status: number ? STATUS[(number - 1) % STATUS.length] : job.status,
-    childrenResult: [{
-      duration: 0,
-      status: 'PENDING',
-      cmdId: 'xxx',
-      outputs: {
-        FLOW_ENV_OUT_1: 'xx'
-      },
-      name: 'step1',
-      order: 0
-    }, {
-      duration: 0,
-      status: 'PENDING',
-      cmdId: 'xxx2',
-      outputs: {
-        FLOW_ENV_OUT_1: 'xx'
-      },
-      name: 'step2',
-      order: 1
-    }]
+    childrenResult: chilren,
   }
 }
 

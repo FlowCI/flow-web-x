@@ -34,7 +34,7 @@ export default class JobNode extends Component {
     const { expended } = this.state
     return <div>
       <Header expended={expended} name={node.get('name')}
-        status={node.get('status')} onClick={this.toggle}
+        status={node.get('status')} toggle={this.toggle}
       />
       {expended && <Content onClose={this.toggle} log={log}
         fetching={fetching} />}
