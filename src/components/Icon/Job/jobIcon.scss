@@ -1,4 +1,5 @@
-@import 'variables/base';
+@import 'variables/modules/job';
+
 .icon{
   font-size: 18px;
   width: 2em;
@@ -10,19 +11,19 @@
 }
 .colored{
   >:global(.icon) {
-    color: $color-primary;
+    color: $job-color-default;
   }
   >:global(.icon-check) {
-    color: $color-success;
+    color: $job-color-success;
   }
   >:global(.icon-failure) {
-    color: $color-danger;
+    color: $job-color-failure;
   }
   >:global(.icon-running) {
     animation: rotating linear 1.5s infinite;
   }
   >:global(.icon-stopped){
-    color: $color-black;
+    color: $job-color-stopped;
   }
 }
 @keyframes rotating {
