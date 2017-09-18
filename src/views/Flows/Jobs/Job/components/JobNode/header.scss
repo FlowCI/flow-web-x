@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables/colors';
 @mixin header-color ($color) {
   .icon{
     color: $color;
