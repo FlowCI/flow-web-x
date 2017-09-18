@@ -16,6 +16,9 @@
   >:global(.icon) {
     color: $job-color-default;
   }
+  >:global(.icon-running) {
+    color: $job-color-running;
+  }
   >:global(.icon-check) {
     color: $job-color-success;
   }

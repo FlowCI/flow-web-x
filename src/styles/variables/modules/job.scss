@@ -3,6 +3,8 @@
 // default color
 $job-color-default: $color-primary!default;
 
+$job-color-running: $job-color-default!default;
+
 $job-color-success: $color-success!default;
 $job-color-failure: $color-danger!default;
 $job-color-stopped: $color-muted!default;
