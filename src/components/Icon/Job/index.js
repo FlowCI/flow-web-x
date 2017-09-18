@@ -18,9 +18,9 @@ export const STATUS = [
 export const IconMapping = {
   'CREATED': <BallPulse className='icon' />,
   'SESSION_CREATING': <BallPulse className='icon' />,
+  'RUNNING': <i className='icon icon-running' />,
   'SUCCESS': <i className='icon icon-check' />,
   'FAILURE': <i className='icon icon-failure' />,
-  'RUNNING': <i className='icon icon-running' />,
   'STOPPED': <i className='icon icon-stopped' />,
 }
 
