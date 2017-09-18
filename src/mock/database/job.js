@@ -2,7 +2,7 @@ import types from 'redux/modules/jobType'
 
 const job = {
   'number': 1,
-  'status': 'SUCCESS',
+  'status': 'STOPPED',
   'startedAt': 1502266861,
   'finishedAt': 1502266861,
   'createdAt': 1502266861,
@@ -35,9 +35,10 @@ function cloneAndRepeat (obj, size) {
   return array
 }
 
-function getJobWithChildrenResult () {
+function getJobWithChildrenResult (number) {
   return {
     ...job,
+    status: number ? STATUS[(number - 1) % STATUS.length] : job.status,
     childrenResult: [{
       duration: 0,
       status: 'PENDING',
@@ -66,7 +67,7 @@ export default {
     return cloneAndRepeat(j, 10)
   },
   [types.get]: function ({ params: { flowName, jobNumber } }) {
-    const j = getJobWithChildrenResult()
+    const j = getJobWithChildrenResult(jobNumber)
     return { ...j, nodeName: flowName, nodePath: flowName, number: jobNumber }
   },
   [types.queryLastest]: function ({ data: flowNames }) {
