@@ -1,10 +1,5 @@
+import Job from 'locales/zh-cn/job'
+
 export default {
-  STATUS: {
-    CREATED: '准备中',
-    SESSION_CREATING: '准备中',
-    SUCCESS: '构建成功',
-    FAILURE: '构建失败',
-    RUNNING: '运行中',
-    STOPPED: '已停止',
-  }
+  STATUS: Job.STATUS,
 }
