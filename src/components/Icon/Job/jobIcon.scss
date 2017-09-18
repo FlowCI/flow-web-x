@@ -8,6 +8,9 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+  >:global(.icon-running) {
+    animation: rotating linear 1.5s infinite;
+  }
 }
 .colored{
   >:global(.icon) {
@@ -18,9 +21,6 @@
   }
   >:global(.icon-failure) {
     color: $job-color-failure;
-  }
-  >:global(.icon-running) {
-    animation: rotating linear 1.5s infinite;
   }
   >:global(.icon-stopped){
     color: $job-color-stopped;
