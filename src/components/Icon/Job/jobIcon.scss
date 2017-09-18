@@ -1,5 +1,11 @@
 @import 'variables/modules/job';
 
+@mixin icon-colored ($color) {
+  @if $color != $job-color-default {
+    color: $color;
+  }
+}
+
 .icon{
   font-size: 18px;
   width: 2em;
@@ -17,16 +23,16 @@
     color: $job-color-default;
   }
   >:global(.icon-running) {
-    color: $job-color-running;
+    @include icon-colored($job-color-running);
   }
   >:global(.icon-check) {
-    color: $job-color-success;
+    @include icon-colored($job-color-success);
   }
   >:global(.icon-failure) {
-    color: $job-color-failure;
+    @include icon-colored($job-color-failure);
   }
   >:global(.icon-stopped){
-    color: $job-color-stopped;
+    @include icon-colored($job-color-stopped);
   }
 }
 @keyframes rotating {
