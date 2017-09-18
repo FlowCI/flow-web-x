@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import moment from 'moment'
 
-import JobIcon from 'components/Icon/Job'
+import JobIcon from 'components/Icon/JobText'
 
 import classes from './jobItem.scss'
 
@@ -46,10 +46,7 @@ export class JobItem extends Component {
     const startedAt = job.get('startedAt')
     const status = job.get('status')
     return <div className={classes.job} onClick={this.handleClick}>
-      <span className={classes.iconWrapper}>
-        <JobIcon status={status} colored className={classes.icon} />
-        {i18n(`STATUS.${status}`)}
-      </span>
+      <JobIcon status={status} colored />
       <div className={classes.info}>
         <h4>
           #{job.get('number')}&nbsp;&nbsp;

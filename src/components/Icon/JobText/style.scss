@@ -1,0 +1,11 @@
+@import 'variables/base';
+.wrapper{
+  flex: 0 0 auto;
+  width: 140px;
+  display: inline-flex;
+  align-items: center;
+
+}
+.icon{
+  margin-right: 2*$padding-base-horizontal;
+}
