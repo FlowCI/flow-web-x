@@ -37,11 +37,13 @@ export default class JobNodeHeader extends Component {
     const onClick = !disabled ? this.handleClick : undefined
 
     return <h5 className={cls.join(' ')} onClick={onClick}>
-      <span>
-        <NodeIcon status={status} className={classes.icon} />
+      <NodeIcon status={status} className={classes.icon} />
+      <span className={classes.name}>
         {name}
       </span>
-      <Arrow up={expended} />
+      <span className={classes.arrow}>
+        <Arrow up={expended} />
+      </span>
     </h5>
   }
 }

@@ -20,8 +20,6 @@
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0px 20px;
   cursor: pointer;
   // border-bottom: 1px solid $color-hr;
 }
@@ -29,10 +27,21 @@
   cursor: default;
   color: $color-muted;
 }
-.icon{
-  margin-right: 20px;
-}
 
+.name{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+.icon{
+  flex: 0 0 50px;
+  text-align: center;
+}
+.arrow{
+  flex: 0 0 50px;
+  text-align: center;
+}
 .RUNNING{
   @include header-color($node-color-running);
 }
