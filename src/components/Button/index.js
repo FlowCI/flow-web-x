@@ -5,7 +5,7 @@ import toProps from 'promise-to-props'
 import is from 'util/is'
 
 import { Link } from 'react-router'
-import LoadingIcon from 'components/Icon/Loading'
+import LoadingIcon from 'components/Icon/Circle'
 
 import classes from './button.scss'
 
