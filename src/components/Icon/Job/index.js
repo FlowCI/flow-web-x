@@ -6,14 +6,6 @@ import BallPulse from '../Loading/BallPulse'
 import classes from './jobIcon.scss'
 
 export { classes }
-export const STATUS = [
-  'CREATED',
-  'SESSION_CREATING',
-  'RUNNING',
-  'SUCCESS',
-  'FAILURE',
-  'STOPPED',
-]
 
 export const IconMapping = {
   'CREATED': <BallPulse className='icon' />,
@@ -23,6 +15,8 @@ export const IconMapping = {
   'FAILURE': <i className='icon icon-failure' />,
   'STOPPED': <i className='icon icon-stopped' />,
 }
+
+export const STATUS = Object.keys(IconMapping)
 
 export default class JobIcon extends Component {
   static propTypes = {
