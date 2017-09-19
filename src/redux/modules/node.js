@@ -29,7 +29,6 @@ export const actions = {
       const state = getState()
       const { node } = state
       const status = node.getIn([jobId, 'ui', nodeOrderStr, 'GET_LOG'])
-      console.log(status)
       if (status === STATUS.send || status === STATUS.success) {
         return
       }
@@ -49,6 +48,7 @@ export const actions = {
     }
   },
   storeLog: function (node /** Map */, log) {
+    console.log(log)
     return {
       type: types.storeLog,
       payload: {
@@ -77,7 +77,7 @@ export default handleActions({
     success: function (state, { indicator, payload, status }) {
       const { jobId, nodeId } = indicator
       return state.updateIn([jobId, 'log', nodeId], (old) => {
-        return payload + (old || '')
+        return payload || ''
       }).setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
     },
     failure: function (state, { indicator, status }) {
@@ -92,7 +92,7 @@ export default handleActions({
   [jobTypes.socketRecived]: function (state, { payload }) {
     const { id: jobId, childrenResult: nodes } = payload
     return state.update(jobId, (s) =>
-      handlers.saveAll(createState(), { payload: nodes })
+      handlers.saveAll(createState().merge(s), { payload: nodes })
     )
   },
   [jobTypes.freedResource]: function (state, { id }) {
