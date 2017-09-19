@@ -43,7 +43,7 @@ export class JobItem extends Component {
   render () {
     const { job, i18n } = this.props
     const envs = job.get('envs', new Map())
-    const startedAt = job.get('startedAt')
+    const startedAt = job.getIn(['result', 'startTime'])
     const status = job.get('status')
     return <div className={classes.job} onClick={this.handleClick}>
       <JobIcon status={status} colored />
@@ -60,7 +60,7 @@ export class JobItem extends Component {
         <div className={`${classes.itemCol} ${classes.firstCol}`}>
           {this.renderItem(i18n('Commit'),
             envs.get('FLOW_GIT_COMMIT_ID', '-'))}
-          {this.renderItem(i18n('Duration'), job.get('duration', ''))}
+          {this.renderItem(i18n('Duration'), job.getIn(['result', 'duration'], ''))}
         </div>
         <div className={classes.itemCol}>
           {this.renderItem(i18n('Compare'),

@@ -24,12 +24,16 @@ export class JobStatusHeader extends Component {
   render () {
     const { job, i18n } = this.props
     const status = job.get('status')
+
+    const startedAt = job.getIn(['result', 'startTime'])
+    const duration = job.getIn(['result', 'duration'])
+
     return <div className={`${classes.header} ${job.get('status', '')}`}>
       <JobIcon status={status} />
       <ul className={classes.list}>
-        <li>{i18n('构建于4小时前', { time: job.get('startedAt') })}</li>
+        <li>{i18n('buildFromNow', { time: startedAt })}</li>
         <li>
-          {i18n('花费43秒', { duration: job.get('duration') })}
+          {i18n('buildDuration', { duration })}
         </li>
         <li>{i18n('手动构建')}</li>
       </ul>
