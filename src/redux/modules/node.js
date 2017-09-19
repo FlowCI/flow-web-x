@@ -34,7 +34,7 @@ export const actions = {
         return
       }
       return dispatch({
-        url: '/jobs/:flowName/:jobNumber/:nodeOrder',
+        url: '/jobs/:flowName/:jobNumber/:nodeOrder/log',
         name: types.getLog,
         params: {
           flowName,
