@@ -11,6 +11,7 @@ const EmailSettingRecord = Record({
   'username': '',
   'password': '',
   'sender': '',
+  isAuthenticated: true,
 })
 
 const initialState = fromJS({ ui: {} })

@@ -81,9 +81,9 @@ export class EmailSettingForm extends Component {
           <tr>
             <td className={classes.name}>SMTP 用户身份验证</td>
             <td>
-              <RadioGroups name='isAuthored'>
-                <Radio rightLabel='开启' value='1' />
-                <Radio rightLabel='关闭' value='0' />
+              <RadioGroups name='isAuthenticated'>
+                <Radio rightLabel='开启' value />
+                <Radio rightLabel='关闭' value={false} />
               </RadioGroups>
             </td>
           </tr>
