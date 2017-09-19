@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { string, func, bool } from 'prop-types'
 import { contains } from 'react-immutable-proptypes'
 
+import { is } from 'util/nodeStatus'
+
 import Header from './header'
 import Content from './content'
 
@@ -13,6 +15,7 @@ export default class JobNode extends Component {
     }).isRequired,
     log: string,
     fetching: bool,
+    getLog: func,
     onExpended: func,
   }
 
@@ -20,8 +23,32 @@ export default class JobNode extends Component {
     expended: false,
   }
 
-  toggle = () => {
-    const { onExpended, node } = this.props
+  componentDidMount () {
+    const { node } = this.props
+    if (is.failure(node.get('status')) || is.running(node.get('status'))) {
+      this.toggle()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { node } = this.props
+    const { node: nextNode } = nextProps
+    const ns = nextNode.get('status')
+    if (node !== nextNode && node.get('status') !== ns) {
+      console.log('status', ns)
+      if (is.running(ns)) {
+        if (!this.state.expended) {
+          this.toggle(nextProps)
+        }
+      } else if (is.finish(ns)) {
+        const { getLog } = this.props
+        getLog && getLog(nextNode)
+      }
+    }
+  }
+
+  toggle = (props = this.props) => {
+    const { onExpended, node } = props
     const { expended } = this.state
     if (!expended) {
       onExpended && onExpended(node)

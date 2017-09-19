@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import { generatorJobId } from 'redux/modules/job'
 import { actions } from 'redux/modules/node'
 
+import { is } from 'util/nodeStatus'
 import JobNode from '../components/JobNode'
 
 import classes from './logs.scss'
@@ -43,7 +44,9 @@ export class JobLogsView extends Component {
 
   getLog = (node) => {
     const { getLog, flowId, jobNumber } = this.props
-    getLog(flowId, jobNumber, node.get('id'))
+    if (is.finish(node.get('status'))) {
+      getLog(flowId, jobNumber, node.get('id'))
+    }
   }
 
   render () {
@@ -54,7 +57,7 @@ export class JobLogsView extends Component {
         {!!downloadHref && <a href={downloadHref} download>download</a>}
       </h4>
       {nodeIds.map((id) => <JobNode key={id} jobId={jobId}
-        nodeId={id} onExpended={this.getLog} />)}
+        nodeId={id} onExpended={this.getLog} getLog={this.getLog} />)}
     </div>
   }
 }
