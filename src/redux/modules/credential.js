@@ -12,11 +12,15 @@ export const actions = {
       name: types.query,
     }
   },
-  create: function () {
+  create: function (type, name) {
     return {
       name: types.create,
-      url: '/credentials',
+      url: '/credentials/:name',
       method: 'post',
+      params: {
+        type,
+        name,
+      }
     }
   },
 }
@@ -33,6 +37,11 @@ export default handleActions({
       const { ios, rsa } = payload
       return state.update('ios', () => fromJS(ios))
         .update('rsa', () => fromJS(rsa))
+    }
+  }),
+  [types.create]: handleHttp('CREATE', {
+    success: function (state, { payload }) {
+      return state
     }
   })
 }, initialState)
