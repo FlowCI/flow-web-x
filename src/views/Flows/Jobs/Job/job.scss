@@ -1,4 +1,5 @@
-@import 'variables';
+@import 'variables/base';
+
 .container{
   padding: 2*$padding-base-vertical
     2*$padding-base-horizontal;

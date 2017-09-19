@@ -1,8 +1,8 @@
-@import 'variables';
+@import 'variables/navbar';
 .navs{
   display: flex;
-  border-bottom: 4px solid $navtabs-default-border;
-  line-height: 40px;
+  border-bottom: $navtabs-default-border-width solid $navtabs-default-border;
+  line-height: $navtabs-default-height;
   margin-bottom: $navtabs-default-bottom;
   font-weight: $navtabs-default-font-weight;
   font-size: $navtabs-default-font-size;

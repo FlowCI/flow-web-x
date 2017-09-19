@@ -1,0 +1,34 @@
+@import 'variables/base';
+.form{
+  padding: 20px 0px;
+  width: 100%;
+  input{
+    font-size: $font-size-base;
+  }
+
+  td{
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
+}
+.name{
+  text-align: right;
+  font-weight: bold;
+}
+.input{
+  width: 300px;
+}
+.port{
+  width: 100px;
+}
+.desc{
+  margin-left: 2*$padding-base-horizontal;
+  color: $color-muted;
+}
+.test{
+  margin-left: $padding-base-horizontal;
+}
+.save{
+  padding-left: 2*$padding-base-horizontal;
+  padding-right: 2*$padding-base-horizontal;
+}

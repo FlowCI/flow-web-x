@@ -12,8 +12,10 @@ const initialState = fromJS({ data: {}, ui: {} })
 export const actions = {
   query: function (flowId) {
     return {
-      url: '/branches',
-      mock: true,
+      url: '/branches/:flowName',
+      params:{
+        flowName: flowId,
+      },
       name: Types.query,
       indicator: {
         id: flowId,

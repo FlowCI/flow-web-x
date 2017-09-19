@@ -22,13 +22,13 @@ import FlowTab from '../components/flowtab'
 import classes from './flows.scss'
 
 const filterFlowsSelector = createSelector(
-  (ids, filter) => ids,
-  (ids, filter) => filter,
-  (ids, filter) => {
-    let filted = ids
+  (names, filter) => names,
+  (names, filter) => filter,
+  (names, filter) => {
+    let filted = names
     if (filter) {
       const reg = new RegExp(filter.replace('\\', '\\\\'), 'i')
-      filted = ids.filter((id) => reg.test(id))
+      filted = names.filter((name) => reg.test(name))
     }
     return filted
   }

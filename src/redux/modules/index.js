@@ -5,10 +5,13 @@ import agent from './agent'
 import flow from './flow'
 import ui from './ui'
 import credential from './credential'
+import notifySetting from './notifySetting'
+
 export default {
   session,
   agent,
   flow,
   ui,
   credential,
+  notifySetting,
 }

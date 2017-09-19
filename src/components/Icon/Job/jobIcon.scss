@@ -1,0 +1,30 @@
+@import 'variables/base';
+.icon{
+  font-size: 18px;
+  width: 2em;
+  height: 1em;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  >:global(.icon) {
+    color: $color-primary;
+  }
+  >:global(.icon-check) {
+    color: $color-success;
+  }
+  >:global(.icon-failure) {
+    color: $color-danger;
+  }
+  >:global(.icon-running) {
+    animation: rotating linear 1.5s infinite;
+  }
+  >:global(.icon-stopped){
+    color: $color-black;
+  }
+}
+
+@keyframes rotating {
+  0%    { transform: rotate(0deg); }
+  100%  { transform: rotate(360deg); }
+}

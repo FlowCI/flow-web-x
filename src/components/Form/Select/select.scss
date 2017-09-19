@@ -1,5 +1,5 @@
-@import 'variables.scss';
-
+@import 'variables/zIndex';
+@import 'variables/components/control';
 @mixin select-option ($font-size, $padding) {
   font-size: $font-size;
   .option{

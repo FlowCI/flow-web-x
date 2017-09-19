@@ -1,0 +1,76 @@
+@import 'variables/components/control';
+@mixin toggle-circle-size ($toggleSize) {
+  width: $toggleSize;
+  height: $toggleSize;
+}
+
+@mixin toggle-size ($height, $font-size) {
+  font-size: $font-size;
+  height: $height;
+  line-height: $height;
+  border-radius: $height/2;
+  >span{
+    width: $height;
+  }
+  .circle{
+    @include toggle-circle-size($height);
+  }
+  &.on{
+    .circle{
+      left: $height;
+    }
+  }
+}
+
+.toggle{
+  display: inline-block;
+  position: relative;
+  transition: background-color .3s;
+  color: $toggle-color;
+  cursor: pointer;
+  top: 0px;
+  @include toggle-size($control-base-size, $font-size-base);
+}
+.circle{
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  transition: left .3s;
+  z-index: 1;
+  padding: $toggle-circle-margin;
+  background-color: $toggle-circle-color;
+  background-clip: content-box;
+}
+.disabled{
+  cursor: not-allowed;
+  opacity: .6;
+}
+.onLabel, .offLabel{
+  display: inline-block;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  opacity: 1;
+  transition: opacity .3s;
+}
+.on{
+  background-color: $toggle-on-bgc;
+  .offLabel{
+    opacity: 0;
+  }
+}
+.off{
+  background-color: $toggle-off-bgc;
+  .onLabel{
+    opacity: 0;
+  }
+  .circle{
+    left: 0px;
+  }
+}
+.lg{
+  @include toggle-size($control-lg-size, $font-size-large);
+}
+.sm{
+  @include toggle-size($control-sm-size, $font-size-small);
+}

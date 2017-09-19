@@ -1,0 +1,8 @@
+// Job Status Colors
+@import './_colors.scss';
+
+$job-status-default-color: $color-primary;
+$job-waiting-color: $color-primary;
+$job-success-color: $color-success;
+$job-failure-color: $color-danger;
+$job-stopped-color: $color-black;
