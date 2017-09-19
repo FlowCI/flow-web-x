@@ -41,7 +41,8 @@ export class RSACredentialList extends Component {
 
   renderItem = (credential) => {
     const { i18n } = this.props
-    const finger = credential.get('fingerprint')
+    const finger = credential.getIn(['detail', 'publicKey'])
+
     return <ListRow key={credential.get('name')}>
       <ListCol>{credential.get('name')}</ListCol>
       <ListCol>{credential.get('author')}</ListCol>
