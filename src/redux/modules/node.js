@@ -3,7 +3,7 @@
  * 同后端 Node 模型
  */
 import { handleActions } from 'redux-actions'
-import { handleHttpActions } from 'redux-http'
+import { handleHttpActions, STATUS } from 'redux-http'
 import { Map } from 'immutable'
 
 import { defaultInitState, handlers } from 'redux/handler'
@@ -24,18 +24,28 @@ function createState () {
 export const actions = {
   getLog: function (flowName, jobNumber, nodeOrder) {
     const jobId = generatorJobId(flowName, jobNumber)
-    return {
-      url: '/jobs/:flowName/:jobNumber/:nodeOrder',
-      name: types.getLog,
-      params: {
-        flowName,
-        jobNumber,
-        nodeOrder,
-      },
-      indicator: {
-        jobId: jobId,
-        nodeId: nodeOrder,
+    const nodeOrderStr = nodeOrder + ''
+    return function (dispatch, getState) {
+      const state = getState()
+      const { node } = state
+      const status = node.getIn([jobId, 'ui', nodeOrderStr, 'GET_LOG'])
+      console.log(status)
+      if (status === STATUS.send || status === STATUS.success) {
+        return
       }
+      return dispatch({
+        url: '/jobs/:flowName/:jobNumber/:nodeOrder',
+        name: types.getLog,
+        params: {
+          flowName,
+          jobNumber,
+          nodeOrder: nodeOrderStr,
+        },
+        indicator: {
+          jobId: jobId,
+          nodeId: nodeOrderStr,
+        }
+      })
     }
   },
   storeLog: function (node /** Map */, log) {

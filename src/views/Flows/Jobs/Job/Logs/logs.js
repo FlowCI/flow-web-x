@@ -4,8 +4,8 @@ import { iterable } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { generatorJobId } from 'redux/modules/job'
 
+import { generatorJobId } from 'redux/modules/job'
 import { actions } from 'redux/modules/node'
 
 import JobNode from '../components/JobNode'
