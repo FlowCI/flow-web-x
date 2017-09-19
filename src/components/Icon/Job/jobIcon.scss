@@ -1,4 +1,11 @@
-@import 'variables/base';
+@import 'variables/modules/job';
+
+@mixin icon-colored ($color) {
+  @if $color != $job-color-default {
+    color: $color;
+  }
+}
+
 .icon{
   font-size: 18px;
   width: 2em;
@@ -7,23 +14,28 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  >:global(.icon) {
-    color: $color-primary;
-  }
-  >:global(.icon-check) {
-    color: $color-success;
-  }
-  >:global(.icon-failure) {
-    color: $color-danger;
-  }
+  vertical-align: middle;
   >:global(.icon-running) {
     animation: rotating linear 1.5s infinite;
   }
+}
+.colored{
+  >:global(.icon) {
+    color: $job-color-default;
+  }
+  >:global(.icon-running) {
+    @include icon-colored($job-color-running);
+  }
+  >:global(.icon-check) {
+    @include icon-colored($job-color-success);
+  }
+  >:global(.icon-failure) {
+    @include icon-colored($job-color-failure);
+  }
   >:global(.icon-stopped){
-    color: $color-black;
+    @include icon-colored($job-color-stopped);
   }
 }
-
 @keyframes rotating {
   0%    { transform: rotate(0deg); }
   100%  { transform: rotate(360deg); }

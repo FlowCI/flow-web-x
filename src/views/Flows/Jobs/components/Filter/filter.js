@@ -18,13 +18,13 @@ import classes from './filter.scss'
 
 function mapStateToProps (state, props) {
   const { branch, job } = state
-  const { id } = props
+  const { flowId } = props
 
   const status = branch.getIn(['ui', 'QUERY'])
   const filter = job.getIn(['ui', 'filter'], {})
 
   return {
-    branches: branch.getIn(['data', id], new List()),
+    branches: branch.getIn(['data', flowId], new List()),
 
     branch: filter.branch,
     onlySelf: !!filter.onlySelf,
@@ -45,7 +45,7 @@ function mapDispatchToProps (dispatch) {
 
 export class JobsFilter extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    flowId: PropTypes.string.isRequired,
     branch: PropTypes.string,
     onlySelf: PropTypes.bool,
     pullRequest: PropTypes.bool,
@@ -64,9 +64,9 @@ export class JobsFilter extends Component {
   }
 
   componentDidMount () {
-    const { id, loading, loaded, queryBranches, } = this.props
+    const { flowId, loading, loaded, queryBranches, } = this.props
     if (!loading && !loaded) {
-      queryBranches(id)
+      queryBranches(flowId)
     }
   }
 

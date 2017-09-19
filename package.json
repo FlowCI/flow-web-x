@@ -47,7 +47,9 @@
     "redux-actions": "^2.2.1",
     "redux-form": "^7.0.3",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "sockjs-client": "^1.1.4",
+    "stompjs": "^2.3.3"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
