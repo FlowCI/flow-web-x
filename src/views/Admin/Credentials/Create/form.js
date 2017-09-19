@@ -7,14 +7,14 @@ import Button from 'components/Button'
 
 import classes from './form.scss'
 
-export default class CreateCredentials extends Component {
+export default class CreateCredential extends Component {
   static propTypes = {
     create: func,
   }
 
   render () {
     return <form className={classes.form}>
-      <tabel>
+      <table>
         <tbody>
           <tr>
             <td className={classes.name}>类型</td>
@@ -38,7 +38,7 @@ export default class CreateCredentials extends Component {
             </td>
           </tr>
         </tbody>
-      </tabel>
+      </table>
     </form>
   }
 }
