@@ -34,7 +34,7 @@ export class CreateCredential extends Component {
   handleCreate = () => {
     const { create } = this.props
     const { name } = this.state
-    return create('rsa', name)
+    return create('RSA', name)
   }
 
   render () {
@@ -45,9 +45,9 @@ export class CreateCredential extends Component {
           <tr>
             <td className={classes.name}>类型</td>
             <td>
-              <Select value='rsa'>
-                <Option value='rsa'>RSA Key</Option>
-                <Option value='ios'>iOS 证书</Option>
+              <Select value='RSA'>
+                <Option value='RSA'>RSA Key</Option>
+                <Option value='IOS'>iOS 证书</Option>
               </Select>
             </td>
           </tr>

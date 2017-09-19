@@ -58,7 +58,9 @@ export default handleActions({
   }),
   [types.create]: handleHttp('CREATE', {
     success: function (state, { payload }) {
-      return state
+      const { type } = payload
+      return state.update(type, (old) => old ? old.push(fromJS(payload))
+        : fromJS([payload]))
     }
-  })
+  }),
 }, initialState)
