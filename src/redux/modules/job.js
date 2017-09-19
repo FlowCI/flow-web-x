@@ -20,6 +20,12 @@ function transformResponse (data) {
     })
   } else if (is.object(data) && data.number > -1) {
     data.id = generatorJobId(data.nodePath, data.number)
+    if (data.childrenResult) {
+      data.childrenResult.forEach((node) => {
+        node.jobId = data.id
+        node.id = `${node.order}`
+      })
+    }
   }
   return data
 }
@@ -74,13 +80,13 @@ export const actions = {
       transformResponse,
     }
   },
-  stop: function (flowId, jobId) {
+  stop: function (flowId, jobNumber) {
     return {
       url: '/jobs/:flowName/:number/stop',
       method: 'post',
       params: {
         flowName: flowId,
-        number: jobId,
+        number: jobNumber,
       }
     }
   },
@@ -94,6 +100,18 @@ export const actions = {
     return {
       type: Types.freedFilter,
     }
+  },
+  freedResource: function (jobId) {
+    return {
+      type: Types.freedResource,
+      id: jobId,
+    }
+  },
+  storeJob: function (job) {
+    return {
+      type: Types.socketRecived,
+      payload: transformResponse(job),
+    }
   }
 }
 
@@ -102,8 +120,15 @@ export default handleActions({
     success: handlers.saveAll,
   }),
   [Types.get]: handleHttp('GET', {
-    success: handlers.saveData,
+    success: function (state, { payload }) {
+      const job = { ...payload, childrenResult: undefined }
+      return handlers.saveData(state, { payload: job })
+    },
   }),
+  [Types.socketRecived]: function (state, { payload }) {
+    const job = { ...payload, childrenResult: undefined }
+    return handlers.saveData(state, { payload: job })
+  },
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
   },

@@ -1,0 +1,11 @@
+@import '../_colors.scss';
+@import './job.scss';
+
+$node-color-default: $color-muted!default;
+
+$node-color-pending: $node-color-default!default;
+$node-color-running: $job-color-running!default;
+$node-color-success: $job-color-success!default;
+$node-color-failure: $job-color-failure!default;
+$node-color-stopped: $job-color-stopped!default;
+$node-color-timeout: $node-color-failure!default;
