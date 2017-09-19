@@ -39,9 +39,12 @@ function mapStateToProps (state, props) {
 
   const list = flow.get('list')
   const filter = flow.getIn(['ui', 'filter'])
+  const query = flow.getIn(['ui', 'QUERY'])
+
   return {
     flowIds: filterFlowsSelector(list, filter),
-    loaded:  status === STATUS.success,
+    loaded: query === STATUS.success && (!list.size ||
+      status === STATUS.success),
   }
 }
 
