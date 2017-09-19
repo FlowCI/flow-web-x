@@ -5,11 +5,24 @@ import { handleHttp } from '../util'
 
 import types from './credentialType'
 
+import is from 'util/is'
+
 export const actions = {
   query: function () {
     return {
       url: '/credentials',
       name: types.query,
+      transformResponse: function (data) {
+        if (is.array(data)) {
+          return data.reduce((d, item) => {
+            const type = item.type
+            const array = d[type] || []
+            array.push(item)
+            d[type] = array
+            return d
+          }, {})
+        }
+      }
     }
   },
   create: function (type, name) {
@@ -26,17 +39,21 @@ export const actions = {
 }
 
 const initialState = fromJS({
-  ios: [],
-  rsa: [],
+  RSA: [],
+  IOS: [],
   ui: {},
 })
 
 export default handleActions({
   [types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
-      const { ios, rsa } = payload
-      return state.update('ios', () => fromJS(ios))
-        .update('rsa', () => fromJS(rsa))
+      const keys = Object.keys(payload)
+      let nextState = state
+      keys.forEach((key) => {
+        const array = payload[key]
+        nextState = nextState.update(key, () => fromJS(array))
+      })
+      return nextState
     }
   }),
   [types.create]: handleHttp('CREATE', {

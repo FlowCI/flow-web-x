@@ -24,8 +24,8 @@ function mapStateToProps (state, props) {
   const { credential } = state
 
   return {
-    rsaCount: credential.get('rsa').size,
-    iosCount: credential.get('ios').size,
+    rsaCount: credential.get('RSA').size,
+    iosCount: credential.get('IOS').size,
     loading: credential.getIn(['ui', 'QUERY']) !== STATUS.success,
   }
 }

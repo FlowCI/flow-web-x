@@ -25,7 +25,7 @@ import classes from './rsa.scss'
 function mapStateToProps (state, props) {
   const { credential } = state
   return {
-    credentials: credential.get('rsa'),
+    credentials: credential.get('RSA'),
   }
 }
 
