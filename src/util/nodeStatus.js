@@ -17,6 +17,8 @@ const pending = createIsInclude(['PENDING', 'ENQUEUE'])
  */
 const finish = createIsInclude(['SUCCESS', 'STOPPED', 'FAILURE', 'TIMEOUT'])
 const stop = createIsInclude(['STOPPED'])
+const running = createIsInclude(['RUNNING'])
+const failure = createIsInclude(['FAILURE', 'TIMEOUT'])
 
 const log = function (status) {
   return !pending(status) && !stop(status)
@@ -24,8 +26,10 @@ const log = function (status) {
 
 export const is = {
   pending,
+  running,
   finish,
   stop,
+  failure,
 }
 
 export const has = {
