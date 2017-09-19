@@ -69,9 +69,7 @@ export class JobInfo extends Component {
   }
 
   renderContent () {
-    return <div>
-      {this.renderCommit()}
-    </div>
+    return this.renderCommit()
   }
 
   render () {

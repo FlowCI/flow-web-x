@@ -21,10 +21,10 @@ export default class JobNode extends Component {
   }
 
   toggle = () => {
-    const { onExpended } = this.props
+    const { onExpended, node } = this.props
     const { expended } = this.state
     if (!expended) {
-      onExpended && onExpended()
+      onExpended && onExpended(node)
     }
     this.setState({ expended: !expended })
   }
