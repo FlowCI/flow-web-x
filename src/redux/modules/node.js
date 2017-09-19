@@ -7,6 +7,7 @@ import { handleHttpActions } from 'redux-http'
 import { Map } from 'immutable'
 
 import { defaultInitState, handlers } from 'redux/handler'
+import { generatorJobId } from './job'
 
 import jobTypes from './jobType'
 import types from './nodeType'
@@ -22,12 +23,18 @@ function createState () {
 
 export const actions = {
   getLog: function (flowName, jobNumber, nodeOrder) {
+    const jobId = generatorJobId(flowName, jobNumber)
     return {
-      type: 'GET_JOBNODE_LOG',
+      url: '/jobs/:flowName/:jobNumber/:nodeOrder',
+      name: types.getLog,
       params: {
         flowName,
         jobNumber,
         nodeOrder,
+      },
+      indicator: {
+        jobId: jobId,
+        nodeId: nodeOrder,
       }
     }
   },
@@ -50,6 +57,26 @@ export default handleActions({
       return state.update(jobId, (s) =>
         handlers.saveAll(createState(), { payload: nodes })
       )
+    },
+  }),
+  [types.getLog]: handleHttpActions({
+    send: function (state, { indicator, status }) {
+      const { jobId, nodeId } = indicator
+      return state.setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
+    },
+    success: function (state, { indicator, payload, status }) {
+      const { jobId, nodeId } = indicator
+      return state.updateIn([jobId, 'log', nodeId], (old) => {
+        return payload + (old || '')
+      }).setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
+    },
+    failure: function (state, { indicator, status }) {
+      const { jobId, nodeId } = indicator
+      return state.setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
+    },
+    cancel: function (state, { indicator, status }) {
+      const { jobId, nodeId } = indicator
+      return state.setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
     },
   }),
   [jobTypes.socketRecived]: function (state, { payload }) {
