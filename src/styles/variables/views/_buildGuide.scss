@@ -1,0 +1,26 @@
+@import '../_base.scss';
+// Build Guide
+$build-guide-step-padding-vertical: 24px!default;
+$build-guide-step-padding-bottom: 60px!default;
+
+$build-guide-step-divider-width: 2px!default;
+$build-guide-step-divider-color: #D4DCE3!default;
+
+$build-guide-step-number-size: 36px!default;
+$build-guide-step-number-font-szie: 20px!default;
+$build-guide-step-number-font-weight: bold!default;
+$build-guide-step-number-bg: $color-primary!default;
+$build-guide-step-number-color: #fff!default;
+$build-guide-step-number-left-abs-offset: ($build-guide-step-number-size
+    + $build-guide-step-divider-width)/2!default;
+
+$build-guide-thumbnail-border-radius: 5px!default;
+$build-guide-thumbnail-width: 260px!default;
+$build-guide-thumbnail-height: 170px!default;
+
+$build-guide-step-margin-left: $build-guide-thumbnail-width
+  + $build-guide-step-padding-vertical
+  + $build-guide-step-number-left-abs-offset!default;
+
+$build-guide-list-disc-size: 8px!default;
+$build-guide-list-disc-bg: #676C72!default;

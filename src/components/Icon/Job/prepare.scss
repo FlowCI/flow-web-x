@@ -1,0 +1,11 @@
+.arrowDown{
+  animation: arrow-down linear 1s infinite;
+}
+@keyframes arrow-down{
+  0%{
+    transform: translateY(-50%);
+  }
+  100%{
+    transform: translateY(200%);
+  }
+}

@@ -1,4 +1,7 @@
-@import 'variables';
+@import 'variables/zIndex';
+@import 'variables/navbar';
+@import 'variables/components/arrow';
+
 .dropmenu{
   position: absolute;
   top: calc(100% + 1px); // show navbar border-bottom;

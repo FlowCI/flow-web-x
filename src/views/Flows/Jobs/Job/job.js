@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
-import { actions } from 'redux/modules/job'
+import { actions, generatorJobId } from 'redux/modules/job'
 import { actions as uiActions } from 'redux/modules/ui'
 
 import Loading from 'components/Loading'
@@ -20,19 +20,17 @@ import JobStatusHeader from './components/JobStatusHeader'
 
 import classes from './job.scss'
 
-// const NAVBARS = [{
-//   text: '详细信息',
-//   href: ''
-// }]
-
 function mapStateToProps (state, props) {
   const { job } = state
-  const { params: { jobId, flowId, } } = props
+  const { params: { jobNumber, flowId, } } = props
+
+  const jobId = generatorJobId(flowId, jobNumber)
   const status = job.getIn(['ui', jobId, 'GET'])
   return {
     key: jobId,
-    id: jobId,
-    flowId: flowId,
+    flowId,
+    jobId,
+    jobNumber,
     // isNotFound: false,
     loaded: status === STATUS.success,
   }
@@ -48,13 +46,13 @@ function mapDispatchToProps (dispatch) {
 
 export class JobContainer extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     flowId: PropTypes.string.isRequired,
+    jobId: PropTypes.string.isRequired,
+    jobNumber: PropTypes.string.isRequired,
     // isNotFound: PropTypes.bool,
     loaded: PropTypes.bool,
 
     location: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
     children: PropTypes.node,
 
     get: PropTypes.func.isRequired,
@@ -67,15 +65,12 @@ export class JobContainer extends Component {
     i18n: createI18n(language),
   }
 
-  state = {
-  }
-
   componentDidMount () {
     const {
-      get, flowId, id,
-      setBackUrl, location
+      get, flowId, jobNumber,
+      setBackUrl, location,
     } = this.props
-    get(flowId, id)
+    get(flowId, jobNumber)
     const { query: { from } } = location
     if (from && /^\/\w+/.test(from)) {
       // 存在并且是相对路径
@@ -100,21 +95,21 @@ export class JobContainer extends Component {
 
   renderContent () {
     const {
-      id, i18n, location,
-      params: { flowId, jobId },
+      jobNumber, i18n, location,
+      jobId, flowId,
       children
     } = this.props
-    const base = { ...location, pathname: `/flows/${flowId}/jobs/${jobId}` }
+    const base = { ...location, pathname: `/flows/${flowId}/jobs/${jobNumber}` }
     return <div className={classes.content}>
-      <JobNavbar id={id} i18n={i18n} base={base} />
+      <JobNavbar jobId={jobId} i18n={i18n} base={base} />
       {children}
     </div>
   }
 
   render () {
-    const { loaded, id, i18n } = this.props
+    const { loaded, jobId, i18n } = this.props
     return <div className={classes.container}>
-      {loaded && <JobStatusHeader id={id} i18n={i18n} />}
+      {loaded && <JobStatusHeader jobId={jobId} i18n={i18n} />}
       {loaded ? this.renderContent() : this.renderLoading()}
     </div>
   }

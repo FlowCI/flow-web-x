@@ -1,11 +1,10 @@
 @import "./fonts/iconVariables.scss";
-
 @font-face {
   font-family: 'flowci';
   src:
-    url('#{$icomoon-font-path}/flowci.ttf?a8k8m0') format('truetype'),
-    url('#{$icomoon-font-path}/flowci.woff?a8k8m0') format('woff'),
-    url('#{$icomoon-font-path}/flowci.svg?a8k8m0#flowci') format('svg');
+    url('#{$icomoon-font-path}/flowci.ttf?5ng2cj') format('truetype'),
+    url('#{$icomoon-font-path}/flowci.woff?5ng2cj') format('woff'),
+    url('#{$icomoon-font-path}/flowci.svg?5ng2cj#flowci') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +24,26 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-timeout {
+  &:before {
+    content: $icon-timeout;
+  }
+}
+.icon-stopped {
+  &:before {
+    content: $icon-stopped;
+  }
+}
+.icon-failure {
+  &:before {
+    content: $icon-failure;
+  }
+}
+.icon-running {
+  &:before {
+    content: $icon-running;
+  }
+}
 .icon-cross {
   &:before {
     content: $icon-cross;
@@ -58,11 +77,6 @@
 .icon-question-thin {
   &:before {
     content: $icon-question-thin;
-  }
-}
-.icon-sync {
-  &:before {
-    content: $icon-sync;
   }
 }
 .icon-plus-sm {

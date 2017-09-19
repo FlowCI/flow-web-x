@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables/components/alert';
 
 @mixin alert-color ($color, $bgc) {
   color: $color;

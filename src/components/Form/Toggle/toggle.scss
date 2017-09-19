@@ -1,5 +1,4 @@
-@import 'variables';
-
+@import 'variables/components/control';
 @mixin toggle-circle-size ($toggleSize) {
   width: $toggleSize;
   height: $toggleSize;
