@@ -1,0 +1,10 @@
+.container{
+  position: fixed;
+  top: 60px;
+  right: 0px;
+  width: 300px;
+  z-index: 1000;
+  >div{
+    margin-bottom: 10px;
+  }
+}
