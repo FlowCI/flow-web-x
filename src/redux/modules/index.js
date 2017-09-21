@@ -6,6 +6,7 @@ import flow from './flow'
 import ui from './ui'
 import notifySetting from './notifySetting'
 import system from './system'
+import alert from './alert'
 
 export default {
   session,
@@ -14,4 +15,5 @@ export default {
   ui,
   notifySetting,
   system,
+  alert,
 }

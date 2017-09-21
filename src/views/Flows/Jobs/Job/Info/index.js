@@ -45,33 +45,32 @@ export class JobInfo extends Component {
   renderCommit () {
     const { job, i18n } = this.props
     const envs = job.get('envs', new Map())
+    const outputs = job.getIn(['result', 'outputs'], new Map())
     return <Mapping>
       <Legend name={i18n('提交信息')} />
       <Entry name='Commit' value={<a target='_blank'>
-        {envs.get('FLOW_GIT_COMMIT_ID', '-')}
+        {outputs.get('FLOW_GIT_COMMIT_ID', '-')}
       </a>} />
       <Entry name='Author'
-        value={envs.get('FLOW_GIT_COMMITER')} />
+        value={outputs.get('FLOW_GIT_COMMITER')} />
 
       <Entry name='Branch'
-        value={envs.get('FLOW_GIT_BRANCH')} />
+        value={outputs.get('FLOW_GIT_BRANCH')} />
 
       <Entry name='Commit message'
-        value={envs.get('FLOW_GIT_CHANGELOG')} />
+        value={outputs.get('FLOW_GIT_CHANGELOG')} />
 
       <Entry name='Compare' value={<a target='_blank'>
-        {envs.get('FLOW_GIT_COMPARE_ID')}
+        {outputs.get('FLOW_GIT_COMPARE_ID')}
       </a>} />
       <Legend name={i18n('Agent 信息')} />
       <Entry name='Agent'
-        value={envs.get('FLOW_AGENT_ZONE')} />
+        value={envs.get('JOB_AGENT_INFO')} />
     </Mapping>
   }
 
   renderContent () {
-    return <div>
-      {this.renderCommit()}
-    </div>
+    return this.renderCommit()
   }
 
   render () {

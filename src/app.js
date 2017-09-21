@@ -17,9 +17,7 @@ class App extends React.Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <div style={{ height: '100%' }}>
-          <Router history={this.props.history} children={this.props.routes} />
-        </div>
+        <Router history={this.props.history} children={this.props.routes} />
       </Provider>
     )
   }

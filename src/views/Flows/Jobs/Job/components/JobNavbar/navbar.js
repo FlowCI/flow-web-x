@@ -15,7 +15,8 @@ export default class JobStatusHeader extends Component {
     const { base, i18n } = this.props
     return <ul className={classes.navbar}>
       <li>
-        <Link to={base} className={classes.nav} activeClassName='active'>
+        <Link to={base} className={classes.nav}
+          onlyActiveOnIndex activeClassName='active'>
           {i18n('详细信息')}
         </Link>
       </li>

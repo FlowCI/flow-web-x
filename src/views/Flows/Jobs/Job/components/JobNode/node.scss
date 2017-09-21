@@ -1,0 +1,14 @@
+@import 'variables/colors';
+.code{
+  background-color: $color-black;
+  color: #fff;
+  padding: 10px 20px;
+  position: relative;
+  max-height: 70vh;
+  overflow: auto;
+}
+.close{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

@@ -72,9 +72,9 @@ export class ConfigFlowView extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { status } = nextProps
+    const { status, redirect, flowId } = nextProps
     if (status === 'READY') {
-      console.log('redirect to flow indexRoute')
+      redirect(`/flows/${flowId}`)
     }
   }
 

@@ -1,0 +1,14 @@
+@import 'variables/zIndex';
+@import 'variables/base';
+
+$width: 300px;
+.container{
+  position: fixed;
+  top: 0px;
+  right: calc(50vw - #{$width/2});
+  width: $width;
+  z-index: $zindex-alert;
+  >div{
+    margin-bottom: $padding-base-vertical;
+  }
+}
