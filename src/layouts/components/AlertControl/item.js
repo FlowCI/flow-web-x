@@ -10,6 +10,14 @@ export default class AlertControlItem extends Component {
     close: PropTypes.func.isRequired,
   }
 
+  static defaultProps = {
+    /**
+     * use for alert components
+     */
+    autoHideDuration: 3000,
+    closable: true,
+  }
+
   handleClose = () => {
     const { close, alert } = this.props
     close(alert.get('id'))
@@ -21,7 +29,7 @@ export default class AlertControlItem extends Component {
     const message = alert.get('message')
     const options = alert.get('options', {})
 
-    return <Alert closable {...options}
+    return <Alert {...this.props} {...options}
       type={type} message={message}
       onRequestClose={this.handleClose} />
   }
