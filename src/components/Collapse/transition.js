@@ -104,7 +104,7 @@ export default class CollapseTransition extends Component {
   render () {
     const { children, delay, ...other } = this.props
     return <Transition {...other}
-      timeout={delay}
+      timeout={delay + 10}
       onEnter={this.handleEnter}
       onEntering={this.handleEntering}
       onEntered={this.handleEntered}

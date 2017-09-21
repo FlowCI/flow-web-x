@@ -31,6 +31,6 @@
 .warning{
   @include alert-color($alert-warning-color, $alert-warning-bgc);
 }
-.error{
-  @include alert-color($alert-error-color, $alert-error-bgc);
+.failure{
+  @include alert-color($alert-failure-color, $alert-failure-bgc);
 }
