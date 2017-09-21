@@ -1,13 +1,4 @@
-@import "./fonts/iconVariables.scss";
-@font-face {
-  font-family: 'flowci';
-  src:
-    url('#{$icomoon-font-path}/flowci.ttf?5ng2cj') format('truetype'),
-    url('#{$icomoon-font-path}/flowci.woff?5ng2cj') format('woff'),
-    url('#{$icomoon-font-path}/flowci.svg?5ng2cj#flowci') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
+@import "./variables";
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
@@ -24,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-pending {
+  &:before {
+    content: $icon-pending;
+  }
+}
 .icon-timeout {
   &:before {
     content: $icon-timeout;
@@ -224,3 +220,4 @@
     content: $icon-warning;
   }
 }
+

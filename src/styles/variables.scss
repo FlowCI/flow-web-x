@@ -1,0 +1,379 @@
+// Colors
+$color-danger: #E56065!default;
+$color-success: #8BB73E!default;
+$color-muted: #A2A8B1!default;
+$color-primary: #575FB7!default;
+
+$color-hr: #D4DCE3!default;
+$color-black: #55575C!default;
+
+$color-hover-bg: #EDEDED!default;
+
+$body-bg: #fff!default;
+$text-color: $color-black!default;
+
+
+$link-color: #575FB7!default;
+$link-hover-color: darken($link-color, 10%) !default;
+
+$border-radius-base: 3px;
+
+// Media
+$screen-xs: 480px!default;
+$screen-phone: $screen-xs!default;
+
+$screen-sm: 768px!default;
+$screen-tablet: $screen-sm!default;
+
+$screen-md: 992px !default;
+$screen-desktop: $screen-md !default;
+
+$screen-lg: 1200px !default;
+$screen-lg-desktop: $screen-lg !default;
+
+// FONT
+$font-size-root: 100px!default; // use for rem, chrome default mini size is 10px
+
+$font-size-base: 14px!default;
+$font-size-large: ceil(($font-size-base * 1.14)) !default; // ~16px
+$font-size-small: ceil(($font-size-base * 0.85)) !default; // ~12px
+
+$font-size-h1: floor(($font-size-base * 2.6)) !default; // ~36px
+$font-size-h2: ceil(($font-size-base * 2)) !default; // 28px
+$font-size-h3: ceil(($font-size-base * 1.85)) !default; // ~26px
+$font-size-h4: ceil(($font-size-base * 1.14)) !default; // ~16px
+$font-size-h5: $font-size-base!default;
+$font-size-h6: ceil(($font-size-base * 0.85)) !default; // ~12px
+
+$line-height-base: 1.29;
+// $line-height-computed: 18px!default;
+$line-height-computed:    floor(($font-size-base * $line-height-base)) !default; // ~18px
+
+$font-family-base:  'Helvetica Neue', 'PingFang SC', 'Open Sans', Helvetica, sans-serif!default;
+// default fonts for <code>, <pre> .code
+$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+
+// Components
+
+$padding-base-vertical: 10px!default;
+
+$padding-base-horizontal: 10px!default;
+
+// Layout
+$layout-padding-vertical: 0!default;
+$layout-padding-horizontal: 4*$padding-base-horizontal;
+
+// Z-index
+$zindex-navbar: 100!default;
+$zindex-select: $zindex-navbar - 1;
+
+// Arrow
+$arrow-size: 6px!default;
+
+// Control
+$control-radius-base: $border-radius-base!default;
+
+$control-sm-size: 22px!default;
+$control-sm-padding-vertical: ($control-sm-size - floor($font-size-small * $line-height-base) - 2px)/2!default;
+$control-sm-padding-horizontal: ($control-sm-size - $font-size-small - 2px)/2!default;
+
+$control-base-size: 34px!default;
+$control-base-padding-vertical: ($control-base-size - $line-height-computed - 2px)/2!default;
+$control-base-padding-horizontal: ($control-base-size - $font-size-base - 2px)/2!default;
+
+$control-lg-size: 40px!default;
+$control-lg-padding-vertical: ($control-lg-size - floor($font-size-large * $line-height-base) - 2px)/2!default;
+$control-lg-padding-horizontal: ($control-lg-size - $font-size-large - 2px)/2!default;
+
+$control-border-base: $color-hr!default;
+$control-base-boxshadow: 0 4px 15px 0px rgba(0,0,0, .15)!default;
+
+// button
+$btn-font-weight: bold!default;
+
+$btn-default-color: $color-black!default;
+$btn-default-bg: #fff!default;
+$btn-default-border: $control-border-base!default;
+
+$btn-primary-color: #fff!default;
+$btn-primary-bg: #6668D3!default;
+$btn-primary-border: darken($btn-primary-bg, 5%) !default;
+
+$btn-success-color: #fff!default;
+$btn-success-bg: $color-success!default;
+$btn-success-border: darken($btn-success-bg, 5%) !default;
+
+$btn-danger-color: #fff!default;
+$btn-danger-bg: $color-danger!default;
+$btn-danger-border: darken($btn-danger-bg, 5%) !default;
+
+$btn-default-inverse-color: $color-black!default;
+$btn-default-inverse-bg: #fff!default;
+
+// input
+$input-placeholder-color: $color-muted!default;
+$input-border: #C3C8CE!default;
+$input-bg-disabled: #eee!default;
+$input-default-width: 200px!default;
+
+// input checkbox
+$checkbox-checked-color: $color-black!default;
+$checkbox-unchecked-color: $color-muted!default;
+
+// input checkbox
+$radio-checked-color: $color-black!default;
+$radio-unchecked-color: $color-muted!default;
+
+// select
+$select-hovered-bg: #ecf6fd!default;
+$select-selected-color: $color-black!default;
+$select-selected-bg: $color-hover-bg!default;
+$select-selected-font-weight: bold!default;
+
+$select-dropdown-offset: 5px!default;
+$select-dropdown-radius: $border-radius-base!default;
+$select-dropdown-border: $control-border-base!default;
+$select-dropdown-boxshadow: $control-base-boxshadow;
+
+// Toggle
+$toggle-color: #fff!default;
+$toggle-circle-color: $toggle-color!default;
+
+$toggle-on-bgc: #F8BA0B!default;
+$toggle-off-bgc: $color-black!default;
+$toggle-circle-margin: 4px!default;
+
+// Alert
+$alert-border-radius: $border-radius-base!default;
+$alert-padding-vertical: $padding-base-vertical!default;
+$alert-padding-horizontal: 1.5*$padding-base-horizontal!default;
+$alert-box-shadow: 0 3px 6px 0px rgba(0,0,0, 0.1)!default;
+
+$alert-info-color: $color-black!default;
+$alert-info-bgc: #EDEFF1!default;
+
+$alert-success-color: #fff!default;
+$alert-success-bgc: #6CB6AA!default;
+
+$alert-error-color: #fff!default;
+$alert-error-bgc: $color-danger!default;
+
+$alert-warning-color: #fff!default;
+$alert-warning-bgc: #F8BA0B!default;
+
+// Navbar
+$navbar-height: 60px!default;
+$navbar-phone-height: 50px!default;
+
+$navbar-font-weight: bold!default;
+
+$navbar-default-bg: #F4F5F5!default;
+$navbar-default-color: $text-color!default;
+$navbar-default-border: $color-hr!default;
+
+$navbar-inverse-bg: $text-color!default;
+$navbar-inverse-color: #fff!default;
+
+$navbar-base-padding-vertical: 0!default;
+$navbar-base-padding-horizontal: 1.5*$padding-base-horizontal!default;
+
+$navbar-brand-width: 140px;
+$navbar-brand-arrow: 5px!default;
+$navbar-brand-padding-vertical: $navbar-base-padding-vertical!default;
+$navbar-brand-padding-horizontal: $navbar-base-padding-horizontal!default;
+
+$navbar-dropmenu-bg: #fff!default;
+$navbar-dropmenu-boxshadow: $control-base-boxshadow!default;
+
+$navbar-dropmenu-arrow: 8px!default;
+$navbar-dropmenu-width: 3*($navbar-height + 1px)!default;
+
+$navbar-dropmenu-item-height: 40px!default;
+$navbar-dropmenu-item-border: $color-hr;
+$navbar-dropmenu-item-vertical: $navbar-base-padding-vertical!default;
+$navbar-dropmenu-item-horizontal: $navbar-base-padding-horizontal!default;
+
+// NavTabs
+$navtabs-default-height: 40px!default;
+$navtabs-default-border: $color-black!default;
+$navtabs-default-border-width: 4px!default;
+$navtabs-default-bottom: 3*$padding-base-vertical!default;
+$navtabs-default-font-size: 16px!default;
+$navtabs-default-font-weight: bold!default;
+$navtabs-default-color: #AEB7BE!default;
+$navtabs-default-active-color: $color-black!default;
+$navtabs-default-item-horizontal-padding: $padding-base-horizontal!default;
+
+
+// Footer
+$footer-height: 60px!default;
+$footer-line-height: 15px!default;
+$footer-font-size: $font-size-small!default;
+
+$footer-padding-base: floor(($footer-height - $footer-line-height) / 3)!default;
+$footer-padding: $footer-padding-base 0 2*$footer-padding-base !default;
+$footer-divier-padding: $footer-padding-base!default;
+
+$footer-xs-padding: 10px 0 20px!default;
+$footer-xs-divier-padding: 10px!default;
+
+$footer-default-color: #676C72!default;
+$footer-default-border: $color-hr!default;
+
+// Build Guide
+
+$build-guide-step-padding-vertical: 24px!default;
+$build-guide-step-padding-bottom: 60px!default;
+
+$build-guide-step-divider-width: 2px!default;
+$build-guide-step-divider-color: #D4DCE3!default;
+
+$build-guide-step-number-size: 36px!default;
+$build-guide-step-number-font-szie: 20px!default;
+$build-guide-step-number-font-weight: bold!default;
+$build-guide-step-number-bg: $color-primary!default;
+$build-guide-step-number-color: #fff!default;
+$build-guide-step-number-left-abs-offset: ($build-guide-step-number-size
+    + $build-guide-step-divider-width)/2!default;
+
+$build-guide-thumbnail-border-radius: 5px!default;
+$build-guide-thumbnail-width: 260px!default;
+$build-guide-thumbnail-height: 170px!default;
+
+$build-guide-step-margin-left: $build-guide-thumbnail-width
+  + $build-guide-step-padding-vertical
+  + $build-guide-step-number-left-abs-offset!default;
+
+$build-guide-list-disc-size: 8px!default;
+$build-guide-list-disc-bg: #676C72!default;
+
+// Create Flow
+$create-flow-step-color: $color-black!default;
+$create-flow-step-bgc: #fff!default;
+$create-flow-step-border-color: $color-hr;
+
+$create-flow-step-spacing: 4*$padding-base-vertical;
+
+$create-flow-step-border-raduis: $border-radius-base!default;
+$create-flow-step-boxshadow: $control-base-boxshadow!default;
+
+$create-flow-step-header-height: 60px!default;
+$create-flow-step-header-vertical-padding: 1.5*$padding-base-vertical!default;
+$create-flow-step-header-horizontal-padding: 2*$padding-base-horizontal!default;
+$create-flow-step-header-color: #fff!default;
+$create-flow-step-header-bgc: #C3C8CE!default;
+
+$create-flow-step-header-active-bgc: #6668D3!default;
+$create-flow-step-header-active-color: $create-flow-step-header-color!default;
+
+$create-flow-step-icon-font-size: 25px!default;
+$create-flow-step-icon-size: 60px!default;
+$create-flow-step-icon-boxshadow: $control-base-boxshadow!default;
+$create-flow-step-icon-padding-left: 4*$padding-base-horizontal;
+
+$create-flow-step-cable-color: #C3C8CE!default;
+
+$create-flow-title-color: $color-black!default;
+$create-flow-subtitle-color: #8B8C9B!default;
+$create-flow-subtitle-font-weight: normal!default;
+
+$create-flow-well-border: #A7ABB1!default;
+$create-flow-well-border-radius: $border-radius-base!default;
+$create-flow-well-vertical-padding: 1.5*$padding-base-vertical!default;
+$create-flow-well-icon-size: 26px!default;
+$create-flow-well-color: $create-flow-title-color!default;
+$create-flow-well-subtitle-color: $create-flow-subtitle-color!default;
+
+$create-flow-well-active-bgc: #F8F7FE!default;
+$create-flow-well-active-border: #9FA0D8!default;
+$create-flow-well-active-color: #6668D3!default;
+
+$create-flow-wrapper-vertical-padding: 4*$padding-base-vertical!default;
+$create-flow-wrapper-horizontal-padding: 4*$padding-base-horizontal!default;
+
+// Create Flow SSH/HTTP Config
+$create-flow-config-code-bgc: #EDEFF1!default;
+$create-flow-config-code-border-radius: $border-radius-base!default;
+$create-flow-config-copy-color: $create-flow-well-active-color!default;
+
+$create-flow-config-section-vertical-padding: 2*$padding-base-vertical!default;
+$create-flow-config-vertical-padding: $padding-base-vertical!default;
+$create-flow-config-horizontal-padding: $padding-base-horizontal!default;
+$create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;
+
+// Admin
+$admin-vertical-padding: 2*$padding-base-vertical!default;
+$admin-horizontal-padding: 0!default;
+
+// Admin Menus
+$admin-menus-height: 50px!default;
+$admin-menus-width: 200px!default;
+
+$admin-menus-font-weight: bold!default;
+$admin-menus-border: #DFDFE5!default;
+$admin-menus-border-radius: $border-radius-base!default;
+$admin-menus-base-boxshadow: $control-base-boxshadow!default;
+
+$admin-menus-vertical-padding: 0!default;
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+$admin-menus-icon-horizontal-padding: $padding-base-horizontal!default;
+$admin-menus-icon-font-size: 18px!default;
+
+$admin-menus-divier: #D7D9DC!default;
+$admin-menus-color: $color-black!default;
+$admin-menus-bgc: #fff!default;
+
+$admin-menus-hover-color: currentColor!default;
+$admin-menus-hover-bgc: #EEF0F3!default;
+
+$admin-menus-active-color: #fff!default;
+$admin-menus-active-bgc: $color-black!default;
+
+$admin-menus-arraw-width: 6px!default;
+$admin-menus-arraw-height: 10px!default;
+$admin-menus-arraw-color: $admin-menus-active-color!default;
+
+$admin-menus-horizontal-padding: 3*$padding-base-horizontal!default;
+
+// Admin Content
+$admin-content-horizontal-padding: $padding-base-horizontal!default;
+
+$admin-navtabs-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-list-header: 30px!default;
+$admin-list-header-bgc: #EDEFF1!default;
+$admin-list-header-horizontal-padding: 1.5*$padding-base-horizontal!default;
+
+$admin-item-height: 50px;
+$admin-item-vertical-padding: $padding-base-vertical!default;
+$admin-item-horizontal-padding: $admin-list-header-horizontal-padding!default;
+$admin-list-divier-color: $admin-menus-divier!default;
+
+// Admin Sub Navbar
+$admin-content-single-navbar-font-size: 20px!default;
+$admin-content-subtitle-font-size: 14px!default;
+$admin-content-subtitle-color: $color-muted!default;
+
+$admin-toolbar-vertical-padding: 1.5*$padding-base-vertical!default;
+
+// Admin TabBars
+$admin-tabbars-height: $control-base-size;
+$admin-tabbars-item-spacing: $padding-base-vertical!default;
+
+// Admin Agents
+$admin-agents-actoins-button-spacing: $padding-base-horizontal!default;
+
+// Admin Flow List
+$admin-flows-list-copy-color: #6668D3!default;
+
+// Admin Flow Members
+$admin-flows-member-border: #D7D9DC!default;
+$admin-flows-member-border-radius: $border-radius-base!default;
+$admin-flows-member-menus-bgc: #F3F6F7!default;
+
+$admin-flows-member-menus-arrow-width: $admin-menus-arraw-width!default;
+$admin-flows-member-menus-arrow-height: $admin-menus-arraw-height!default;
+
+$admin-flows-member-menus-item-height: 40px!default;
+$admin-flows-member-menus-horizontal-padding: 1.5*$padding-base-horizontal!default;

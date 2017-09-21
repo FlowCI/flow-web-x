@@ -36,6 +36,7 @@ export class EmailSettingForm extends Component {
   static propTypes = {
     values: object.isRequired,
     valid: bool,
+    pristine: bool,
     i18n: func.isRequired,
     handleSubmit: func.isRequired,
     onTest: func.isRequired,
@@ -47,8 +48,9 @@ export class EmailSettingForm extends Component {
   }
 
   render () {
-    const { i18n, valid, handleSubmit } = this.props
-    return <form onSubmit={handleSubmit} className={classes.form}>
+    const { i18n, valid, pristine, handleSubmit } = this.props
+    const actionEnaled = !pristine && valid
+    return <form className={classes.form}>
       <table>
         <tbody>
           <tr>
@@ -81,9 +83,9 @@ export class EmailSettingForm extends Component {
           <tr>
             <td className={classes.name}>SMTP 用户身份验证</td>
             <td>
-              <RadioGroups name='isAuthored'>
-                <Radio rightLabel='开启' value='1' />
-                <Radio rightLabel='关闭' value='0' />
+              <RadioGroups name='isAuthenticated'>
+                <Radio rightLabel='开启' value />
+                <Radio rightLabel='关闭' value={false} />
               </RadioGroups>
             </td>
           </tr>
@@ -107,7 +109,7 @@ export class EmailSettingForm extends Component {
                 onChange={this.handlePasswordChange}
               />
               <Button className={`btn-default ${classes.test}`}
-                disabled={!valid} onClick={this.handleTest}>
+                disabled={!actionEnaled} onClick={this.handleTest}>
                 {i18n('test')}
               </Button>
             </td>
@@ -116,7 +118,9 @@ export class EmailSettingForm extends Component {
             <td className={classes.name}>&nbsp;</td>
             <td>
               <Button className={`btn-primary ${classes.save}`}
-                size='lg' type='submit' disabled={!valid}>
+                size='lg' type='submit' disabled={!actionEnaled}
+                onClick={handleSubmit}
+              >
                 {i18n('save')}
               </Button>
             </td>

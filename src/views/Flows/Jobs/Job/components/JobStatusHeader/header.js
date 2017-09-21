@@ -4,6 +4,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 
+import JobIcon from 'components/Icon/JobText'
+
 import classes from './header.scss'
 
 function mapStateToProps (state, { jobId }) {
@@ -15,20 +17,23 @@ function mapStateToProps (state, { jobId }) {
 
 export class JobStatusHeader extends Component {
   static propTypes = {
-    job: ImmutablePropTypes.map,
+    job: ImmutablePropTypes.map.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
   render () {
     const { job, i18n } = this.props
+    const status = job.get('status')
+
+    const startedAt = job.getIn(['result', 'startTime'])
+    const duration = job.getIn(['result', 'duration'])
+
     return <div className={`${classes.header} ${job.get('status', '')}`}>
-      <span className={classes.icon}>
-        <i className='icon icon-check' />{i18n('构建成功')}
-      </span>
+      <JobIcon status={status} />
       <ul className={classes.list}>
-        <li>{i18n('构建于4小时前', { time: job.get('startedAt') })}</li>
+        <li>{i18n('buildFromNow', { time: startedAt })}</li>
         <li>
-          {i18n('花费43秒', { duration: job.get('duration') })}
+          {i18n('buildDuration', { duration })}
         </li>
         <li>{i18n('手动构建')}</li>
       </ul>

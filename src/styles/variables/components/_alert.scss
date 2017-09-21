@@ -1,0 +1,18 @@
+@import '../_base.scss';
+// Alert
+$alert-border-radius: $border-radius-base!default;
+$alert-padding-vertical: $padding-base-vertical!default;
+$alert-padding-horizontal: 1.5*$padding-base-horizontal!default;
+$alert-box-shadow: 0 3px 6px 0px rgba(0,0,0, 0.1)!default;
+
+$alert-info-color: $color-black!default;
+$alert-info-bgc: #EDEFF1!default;
+
+$alert-success-color: #fff!default;
+$alert-success-bgc: #6CB6AA!default;
+
+$alert-failure-color: #fff!default;
+$alert-failure-bgc: $color-danger!default;
+
+$alert-warning-color: #fff!default;
+$alert-warning-bgc: #F8BA0B!default;
