@@ -1,4 +1,4 @@
-import types from 'redux/modules/userType'
+import types from 'redux/modules/memberType'
 import roleData, { types as roleTypes } from './role'
 import flowData, { types as flowTypes } from './flow'
 

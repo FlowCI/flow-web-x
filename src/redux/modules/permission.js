@@ -7,7 +7,7 @@ import { Map } from 'immutable'
 
 import { handleHttp } from '../util'
 
-import types from './userType'
+import types from './memberType'
 
 const initialState = new Map()
 

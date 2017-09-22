@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions'
 import { handleHttp } from '../util'
 import { defaultInitState, createHandlers } from 'redux/handler'
 
-import types from './userType'
+import types from './memberType'
 
 const initialState = defaultInitState
 const handlers = createHandlers({ id: 'email' })
