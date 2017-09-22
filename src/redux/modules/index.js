@@ -7,6 +7,9 @@ import ui from './ui'
 import notifySetting from './notifySetting'
 import system from './system'
 import alert from './alert'
+import user from './user'
+import role from './role'
+import permission from './permission'
 
 export default {
   session,
@@ -16,4 +19,7 @@ export default {
   notifySetting,
   system,
   alert,
+  user,
+  role,
+  permission,
 }
