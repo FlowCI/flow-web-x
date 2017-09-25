@@ -79,6 +79,7 @@ export default class Input extends Component {
   handleClick = (e) => {
     if (this.input) {
       this.input.focus()
+      this.input.click()
     }
   }
 

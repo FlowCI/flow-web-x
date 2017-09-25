@@ -11,7 +11,8 @@ export function createInitState (initState) {
 }
 
 function getId (obj, options) {
-  return obj[options && options.id ? options.id : 'id']
+  // 强制转为 string 型
+  return obj[options && options.id ? options.id : 'id'] + ''
 }
 
 export function saveToData (state, { payload }, options) {
