@@ -29,13 +29,18 @@ export default {
       users,
     }
   },
-  [types.updateRole]: function (email, roleId) {
-    const roles = roleData[roleTypes.query]()
+  [types.updateRole]: function ({ params }) {
+    const { emailList, roles } = params
+    const role = roles[0]
 
-    return {
-      email: email,
-      roles: [roles.find((r) => `${r.id}` === roleId)],
-    }
+    return emailList.map((email) => {
+      return {
+        email: email,
+        username: `demo_for_update_role_username_${email}`,
+        flows: [`demo_flow_name_for_${email}`],
+        roles: [{ name: role }]
+      }
+    })
   },
   [types.removeAll]: function () {
     return {}

@@ -26,6 +26,17 @@ export const actions = {
       }
     }
   },
+  updateRole: function (emails, role) {
+    return {
+      url: '/user/role/update',
+      method: 'post',
+      name: types.updateRoles,
+      params: {
+        emailList: emails,
+        roles: [role] // 目前只支持一条 role
+      },
+    }
+  },
   removeAll: function (emails) {
     return {
       url: '/user',
@@ -66,6 +77,7 @@ export default handleActions({
       })
     }
   }),
+  [types.updateRoles]: handleHttp('UPDATE'),
   [types.removeAll]: handleHttp('', {
     success: function (state, { indicator }) {
       const { emails } = indicator
