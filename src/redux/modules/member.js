@@ -54,9 +54,15 @@ export default handleActions({
 
       // 如果是第一页,则直接替换 state
       const s = page === 1 ? initialState : state
-
-      return handlers.saveAll(s, users).update('ui', (ui) => {
-        return ui.set('total', total).set('adminCount', adminCount)
+      const pureUsers = users.map((user) => {
+        return {
+          ...user,
+          flows: undefined,
+          roles: undefined
+        }
+      })
+      return handlers.saveAll(s, { payload: pureUsers }).update('ui', (ui) => {
+        return ui.merge({ total, adminCount, page })
       })
     }
   }),
