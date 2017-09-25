@@ -95,7 +95,7 @@ export class AdminMemberList extends Component {
         {this.renderFilterItem('ALL', total)}
         {this.renderFilterItem('ADMIN', adminCount)}
       </TabBars>
-      <Input className={classes.search} placeholder='搜索1'
+      <Input className={classes.search} placeholder='搜索'
         leftIcon={<i className='icon icon-search2' />}
       />
     </div>
