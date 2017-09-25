@@ -73,8 +73,10 @@ export class AdminMemberListActions extends Component {
     const { role } = this.state
     return <Select placeholder={i18n('选择变更角色')} value={role}
       onChange={this.handleRoleSelect}>
-      {roles.map((r) => <Option key={r.get('id')}
-        value={r.get('id')} title={r.get('name')} />)}
+      {roles.map((r) => {
+        const name = r.get('name')
+        return <Option key={name} value={name} title={name} />
+      })}
     </Select>
   }
 
