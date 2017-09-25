@@ -93,6 +93,12 @@ export class AdminMemberList extends Component {
     return list.every((k) => !!checks[k])
   }
 
+  getChecked () {
+    const { checks } = this.state
+    const keys = Object.keys(checks)
+    return keys.filter((k) => !!checks[k])
+  }
+
   setChecked = (email, checked) => {
     const { checks } = this.state
     const nextChecks = { ...checks, [email]: checked }
@@ -113,7 +119,11 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
-    console.log('remove')
+    const { removeAll } = this.props
+    const selected = this.getChecked()
+    if (selected.length) {
+      return removeAll(selected)
+    }
   }
 
   handleChangeRole = (role) => {
