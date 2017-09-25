@@ -77,9 +77,12 @@ export default class Input extends Component {
   }
 
   handleClick = (e) => {
+    const { target } = e
     if (this.input) {
       this.input.focus()
-      this.input.click()
+      if (target !== this.input) {
+        this.input.click()
+      }
     }
   }
 
