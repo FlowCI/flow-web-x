@@ -5,7 +5,7 @@ import flowData, { types as flowTypes } from './flow'
 export default {
   [types.query]: function () {
     const roles = roleData[roleTypes.query]()
-    const flows = flowData(flowTypes.query)()
+    const flows = flowData[flowTypes.query]()
 
     const randomLength = ~~(Math.random() * 10)
     const users = []
