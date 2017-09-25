@@ -68,8 +68,9 @@ export default handleActions({
   }),
   [types.removeAll]: handleHttp('', {
     success: function (state, { indicator }) {
+      const { emails } = indicator
       // 待定，需要减去 ui 中 total 数
-      return handlers.removeAll(state, { payload: indicator })
+      return handlers.removeAll(state, { payload: emails })
     }
   }),
   [types.freedAll]: function () {
