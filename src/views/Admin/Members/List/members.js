@@ -125,7 +125,7 @@ export class AdminMemberList extends Component {
     const { removeAll } = this.props
     const selected = this.getChecked()
     if (selected.length) {
-      this.setState({ checks: {} })
+      this.setState({ checks: {}, checkAll: false })
       return removeAll(selected)
     }
   }
@@ -134,7 +134,7 @@ export class AdminMemberList extends Component {
     const { updateRole } = this.props
     const selected = this.getChecked()
     if (selected.length) {
-      this.setState({ checks: {} })
+      this.setState({ checks: {}, checkAll: false })
       return updateRole(selected, role)
     }
   }
