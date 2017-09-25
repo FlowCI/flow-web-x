@@ -29,6 +29,7 @@ import {
   Tab
 } from '../../components/TabBars'
 import Member from './member'
+import ActionBar from './actions'
 
 import classes from './members.scss'
 
@@ -167,9 +168,10 @@ export class AdminMemberList extends Component {
   }
 
   render () {
-    const { loaded } = this.props
+    const { loaded, i18n } = this.props
     return <div className={classes.container}>
       {loaded && this.renderFilter()}
+      {loaded && <ActionBar i18n={i18n} />}
       {loaded ? this.rendrMembers() : this.renderLoading()}
     </div>
   }
