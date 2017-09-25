@@ -29,7 +29,7 @@ export default {
       users,
     }
   },
-  [types.updateRole]: function ({ params }) {
+  [types.updateRoles]: function ({ params }) {
     const { emailList, roles } = params
     const role = roles[0]
 
