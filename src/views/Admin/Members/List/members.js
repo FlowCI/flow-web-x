@@ -95,8 +95,9 @@ export class AdminMemberList extends Component {
 
   getChecked () {
     const { checks } = this.state
+    const { list } = this.props
     const keys = Object.keys(checks)
-    return keys.filter((k) => !!checks[k])
+    return keys.filter((k) => !!checks[k] && list.has(k))
   }
 
   setChecked = (email, checked) => {
