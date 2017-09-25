@@ -8,7 +8,7 @@ import language from 'util/language'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-// import autoCancel from 'react-promise-cancel'
+import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/member'
@@ -111,6 +111,12 @@ export class AdminMemberList extends Component {
     this.setState({ checks: nextChecks, checkAll: checked })
   }
 
+  renderLoading () {
+    return <div>
+      <Loading />
+    </div>
+  }
+
   renderFilterItem (category, count) {
     const { i18n } = this.props
     const text = i18n(`filter.${category}`, { count })
@@ -127,12 +133,6 @@ export class AdminMemberList extends Component {
       <Input className={classes.search} placeholder='搜索'
         leftIcon={<i className='icon icon-search2' />}
       />
-    </div>
-  }
-
-  renderLoading () {
-    return <div>
-      <Loading />
     </div>
   }
 
@@ -176,5 +176,5 @@ export class AdminMemberList extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  AdminMemberList
+  autoCancel({ funcs: ['query'], trigger: 'unique' })(AdminMemberList)
 )
