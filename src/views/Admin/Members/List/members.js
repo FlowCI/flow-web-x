@@ -72,6 +72,11 @@ export class AdminMemberList extends Component {
     i18n: createI18n(language).createChild('list'),
   }
 
+  state = {
+    checks: {},
+    checkAll: false,
+  }
+
   componentDidMount () {
     const { page, pageSize, query } = this.props
     query(page, pageSize)
@@ -80,6 +85,30 @@ export class AdminMemberList extends Component {
   componentWillUnmount () {
     const { freedAll } = this.props
     freedAll()
+  }
+
+  getAllChecked (checks) {
+    const { list } = this.props
+    return list.every((k) => !!checks[k])
+  }
+
+  setChecked = (email, checked) => {
+    const { checks } = this.state
+    const nextChecks = { ...checks, [email]: checked }
+    this.setState({
+      checks: nextChecks,
+      checkAll: this.getAllChecked(nextChecks),
+    })
+  }
+
+  toggleAll = (checked) => {
+    const { list } = this.props
+
+    const nextChecks = {}
+    list.forEach((k) => {
+      nextChecks[k] = checked
+    })
+    this.setState({ checks: nextChecks, checkAll: checked })
   }
 
   renderFilterItem (category, count) {
@@ -109,11 +138,12 @@ export class AdminMemberList extends Component {
 
   rendrMembers () {
     const { i18n, list } = this.props
+    const { checks, checkAll } = this.state
     return <List className={classes.agents}>
       <ListHead>
         <ListRow>
           <ListHeadCol>
-            <Checkbox />
+            <Checkbox checked={checkAll} onChange={this.toggleAll} />
           </ListHeadCol>
           <ListHeadCol>
             {i18n('用户名')}
@@ -130,7 +160,8 @@ export class AdminMemberList extends Component {
         </ListRow>
       </ListHead>
       <ListBody>
-        {list.map((email) => <Member key={email} email={email} />)}
+        {list.map((email) => <Member key={email} email={email}
+          checked={checks[email]} toggle={this.setChecked} />)}
       </ListBody>
     </List>
   }

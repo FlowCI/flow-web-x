@@ -32,7 +32,7 @@ export class AdminMemberItem extends Component {
 
     email: PropTypes.string.isRequired,
     checked: PropTypes.bool,
-    toggle: PropTypes.func,
+    toggle: PropTypes.func.isRequired,
   }
 
   handleChange = (checked) => {
