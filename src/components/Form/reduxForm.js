@@ -11,7 +11,7 @@ import Checkbox from './Checkbox'
 import Input from './Input'
 import Radio from './Radio'
 import RadioGroups from './RadioGroups'
-import Select from './Select'
+import { Select, Option } from './Select'
 
 export function createReduxFormAdapter (Component) {
   function ReduxFormAdapter (props) {
@@ -53,4 +53,5 @@ export {
   Radio,
   ReduxFormRadioGroups as RadioGroups,
   ReduxFormSelect as Select,
+  Option,
 }
