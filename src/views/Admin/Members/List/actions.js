@@ -65,7 +65,7 @@ export class AdminMemberListActions extends Component {
   handleRole = () => {
     const { role } = this.state
     const { onChangRole } = this.props
-    return onChangRole && onChangRole(role)
+    return role && onChangRole && onChangRole(role)
   }
 
   renderRoles () {
