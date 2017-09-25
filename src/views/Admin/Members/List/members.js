@@ -47,6 +47,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    updateRole: actions.updateRole,
     removeAll: actions.removeAll,
     freedAll: actions.freedAll,
   }, dispatch)
@@ -63,6 +64,7 @@ export class AdminMemberList extends Component {
     pageSize: PropTypes.number.isRequired,
 
     query: PropTypes.func.isRequired,
+    updateRole: PropTypes.func.isRequired,
     removeAll: PropTypes.func.isRequired,
     freedAll: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
@@ -128,7 +130,11 @@ export class AdminMemberList extends Component {
   }
 
   handleChangeRole = (role) => {
-    console.log('change role', role)
+    const { updateRole } = this.props
+    const selected = this.getChecked()
+    if (selected.length) {
+      return updateRole(selected, role)
+    }
   }
 
   renderLoading () {
