@@ -88,7 +88,7 @@ export class AdminMemberList extends Component {
     freedAll()
   }
 
-  getAllChecked (checks) {
+  isAllChecked (checks) {
     const { list } = this.props
     return list.every((k) => !!checks[k])
   }
@@ -98,7 +98,7 @@ export class AdminMemberList extends Component {
     const nextChecks = { ...checks, [email]: checked }
     this.setState({
       checks: nextChecks,
-      checkAll: this.getAllChecked(nextChecks),
+      checkAll: this.isAllChecked(nextChecks),
     })
   }
 
@@ -113,11 +113,11 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
-
+    console.log('remove')
   }
 
-  handleChangeRole = () => {
-
+  handleChangeRole = (role) => {
+    console.log('change role', role)
   }
 
   renderLoading () {
