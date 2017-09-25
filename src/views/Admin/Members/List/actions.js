@@ -80,14 +80,18 @@ export class AdminMemberListActions extends Component {
 
   render () {
     const { i18n, onRemove } = this.props
-    return <div className={classes.container}>
-      <Button className='btn-default' onClick={onRemove}>
+    return <div className={classes.actions}>
+      <Button className={`btn-default ${classes.action}`}
+        onClick={onRemove}>
         {i18n('删除')}
       </Button>
-      {this.renderRoles()}
-      <Button className='btn-default' onClick={this.handleRole}>
-        {i18n('应用')}
-      </Button>
+      <div className={classes.group}>
+        {this.renderRoles()}
+        <Button className={`btn-default ${classes.action}`}
+          onClick={this.handleRole}>
+          {i18n('应用')}
+        </Button>
+      </div>
     </div>
   }
 }
