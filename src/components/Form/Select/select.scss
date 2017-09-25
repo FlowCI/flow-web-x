@@ -11,6 +11,7 @@
 .select {
   position: relative;
   display: inline-flex;
+  vertical-align: middle;
   font-size: $font-size-base;
   z-index: $zindex-select;
   width: $input-default-width;
