@@ -7,7 +7,7 @@ export default {
     const roles = roleData[roleTypes.query]()
     const flows = flowData[flowTypes.query]()
 
-    const randomLength = ~~(Math.random() * 10)
+    const randomLength = ~~(Math.random() * 10) + 1
     const users = []
 
     for (let i = 0; i < randomLength; i++) {
