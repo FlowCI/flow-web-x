@@ -10,8 +10,7 @@ import types from './memberType'
 
 const initialState = new Map()
 
-function save (state, { payload }) {
-  const { users } = payload
+function save (state, users) {
   const mapping = users.reduce((s, user) => {
     s[user.email] = {
       flows: user.flows,
@@ -24,10 +23,14 @@ function save (state, { payload }) {
 
 export default handleActions({
   [types.query]: handleHttpActions({
-    success: save,
+    success: function (state, { payload }) {
+      return save(state, payload.users)
+    }
   }),
   [types.updateRoles]: handleHttpActions({
-    success: save,
+    success: function (state, { payload }) {
+      return save(state, payload)
+    },
   }),
   [types.freedAll]: function () {
     return initialState
