@@ -3,16 +3,15 @@
  */
 
 import { handleActions } from 'redux-actions'
+import { handleHttpActions } from 'redux-http'
 import { Map } from 'immutable'
-
-import { handleHttp } from '../util'
 
 import types from './memberType'
 
 const initialState = new Map()
 
 export default handleActions({
-  [types.query]: handleHttp('QUERY', {
+  [types.query]: handleHttpActions({
     success: function (state, { payload }) {
       const { users } = payload
       const mapping = users.reduce((s, user) => {
