@@ -36,5 +36,8 @@ export default {
       email: email,
       roles: [roles.find((r) => `${r.id}` === roleId)],
     }
+  },
+  [types.removeAll]: function () {
+    return {}
   }
 }
