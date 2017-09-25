@@ -25,6 +25,7 @@ export default class Checkbox extends Component {
   }
 
   static defaultProps = {
+    checked: false,
     className: '',
     classNames: classes,
     type: 'checkbox',

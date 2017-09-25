@@ -57,9 +57,11 @@ export function removeFromData (state, { payload }, options) {
   return state.update('data', (data) => data.delete(id))
 }
 
-export function removeAllFromData (state, { payload }, options) {
-  const ids = payload.map((data) => getId(data, options))
-  return state.update('data', (data) => data.deleteAll(ids))
+export function removeAllFromData (state, { payload }) {
+  const ids = payload
+  return state.update('data', (data) => {
+    return ids.reduce((d, id) => d.delete(id), data)
+  })
 }
 
 export function removeFromList (state, { payload }, options) {
@@ -67,9 +69,11 @@ export function removeFromList (state, { payload }, options) {
   return state.update('list', (list) => list.delete(id))
 }
 
-export function removeAllFromList (state, { payload }, options) {
-  const ids = payload.map((data) => getId(data, options))
-  return state.update('list', (list) => list.deleteAll(ids))
+export function removeAllFromList (state, { payload }) {
+  const ids = payload
+  return state.update('list', (list) => {
+    return ids.reduce((l, id) => l.delete(id), list)
+  })
 }
 
 export function bindOptions (options, fn) {
