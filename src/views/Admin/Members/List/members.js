@@ -112,6 +112,14 @@ export class AdminMemberList extends Component {
     this.setState({ checks: nextChecks, checkAll: checked })
   }
 
+  handleRemove = () => {
+
+  }
+
+  handleChangeRole = () => {
+
+  }
+
   renderLoading () {
     return <div>
       <Loading />
@@ -171,7 +179,10 @@ export class AdminMemberList extends Component {
     const { loaded, i18n } = this.props
     return <div className={classes.container}>
       {loaded && this.renderFilter()}
-      {loaded && <ActionBar i18n={i18n} />}
+      {loaded && <ActionBar i18n={i18n}
+        onRemove={this.handleRemove}
+        onChangRole={this.handleChangeRole}
+      />}
       {loaded ? this.rendrMembers() : this.renderLoading()}
     </div>
   }

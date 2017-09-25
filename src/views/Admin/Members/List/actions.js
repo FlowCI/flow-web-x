@@ -58,20 +58,36 @@ export class AdminMemberListActions extends Component {
     freedAll()
   }
 
+  handleRoleSelect = (v) => {
+    this.setState({ role: v })
+  }
+
+  handleRole = () => {
+    const { role } = this.state
+    const { onChangRole } = this.props
+    return onChangRole && onChangRole(role)
+  }
+
   renderRoles () {
     const { roles, i18n } = this.props
-    return <Select placeholder={i18n('选择变更角色')}>
+    const { role } = this.state
+    return <Select placeholder={i18n('选择变更角色')} value={role}
+      onChange={this.handleRoleSelect}>
       {roles.map((r) => <Option key={r.get('id')}
         value={r.get('id')} title={r.get('name')} />)}
     </Select>
   }
 
   render () {
-    const { i18n } = this.props
+    const { i18n, onRemove } = this.props
     return <div className={classes.container}>
-      <Button className='btn-default'>{i18n('删除')}</Button>
+      <Button className='btn-default' onClick={onRemove}>
+        {i18n('删除')}
+      </Button>
       {this.renderRoles()}
-      <Button className='btn-default'>{i18n('应用')}</Button>
+      <Button className='btn-default' onClick={this.handleRole}>
+        {i18n('应用')}
+      </Button>
     </div>
   }
 }
