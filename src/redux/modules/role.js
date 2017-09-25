@@ -1,12 +1,12 @@
 import { handleActions } from 'redux-actions'
 
 import { handleHttp } from '../util'
-import { defaultInitState, handlers } from 'redux/handler'
+import { defaultInitState, createHandlers } from 'redux/handler'
 
 import types from './roleType'
 
 const initialState = defaultInitState
-
+const handlers = createHandlers({ id: 'name' })
 export const actions = {
   query: function () {
     return {
@@ -23,7 +23,10 @@ export const actions = {
 
 export default handleActions({
   [types.query]: handleHttp('QUERY', {
-    success: handlers.saveAll,
+    success: function (state, actions) {
+      const s = initialState.update('ui', () => state.get('ui'))
+      return handlers.saveAll(s, actions)
+    },
   }),
   [types.freedAll]: function () {
     return initialState
