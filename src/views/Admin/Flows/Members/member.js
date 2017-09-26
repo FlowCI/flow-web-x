@@ -20,7 +20,8 @@ export default class MemeberCheckbox extends PureComponent {
   render () {
     const { user, ...other } = this.props
     return <li className={classes.item}>
-      <Checkbox {...other} rightLabel={user.get('username')}
+      <Checkbox {...other} className={classes.checkbox}
+        rightLabel={user.get('username')}
         onChange={this.handleChange} />
     </li>
   }
