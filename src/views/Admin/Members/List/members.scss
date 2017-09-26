@@ -1,0 +1,21 @@
+@import 'variables/views/Admin/container';
+.toolbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $admin-toolbar-vertical-padding;
+}
+
+.actions{
+  margin-bottom: $admin-toolbar-vertical-padding;
+}
+.action{
+  margin-right: 2*$padding-base-horizontal;
+}
+.group{
+  display: inline-block;
+  vertical-align: middle;
+  .action{
+    margin: 0 0 0 $padding-base-horizontal;
+  }
+}
