@@ -62,9 +62,9 @@ export class AdminFlowMembers extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { flowName } = this.props
-    const { flowName: nextFlowName } = nextProps
-    if (flowName !== nextFlowName) {
+    const { flowName, permission: p } = this.props
+    const { flowName: nextFlowName, permission: np } = nextProps
+    if (flowName !== nextFlowName || p !== np) {
       // reset select
       this.setState({ selected: this.getInitSelected(nextProps) })
     }
@@ -80,8 +80,16 @@ export class AdminFlowMembers extends Component {
     }, {})
   }
 
+  getCheckeds () {
+    const { selected } = this.state
+    const keys = Object.keys(selected)
+    return keys.filter((k) => selected[k])
+  }
+
   handleSave = () => {
-    console.log(this.state.selected)
+    const { updateFlowAuth, flowName } = this.props
+    const checkeds = this.getCheckeds()
+    return updateFlowAuth(checkeds, flowName)
   }
 
   handleChecked = (user, checked) => {
