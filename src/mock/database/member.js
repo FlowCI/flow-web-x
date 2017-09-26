@@ -32,7 +32,7 @@ export default {
   [types.create]: function (params) {
     return {}
   },
-  [types.updateRoles]: function ({ params }) {
+  [types.updatePermission]: function ({ params }) {
     const { emailList, roles } = params
     const role = roles[0]
 
