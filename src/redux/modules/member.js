@@ -48,11 +48,22 @@ export const actions = {
     return {
       url: '/user/role/update',
       method: 'post',
-      name: types.updateRoles,
+      name: types.updatePermission,
       params: {
         emailList: emails,
         roles: [role] // 目前只支持一条 role
       },
+    }
+  },
+  updateFlow: function (emails, flowId) {
+    return {
+      url: '/flows/:flowName/flowAuthUsers',
+      method: 'post',
+      params: {
+        emailList: emails,
+        flowName: flowId,
+      },
+      name: types.updatePermission,
     }
   },
   removeAll: function (emails) {

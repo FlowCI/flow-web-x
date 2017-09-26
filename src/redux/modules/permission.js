@@ -27,7 +27,7 @@ export default handleActions({
       return save(state, payload.users)
     }
   }),
-  [types.updateRoles]: handleHttpActions({
+  [types.updatePermission]: handleHttpActions({
     success: function (state, { payload }) {
       return save(state, payload)
     },
