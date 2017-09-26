@@ -57,7 +57,7 @@ export const actions = {
   },
   updateFlowAuth: function (emails, flowId) {
     return {
-      url: '/flows/:flowName/flowAuthUsers',
+      url: '/:flowName/users/auth',
       method: 'post',
       params: {
         emailList: emails,
