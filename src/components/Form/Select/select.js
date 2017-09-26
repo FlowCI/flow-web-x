@@ -226,6 +226,7 @@ export default class Select extends Component {
     const cls = [classNames.select, className]
 
     size && cls.push(classNames[size])
+    opened && cls.push(classNames.opened)
     /*
       input component will add disabled class,
       so there is no need to add disabled

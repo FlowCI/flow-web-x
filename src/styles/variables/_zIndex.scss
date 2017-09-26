@@ -1,4 +1,5 @@
 // Z-index
 $zindex-navbar: 100!default;
-$zindex-select: $zindex-navbar - 1;
+$zindex-select: $zindex-navbar - 1!default;
+$zindex-select-opened: $zindex-navbar!default;
 $zindex-alert: 1000!default;
