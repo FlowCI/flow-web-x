@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import { fromJS } from 'immutable'
-
 import { reduxForm } from 'redux-form'
 
 import Button from 'components/Button'
@@ -18,8 +16,14 @@ export function validate (values) {
   if (!values.username) {
     errors.username = 'Required'
   }
+  if (!values.email) {
+    errors.email = 'Required'
+  }
   if (!values.password) {
     errors.password = 'Required'
+  }
+  if (!values.role) {
+    errors.role = 'Required'
   }
   return errors
 }
@@ -39,12 +43,6 @@ export class CreateMemberForm extends Component {
     handleSubmit: PropTypes.func,
   }
 
-  static defaultProps = {
-    flows: fromJS(['flow1', 'flow2', 'flow3']),
-    roles: fromJS([{ name: 'role1' }, { name: 'role2' }, { name: 'role3' }]),
-    i18n: function (n) { return n },
-  }
-
   render () {
     const {
       flows, roles,
@@ -59,29 +57,30 @@ export class CreateMemberForm extends Component {
             <Input name='username' size='lg' className={classes.input} />
           </FieldSet>
           <FieldSet required text={i18n('邮箱')}>
-            <Input name='email' size='lg' className={classes.input} />
+            <Input type='email' name='email'
+              size='lg' className={classes.input} />
           </FieldSet>
           <FieldSet required text={i18n('初始密码')}>
-            <Input name='password' size='lg' className={classes.input} />
+            <Input type='password' name='password'
+              size='lg' className={classes.input} />
           </FieldSet>
           <FieldSet text={i18n('角色')}>
             <Select size='lg' name='role'
               loading={!loadedRoles}
               className={classes.select}>
-              {roles.map((n) => <Option key={n} value={n} title={n} />
-              )}
+              {roles.map((n) => <Option key={n} value={n} title={n} />)}
             </Select>
           </FieldSet>
           <FieldSet text={i18n('Flow授权')}>
             <Select size='lg' name='flow'
               loading={!loadedFlows}
               className={classes.select}>
-              <Option value='none' title='无授权' />
+              <Option value={false} title='无授权' />
               {flows.map((f) => <Option key={f} value={f} title={f} />)}
             </Select>
           </FieldSet>
           <FieldSet text={i18n('发送用户通知')}>
-            <Checkbox name='notify' rightLabel={i18n('发送账户详情电子邮件')} />
+            <Checkbox name='isSendEmail' rightLabel={i18n('发送账户详情电子邮件')} />
           </FieldSet>
           <FieldSet>
             <Button className='btn-primary'
@@ -100,6 +99,6 @@ export default reduxForm({
   validate,
   form: 'createMemberForm',
   initialValues: {
-    flow: 'none',
+    flow: false,
   }
 })(CreateMemberForm)

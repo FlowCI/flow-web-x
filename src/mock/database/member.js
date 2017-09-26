@@ -29,6 +29,9 @@ export default {
       users,
     }
   },
+  [types.create]: function (params) {
+    return {}
+  },
   [types.updateRoles]: function ({ params }) {
     const { emailList, roles } = params
     const role = roles[0]

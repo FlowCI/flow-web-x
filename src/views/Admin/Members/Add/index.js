@@ -8,7 +8,9 @@ import { createSelector } from 'reselect'
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
-import { actions } from 'redux/modules/role'
+import { actions } from 'redux/modules/member'
+import { actions as roleActions } from 'redux/modules/role'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Form from './form'
 
@@ -31,25 +33,22 @@ function mapStateToProps (state, props) {
     roles: rolesSelector(role),
     loadedFlows: flow.getIn(['ui', 'QUERY']) === STATUS.success,
     flows: flowsSelector(flow),
-
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    queryRoles: actions.query,
+    create: actions.create,
+    queryRoles: roleActions.query,
+    alert: alertActions.alert,
   }, dispatch)
 }
 
 export class CreateMember extends Component {
   static propTypes = {
-    // flows: ImmutablePropTypes.list.isRequired,
-    // roles: ImmutablePropTypes.list.isRequired,
-
-    // loadedRoles: PropTypes.bool,
-    // loadedFlows: PropTypes.bool,
-
+    create: PropTypes.func.isRequired,
     queryRoles: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -60,10 +59,34 @@ export class CreateMember extends Component {
   componentDidMount () {
     const { queryRoles } = this.props
     queryRoles()
+    this.isMount = true
+  }
+
+  componentWillUnmount () {
+    this.isMount = false
+  }
+
+  handleSubmit = (values) => {
+    const params = {
+      ...values,
+      flows: values.flow === false ? [] : [values.flow],
+      roles: [values.role],
+    }
+    delete params.flow
+    delete params.role
+
+    const { create } = this.props
+    return create(params).then(() => {
+      if (this.isMount) {
+        const { alert, i18n } = this.props
+        alert('success', i18n('创建成功'))
+        // maybe redirect to list
+      }
+    })
   }
 
   render () {
-    return <Form {...this.props} />
+    return <Form {...this.props} onSubmit={this.handleSubmit} />
   }
 }
 

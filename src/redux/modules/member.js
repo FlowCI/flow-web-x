@@ -26,6 +26,24 @@ export const actions = {
       }
     }
   },
+  /**
+   * params {
+   *  email {string}
+   *  username {string}
+   *  password {string}
+   *  isSendEmail {boolTostring}
+   *  flows {Array<string>}
+   *  roles {Array<string>}
+   * }
+   */
+  create: function (params) {
+    return {
+      url: '/user/register',
+      method: 'post',
+      params: params,
+      name: types.create,
+    }
+  },
   updateRole: function (emails, role) {
     return {
       url: '/user/role/update',
@@ -77,6 +95,8 @@ export default handleActions({
       })
     }
   }),
+  // 目前先不接收返回的 member 对象
+  [types.create]: handleHttp('CREATE'),
   [types.updateRoles]: handleHttp('UPDATE'),
   [types.removeAll]: handleHttp('', {
     success: function (state, { indicator }) {
