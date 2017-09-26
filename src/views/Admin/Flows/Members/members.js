@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { bool, string, func } from 'prop-types'
-import { list } from 'react-immutable-proptypes'
+import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -24,11 +24,12 @@ const membersSelector = createSelector(
 )
 
 function mapStateToProps (state, props) {
-  const { member } = state
+  const { member, permission } = state
 
   return {
     members: membersSelector(member),
     loaded: member.getIn(['ui', 'QUERY']) === STATUS.success,
+    permission,
   }
 }
 
@@ -41,13 +42,14 @@ function mapDispatchToProps (dispatch) {
 
 export class AdminFlowMembers extends Component {
   static propTypes = {
-    loaded: bool.isRequired,
-    flowName: string.isRequired,
-    members: list.isRequired,
+    loaded: PropTypes.bool.isRequired,
+    flowName: PropTypes.string.isRequired,
+    members: ImmutablePropTypes.list.isRequired,
+    permission: ImmutablePropTypes.map.isRequired,
 
-    queryMembers: func.isRequired,
-    updateFlowAuth: func.isRequired,
-    i18n: func.isRequired,
+    queryMembers: PropTypes.func.isRequired,
+    updateFlowAuth: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
   }
 
   state = {
@@ -69,7 +71,13 @@ export class AdminFlowMembers extends Component {
   }
 
   getInitSelected (props = this.props) {
-    return {}
+    const { flowName, members, permission } = props
+    return members.reduce((state, member) => {
+      const email = member.get('email')
+      const flows = permission.getIn([email, 'flows'])
+      state[email] = flows.includes(flowName)
+      return state
+    }, {})
   }
 
   handleSave = () => {
@@ -96,7 +104,7 @@ export class AdminFlowMembers extends Component {
             onChange={this.handleChecked} />
         })}
       </ul>}
-      {loaded && <Button className='btn-primary'>
+      {loaded && <Button className='btn-primary' onClick={this.handleSave}>
         {i18n('保存')}
       </Button>}
     </div>
