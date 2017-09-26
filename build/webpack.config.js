@@ -13,7 +13,6 @@ const LOCALES = config.languages.map((lang) => {
   return lang.replace(/[\-]/g, '\\$&')
 }).join('|')
 
-
 const webpackConfig = {
   entry: {
     main: [paths.src('main.js')],
@@ -72,7 +71,7 @@ webpackConfig.module.rules.push({
     /node_modules/,
     /static/,
   ],
-  enforce: "pre",
+  enforce: 'pre',
   use: [{
     loader: 'eslint-loader'
   }]

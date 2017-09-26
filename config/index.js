@@ -1,5 +1,5 @@
 const path = require('path')
-const argv = require('yargs').argv
+// const argv = require('yargs').argv
 
 const languages = ['zh-cn']
 
@@ -42,7 +42,7 @@ const config = {
   // ------------------------------------
   // N.B.: globals added here must _also_ be added to .eslintrc
   globals: {
-    __API__: '""',
+    __API__: `"${process.env.FLOW_WEB_API || ''}"`,
     LANGUAGES: `"${languages.join(',')}"`,
   },
 
@@ -69,6 +69,5 @@ config.pathUtils = (() => {
     public: base.bind(null, config.dir_public),
   }
 })()
-
 
 module.exports = config
