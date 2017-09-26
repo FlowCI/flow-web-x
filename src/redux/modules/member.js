@@ -57,7 +57,7 @@ export const actions = {
   },
   removeAll: function (emails) {
     return {
-      url: '/user',
+      url: '/user/delete',
       method: 'post',
       name: types.removeAll,
       params: {
