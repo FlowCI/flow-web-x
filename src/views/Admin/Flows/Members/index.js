@@ -6,12 +6,7 @@ import createI18n from '../i18n'
 import language from 'util/language'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
-
-import autoCancel from 'react-promise-cancel'
-
-import { actions } from 'redux/modules/member'
 
 import {
   TabBars,
@@ -34,16 +29,9 @@ function mapStateToProps (state, props) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    queryMembers: actions.query,
-  }, dispatch)
-}
-
 export class AdminFlowMembersPanel extends Component {
   static propTypes = {
     flows: list.isRequired,
-    queryMembers: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -52,11 +40,6 @@ export class AdminFlowMembersPanel extends Component {
   }
 
   state = {}
-
-  componentDidMount () {
-    const { queryMembers } = this.props
-    queryMembers()
-  }
 
   handleMenuClick = (flow) => {
     this.setState({ selected: flow.get('id') })
@@ -87,6 +70,4 @@ export class AdminFlowMembersPanel extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  autoCancel({ funcs: ['queryMembers'] })(AdminFlowMembersPanel)
-)
+export default connect(mapStateToProps)(AdminFlowMembersPanel)
