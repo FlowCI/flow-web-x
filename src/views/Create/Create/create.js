@@ -44,7 +44,7 @@ export class CreateFlowView extends Component {
 
   state = {
     name: '',
-    git: '',
+    git: 'custom',
   }
 
   handleNameChange = (value) => {
