@@ -8,6 +8,9 @@ export const supported = clipboard.isSupported()
 
 export default class ClipboardButtonWrapper extends Component {
   static propTypes = {
+    /**
+     * @param {string} data-clipboard-text 要复制的内容
+     */
     className: string,
     i18n: func.isRequired,
     onSuccess: func,
