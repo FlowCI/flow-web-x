@@ -1,8 +1,8 @@
 import types from 'redux/modules/credentialType'
 
 export default {
-  [types.query]: function () {
-    return [
+  [types.query]: function ({ params: { types } }) {
+    const array = [
       {
         'name': 'android-credential',
         'type': 'ANDROID',
@@ -47,6 +47,16 @@ export default {
         'updatedAt': 1504737923
       },
       {
+        'name': 'ras-credential222',
+        'type': 'RSA',
+        'detail': {
+          'publicKey': 'public key',
+          'privateKey': 'private key'
+        },
+        'createdAt': 1504737923,
+        'updatedAt': 1504737923
+      },
+      {
         'name': 'username-credential',
         'type': 'USERNAME',
         'detail': {
@@ -57,5 +67,21 @@ export default {
         'updatedAt': 1504737923
       }
     ]
+    if (!types) {
+      return array
+    }
+    return array.filter((item) => item.type === types)
   },
+  [types.create]: function ({ params: { type, name } }) {
+    return {
+      'name': name,
+      'type': type,
+      'detail': {
+        'publicKey': 'public key',
+        'privateKey': 'private key'
+      },
+      'createdAt': 1504737923,
+      'updatedAt': 1504737923
+    }
+  }
 }

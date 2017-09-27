@@ -62,10 +62,11 @@ function pollingTestResult (flowId) {
   }
 }
 
-function getCreateEnv ({ source, url }) {
+function getCreateEnv ({ source, url, deploy }) {
   return {
     FLOW_GIT_SOURCE: source,
     FLOW_GIT_URL: url,
+    FLOW_GIT_CREDENTIAL: deploy,
   }
 }
 
@@ -133,6 +134,9 @@ export const actions = {
       transformResponse,
     }
   },
+  /**
+   * see getCreateEnv params
+   */
   doneCreate: function (flowId, params) {
     return actions.updateEnv(flowId, {
       FLOW_STATUS: 'READY',

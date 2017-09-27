@@ -33,7 +33,7 @@ export class AdminFlowListItem extends PureComponent {
     const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
     return <ListRow>
       <ListCol>{flow.get('name')}</ListCol>
-      <ListCol>{flow.get('createdBy') || ''}</ListCol>
+      <ListCol>{flow.get('createdBy', '')}</ListCol>
       <ListCol>
         {moment(flow.get('createdAt') * 1000).format('YYYY.M.D')}
       </ListCol>

@@ -1,0 +1,47 @@
+@import 'variables/base';
+.list{
+  display: block;
+  >li{
+    border-bottom: 1px solid $color-hr;
+  }
+}
+.item{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  // border-bottom: 1px solid $color-hr;
+  &:hover{
+    .actions{
+      opacity: 1;
+    }
+  }
+  >:global(.icon){
+    font-size: 18px;
+  }
+}
+.thumail{
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.actions{
+  opacity: 0;
+  >li{
+    display: inline-block;
+    vertical-align: middle;
+    &:not(:last-child) {
+      &:after{
+        content: '|';
+        padding: 0px 5px;
+        display: inline-block;
+        vertical-align: middle;
+        color: $link-color;
+      }
+    }
+  }
+}
+
+.code{
+  padding: 10px;
+}

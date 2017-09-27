@@ -59,15 +59,13 @@ export default class Checkbox extends Component {
     if (leftLabel) {
       left = <span className={classNames.label}>{leftLabel}</span>
     }
-    const right = left === icon ? <span className={classNames.label}>
-      {rightLabel}
-    </span> : icon
+    const right = left === icon ? rightLabel : icon
 
     return <label className={cls.join(' ')}>
       <input {...other} className='hide'
         checked={checked}
         disabled={readOnly}
-        onChange={!!onChange && this.handleChange}
+        onChange={onChange ? this.handleChange : undefined}
       />
       {left}
       {right}
