@@ -1,40 +1,25 @@
 import React, { Component } from 'react'
 import { func } from 'prop-types'
 
-import { Select, Option } from 'components/Form/Select'
-import Input from 'components/Form/Input'
+import { Select, Option, Input } from 'components/Form'
 import Button from 'components/Button'
 
 import classes from './form.scss'
 
-export default class CreateCredential extends Component {
+export default class CreateCredentialForm extends Component {
   static propTypes = {
-    create: func,
-  }
-
-  state = {
-    name: ''
-  }
-
-  handleNameChange = (v) => {
-    this.setState({ name: v })
-  }
-
-  handleCreate = () => {
-    const { create } = this.props
-    const { name } = this.state
-    return create('RSA', name)
+    onSubmit: func.isRequired,
   }
 
   render () {
-    const { name } = this.state
+    const { onSubmit } = this.props
     return <form className={classes.form}>
       <table>
         <thead>
           <tr>
             <th className={classes.name}>类型</th>
             <th>
-              <Select value='RSA'>
+              <Select name='type' >
                 <Option value='RSA'>RSA Key</Option>
                 <Option value='IOS'>iOS 证书</Option>
               </Select>
@@ -45,7 +30,7 @@ export default class CreateCredential extends Component {
           <tr>
             <td className={classes.name}>名称</td>
             <td>
-              <Input value={name} onChange={this.handleNameChange} />
+              <Input name='name' />
             </td>
           </tr>
         </tbody>
@@ -53,7 +38,8 @@ export default class CreateCredential extends Component {
           <tr>
             <td>&nbsp;</td>
             <td>
-              <Button className='btn-primary' onClick={this.handleCreate}>
+              <Button className='btn-primary' type='submit'
+                onSubmit={onSubmit}>
                 生成
               </Button>
             </td>
