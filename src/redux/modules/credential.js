@@ -8,10 +8,13 @@ import types from './credentialType'
 import is from 'util/is'
 
 export const actions = {
-  query: function () {
+  query: function (type) {
     return {
       url: '/credentials',
       name: types.query,
+      params: {
+        types: type, /** 目前只支持 1个 type */
+      },
       transformResponse: function (data) {
         if (is.array(data)) {
           return data.reduce((d, item) => {

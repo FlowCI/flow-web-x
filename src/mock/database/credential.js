@@ -1,8 +1,8 @@
 import types from 'redux/modules/credentialType'
 
 export default {
-  [types.query]: function () {
-    return [
+  [types.query]: function ({ params: { types } }) {
+    const array = [
       {
         'name': 'android-credential',
         'type': 'ANDROID',
@@ -57,5 +57,9 @@ export default {
         'updatedAt': 1504737923
       }
     ]
+    if (!types) {
+      return array
+    }
+    return array.filter((item) => item.type === types)
   },
 }
