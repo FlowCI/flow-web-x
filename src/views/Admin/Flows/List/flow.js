@@ -31,10 +31,9 @@ export class AdminFlowListItem extends PureComponent {
   render () {
     const { flow, i18n } = this.props
     const webhook = flow.getIn(['envs', 'FLOW_GIT_WEBHOOK'])
-
     return <ListRow>
       <ListCol>{flow.get('name')}</ListCol>
-      <ListCol>xyz</ListCol>
+      <ListCol>{flow.get('createdBy', '')}</ListCol>
       <ListCol>
         {moment(flow.get('createdAt') * 1000).format('YYYY.M.D')}
       </ListCol>
@@ -46,7 +45,7 @@ export class AdminFlowListItem extends PureComponent {
         </div>
       </ListCol>
       <ListCol>
-        Key-name
+        {flow.getIn(['envs', 'FLOW_GIT_CREDENTIAL']) || ''}
       </ListCol>
     </ListRow>
   }
