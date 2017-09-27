@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import Checkbox, { classes as checkboxClass } from 'components/Form/Checkbox'
+import Checkbox from 'components/Form/Checkbox'
 import Button from 'components/Button'
 import ClipboardButton from 'components/ClipboardButton'
 
@@ -10,8 +10,6 @@ import classes from './deploy.scss'
 
 const checkedIcon = <i className='icon checked icon-circle-check' />
 const unCheckedIcon = <i className='icon checked icon-radio-unchecked' />
-
-const checkboxClassNames = { ...checkboxClass, label: classes.label }
 
 export default class DeployListItem extends Component {
   static propTypes = {
@@ -29,6 +27,10 @@ export default class DeployListItem extends Component {
     return onChange(deploy, v)
   }
 
+  toggle = () => {
+    this.setState({ showAll: !this.state.showAll })
+  }
+
   renderThumail () {
     const { deploy } = this.props
     const deployKey = deploy.getIn(['detail', 'publicKey'])
@@ -36,7 +38,9 @@ export default class DeployListItem extends Component {
       <span>{deploy.get('name')}</span>
       <ul className={classes.actions}>
         <li>
-          <Button className='btn-link' size='sm'>显示完整内容</Button>
+          <Button className='btn-link' size='sm' onClick={this.toggle}>
+            显示完整内容
+          </Button>
         </li>
         <li>
           <ClipboardButton className='btn-link' size='sm'
@@ -46,15 +50,24 @@ export default class DeployListItem extends Component {
     </div>
   }
 
+  renderDesc () {
+    const { deploy } = this.props
+    const deployKey = deploy.getIn(['detail', 'publicKey'])
+    return <code className={classes.code}>
+      {deployKey}
+    </code>
+  }
+
   render () {
     const { checked } = this.props
+    const { showAll } = this.state
     return <li>
-      <Checkbox classNames={checkboxClassNames}
-        className={classes.item}
+      <Checkbox className={classes.item}
         rightLabel={this.renderThumail()}
         checked={checked} onChange={this.handleChange}
         checkedIcon={checkedIcon} unCheckedIcon={unCheckedIcon}
       />
+      {showAll && this.renderDesc()}
     </li>
   }
 }

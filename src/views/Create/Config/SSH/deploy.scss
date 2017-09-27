@@ -8,14 +8,12 @@
 .item{
   display: flex;
   align-items: center;
+  // border-bottom: 1px solid $color-hr;
   &:hover{
     .actions{
       opacity: 1;
     }
   }
-}
-.label{
-  flex: 1;
 }
 .thumail{
   flex: 1;
@@ -38,4 +36,8 @@
       }
     }
   }
+}
+
+.code{
+  padding: 10px;
 }
