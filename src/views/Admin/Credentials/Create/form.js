@@ -1,24 +1,13 @@
 import React, { Component } from 'react'
 import { func } from 'prop-types'
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
-import { actions } from 'redux/modules/credential'
-
 import { Select, Option } from 'components/Form/Select'
 import Input from 'components/Form/Input'
 import Button from 'components/Button'
 
 import classes from './form.scss'
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    create: actions.create,
-  }, dispatch)
-}
-
-export class CreateCredential extends Component {
+export default class CreateCredential extends Component {
   static propTypes = {
     create: func,
   }
@@ -41,22 +30,26 @@ export class CreateCredential extends Component {
     const { name } = this.state
     return <form className={classes.form}>
       <table>
-        <tbody>
+        <thead>
           <tr>
-            <td className={classes.name}>类型</td>
-            <td>
+            <th className={classes.name}>类型</th>
+            <th>
               <Select value='RSA'>
                 <Option value='RSA'>RSA Key</Option>
                 <Option value='IOS'>iOS 证书</Option>
               </Select>
-            </td>
+            </th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
             <td className={classes.name}>名称</td>
             <td>
               <Input value={name} onChange={this.handleNameChange} />
             </td>
           </tr>
+        </tbody>
+        <tfoot>
           <tr>
             <td>&nbsp;</td>
             <td>
@@ -65,9 +58,8 @@ export class CreateCredential extends Component {
               </Button>
             </td>
           </tr>
-        </tbody>
+        </tfoot>
       </table>
     </form>
   }
 }
-export default connect(undefined, mapDispatchToProps)(CreateCredential)
