@@ -46,13 +46,21 @@ export class JobInfo extends Component {
     const { job, i18n } = this.props
     const envs = job.get('envs', new Map())
     const outputs = job.getIn(['result', 'outputs'], new Map())
+
+    const commitBlock =
+      <a target='_blank' href={outputs.get('FLOW_GIT_COMMIT_URL')}>
+        {outputs.get('FLOW_GIT_COMMIT_ID', '-')}
+      </a>
+    const compareBlock =
+      <a target='_blank' href={outputs.get('FLOW_GIT_COMPARE_URL')}>
+        {outputs.get('FLOW_GIT_COMPARE_ID')}
+      </a>
+
     return <Mapping>
       <Legend name={i18n('提交信息')} />
-      <Entry name='Commit' value={<a target='_blank'>
-        {outputs.get('FLOW_GIT_COMMIT_ID', '-')}
-      </a>} />
+      <Entry name='Commit' value={commitBlock} />
       <Entry name='Author'
-        value={outputs.get('FLOW_GIT_COMMITER')} />
+        value={outputs.get('FLOW_GIT_AUTHOR')} />
 
       <Entry name='Branch'
         value={outputs.get('FLOW_GIT_BRANCH')} />
@@ -60,12 +68,10 @@ export class JobInfo extends Component {
       <Entry name='Commit message'
         value={outputs.get('FLOW_GIT_CHANGELOG')} />
 
-      <Entry name='Compare' value={<a target='_blank'>
-        {outputs.get('FLOW_GIT_COMPARE_ID')}
-      </a>} />
+      <Entry name='Compare' value={compareBlock} />
       <Legend name={i18n('Agent 信息')} />
       <Entry name='Agent'
-        value={envs.get('JOB_AGENT_INFO')} />
+        value={envs.get('FLOW_JOB_AGENT_INFO')} />
     </Mapping>
   }
 
