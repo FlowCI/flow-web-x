@@ -47,6 +47,16 @@ export default {
         'updatedAt': 1504737923
       },
       {
+        'name': 'ras-credential222',
+        'type': 'RSA',
+        'detail': {
+          'publicKey': 'public key',
+          'privateKey': 'private key'
+        },
+        'createdAt': 1504737923,
+        'updatedAt': 1504737923
+      },
+      {
         'name': 'username-credential',
         'type': 'USERNAME',
         'detail': {
