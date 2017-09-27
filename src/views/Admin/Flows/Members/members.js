@@ -10,6 +10,7 @@ import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/member'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Loading from 'components/Loading'
 import Button from 'components/Button'
@@ -37,6 +38,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     queryMembers: actions.query,
     updateFlowAuth: actions.updateFlowAuth,
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -49,6 +51,7 @@ export class AdminFlowMembers extends Component {
 
     queryMembers: PropTypes.func.isRequired,
     updateFlowAuth: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -87,9 +90,11 @@ export class AdminFlowMembers extends Component {
   }
 
   handleSave = () => {
-    const { updateFlowAuth, flowName } = this.props
+    const { updateFlowAuth, flowName, alert, i18n } = this.props
     const checkeds = this.getCheckeds()
-    return updateFlowAuth(checkeds, flowName)
+    return updateFlowAuth(checkeds, flowName).then(() => {
+      alert('success', i18n('更新成功'))
+    })
   }
 
   handleChecked = (user, checked) => {
