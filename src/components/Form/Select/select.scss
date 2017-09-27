@@ -11,11 +11,14 @@
 .select {
   position: relative;
   display: inline-flex;
+  vertical-align: middle;
   font-size: $font-size-base;
   z-index: $zindex-select;
   width: $input-default-width;
 }
-
+.opened{
+  z-index: $zindex-select-opened;
+}
 .input{
   cursor: pointer;
   width: 100%;

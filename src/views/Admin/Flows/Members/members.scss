@@ -1,11 +1,13 @@
-@import 'variables/views/Admin/flows';
-.toolbar{
-  margin-bottom: $admin-toolbar-vertical-padding;
+.list{
+  display: block;
+  margin-bottom: 20px;
 }
-
-.panel{
-  border: 1px solid $admin-flows-member-border;
-  border-radius: $admin-flows-member-border-radius;
-  display: flex;
-  align-items: stretch;
+.item{
+  width: 50%;
+  max-width: 200px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.checkbox{
+  width: 100%;
 }

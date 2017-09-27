@@ -44,7 +44,7 @@ export class CreateFlowView extends Component {
 
   state = {
     name: '',
-    git: '',
+    git: 'custom',
   }
 
   handleNameChange = (value) => {
@@ -94,12 +94,6 @@ export class CreateFlowView extends Component {
         <ul className={classes.gits}>
           <li>
             {this.renderWell('custom', <i className='icon icon-equalizer' />,
-              i18n('手动配置 Git 仓库'),
-              i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
-            )}
-          </li>
-          <li>
-            {this.renderWell('gitlab', <i className='icon icon-equalizer' />,
               i18n('手动配置 Git 仓库'),
               i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
             )}

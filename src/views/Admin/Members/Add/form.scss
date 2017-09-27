@@ -1,0 +1,27 @@
+@import 'variables/base';
+.form{
+  padding: 20px 0px;
+  width: 100%;
+  input{
+    font-size: $font-size-base;
+  }
+  td{
+    padding: 5px 10px;
+    vertical-align: middle;
+  }
+}
+.table{
+  width: 100%;
+}
+.name{
+  text-align: right;
+  width: 130px;
+  // font-weight: bold;
+}
+.input{
+  width: 300px;
+}
+.select{
+  width: 150px;
+  font-size: 14px;
+}

@@ -13,7 +13,7 @@ export default class Checkbox extends Component {
     classNames: PropTypes.object.isRequired,
 
     size: PropTypes.oneOf(['sm', 'lg']),
-    meta: PropTypes.bool,
+    meta: PropTypes.object,
 
     leftLabel: PropTypes.node,
     rightLabel: PropTypes.node,
@@ -25,6 +25,7 @@ export default class Checkbox extends Component {
   }
 
   static defaultProps = {
+    checked: false,
     className: '',
     classNames: classes,
     type: 'checkbox',

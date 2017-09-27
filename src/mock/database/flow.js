@@ -1,5 +1,8 @@
 import types from 'redux/modules/flowType'
 
+export {
+  types,
+}
 export default {
   [types.query]: function () {
     return [{
