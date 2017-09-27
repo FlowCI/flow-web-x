@@ -2,6 +2,16 @@ import types from 'redux/modules/memberType'
 import roleData, { types as roleTypes } from './role'
 import flowData, { types as flowTypes } from './flow'
 
+function createRole (key) {
+  return {
+    name: `mock_role_${key}`
+  }
+}
+
+function createFlow (key) {
+  return `mock_flow_${key}`
+}
+
 export default {
   [types.query]: function () {
     const roles = roleData[roleTypes.query]()
@@ -32,15 +42,20 @@ export default {
   [types.create]: function (params) {
     return {}
   },
-  [types.updateRoles]: function ({ params }) {
-    const { emailList, roles } = params
+  [types.updatePermission]: function ({ params }) {
+    const {
+      emailList,
+      roles = [createRole('1')],
+      flowName,
+    } = params
     const role = roles[0]
+    const flows = flowName ? [flowName] : [createFlow('1')]
 
     return emailList.map((email) => {
       return {
         email: email,
         username: `demo_for_update_role_username_${email}`,
-        flows: [`demo_flow_name_for_${email}`],
+        flows: flows,
         roles: [{ name: role }]
       }
     })

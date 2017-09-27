@@ -14,8 +14,8 @@ import {
 } from '../../components/TabBars'
 
 import Menus from './menus'
-
-import classes from './members.scss'
+import Members from './members'
+import classes from './index.scss'
 
 const flowsSelector = createSelector(
   (flows) => flows.get('list'),
@@ -29,7 +29,7 @@ function mapStateToProps (state, props) {
   }
 }
 
-export class AdminFlowMembers extends Component {
+export class AdminFlowMembersPanel extends Component {
   static propTypes = {
     flows: list.isRequired,
     i18n: func.isRequired,
@@ -39,9 +39,7 @@ export class AdminFlowMembers extends Component {
     i18n: createI18n(language).createChild('members'),
   }
 
-  state = {
-
-  }
+  state = {}
 
   handleMenuClick = (flow) => {
     this.setState({ selected: flow.get('id') })
@@ -57,16 +55,19 @@ export class AdminFlowMembers extends Component {
   }
 
   render () {
-    const { flows } = this.props
+    const { flows, i18n } = this.props
     const { selected } = this.state
     return <div>
       {this.renderToolBars()}
       <div className={classes.panel}>
         <Menus flows={flows} selected={selected}
           onItemActive={this.handleMenuClick} />
+        <div className={classes.panelBody}>
+          {!!selected && <Members flowName={selected} i18n={i18n} />}
+        </div>
       </div>
     </div>
   }
 }
 
-export default connect(mapStateToProps)(AdminFlowMembers)
+export default connect(mapStateToProps)(AdminFlowMembersPanel)
