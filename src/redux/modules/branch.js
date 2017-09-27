@@ -12,7 +12,7 @@ const initialState = fromJS({ data: {}, ui: {} })
 export const actions = {
   query: function (flowId) {
     return {
-      url: '/branches/:flowName',
+      url: '/flows/:flowName/branches',
       params:{
         flowName: flowId,
       },
