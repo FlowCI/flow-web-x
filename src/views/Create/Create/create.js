@@ -98,12 +98,6 @@ export class CreateFlowView extends Component {
               i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
             )}
           </li>
-          <li>
-            {this.renderWell('gitlab', <i className='icon icon-equalizer' />,
-              i18n('手动配置 Git 仓库'),
-              i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
-            )}
-          </li>
         </ul>
         <Button disabled={!enabled} onClick={this.handleNext}
           className={`btn btn-primary ${classes.next}`}>
