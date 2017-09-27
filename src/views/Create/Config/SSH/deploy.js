@@ -17,6 +17,8 @@ import Loading from 'components/Loading'
 import { Section, SectionTitle } from '../components/Section'
 import DeployItem from './deployItem'
 
+import classes from './deploy.scss'
+
 const credentialType = 'RSA'
 
 function mapStateToProps (state, { flowId }) {
@@ -47,6 +49,8 @@ export class DeployList extends Component {
     i18n: PropTypes.func.isRequired,
   }
 
+  state = {}
+
   componentDidMount () {
     const { query } = this.props
     query(credentialType)
@@ -59,7 +63,7 @@ export class DeployList extends Component {
 
   renderList () {
     const { deploys, selected, onSelect } = this.props
-    return <ul>
+    return <ul className={classes.list}>
       {deploys.map((deploy) => {
         const name = deploy.get('name')
         return <DeployItem key={name} checked={name === selected}
