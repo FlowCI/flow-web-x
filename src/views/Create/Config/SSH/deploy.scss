@@ -9,16 +9,22 @@
   display: flex;
   align-items: center;
   &:hover{
-    background-color: $color-hover-bg;
+    .actions{
+      opacity: 1;
+    }
   }
 }
-.desc{
+.label{
+  flex: 1;
+}
+.thumail{
   flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .actions{
+  // opacity: 0;
   >li{
     display: inline-block;
     vertical-align: middle;
@@ -28,6 +34,7 @@
         padding: 0px 5px;
         display: inline-block;
         vertical-align: middle;
+        color: $link-color;
       }
     }
   }
