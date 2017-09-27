@@ -133,6 +133,11 @@ export const actions = {
       transformResponse,
     }
   },
+  /**
+   * params: {
+   *  FLOW_GIT_CREDENTIAL {string} deploy key name (credential.name)
+   * }
+   */
   doneCreate: function (flowId, params) {
     return actions.updateEnv(flowId, {
       FLOW_STATUS: 'READY',
