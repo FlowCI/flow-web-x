@@ -12,10 +12,10 @@ import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/credential'
 
-import Button from 'components/Button'
 import Loading from 'components/Loading'
 import { Section, SectionTitle } from '../components/Section'
 import DeployItem from './deployItem'
+import CreateButton from './create'
 
 import classes from './deploy.scss'
 
@@ -32,6 +32,7 @@ function mapStateToProps (state, { flowId }) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    create: actions.create,
     freedAll: actions.freedAll,
   }, dispatch)
 }
@@ -45,6 +46,7 @@ export class DeployList extends Component {
     onSelect: PropTypes.func.isRequired,
 
     query: PropTypes.func.isRequired,
+    create: PropTypes.func.isRequired,
     freedAll: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
@@ -59,6 +61,11 @@ export class DeployList extends Component {
   componentWillUnmount () {
     const { freedAll } = this.props
     freedAll()
+  }
+
+  createDeploy = (name) => {
+    const { create } = this.props
+    return create(credentialType, name)
   }
 
   renderList () {
@@ -83,7 +90,7 @@ export class DeployList extends Component {
     return <Section>
       <SectionTitle title={i18n('Deploy Key（可选）')}
         question='link for doc'
-        action={<Button className='btn-link' size='sm'>新建一个</Button>}
+        action={<CreateButton i18n={i18n} onCreate={this.createDeploy} />}
         subTitle={i18n('如没有 Git 仓库访问权限，请添加 Deploy Key 到 Git 仓库的项目或者用户设置')}
       />
       {loaded ? this.renderList() : this.renderLoading()}

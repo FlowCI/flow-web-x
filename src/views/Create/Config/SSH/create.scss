@@ -1,0 +1,34 @@
+@import 'variables/base';
+
+.popover{
+  display: inline-flex;
+  position: relative;
+  line-height: initial;
+}
+.close{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  color: $color-muted;
+  padding: 10px;
+  line-height: 1;
+  cursor: pointer;
+  &:hover{
+    color: $color-black;
+  }
+}
+.panel{
+  position: absolute;
+  top: 40px;
+  width: 360px;
+  border: 1px solid $color-hr;
+  box-shadow: $base-boxshadow;
+  padding: 15px 20px;
+  background-color: #fff;
+}
+.title{
+  line-height: 30px;
+}
+.field{
+  margin-bottom: 10px;
+}
