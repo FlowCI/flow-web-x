@@ -72,4 +72,16 @@ export default {
     }
     return array.filter((item) => item.type === types)
   },
+  [types.create]: function ({ params: { type, name } }) {
+    return {
+      'name': name,
+      'type': type,
+      'detail': {
+        'publicKey': 'public key',
+        'privateKey': 'private key'
+      },
+      'createdAt': 1504737923,
+      'updatedAt': 1504737923
+    }
+  }
 }
