@@ -44,6 +44,7 @@ export class SSHConfig extends Component {
 
   state = {
     url: this.props.defaultGitUrl,
+    deployKey: '',
   }
 
   getGitSource () {
@@ -52,10 +53,11 @@ export class SSHConfig extends Component {
   }
 
   getValues () {
-    const { url } = this.state
+    const { url, deployKey } = this.state
     return {
       source: this.getGitSource(),
-      url: url
+      url: url,
+      deploy: deployKey,
     }
   }
 
