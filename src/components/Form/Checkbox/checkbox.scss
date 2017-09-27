@@ -2,7 +2,7 @@
 
 @mixin icon-variant ($font-size, $padding) {
   font-size: $font-size;
-  :nth-child(2){
+  >:nth-child(2){
     margin-right: $padding;
   }
 }
