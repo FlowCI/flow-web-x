@@ -83,7 +83,7 @@ export class DeployList extends Component {
     return <Section>
       <SectionTitle title={i18n('Deploy Key（可选）')}
         question='link for doc'
-        action={<Button className='btn-link'>新建一个</Button>}
+        action={<Button className='btn-link' size='sm'>新建一个</Button>}
         subTitle={i18n('如没有 Git 仓库访问权限，请添加 Deploy Key 到 Git 仓库的项目或者用户设置')}
       />
       {loaded ? this.renderList() : this.renderLoading()}

@@ -62,7 +62,7 @@ export default class DeployListItem extends Component {
     const { checked } = this.props
     const { showAll } = this.state
     return <li>
-      <Checkbox className={classes.item}
+      <Checkbox className={classes.item} size='lg'
         rightLabel={this.renderThumail()}
         checked={checked} onChange={this.handleChange}
         checkedIcon={checkedIcon} unCheckedIcon={unCheckedIcon}
