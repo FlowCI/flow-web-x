@@ -39,6 +39,11 @@ export const actions = {
       }
     }
   },
+  freedAll: function () {
+    return {
+      type: types.freedAll,
+    }
+  }
 }
 
 const initialState = fromJS({
@@ -66,4 +71,7 @@ export default handleActions({
         : fromJS([payload]))
     }
   }),
+  [types.freedAll]: function () {
+    return initialState
+  }
 }, initialState)
