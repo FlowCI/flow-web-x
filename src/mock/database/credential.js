@@ -6,6 +6,7 @@ export default {
       {
         'name': 'android-credential',
         'type': 'ANDROID',
+        'createdBy': 'test',
         'detail': {
           'file': {
             'name': 'android.jks'
@@ -20,6 +21,7 @@ export default {
       {
         'name': 'ios-credential',
         'type': 'IOS',
+        'createdBy': 'test',
         'detail': {
           'provisionProfiles': [
             {
@@ -39,6 +41,7 @@ export default {
       {
         'name': 'ras-credential',
         'type': 'RSA',
+        'createdBy': 'test',
         'detail': {
           'publicKey': 'public key',
           'privateKey': 'private key'
@@ -49,6 +52,7 @@ export default {
       {
         'name': 'ras-credential222',
         'type': 'RSA',
+        'createdBy': 'test',
         'detail': {
           'publicKey': 'public key',
           'privateKey': 'private key'
@@ -59,6 +63,7 @@ export default {
       {
         'name': 'username-credential',
         'type': 'USERNAME',
+        'createdBy': 'test',
         'detail': {
           'username': 'user',
           'password': 'pass'

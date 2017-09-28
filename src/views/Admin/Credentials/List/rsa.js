@@ -45,7 +45,7 @@ export class RSACredentialList extends Component {
 
     return <ListRow key={credential.get('name')}>
       <ListCol>{credential.get('name')}</ListCol>
-      <ListCol>{credential.get('author')}</ListCol>
+      <ListCol>{credential.get('createdBy')}</ListCol>
       <ListCol>
         {moment(credential.get('createdAt') * 1000).format('YYYY.M.D')}
       </ListCol>
