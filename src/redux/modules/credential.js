@@ -7,6 +7,36 @@ import types from './credentialType'
 
 import is from 'util/is'
 
+/**
+ *
+ * @param {string} type 证书类型，目前只有 RSA, IOS
+ * @param {string} name 证书名称
+ * @param {object} extendParams 扩展字段，目前只有 IOS 使用,
+ * * 包括 p12s: [{ file, password }], mobileprovisions: [file]
+ */
+function formatCreateParams (type, name, extendParams) {
+  if (type === 'IOS') {
+    const { p12s, mobileprovisions } = extendParams
+    const f = new FormData()
+    const ps = []
+    p12s.forEach((d) => {
+      const { password, file } = d
+      const filename = file.name
+      ps.push({ name: filename, password })
+      f.append('p12-files', file)
+    })
+    mobileprovisions.forEach((file) => {
+      f.append('pp-files', file)
+    })
+    f.append('detail', JSON.stringify({
+      type,
+      p12s: ps,
+    }))
+    return f
+  }
+  return { type, name }
+}
+
 export const actions = {
   query: function (type) {
     return {
@@ -28,16 +58,18 @@ export const actions = {
       }
     }
   },
-  create: function (type, name) {
+  create: function (type, name, extendParams) {
+    const params = formatCreateParams(type, name, extendParams)
     return {
-      name: types.create,
-      url: '/credentials/:name',
-      method: 'post',
-      params: {
-        type,
-        name,
-      }
+      type: 'CREATE_CREDENTIAL',
+      params,
     }
+    // return {
+    //   name: types.create,
+    //   url: `/credentials/${name}`,
+    //   method: 'post',
+    //   params: params,
+    // }
   },
   freedAll: function () {
     return {

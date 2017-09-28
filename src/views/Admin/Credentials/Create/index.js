@@ -20,8 +20,8 @@ export class CreateCredentialForm extends Component {
 
   handleCreate = (values) => {
     const { create } = this.props
-    const { type, name } = values
-    return create(type, name)
+    const { type, name, ...other } = values
+    return create(type, name, other)
   }
 
   render () {

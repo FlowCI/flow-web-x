@@ -8,6 +8,7 @@ import { Select, Option } from 'components/Form/reduxForm'
 import Button from 'components/Button'
 
 import RSA, { validate as rsaValidate } from './rsa'
+import IOS, { validate as iosValidate } from './Ios'
 
 import classes from './form.scss'
 
@@ -16,6 +17,10 @@ const types = {
     component: RSA,
     validate: rsaValidate,
   },
+  IOS: {
+    component: IOS,
+    validate: iosValidate,
+  }
 }
 
 const enumTypes = Object.keys(types)
@@ -79,7 +84,7 @@ export const CreateCredentialReduxForm = reduxForm({
   validate,
   form: 'createCredentialForm',
   initialValues: {
-    type: 'RSA',
+    type: 'IOS',
   }
 })(CreateCredentialForm)
 
