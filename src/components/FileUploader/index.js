@@ -14,6 +14,9 @@ export default class FileUploader extends Component {
     children: PropTypes.node,
 
     disabled: PropTypes.bool,
+    /**
+     * function (props.multiple ? [file, file] : file )
+     */
     onChange: PropTypes.func
   };
 
@@ -35,8 +38,10 @@ export default class FileUploader extends Component {
   }
 
   handleChange = (e) => {
-    const { onChange } = this.props
-    onChange && onChange(this.getFiles(e))
+    const { onChange, multiple } = this.props
+    const files = this.getFiles(e)
+
+    onChange && onChange(multiple ? files : files[0])
   }
 
   handleClick = (e) => {
