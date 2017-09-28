@@ -15,6 +15,7 @@
   font-size: $font-size-base;
   z-index: $zindex-select;
   width: $input-default-width;
+  text-align: left;
 }
 .opened{
   z-index: $zindex-select-opened;
