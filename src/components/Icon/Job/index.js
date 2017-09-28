@@ -14,6 +14,7 @@ export const IconMapping = {
   'SUCCESS': <i className='icon icon-check' />,
   'FAILURE': <i className='icon icon-failure' />,
   'STOPPED': <i className='icon icon-stopped' />,
+  'TIMEOUT': <i className='icon icon-timeout' />,
 }
 
 export const STATUS = Object.keys(IconMapping)

@@ -36,7 +36,7 @@ export class JobStatusHeader extends Component {
         <li>
           {i18n('buildDuration', { duration })}
         </li>
-        <li>{i18n('jobCategory', { category })}</li>
+        <li>{i18n('CATEGORY')[category]}</li>
       </ul>
     </div>
   }

@@ -65,7 +65,7 @@ export class JobItem extends Component {
         <div className={classes.itemCol}>
           {this.renderItem(i18n('Compare'),
             envs.get('FLOW_GIT_COMPARE_ID', '-'))}
-          {this.renderItem(i18n('Builded'),
+          {this.renderItem(i18n('Built'),
             startedAt ? moment(startedAt * 1000).fromNow() : '-')}
         </div>
       </div>
