@@ -15,6 +15,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-trash {
+  &:before {
+    content: $icon-trash;
+  }
+}
+.icon-trash2 {
+  &:before {
+    content: $icon-trash2;
+  }
+}
 .icon-pending {
   &:before {
     content: $icon-pending;
@@ -38,6 +48,11 @@
 .icon-running {
   &:before {
     content: $icon-running;
+  }
+}
+.icon-check {
+  &:before {
+    content: $icon-check;
   }
 }
 .icon-cross {
@@ -183,11 +198,6 @@
 .icon-branches {
   &:before {
     content: $icon-branches;
-  }
-}
-.icon-check {
-  &:before {
-    content: $icon-check;
   }
 }
 .icon-checkbox-checked {
