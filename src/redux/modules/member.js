@@ -40,7 +40,15 @@ export const actions = {
     return {
       url: '/user/register',
       method: 'post',
-      params: params,
+      params: {
+        ...params,
+        flows: {
+          arrays: params.flows,
+        },
+        roles: {
+          arrays: params.roles
+        }
+      },
       name: types.create,
     }
   },
@@ -50,8 +58,12 @@ export const actions = {
       method: 'post',
       name: types.updatePermission,
       params: {
-        emailList: emails,
-        roles: [role] // 目前只支持一条 role
+        emailList: {
+          arrays: emails
+        },
+        roles: {
+          arrays: [role] // 目前只支持一条 role
+        }
       },
     }
   },
@@ -60,7 +72,7 @@ export const actions = {
       url: '/:flowName/users/auth',
       method: 'post',
       params: {
-        emailList: emails,
+        arrays: emails,
         flowName: flowId,
       },
       name: types.updatePermission,
@@ -72,7 +84,7 @@ export const actions = {
       method: 'post',
       name: types.removeAll,
       params: {
-        emailList: emails
+        arrays: emails
       },
       indicator: {
         emails,
