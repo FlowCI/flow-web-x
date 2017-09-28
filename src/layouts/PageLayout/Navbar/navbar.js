@@ -80,7 +80,7 @@ export class PageLayoutNavbar extends PureComponent {
     return <Card containerClass={classes.backButton}
       className={classes.back} to={backUrl}>
       <i className='icon icon-arrow-left' />
-      {i18n('back')}
+      {i18n('返回')}
     </Card>
   }
 

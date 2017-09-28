@@ -18,12 +18,13 @@ function mapStateToProps (state, { jobId }) {
 export class JobStatusHeader extends Component {
   static propTypes = {
     job: ImmutablePropTypes.map.isRequired,
-    i18n: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired
   }
 
   render () {
     const { job, i18n } = this.props
     const status = job.get('status')
+    const category = job.get('category')
 
     const startedAt = job.getIn(['result', 'startTime'])
     const duration = job.getIn(['result', 'duration'])
@@ -35,7 +36,7 @@ export class JobStatusHeader extends Component {
         <li>
           {i18n('buildDuration', { duration })}
         </li>
-        <li>{i18n('手动构建')}</li>
+        <li>{i18n('CATEGORY')[category]}</li>
       </ul>
     </div>
   }
