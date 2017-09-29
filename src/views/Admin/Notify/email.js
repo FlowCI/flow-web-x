@@ -77,7 +77,7 @@ export class AdminNotifyEmail extends Component {
     return <div>
       <Title title={i18n('title')} subTitle={i18n('subTitle')} />
       {loading ? <Loading />
-        : <Form initialValues={setting.toJSON()} i18n={i18n}
+        : <Form initialValues={setting.toJSON()} i18n={i18n} enableReinitialize
           onSubmit={this.handleSave} onTest={this.handleTest} />
       }
     </div>
