@@ -62,11 +62,14 @@ function pollingTestResult (flowId) {
   }
 }
 
-function getCreateEnv ({
-  type,
-  source, url,
-  deploy, username,
-  password }) {
+function getCreateEnv (params) {
+  const {
+    type,
+    source, url,
+    deploy, username,
+    password
+  } = params
+  console.log(params)
   const env = {
     FLOW_GIT_SOURCE: source,
     FLOW_GIT_URL: url,

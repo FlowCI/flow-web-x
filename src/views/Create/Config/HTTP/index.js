@@ -54,11 +54,13 @@ export class HTTPConfig extends Component {
   }
 
   getValues () {
-    const { url } = this.state
+    const { url, username, password } = this.state
     return {
       type: 'HTTP',
       source: this.getGitSource(),
-      url: url
+      url: url,
+      username,
+      password,
     }
   }
 
