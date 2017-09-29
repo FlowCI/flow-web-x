@@ -55,6 +55,7 @@ export class SSHConfig extends Component {
   getValues () {
     const { url, deployKey } = this.state
     return {
+      type: 'SSH',
       source: this.getGitSource(),
       url: url,
       deploy: deployKey,
