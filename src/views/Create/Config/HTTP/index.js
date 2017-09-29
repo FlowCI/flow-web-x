@@ -151,6 +151,7 @@ export class HTTPConfig extends Component {
       </Button>
       <Button className='btn-inverse'
         leftIcon={<i className='icon icon-check text-success' />}
+        disabled={!enabled}
         onClick={this.handleTestClick}
       >
         {i18n('连接测试')}
