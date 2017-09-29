@@ -50,7 +50,11 @@ export default class SocketClient {
    * 断开连接
    */
   disconnect () {
-    this.stompClient.disconnect()
+    if (this.connected) {
+      this.stompClient.disconnect()
+    } else {
+      this.socket.close()
+    }
     this.connected = false
   }
 }
