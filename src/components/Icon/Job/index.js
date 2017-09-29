@@ -21,7 +21,7 @@ export const STATUS = Object.keys(IconMapping)
 
 export default class JobIcon extends Component {
   static propTypes = {
-    status: PropTypes.oneOf(STATUS).isRequired,
+    status: PropTypes.oneOf([...STATUS, '']).isRequired,
     className: PropTypes.string,
     colored: PropTypes.bool,
   }
