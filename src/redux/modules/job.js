@@ -116,7 +116,10 @@ export const actions = {
       id: jobId,
     }
   },
-  storeJob: function (job) {
+  /**
+   * 如果是已经存过的 job 或者是新 job 则保存，否则丢弃
+   */
+  saveOrdiscarded: function (job) {
     return {
       type: Types.socketRecived,
       payload: transformResponse(job),
@@ -136,7 +139,18 @@ export default handleActions({
   }),
   [Types.socketRecived]: function (state, { payload }) {
     const job = { ...payload, childrenResult: undefined }
-    return handlers.saveData(state, { payload: job })
+    const { id, number } = job
+    const old = state.getIn(['data', id])
+    if (old) {
+      return handlers.saveData(state, { payload: job })
+    }
+    const lastId = state.get('list').last()
+    const last = state.getIn(['data', lastId])
+    const lastNumber = last ? last.get('number') : 0
+    if (lastNumber < number) {
+      // save to top list
+      return handlers.unshift(state, { payload: job })
+    }
   },
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { contains } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,34 +11,26 @@ import { Subscriber } from 'packages/socket'
 const baseChanel = '/topic/job'
 
 function mapStateToProps (state, props) {
-  const { jobId } = props
-  return {
-    job: state.job.getIn(['data', jobId]),
-  }
+  return {}
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    onMessage: actions.storeJob,
+    onMessage: actions.saveOrdiscarded,
   }, dispatch)
 }
 
 export class JobStatusSubscriber extends Component {
   static propTypes = {
-    job: contains({
-      /**
-       * 实际上为 ${nodePath}-${number} 其值刚好等于 id
-       */
-      id: PropTypes.string.isRequired,
-    }).isRequired,
+    flowId: PropTypes.string.isRequired,
     onMessage: PropTypes.func.isRequired,
   }
 
   constructor (props, context) {
     super(props, context)
-    const { job } = this.props
+    const { flowId } = this.props
     this.state = {
-      chanel: `${baseChanel}/${job.get('id')}`
+      chanel: `${baseChanel}/${flowId}`
     }
   }
 

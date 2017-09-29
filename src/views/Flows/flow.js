@@ -7,7 +7,7 @@ import autoCancel from 'react-promise-cancel'
 
 import { actions } from 'redux/modules/flow'
 import { actions as jobActions } from 'redux/modules/job'
-import { Socket } from './Socket'
+import { Socket, JobStatusSubscriber } from './Socket'
 
 function mapStateToProps (state, props) {
   const { params: { flowId } } = props
@@ -47,9 +47,11 @@ export class FlowView extends Component {
   }
 
   render () {
-    const { children } = this.props
+    const { children, flowId } = this.props
     return <Socket>
-      {children}
+      <JobStatusSubscriber flowId={flowId}>
+        {children}
+      </JobStatusSubscriber>
     </Socket>
   }
 }
