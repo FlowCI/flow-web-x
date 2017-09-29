@@ -36,7 +36,7 @@ export class FlowIndexRoute extends Component {
     if (status === 'READY') {
       redirect(`/flows/${flowId}/jobs`)
     } else {
-      redirect(`/create/${flowId}`)
+      redirect(`/create/${flowId}/config`)
     }
   }
 
