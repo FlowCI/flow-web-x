@@ -18,8 +18,6 @@ import Loading from 'components/Loading'
 import JobNavbar from './components/JobNavbar'
 import JobStatusHeader from './components/JobStatusHeader'
 
-import { JobSocket, JobStatusSubscriber } from './Socket'
-
 import classes from './job.scss'
 
 function mapStateToProps (state, props) {
@@ -105,22 +103,18 @@ export class JobContainer extends Component {
       children
     } = this.props
     const base = { ...location, pathname: `/flows/${flowId}/jobs/${jobNumber}` }
-    return <JobStatusSubscriber jobId={jobId}>
-      <div className={classes.content}>
-        <JobNavbar jobId={jobId} i18n={i18n} base={base} />
-        {children}
-      </div>
-    </JobStatusSubscriber>
+    return <div className={classes.content}>
+      <JobNavbar jobId={jobId} i18n={i18n} base={base} />
+      {children}
+    </div>
   }
 
   render () {
     const { loaded, jobId, i18n } = this.props
-    return <JobSocket>
-      <div className={classes.container}>
-        {loaded && <JobStatusHeader jobId={jobId} i18n={i18n} />}
-        {loaded ? this.renderContent() : this.renderLoading()}
-      </div>
-    </JobSocket>
+    return <div className={classes.container}>
+      {loaded && <JobStatusHeader jobId={jobId} i18n={i18n} />}
+      {loaded ? this.renderContent() : this.renderLoading()}
+    </div>
   }
 }
 
