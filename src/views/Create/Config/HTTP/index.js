@@ -11,6 +11,7 @@ import Button from 'components/Button'
 
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
+import TestButton from '../components/TestButton'
 
 import classes from './http.scss'
 
@@ -139,8 +140,9 @@ export class HTTPConfig extends Component {
   }
 
   renderActions () {
-    const { i18n } = this.props
-    const enabled = this.valid(this.getValues())
+    const { i18n, flowId } = this.props
+    const values = this.getValues()
+    const enabled = this.valid(values)
 
     return <div className={classes.actions}>
       <Button className='btn-primary'
@@ -149,13 +151,11 @@ export class HTTPConfig extends Component {
       >
         {i18n('完成')}
       </Button>
-      <Button className='btn-inverse'
-        leftIcon={<i className='icon icon-check text-success' />}
-        disabled={!enabled}
-        onClick={this.handleTestClick}
-      >
-        {i18n('连接测试')}
-      </Button>
+      <TestButton
+        envs={values}
+        i18n={i18n.createChild('test')} disabled={!enabled}
+        flowId={flowId}
+      />
     </div>
   }
 
