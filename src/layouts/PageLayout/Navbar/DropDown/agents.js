@@ -58,12 +58,16 @@ export class AgentsDropDown extends PureComponent {
     const number = agent.get('number')
     const branch = agent.get('branch')
 
-    const job = flow ? `${flow} / #${number} ${branch}` : ''
+    const job = flow ? `${flow} / #${number} ${branch}` : '-'
     return <tr key={agent.get('id')}>
       <td className={classes.statusCell}>
         <AgentIcon status={agent.get('agentStatus')} />
       </td>
-      <td>{agent.get('zoneWithName')}</td>
+      <td className={classes.name}>
+        <div className={classes.zoneWithName}>
+          {agent.get('zoneWithName')}
+        </div>
+      </td>
       <td>{job}</td>
     </tr>
   }

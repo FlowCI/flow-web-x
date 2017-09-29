@@ -48,8 +48,14 @@ $lh: 20px;
   width: 1%;
   white-space: nowrap;
 }
+.zoneWithName{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 0.3*$width;
+}
 .name{
-  width: 30%;
+  width: 0.3*$width;
 }
 .job{
   width: auto;
