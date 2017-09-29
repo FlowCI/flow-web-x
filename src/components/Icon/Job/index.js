@@ -14,13 +14,14 @@ export const IconMapping = {
   'SUCCESS': <i className='icon icon-check' />,
   'FAILURE': <i className='icon icon-failure' />,
   'STOPPED': <i className='icon icon-stopped' />,
+  'TIMEOUT': <i className='icon icon-timeout' />,
 }
 
 export const STATUS = Object.keys(IconMapping)
 
 export default class JobIcon extends Component {
   static propTypes = {
-    status: PropTypes.oneOf(STATUS).isRequired,
+    status: PropTypes.oneOf([...STATUS, '']).isRequired,
     className: PropTypes.string,
     colored: PropTypes.bool,
   }

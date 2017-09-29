@@ -12,6 +12,7 @@ import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/member'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Loading from 'components/Loading'
 import Input from 'components/Form/Input'
@@ -50,6 +51,8 @@ function mapDispatchToProps (dispatch) {
     updateRole: actions.updateRole,
     removeAll: actions.removeAll,
     freedAll: actions.freedAll,
+
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -63,6 +66,7 @@ export class AdminMemberList extends Component {
     page: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
 
+    alert: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired,
     updateRole: PropTypes.func.isRequired,
     removeAll: PropTypes.func.isRequired,
@@ -122,20 +126,24 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
-    const { removeAll } = this.props
+    const { removeAll, alert } = this.props
     const selected = this.getChecked()
     if (selected.length) {
       this.setState({ checks: {}, checkAll: false })
-      return removeAll(selected)
+      return removeAll(selected).then(() => {
+        alert('success', '删除成功')
+      })
     }
   }
 
   handleChangeRole = (role) => {
-    const { updateRole } = this.props
+    const { updateRole, alert } = this.props
     const selected = this.getChecked()
     if (selected.length) {
       this.setState({ checks: {}, checkAll: false })
-      return updateRole(selected, role)
+      return updateRole(selected, role).then(() => {
+        alert('success', '更新角色成功')
+      })
     }
   }
 

@@ -42,7 +42,7 @@ export function saveAllToList (state, { payload }, options = {}) {
 
 export function unshiftToList (state, { payload }, options = {}) {
   const id = getId(payload, options)
-  const set = new OrderedSet(id)
+  const set = new OrderedSet().add(id)
   return state.update('list', (list) => set.union(list))
 }
 

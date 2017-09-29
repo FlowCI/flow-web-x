@@ -13,7 +13,8 @@ import { push } from 'react-router-redux'
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
-import { actions } from 'redux/modules/flow'
+import { actions as flowActions } from 'redux/modules/flow'
+import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
 import Button from 'components/Button'
@@ -42,7 +43,8 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    query: actions.query,
+    query: flowActions.query,
+    createJob: jobActions.create,
     redirect: push
   }, dispatch)
 }
@@ -69,6 +71,7 @@ export class JobsView extends Component {
     i18n: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    createJob: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -131,11 +134,11 @@ export class JobsView extends Component {
   }
 
   renderContent () {
-    const { i18n, flowId, loading } = this.props
+    const { i18n, flowId, loading, createJob } = this.props
     return <div className={classes.container}>
       {this.renderFlowHeader()}
       <div className={classes.actions}>
-        <button className='btn btn-primary'>{i18n('运行工作流')}</button>
+        <button className='btn btn-primary' onClick={() => { createJob(flowId) }}>{i18n('运行工作流')}</button>
         <Filter flowId={flowId} i18n={i18n} />
       </div>
       {this.renderJobs()}

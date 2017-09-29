@@ -34,6 +34,7 @@ function mapDispatchToProps (dispatch) {
 export class TestButton extends Component {
   static propTypes = {
     loading: bool,
+    disabled: bool,
     flowId: string.isRequired,
     status: string,
     message: string,
@@ -89,8 +90,9 @@ export class TestButton extends Component {
   }
 
   renderButton () {
-    const { i18n } = this.props
+    const { i18n, disabled } = this.props
     return <Button className={classes.button}
+      disabled={disabled}
       onClick={this.handleClick}
     >
       {i18n('连接测试')}

@@ -43,10 +43,10 @@ function pollingTestResult (flowId) {
   return function (dispatch, getState) {
     function get () {
       return dispatch({
-        url: '/flows/env',
+        url: '/flows/:flowName/env',
         name: Types.pollingEnv,
         params: {
-          pathOrName: flowId,
+          flowName: flowId,
         },
         indicator: {
           id: flowId,
@@ -62,12 +62,24 @@ function pollingTestResult (flowId) {
   }
 }
 
-function getCreateEnv ({ source, url, deploy }) {
-  return {
+function getCreateEnv (params) {
+  const {
+    type,
+    source, url,
+    deploy, username,
+    password
+  } = params
+  const env = {
     FLOW_GIT_SOURCE: source,
     FLOW_GIT_URL: url,
-    FLOW_GIT_CREDENTIAL: deploy,
   }
+  if (type === 'SSH') {
+    env.FLOW_GIT_CREDENTIAL = deploy
+  } else if (type === 'HTTP') {
+    env.FLOW_GIT_HTTP_USER = username
+    env.FLOW_GIT_HTTP_PASS = password
+  }
+  return env
 }
 
 export const actions = {
@@ -107,8 +119,8 @@ export const actions = {
   },
   remove: function (flowId) {
     return {
-      url: '/flows/:flowName/delete',
-      method: 'post',
+      url: '/flows/:flowName',
+      method: 'delete',
       name: Types.remove,
       params: {
         flowName: flowId,
