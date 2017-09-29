@@ -84,7 +84,7 @@ export const CreateCredentialReduxForm = reduxForm({
   validate,
   form: 'createCredentialForm',
   initialValues: {
-    type: 'IOS',
+    type: 'RSA',
   }
 })(CreateCredentialForm)
 
