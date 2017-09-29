@@ -16,6 +16,9 @@ const is = {
     return typeof v === 'object'
   },
   array: Array.isArray,
+  formData (f) {
+    return f instanceof FormData
+  }
 }
 
 export function setIsType (name, checkFn) {

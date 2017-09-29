@@ -1,73 +1,99 @@
 import React, { Component } from 'react'
-import { func } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { reduxForm, formValueSelector } from 'redux-form'
 
-import { actions } from 'redux/modules/credential'
-
-import { Select, Option } from 'components/Form/Select'
-import Input from 'components/Form/Input'
+import { Select, Option } from 'components/Form/reduxForm'
 import Button from 'components/Button'
+
+import RSA, { validate as rsaValidate } from './rsa'
+import IOS, { validate as iosValidate } from './Ios'
 
 import classes from './form.scss'
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    create: actions.create,
-  }, dispatch)
+const types = {
+  RSA: {
+    component: RSA,
+    validate: rsaValidate,
+  },
+  IOS: {
+    component: IOS,
+    validate: iosValidate,
+  }
 }
 
-export class CreateCredential extends Component {
+const enumTypes = Object.keys(types)
+
+export function validate (values) {
+  const { type } = values
+  const { validate: v } = types[type] || { }
+  return v ? v(values) : {}
+}
+
+export class CreateCredentialForm extends Component {
   static propTypes = {
-    create: func,
+    type: PropTypes.oneOf(enumTypes),
+    invalid: PropTypes.bool,
+    submitting: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
   }
 
-  state = {
-    name: ''
-  }
-
-  handleNameChange = (v) => {
-    this.setState({ name: v })
-  }
-
-  handleCreate = () => {
-    const { create } = this.props
-    const { name } = this.state
-    return create('RSA', name)
+  getChildComponent () {
+    const { type } = this.props
+    if (types[type]) {
+      const { component: Child } = types[type] || {}
+      if (Child) {
+        return <Child />
+      }
+    }
   }
 
   render () {
-    const { name } = this.state
-    return <form className={classes.form}>
+    const { handleSubmit, invalid, submitting } = this.props
+    return <form className={classes.form} onSubmit={handleSubmit}>
       <table>
-        <tbody>
+        <thead>
           <tr>
-            <td className={classes.name}>类型</td>
-            <td>
-              <Select value='RSA'>
-                <Option value='RSA'>RSA Key</Option>
-                <Option value='IOS'>iOS 证书</Option>
+            <th className={classes.name}>类型</th>
+            <th>
+              <Select name='type'>
+                {enumTypes.map((t) => <Option key={t} value={t} title={t} />)}
               </Select>
-            </td>
+            </th>
           </tr>
-          <tr>
-            <td className={classes.name}>名称</td>
-            <td>
-              <Input value={name} onChange={this.handleNameChange} />
-            </td>
-          </tr>
+        </thead>
+        {this.getChildComponent()}
+        <tfoot>
           <tr>
             <td>&nbsp;</td>
             <td>
-              <Button className='btn-primary' onClick={this.handleCreate}>
+              <Button className='btn-primary' type='submit'
+                disabled={invalid} loading={submitting}>
                 生成
               </Button>
             </td>
           </tr>
-        </tbody>
+        </tfoot>
       </table>
     </form>
   }
 }
-export default connect(undefined, mapDispatchToProps)(CreateCredential)
+
+export const CreateCredentialReduxForm = reduxForm({
+  validate,
+  form: 'createCredentialForm',
+  initialValues: {
+    type: 'RSA',
+  }
+})(CreateCredentialForm)
+
+const selector = formValueSelector('createCredentialForm')
+
+function mapStateToProps (state, props) {
+  return {
+    type: selector(state, 'type')
+  }
+}
+
+export default connect(mapStateToProps)(CreateCredentialReduxForm)
