@@ -19,6 +19,8 @@ import { actions as jobActions } from 'redux/modules/job'
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 
+import { JobStatusSubscriber } from '../Socket'
+
 import Filter from './components/Filter'
 import JobItem from './components/JobItem'
 
@@ -147,8 +149,10 @@ export class JobsView extends Component {
   }
 
   render () {
-    const { children } = this.props
-    return children || this.renderContent()
+    const { children, flowId } = this.props
+    return <JobStatusSubscriber flowId={flowId}>
+      {children || this.renderContent()}
+    </JobStatusSubscriber>
   }
 }
 

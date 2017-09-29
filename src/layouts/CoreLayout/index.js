@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { node } from 'prop-types'
 
 import AlertControl from '../components/AlertControl'
+import Socket from './Socket'
+
 export default class CoreLayout extends Component {
   static propTypes = {
     children: node.isRequired,
@@ -11,7 +13,9 @@ export default class CoreLayout extends Component {
     const { children } = this.props
     return <div style={{ height: '100%' }}>
       <AlertControl />
-      {children}
+      <Socket>
+        {children}
+      </Socket>
     </div>
   }
 }
