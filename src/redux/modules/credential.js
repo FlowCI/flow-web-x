@@ -61,15 +61,11 @@ export const actions = {
   create: function (type, name, extendParams) {
     const params = formatCreateParams(type, name, extendParams)
     return {
-      type: 'CREATE_CREDENTIAL',
-      params,
+      name: types.create,
+      url: `/credentials/${name}`,
+      method: 'post',
+      params: params,
     }
-    // return {
-    //   name: types.create,
-    //   url: `/credentials/${name}`,
-    //   method: 'post',
-    //   params: params,
-    // }
   },
   freedAll: function () {
     return {
