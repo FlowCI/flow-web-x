@@ -56,6 +56,7 @@ export class HTTPConfig extends Component {
   getValues () {
     const { url } = this.state
     return {
+      type: 'HTTP',
       source: this.getGitSource(),
       url: url
     }
@@ -63,6 +64,14 @@ export class HTTPConfig extends Component {
 
   handleUrlChange = (value) => {
     this.setState({ url: value })
+  }
+
+  handleUsernameChange = (value) => {
+    this.setState({ username: value })
+  }
+
+  handlePasswordChange = (value) => {
+    this.setState({ password: value })
   }
 
   handleDoneCick = () => {
@@ -79,7 +88,7 @@ export class HTTPConfig extends Component {
 
   valid (values) {
     const { url } = values
-    return /^git@\w+\.\w+/.test(url)
+    return /^http/.test(url)
   }
 
   renderGitUrl () {
@@ -91,7 +100,7 @@ export class HTTPConfig extends Component {
       />
       <Input className={classes.addr} value={url}
         type='url' onChange={this.handleUrlChange}
-        placeholder={i18n('例：git@github.com:FlowCI/flow-platform.git')} />
+        placeholder={i18n('例：https://github.com/FlowCI/flow-platform.git')} />
     </Section>
   }
 
@@ -103,7 +112,7 @@ export class HTTPConfig extends Component {
         question='link for doc'
       />
       <Input value={username} className={classes.input}
-        type='text' onChange={this.handleUrlChange}
+        type='text' onChange={this.handleUsernameChange}
         placeholder={i18n('')} />
     </Section>
   }
@@ -117,7 +126,7 @@ export class HTTPConfig extends Component {
         question='link for doc'
       />
       <Input value={password} className={classes.input}
-        type='password' onChange={this.handleUrlChange}
+        type='password' onChange={this.handlePasswordChange}
         placeholder={i18n('')} />
     </Section>
   }

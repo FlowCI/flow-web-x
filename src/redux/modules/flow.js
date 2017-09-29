@@ -62,12 +62,22 @@ function pollingTestResult (flowId) {
   }
 }
 
-function getCreateEnv ({ source, url, deploy }) {
-  return {
+function getCreateEnv ({
+  type,
+  source, url,
+  deploy, username,
+  password }) {
+  const env = {
     FLOW_GIT_SOURCE: source,
     FLOW_GIT_URL: url,
-    FLOW_GIT_CREDENTIAL: deploy,
   }
+  if (type === 'SSH') {
+    env.FLOW_GIT_CREDENTIAL = deploy
+  } else if (type === 'HTTP') {
+    env.FLOW_GIT_HTTP_USER = username
+    env.FLOW_GIT_HTTP_PASS = password
+  }
+  return env
 }
 
 export const actions = {
