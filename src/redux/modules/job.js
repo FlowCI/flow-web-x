@@ -80,6 +80,15 @@ export const actions = {
       transformResponse,
     }
   },
+  create: function (flowId) {
+    return {
+      url: '/jobs/:flowName',
+      method: 'post',
+      params: {
+        flowName: flowId
+      }
+    }
+  },
   stop: function (flowId, jobNumber) {
     return {
       url: '/jobs/:flowName/:number/stop',

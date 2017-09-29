@@ -43,10 +43,10 @@ function pollingTestResult (flowId) {
   return function (dispatch, getState) {
     function get () {
       return dispatch({
-        url: '/flows/env',
+        url: '/flows/:flowName/env',
         name: Types.pollingEnv,
         params: {
-          pathOrName: flowId,
+          flowName: flowId,
         },
         indicator: {
           id: flowId,
@@ -107,8 +107,8 @@ export const actions = {
   },
   remove: function (flowId) {
     return {
-      url: '/flows/:flowName/delete',
-      method: 'post',
+      url: '/flows/:flowName',
+      method: 'delete',
       name: Types.remove,
       params: {
         flowName: flowId,
