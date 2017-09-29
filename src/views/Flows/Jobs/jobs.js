@@ -104,6 +104,11 @@ export class JobsView extends Component {
     })
   }
 
+  handleCreateJob = () => {
+    const { createJob, flowId } = this.props
+    return createJob(flowId)
+  }
+
   renderFlowHeader () {
     const { flowName } = this.props
     return <div className={classes.flow}>
@@ -136,11 +141,13 @@ export class JobsView extends Component {
   }
 
   renderContent () {
-    const { i18n, flowId, loading, createJob } = this.props
+    const { i18n, flowId, loading } = this.props
     return <div className={classes.container}>
       {this.renderFlowHeader()}
       <div className={classes.actions}>
-        <button className='btn btn-primary' onClick={() => { createJob(flowId) }}>{i18n('运行工作流')}</button>
+        <Button className='btn-primary' onClick={this.handleCreateJob}>
+          {i18n('运行工作流')}
+        </Button>
         <Filter flowId={flowId} i18n={i18n} />
       </div>
       {this.renderJobs()}
