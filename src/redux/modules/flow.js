@@ -69,7 +69,6 @@ function getCreateEnv (params) {
     deploy, username,
     password
   } = params
-  console.log(params)
   const env = {
     FLOW_GIT_SOURCE: source,
     FLOW_GIT_URL: url,
