@@ -11,7 +11,7 @@ export default function ({ dispatch, getState }) {
           const { response } = e
           if (response) {
             const { data: { message } } = response
-            dispatch(actions.failure(message))
+            message && dispatch(actions.failure(message))
           }
         }
       })
