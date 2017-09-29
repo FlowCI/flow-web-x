@@ -56,7 +56,8 @@ function pollingTestResult (flowId) {
     function check (response) {
       const envs = response.data
       return envs.FLOW_YML_STATUS === 'FOUND' ||
-        envs.FLOW_YML_STATUS === 'ERROR'
+        envs.FLOW_YML_STATUS === 'ERROR' ||
+        envs.FLOW_YML_STATUS === 'NOT_FOUND'
     }
     return polling(get, check)
   }
