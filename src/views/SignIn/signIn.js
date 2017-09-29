@@ -13,7 +13,7 @@ import { actions } from 'redux/modules/session'
 
 import Form from './form'
 
-import classes from './signin.scss'
+import classes from './signIn.scss'
 
 function mapStateToProps (state, props) {
   const { session } = state
