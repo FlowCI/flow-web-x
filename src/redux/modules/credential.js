@@ -64,7 +64,7 @@ export const actions = {
       name: types.create,
       url: `/credentials/${name}`,
       method: 'post',
-      params: params,
+      data: params,
     }
   },
   freedAll: function () {
