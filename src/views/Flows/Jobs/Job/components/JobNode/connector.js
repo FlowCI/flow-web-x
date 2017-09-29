@@ -9,7 +9,7 @@ function mapStateToProps (state, props) {
   return {
     node: nodeState.getIn(['data', nodeId]),
     log: nodeState.getIn(['log', nodeId]),
-    fetching: nodeState.getIn(['ui', 'GET_LOG']) !== STATUS.success,
+    fetching: nodeState.getIn(['ui', nodeId, 'GET_LOG']) !== STATUS.success,
   }
 }
 
