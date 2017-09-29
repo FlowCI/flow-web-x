@@ -44,8 +44,12 @@ export default {
   },
   [types.updatePermission]: function ({ params }) {
     const {
-      emailList,
-      roles = [createRole('1')],
+      emailList: {
+        arrays: emailList,
+      },
+      roles: {
+        arrays: roles = [createRole('1')],
+      },
       flowName,
     } = params
     const role = roles[0]
