@@ -40,6 +40,13 @@ export class FlowIndexRoute extends Component {
     loaded: this.props.loaded
   }
 
+  componentDidMount () {
+    if (this.props.hasJob) {
+      const { baseHref, redirect } = this.props
+      redirect(`${baseHref}/jobs`)
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
     if (nextProps.hasJob) {
       const { baseHref, redirect } = nextProps
