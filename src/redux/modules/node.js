@@ -91,9 +91,10 @@ export default handleActions({
   }),
   [jobTypes.socketRecived]: function (state, { payload }) {
     const { id: jobId, childrenResult: nodes } = payload
-    return state.update(jobId, (s) =>
-      handlers.saveAll(createState().merge(s), { payload: nodes })
-    )
+    return state.update(jobId, (s) => {
+      if (!s) { return }
+      return handlers.saveAll(createState().merge(s), { payload: nodes })
+    })
   },
   [jobTypes.freedResource]: function (state, { id }) {
     return state.delete(id)
