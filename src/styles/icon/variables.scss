@@ -1,7 +1,8 @@
 $icomoon-font-path: "fonts" !default;
 
-$icon-trash: "\e91b";
-$icon-trash2: "\e91c";
+$icon-warning: "\e90b";
+$icon-warning2: "\f071";
+$icon-trash: "\e91c";
 $icon-pending: "\e91e";
 $icon-timeout: "\e91a";
 $icon-stopped: "\e93a";
@@ -14,15 +15,14 @@ $icon-bookmark: "\e916";
 $icon-jigsaw: "\e917";
 $icon-notification: "\e918";
 $icon-users: "\e919";
-$icon-question-thin: "\e914";
 $icon-plus-sm: "\e913";
 $icon-equalizer: "\e90d";
 $icon-git-branch: "\e90e";
 $icon-layergroup: "\e90f";
 $icon-off: "\e910";
 $icon-code: "\e912";
-$icon-loading2: "\e64d";
 $icon-radio-checked: "\e39e";
+$icon-radio-checked-disabled: "\ea55";
 $icon-radio-unchecked: "\e836";
 $icon-circle-check: "\e934";
 $icon-search2: "\e911";
@@ -40,7 +40,9 @@ $icon-branches: "\e903";
 $icon-checkbox-checked: "\e905";
 $icon-checkbox-unchecked: "\e906";
 $icon-logout: "\e908";
+$icon-question-thin: "\e914";
 $icon-question: "\e909";
 $icon-settings: "\e90a";
-$icon-warning: "\e90b";
+$icon-loading: "\e64d";
+$icon-loading1: "\e6ae";
 

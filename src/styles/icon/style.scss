@@ -15,14 +15,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-warning {
+  &:before {
+    content: $icon-warning;
+  }
+}
+.icon-warning2 {
+  &:before {
+    content: $icon-warning2;
+  }
+}
 .icon-trash {
   &:before {
     content: $icon-trash;
-  }
-}
-.icon-trash2 {
-  &:before {
-    content: $icon-trash2;
   }
 }
 .icon-pending {
@@ -85,11 +90,6 @@
     content: $icon-users;
   }
 }
-.icon-question-thin {
-  &:before {
-    content: $icon-question-thin;
-  }
-}
 .icon-plus-sm {
   &:before {
     content: $icon-plus-sm;
@@ -120,14 +120,14 @@
     content: $icon-code;
   }
 }
-.icon-loading2 {
-  &:before {
-    content: $icon-loading2;
-  }
-}
 .icon-radio-checked {
   &:before {
     content: $icon-radio-checked;
+  }
+}
+.icon-radio-checked-disabled {
+  &:before {
+    content: $icon-radio-checked-disabled;
   }
 }
 .icon-radio-unchecked {
@@ -215,6 +215,11 @@
     content: $icon-logout;
   }
 }
+.icon-question-thin {
+  &:before {
+    content: $icon-question-thin;
+  }
+}
 .icon-question {
   &:before {
     content: $icon-question;
@@ -225,9 +230,14 @@
     content: $icon-settings;
   }
 }
-.icon-warning {
+.icon-loading {
   &:before {
-    content: $icon-warning;
+    content: $icon-loading;
+  }
+}
+.icon-loading1 {
+  &:before {
+    content: $icon-loading1;
   }
 }
 
