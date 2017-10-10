@@ -180,7 +180,7 @@ webpackConfig.module.rules.push({
     test    : new RegExp(`\\.${extension}$`),
     loader  : 'url-loader',
     options : {
-      name  : 'fonts/[name][contenthash].[ext]',
+      name  : 'fonts/[name][hash:8].[ext]',
       limit : 10000,
       mimetype,
     },
