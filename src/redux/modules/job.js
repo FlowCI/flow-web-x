@@ -30,8 +30,21 @@ function transformResponse (data) {
   return data
 }
 
+function getQueryParams (filter, getState) {
+  const { branch, keyword, onlySelf, pullRequest } = filter || {}
+  const creator = onlySelf ? getState().session.getIn(['user', 'email']) : ''
+  const category = pullRequest ? 'PR' : ''
+
+  return {
+    branch,
+    keyword,
+    creator,
+    category,
+  }
+}
+
 function queryAfterLastest (flowId, filter, lastestId) {
-  return function ({ getState, dispatch }) {
+  return function (dispatch, getState) {
     const state = getState()
     const job = state.job.getIn(['data', lastestId])
     if (!job) {
@@ -42,13 +55,16 @@ function queryAfterLastest (flowId, filter, lastestId) {
 }
 
 function query (flowId, filter) {
-  return {
-    url: '/jobs/:flowName',
-    name: Types.query,
-    params: {
-      flowName: flowId,
-    },
-    transformResponse: transformResponse,
+  return function (dispatch, getState) {
+    return dispatch({
+      url: '/jobs/:flowName',
+      name: Types.query,
+      params: {
+        flowName: flowId,
+        ...getQueryParams(filter, getState)
+      },
+      transformResponse: transformResponse,
+    })
   }
 }
 
