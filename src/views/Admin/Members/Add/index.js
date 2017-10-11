@@ -12,6 +12,8 @@ import { actions } from 'redux/modules/member'
 import { actions as roleActions } from 'redux/modules/role'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import { push } from 'react-router-redux'
+
 import Form from './form'
 
 const rolesSelector = createSelector(
@@ -41,6 +43,7 @@ function mapDispatchToProps (dispatch) {
     create: actions.create,
     queryRoles: roleActions.query,
     alert: alertActions.alert,
+    redirect: push,
   }, dispatch)
 }
 
@@ -50,6 +53,7 @@ export class CreateMember extends Component {
     queryRoles: PropTypes.func.isRequired,
     alert: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
+    redirect: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -75,12 +79,12 @@ export class CreateMember extends Component {
     delete params.flow
     delete params.role
 
-    const { create } = this.props
+    const { create, redirect } = this.props
     return create(params).then(() => {
       if (this.isMount) {
         const { alert, i18n } = this.props
         alert('success', i18n('创建成功'))
-        // maybe redirect to list
+        redirect('/admin/members')
       }
     })
   }
