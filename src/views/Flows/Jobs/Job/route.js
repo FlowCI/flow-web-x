@@ -3,6 +3,7 @@
 import Component from './index'
 import JobInfo from './Info'
 import JobLogs from './Logs'
+import JobYml from './Yml'
 
 export default function (store) {
   return {
@@ -13,6 +14,9 @@ export default function (store) {
     childRoutes: [{
       path: 'logs',
       component: JobLogs,
+    }, {
+      path: 'yml',
+      component: JobYml,
     }]
   }
 }

@@ -1,0 +1,35 @@
+@import 'variables/colors';
+
+.table{
+  width: 100%;
+  td{
+    padding: 0px 10px;
+    line-height: 1.5;
+  }
+  &:global(.black){
+    background-color: #4f5565;
+    color: #fff;
+    .number{
+      background-color: #646B7D;
+      color: #C3C8CE;
+    }
+  }
+  tr{
+    &:first-child{
+      >td{
+        padding-top: 10px;
+      }
+    }
+    &:last-child{
+      >td{
+        padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.number{
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
