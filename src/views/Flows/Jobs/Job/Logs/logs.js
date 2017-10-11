@@ -9,20 +9,25 @@ import { generatorJobId } from 'redux/modules/job'
 import { actions } from 'redux/modules/node'
 
 import { is } from 'util/nodeStatus'
+
+import Button from 'components/Button'
+
 import JobNode from '../components/JobNode'
 
 import classes from './logs.scss'
 
 function mapStateToProps (state, props) {
-  const { node } = state
+  const { node, job } = state
   const { params: { jobNumber, flowId, } } = props
 
   const jobId = generatorJobId(flowId, jobNumber)
+
   return {
     jobId,
     flowId,
     jobNumber,
     nodeIds: node.getIn([jobId, 'list']),
+    downloadHref: job.getIn(['data', jobId, 'envs', 'FLOW_JOB_LOG_PATH'])
   }
 }
 
@@ -53,8 +58,11 @@ export class JobLogsView extends Component {
     const { jobId, downloadHref, nodeIds } = this.props
     return <div>
       <h4 className={classes.header}>
-        构建日志
-        {!!downloadHref && <a href={downloadHref} download>download</a>}
+        <span>构建日志</span>
+        {!!downloadHref && <Button href={downloadHref} download
+          className={`btn-default ${classes.download}`}>
+          下载完整日志
+        </Button>}
       </h4>
       {nodeIds.map((id) => <JobNode key={id} jobId={jobId}
         nodeId={id} onExpended={this.getLog} getLog={this.getLog} />)}

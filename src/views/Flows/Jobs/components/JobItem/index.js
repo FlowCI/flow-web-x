@@ -53,6 +53,7 @@ export class JobItem extends Component {
           {envs.get('FLOW_GIT_BRANCH')}
         </h4>
         <small>
+          {job.get('createdBy')}&nbsp;
           {envs.get('FLOW_GIT_CHANGELOG')}
         </small>
       </div>
