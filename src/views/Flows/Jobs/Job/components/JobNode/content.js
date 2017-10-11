@@ -10,7 +10,7 @@ export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
   return <code className={classes.code}>
     {!show && <Loading size={20} />}
     {show && (log || emptyText)}
-    {show && !!log && <Button className={`btn-primary ${classes.close}`}
+    {show && !!log && <Button className={`btn-primary hide ${classes.close}`}
       size='sm' useSpinner={false} onClick={onClose}
     >
       Close
