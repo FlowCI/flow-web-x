@@ -32,8 +32,8 @@ function transformResponse (data) {
 
 function getQueryParams (filter, getState) {
   const { branch, keyword, onlySelf, pullRequest } = filter || {}
-  const creator = onlySelf ? getState().session.getIn(['user', 'email']) : ''
-  const category = pullRequest ? 'PR' : ''
+  const creator = onlySelf ? getState().session.getIn(['user', 'email']) : undefined
+  const category = pullRequest ? 'PR' : undefined
 
   return {
     branch,
@@ -145,7 +145,10 @@ export const actions = {
 
 export default handleActions({
   [Types.query]: handleHttp('QUERY', {
-    success: handlers.saveAll,
+    success: function (state, action) {
+      const nextState = initialState.update('ui', () => state.get('ui'))
+      return handlers.saveAll(nextState, action)
+    }
   }),
   [Types.get]: handleHttp('GET', {
     success: function (state, { payload }) {
