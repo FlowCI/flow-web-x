@@ -5,4 +5,10 @@
   line-height: 50px;
   margin-top: -4px;
   padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.download{
+  line-height: initial;
 }
