@@ -13,7 +13,6 @@ import { push } from 'react-router-redux'
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
-import { actions as flowActions } from 'redux/modules/flow'
 import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
@@ -45,7 +44,7 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    query: flowActions.query,
+    query: jobActions.query,
     createJob: jobActions.create,
     redirect: push
   }, dispatch)
