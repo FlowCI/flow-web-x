@@ -22,6 +22,7 @@ import { JobStatusSubscriber } from '../Socket'
 
 import Filter from './components/Filter'
 import JobItem from './components/JobItem'
+import BranchDialog from './components/BranchDialog'
 
 import classes from './jobs.scss'
 
@@ -46,6 +47,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: jobActions.query,
     createJob: jobActions.create,
+    freedFilter: jobActions.freedFilter,
     redirect: push
   }, dispatch)
 }
@@ -73,11 +75,16 @@ export class JobsView extends Component {
     redirect: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
     createJob: PropTypes.func.isRequired,
+    freedFilter: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     filter: {},
     i18n: createI18n(language),
+  }
+
+  state = {
+    openBranchDialog: false
   }
 
   componentWillReceiveProps (nextProps) {
@@ -103,9 +110,23 @@ export class JobsView extends Component {
     })
   }
 
-  handleCreateJob = () => {
-    const { createJob, flowId } = this.props
-    return createJob(flowId)
+  handleCreateJob = (branch) => {
+    const { createJob, flowId, freedFilter } = this.props
+    /**
+     * 创建新的 job 时清空过滤条件,
+     * @see https://trello.com/c/Y7r1Xfm0/1167-%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%80%89%E5%88%86%E6%94%AF
+     */
+    freedFilter()
+    this.closeBranchDialog()
+    return createJob(flowId, branch)
+  }
+
+  openBranchDialog = () => {
+    this.setState({ openBranchDialog: true })
+  }
+
+  closeBranchDialog = () => {
+    this.setState({ openBranchDialog: false })
   }
 
   renderFlowHeader () {
@@ -141,16 +162,21 @@ export class JobsView extends Component {
 
   renderContent () {
     const { i18n, flowId, loading } = this.props
+    const { openBranchDialog } = this.state
     return <div className={classes.container}>
       {this.renderFlowHeader()}
       <div className={classes.actions}>
-        <Button className='btn-primary' onClick={this.handleCreateJob}>
+        <Button className='btn-primary' onClick={this.openBranchDialog}>
           {i18n('运行工作流')}
         </Button>
         <Filter flowId={flowId} i18n={i18n} />
       </div>
       {this.renderJobs()}
       {loading && this.renderLoading()}
+      <BranchDialog flowId={flowId} isOpen={openBranchDialog}
+        onRequestClose={this.closeBranchDialog}
+        onBuild={this.handleCreateJob}
+      />
     </div>
   }
 
