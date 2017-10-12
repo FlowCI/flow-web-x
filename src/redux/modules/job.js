@@ -98,12 +98,13 @@ export const actions = {
       transformResponse,
     }
   },
-  create: function (flowId) {
+  create: function (flowId, branch) {
     return {
       url: '/jobs/:flowName',
       method: 'post',
       params: {
-        flowName: flowId
+        flowName: flowId,
+        branch,
       }
     }
   },

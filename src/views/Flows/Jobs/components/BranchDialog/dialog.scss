@@ -1,0 +1,25 @@
+@import 'variables/colors';
+.loading{
+  text-align: center;
+}
+.list{
+  margin-bottom: 20px;
+  padding: 0px 10px;
+}
+.item{
+  padding: 10px 0px;
+  border-bottom: 1px solid $color-hr;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.build{
+  height: 30px;
+  padding: 0px 10px;
+}
+.cogs{
+  text-align: center;
+  font-size: 100px;
+  padding: 20px 0;
+  color: #DFE0E6;
+}
