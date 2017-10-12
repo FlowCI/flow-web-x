@@ -87,10 +87,18 @@ export class JobsView extends Component {
     openBranchDialog: false
   }
 
+  componentDidMount () {
+    this.isMount = true
+  }
+
   componentWillReceiveProps (nextProps) {
     if (this.props.filter !== nextProps.filter) {
       this.queryWithFilter(nextProps)
     }
+  }
+
+  componentWillUnmount () {
+    this.isMount = false
   }
 
   queryWithFilter (props = this.props, preJob) {
@@ -126,7 +134,9 @@ export class JobsView extends Component {
   }
 
   closeBranchDialog = () => {
-    this.setState({ openBranchDialog: false })
+    if (this.isMount) {
+      this.setState({ openBranchDialog: false })
+    }
   }
 
   renderFlowHeader () {
