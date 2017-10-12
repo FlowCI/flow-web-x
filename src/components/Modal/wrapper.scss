@@ -1,0 +1,49 @@
+@import 'variables/zIndex';
+
+.overlay{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $zindex-modal;
+  background-color: rgba(#23252A, .7);
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity ease-in-out .3s;
+}
+.overlayAfterOpen{
+  opacity: 1;
+}
+.overlayBeforeClose{
+  opacity: 0;
+}
+
+.container{
+  flex: 0 0 auto;
+
+  max-height: 80vh;
+  width: 520px;
+  max-width: 80vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+
+  background-color: #fff;
+  border-radius: 3px;
+  transform: translateY(-64px);
+  transition: transform ease-in-out .3s;
+  &:focus{
+    outline: none;
+  }
+}
+.containerAfterOpen{
+  transform: translateY(0);
+}
+.containerBeforeClose{
+  transform: translateY(-64px);
+}
