@@ -24,8 +24,8 @@ export default class Confirm extends Component {
     children: PropTypes.node,
     classNames: PropTypes.object.isRequired,
 
-    onOk: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
+    onOk: PropTypes.func,
+    onCancel: PropTypes.func,
   }
 
   static defaultProps = {
