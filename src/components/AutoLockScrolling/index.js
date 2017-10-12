@@ -9,6 +9,10 @@ export default class AutoLockScrolling extends Component {
     lock: PropTypes.bool.isRequired
   }
 
+  static defaultProps = {
+    lock: false,
+  }
+
   componentDidMount () {
     if (this.props.lock) {
       this.preventScrolling()
