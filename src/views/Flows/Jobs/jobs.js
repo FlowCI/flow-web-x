@@ -117,8 +117,8 @@ export class JobsView extends Component {
      * @see https://trello.com/c/Y7r1Xfm0/1167-%E6%89%8B%E5%8A%A8%E6%9E%84%E5%BB%BA%E9%80%89%E5%88%86%E6%94%AF
      */
     freedFilter()
-    this.closeBranchDialog()
     return createJob(flowId, branch)
+      .then(this.closeBranchDialog, this.closeBranchDialog)
   }
 
   openBranchDialog = () => {

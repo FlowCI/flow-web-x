@@ -14,6 +14,7 @@ import { actions } from 'redux/modules/branch'
 import Modal from 'components/Modal'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import Cogs from 'components/Icon/Cogs'
 
 import Item from './item'
 
@@ -36,6 +37,7 @@ function mapDispatchToProps (dispatch) {
 
 export class BranchDialog extends Component {
   static propTypes = {
+    isOpen: PropTypes.bool,
     flowId: PropTypes.string.isRequired,
     loaded: PropTypes.bool,
     branches: ImmutablePropTypes.list.isRequired,
@@ -44,9 +46,25 @@ export class BranchDialog extends Component {
     onBuild: PropTypes.func,
   }
 
+  state = {
+    building: false
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (!nextProps.isOpen) {
+      this.setState({ building: false })
+    }
+  }
+
   handleRefresh = () => {
     const { refresh, flowId } = this.props
     return refresh(flowId)
+  }
+
+  handleBuild = (branch) => {
+    const { onBuild } = this.props
+    this.setState({ building: true })
+    return onBuild(branch)
   }
 
   renderActions () {
@@ -64,19 +82,27 @@ export class BranchDialog extends Component {
   }
 
   renderContent () {
-    const { loaded, branches, onBuild } = this.props
+    const { loaded, branches } = this.props
     if (!loaded) {
       return this.renderLoading()
     }
     return <ul className={classes.list}>
-      {branches.map((b) => <Item key={b} branch={b} onBuild={onBuild} />)}
+      {branches.map((b) => <Item key={b} branch={b}
+        onBuild={this.handleBuild} />)}
     </ul>
   }
 
+  renderCogs () {
+    return <div className={classes.cogs}>
+      <Cogs />
+    </div>
+  }
+
   render () {
+    const { building } = this.state
     return <Modal {...this.props} title='选择构建分支'
-      footer={this.renderActions()}>
-      {this.renderContent()}
+      footer={!building ? this.renderActions() : undefined}>
+      {!building ? this.renderContent() : this.renderCogs()}
     </Modal>
   }
 }
