@@ -12,6 +12,7 @@ import { createSelector } from 'reselect'
 import { actions } from 'redux/modules/flow'
 
 import Input from 'components/Form/Input'
+import { Confirm } from 'components/Modal'
 
 import {
   List,
@@ -58,6 +59,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     setFilter: actions.setFilter,
     freedFilter: actions.freedFilter,
+    remove: actions.remove,
   }, dispatch)
 }
 
@@ -67,6 +69,7 @@ export class AdminFlowList extends Component {
     filter: string,
     setFilter: func.isRequired,
     freedFilter: func.isRequired,
+    remove: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -75,14 +78,49 @@ export class AdminFlowList extends Component {
     filter: '',
   }
 
+  state = {
+    openConfirm: false,
+    selected: undefined,
+  }
+
+  componentDidMount () {
+    this.isMount = true
+  }
+
   componentWillUnmount () {
     const { freedFilter } = this.props
     freedFilter()
+    this.isMount = false
   }
 
   handleSearchChange = (value) => {
     const { setFilter } = this.props
     setFilter(value)
+  }
+
+  openConfirm = (flow) => {
+    if (this.isMount) {
+      this.setState({ selected: flow, openConfirm: true })
+    }
+  }
+
+  closeConfirm = () => {
+    if (this.isMount) {
+      /**
+       * 由于关闭 confirm 会有动画，如果此刻立即设置 selected 为 undefined 后导致
+       * 关闭动画时 Confirm 内容错误，所以不清空 selected
+       */
+      this.setState({ openConfirm: false })
+    }
+  }
+
+  handleRemove = () => {
+    const { remove } = this.props
+    const { selected } = this.state
+    if (selected) {
+      return remove(selected.get('id'))
+        .then(this.closeConfirm, this.closeConfirm)
+    }
   }
 
   renderListHeader () {
@@ -103,6 +141,9 @@ export class AdminFlowList extends Component {
         <ListHeadCol className={classes.deploy}>
           Deploy Key
         </ListHeadCol>
+        <ListHeadCol className={classes.action}>
+          &nbsp;
+        </ListHeadCol>
       </ListRow>
     </ListHead>
   }
@@ -110,7 +151,8 @@ export class AdminFlowList extends Component {
   renderFlows () {
     const { flowIds, i18n } = this.props
     return <ListBody>
-      {flowIds.map((id) => <FlowItem key={id} flowId={id} i18n={i18n} />)}
+      {flowIds.map((id) => <FlowItem key={id} flowId={id} i18n={i18n}
+        onRemove={this.openConfirm} />)}
     </ListBody>
   }
 
@@ -128,6 +170,9 @@ export class AdminFlowList extends Component {
   }
 
   render () {
+    const { selected, openConfirm } = this.state
+    const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
+      : 'Confirm'
     return <div>
       {this.renderToolBars()}
       <div className={classes.scroller}>
@@ -136,6 +181,12 @@ export class AdminFlowList extends Component {
           {this.renderFlows()}
         </List>
       </div>
+      <Confirm isOpen={openConfirm} title={confirmTitle}
+        onCancel={this.closeConfirm}
+        onOk={this.handleRemove}
+      >
+        提示文案...
+      </Confirm>
     </div>
   }
 }
