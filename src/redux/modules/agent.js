@@ -50,6 +50,29 @@ export const actions = {
       },
     }
   },
+  /**
+   * 改方法仅通知 api ，api 无具体返回，内容通过 socket
+   * /topic/agent/sysinfo/:zone/:name 频道推送
+   */
+  getSystemInfo: function (agent) {
+    return {
+      url: '/agents/sys/info',
+      name: Types.getSystemInfo,
+      params: {
+        zone: agent.get('zone'),
+        name: agent.get('name'),
+      }
+    }
+  },
+  storeSystemInfo: function (agent /* Map */, system) {
+    return {
+      type: Types.storeSystemInfo,
+      payload: {
+        id: agent.get('id'),
+        system,
+      }
+    }
+  }
 }
 
 export default handleActions({
