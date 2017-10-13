@@ -7,7 +7,7 @@ export default class Code extends PureComponent {
   static propTypes = {
     code: PropTypes.string.isRequired,
     className: PropTypes.string,
-    lineNumbers: PropTypes.bool,
+    // lineNumbers: PropTypes.bool,
   }
 
   static defaultProps = {
