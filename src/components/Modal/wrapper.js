@@ -20,10 +20,11 @@ const overlayClassName = {
 }
 
 const defaultClassNames = {
-  container: containerClassName,
-  overlay: overlayClassName,
+  ...classes,
   portal: classes.portal,
   bodyOpen: classes.bodyOpen,
+  container: containerClassName,
+  overlay: overlayClassName,
 }
 
 export {
@@ -116,7 +117,7 @@ export default class ReactModalWrapper extends Component {
         shouldCloseOnOverlayClick={!modal}
       >
         <AutoLockScrolling lock={isOpen} />
-        {!closed && <ModalChildWrapper isOpen={isOpen}>
+        {!closed && <ModalChildWrapper classNames={classNames} isOpen={isOpen}>
           {children}
         </ModalChildWrapper>}
       </ReactModal>
