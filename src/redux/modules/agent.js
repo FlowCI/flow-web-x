@@ -11,12 +11,17 @@ import Types from './agentType'
 const initialState = fromJS({
   list: [],
   ui: {},
+  info: {},
 })
+
+export function generatorAgentId (agent) {
+  return `${agent.zone} - ${agent.name}`
+}
 
 const transformResponse = function (data) {
   if (is.array(data)) {
     data.forEach((d) => {
-      d.id = d.zoneWithName
+      d.id = generatorAgentId(d)
     })
   }
   return data
