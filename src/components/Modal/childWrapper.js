@@ -5,6 +5,7 @@ export default class ModalChildWrapper extends Component {
   static propTypes = {
     isOpen: PropTypes.bool,
     children: PropTypes.node,
+    classNames: PropTypes.object,
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -16,8 +17,8 @@ export default class ModalChildWrapper extends Component {
   }
 
   render () {
-    const { children } = this.props
-    return <div>
+    const { classNames, children } = this.props
+    return <div className={classNames.childWrapper}>
       {children}
     </div>
   }
