@@ -50,12 +50,6 @@ export class BranchDialog extends Component {
     building: false
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (!nextProps.isOpen) {
-      this.setState({ building: false })
-    }
-  }
-
   handleRefresh = () => {
     const { refresh, flowId } = this.props
     return refresh(flowId)
