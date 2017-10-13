@@ -69,7 +69,7 @@ function cloneAndRepeat (obj, size) {
     const status = STATUS[i % STATUS.length]
     array.push({ ...obj, number: i + 1, status })
   }
-  return array
+  return array.reverse()
 }
 
 function getJobWithChildrenResult (number) {
