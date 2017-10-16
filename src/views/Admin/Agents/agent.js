@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 
 import Button from 'components/Button'
 import AgentIcon from 'components/Icon/Agent'
+import ClipboardButton from 'components/ClipboardButton'
 
 import { ListRow, ListCol } from '../components/List'
 
@@ -42,7 +43,7 @@ export default class Agent extends PureComponent {
     const canStop = status === 'BUSY'
 
     const encodeForm = encodeURIComponent('/admin/agents')
-
+    const token = agent.get('token')
     return <ListRow>
       <ListCol className={classes.status}>
         <AgentIcon status={status} />
@@ -56,6 +57,13 @@ export default class Agent extends PureComponent {
         >
           {job}
         </Link>}
+      </ListCol>
+      <ListCol className={classes.token}>
+        <div className={classes.tokenWrapper}>
+          <span>{token}</span>
+          {!!token && <ClipboardButton className={classes.copy}
+            data-clipboard-text={token} />}
+        </div>
       </ListCol>
       <ListCol className={classes.actions}>
         <Button size='sm' className='btn-inverse'

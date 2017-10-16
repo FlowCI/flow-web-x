@@ -106,6 +106,9 @@ export class AdminAgentView extends Component {
             <ListHeadCol className={classes.job}>
               {i18n('任务')}
             </ListHeadCol>
+            <ListHeadCol className={classes.token}>
+              {i18n('Token')}
+            </ListHeadCol>
             <ListHeadCol className={classes.actions}>
               {i18n('操作')}
             </ListHeadCol>
