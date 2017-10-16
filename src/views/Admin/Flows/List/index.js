@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
 
 import { actions } from 'redux/modules/flow'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Input from 'components/Form/Input'
 import { Confirm } from 'components/Modal'
@@ -60,6 +61,7 @@ function mapDispatchToProps (dispatch) {
     setFilter: actions.setFilter,
     freedFilter: actions.freedFilter,
     remove: actions.remove,
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -70,6 +72,7 @@ export class AdminFlowList extends Component {
     setFilter: func.isRequired,
     freedFilter: func.isRequired,
     remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -111,11 +114,14 @@ export class AdminFlowList extends Component {
   }
 
   handleRemove = () => {
-    const { remove } = this.props
+    const { remove, alert } = this.props
     const { selected } = this.state
     if (selected) {
       return remove(selected.get('id'))
         .then(this.closeConfirm, this.closeConfirm)
+        .then(() => {
+          alert('success', '删除成功')
+        })
     }
   }
 
