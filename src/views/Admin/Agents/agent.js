@@ -18,6 +18,7 @@ export default class Agent extends PureComponent {
 
     stop: func.isRequired,
     shutdown: func.isRequired,
+    remove: func.isRequired,
   }
 
   handleStop = () => {
@@ -28,6 +29,11 @@ export default class Agent extends PureComponent {
   handleShutDown = () => {
     const { shutdown, agent } = this.props
     return shutdown(agent, 'dialog password result')
+  }
+
+  handleRemove = () => {
+    const { remove, agent } = this.props
+    return remove(agent)
   }
 
   render () {
@@ -73,6 +79,11 @@ export default class Agent extends PureComponent {
         <Button size='sm' className='btn-inverse'
           onClick={this.handleShutDown} disabled={!canShutDown}>
           关机
+        </Button>
+        <Button size='sm' className='btn-inverse'
+          onClick={this.handleRemove}
+        >
+          删除
         </Button>
       </ListCol>
     </ListRow>
