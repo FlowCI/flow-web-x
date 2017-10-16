@@ -15,6 +15,7 @@ import { actions } from 'redux/modules/agent'
 import { actions as jobActions } from 'redux/modules/job'
 
 import Loading from 'components/Loading'
+import { Confirm } from 'components/Modal'
 
 import Title from '../components/Title'
 import {
@@ -67,11 +68,17 @@ export class AdminAgentView extends Component {
 
   state = {
     category: 'ALL',
+    openConfirm: false,
   }
 
   componentDidMount () {
     const { query } = this.props
     query()
+    this.isMount = true
+  }
+
+  componentWillUnmount () {
+    this.isMount = false
   }
 
   selectCategory = (category) => {
@@ -85,10 +92,28 @@ export class AdminAgentView extends Component {
       agent.get('agentStatus') === category)
   }
 
+  openConfirm = (agent) => {
+    if (this.isMount) {
+      this.setState({ selected: agent, openConfirm: true })
+    }
+  }
+
+  closeConfirm = () => {
+    if (this.isMount) {
+      this.setState({ openConfirm: false, selected: undefined })
+    }
+  }
+
+  handleRemove = () => {
+    const { selected } = this.state
+    const { remove } = this.props
+    return remove(selected).then(this.closeConfirm, this.closeConfirm)
+  }
+
   renderAgent = (agent) => {
-    const { stop, shutdown, remove } = this.props
+    const { stop, shutdown } = this.props
     return <Agent key={agent.get('id')} agent={agent}
-      stop={stop} shutdown={shutdown} remove={remove}
+      stop={stop} shutdown={shutdown} remove={this.openConfirm}
     />
   }
 
@@ -168,10 +193,17 @@ export class AdminAgentView extends Component {
 
   render () {
     const { loading } = this.props
+    const { openConfirm, selected } = this.state
+    const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
+    : 'Confirm'
     return <div className={classes.container}>
       <Title title='Agent' />
       {!loading && this.renderFilter()}
       {loading ? this.renderLoading() : this.renderAgents()}
+      <Confirm isOpen={openConfirm} title={confirmTitle}
+        onCancel={this.closeConfirm}
+        onOk={this.handleRemove}
+      />
     </div>
   }
 }
