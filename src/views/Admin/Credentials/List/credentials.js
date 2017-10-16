@@ -11,6 +11,7 @@ import createI18n from '../i18n'
 import language from 'util/language'
 
 import { actions } from 'redux/modules/credential'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Loading from 'components/Loading'
 import {
@@ -34,6 +35,8 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
     remove: actions.remove,
+
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -44,6 +47,7 @@ export class AdminCredentialList extends Component {
     loading: bool,
     query: func.isRequired,
     remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -75,9 +79,9 @@ export class AdminCredentialList extends Component {
 
   renderList () {
     const { tab } = this.state
-    const { remove } = this.props
+    const { remove, alert } = this.props
     if (tab === 'rsa') {
-      return <RSAList remove={remove} />
+      return <RSAList remove={remove} alert={alert} />
     }
   }
 

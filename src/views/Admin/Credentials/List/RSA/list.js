@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 import createI18n from '../../i18n'
 import language from 'util/language'
-
+import { Confirm } from 'components/Modal'
 import {
   List,
   ListHead,
@@ -30,6 +30,7 @@ export class RSACredentialList extends Component {
   static propTypes = {
     credentials: list.isRequired,
     remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -37,22 +38,55 @@ export class RSACredentialList extends Component {
     i18n: createI18n(language).createChild('list.rsa'),
   }
 
-  handleRemove = (credential) => {
-    const name = credential.get('name')
-    const { remove } = this.props
+  state = {
+    openConfirm: false,
+    selected: undefined,
+  }
+
+  componentDidMount () {
+    this.isMount = true
+  }
+
+  componentWillUnmount () {
+    this.isMount = false
+  }
+
+  openConfirm = (credential) => {
+    if (this.isMount) {
+      this.setState({ selected: credential, openConfirm: true })
+    }
+  }
+
+  closeConfirm = () => {
+    if (this.isMount) {
+      this.setState({ openConfirm: false, selected: undefined })
+    }
+  }
+
+  handleRemove = () => {
+    const { selected } = this.state
+    const name = selected.get('name')
+    const { remove, alert } = this.props
     return remove(CredentialType, name)
+      .then(this.closeConfirm, this.closeConfirm)
+      .then(() => {
+        alert('success', '删除成功')
+      })
   }
 
   renderItem = (credential) => {
     const { i18n } = this.props
     return <Item key={credential.get('name')}
       i18n={i18n} credential={credential}
-      remove={this.handleRemove}
+      remove={this.openConfirm}
     />
   }
 
   render () {
     const { credentials, i18n } = this.props
+    const { openConfirm, selected } = this.state
+    const confirmTitle = selected ? `确认删除证书 ${selected.get('name')} ?`
+    : 'Confirm'
     return <List>
       <ListHead>
         <ListRow>
@@ -66,6 +100,16 @@ export class RSACredentialList extends Component {
       <ListBody>
         {credentials.map(this.renderItem)}
       </ListBody>
+      <tfoot className='hide'>
+        <tr>
+          <td>
+            <Confirm isOpen={openConfirm} title={confirmTitle}
+              onCancel={this.closeConfirm}
+              onOk={this.handleRemove}
+            />
+          </td>
+        </tr>
+      </tfoot>
     </List>
   }
 }
