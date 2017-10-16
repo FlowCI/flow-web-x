@@ -120,7 +120,7 @@ export const actions = {
   },
   remove: function (flowId) {
     return {
-      url: '/flows/:flowName/delete',
+      url: '/flows/:flowName',
       method: 'delete',
       name: Types.remove,
       params: {
