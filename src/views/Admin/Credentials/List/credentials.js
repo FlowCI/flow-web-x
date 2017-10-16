@@ -18,7 +18,7 @@ import {
   Tab
 } from '../../components/TabBars'
 
-import RSAList from './rsa'
+import RSAList from './RSA'
 
 function mapStateToProps (state, props) {
   const { credential } = state
@@ -33,6 +33,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    remove: actions.remove,
   }, dispatch)
 }
 
@@ -42,6 +43,7 @@ export class AdminCredentialList extends Component {
     iosCount: number,
     loading: bool,
     query: func.isRequired,
+    remove: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -73,8 +75,9 @@ export class AdminCredentialList extends Component {
 
   renderList () {
     const { tab } = this.state
+    const { remove } = this.props
     if (tab === 'rsa') {
-      return <RSAList />
+      return <RSAList remove={remove} />
     }
   }
 

@@ -4,12 +4,8 @@ import { list } from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 
-import createI18n from '../i18n'
+import createI18n from '../../i18n'
 import language from 'util/language'
-
-import moment from 'moment'
-
-import ClipboardButton from 'components/ClipboardButton'
 
 import {
   List,
@@ -17,10 +13,9 @@ import {
   ListHeadCol,
   ListBody,
   ListRow,
-  ListCol,
-} from '../../components/List'
+} from '../../../components/List'
 
-import classes from './rsa.scss'
+import Item from './item'
 
 function mapStateToProps (state, props) {
   const { credential } = state
@@ -29,9 +24,12 @@ function mapStateToProps (state, props) {
   }
 }
 
+const CredentialType = 'RSA'
+
 export class RSACredentialList extends Component {
   static propTypes = {
     credentials: list.isRequired,
+    remove: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -39,25 +37,17 @@ export class RSACredentialList extends Component {
     i18n: createI18n(language).createChild('list.rsa'),
   }
 
+  handleRemove = (credential) => {
+    const name = credential.get('name')
+    console.log(CredentialType, name)
+  }
+
   renderItem = (credential) => {
     const { i18n } = this.props
-    const finger = credential.getIn(['detail', 'publicKey'])
-
-    return <ListRow key={credential.get('name')}>
-      <ListCol>{credential.get('name')}</ListCol>
-      <ListCol>{credential.get('createdBy')}</ListCol>
-      <ListCol>
-        {moment(credential.get('createdAt') * 1000).format('YYYY.M.D')}
-      </ListCol>
-      <ListCol>
-        <div className={classes.wrapper}>
-          <span>{finger}</span>
-          <ClipboardButton data-clipboard-text={finger} i18n={i18n}
-            className={classes.copy}
-          />
-        </div>
-      </ListCol>
-    </ListRow>
+    return <Item key={credential.get('name')}
+      i18n={i18n} credential={credential}
+      remove={this.handleRemove}
+    />
   }
 
   render () {
@@ -69,6 +59,7 @@ export class RSACredentialList extends Component {
           <ListHeadCol>{i18n('创建人')}</ListHeadCol>
           <ListHeadCol>{i18n('创建时间')}</ListHeadCol>
           <ListHeadCol>{i18n('Fingerprint')}</ListHeadCol>
+          <ListHeadCol>&nbsp;</ListHeadCol>
         </ListRow>
       </ListHead>
       <ListBody>
