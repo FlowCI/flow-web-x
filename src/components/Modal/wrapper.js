@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ReactModal from 'react-modal'
 
 import AutoLockScrolling from 'components/AutoLockScrolling'
-
+import ModalChildWrapper from './childWrapper'
 import classes from './wrapper.scss'
 
 const containerClassName = {
@@ -72,7 +72,9 @@ export default class ReactModalWrapper extends Component {
         shouldCloseOnOverlayClick={!modal}
       >
         <AutoLockScrolling lock={isOpen} />
-        {children}
+        <ModalChildWrapper className={classNames.childWrapper} isOpen={isOpen}>
+          {children}
+        </ModalChildWrapper>
       </ReactModal>
     )
   }
