@@ -45,12 +45,34 @@ export const actions = {
       },
     }
   },
+  remove: function (agent) {
+    return {
+      url: '/agents/delete',
+      method: 'post',
+      name: Types.remove,
+      indicator: {
+        id: agent.get('id'),
+      },
+      params: {
+        zone: agent.get('zone'),
+        name: agent.get('name'),
+      }
+    }
+  },
 }
 
 export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
       return state.set('list', fromJS(payload))
+    },
+  }),
+  [Types.remove]: handleHttp('REMOVE', {
+    success: function (state, { indicator }) {
+      const { id } = indicator
+      return state.update('list', (list) => {
+        return list.filter((item) => item.get('id') !== id)
+      })
     },
   }),
   [Types.freedAll]: function (state) {
