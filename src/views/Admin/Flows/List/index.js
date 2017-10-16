@@ -186,9 +186,7 @@ export class AdminFlowList extends Component {
       <Confirm isOpen={openConfirm} title={confirmTitle}
         onCancel={this.closeConfirm}
         onOk={this.handleRemove}
-      >
-        提示文案...
-      </Confirm>
+      />
     </div>
   }
 }
