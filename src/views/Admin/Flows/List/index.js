@@ -106,11 +106,7 @@ export class AdminFlowList extends Component {
 
   closeConfirm = () => {
     if (this.isMount) {
-      /**
-       * 由于关闭 confirm 会有动画，如果此刻立即设置 selected 为 undefined 后导致
-       * 关闭动画时 Confirm 内容错误，所以不清空 selected
-       */
-      this.setState({ openConfirm: false })
+      this.setState({ openConfirm: false, selected: undefined })
     }
   }
 
