@@ -39,10 +39,10 @@ export default class Confirm extends Component {
       onOk, onCancel
     } = this.props
     return <Wrapper {...this.props} modal onRequestClose={onCancel}>
-      {!!children && <h3 className={classNames.header}>{title}</h3>}
-      <div className={classNames.body}>
-        {children || title}
-      </div>
+      <h3 className={classNames.header}>{title}</h3>
+      {!!children && <div className={classNames.body}>
+        {children}
+      </div>}
       <div className={classNames.footer}>
         <Button className='btn-default' onClick={onCancel}>
           Cancel
