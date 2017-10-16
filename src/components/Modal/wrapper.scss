@@ -23,15 +23,8 @@
 
 .container{
   flex: 0 0 auto;
-
-  max-height: 80vh;
   width: 520px;
   max-width: 80vw;
-
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
 
   background-color: #fff;
   border-radius: 3px;
@@ -46,4 +39,12 @@
 }
 .containerBeforeClose{
   transform: translateY(-64px);
+}
+.childWrapper{
+  max-height: 80vh;
+  overflow: auto;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: stretch;
+  // justify-content: flex-start;
 }
