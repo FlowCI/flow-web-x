@@ -67,6 +67,20 @@ export const actions = {
       data: params,
     }
   },
+  remove: function (type, name) {
+    return {
+      url: '/credentials/:name',
+      method: 'post',
+      name: types.remove,
+      indicator: {
+        type,
+        name,
+      },
+      params: {
+        name: name,
+      },
+    }
+  },
   freedAll: function () {
     return {
       type: types.freedAll,
@@ -97,6 +111,14 @@ export default handleActions({
       const { type } = payload
       return state.update(type, (old) => old ? old.push(fromJS(payload))
         : fromJS([payload]))
+    }
+  }),
+  [types.remove]: handleHttp('CREATE', {
+    success: function (state, { indicator }) {
+      const { type, name } = indicator
+      return state.update(type, (list) => {
+        return list.filter((item) => item.get('name') !== name)
+      })
     }
   }),
   [types.freedAll]: function () {
