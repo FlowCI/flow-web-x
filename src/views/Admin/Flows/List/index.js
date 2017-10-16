@@ -10,8 +10,10 @@ import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
 
 import { actions } from 'redux/modules/flow'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Input from 'components/Form/Input'
+import { Confirm } from 'components/Modal'
 
 import {
   List,
@@ -58,6 +60,8 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     setFilter: actions.setFilter,
     freedFilter: actions.freedFilter,
+    remove: actions.remove,
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -67,6 +71,8 @@ export class AdminFlowList extends Component {
     filter: string,
     setFilter: func.isRequired,
     freedFilter: func.isRequired,
+    remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -75,14 +81,48 @@ export class AdminFlowList extends Component {
     filter: '',
   }
 
+  state = {
+    openConfirm: false,
+    selected: undefined,
+  }
+
+  componentDidMount () {
+    this.isMount = true
+  }
+
   componentWillUnmount () {
     const { freedFilter } = this.props
     freedFilter()
+    this.isMount = false
   }
 
   handleSearchChange = (value) => {
     const { setFilter } = this.props
     setFilter(value)
+  }
+
+  openConfirm = (flow) => {
+    if (this.isMount) {
+      this.setState({ selected: flow, openConfirm: true })
+    }
+  }
+
+  closeConfirm = () => {
+    if (this.isMount) {
+      this.setState({ openConfirm: false, selected: undefined })
+    }
+  }
+
+  handleRemove = () => {
+    const { remove, alert } = this.props
+    const { selected } = this.state
+    if (selected) {
+      return remove(selected.get('id'))
+        .then(this.closeConfirm, this.closeConfirm)
+        .then(() => {
+          alert('success', '删除成功')
+        })
+    }
   }
 
   renderListHeader () {
@@ -103,6 +143,9 @@ export class AdminFlowList extends Component {
         <ListHeadCol className={classes.deploy}>
           Deploy Key
         </ListHeadCol>
+        <ListHeadCol className={classes.action}>
+          &nbsp;
+        </ListHeadCol>
       </ListRow>
     </ListHead>
   }
@@ -110,7 +153,8 @@ export class AdminFlowList extends Component {
   renderFlows () {
     const { flowIds, i18n } = this.props
     return <ListBody>
-      {flowIds.map((id) => <FlowItem key={id} flowId={id} i18n={i18n} />)}
+      {flowIds.map((id) => <FlowItem key={id} flowId={id} i18n={i18n}
+        onRemove={this.openConfirm} />)}
     </ListBody>
   }
 
@@ -128,6 +172,9 @@ export class AdminFlowList extends Component {
   }
 
   render () {
+    const { selected, openConfirm } = this.state
+    const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
+      : 'Confirm'
     return <div>
       {this.renderToolBars()}
       <div className={classes.scroller}>
@@ -136,6 +183,10 @@ export class AdminFlowList extends Component {
           {this.renderFlows()}
         </List>
       </div>
+      <Confirm isOpen={openConfirm} title={confirmTitle}
+        onCancel={this.closeConfirm}
+        onOk={this.handleRemove}
+      />
     </div>
   }
 }
