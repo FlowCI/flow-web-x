@@ -70,7 +70,7 @@ export const actions = {
   remove: function (type, name) {
     return {
       url: '/credentials/:name',
-      method: 'post',
+      method: 'delete',
       name: types.remove,
       indicator: {
         type,

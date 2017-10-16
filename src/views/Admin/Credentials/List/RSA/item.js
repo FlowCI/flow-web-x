@@ -45,7 +45,7 @@ export default class RSACredentialItem extends Component {
         </div>
       </ListCol>
       <ListCol>
-        <IconButton onClick={this.handleRemove}>
+        <IconButton onClick={this.handleRemove} className={classes.remove}>
           <i className='icon icon-trash' />
         </IconButton>
       </ListCol>

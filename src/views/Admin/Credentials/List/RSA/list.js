@@ -39,7 +39,8 @@ export class RSACredentialList extends Component {
 
   handleRemove = (credential) => {
     const name = credential.get('name')
-    console.log(CredentialType, name)
+    const { remove } = this.props
+    return remove(CredentialType, name)
   }
 
   renderItem = (credential) => {
