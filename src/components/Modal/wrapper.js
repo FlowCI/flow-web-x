@@ -19,6 +19,7 @@ const overlayClassName = {
 }
 
 const defaultClassNames = {
+  ...classes,
   container: containerClassName,
   overlay: overlayClassName,
   portal: classes.portal,
