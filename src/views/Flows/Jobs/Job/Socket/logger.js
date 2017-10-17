@@ -5,6 +5,8 @@ import { contains } from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import { is } from 'util/nodeStatus'
+
 import { actions } from 'redux/modules/node'
 
 import { Subscriber } from 'packages/socket'
@@ -21,6 +23,7 @@ export class JobLogSubscriber extends Component {
   static propTypes = {
     node: contains({
       cmdId: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
     }).isRequired,
     onMessage: PropTypes.func.isRequired,
   }
@@ -35,9 +38,11 @@ export class JobLogSubscriber extends Component {
   }
 
   render () {
+    const { node } = this.props
     const { chanel } = this.state
+    const status = node.get('status')
     return <Subscriber {...this.props} chanel={chanel}
-      onMessage={this.handleMessage} />
+      onMessage={this.handleMessage} disabled={is.finish(status)} />
   }
 }
 
