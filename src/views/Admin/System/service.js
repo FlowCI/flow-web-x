@@ -84,7 +84,7 @@ export class AdminServiceInfo extends Component {
 
   renderJvm () {
     const { services, i18n } = this.props
-    const jvm = services.find((it) => it.get('name') === 'Java(TM) SE Runtime Environment')
+    const jvm = services.find((it) => it.get('type') === 'JVM')
     if (jvm) {
       return <JVM jvm={jvm} i18n={i18n} />
     }
