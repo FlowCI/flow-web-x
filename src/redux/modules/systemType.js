@@ -1,3 +1,4 @@
 export default {
-  query: 'SYSTEM_INFO_QUERY',
+  query: 'ALL_SYSTEM_INFO_QUERY',
+  querySystem: 'SYSTEM_INFO_QUERY',
 }
