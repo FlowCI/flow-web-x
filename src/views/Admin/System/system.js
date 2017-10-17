@@ -12,6 +12,7 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/system'
 
 import Loading from 'components/Loading'
+import { Select, Option } from 'components/Form/Select'
 import Title from '../components/Title'
 
 import {
@@ -22,7 +23,7 @@ import {
   ListRow,
   ListCol,
 } from '../components/List'
-
+import Services from './service'
 import classes from './system.scss'
 
 function mapStateToProps (state, props) {
@@ -38,6 +39,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    freedAll: actions.freedAll,
   }, dispatch)
 }
 
@@ -47,6 +49,7 @@ export class AdminSystemInfos extends Component {
     systems: iterable.isRequired,
 
     query: func.isRequired,
+    freedAll: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -54,44 +57,62 @@ export class AdminSystemInfos extends Component {
     i18n: createI18n(language),
   }
 
+  state = {
+    system: 'api'
+  }
+
   componentDidMount () {
     const { query } = this.props
     query()
   }
 
-  renderSystemInfo () {
-    const { systems } = this.props
-    return <List>
-      <ListHead>
-        <ListRow>
-          <ListHeadCol>名称</ListHeadCol>
-          <ListHeadCol>当前版本</ListHeadCol>
-          <ListHeadCol>最新版本</ListHeadCol>
-        </ListRow>
-      </ListHead>
-      <ListBody>
-        {systems.map((system) => {
-          return <ListRow key={system.get('name')}>
-            <ListCol>{system.get('name')}</ListCol>
-            <ListCol>{system.get('version')}</ListCol>
-            <ListCol>最新版本</ListCol>
-          </ListRow>
-        })}
-      </ListBody>
-    </List>
+  componentWillUnmount () {
+    const { freedAll } = this.props
+    freedAll()
   }
 
-  renderInfoTitle () {
-    const { i18n } = this.props
-    return <h5 className={classes.title}>
-      {i18n('系统版本')}
-    </h5>
+  selectSystem = (v) => {
+    this.setState({ system: v })
+  }
+
+  renderSystemInfo () {
+    const { systems, i18n } = this.props
+    return <div className={classes.section}>
+      <h5 className={classes.title}>
+        {i18n('系统版本')}
+      </h5>
+      <List>
+        <ListHead>
+          <ListRow>
+            <ListHeadCol>名称</ListHeadCol>
+            <ListHeadCol>当前版本</ListHeadCol>
+            <ListHeadCol>最新版本</ListHeadCol>
+          </ListRow>
+        </ListHead>
+        <ListBody>
+          {systems.map((system) => {
+            return <ListRow key={system.get('name')}>
+              <ListCol>{system.get('name')}</ListCol>
+              <ListCol>{system.get('version')}</ListCol>
+              <ListCol>最新版本</ListCol>
+            </ListRow>
+          })}
+        </ListBody>
+      </List>
+    </div>
   }
 
   renderContent () {
+    const { i18n } = this.props
+    const { system } = this.state
     return <div>
-      {this.renderInfoTitle()}
       {this.renderSystemInfo()}
+      <Select value={system} onChange={this.selectSystem}
+        className={classes.dropdown}>
+        <Option value='api' title='API 信息' />
+        <Option value='cc' title='Control Center' />
+      </Select>
+      <Services system={system} i18n={i18n} />
     </div>
   }
 
