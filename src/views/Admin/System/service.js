@@ -17,6 +17,7 @@ import {
   ListCol,
 } from '../components/List'
 
+import JVM from './jvm'
 import classes from './system.scss'
 
 function mapStateToProps (state, props) {
@@ -81,13 +82,24 @@ export class AdminServiceInfo extends Component {
     </ListComponent>
   }
 
+  renderJvm () {
+    const { services, i18n } = this.props
+    const jvm = services.find((it) => it.get('name') === 'Java(TM) SE Runtime Environment')
+    if (jvm) {
+      return <JVM jvm={jvm} i18n={i18n} />
+    }
+  }
+
   render () {
     const { i18n } = this.props
-    return <div className={classes.section}>
-      <h5 className={classes.title}>
-        {i18n('服务信息')}
-      </h5>
-      {this.renderList()}
+    return <div>
+      <div className={classes.section}>
+        <h5 className={classes.title}>
+          {i18n('服务信息')}
+        </h5>
+        {this.renderList()}
+      </div>
+      {this.renderJvm()}
     </div>
   }
 }
