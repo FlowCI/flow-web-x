@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bool, func } from 'prop-types'
 import { list } from 'react-immutable-proptypes'
 
-import createI18n from './i18n'
+import createI18n from '../i18n'
 import language from 'util/language'
 
 import { connect } from 'react-redux'
@@ -13,21 +13,22 @@ import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/agent'
 import { actions as jobActions } from 'redux/modules/job'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Loading from 'components/Loading'
+import { Confirm } from 'components/Modal'
 
-import Title from '../components/Title'
 import {
   List,
   ListHead,
   ListHeadCol,
   ListBody,
   ListRow,
-} from '../components/List'
+} from '../../components/List'
 import {
   TabBars,
   Tab
-} from '../components/TabBars'
+} from '../../components/TabBars'
 
 import Agent from './agent'
 import classes from './agents.scss'
@@ -42,9 +43,11 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    query: actions.query,
     stop: jobActions.stop,
+    query: actions.query,
     shutdown: actions.shutdown,
+    remove: actions.remove,
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -56,20 +59,28 @@ export class AdminAgentView extends Component {
     query: func.isRequired,
     stop: func.isRequired,
     shutdown: func.isRequired,
+    remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
   static defaultProps = {
-    i18n: createI18n(language),
+    i18n: createI18n(language).createChild('list'),
   }
 
   state = {
     category: 'ALL',
+    openConfirm: false,
   }
 
   componentDidMount () {
     const { query } = this.props
     query()
+    this.isMount = true
+  }
+
+  componentWillUnmount () {
+    this.isMount = false
   }
 
   selectCategory = (category) => {
@@ -83,10 +94,32 @@ export class AdminAgentView extends Component {
       agent.get('agentStatus') === category)
   }
 
+  openConfirm = (agent) => {
+    if (this.isMount) {
+      this.setState({ selected: agent, openConfirm: true })
+    }
+  }
+
+  closeConfirm = () => {
+    if (this.isMount) {
+      this.setState({ openConfirm: false, selected: undefined })
+    }
+  }
+
+  handleRemove = () => {
+    const { selected } = this.state
+    const { remove, alert } = this.props
+    return remove(selected)
+      .then(this.closeConfirm, this.closeConfirm)
+      .then(() => {
+        alert('success', '删除成功')
+      })
+  }
+
   renderAgent = (agent) => {
     const { stop, shutdown } = this.props
     return <Agent key={agent.get('id')} agent={agent}
-      stop={stop} shutdown={shutdown}
+      stop={stop} shutdown={shutdown} remove={this.openConfirm}
     />
   }
 
@@ -105,6 +138,9 @@ export class AdminAgentView extends Component {
             </ListHeadCol>
             <ListHeadCol className={classes.job}>
               {i18n('任务')}
+            </ListHeadCol>
+            <ListHeadCol className={classes.token}>
+              {i18n('Token')}
             </ListHeadCol>
             <ListHeadCol className={classes.actions}>
               {i18n('操作')}
@@ -163,10 +199,16 @@ export class AdminAgentView extends Component {
 
   render () {
     const { loading } = this.props
+    const { openConfirm, selected } = this.state
+    const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
+    : 'Confirm'
     return <div className={classes.container}>
-      <Title title='Agent' />
       {!loading && this.renderFilter()}
       {loading ? this.renderLoading() : this.renderAgents()}
+      <Confirm isOpen={openConfirm} title={confirmTitle}
+        onCancel={this.closeConfirm}
+        onOk={this.handleRemove}
+      />
     </div>
   }
 }

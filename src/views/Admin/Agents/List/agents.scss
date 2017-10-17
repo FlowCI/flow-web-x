@@ -17,8 +17,29 @@
   width: 100px;
   text-align: center;
 }
+.name{
+  width: 150px;
+}
+.token{
+  width: 170px;
+}
+.tokenWrapper{
+  display: flex;
+  align-items: center;
+  >span{
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;
+    text-overflow: ellipsis;
+  }
+}
+.copy{
+  flex: 0 0 auto;
+  border: none;
+}
 .actions{
-  width: 200px;
+  width: 280px;
   >:global(.btn-sm){
     padding-left: 10px;
     padding-right: 10px;

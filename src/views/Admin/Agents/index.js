@@ -1,5 +1,5 @@
 import agentReducer from 'redux/modules/agent'
-import Component from './agents'
+import Component from './container'
 
 export default Component
 export const reducers = {
