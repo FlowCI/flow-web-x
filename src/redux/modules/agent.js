@@ -18,6 +18,8 @@ const transformResponse = function (data) {
     data.forEach((d) => {
       d.id = d.zoneWithName
     })
+  } else if (is.object(data)) {
+    data.id = data.zoneWithName
   }
   return data
 }
@@ -59,6 +61,18 @@ export const actions = {
       }
     }
   },
+  create: function (zone, name) {
+    return {
+      url: '/agents/create',
+      method: 'post',
+      name: Types.create,
+      params: {
+        zone,
+        name,
+      },
+      transformResponse
+    }
+  }
 }
 
 export default handleActions({
@@ -73,6 +87,11 @@ export default handleActions({
       return state.update('list', (list) => {
         return list.filter((item) => item.get('id') !== id)
       })
+    },
+  }),
+  [Types.create]: handleHttp('CREATE', {
+    success: function (state, { payload }) {
+      return state.update('list', (list) => list.unshift(payload))
     },
   }),
   [Types.freedAll]: function (state) {

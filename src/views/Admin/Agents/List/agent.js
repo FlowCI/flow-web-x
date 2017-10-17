@@ -8,7 +8,7 @@ import Button from 'components/Button'
 import AgentIcon from 'components/Icon/Agent'
 import ClipboardButton from 'components/ClipboardButton'
 
-import { ListRow, ListCol } from '../components/List'
+import { ListRow, ListCol } from '../../components/List'
 
 import classes from './agents.scss'
 

@@ -1,15 +1,13 @@
 import React, { PureComponent } from 'react'
-import { array, node, string, bool, func } from 'prop-types'
+import { array, node, string, func } from 'prop-types'
 
 import createI18n from './i18n'
 import language from 'util/language'
 
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { STATUS } from 'redux-http'
 
 import { NavTabs, Nav } from 'components/NavTabs'
-import Loading from 'components/Loading'
 
 import classes from './container.scss'
 
@@ -19,18 +17,15 @@ const navbarSelectors = createSelector(
 )
 
 function mapStateToProps (state, props) {
-  const { flow } = state
   const navbars = navbarSelectors(props)
   return {
     menus: navbars,
-    loading: flow.getIn(['ui', 'QUERY']) !== STATUS.success,
   }
 }
 
-export class AdminFlowsContainer extends PureComponent {
+export class AdminAgentContainer extends PureComponent {
   static propTypes = {
     menus: array.isRequired,
-    loading: bool,
     children: node,
 
     base: string.isRequired,
@@ -38,12 +33,12 @@ export class AdminFlowsContainer extends PureComponent {
   }
 
   static defaultProps = {
-    base: '/admin/flows',
+    base: '/admin/agents',
     i18n: createI18n(language),
   }
 
   render () {
-    const { loading, i18n, base, menus, children } = this.props
+    const { i18n, base, menus, children } = this.props
     return <div>
       <NavTabs className={classes.navbar}>
         {menus.map((menu) => <Nav
@@ -53,9 +48,9 @@ export class AdminFlowsContainer extends PureComponent {
           {i18n(`${menu.path}.title`)}
         </Nav>)}
       </NavTabs>
-      {loading ? <Loading /> : children}
+      {children}
     </div>
   }
 }
 
-export default connect(mapStateToProps)(AdminFlowsContainer)
+export default connect(mapStateToProps)(AdminAgentContainer)
