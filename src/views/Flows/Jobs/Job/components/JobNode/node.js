@@ -35,7 +35,6 @@ export default class JobNode extends Component {
     const { node: nextNode } = nextProps
     const ns = nextNode.get('status')
     if (node !== nextNode && node.get('status') !== ns) {
-      console.log('status', ns)
       if (is.running(ns)) {
         if (!this.state.expended) {
           this.toggle(nextProps)
