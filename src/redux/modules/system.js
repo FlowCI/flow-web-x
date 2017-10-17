@@ -32,6 +32,11 @@ export const actions = {
         system,
       }
     }
+  },
+  freedAll: function () {
+    return {
+      type: types.freedAll,
+    }
   }
 }
 
@@ -45,4 +50,7 @@ export default handleActions({
       return state.update('services', (s) => s.set(system, fromJS(payload)))
     }
   }),
+  [types.freedAll]: function () {
+    return initialState
+  }
 }, initialState)
