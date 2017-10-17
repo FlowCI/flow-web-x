@@ -91,7 +91,7 @@ export default handleActions({
   }),
   [Types.create]: handleHttp('CREATE', {
     success: function (state, { payload }) {
-      return state.update('list', (list) => list.unshift(payload))
+      return state.update('list', (list) => list.unshift(fromJS(payload)))
     },
   }),
   [Types.freedAll]: function (state) {
