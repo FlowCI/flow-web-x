@@ -104,7 +104,7 @@ export const actions = {
       method: 'post',
       params: {
         flowName: flowId,
-        branch,
+        FLOW_GIT_BRANCH: branch
       }
     }
   },
