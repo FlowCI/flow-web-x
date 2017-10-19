@@ -20,11 +20,6 @@ export const actions = {
       indicator: {
         id: flowId,
       },
-      response: [
-        'master',
-        'develop',
-        'feature/xx',
-      ],
     }
   },
   freed: function (flowId) {
