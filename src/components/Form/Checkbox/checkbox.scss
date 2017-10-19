@@ -5,6 +5,9 @@
   >:nth-child(2){
     margin-right: $padding;
   }
+  >:last-child{
+    margin-right: 0;
+  }
 }
 
 .checkbox{
