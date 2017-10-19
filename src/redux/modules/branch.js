@@ -6,8 +6,25 @@ import { handleHttp } from '../util'
 import { fromJS } from 'immutable'
 
 import Types from './branchType'
+import is from 'util/is'
 
 const initialState = fromJS({ data: {}, ui: {} })
+
+const preposition = (array, item) => {
+  const index = array.indexOf(item)
+  if (index > -1) {
+    array.splice(index, 1)
+    return [item].concat(array)
+  }
+  return array
+}
+
+function transformResponse (data) {
+  if (is.array(data)) {
+    return ['develop', 'master'].reduce(preposition, data)
+  }
+  return data
+}
 
 export const actions = {
   query: function (flowId) {
@@ -20,6 +37,7 @@ export const actions = {
       indicator: {
         id: flowId,
       },
+      transformResponse,
     }
   },
   freed: function (flowId) {
