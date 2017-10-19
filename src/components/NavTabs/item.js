@@ -30,10 +30,16 @@ export default class Nav extends Component {
     const cls = [classNames.nav]
     className && cls.push(className)
 
-    return React.createElement(component, {
+    const props = {
       ...other,
-      activeClassName: classNames.active,
-      className: cls.join(' '),
-    }, children)
+    }
+    if (component === Link) {
+      props.activeClassName = classNames.active
+    } else if (active) {
+      cls.push(classNames.active)
+    }
+
+    props.className = cls.join(' ')
+    return React.createElement(component, props, children)
   }
 }
