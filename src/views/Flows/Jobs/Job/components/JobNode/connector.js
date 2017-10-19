@@ -8,7 +8,7 @@ function mapStateToProps (state, props) {
   const nodeState = node.get(jobId)
   return {
     node: nodeState.getIn(['data', nodeId]),
-    log: nodeState.getIn(['log', nodeId]),
+    log: nodeState.getIn(['log', nodeId, 'str']),
     fetching: nodeState.getIn(['ui', nodeId, 'GET_LOG']) !== STATUS.success,
   }
 }
