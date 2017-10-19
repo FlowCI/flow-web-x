@@ -39,13 +39,13 @@
   border: none;
 }
 .actions{
-  width: 280px;
+  width: 190px;
   >:global(.btn-sm){
     padding-left: 10px;
     padding-right: 10px;
     font-weight: normal;
   }
-  >button+button{
-    margin-left: $admin-agents-actoins-button-spacing;
+  >button{
+    margin-right: $admin-agents-actoins-button-spacing;
   }
 }

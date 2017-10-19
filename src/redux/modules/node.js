@@ -48,7 +48,6 @@ export const actions = {
     }
   },
   storeLog: function (node /** Map */, log) {
-    console.log(log)
     return {
       type: types.storeLog,
       payload: {
