@@ -72,6 +72,20 @@ export const actions = {
       },
       transformResponse
     }
+  },
+  /**
+   * 告知 api 获取 agent 信息，具体信息将由通过 socket 推送
+   */
+  getSystemInfo: function (agent) {
+    const name = agent.get('name')
+    const zone = agent.get('zone')
+    return {
+      url: '/agents/sys/info',
+      params: {
+        name,
+        zone,
+      }
+    }
   }
 }
 

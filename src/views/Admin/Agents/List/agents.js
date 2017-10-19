@@ -30,6 +30,7 @@ import {
   Tab
 } from '../../components/TabBars'
 
+import ConfigDialog from '../components/ConfigDialog'
 import Agent from './agent'
 import classes from './agents.scss'
 
@@ -71,6 +72,7 @@ export class AdminAgentView extends Component {
   state = {
     category: 'ALL',
     openConfirm: false,
+    openConfig: false,
   }
 
   componentDidMount () {
@@ -106,6 +108,18 @@ export class AdminAgentView extends Component {
     }
   }
 
+  openConfig = (agent) => {
+    if (this.isMount) {
+      this.setState({ selected: agent, openConfig: true })
+    }
+  }
+
+  closeConfig = () => {
+    if (this.isMount) {
+      this.setState({ openConfig: false, selected: undefined })
+    }
+  }
+
   handleRemove = () => {
     const { selected } = this.state
     const { remove, alert } = this.props
@@ -120,6 +134,7 @@ export class AdminAgentView extends Component {
     const { stop, shutdown } = this.props
     return <Agent key={agent.get('id')} agent={agent}
       stop={stop} shutdown={shutdown} remove={this.openConfirm}
+      openDetail={this.openConfig}
     />
   }
 
@@ -199,7 +214,7 @@ export class AdminAgentView extends Component {
 
   render () {
     const { loading } = this.props
-    const { openConfirm, selected } = this.state
+    const { openConfirm, openConfig, selected } = this.state
     const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
     : 'Confirm'
     return <div className={classes.container}>
@@ -208,6 +223,9 @@ export class AdminAgentView extends Component {
       <Confirm isOpen={openConfirm} title={confirmTitle}
         onCancel={this.closeConfirm}
         onOk={this.handleRemove}
+      />
+      <ConfigDialog agent={selected} isOpen={openConfig}
+        onRequestClose={this.closeConfig}
       />
     </div>
   }
