@@ -38,7 +38,6 @@ export default class Subscriber extends Component {
     const { subscribe } = this.context
     const { chanel, onMessage } = this.props
     if (!this.subscription) {
-      console.log('subscribe', chanel)
       this.subscription = subscribe(chanel, onMessage)
     }
   }
