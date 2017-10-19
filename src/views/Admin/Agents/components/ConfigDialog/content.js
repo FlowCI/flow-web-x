@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { map } from 'react-immutable-proptypes'
 
+import getCapacity from 'util/capacity'
+
 import Loading from 'components/Loading'
 
 import AgentSystemSubscriber from '../../Socket/system'
@@ -50,7 +52,8 @@ export default class AgentDialogContent extends Component {
         </tr>
       </thead>
       <tbody>
-        {this.renderItem('Memory', `${useMemory}/${totalMemory}`)}
+        {this.renderItem('Memory',
+          `${getCapacity(useMemory, 'KB')}/${getCapacity(totalMemory, 'KB')}`)}
         {keys.map((key) => this.renderItem(key, system[key]))}
       </tbody>
     </table>
