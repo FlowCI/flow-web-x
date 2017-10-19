@@ -34,7 +34,10 @@ export class JobLogSubscriber extends Component {
 
   handleMessage = ({ body }) => {
     const { node, onMessage } = this.props
-    return onMessage(node, body)
+    try {
+      const obj = JSON.parse(body)
+      return onMessage(node, obj)
+    } catch (e) {}
   }
 
   render () {

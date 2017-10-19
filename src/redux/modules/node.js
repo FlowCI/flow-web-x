@@ -13,7 +13,18 @@ import jobTypes from './jobType'
 import types from './nodeType'
 
 /**
- * type: { [jobId]: { ids: [], data: {}, log: { [nodeId]: 'string' } } }
+ * type: {
+ *  [jobId]: {
+ *    ids: [],
+ *    data: {},
+ *    log: {
+ *      [nodeId]: {
+ *        line: [number],  最后一行行号
+ *        str: [string] 日志内容
+ *      }
+ *    }
+ *  }
+ * }
  */
 const initState = new Map()
 
@@ -47,13 +58,16 @@ export const actions = {
       })
     }
   },
+  /**
+   * @param {object} log { number: number, content: string }
+   */
   storeLog: function (node /** Map */, log) {
     return {
       type: types.storeLog,
       payload: {
         jobId: node.get('jobId'),
         id: node.get('id'),
-        log,
+        log: log,
       }
     }
   }
@@ -75,8 +89,9 @@ export default handleActions({
     },
     success: function (state, { indicator, payload, status }) {
       const { jobId, nodeId } = indicator
+      const line = payload.split('\n').length
       return state.updateIn([jobId, 'log', nodeId], (old) => {
-        return payload || ''
+        return new Map({ line, str: payload })
       }).setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
     },
     failure: function (state, { indicator, status }) {
@@ -100,8 +115,18 @@ export default handleActions({
   },
   [types.storeLog]: function (state, { payload }) {
     const { jobId, id, log } = payload
+    const { number, content } = log
     return state.updateIn([jobId, 'log', id], (old) => {
-      return log + (old || '')
+      if (old) {
+        if (old.line < number) {
+          return new Map({
+            line: number,
+            str: [old.str, old.content].join('\n'),
+          })
+        }
+      } else {
+        return new Map({ line: number, str: content })
+      }
     })
   }
 }, initState)
