@@ -32,11 +32,11 @@ export class JobStatusHeader extends Component {
     return <div className={`${classes.header} ${job.get('status', '')}`}>
       <JobIcon status={status} />
       <ul className={classes.list}>
-        <li>{i18n('buildFromNow', { time: startedAt })}</li>
-        <li>
-          {i18n('buildDuration', { duration })}
-        </li>
         <li>{i18n('CATEGORY')[category]}</li>
+        {startedAt && <li>{i18n('buildFromNow', { time: startedAt })}</li>}
+        {duration && <li>
+          {i18n('buildDuration', { duration })}
+        </li>}
       </ul>
     </div>
   }
