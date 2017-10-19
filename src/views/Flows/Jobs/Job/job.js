@@ -110,9 +110,9 @@ export class JobContainer extends Component {
   }
 
   render () {
-    const { loaded, jobId, i18n } = this.props
+    const { loaded, jobId, flowId, i18n } = this.props
     return <div className={classes.container}>
-      {loaded && <JobStatusHeader jobId={jobId} i18n={i18n} />}
+      {loaded && <JobStatusHeader flowId={flowId} jobId={jobId} i18n={i18n} />}
       {loaded ? this.renderContent() : this.renderLoading()}
     </div>
   }
