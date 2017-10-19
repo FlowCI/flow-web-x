@@ -53,7 +53,7 @@ export default class AgentDialogContent extends Component {
       </thead>
       <tbody>
         {this.renderItem('Memory',
-          `${getCapacity(useMemory, 'KB')}/${getCapacity(totalMemory, 'KB')}`)}
+          `${getCapacity(useMemory)}/${getCapacity(totalMemory)}`)}
         {keys.map((key) => this.renderItem(key, system[key]))}
       </tbody>
     </table>
