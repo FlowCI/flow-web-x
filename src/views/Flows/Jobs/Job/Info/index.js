@@ -58,19 +58,19 @@ export class JobInfo extends Component {
 
     return <Mapping>
       <Legend name={i18n('提交信息')} />
-      <Entry name='Commit' value={commitBlock} />
-      <Entry name='Author'
+      <Entry name={i18n('commit')} value={commitBlock} />
+      <Entry name={i18n('author')}
         value={outputs.get('FLOW_GIT_AUTHOR')} />
 
-      <Entry name='Branch'
+      <Entry name={i18n('branch')}
         value={outputs.get('FLOW_GIT_BRANCH')} />
 
-      <Entry name='Commit message'
+      <Entry name={i18n('commit message')}
         value={outputs.get('FLOW_GIT_CHANGELOG')} />
 
-      <Entry name='Compare' value={compareBlock} />
+      <Entry name={i18n('compare')} value={compareBlock} />
       <Legend name={i18n('Agent 信息')} />
-      <Entry name='Agent'
+      <Entry name={i18n('Agent')}
         value={envs.get('FLOW_JOB_AGENT_INFO')} />
     </Mapping>
   }
