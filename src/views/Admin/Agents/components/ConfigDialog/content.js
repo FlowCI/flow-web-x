@@ -40,7 +40,8 @@ export default class AgentDialogContent extends Component {
 
   renderContent () {
     const { system } = this.state
-    const keys = Object.keys(system)
+    const { useMemory, totalMemory, ...other } = system
+    const keys = Object.keys(other)
     return <table className={classes.table}>
       <thead>
         <tr className={classes.header}>
@@ -49,6 +50,7 @@ export default class AgentDialogContent extends Component {
         </tr>
       </thead>
       <tbody>
+        {this.renderItem('Memory', `${useMemory}/${totalMemory}`)}
         {keys.map((key) => this.renderItem(key, system[key]))}
       </tbody>
     </table>
