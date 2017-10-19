@@ -15,19 +15,25 @@ export function generatorJobId (flowId, jobNumber) {
   return `${flowId}-${jobNumber}`
 }
 
+function transform (d) {
+  d.id = generatorJobId(d.nodePath, d.number)
+  if (d.childrenResult) {
+    d.childrenResult.forEach((node) => {
+      node.jobId = d.id
+      node.id = `${node.order}`
+    })
+  }
+  if (d.status === 'YML_LOADING') {
+    d.status = 'CREATED'
+  }
+  return d
+}
+
 function transformResponse (data) {
   if (is.array(data)) {
-    data.forEach((d) => {
-      d.id = generatorJobId(d.nodePath, d.number)
-    })
+    data.forEach(transform)
   } else if (is.object(data) && data.number > -1) {
-    data.id = generatorJobId(data.nodePath, data.number)
-    if (data.childrenResult) {
-      data.childrenResult.forEach((node) => {
-        node.jobId = data.id
-        node.id = `${node.order}`
-      })
-    }
+    transform(data)
   }
   return data
 }
