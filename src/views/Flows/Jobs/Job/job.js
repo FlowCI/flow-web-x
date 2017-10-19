@@ -17,6 +17,7 @@ import Loading from 'components/Loading'
 
 import JobNavbar from './components/JobNavbar'
 import JobStatusHeader from './components/JobStatusHeader'
+import JobFailureAlert from './components/JobFailureAlert'
 
 import classes from './job.scss'
 
@@ -113,6 +114,7 @@ export class JobContainer extends Component {
     const { loaded, jobId, i18n } = this.props
     return <div className={classes.container}>
       {loaded && <JobStatusHeader jobId={jobId} i18n={i18n} />}
+      {loaded && <JobFailureAlert jobId={jobId} />}
       {loaded ? this.renderContent() : this.renderLoading()}
     </div>
   }
