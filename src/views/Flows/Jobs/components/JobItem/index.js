@@ -59,14 +59,14 @@ export class JobItem extends Component {
       </div>
       <div className={classes.detail}>
         <div className={`${classes.itemCol} ${classes.firstCol}`}>
-          {this.renderItem(i18n('Commit'),
+          {this.renderItem(i18n('commit'),
             envs.get('FLOW_GIT_COMMIT_ID', '-'))}
-          {this.renderItem(i18n('Duration'), job.getIn(['result', 'duration'], ''))}
+          {this.renderItem(i18n('duration'), job.getIn(['result', 'duration'], ''))}
         </div>
         <div className={classes.itemCol}>
-          {this.renderItem(i18n('Compare'),
+          {this.renderItem(i18n('compare'),
             envs.get('FLOW_GIT_COMPARE_ID', '-'))}
-          {this.renderItem(i18n('Built'),
+          {this.renderItem(i18n('built'),
             startedAt ? moment(startedAt * 1000).fromNow() : '-')}
         </div>
       </div>
