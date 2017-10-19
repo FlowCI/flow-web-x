@@ -11,18 +11,15 @@ import Types from './agentType'
 const initialState = fromJS({
   list: [],
   ui: {},
-  info: {},
 })
-
-export function generatorAgentId (agent) {
-  return `${agent.zone} - ${agent.name}`
-}
 
 const transformResponse = function (data) {
   if (is.array(data)) {
     data.forEach((d) => {
-      d.id = generatorAgentId(d)
+      d.id = d.zoneWithName
     })
+  } else if (is.object(data)) {
+    data.id = data.zoneWithName
   }
   return data
 }
@@ -50,27 +47,30 @@ export const actions = {
       },
     }
   },
-  /**
-   * 改方法仅通知 api ，api 无具体返回，内容通过 socket
-   * /topic/agent/sysinfo/:zone/:name 频道推送
-   */
-  getSystemInfo: function (agent) {
+  remove: function (agent) {
     return {
-      url: '/agents/sys/info',
-      name: Types.getSystemInfo,
+      url: '/agents/delete',
+      method: 'post',
+      name: Types.remove,
+      indicator: {
+        id: agent.get('id'),
+      },
       params: {
         zone: agent.get('zone'),
         name: agent.get('name'),
       }
     }
   },
-  storeSystemInfo: function (agent /* Map */, system) {
+  create: function (zone, name) {
     return {
-      type: Types.storeSystemInfo,
-      payload: {
-        id: agent.get('id'),
-        system,
-      }
+      url: '/agents/create',
+      method: 'post',
+      name: Types.create,
+      params: {
+        zone,
+        name,
+      },
+      transformResponse
     }
   }
 }
@@ -79,6 +79,19 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
       return state.set('list', fromJS(payload))
+    },
+  }),
+  [Types.remove]: handleHttp('REMOVE', {
+    success: function (state, { indicator }) {
+      const { id } = indicator
+      return state.update('list', (list) => {
+        return list.filter((item) => item.get('id') !== id)
+      })
+    },
+  }),
+  [Types.create]: handleHttp('CREATE', {
+    success: function (state, { payload }) {
+      return state.update('list', (list) => list.unshift(fromJS(payload)))
     },
   }),
   [Types.freedAll]: function (state) {

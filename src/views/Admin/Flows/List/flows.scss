@@ -32,7 +32,7 @@
   width: 100px;
 }
 .createTime{
-  width: 100px;
+  width: 110px;
 }
 .webhook{
   // width: 40%;
@@ -62,4 +62,14 @@
 }
 .deploy{
   width: 20%;
+}
+.action{
+  width: 64px; /* button size + td padding */
+}
+.remove{
+  color: $color-danger;
+  &:hover{
+    background-color: $color-danger;
+    color: #fff;
+  }
 }

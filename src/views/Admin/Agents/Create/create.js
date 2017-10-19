@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { push } from 'react-router-redux'
-import { actions } from 'redux/modules/credential'
+import { actions } from 'redux/modules/agent'
 
 import Form from './form'
 
@@ -15,23 +16,23 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-export class CreateCredentialForm extends Component {
+export class CreateAgent extends Component {
   static propTypes = {
     create: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
   }
 
-  handleCreate = (values) => {
+  handleSbumit = (values) => {
     const { create, redirect } = this.props
-    const { type, name, ...other } = values
-    return create(type, name, other).then(() => {
-      redirect('/admin/credentials')
+    const { zone, name } = values
+    return create(zone, name).then(() => {
+      redirect('/admin/agents')
     })
   }
 
   render () {
-    return <Form onSubmit={this.handleCreate} />
+    return <Form onSubmit={this.handleSbumit} />
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(CreateCredentialForm)
+export default connect(undefined, mapDispatchToProps)(CreateAgent)

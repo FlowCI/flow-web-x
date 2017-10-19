@@ -5,6 +5,7 @@ export default class Subscriber extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
     chanel: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
     /**
      * @param {object} data { body: string }
      */
@@ -16,13 +17,34 @@ export default class Subscriber extends Component {
   }
 
   componentDidMount () {
-    const { subscribe } = this.context
-    const { chanel, onMessage } = this.props
-    this.subscription = subscribe(chanel, onMessage)
+    const { disabled } = this.props
+    if (!disabled) {
+      this.subscribe()
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { disabled } = nextProps
+    if (this.props.disabled !== disabled) {
+      disabled ? this.unsubscribe() : this.subscribe()
+    }
   }
 
   componentWillUnmount () {
-    this.subscription.unsubscribe()
+    this.unsubscribe()
+  }
+
+  subscribe () {
+    const { subscribe } = this.context
+    const { chanel, onMessage } = this.props
+    if (!this.subscription) {
+      console.log('subscribe', chanel)
+      this.subscription = subscribe(chanel, onMessage)
+    }
+  }
+
+  unsubscribe () {
+    this.subscription && this.subscription.unsubscribe()
   }
 
   render () {

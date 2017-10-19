@@ -6,8 +6,9 @@ import { Link } from 'react-router'
 
 import Button from 'components/Button'
 import AgentIcon from 'components/Icon/Agent'
+import ClipboardButton from 'components/ClipboardButton'
 
-import { ListRow, ListCol } from '../components/List'
+import { ListRow, ListCol } from '../../components/List'
 
 import classes from './agents.scss'
 
@@ -17,6 +18,7 @@ export default class Agent extends PureComponent {
 
     stop: func.isRequired,
     shutdown: func.isRequired,
+    remove: func.isRequired,
   }
 
   handleStop = () => {
@@ -27,6 +29,11 @@ export default class Agent extends PureComponent {
   handleShutDown = () => {
     const { shutdown, agent } = this.props
     return shutdown(agent, 'dialog password result')
+  }
+
+  handleRemove = () => {
+    const { remove, agent } = this.props
+    return remove(agent)
   }
 
   render () {
@@ -42,7 +49,7 @@ export default class Agent extends PureComponent {
     const canStop = status === 'BUSY'
 
     const encodeForm = encodeURIComponent('/admin/agents')
-
+    const token = agent.get('token')
     return <ListRow>
       <ListCol className={classes.status}>
         <AgentIcon status={status} />
@@ -57,6 +64,13 @@ export default class Agent extends PureComponent {
           {job}
         </Link>}
       </ListCol>
+      <ListCol className={classes.token}>
+        <div className={classes.tokenWrapper}>
+          <span>{token}</span>
+          {!!token && <ClipboardButton className={classes.copy}
+            data-clipboard-text={token} />}
+        </div>
+      </ListCol>
       <ListCol className={classes.actions}>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleStop} disabled={!canStop}>
@@ -65,6 +79,11 @@ export default class Agent extends PureComponent {
         <Button size='sm' className='btn-inverse'
           onClick={this.handleShutDown} disabled={!canShutDown}>
           关机
+        </Button>
+        <Button size='sm' className='btn-inverse'
+          onClick={this.handleRemove}
+        >
+          删除
         </Button>
       </ListCol>
     </ListRow>

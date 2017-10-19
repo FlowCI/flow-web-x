@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 import ClipboardButton from 'components/ClipboardButton'
+import IconButton from 'components/IconButton'
+
 import {
   ListRow,
   ListCol
@@ -26,6 +28,12 @@ export class AdminFlowListItem extends PureComponent {
   static propTypes = {
     flow: map.isRequired,
     i18n: func.isRequired,
+    onRemove: func.isRequired,
+  }
+
+  handleRemove = () => {
+    const { onRemove, flow } = this.props
+    return onRemove(flow)
   }
 
   render () {
@@ -46,6 +54,11 @@ export class AdminFlowListItem extends PureComponent {
       </ListCol>
       <ListCol>
         {flow.getIn(['envs', 'FLOW_GIT_CREDENTIAL']) || ''}
+      </ListCol>
+      <ListCol>
+        <IconButton className={classes.remove} onClick={this.handleRemove}>
+          <i className='icon icon-trash' />
+        </IconButton>
       </ListCol>
     </ListRow>
   }

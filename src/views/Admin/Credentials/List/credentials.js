@@ -11,6 +11,7 @@ import createI18n from '../i18n'
 import language from 'util/language'
 
 import { actions } from 'redux/modules/credential'
+import { actions as alertActions } from 'redux/modules/alert'
 
 import Loading from 'components/Loading'
 import {
@@ -18,7 +19,7 @@ import {
   Tab
 } from '../../components/TabBars'
 
-import RSAList from './rsa'
+import RSAList from './RSA'
 
 function mapStateToProps (state, props) {
   const { credential } = state
@@ -33,6 +34,9 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    remove: actions.remove,
+
+    alert: alertActions.alert,
   }, dispatch)
 }
 
@@ -42,6 +46,8 @@ export class AdminCredentialList extends Component {
     iosCount: number,
     loading: bool,
     query: func.isRequired,
+    remove: func.isRequired,
+    alert: func.isRequired,
     i18n: func.isRequired,
   }
 
@@ -73,8 +79,9 @@ export class AdminCredentialList extends Component {
 
   renderList () {
     const { tab } = this.state
+    const { remove, alert } = this.props
     if (tab === 'rsa') {
-      return <RSAList />
+      return <RSAList remove={remove} alert={alert} />
     }
   }
 

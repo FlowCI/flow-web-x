@@ -29,10 +29,10 @@ export default class Nav extends Component {
     } = this.props
     const cls = [classNames.nav]
     className && cls.push(className)
-    active && cls.push(classNames.active)
 
     return React.createElement(component, {
       ...other,
+      activeClassName: classNames.active,
       className: cls.join(' '),
     }, children)
   }
