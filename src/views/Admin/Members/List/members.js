@@ -35,9 +35,10 @@ import ActionBar from './actions'
 import classes from './members.scss'
 
 function mapStateToProps (state, props) {
-  const { member } = state
+  const { member, session } = state
   return {
     loaded: member.getIn(['ui', 'QUERY']) === STATUS.success,
+    currentEmail: session.getIn(['user', 'email']),
     list: member.get('list'),
     total: member.getIn(['ui', 'total'], 0),
     adminCount: member.getIn(['ui', 'adminCount'], 0),
@@ -59,6 +60,7 @@ function mapDispatchToProps (dispatch) {
 export class AdminMemberList extends Component {
   static propTypes = {
     loaded: PropTypes.bool,
+    currentEmail: PropTypes.string.isRequired,
     list: ImmutablePropTypes.iterable.isRequired,
     total: PropTypes.number.isRequired,
     adminCount: PropTypes.number.isRequired,
@@ -126,8 +128,8 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
-    const { removeAll, alert } = this.props
-    const selected = this.getChecked()
+    const { removeAll, alert, currentEmail } = this.props
+    const selected = this.getChecked().filter((email) => email !== currentEmail)
     if (selected.length) {
       this.setState({ checks: {}, checkAll: false })
       return removeAll(selected).then(() => {
@@ -178,19 +180,19 @@ export class AdminMemberList extends Component {
     return <List className={classes.agents}>
       <ListHead>
         <ListRow>
-          <ListHeadCol>
+          <ListHeadCol className={classes.checkbox}>
             <Checkbox checked={checkAll} onChange={this.toggleAll} />
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.username}>
             {i18n('用户名')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.email}>
             {i18n('电子邮件')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.flows}>
             {i18n('Flow 授权')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.roles}>
             {i18n('角色')}
           </ListHeadCol>
         </ListRow>
