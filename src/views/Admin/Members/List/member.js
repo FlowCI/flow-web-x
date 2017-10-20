@@ -10,6 +10,8 @@ import Checkbox from 'components/Form/Checkbox'
 
 import { ListRow, ListCol } from '../../components/List'
 
+import classes from './members.scss'
+
 function mapStateToProps (state, props) {
   const { member, permission } = state
   const { email } = props
@@ -43,21 +45,21 @@ export class AdminMemberItem extends Component {
   render () {
     const { checked, member, roles, flows } = this.props
     return <ListRow>
-      <ListCol>
+      <ListCol className={classes.checkbox}>
         <Checkbox checked={checked} onChange={this.handleChange} />
       </ListCol>
-      <ListCol>
+      <ListCol className={classes.username}>
         {member.get('username')}
       </ListCol>
-      <ListCol>
+      <ListCol className={classes.email}>
         {member.get('email')}
       </ListCol>
-      <ListCol>
+      <ListCol className={classes.flows}>
         <ul>
           {flows.map((f) => <li key={f}>{f}</li>)}
         </ul>
       </ListCol>
-      <ListCol>
+      <ListCol className={classes.roles}>
         <ul>
           {roles.map((r, i) => <li key={i}>{r.get('name')}</li>)}
         </ul>
