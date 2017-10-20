@@ -17,6 +17,7 @@ import { actions as alertActions } from 'redux/modules/alert'
 import Loading from 'components/Loading'
 import Input from 'components/Form/Input'
 import Checkbox from 'components/Form/Checkbox'
+import { Confirm } from 'components/Modal'
 
 import {
   List,
@@ -84,6 +85,7 @@ export class AdminMemberList extends Component {
   state = {
     checks: {},
     checkAll: false,
+    confirm: false,
   }
 
   componentDidMount () {
@@ -128,8 +130,10 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
+    this.closeRemoveConfirm()
     const { removeAll, alert, currentEmail } = this.props
-    const selected = this.getChecked().filter((email) => email !== currentEmail)
+    const selected = this.getChecked()
+      .filter((email) => email !== currentEmail)
     if (selected.length) {
       this.setState({ checks: {}, checkAll: false })
       return removeAll(selected).then(() => {
@@ -147,6 +151,14 @@ export class AdminMemberList extends Component {
         alert('success', '更新角色成功')
       })
     }
+  }
+
+  openRemoveConfirm = () => {
+    this.setState({ confirm: true })
+  }
+
+  closeRemoveConfirm = () => {
+    this.setState({ confirm: false })
   }
 
   renderLoading () {
@@ -206,13 +218,16 @@ export class AdminMemberList extends Component {
 
   render () {
     const { loaded, i18n } = this.props
+    const { confirm } = this.state
     return <div className={classes.container}>
       {loaded && this.renderFilter()}
       {loaded && <ActionBar i18n={i18n}
-        onRemove={this.handleRemove}
+        onRemove={this.openRemoveConfirm}
         onChangRole={this.handleChangeRole}
       />}
       {loaded ? this.rendrMembers() : this.renderLoading()}
+      <Confirm title='删除提示' isOpen={confirm}
+        onOk={this.handleRemove} onCancel={this.closeRemoveConfirm} />
     </div>
   }
 }
