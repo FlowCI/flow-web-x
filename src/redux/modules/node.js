@@ -118,10 +118,10 @@ export default handleActions({
     const { number, content } = log
     return state.updateIn([jobId, 'log', id], (old) => {
       if (old) {
-        if (old.line < number) {
+        if (old.get('line') < number) {
           return new Map({
             line: number,
-            str: [old.str, old.content].join('\n'),
+            str: [old.get('str'), old.content].join('\n'),
           })
         }
       } else {
