@@ -37,6 +37,7 @@ function mapDispatchToProps (dispatch) {
 
 export class BranchDialog extends Component {
   static propTypes = {
+    isOpen: PropTypes.bool,
     flowId: PropTypes.string.isRequired,
     loaded: PropTypes.bool,
     branches: ImmutablePropTypes.list.isRequired,
@@ -47,6 +48,12 @@ export class BranchDialog extends Component {
 
   state = {
     building: false
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.isOpen && this.props.isOpen !== nextProps.isOpen) {
+      this.setState({ building: true })
+    }
   }
 
   handleRefresh = () => {
