@@ -52,7 +52,7 @@ export class BranchDialog extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (nextProps.isOpen && this.props.isOpen !== nextProps.isOpen) {
-      this.setState({ building: true })
+      this.setState({ building: false })
     }
   }
 
