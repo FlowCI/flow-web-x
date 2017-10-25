@@ -121,7 +121,7 @@ export default handleActions({
         if (old.get('line') < number) {
           return new Map({
             line: number,
-            str: [old.get('str'), old.content].join('\n'),
+            str: [old.get('str'), content].join('\n'),
           })
         }
       } else {
