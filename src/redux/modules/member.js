@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions'
+import { Map } from 'immutable'
 
 import { handleHttp } from '../util'
 import { defaultInitState, createHandlers } from 'redux/handler'
@@ -95,6 +96,17 @@ export const actions = {
     return {
       type: types.freedAll,
     }
+  },
+  setFilter: function (filter) {
+    return {
+      type: types.setFilter,
+      payload: filter
+    }
+  },
+  freedFilter: function () {
+    return {
+      type: types.freedFilter
+    }
   }
 }
 // { list: [[page1], [page2], [page3]], data: {} }
@@ -128,6 +140,15 @@ export default handleActions({
       return handlers.removeAll(state, { payload: emails })
     }
   }),
+
+  // ui
+  [types.setFilter]: function (state, { payload }) {
+    return state.updateIn(['ui', 'filter'], (filter) => filter
+      ? filter.merge(payload) : new Map(payload))
+  },
+  [types.freedFilter]: function (state) {
+    return state.updateIn(['ui', 'filter'], () => new Map())
+  },
   [types.freedAll]: function () {
     return initialState
   }

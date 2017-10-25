@@ -7,6 +7,7 @@ import language from 'util/language'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { createSelector } from 'reselect'
 
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
@@ -35,21 +36,48 @@ import ActionBar from './actions'
 
 import classes from './members.scss'
 
+const includeIdsSelector = createSelector(
+  (member, permission, roleStr) => {
+    return member.get('list')
+  },
+  (member, permission, roleStr) => {
+    return member.get('data')
+  },
+  (member, permission, roleStr) => {
+    return permission
+  },
+  (member, permission, roleStr) => {
+    return roleStr
+  },
+  (list, data, mapping, roleStr) => {
+    return list.filter((id) => {
+      const m = data.get(id)
+      const email = m.get('email')
+      const roles = mapping.getIn([email, 'roles'])
+      return roles && roles.some((r) => r.get('name') === roleStr)
+    })
+  }
+)
+
 function mapStateToProps (state, props) {
-  const { member, session } = state
+  const { member, session, permission } = state
+  const cate = member.getIn(['ui', 'filter', 'category'], 'ALL')
   return {
     loaded: member.getIn(['ui', 'QUERY']) === STATUS.success,
     currentEmail: session.getIn(['user', 'email']),
-    list: member.get('list'),
+    list: cate === 'ALL' ? member.get('list')
+      : includeIdsSelector(member, permission, cate),
     total: member.getIn(['ui', 'total'], 0),
     adminCount: member.getIn(['ui', 'adminCount'], 0),
     page: member.getIn(['ui', 'page'], 0),
+    category: cate,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    setFilter: actions.setFilter,
     updateRole: actions.updateRole,
     removeAll: actions.removeAll,
     freedAll: actions.freedAll,
@@ -66,10 +94,12 @@ export class AdminMemberList extends Component {
     total: PropTypes.number.isRequired,
     adminCount: PropTypes.number.isRequired,
 
+    category: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
 
     alert: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired,
     updateRole: PropTypes.func.isRequired,
     removeAll: PropTypes.func.isRequired,
@@ -83,6 +113,7 @@ export class AdminMemberList extends Component {
   }
 
   state = {
+    type: 'ALL',
     checks: {},
     checkAll: false,
     confirm: false,
@@ -117,6 +148,15 @@ export class AdminMemberList extends Component {
       checks: nextChecks,
       checkAll: this.isAllChecked(nextChecks),
     })
+  }
+
+  setListType = (type) => {
+    this.setState({
+      checks: {},
+      checkAll: false,
+      confirm: false,
+    })
+    this.props.setFilter({ category: type })
   }
 
   toggleAll = (checked) => {
@@ -174,9 +214,10 @@ export class AdminMemberList extends Component {
   }
 
   renderFilter () {
-    const { total, adminCount } = this.props
+    const { total, adminCount, category } = this.props
     return <div className={classes.toolbar}>
-      <TabBars className={classes.toolbars}>
+      <TabBars className={classes.toolbars}
+        value={category} onChange={this.setListType}>
         {this.renderFilterItem('ALL', total)}
         {this.renderFilterItem('ADMIN', adminCount)}
       </TabBars>
