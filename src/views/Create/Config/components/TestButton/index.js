@@ -107,8 +107,8 @@ export class TestButton extends Component {
     </span>
   }
 
-  renderError () {
-    const { i18n, message } = this.props
+  renderError (message) {
+    const { i18n } = this.props
     return <span className={`${classes.text} text-danger`}>
       <i className='icon icon-warning' />
       测试失败: {message}
@@ -118,9 +118,13 @@ export class TestButton extends Component {
     </span>
   }
 
+  renderNotFound () {
+
+  }
+
   renderStatus (status) {
-    if (status === 'ERROR') {
-      return this.renderError()
+    if (status === 'ERROR' || status === 'NOT_FOUND') {
+      return this.renderError(this.props.message || '未找到 .flow.yml 配置文件')
     }
     const { i18n } = this.props
     return <span className={classes.text}>
