@@ -7,6 +7,7 @@ import language from 'util/language'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { createSelector } from 'reselect'
 
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
@@ -17,6 +18,7 @@ import { actions as alertActions } from 'redux/modules/alert'
 import Loading from 'components/Loading'
 import Input from 'components/Form/Input'
 import Checkbox from 'components/Form/Checkbox'
+import { Confirm } from 'components/Modal'
 
 import {
   List,
@@ -34,20 +36,48 @@ import ActionBar from './actions'
 
 import classes from './members.scss'
 
+const includeIdsSelector = createSelector(
+  (member, permission, roleStr) => {
+    return member.get('list')
+  },
+  (member, permission, roleStr) => {
+    return member.get('data')
+  },
+  (member, permission, roleStr) => {
+    return permission
+  },
+  (member, permission, roleStr) => {
+    return roleStr
+  },
+  (list, data, mapping, roleStr) => {
+    return list.filter((id) => {
+      const m = data.get(id)
+      const email = m.get('email')
+      const roles = mapping.getIn([email, 'roles'])
+      return roles && roles.some((r) => r.get('name') === roleStr)
+    })
+  }
+)
+
 function mapStateToProps (state, props) {
-  const { member } = state
+  const { member, session, permission } = state
+  const cate = member.getIn(['ui', 'filter', 'category'], 'ALL')
   return {
     loaded: member.getIn(['ui', 'QUERY']) === STATUS.success,
-    list: member.get('list'),
+    currentEmail: session.getIn(['user', 'email']),
+    list: cate === 'ALL' ? member.get('list')
+      : includeIdsSelector(member, permission, cate),
     total: member.getIn(['ui', 'total'], 0),
     adminCount: member.getIn(['ui', 'adminCount'], 0),
     page: member.getIn(['ui', 'page'], 0),
+    category: cate,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    setFilter: actions.setFilter,
     updateRole: actions.updateRole,
     removeAll: actions.removeAll,
     freedAll: actions.freedAll,
@@ -59,14 +89,17 @@ function mapDispatchToProps (dispatch) {
 export class AdminMemberList extends Component {
   static propTypes = {
     loaded: PropTypes.bool,
+    currentEmail: PropTypes.string.isRequired,
     list: ImmutablePropTypes.iterable.isRequired,
     total: PropTypes.number.isRequired,
     adminCount: PropTypes.number.isRequired,
 
+    category: PropTypes.string.isRequired,
     page: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
 
     alert: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
     query: PropTypes.func.isRequired,
     updateRole: PropTypes.func.isRequired,
     removeAll: PropTypes.func.isRequired,
@@ -80,8 +113,10 @@ export class AdminMemberList extends Component {
   }
 
   state = {
+    type: 'ALL',
     checks: {},
     checkAll: false,
+    confirm: false,
   }
 
   componentDidMount () {
@@ -115,6 +150,15 @@ export class AdminMemberList extends Component {
     })
   }
 
+  setListType = (type) => {
+    this.setState({
+      checks: {},
+      checkAll: false,
+      confirm: false,
+    })
+    this.props.setFilter({ category: type })
+  }
+
   toggleAll = (checked) => {
     const { list } = this.props
 
@@ -126,8 +170,10 @@ export class AdminMemberList extends Component {
   }
 
   handleRemove = () => {
-    const { removeAll, alert } = this.props
+    this.closeRemoveConfirm()
+    const { removeAll, alert, currentEmail } = this.props
     const selected = this.getChecked()
+      .filter((email) => email !== currentEmail)
     if (selected.length) {
       this.setState({ checks: {}, checkAll: false })
       return removeAll(selected).then(() => {
@@ -147,6 +193,14 @@ export class AdminMemberList extends Component {
     }
   }
 
+  openRemoveConfirm = () => {
+    this.setState({ confirm: true })
+  }
+
+  closeRemoveConfirm = () => {
+    this.setState({ confirm: false })
+  }
+
   renderLoading () {
     return <div>
       <Loading />
@@ -160,9 +214,10 @@ export class AdminMemberList extends Component {
   }
 
   renderFilter () {
-    const { total, adminCount } = this.props
+    const { total, adminCount, category } = this.props
     return <div className={classes.toolbar}>
-      <TabBars className={classes.toolbars}>
+      <TabBars className={classes.toolbars}
+        value={category} onChange={this.setListType}>
         {this.renderFilterItem('ALL', total)}
         {this.renderFilterItem('ADMIN', adminCount)}
       </TabBars>
@@ -178,19 +233,19 @@ export class AdminMemberList extends Component {
     return <List className={classes.agents}>
       <ListHead>
         <ListRow>
-          <ListHeadCol>
+          <ListHeadCol className={classes.checkbox}>
             <Checkbox checked={checkAll} onChange={this.toggleAll} />
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.username}>
             {i18n('用户名')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.email}>
             {i18n('电子邮件')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.flows}>
             {i18n('Flow 授权')}
           </ListHeadCol>
-          <ListHeadCol>
+          <ListHeadCol className={classes.roles}>
             {i18n('角色')}
           </ListHeadCol>
         </ListRow>
@@ -204,13 +259,16 @@ export class AdminMemberList extends Component {
 
   render () {
     const { loaded, i18n } = this.props
+    const { confirm } = this.state
     return <div className={classes.container}>
       {loaded && this.renderFilter()}
       {loaded && <ActionBar i18n={i18n}
-        onRemove={this.handleRemove}
+        onRemove={this.openRemoveConfirm}
         onChangRole={this.handleChangeRole}
       />}
       {loaded ? this.rendrMembers() : this.renderLoading()}
+      <Confirm title='删除提示' isOpen={confirm}
+        onOk={this.handleRemove} onCancel={this.closeRemoveConfirm} />
     </div>
   }
 }

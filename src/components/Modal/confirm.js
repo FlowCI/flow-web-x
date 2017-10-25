@@ -24,18 +24,20 @@ export default class Confirm extends Component {
     children: PropTypes.node,
     classNames: PropTypes.object.isRequired,
 
+    cancelable: PropTypes.bool,
     onOk: PropTypes.func,
     onCancel: PropTypes.func,
   }
 
   static defaultProps = {
+    cancelable: true,
     classNames: defaultClassName,
   }
 
   render () {
     const {
       title, children,
-      classNames,
+      classNames, cancelable,
       onOk, onCancel
     } = this.props
     return <Wrapper {...this.props} modal onRequestClose={onCancel}>
@@ -44,9 +46,9 @@ export default class Confirm extends Component {
         {children}
       </div>}
       <div className={classNames.footer}>
-        <Button className='btn-default' onClick={onCancel}>
+        {cancelable && <Button className='btn-default' onClick={onCancel}>
           Cancel
-        </Button>
+        </Button>}
         <Button className='btn-primary' onClick={onOk}>
           Ok
         </Button>
