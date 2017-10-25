@@ -39,3 +39,9 @@ $height: 50px;
     border-left: 1px solid;
   }
 }
+.actions{
+  flex: 0 0 auto;
+  >button{
+    border-color: transparent;
+  }
+}
