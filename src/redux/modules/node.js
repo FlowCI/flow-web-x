@@ -89,7 +89,7 @@ export default handleActions({
     },
     success: function (state, { indicator, payload, status }) {
       const { jobId, nodeId } = indicator
-      const line = payload.split('\n').length
+      const line = (payload + '').split('\n').length
       return state.updateIn([jobId, 'log', nodeId], (old) => {
         return new Map({ line, str: payload })
       }).setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
