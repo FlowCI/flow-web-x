@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import { is } from 'util/nodeStatus'
+
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { actions } from 'redux/modules/job'
 
 import JobIcon from 'components/Icon/JobText'
-
+import Button from 'components/Button'
 import classes from './header.scss'
 
 function mapStateToProps (state, { jobId }) {
@@ -15,10 +20,35 @@ function mapStateToProps (state, { jobId }) {
   }
 }
 
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    stop: actions.stop,
+  }, dispatch)
+}
+
 export class JobStatusHeader extends Component {
   static propTypes = {
+    flowId: PropTypes.string.isRequired,
     job: ImmutablePropTypes.map.isRequired,
+    stop: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired
+  }
+
+  handleStop = () => {
+    const { stop, flowId, job } = this.props
+    return stop(flowId, job.get('number'))
+  }
+
+  renderActions () {
+    const { job } = this.props
+    const canStop = is.finish.not(job.get('status'))
+    if (canStop) {
+      return <div className={classes.actions}>
+        <Button className='btn-inverse' onClick={this.handleStop}>
+          停止构建
+        </Button>
+      </div>
+    }
   }
 
   render () {
@@ -38,8 +68,9 @@ export class JobStatusHeader extends Component {
           {i18n('buildDuration', { duration })}
         </li>}
       </ul>
+      {this.renderActions()}
     </div>
   }
 }
 
-export default connect(mapStateToProps)(JobStatusHeader)
+export default connect(mapStateToProps, mapDispatchToProps)(JobStatusHeader)
