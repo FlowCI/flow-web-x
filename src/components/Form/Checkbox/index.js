@@ -56,12 +56,15 @@ export default class Checkbox extends Component {
     readOnly && cls.push(classNames.readonly)
 
     let left = icon
+    let right
     if (leftLabel) {
       left = <span className={classNames.label}>{leftLabel}</span>
+    } else if (rightLabel) {
+      left = icon
+      right = <span className={classNames.label}>
+        {rightLabel}
+      </span>
     }
-    const right = left === icon ? <span className={classNames.label}>
-      {rightLabel}
-    </span> : icon
 
     return <label className={cls.join(' ')}>
       <input {...other} className='hide'
