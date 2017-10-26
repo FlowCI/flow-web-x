@@ -34,6 +34,7 @@ export class AdminMemberItem extends Component {
 
     email: PropTypes.string.isRequired,
     checked: PropTypes.bool,
+    removeable: PropTypes.bool,
     toggle: PropTypes.func.isRequired,
   }
 
@@ -43,10 +44,11 @@ export class AdminMemberItem extends Component {
   }
 
   render () {
-    const { checked, member, roles, flows } = this.props
+    const { removeable, checked, member, roles, flows } = this.props
     return <ListRow>
       <ListCol className={classes.checkbox}>
-        <Checkbox checked={checked} onChange={this.handleChange} />
+        {removeable ? <Checkbox checked={checked} onChange={this.handleChange} />
+        : <i className='icon icon-user' />}
       </ListCol>
       <ListCol className={classes.username}>
         {member.get('username')}
