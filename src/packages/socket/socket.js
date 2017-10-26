@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client'
 import { Stomp } from 'stompjs/lib/stomp'
 
+let accumulator = 0
 export default class SocketClient {
   constructor (url, headers) {
     this.wantSubscribe = []
@@ -26,7 +27,7 @@ export default class SocketClient {
    * @param {function} onMessage function ({ body (string): message }) {}
    */
   subscribe (...args) {
-    const randomId = new Date().getTime()
+    const randomId = `${new Date().getTime()}-${accumulator++}`
     this.wantSubscribe.push({ randomId, args })
     this.refresh()
     return {
