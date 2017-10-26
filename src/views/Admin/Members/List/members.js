@@ -62,14 +62,15 @@ const includeIdsSelector = createSelector(
 function mapStateToProps (state, props) {
   const { member, session, permission } = state
   const cate = member.getIn(['ui', 'filter', 'category'], 'ALL')
+  const list = member.get('list')
+  const admin = includeIdsSelector(member, permission, 'ADMIN')
   return {
     loaded: member.getIn(['ui', 'QUERY']) === STATUS.success,
     currentEmail: session.getIn(['user', 'email']),
-    list: cate === 'ALL' ? member.get('list')
-      : includeIdsSelector(member, permission, cate),
-    total: member.getIn(['ui', 'total'], 0),
-    adminCount: member.getIn(['ui', 'adminCount'], 0),
-    page: member.getIn(['ui', 'page'], 0),
+    list: cate === 'ALL' ? list : admin,
+    total: list.size,
+    adminCount: admin.size,
+    page: 0,
     category: cate,
   }
 }

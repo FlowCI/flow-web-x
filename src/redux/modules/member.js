@@ -113,11 +113,8 @@ export const actions = {
 export default handleActions({
   [types.query]: handleHttp('QUERY', {
     success: function (state, { indicator, payload }) {
-      const { total, adminCount, users } = payload
-      const { page } = indicator
-
-      // 如果是第一页,则直接替换 state
-      const s = page === 1 ? initialState : state
+      // 暂时不考虑分页
+      const { users } = payload
       const pureUsers = users.map((user) => {
         return {
           ...user,
@@ -125,9 +122,7 @@ export default handleActions({
           roles: undefined
         }
       })
-      return handlers.saveAll(s, { payload: pureUsers }).update('ui', (ui) => {
-        return ui.merge({ total, adminCount, page })
-      })
+      return handlers.saveAll(initialState, { payload: pureUsers })
     }
   }),
   // 目前先不接收返回的 member 对象
@@ -136,7 +131,6 @@ export default handleActions({
   [types.removeAll]: handleHttp('', {
     success: function (state, { indicator }) {
       const { emails } = indicator
-      // 待定，需要减去 ui 中 total 数
       return handlers.removeAll(state, { payload: emails })
     }
   }),
