@@ -8,7 +8,7 @@ const closeIcon = <i className='icon icon-cross' />
 export { classes }
 export default class Alert extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(['success', 'info', 'warning', 'failure']).isRequired,
+    type: PropTypes.oneOf(['success', 'info', 'warning', 'failure']),
     closable: PropTypes.bool,
     message: PropTypes.string.isRequired,
     showIcon: PropTypes.bool,
@@ -68,7 +68,8 @@ export default class Alert extends Component {
       showIcon,
     } = this.props
 
-    const cls = [classNames.alert, classNames[type]]
+    const cls = [classNames.alert]
+    type && cls.push(classNames[type])
     flat && cls.push(classNames.flat)
     className && cls.push(className)
 
