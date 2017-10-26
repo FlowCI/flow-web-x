@@ -8,9 +8,10 @@
 .alert{
   position: relative;
   border-radius: $alert-border-radius;
-  line-height: 20px;
+  line-height: 18px;
   padding: $alert-padding-vertical $alert-padding-horizontal;
   box-shadow: $alert-box-shadow;
+  border: 1px solid transparent;
   font-weight: bold;
 }
 .flat{
@@ -30,6 +31,7 @@
 }
 .warning{
   @include alert-color($alert-warning-color, $alert-warning-bgc);
+  border-color: $alert-warning-border;
 }
 .failure{
   @include alert-color($alert-failure-color, $alert-failure-bgc);
