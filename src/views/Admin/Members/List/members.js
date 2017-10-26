@@ -117,6 +117,7 @@ export class AdminMemberList extends Component {
     checks: {},
     checkAll: false,
     confirm: false,
+    search: '',
   }
 
   componentDidMount () {
@@ -130,8 +131,8 @@ export class AdminMemberList extends Component {
   }
 
   isAllChecked (checks) {
-    const { list } = this.props
-    return list.every((k) => !!checks[k])
+    const { list, currentEmail } = this.props
+    return list.every((k) => !!checks[k] || k === currentEmail)
   }
 
   getChecked () {
@@ -159,12 +160,20 @@ export class AdminMemberList extends Component {
     this.props.setFilter({ category: type })
   }
 
-  toggleAll = (checked) => {
+  getMemberIds () {
     const { list } = this.props
+    const { search } = this.state
+    return search ? list.filter((email) => email.includes(search)) : list
+  }
+
+  toggleAll = (checked) => {
+    const { list, currentEmail } = this.props
 
     const nextChecks = {}
     list.forEach((k) => {
-      nextChecks[k] = checked
+      if (k !== currentEmail) {
+        nextChecks[k] = checked
+      }
     })
     this.setState({ checks: nextChecks, checkAll: checked })
   }
@@ -193,8 +202,15 @@ export class AdminMemberList extends Component {
     }
   }
 
+  handleSearchChange = (v) => {
+    this.setState({ search: v })
+  }
+
   openRemoveConfirm = () => {
-    this.setState({ confirm: true })
+    const selected = this.getChecked()
+    if (selected.length) {
+      this.setState({ confirm: true })
+    }
   }
 
   closeRemoveConfirm = () => {
@@ -215,6 +231,7 @@ export class AdminMemberList extends Component {
 
   renderFilter () {
     const { total, adminCount, category } = this.props
+    const { search } = this.state
     return <div className={classes.toolbar}>
       <TabBars className={classes.toolbars}
         value={category} onChange={this.setListType}>
@@ -223,13 +240,15 @@ export class AdminMemberList extends Component {
       </TabBars>
       <Input className={classes.search} placeholder='搜索'
         leftIcon={<i className='icon icon-search2' />}
+        value={search} onChange={this.handleSearchChange}
       />
     </div>
   }
 
   rendrMembers () {
-    const { i18n, list } = this.props
+    const { i18n, currentEmail } = this.props
     const { checks, checkAll } = this.state
+    const list = this.getMemberIds()
     return <List className={classes.agents}>
       <ListHead>
         <ListRow>
@@ -252,7 +271,9 @@ export class AdminMemberList extends Component {
       </ListHead>
       <ListBody>
         {list.map((email) => <Member key={email} email={email}
-          checked={checks[email]} toggle={this.setChecked} />)}
+          checked={checks[email]} toggle={this.setChecked}
+          removeable={currentEmail !== email}
+        />)}
       </ListBody>
     </List>
   }
@@ -267,7 +288,7 @@ export class AdminMemberList extends Component {
         onChangRole={this.handleChangeRole}
       />}
       {loaded ? this.rendrMembers() : this.renderLoading()}
-      <Confirm title='删除提示' isOpen={confirm}
+      <Confirm title='确认删除?' isOpen={confirm}
         onOk={this.handleRemove} onCancel={this.closeRemoveConfirm} />
     </div>
   }

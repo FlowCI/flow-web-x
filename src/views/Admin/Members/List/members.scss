@@ -24,6 +24,10 @@
 .checkbox{
   width: 34px;
   padding: 0px;
+  text-align: center;
+  >:global(.icon-user) {
+    color: $color-muted;
+  }
 }
 .username{
   width: 100px;
