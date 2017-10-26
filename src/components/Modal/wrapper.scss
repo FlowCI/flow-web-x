@@ -1,4 +1,5 @@
 @import 'variables/zIndex';
+@import 'variables/base';
 
 .overlay{
   position: fixed;
@@ -28,6 +29,7 @@
 
   background-color: #fff;
   border-radius: 3px;
+  box-shadow: $base-boxshadow;
   transform: translateY(-64px);
   transition: transform ease-in-out .3s;
   &:focus{

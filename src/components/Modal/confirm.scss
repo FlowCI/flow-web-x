@@ -7,20 +7,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   font-size: 20px;
 }
 .body{
   flex: 1;
   overflow: auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .footer{
   flex: 0 0 auto;
-  padding: 10px;
+  padding: 20px;
   text-align: right;
   button + button {
-    margin-left: 5px;
+    margin-left: 10px;
   }
 }
