@@ -14,7 +14,7 @@ $height: 50px;
   height: $height;
   border-radius: $border-radius-base;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
-  margin-bottom: 2*$padding-base-horizontal;
+  margin-bottom: 1.5*$padding-base-horizontal;
   padding: 0px 1.5*$padding-base-horizontal;
   @include header-color($job-color-default); // default color
   &:global(.SUCCESS) {
