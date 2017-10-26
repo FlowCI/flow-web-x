@@ -36,7 +36,7 @@ export class CreateAgentForm extends Component {
           <tr>
             <td className={classes.name}>Zone:</td>
             <td>
-              <Input name='zone' />
+              <Input name='zone' readOnly />
             </td>
           </tr>
           <tr>
@@ -65,4 +65,7 @@ export class CreateAgentForm extends Component {
 export default reduxForm({
   validate,
   form: formName,
+  initialValues: {
+    zone: 'default'
+  }
 })(CreateAgentForm)

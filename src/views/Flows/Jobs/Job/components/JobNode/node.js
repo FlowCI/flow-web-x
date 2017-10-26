@@ -40,6 +40,11 @@ export default class JobNode extends Component {
           this.toggle(nextProps)
         }
       } else if (is.finish(ns)) {
+        if (is.success(ns)) {
+          // 自动关闭已经打开的成功日志
+          this.state.expended && this.toggle(nextProps)
+        }
+        // 获取完整日志，以防止推送日志不全
         const { getLog } = this.props
         getLog && getLog(nextNode)
       }
