@@ -27,7 +27,7 @@ export default class SocketClient {
    * @param {function} onMessage function ({ body (string): message }) {}
    */
   subscribe (...args) {
-    const randomId = `${new Date().getTime()}-${accumulator++}`
+    const randomId = `${accumulator++}`
     this.wantSubscribe.push({ randomId, args })
     this.refresh()
     return {
