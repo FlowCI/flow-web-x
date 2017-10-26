@@ -1,15 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import escapeHtml from 'util/escapeHtml'
+import colors from 'util/commandColor'
+
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 
 import classes from './node.scss'
 export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
   const show = !!log || !fetching
+  const h = !show ? '' : (log ? colors(escapeHtml(log)) : emptyText)
   return <code className={classes.code}>
     {!show && <Loading size={20} />}
-    {show && (log || emptyText)}
+    {show && <div dangerouslySetInnerHTML={{ __html: h }} />}
     {show && !!log && <Button className={`btn-primary hide ${classes.close}`}
       size='sm' useSpinner={false} onClick={onClose}
     >
