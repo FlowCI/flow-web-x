@@ -34,6 +34,7 @@ export default class SocketClient {
       unsubscribe: () => {
         const subscription = this.getSubScribed(randomId)
         subscription && subscription.unsubscribe()
+        this.subscribed[randomId] = undefined
       }
     }
   }
