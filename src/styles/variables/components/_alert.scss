@@ -16,4 +16,4 @@ $alert-failure-bgc: $color-danger!default;
 
 $alert-warning-color: $color-black!default;
 $alert-warning-bgc: #fffaeb!default;
-$alert-warning-border: #F8BA0B!default;
+$alert-warning-border: darken(#fffaeb, 20%)!default;
