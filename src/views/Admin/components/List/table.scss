@@ -18,6 +18,7 @@
 }
 .tr{
   border-bottom: 1px solid $admin-list-divier-color;
+  vertical-align: baseline;
 }
 .td{
   line-height: ($admin-item-height - 2*$admin-item-vertical-padding);
