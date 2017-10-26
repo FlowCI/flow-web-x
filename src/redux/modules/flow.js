@@ -10,6 +10,7 @@ import { defaultInitState, handlers } from 'redux/handler'
 
 import Types from './flowType'
 import JobTypes from './jobType'
+import { actions as jobActions } from './job'
 
 const initialState = defaultInitState.set('status', new Map())
 
@@ -151,10 +152,17 @@ export const actions = {
    * see getCreateEnv params
    */
   doneCreate: function (flowId, params) {
-    return actions.updateEnv(flowId, {
-      FLOW_STATUS: 'READY',
-      ...getCreateEnv(params)
-    })
+    return function (dispatch) {
+      const p = dispatch(actions.updateEnv(flowId, {
+        FLOW_STATUS: 'READY',
+        ...getCreateEnv(params)
+      }))
+      p.then(() => {
+        // 创建成功后自动创建 job
+        dispatch(jobActions.create(flowId, 'master'))
+      })
+      return p
+    }
   },
   doCreateTest: function (flowId, params) {
     return async function (dispatch) {
