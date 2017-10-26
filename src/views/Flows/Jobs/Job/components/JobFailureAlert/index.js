@@ -26,7 +26,7 @@ export class JobFailureResult extends Component {
     }
     const message = `失败原因：${result}`
     return <Alert className={classes.alert} message={message}
-      closable={false} type='failure' />
+      closable={false} flat type='warning' />
   }
 }
 export default connect(mapStateToProps)(JobFailureResult)
