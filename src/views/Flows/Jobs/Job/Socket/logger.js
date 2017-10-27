@@ -35,7 +35,11 @@ export class JobLogSubscriber extends Component {
   handleMessage = ({ body }) => {
     const { node, onMessage } = this.props
     try {
-      const obj = JSON.parse(body)
+      // 由于特殊字符及后端推送 context-type 为 text，所以此处为 # 隔断
+      const index = body.indexOf('#')
+      const number = parseInt(body.substr(0, index))
+      const content = body.substr(index + 1)
+      const obj = { number, content }
       return onMessage(node, obj)
     } catch (e) {}
   }
