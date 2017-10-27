@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import escapeHtml from 'util/escapeHtml'
-import colors from 'util/commandColor'
+import ansiHTML from 'ansi-html'
 
 import Button from 'components/Button'
 import Loading from 'components/Loading'
@@ -10,7 +10,7 @@ import Loading from 'components/Loading'
 import classes from './node.scss'
 export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
   const show = !!log || !fetching
-  const h = !show ? '' : (log ? colors(escapeHtml(log)) : emptyText)
+  const h = !show ? '' : (log ? ansiHTML(escapeHtml(log)) : emptyText)
   return <code className={classes.code}>
     {!show && <Loading size={20} />}
     {show && <div dangerouslySetInnerHTML={{ __html: h }} />}

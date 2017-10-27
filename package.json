@@ -23,6 +23,7 @@
   },
   "homepage": "https://flow.ci",
   "dependencies": {
+    "ansi-html": "^0.0.7",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "clipboard": "^1.7.1",
