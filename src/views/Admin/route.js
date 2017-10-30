@@ -1,7 +1,7 @@
 import Component from './index'
 
 import AgentsRoute from './Agents/route'
-import s from './Credentials/route'
+import CredentialsRoute from './Credentials/route'
 import FlowsRoute from './Flows/route'
 import MembersRoute from './Members/route'
 import NotifyRoute from './Notify/route'
@@ -12,11 +12,11 @@ export const createRoutes = (store) => ({
   component: Component,
   indexRoute: { onEnter: (nextState, replace) => replace('/admin/plugins') },
   childRoutes: [{
-    path: 'plugins',
-    icon: 'icon-jigsaw',
-    text: 'Plugin',
+    path: 'flows',
+    icon: 'icon-branches',
+    text: 'Flow',
     navbar: true,
-    ...PluginsRoute(store),
+    ...FlowsRoute(store),
   }, {
     path: 'members',
     icon: 'icon-users',
@@ -30,17 +30,17 @@ export const createRoutes = (store) => ({
     navbar: true,
     ...AgentsRoute(store),
   }, {
-    path: 'flows',
-    icon: 'icon-branches',
-    text: 'Flow',
-    navbar: true,
-    ...FlowsRoute(store),
-  }, {
     path: 'credentials',
     icon: 'icon-bookmark',
     text: 'Credentials',
     navbar: true,
-    ...s(store),
+    ...CredentialsRoute(store),
+  }, {
+    path: 'notify',
+    icon: 'icon-notification',
+    text: 'Notify',
+    navbar: true,
+    ...NotifyRoute(store),
   }, {
     path: 'system',
     icon: 'icon-warning',
@@ -48,11 +48,11 @@ export const createRoutes = (store) => ({
     navbar: true,
     ...SystemRoute(store),
   }, {
-    path: 'notify',
-    icon: 'icon-notification',
-    text: 'Notify',
+    path: 'plugins',
+    icon: 'icon-jigsaw',
+    text: 'Plugin',
     navbar: true,
-    ...NotifyRoute(store),
+    ...PluginsRoute(store),
   }]
 })
 
