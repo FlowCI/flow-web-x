@@ -37,6 +37,7 @@ export class CreateCredentialForm extends Component {
     invalid: PropTypes.bool,
     submitting: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
   }
 
   getChildComponent () {
@@ -50,7 +51,7 @@ export class CreateCredentialForm extends Component {
   }
 
   render () {
-    const { handleSubmit, invalid, submitting } = this.props
+    const { handleSubmit, invalid, submitting, i18n } = this.props
     return <form className={classes.form} onSubmit={handleSubmit}>
       <table>
         <thead>
@@ -58,7 +59,8 @@ export class CreateCredentialForm extends Component {
             <th className={classes.name}>类型</th>
             <th>
               <Select name='type'>
-                {enumTypes.map((t) => <Option key={t} value={t} title={t} />)}
+                {enumTypes.map((t) => <Option key={t} value={t}
+                  title={i18n(`${t}.title`)} />)}
               </Select>
             </th>
           </tr>

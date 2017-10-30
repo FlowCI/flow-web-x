@@ -5,10 +5,16 @@ export default {
       title: 'RSA 证书 (:count)',
     },
     iosCert: {
-      title: 'IOS 证书 (:count)',
+      title: 'iOS 证书 (:count)',
     },
   },
   create: {
     title: '添加 Credential',
+    IOS: {
+      title: 'iOS'
+    },
+    RSA: {
+      title: 'RSA'
+    }
   },
 }
