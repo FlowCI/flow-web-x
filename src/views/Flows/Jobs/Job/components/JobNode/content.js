@@ -2,12 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import escapeHtml from 'util/escapeHtml'
-import ansiHTML from 'ansi-html'
+import ansiHTMLFactory from 'ansiToHtml'
 
 import Button from 'components/Button'
 import Loading from 'components/Loading'
 
 import classes from './node.scss'
+
+const ansiHTML = ansiHTMLFactory()
+
 export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
   const show = !!log || !fetching
   const h = !show ? '' : (log ? ansiHTML(escapeHtml(log)) : emptyText)
