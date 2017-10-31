@@ -37,7 +37,7 @@ export default function ({ dispatch, getState }) {
     const result = next(nextAction)
     if (injectAccessToken && is.promise(result)) {
       result.catch(function (e) {
-        if (e && e.status === 401) {
+        if (e && e.response && e.response.status === 401) {
           dispatch({ type: INVALID })
         }
       })
