@@ -1,4 +1,6 @@
 import Container from './index'
+import Build from './Build'
+
 export default function (store) {
   return {
     component: Container,
@@ -13,6 +15,7 @@ export default function (store) {
     },
     childRoutes: [{
       path: 'build',
+      component: Build,
       navbar: true,
       text: 'Build',
     }, {

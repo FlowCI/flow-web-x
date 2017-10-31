@@ -37,6 +37,7 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowSettingsContainer extends Component {
   static propTypes = {
+    children: PropTypes.node,
     menus: PropTypes.array.isRequired,
     flowId: PropTypes.string.isRequired,
 
@@ -72,7 +73,7 @@ export class FlowSettingsContainer extends Component {
   }
 
   render () {
-    const { menus, i18n } = this.props
+    const { menus, i18n, children } = this.props
     const { base } = this.state
     return <div className={classes.container}>
       <Tabs>
@@ -81,6 +82,7 @@ export class FlowSettingsContainer extends Component {
           i18n={i18n.createChild('navbar')}
         />)}
       </Tabs>
+      {children}
     </div>
   }
 }

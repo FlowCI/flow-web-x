@@ -1,0 +1,10 @@
+@import 'variables/colors';
+.build{
+  margin-bottom: -1px;
+  h4{
+    color: $color-black;
+  }
+  small{
+    color: $color-muted;
+  }
+}
