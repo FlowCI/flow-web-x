@@ -28,9 +28,9 @@ export function getCircleStyle (props) {
 
 export default class Loading extends Component {
   static propTypes = {
-    className: PropTypes.string,
-    color: PropTypes.string,
-    size: PropTypes.number
+    className: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    color: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+    size: PropTypes.number // eslint-disable-line react/no-unused-prop-types
   };
 
   static defaultProps = {
