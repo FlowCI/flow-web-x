@@ -11,7 +11,7 @@ import classes from './navbar.scss'
 function mapStateToProps (state, props) {
   const { session, ui } = state
   return {
-    authored: session.has('user'),
+    authored: !!session.get('user'),
     avatar: session.getIn(['user', 'avatar']),
     backUrl: ui.get('backUrl'),
   }
@@ -33,7 +33,7 @@ export class PageLayoutNavbar extends PureComponent {
     */
     backUrl: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 
-    locatonKey: PropTypes.any,
+    locationKey: PropTypes.any,
 
     i18n: PropTypes.func.isRequired,
   }
@@ -45,7 +45,7 @@ export class PageLayoutNavbar extends PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.locatonKey !== nextProps.locatonKey) {
+    if (this.props.locationKey !== nextProps.locationKey) {
       this.setState({ openFlows: false, openAgents: false, openMenus: false })
     }
   }
