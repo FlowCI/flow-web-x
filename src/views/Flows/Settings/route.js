@@ -1,5 +1,7 @@
+import Container from './index'
 export default function (store) {
   return {
+    component: Container,
     indexRoute: {
       onEnter: (nextState, replace) => {
         const { location } = nextState
@@ -11,8 +13,12 @@ export default function (store) {
     },
     childRoutes: [{
       path: 'build',
+      navbar: true,
+      text: 'Build',
     }, {
-      path: 'envs'
+      path: 'envs',
+      navbar: true,
+      text: 'Envs',
     }]
   }
 }
