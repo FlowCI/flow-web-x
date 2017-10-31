@@ -10,7 +10,7 @@ import SystemRoute from './System/route'
 
 export const createRoutes = (store) => ({
   component: Component,
-  indexRoute: { onEnter: (nextState, replace) => replace('/admin/plugins') },
+  indexRoute: { onEnter: (nextState, replace) => replace('/admin/flows') },
   childRoutes: [{
     path: 'flows',
     icon: 'icon-branches',
