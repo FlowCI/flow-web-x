@@ -42,5 +42,9 @@ export default handleActions({
   }),
   [Types.signOut]: function (state) {
     return initialState
+  },
+  // dispatch from header middleware
+  'ACCESSTOKEN/INVALID': function (state) {
+    return initialState
   }
 }, initialState)
