@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { Input } from 'components/Form/reduxForm'
 
@@ -14,7 +14,7 @@ export function validate (values) {
 }
 export default class CreateRsa extends Component {
   static propTypes = {
-    i18n: PropTypes.func,
+    // i18n: PropTypes.func,
   }
 
   render () {

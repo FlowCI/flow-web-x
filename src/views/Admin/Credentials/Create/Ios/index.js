@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { FieldArray } from 'redux-form'
 
@@ -19,7 +19,7 @@ export function validate (values) {
 
 export default class CreateIosCredential extends Component {
   static propTypes = {
-    i18n: PropTypes.func,
+    // i18n: PropTypes.func,
   }
 
   render () {
