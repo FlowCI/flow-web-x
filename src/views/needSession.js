@@ -12,8 +12,8 @@ import Loading from 'components/Loading'
 function mapStateToProps (state) {
   const { session } = state
   return {
-    authored: session.has('user'),
-    authoring: session.has('token'),
+    authored: !!session.get('user'),
+    authoring: !!session.get('token'),
   }
 }
 
