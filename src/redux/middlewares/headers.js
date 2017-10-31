@@ -23,9 +23,10 @@ export default function ({ dispatch, getState }) {
       library: 'web'
     }
 
-    const { accessToken } = getState()
-    if (accessToken) {
-      headers.accessToken = accessToken
+    const { session } = getState()
+    const token = session.get('token')
+    if (token) {
+      headers['X-Authorization'] = token
       injectAccessToken = true
     }
     const nextAction = {

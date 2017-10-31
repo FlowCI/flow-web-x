@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { STATUS } from 'redux-http'
-
 import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/flow'
 
@@ -15,7 +13,7 @@ function mapStateToProps (state) {
   const { session } = state
   return {
     authored: session.has('user'),
-    authoring: session.getIn(['ui', 'SIGNIN']) === STATUS.send,
+    authoring: session.has('token'),
   }
 }
 

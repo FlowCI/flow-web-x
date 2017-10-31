@@ -2,23 +2,26 @@ import { handleActions } from 'redux-actions'
 import { handleHttp } from '../util'
 import Types from './sessionType'
 import { fromJS } from 'immutable'
+import Storge from 'util/storge'
 
 const initialState = fromJS({
-  user: {
-    name: 'admin',
-    email: 'admin@flow.ci',
-    avatar: 'https://avatars0.githubusercontent.com/u/5201638'
-  },
+  token: Storge.get('token'),
   ui: {},
 })
 
 export const actions = {
   signIn: function (user) {
     return {
-      url: '/login',
+      url: '/user/login',
       method: 'post',
       params: user,
       name: Types.signIn,
+    }
+  },
+  getUser: function () {
+    return {
+      url: '/user/show',
+      name: Types.getUser,
     }
   },
   signOut: function () { return { type: Types.signOut } },
@@ -26,6 +29,13 @@ export const actions = {
 
 export default handleActions({
   [Types.signIn]: handleHttp('SIGNIN', {
+    success: function (state, { payload }) {
+      const { token, user } = payload
+      Storge.set('token', token)
+      return state.set('user', user).set('token', token)
+    },
+  }),
+  [Types.getUser]: handleHttp('SIGNIN', {
     success: function (state, { payload }) {
       return state.set('user', payload)
     },

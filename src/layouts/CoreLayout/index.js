@@ -1,12 +1,37 @@
 import React, { Component } from 'react'
-import { node } from 'prop-types'
+import { node, string, func } from 'prop-types'
 
 import AlertControl from '../components/AlertControl'
 import Socket from './Socket'
 
-export default class CoreLayout extends Component {
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { actions } from 'redux/modules/session'
+
+function mapStateToProps (state) {
+  const { session } = state
+  return {
+    token: session.get('token'),
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    getUser: actions.getUser,
+  }, dispatch)
+}
+
+export class CoreLayout extends Component {
   static propTypes = {
     children: node.isRequired,
+    token: string,
+    getUser: func.isRequired,
+  }
+
+  componentDidMount () {
+    const { token, getUser } = this.props
+    token && getUser(token)
   }
 
   render () {
@@ -19,3 +44,4 @@ export default class CoreLayout extends Component {
     </div>
   }
 }
+export default connect(mapStateToProps, mapDispatchToProps)(CoreLayout)
