@@ -4,7 +4,7 @@ export const INVALID = 'ACCESSTOKEN/INVALID' // maybe import form type
 
 function isRelative (url) {
   // must begin with /
-  return /^\/\w+/.test(url)
+  return !/^(http:|https:|\/\/)/.test(url)
 }
 
 export default function ({ dispatch, getState }) {
