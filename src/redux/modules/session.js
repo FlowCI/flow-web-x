@@ -9,10 +9,10 @@ const su = Storge.get('user')
 
 const validStorge = st && su
 const initialState = fromJS({
-  token: validStorge ? st : undefined,
-  user: validStorge ? su : undefined,
   ui: {},
 })
+const nState = initialState.set('token', fromJS(validStorge ? st : undefined))
+  .set('user', fromJS(validStorge ? su : undefined))
 
 export const actions = {
   signIn: function (user) {
@@ -42,4 +42,4 @@ export default handleActions({
   'ACCESSTOKEN/INVALID': function (state) {
     return initialState
   }
-}, initialState)
+}, nState)
