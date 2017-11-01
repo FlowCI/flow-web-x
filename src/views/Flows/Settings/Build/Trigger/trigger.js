@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import RadioPanel from './components/RadioPanel'
-import Panel from './components/Panel'
-
-import classes from './trigger.scss'
+import RadioPanel from '../components/RadioPanel'
+import Panel from '../components/Panel'
+import Header from '../components/Header'
 
 function mapStateToProps (state, props) {
   const { flowId } = props
@@ -52,14 +51,9 @@ export class FlowTriggerSetting extends Component {
     const { i18n } = this.props
     const { push, tag, pr } = this.state
     return <section>
-      <div className={classes.panel}>
-        <h4>
-          {i18n('触发器')}
-        </h4>
-        <small>
-          {i18n('当代码仓库收到提交请求时，flow.ci将自动触发构建   查看帮助文档')}
-        </small>
-      </div>
+      <Header title={i18n('触发器')}
+        subTitle={i18n('当代码仓库收到提交请求时，flow.ci将自动触发构建   查看帮助文档')}
+      />
       <RadioPanel title='Git Push' enabled={push}
         onToggle={this.handlePushToggle} />
       <RadioPanel title='Git Tag' enabled={tag}

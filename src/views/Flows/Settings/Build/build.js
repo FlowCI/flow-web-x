@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Trigger from './trigger'
-
+import Trigger from './Trigger'
+import Shedules from './Shedules'
 import classes from './build.scss'
 
 export default class FlowBuildSetting extends Component {
@@ -21,6 +21,7 @@ export default class FlowBuildSetting extends Component {
     const { params: { flowId }, i18n } = this.props
     return <div className={classes.build}>
       <Trigger flowId={flowId} i18n={i18n} />
+      <Shedules flowId={flowId} i18n={i18n} />
     </div>
   }
 }
