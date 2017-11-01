@@ -3,6 +3,6 @@
 export default {
   navbar: {
     Build: '构建设置',
-    Envs: '编译环境',
+    Envs: '环境变量',
   }
 }
