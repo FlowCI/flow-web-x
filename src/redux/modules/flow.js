@@ -148,6 +148,18 @@ export const actions = {
       transformResponse,
     }
   },
+  removeEnv: function (flowId, envNames) {
+    return {
+      url: `/flows/${flowId}/env`,
+      name: Types.updateEnv,
+      method: 'delete',
+      data: envNames,
+      indicator: {
+        id: flowId,
+      },
+      transformResponse,
+    }
+  },
   /**
    * see getCreateEnv params
    */
