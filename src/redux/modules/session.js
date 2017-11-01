@@ -36,10 +36,14 @@ export default handleActions({
     },
   }),
   [Types.signOut]: function (state) {
+    Storge.clear('token')
+    Storge.clear('user')
     return initialState
   },
   // dispatch from header middleware
   'ACCESSTOKEN/INVALID': function (state) {
+    Storge.clear('token')
+    Storge.clear('user')
     return initialState
   }
 }, nState)

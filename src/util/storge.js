@@ -22,7 +22,11 @@ function get (name, options) {
   return value
 }
 
+function clear (name, options) {
+  set(name, '', options)
+}
 export default {
   get,
   set,
+  clear
 }
