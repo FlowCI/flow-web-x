@@ -19,7 +19,7 @@ function mapStateToProps (state, props) {
   const { session } = state
   const { location } = props
   return {
-    unauthored: !session.has('user'),
+    unauthored: !session.get('user'),
     email: location.query.email,
   }
 }

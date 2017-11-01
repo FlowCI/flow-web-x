@@ -4,8 +4,13 @@ import Types from './sessionType'
 import { fromJS } from 'immutable'
 import Storge from 'util/storge'
 
+const st = Storge.get('token')
+const su = Storge.get('user')
+
+const validStorge = st && su
 const initialState = fromJS({
-  token: Storge.get('token'),
+  token: validStorge ? st : undefined,
+  user: validStorge ? su : undefined,
   ui: {},
 })
 
@@ -18,12 +23,6 @@ export const actions = {
       name: Types.signIn,
     }
   },
-  getUser: function () {
-    return {
-      url: '/user/show',
-      name: Types.getUser,
-    }
-  },
   signOut: function () { return { type: Types.signOut } },
 }
 
@@ -32,12 +31,8 @@ export default handleActions({
     success: function (state, { payload }) {
       const { token, user } = payload
       Storge.set('token', token)
+      Storge.set('user', user)
       return state.set('user', user).set('token', token)
-    },
-  }),
-  [Types.getUser]: handleHttp('SIGNIN', {
-    success: function (state, { payload }) {
-      return state.set('user', payload)
     },
   }),
   [Types.signOut]: function (state) {
