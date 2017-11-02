@@ -17,7 +17,7 @@ $tab-active-border-width: 3px;
   border-bottom: $tab-active-border-width solid transparent;
   border-right: 1px solid $color-hr;
   margin-bottom: -1px;
-  &:hover{
+  &:hover, &:focus{
     color: $color-black;
   }
 }
