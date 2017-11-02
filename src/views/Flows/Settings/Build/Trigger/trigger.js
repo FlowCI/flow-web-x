@@ -19,8 +19,8 @@ const triggerSelector = createSelector(
       prEnable: flow.get('prEnable'),
       pushEnable: flow.get('pushEnable'),
       tagEnable: flow.get('tagEnable'),
-      tagFilter: flow.get('tagFilter'),
-      branchFilter: flow.get('branchFilter'),
+      tagFilter: flow.get('tagFilter') || [],
+      branchFilter: flow.get('branchFilter') || [],
     }
   }
 )
