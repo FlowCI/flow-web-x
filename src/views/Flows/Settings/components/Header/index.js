@@ -5,7 +5,7 @@ import classes from './header.scss'
 export default class FlowBuildSettingHeader extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
-    subTitle: PropTypes.string
+    subTitle: PropTypes.node,
   }
 
   render () {

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
+import Header from '../../components/Header'
 import RadioPanel from '../components/RadioPanel'
 import Panel from '../components/Panel'
-import Header from '../components/Header'
 
 function mapStateToProps (state, props) {
   const { flowId } = props
