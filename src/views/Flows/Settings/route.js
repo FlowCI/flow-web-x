@@ -1,6 +1,7 @@
 import Container from './index'
 import Build from './Build'
 import Envs from './Envs'
+import Yml from './Yml'
 
 export default function (store) {
   return {
@@ -24,6 +25,11 @@ export default function (store) {
       component: Envs,
       navbar: true,
       text: 'Envs',
+    }, {
+      path: 'yml',
+      component: Yml,
+      navbar: true,
+      text: 'Yml',
     }]
   }
 }
