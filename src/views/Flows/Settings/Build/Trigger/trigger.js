@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
 
+import { actions } from 'redux/modules/flow'
+
 import Header from '../../components/Header'
 import RadioPanel from '../components/RadioPanel'
 import Panel from '../components/Panel'
@@ -33,12 +35,13 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    update: function () {}
+    update: actions.setTrigger,
   }, dispatch)
 }
 
 export class FlowTriggerSetting extends Component {
   static propTypes = {
+    flowId: PropTypes.string.isRequired,
     trigger: PropTypes.shape({
       prEnable: PropTypes.bool.isRequired,
       pushEnable: PropTypes.bool.isRequired,
@@ -46,6 +49,7 @@ export class FlowTriggerSetting extends Component {
       tagFilter: ImmutablePropTypes.list.isRequired,
       branchFilter: ImmutablePropTypes.list.isRequired,
     }).isRequired,
+    update: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -90,23 +94,31 @@ export class FlowTriggerSetting extends Component {
   }
 
   handlePushToggle = (c) => {
-    this.setState({ pushEnable: c })
+    this.saveValue({ pushEnable: c })
   }
 
   handleTagToggle = (c) => {
-    this.setState({ tagEnable: c })
+    this.saveValue({ tagEnable: c })
   }
 
   handlePrToggle = (c) => {
-    this.setState({ prEnable: c })
+    this.saveValue({ prEnable: c })
   }
 
   handleSaveBranch = (s) => {
-    console.log(s)
+    this.saveValue({ branchFilter: s })
   }
 
   handleSaveTag = (s) => {
-    console.log(s)
+    this.saveValue({ tagFilter: s })
+  }
+
+  saveValue (obj) {
+    this.setState(obj, () => {
+      const values = this.getStateValue()
+      const { update, flowId } = this.props
+      update(flowId, values)
+    })
   }
 
   render () {
@@ -123,7 +135,8 @@ export class FlowTriggerSetting extends Component {
         enabled={pushEnable}
         onToggle={this.handlePushToggle}
         filter={branchFilter}
-        onSave={this.handleSaveBranch} />
+        onSave={this.handleSaveBranch}
+        defaultFilter={['master', 'develop', 'feature*'].join('\n')} />
       <RadioPanel title='Git Tag'
         enabled={tagEnable}
         onToggle={this.handleTagToggle}

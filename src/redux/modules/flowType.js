@@ -8,6 +8,8 @@ export default {
   loadYml: 'FLOW_LOAD_YML',
   pollingEnv: 'FLOW_POLLING_ENV',
 
+  updateTrigger: 'FLOW_TRIGGER_UPDATE',
+
   freed: 'FLOW_FREED',
   freedAll: 'FLOW_FREED_ALL',
 

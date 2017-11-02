@@ -11,7 +11,12 @@ export default class FlowBuildSettingRadioPanel extends Component {
   static propTypes = {
     enabled: PropTypes.bool,
     filter: PropTypes.string,
+    defaultFilter: PropTypes.string,
     onSave: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    defaultFilter: '*',
   }
 
   state = {
@@ -29,10 +34,8 @@ export default class FlowBuildSettingRadioPanel extends Component {
     const all = value === '*'
     this.setState({
       radioValue: value,
-      filter: all ? '*' : this.props.filter
-    }, () => {
-      all && this.handleSave()
-    })
+      filter: all ? '*' : this.props.defaultFilter,
+    }, this.handleSave)
   }
 
   handleFilterChange = (e) => {

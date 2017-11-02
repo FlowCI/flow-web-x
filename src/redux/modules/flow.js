@@ -184,6 +184,18 @@ export const actions = {
   },
   getTestResult: pollingTestResult,
 
+  setTrigger: function (flowId, trigger) {
+    return {
+      url: '/flows/:flowName/trigger',
+      method: 'post',
+      name: Types.updateTrigger,
+      params: {
+        flowName: flowId,
+        ...trigger,
+      },
+      transformResponse,
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.setFilter,
@@ -229,6 +241,9 @@ export default handleActions({
     },
   }),
 
+  [Types.updateTrigger]: handleHttpActions({
+    success: handlers.saveData,
+  }),
   // UI
   [Types.setFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
