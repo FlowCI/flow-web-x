@@ -20,7 +20,7 @@ export function validate (values) {
 export class FlowEnvForm extends Component {
   static propTypes = {
     className: PropTypes.string,
-    handleSubmit: PropTypes.func.isRequired,
+    // handleSubmit: PropTypes.func.isRequired,
   }
 
   render () {
