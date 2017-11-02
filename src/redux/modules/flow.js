@@ -12,7 +12,14 @@ import Types from './flowType'
 import JobTypes from './jobType'
 import { actions as jobActions } from './job'
 
+/**
+ * {
+ *   status: { flowId: 'string' },
+ *    yml: { flowId: 'string' },
+ * }
+ */
 const initialState = defaultInitState.set('status', new Map())
+  .set('yml', new Map())
 
 /**
  * 后端以 name 为 flow 的唯一标识，为统一将 name 值转至 id 字段
@@ -196,6 +203,19 @@ export const actions = {
       transformResponse,
     }
   },
+
+  getYml: function (flowId) {
+    return {
+      url: '/flows/:flowName/yml',
+      params: {
+        flowName: flowId,
+      },
+      name: Types.getYml,
+      indicator: {
+        flowId,
+      }
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.setFilter,
@@ -243,6 +263,12 @@ export default handleActions({
 
   [Types.updateTrigger]: handleHttpActions({
     success: handlers.saveData,
+  }),
+  [Types.getYml]: handleHttpActions({
+    success: function (state, { indicator, payload }) {
+      const { flowId } = indicator
+      return state.setIn(['yml', flowId], payload || '')
+    }
   }),
   // UI
   [Types.setFilter]: function (state, { payload }) {

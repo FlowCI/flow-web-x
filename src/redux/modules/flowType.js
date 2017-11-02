@@ -9,6 +9,7 @@ export default {
   pollingEnv: 'FLOW_POLLING_ENV',
 
   updateTrigger: 'FLOW_TRIGGER_UPDATE',
+  getYml: 'FLOW_GET_YML',
 
   freed: 'FLOW_FREED',
   freedAll: 'FLOW_FREED_ALL',
