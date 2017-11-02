@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { Map } from 'immutable'
@@ -29,9 +29,9 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowEnvsSetting extends Component {
   static propTypes = {
-    flowId: PropTypes.string.isRequired,
+    // flowId: PropTypes.string.isRequired,
     envs: ImmutablePropTypes.map.isRequired,
-    update: PropTypes.func.isRequired,
+    // update: PropTypes.func.isRequired,
 
   }
 
