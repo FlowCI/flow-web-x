@@ -29,6 +29,7 @@
   color: $toggle-color;
   cursor: pointer;
   top: 0px;
+  user-select: none;
   @include toggle-size($control-base-size, $font-size-base);
 }
 .circle{
