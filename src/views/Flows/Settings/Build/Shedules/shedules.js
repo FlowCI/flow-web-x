@@ -53,7 +53,7 @@ export class FlowShedulesSetting extends Component {
     queryBranches: PropTypes.func.isRequired,
     updateEnv: PropTypes.func.isRequired,
     removeEnv: PropTypes.func.isRequired,
-    i18n: PropTypes.func.isRequired,
+    // i18n: PropTypes.func.isRequired,
   }
 
   state = {
