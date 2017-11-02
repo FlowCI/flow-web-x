@@ -1,5 +1,6 @@
 import Container from './index'
 import Build from './Build'
+import Envs from './Envs'
 
 export default function (store) {
   return {
@@ -20,6 +21,7 @@ export default function (store) {
       text: 'Build',
     }, {
       path: 'envs',
+      component: Envs,
       navbar: true,
       text: 'Envs',
     }]
