@@ -21,10 +21,12 @@ const navbarSelectors = createSelector(
 
 function mapStateToProps (state, props) {
   const navbars = navbarSelectors(props)
+  const { flow } = state
   const { params: { flowId } } = props
   return {
     menus: navbars,
     flowId,
+    loaded: !!flow.getIn(['data', flowId]),
   }
 }
 
@@ -40,6 +42,7 @@ export class FlowSettingsContainer extends Component {
     children: PropTypes.node,
     menus: PropTypes.array.isRequired,
     flowId: PropTypes.string.isRequired,
+    loaded: PropTypes.bool.isRequired,
 
     setBackUrl: PropTypes.func.isRequired,
     freedBackUrl: PropTypes.func.isRequired,
@@ -73,7 +76,7 @@ export class FlowSettingsContainer extends Component {
   }
 
   render () {
-    const { menus, i18n, children } = this.props
+    const { loaded, menus, i18n, children } = this.props
     const { base } = this.state
     return <div className={classes.container}>
       <Tabs>
@@ -82,7 +85,7 @@ export class FlowSettingsContainer extends Component {
           i18n={i18n.createChild('navbar')}
         />)}
       </Tabs>
-      {children}
+      {loaded && children}
     </div>
   }
 }
