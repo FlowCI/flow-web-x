@@ -216,6 +216,17 @@ export const actions = {
       }
     }
   },
+  saveYml: function (flowId, ymlStr) {
+    return {
+      url: `/flows/${flowId}/yml`,
+      method: 'post',
+      data: ymlStr,
+      name: Types.saveYml,
+      indicator: {
+        flowId,
+      }
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.setFilter,
@@ -265,6 +276,12 @@ export default handleActions({
     success: handlers.saveData,
   }),
   [Types.getYml]: handleHttpActions({
+    success: function (state, { indicator, payload }) {
+      const { flowId } = indicator
+      return state.setIn(['yml', flowId], payload || '')
+    }
+  }),
+  [Types.saveYml]: handleHttpActions({
     success: function (state, { indicator, payload }) {
       const { flowId } = indicator
       return state.setIn(['yml', flowId], payload || '')

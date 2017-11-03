@@ -10,6 +10,7 @@ export default {
 
   updateTrigger: 'FLOW_TRIGGER_UPDATE',
   getYml: 'FLOW_GET_YML',
+  saveYml: 'FLOW_SAVE_YML',
 
   freed: 'FLOW_FREED',
   freedAll: 'FLOW_FREED_ALL',
