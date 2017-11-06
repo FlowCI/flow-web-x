@@ -1,4 +1,5 @@
-@import "./variables";
+@import "variables";
+
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'flowci' !important;
@@ -11,6 +12,12 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-social-github {
+  &:before {
+    content: $icon-social-github;
+  }
 }
 
 .icon-pencil {

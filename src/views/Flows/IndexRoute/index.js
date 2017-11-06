@@ -24,13 +24,24 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowIndexRoute extends Component {
   static propTypes = {
-    flowId: PropTypes.string.isRequired,
-    flow: ImmutablePropTypes.map.isRequired,
-    redirect: PropTypes.func.isRequired,
+    flowId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
+    flow: ImmutablePropTypes.map.isRequired, // eslint-disable-line react/no-unused-prop-types
+    redirect: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
   }
 
   componentDidMount () {
-    const { flow, flowId, redirect } = this.props
+    this.tryRedirect()
+  }
+
+  componentWillUpdate (nextProps, nextState) {
+    this.tryRedirect(nextProps)
+  }
+
+  tryRedirect (props = this.props) {
+    const { flow, flowId, redirect } = props
+    if (!flow) {
+      return
+    }
     const status = flow.getIn(['envs', 'FLOW_STATUS'])
 
     if (status === 'READY') {
