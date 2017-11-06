@@ -1,0 +1,13 @@
+@import 'variables/colors';
+.editor{
+  resize: none;
+  width: 100%;
+  height: 100px;
+  border-radius: 3px;
+  border-color: $color-hr;
+  padding: 10px;
+  &:focus{
+    outline: none;
+    border-color: #20a0ff;
+  }
+}

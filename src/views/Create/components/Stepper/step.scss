@@ -40,8 +40,10 @@
 
   width: $create-flow-step-icon-size;
   height: $create-flow-step-icon-size;
-  line-height: $create-flow-step-icon-size;
-  text-align: center;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   font-size: $create-flow-step-icon-font-size;
   border-radius: 50%;
