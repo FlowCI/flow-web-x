@@ -50,10 +50,12 @@ export class FlowYmlSetting extends Component {
 
   render () {
     const { text } = this.state
-    return <div className={classes.editorwrap}>
-      <div className={classes.header}>.flow.ci</div>
-      <Editor className={classes.editor} value={text}
-        onChange={this.handleEditorChange} placeholder='填写 yml 内容' />
+    return <div className={classes.container}>
+      <div className={classes.editorwrap}>
+        <div className={classes.header}>.flow.ci</div>
+        <Editor className={classes.editor} value={text}
+          onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
+      </div>
       <Button className={classes.save} onClick={this.handleSave}>
         保存
       </Button>
