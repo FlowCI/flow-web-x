@@ -1,0 +1,25 @@
+@import 'variables/colors';
+.editorwrap{
+  padding: 30px 40px 40px;
+}
+
+.header{
+  background-color: #EDEDED;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 10px;
+}
+.editor{
+  margin-bottom: 20px;
+}
+
+.save{
+  background-color: $color-primary;
+  color: #fff;
+  min-width: 100px;
+  margin-bottom: 10px;
+  &:hover, &:focus{
+    background-color: darken($color-primary, 10%);
+    color: #fff;
+  }
+}
