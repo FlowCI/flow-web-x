@@ -5,5 +5,5 @@ import { Socket } from 'packages/socket'
 const url = `${api}/ws/web`
 
 export default function WebSocket (props) {
-  return <Socket {...props} url={url} mock={__DEV__} />
+  return <Socket {...props} url={url} />
 }
