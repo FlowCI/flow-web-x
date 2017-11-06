@@ -114,8 +114,8 @@ export default class Input extends Component {
     !divider && cls.push(classNames.noDivider)
 
     focus && cls.push('focus')
-    disabled && cls.push(classNames.disabled)
-    readOnly && cls.push(classNames.readonly)
+    disabled && cls.push('disabled')
+    readOnly && cls.push('readonly')
 
     return <div className={cls.join(' ')} onClick={this.handleClick}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}

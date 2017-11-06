@@ -1,0 +1,14 @@
+@import 'variables/colors';
+.editor{
+  background-color: $color-black;
+  color: #fff;
+  display: block;
+  width: 100%;
+  height: 50vh;
+  resize: none;
+  padding: 10px;
+  outline: none;
+  &:focus{
+    outline: none;
+  }
+}

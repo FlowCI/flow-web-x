@@ -140,12 +140,12 @@ export class JobsView extends Component {
   }
 
   renderFlowHeader () {
-    const { flowName } = this.props
+    const { flowName, flowId } = this.props
     return <div className={classes.flow}>
       <div className={classes.brand}>
         <i className='icon icon-layergroup' />{flowName}
       </div>
-      <Button to='settings'
+      <Button to={`/flows/${flowId}/settings`}
         className='btn btn-inverse'
         leftIcon={<i className='icon icon-settings' />}>
         工作流设置

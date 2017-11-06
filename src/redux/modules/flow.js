@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions'
-import { Map, fromJS } from 'immutable'
+import { Map, OrderedMap, fromJS } from 'immutable'
 import is from 'util/is'
 
 import polling from 'polling'
@@ -10,9 +10,16 @@ import { defaultInitState, handlers } from 'redux/handler'
 
 import Types from './flowType'
 import JobTypes from './jobType'
-import { actions as jobActions } from './job'
 
+/**
+ * {
+ *   status: { flowId: 'string' },
+ *    yml: { flowId: 'string' },
+ * }
+ */
 const initialState = defaultInitState.set('status', new Map())
+  .set('yml', new Map())
+  .set('editEnvs', new Map())
 
 /**
  * 后端以 name 为 flow 的唯一标识，为统一将 name 值转至 id 字段
@@ -148,21 +155,26 @@ export const actions = {
       transformResponse,
     }
   },
+  removeEnv: function (flowId, envNames) {
+    return {
+      url: `/flows/${flowId}/env`,
+      name: Types.updateEnv,
+      method: 'delete',
+      data: envNames,
+      indicator: {
+        id: flowId,
+      },
+      transformResponse,
+    }
+  },
   /**
    * see getCreateEnv params
    */
   doneCreate: function (flowId, params) {
-    return function (dispatch) {
-      const p = dispatch(actions.updateEnv(flowId, {
-        FLOW_STATUS: 'READY',
-        ...getCreateEnv(params)
-      }))
-      p.then(() => {
-        // 创建成功后自动创建 job
-        dispatch(jobActions.create(flowId, 'master'))
-      })
-      return p
-    }
+    return actions.updateEnv(flowId, {
+      FLOW_STATUS: 'READY',
+      ...getCreateEnv(params)
+    })
   },
   doCreateTest: function (flowId, params) {
     return async function (dispatch) {
@@ -172,6 +184,78 @@ export const actions = {
   },
   getTestResult: pollingTestResult,
 
+  setTrigger: function (flowId, trigger) {
+    return {
+      url: '/flows/:flowName/trigger',
+      method: 'post',
+      name: Types.updateTrigger,
+      params: {
+        flowName: flowId,
+        ...trigger,
+      },
+      transformResponse,
+    }
+  },
+
+  getEditEnvs: function (flowId) {
+    return {
+      url: '/flows/:flowName/env?editable=true',
+      params: {
+        flowName: flowId,
+      },
+      name: Types.getEditEnvs,
+      indicator: {
+        flowId,
+      }
+    }
+  },
+  saveEditEnvs: function (flowId, envs) {
+    return {
+      url: `/flows/${flowId}/env?verify=true`,
+      method: 'post',
+      params: envs,
+      name: Types.saveEditEnvs,
+      indicator: {
+        flowId,
+        envs: envs,
+      }
+    }
+  },
+  removeEditEnvs: function (flowId, name) {
+    return {
+      url: `/flows/${flowId}/env?verify=true`,
+      method: 'delete',
+      data: [name],
+      name: Types.removeEditEnvs,
+      indicator: {
+        flowId,
+        name
+      }
+    }
+  },
+  getYml: function (flowId) {
+    return {
+      url: '/flows/:flowName/yml',
+      params: {
+        flowName: flowId,
+      },
+      name: Types.getYml,
+      indicator: {
+        flowId,
+      }
+    }
+  },
+  saveYml: function (flowId, ymlStr) {
+    return {
+      url: `/flows/${flowId}/yml`,
+      method: 'post',
+      data: ymlStr,
+      name: Types.saveYml,
+      indicator: {
+        flowId,
+      }
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.setFilter,
@@ -217,6 +301,46 @@ export default handleActions({
     },
   }),
 
+  [Types.updateTrigger]: handleHttpActions({
+    success: handlers.saveData,
+  }),
+  [Types.getYml]: handleHttpActions({
+    success: function (state, { indicator, payload }) {
+      const { flowId } = indicator
+      return state.setIn(['yml', flowId], payload || '')
+    }
+  }),
+  [Types.saveYml]: handleHttpActions({
+    success: function (state, { indicator, payload }) {
+      const { flowId } = indicator
+      return state.setIn(['yml', flowId], payload || '')
+    }
+  }),
+
+  [Types.getEditEnvs]: handleHttp('GET_EDIT_ENVS', {
+    success: function (state, { indicator, payload }) {
+      const { flowId } = indicator
+      return state.updateIn(['editEnvs', flowId], (envs) => {
+        return envs ? envs.merge(payload) : new OrderedMap(payload)
+      })
+    }
+  }),
+  [Types.saveEditEnvs]: handleHttp('SAVE_EDIT_ENVS', {
+    success: function (state, { indicator }) {
+      const { flowId, envs: payload } = indicator
+      return state.updateIn(['editEnvs', flowId], (envs) => {
+        return envs ? envs.merge(payload) : new OrderedMap(payload)
+      })
+    }
+  }),
+  [Types.removeEditEnvs]: handleHttp('REMOVE_EDIT_ENVS', {
+    success: function (state, { indicator, payload }) {
+      const { flowId, name } = indicator
+      return state.updateIn(['editEnvs', flowId], (envs) => {
+        return envs ? envs.delete(name) : envs
+      })
+    }
+  }),
   // UI
   [Types.setFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))

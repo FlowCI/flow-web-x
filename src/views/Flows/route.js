@@ -4,9 +4,9 @@ import Component, { reducers } from './index'
 import IndexRouteComponent from './IndexRoute'
 
 import JobsRoute from './Jobs/route'
+import SettingRoute from './Settings/route'
 
 export default function (store) {
-  const jobsRoute = JobsRoute(store)
   return {
     getComponent: function (state, callback) {
       injectReducer(store, reducers)
@@ -16,8 +16,11 @@ export default function (store) {
       component: IndexRouteComponent,
     },
     childRoutes: [{
-      ...jobsRoute,
+      ...JobsRoute(store),
       path: 'jobs',
+    }, {
+      ...SettingRoute(store),
+      path: 'settings'
     }]
   }
 }

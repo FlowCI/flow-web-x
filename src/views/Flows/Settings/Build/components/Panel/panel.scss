@@ -1,0 +1,10 @@
+@import 'variables/colors';
+.panel{
+  padding: 20px 30px;
+  border-bottom: 1px solid $color-hr;
+  >h4{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
