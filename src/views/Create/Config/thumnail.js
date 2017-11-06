@@ -21,7 +21,7 @@ export class CreateFlowThumnail extends Component {
     const { git } = this.props
     return <div className={classes.thumnail}>
       <span className={classes.icon}>
-        <i className='icon icon-equalizer' />
+        <i className='icon icon-social-github' />
       </span>
       <h4 className={classes.wrapper}>
         {git}
