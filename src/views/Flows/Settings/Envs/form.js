@@ -8,8 +8,8 @@ import Button from 'components/Button'
 import classes from './form.scss'
 export function validate (values) {
   const errors = {}
-  if (!values.key) {
-    errors.key = 'Required'
+  if (!values.name) {
+    errors.name = 'Required'
   }
   if (!values.value) {
     errors.value = 'Required'
@@ -20,21 +20,32 @@ export function validate (values) {
 export class FlowEnvForm extends Component {
   static propTypes = {
     className: PropTypes.string,
-    // handleSubmit: PropTypes.func.isRequired,
+    submitSucceeded: PropTypes.bool,
+    submitting: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
+    reset: PropTypes.func.isRequired,
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.submitting && !nextProps.submitting &&
+      nextProps.submitSucceeded) {
+      nextProps.reset()
+    }
   }
 
   render () {
-    const { className } = this.props
+    const { className, submitting, handleSubmit } = this.props
     return (
-      <div className={className}>
-        <Input name='key' size='lg' placeholder='key'
+      <form className={className}>
+        <Input name='name' size='lg' placeholder='key'
           className={classes.control} />
         <Input name='value' size='lg' placeholder='key'
           className={classes.control} />
-        <Button className={classes.save} size='lg'>
+        <Button className={classes.save} size='lg'
+          loading={submitting} onClick={handleSubmit}>
           添加
         </Button>
-      </div>
+      </form>
     )
   }
 }
