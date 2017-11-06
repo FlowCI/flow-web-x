@@ -1,9 +1,9 @@
 import React from 'react'
-
+import { api } from 'util/constant'
 import { Socket } from 'packages/socket'
 
-const url = `${__API__}/ws/web`
+const url = `${api}/ws/web`
 
 export default function WebSocket (props) {
-  return <Socket {...props} url={url} mock={!__API__} />
+  return <Socket {...props} url={url} mock={__DEV__} />
 }

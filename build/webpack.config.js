@@ -199,6 +199,7 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
   },
   version: config.version,
   last_modify: new Date().toISOString(),
+  api: config.globals.__API__,
 }))
 
 // Development Tools
