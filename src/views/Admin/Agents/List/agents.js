@@ -46,7 +46,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     stop: jobActions.stop,
     query: actions.query,
-    shutdown: actions.shutdown,
+    close: actions.close,
     remove: actions.remove,
     alert: alertActions.alert,
   }, dispatch)
@@ -59,7 +59,7 @@ export class AdminAgentView extends Component {
 
     query: func.isRequired,
     stop: func.isRequired,
-    shutdown: func.isRequired,
+    close: func.isRequired,
     remove: func.isRequired,
     alert: func.isRequired,
     i18n: func.isRequired,
@@ -131,9 +131,9 @@ export class AdminAgentView extends Component {
   }
 
   renderAgent = (agent) => {
-    const { stop, shutdown } = this.props
+    const { stop, close } = this.props
     return <Agent key={agent.get('id')} agent={agent}
-      stop={stop} shutdown={shutdown} remove={this.openConfirm}
+      stop={stop} close={close} remove={this.openConfirm}
       openDetail={this.openConfig}
     />
   }

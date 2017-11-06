@@ -13,6 +13,8 @@ export default {
     MANUAL: '手动构建',
     PUSH: 'Push',
     PR: 'Pull Request',
-    TAG: 'Tag'
+    TAG: 'Tag',
+    SCHEDULER: '定时触发',
+    API: 'API 触发'
   }
 }

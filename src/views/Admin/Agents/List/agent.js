@@ -17,7 +17,7 @@ export default class Agent extends PureComponent {
     agent: map.isRequired,
 
     stop: func.isRequired,
-    shutdown: func.isRequired,
+    close: func.isRequired,
     remove: func.isRequired,
     openDetail: func.isRequired,
   }
@@ -27,9 +27,9 @@ export default class Agent extends PureComponent {
     return stop(agent.get('flowName'), agent.get('number'))
   }
 
-  handleShutDown = () => {
-    const { shutdown, agent } = this.props
-    return shutdown(agent, 'dialog password result')
+  handleClose = () => {
+    const { close, agent } = this.props
+    return close(agent)
   }
 
   handleCheck = () => {
@@ -51,8 +51,8 @@ export default class Agent extends PureComponent {
 
     const job = flow ? `${flow} / #${number} ${branch}` : ''
 
-    const canShutDown = status !== 'OFFLINE'
-    const canStop = status === 'BUSY'
+    const isOnline = status !== 'OFFLINE'
+    const isBusy = status === 'BUSY'
 
     const encodeForm = encodeURIComponent('/admin/agents')
     const token = agent.get('token')
@@ -79,20 +79,19 @@ export default class Agent extends PureComponent {
       </ListCol>
       <ListCol className={classes.actions}>
         <Button size='sm' className='btn-inverse'
-          onClick={this.handleStop} disabled={!canStop}>
+          onClick={this.handleStop} disabled={!isBusy}>
           停止任务
         </Button>
         <Button size='sm' className='btn-inverse'
-          onClick={this.handleShutDown} disabled={!canShutDown}>
-          关机
+          onClick={this.handleClose} disabled={!isOnline}>
+          停止
         </Button>
         <Button size='sm' className='btn-inverse'
-          onClick={this.handleCheck} disabled={!canShutDown}>
+          onClick={this.handleCheck} disabled={!isOnline}>
           查看
         </Button>
         <Button size='sm' className='btn-inverse'
-          onClick={this.handleRemove}
-        >
+          onClick={this.handleRemove}>
           删除
         </Button>
       </ListCol>

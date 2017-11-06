@@ -1,3 +1,4 @@
+import { api } from 'util/constant'
 import {
   applyMiddleware,
   compose,
@@ -23,7 +24,7 @@ const createStore = (initialState = {}, history) => {
     resquestHeaders,
     // httpMockMiddleware(),
     httpMiddleware({
-      baseURL: __API__
+      baseURL: api
     }),
   ]
 

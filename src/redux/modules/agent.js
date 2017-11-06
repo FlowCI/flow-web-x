@@ -32,10 +32,9 @@ export const actions = {
       transformResponse
     }
   },
-  shutdown: function (agent, password) {
-    // wait for socket
+  close: function (agent) {
     return {
-      url: '/agents/shutdown',
+      url: '/agents/close',
       method: 'post',
       indicator: {
         id: agent.get('id'),
@@ -43,7 +42,6 @@ export const actions = {
       params: {
         zone: agent.get('zone'),
         name: agent.get('name'),
-        password,
       },
     }
   },
