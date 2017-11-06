@@ -7,11 +7,64 @@
   margin-bottom: -1px;
   td{
     line-height: 20px;
-    padding: 15px 30px;
+    padding: 5px 30px;
     border-bottom: 1px solid $color-hr;
     white-space: nowrap;
     &:first-child{
       width: 1%;
     }
+  }
+}
+
+.env{
+}
+
+.input{
+  margin-right: 5px;
+  width: 300px;
+  border-color: transparent;
+  &:focus, &:global(.focus){
+    box-shadow: none;
+    outline: none;
+  }
+}
+.actions{
+  display: inline-block;
+  vertical-align: middle;
+  >:global(.btn) {
+    margin-right: 5px;
+  }
+
+  &:hover,
+  &:focus {
+    >:global(.btn) {}
+  }
+
+}
+.edit{
+  border: none;
+  &:focus, &:hover{
+    color: #fff;
+    background-color: $color-primary;
+  }
+}
+.save{
+  border: none;
+  &:focus,
+  &:hover {
+    color: #fff;
+    background-color: $color-success;
+  }
+
+}
+
+.remove{
+  color: $color-danger;
+  background-color: #fff;
+  border: none;
+  &:focus, &:hover{
+    color: #fff;
+    background-color: $color-danger;
+
   }
 }
