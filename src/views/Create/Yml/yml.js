@@ -56,7 +56,7 @@ export class FlowYmlSetting extends Component {
         <Editor className={classes.editor} value={text}
           onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
       </div>
-      <Button className={classes.save} onClick={this.handleSave}>
+      <Button className='btn-primary' onClick={this.handleSave}>
         保存
       </Button>
     </div>

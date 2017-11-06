@@ -1,6 +1,10 @@
 @import 'variables/colors';
 .container {
   padding: 30px 40px 40px;
+  :global(.btn-primary){
+    min-width: 100px;
+  }
+
 }
 .editorwrap{
   border: 1px solid $color-hr;
@@ -20,15 +24,4 @@
   background-color: #fff;
   color: $color-black;
   border: none;
-}
-
-.save{
-  background-color: $color-primary;
-  color: #fff;
-  min-width: 100px;
-  margin-bottom: 10px;
-  &:hover, &:focus{
-    background-color: darken($color-primary, 10%);
-    color: #fff;
-  }
 }
