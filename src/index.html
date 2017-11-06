@@ -9,7 +9,9 @@
   <!-- 360 选择渲染引擎 -->
   <meta name="renderer" content="webkit" />
   <script type='text/javascript'>
-    var $endPoint = <%= htmlWebpackPlugin.options.api %>
+    window.FLOWCI = {
+      $endPoint: <%= htmlWebpackPlugin.options.api %>
+    }
   </script>
 </head>
 <body>

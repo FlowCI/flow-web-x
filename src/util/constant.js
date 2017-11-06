@@ -1,1 +1,1 @@
-export const api = window.$endPoint
+export const api = window.FLOWCI.$endPoint
