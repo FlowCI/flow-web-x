@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
+import { actions as jobActions } from 'redux/modules/job'
+
 import Editor from 'components/CodeEditor'
 import Button from 'components/Button'
 
@@ -21,6 +23,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     save: actions.saveYml,
+    createJob: jobActions.create,
     redirect: push,
   }, dispatch)
 }
@@ -29,6 +32,7 @@ export class FlowYmlSetting extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired,
     save: PropTypes.func.isRequired,
+    createJob: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
   }
 
@@ -41,9 +45,11 @@ export class FlowYmlSetting extends Component {
   }
 
   handleSave = () => {
-    const { flowId, save, redirect } = this.props
+    const { flowId, save, createJob, redirect } = this.props
     const { text } = this.state
     return save(flowId, text).then(() => {
+      return createJob(flowId, 'master')
+    }).then(() => {
       redirect(`/flows/${flowId}`)
     })
   }
