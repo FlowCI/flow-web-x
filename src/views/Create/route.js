@@ -21,11 +21,17 @@ export const createRoutes = (store) => ({
       step: 2,
       component: NoopComponent,
     }, {
-      path: ':git',
-      step: 1,
-      component: NoopComponent,
+      path: '*',
+      onEnter: (nextState, replace) => {
+        const { params } = nextState
+        replace(`/create/${params.flowId}`)
+      }
     }]
   }]
 })
-
+// , {
+//     path: ':git',
+//   step: 1,
+//   component: NoopComponent,
+//   }
 export default createRoutes
