@@ -10,8 +10,8 @@ import classes from './form.scss'
 
 export function validate (values) {
   const errors = {}
-  if (!values.username) {
-    errors.username = 'Required'
+  if (!values.emailOrUsername) {
+    errors.emailOrUsername = 'Required'
   }
   if (!values.password) {
     errors.password = 'Required'
@@ -35,7 +35,7 @@ export class SignInForm extends Component {
       <div className={classes.logo}>
         <i className='icon icon-logo' />
       </div>
-      <Input type='text' name='username'
+      <Input type='text' name='emailOrUsername'
         leftIcon={<i className='icon icon-user' />}
         divider size='hg' className='block' />
       <Input type='password' name='password'

@@ -10,7 +10,7 @@ import classes from './PageLayout.scss'
 
 export const PageLayout = ({ children, i18n, location: { key } }) => (
   <div>
-    <Navbar i18n={i18n.createChild('navbar')} locatonKey={key} />
+    <Navbar i18n={i18n.createChild('navbar')} locationKey={key} />
     <div className={classes.container}>
       {children}
     </div>

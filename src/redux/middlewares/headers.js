@@ -4,7 +4,7 @@ export const INVALID = 'ACCESSTOKEN/INVALID' // maybe import form type
 
 function isRelative (url) {
   // must begin with /
-  return /^\/\w+/.test(url)
+  return !/^(http:|https:|\/\/)/.test(url)
 }
 
 export default function ({ dispatch, getState }) {
@@ -23,9 +23,10 @@ export default function ({ dispatch, getState }) {
       library: 'web'
     }
 
-    const { accessToken } = getState()
-    if (accessToken) {
-      headers.accessToken = accessToken
+    const { session } = getState()
+    const token = session.get('token')
+    if (token) {
+      headers['X-Authorization'] = token
       injectAccessToken = true
     }
     const nextAction = {
@@ -36,7 +37,7 @@ export default function ({ dispatch, getState }) {
     const result = next(nextAction)
     if (injectAccessToken && is.promise(result)) {
       result.catch(function (e) {
-        if (e && e.status === 401) {
+        if (e && e.response && e.response.status === 401) {
           dispatch({ type: INVALID })
         }
       })
