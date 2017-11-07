@@ -14,7 +14,7 @@ function mapStateToProps (state, props) {
   const { params: { flowId } } = props
   const { flow } = state
   return {
-    yml: flow.getIn(['yml', flowId]),
+    yml: flow.getIn(['yml', flowId], ''),
     flowId,
   }
 }
