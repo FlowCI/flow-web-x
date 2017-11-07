@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+
+import { Map } from 'immutable'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,15 +13,19 @@ import Header from '../../components/Header'
 import RadioPanel from '../components/RadioPanel'
 import Panel from '../components/Panel'
 
+function toBool (str) {
+  return str === 'true'
+}
+
 const triggerSelector = createSelector(
-  (flow) => flow,
-  (flow) => {
+  (flow) => flow.get('envs', new Map()),
+  (envs) => {
     return {
-      prEnable: flow.get('prEnable'),
-      pushEnable: flow.get('pushEnable'),
-      tagEnable: flow.get('tagEnable'),
-      tagFilter: flow.get('tagFilter') || [],
-      branchFilter: flow.get('branchFilter') || [],
+      prEnable: toBool(envs.get('FLOW_GIT_PR_ENABLED')),
+      pushEnable: toBool(envs.get('FLOW_GIT_PUSH_ENABLED')),
+      branchFilter: JSON.parse(envs.get('FLOW_GIT_PUSH_FILTER', '[]')),
+      tagEnable: toBool(envs.get('FLOW_GIT_TAG_ENABLED')),
+      tagFilter: JSON.parse(envs.get('FLOW_GIT_TAG_FILTER', '[]')),
     }
   }
 )
@@ -45,9 +50,9 @@ export class FlowTriggerSetting extends Component {
     trigger: PropTypes.shape({
       prEnable: PropTypes.bool.isRequired,
       pushEnable: PropTypes.bool.isRequired,
+      branchFilter: PropTypes.array.isRequired,
       tagEnable: PropTypes.bool.isRequired,
-      tagFilter: ImmutablePropTypes.list.isRequired,
-      branchFilter: ImmutablePropTypes.list.isRequired,
+      tagFilter: PropTypes.array.isRequired,
     }).isRequired,
     update: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
