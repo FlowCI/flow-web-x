@@ -18,7 +18,7 @@ function mapStateToProps (state, { flowId }) {
   const status = f.getIn(['envs', 'FLOW_YML_STATUS'])
   const n = Mapping[status]
   return {
-    loading: n > 0 && n < Mapping.FOUND,
+    loading: n > 0 && n < Mapping.GIT_LOADED,
     status,
     message: f.getIn(['envs', 'FLOW_YML_ERROR_MSG']),
   }
@@ -123,7 +123,7 @@ export class TestButton extends Component {
   }
 
   renderStatus (status) {
-    if (status === 'ERROR' || status === 'NOT_FOUND') {
+    if (status === 'ERROR') {
       return this.renderError(this.props.message || '未找到 .flow.yml 配置文件')
     }
     const { i18n } = this.props
@@ -140,7 +140,7 @@ export class TestButton extends Component {
     }
     if (checked) {
       const { status } = this.props
-      if (status !== 'GIT_CONNECTING') {
+      if (status && status !== 'GIT_CONNECTING') {
         return this.renderStatus(status)
       }
     }
