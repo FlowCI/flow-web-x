@@ -48,6 +48,13 @@ function notifyLoadYml (flowId) {
 }
 
 function pollingTestResult (flowId) {
+  const finishStatus = [
+    'GIT_LOADING',
+    'GIT_LOADED',
+    'ERROR',
+    'FOUND',
+    'NOT_FOUND'
+  ]
   return function (dispatch, getState) {
     function get () {
       return dispatch({
@@ -63,9 +70,7 @@ function pollingTestResult (flowId) {
     }
     function check (response) {
       const envs = response.data
-      return envs.FLOW_YML_STATUS === 'GIT_LOADED' ||
-        envs.FLOW_YML_STATUS === 'ERROR' ||
-        envs.FLOW_YML_STATUS === 'FOUND'
+      return finishStatus.includes(envs.FLOW_YML_STATUS)
     }
     return polling(get, check)
   }

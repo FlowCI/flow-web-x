@@ -18,7 +18,7 @@ function mapStateToProps (state, { flowId }) {
   const status = f.getIn(['envs', 'FLOW_YML_STATUS'])
   const n = Mapping[status]
   return {
-    loading: n > 0 && n < Mapping.GIT_LOADED,
+    loading: n > 0 && n < Mapping.GIT_LOADING,
     status,
     message: f.getIn(['envs', 'FLOW_YML_ERROR_MSG']),
   }
