@@ -14,7 +14,6 @@ import classes from './user.scss'
 function mapStateToProps (state, props) {
   const { session } = state
   const isAdmin = session.getIn(['user', 'isAdmin'], false)
-  console.log(isAdmin)
   return {
     isAdmin,
   }
