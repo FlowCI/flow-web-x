@@ -118,6 +118,11 @@ export const actions = {
     return {
       url: '/jobs/:flowName/:number/stop',
       method: 'post',
+      name: Types.stop,
+      indicator: {
+        flowId: flowId,
+        number: jobNumber,
+      },
       params: {
         flowName: flowId,
         number: jobNumber,

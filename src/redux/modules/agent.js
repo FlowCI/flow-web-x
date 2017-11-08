@@ -7,6 +7,7 @@ import { fromJS } from 'immutable'
 import is from 'util/is'
 
 import Types from './agentType'
+import jobTypes from './jobType'
 
 const initialState = fromJS({
   list: [],
@@ -102,6 +103,7 @@ export default handleActions({
         if (index >= 0) {
           return list.update(index, (agent) => {
             return agent.set('agentStatus', 'OFFLINE')
+              .delete('flowName').delete('number') // 关闭可能显示的任务
           })
         }
         return list
@@ -123,5 +125,24 @@ export default handleActions({
   }),
   [Types.freedAll]: function (state) {
     return initialState
-  }
+  },
+
+  // job stop
+  [jobTypes.stop]: handleHttp('', {
+    success: function (state, { indicator }) {
+      const { flowId, number } = indicator
+      return state.update('list', (list) => {
+        const index = list.findIndex((a) => a.get('flowName') === flowId)
+        if (index > -1) {
+          return list.update(index, (agent) => {
+            if (agent.get('number') === number) {
+              return agent.delete('flowName').delete('number')
+            }
+            return agent
+          })
+        }
+        return list
+      })
+    },
+  }),
 }, initialState)
