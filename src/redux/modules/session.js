@@ -20,7 +20,7 @@ export const actions = {
       url: '/user/login',
       method: 'post',
       params: user,
-      name: Types.signIn,
+      name: Types.signIn
     }
   },
   signOut: function () { return { type: Types.signOut } },
@@ -30,9 +30,14 @@ export default handleActions({
   [Types.signIn]: handleHttp('SIGNIN', {
     success: function (state, { payload }) {
       const { token, user } = payload
+      const { roles } = user
+      user.isAdmin = roles.some((r) => r.name === 'ADMIN')
+      // remove roles
+      user.roles = undefined
+
       Storge.set('token', token)
       Storge.set('user', user)
-      return state.set('user', user).set('token', token)
+      return state.set('user', fromJS(user)).set('token', token)
     },
   }),
   [Types.signOut]: function (state) {
