@@ -97,6 +97,7 @@ export default handleActions({
   }),
   [Types.close]: handleHttp('CLOSE', {
     success: function (state, { indicator }) {
+      // 临时
       const { id } = indicator
       return state.update('list', (list) => {
         const index = list.findIndex((agent) => agent.get('id') === id)
@@ -129,6 +130,7 @@ export default handleActions({
 
   // job stop
   [jobTypes.stop]: handleHttp('', {
+    // 临时
     success: function (state, { indicator }) {
       const { flowId, number } = indicator
       return state.update('list', (list) => {
