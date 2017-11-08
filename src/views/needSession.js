@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/flow'
 
 import Loading from 'components/Loading'
@@ -19,7 +18,6 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    redirect: push,
     queryFlows: actions.query
   }, dispatch)
 }
@@ -30,7 +28,6 @@ export class NeedSession extends Component {
     authoring: PropTypes.bool,
     children: PropTypes.node,
 
-    redirect: PropTypes.func.isRequired,
     queryFlows: PropTypes.func.isRequired,
   }
 
@@ -52,7 +49,7 @@ export class NeedSession extends Component {
 
   toSignIn () {
     // todo 记下当前页面后跳转, 用于登录后跳回
-    this.props.redirect('/signin')
+    window.location.href = '/signin'
   }
 
   render () {
