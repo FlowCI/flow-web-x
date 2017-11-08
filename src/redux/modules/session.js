@@ -30,8 +30,8 @@ export default handleActions({
   [Types.signIn]: handleHttp('SIGNIN', {
     success: function (state, { payload }) {
       const { token, user } = payload
-      const { roles } = user
-      user.isAdmin = roles.some((r) => r.name === 'ADMIN')
+      const { roles = [] } = user
+      user.isAdmin = user.isAdmin || roles.some((r) => r.name === 'ADMIN')
       // remove roles
       user.roles = undefined
 
