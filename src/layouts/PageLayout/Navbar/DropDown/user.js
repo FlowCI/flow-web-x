@@ -11,6 +11,14 @@ import DropDown from './dropdown'
 
 import classes from './user.scss'
 
+function mapStateToProps (state, props) {
+  const { session } = state
+  const isAdmin = session.getIn(['user', 'isAdmin'], false)
+  console.log(isAdmin)
+  return {
+    isAdmin,
+  }
+}
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     signOut: actions.signOut,
@@ -19,6 +27,7 @@ function mapDispatchToProps (dispatch) {
 
 export class UserDropMenus extends PureComponent {
   static propTypes = {
+    isAdmin: PropTypes.bool,
     onRequestClose: PropTypes.func,
     signOut: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
@@ -31,7 +40,7 @@ export class UserDropMenus extends PureComponent {
   }
 
   render () {
-    const { i18n } = this.props
+    const { isAdmin, i18n } = this.props
     return <DropDown className={classes.dropmenu} arrowClass={classes.arrow}>
       <ul className={classes.menus}>
         <li>
@@ -40,12 +49,12 @@ export class UserDropMenus extends PureComponent {
             <span>{i18n('个人设置')}</span>
           </Link>
         </li>
-        <li>
+        {isAdmin && <li>
           <Link className={classes.item} to='/admin'>
             <i className='icon icon-settings' />
             <span>{i18n('系统管理')}</span>
           </Link>
-        </li>
+        </li>}
         <li>
           <a className={classes.item} onClick={this.handleSignOutClick}>
             <i className='icon icon-logout' />
@@ -57,4 +66,4 @@ export class UserDropMenus extends PureComponent {
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(UserDropMenus)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDropMenus)
