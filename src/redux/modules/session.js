@@ -31,13 +31,16 @@ export default handleActions({
     success: function (state, { payload }) {
       const { token, user } = payload
       const { roles = [] } = user
-      user.isAdmin = user.isAdmin || roles.some((r) => r.name === 'ADMIN')
-      // remove roles
-      user.roles = undefined
+      const isAdmin = roles.some((r) => r.name === 'ADMIN')
 
+      const u = {
+        ...user,
+        isAdmin,
+        roles: undefined
+      }
       Storge.set('token', token)
-      Storge.set('user', user)
-      return state.set('user', fromJS(user)).set('token', token)
+      Storge.set('user', u)
+      return state.set('user', fromJS(u)).set('token', token)
     },
   }),
   [Types.signOut]: function (state) {
