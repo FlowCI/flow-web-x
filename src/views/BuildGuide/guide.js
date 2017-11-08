@@ -30,7 +30,8 @@ export default class BuildGuide extends Component {
   renderSteps () {
     const { i18n } = this.props
     return <Steps>
-      <Step title={i18n('在你的项目中添加 .flow.yml 配置文件')}>
+      <Step title={i18n('在你的项目中添加 .flow.yml 配置文件')}
+        thumbnail={require('static/images/flow_yml.png')}>
         <List>
           <Item>
             <p>在根目录下添加 .flow.yml 文件。</p>
@@ -48,7 +49,8 @@ export default class BuildGuide extends Component {
           </Item>
         </List>
       </Step>
-      <Step title={i18n('通过 git push 触发第一次构建')}>
+      <Step title={i18n('通过 git push 触发第一次构建')}
+        thumbnail={require('static/images/git.png')}>
         <div>
           <p>要开始构建，请务必完成以下操作：</p>
           <List>
@@ -64,7 +66,8 @@ export default class BuildGuide extends Component {
           <p>完成上面的操作后，你可以立即发起一次 commit 来触发构建。</p>
         </div>
       </Step>
-      <Step title={i18n('点击这里切换 flow')} />
+      <Step title={i18n('点击这里切换 flow')}
+        thumbnail={require('static/images/flow.png')} />
     </Steps>
   }
 
