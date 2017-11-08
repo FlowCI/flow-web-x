@@ -36,6 +36,7 @@ export const actions = {
     return {
       url: '/agents/close',
       method: 'post',
+      name: Types.close,
       indicator: {
         id: agent.get('id'),
       },
@@ -91,6 +92,20 @@ export default handleActions({
   [Types.query]: handleHttp('QUERY', {
     success: function (state, { payload }) {
       return state.set('list', fromJS(payload))
+    },
+  }),
+  [Types.close]: handleHttp('CLOSE', {
+    success: function (state, { indicator }) {
+      const { id } = indicator
+      return state.update('list', (list) => {
+        const index = list.findIndex((agent) => agent.get('id') === id)
+        if (index >= 0) {
+          return list.update(index, (agent) => {
+            return agent.set('agentStatus', 'OFFLINE')
+          })
+        }
+        return list
+      })
     },
   }),
   [Types.remove]: handleHttp('REMOVE', {
