@@ -334,7 +334,19 @@ export default handleActions({
     success: function (state, { indicator }) {
       const { flowId, envs: payload } = indicator
       return state.updateIn(['editEnvs', flowId], (envs) => {
-        return envs ? envs.merge(payload) : new OrderedMap(payload)
+        const keys = Object.keys(payload)
+        let nextEnvs = envs
+        let top = {}
+        keys.forEach((key) => {
+          if (envs.has(key)) {
+            nextEnvs = nextEnvs.set(key, payload[key])
+          } else {
+            top[key] = payload[key]
+          }
+          return top
+        })
+        const topOrderedMap = new OrderedMap(top)
+        return topOrderedMap.merge(nextEnvs)
       })
     }
   }),
