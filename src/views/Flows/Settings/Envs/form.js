@@ -39,7 +39,7 @@ export class FlowEnvForm extends Component {
       <form className={className}>
         <Input name='name' size='lg' placeholder='key'
           className={classes.control} />
-        <Input name='value' size='lg' placeholder='key'
+        <Input name='value' size='lg' placeholder='value'
           className={classes.control} />
         <Button className={classes.save} size='lg'
           loading={submitting} onClick={handleSubmit}>
