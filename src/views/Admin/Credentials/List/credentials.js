@@ -13,6 +13,8 @@ import language from 'util/language'
 import { actions } from 'redux/modules/credential'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import {
   TabBars,
@@ -87,11 +89,13 @@ export class AdminCredentialList extends Component {
 
   render () {
     const { loading } = this.props
-    return <div>
-      {loading && <Loading />}
-      {!loading && this.renderToolBar()}
-      {!loading && this.renderList()}
-    </div>
+    return <DocumentTitle title='证书列表 · 控制台'>
+      <div>
+        {loading && <Loading />}
+        {!loading && this.renderToolBar()}
+        {!loading && this.renderList()}
+      </div>
+    </DocumentTitle>
   }
 }
 

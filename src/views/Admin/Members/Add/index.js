@@ -14,6 +14,8 @@ import { actions as alertActions } from 'redux/modules/alert'
 
 import { push } from 'react-router-redux'
 
+import DocumentTitle from 'react-document-title'
+
 import Form from './form'
 
 const rolesSelector = createSelector(
@@ -90,7 +92,9 @@ export class CreateMember extends Component {
   }
 
   render () {
-    return <Form {...this.props} onSubmit={this.handleSubmit} />
+    return <DocumentTitle title='添加成员 · 控制台'>
+      <Form {...this.props} onSubmit={this.handleSubmit} />
+    </DocumentTitle>
   }
 }
 

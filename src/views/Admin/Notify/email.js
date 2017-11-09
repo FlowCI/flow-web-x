@@ -12,6 +12,8 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/notifySetting'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import Title from '../components/Title'
 import Form from './form'
@@ -74,13 +76,16 @@ export class AdminNotifyEmail extends Component {
 
   render () {
     const { loading, setting, i18n } = this.props
-    return <div>
-      <Title title={i18n('title')} subTitle={i18n('subTitle')} />
-      {loading ? <Loading />
-        : <Form initialValues={setting.toJSON()} i18n={i18n} enableReinitialize
-          onSubmit={this.handleSave} onTest={this.handleTest} />
-      }
-    </div>
+    return <DocumentTitle title='邮件设置 · 控制台'>
+      <div>
+        <Title title={i18n('title')} subTitle={i18n('subTitle')} />
+        {loading ? <Loading />
+          : <Form initialValues={setting.toJSON()} i18n={i18n}
+            enableReinitialize onSubmit={this.handleSave}
+            onTest={this.handleTest} />
+        }
+      </div>
+    </DocumentTitle>
   }
 }
 

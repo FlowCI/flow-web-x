@@ -15,6 +15,8 @@ import { actions } from 'redux/modules/agent'
 import { actions as jobActions } from 'redux/modules/job'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import { Confirm } from 'components/Modal'
 
@@ -217,17 +219,19 @@ export class AdminAgentView extends Component {
     const { openConfirm, openConfig, selected } = this.state
     const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
     : 'Confirm'
-    return <div className={classes.container}>
-      {!loading && this.renderFilter()}
-      {loading ? this.renderLoading() : this.renderAgents()}
-      <Confirm isOpen={openConfirm} title={confirmTitle}
-        onCancel={this.closeConfirm}
-        onOk={this.handleRemove}
-      />
-      <ConfigDialog agent={selected} isOpen={openConfig}
-        onRequestClose={this.closeConfig}
-      />
-    </div>
+    return <DocumentTitle title='Agent 列表 · 控制台'>
+      <div className={classes.container}>
+        {!loading && this.renderFilter()}
+        {loading ? this.renderLoading() : this.renderAgents()}
+        <Confirm isOpen={openConfirm} title={confirmTitle}
+          onCancel={this.closeConfirm}
+          onOk={this.handleRemove}
+        />
+        <ConfigDialog agent={selected} isOpen={openConfig}
+          onRequestClose={this.closeConfig}
+        />
+      </div>
+    </DocumentTitle>
   }
 }
 

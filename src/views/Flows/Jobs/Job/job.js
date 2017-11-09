@@ -13,6 +13,8 @@ import { STATUS } from 'redux-http'
 import { actions, generatorJobId } from 'redux/modules/job'
 import { actions as uiActions } from 'redux/modules/ui'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 
 import JobNavbar from './components/JobNavbar'
@@ -32,6 +34,7 @@ function mapStateToProps (state, props) {
     flowId,
     jobId,
     jobNumber,
+    branch: job.getIn(['data', jobId, 'envs', 'FLOW_GIT_BRANCH'], ''),
     // isNotFound: false,
     loaded: status === STATUS.success,
   }
@@ -51,6 +54,7 @@ export class JobContainer extends Component {
     flowId: PropTypes.string.isRequired,
     jobId: PropTypes.string.isRequired,
     jobNumber: PropTypes.string.isRequired,
+    branch: PropTypes.string,
     // isNotFound: PropTypes.bool,
     loaded: PropTypes.bool,
 
@@ -111,12 +115,18 @@ export class JobContainer extends Component {
   }
 
   render () {
-    const { loaded, jobId, flowId, i18n } = this.props
-    return <div className={classes.container}>
-      {loaded && <JobStatusHeader flowId={flowId} jobId={jobId} i18n={i18n} />}
-      {loaded && <JobFailureAlert jobId={jobId} />}
-      {loaded ? this.renderContent() : this.renderLoading()}
-    </div>
+    const {
+      loaded, jobId, flowId, i18n,
+      jobNumber, branch
+    } = this.props
+    return <DocumentTitle title={`#${jobNumber} ${branch} · ${flowId}`}>
+      <div className={classes.container}>
+        {loaded && <JobStatusHeader flowId={flowId}
+          jobId={jobId} i18n={i18n} />}
+        {loaded && <JobFailureAlert jobId={jobId} />}
+        {loaded ? this.renderContent() : this.renderLoading()}
+      </div>
+    </DocumentTitle>
   }
 }
 

@@ -12,6 +12,8 @@ import { createSelector } from 'reselect'
 import { actions } from 'redux/modules/flow'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Input from 'components/Form/Input'
 import { Confirm } from 'components/Modal'
 
@@ -175,19 +177,21 @@ export class AdminFlowList extends Component {
     const { selected, openConfirm } = this.state
     const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
       : 'Confirm'
-    return <div>
-      {this.renderToolBars()}
-      <div className={classes.scroller}>
-        <List className={classes.flows}>
-          {this.renderListHeader()}
-          {this.renderFlows()}
-        </List>
+    return <DocumentTitle title='Flow 列表 · 控制台'>
+      <div>
+        {this.renderToolBars()}
+        <div className={classes.scroller}>
+          <List className={classes.flows}>
+            {this.renderListHeader()}
+            {this.renderFlows()}
+          </List>
+        </div>
+        <Confirm isOpen={openConfirm} title={confirmTitle}
+          onCancel={this.closeConfirm}
+          onOk={this.handleRemove}
+        />
       </div>
-      <Confirm isOpen={openConfirm} title={confirmTitle}
-        onCancel={this.closeConfirm}
-        onOk={this.handleRemove}
-      />
-    </div>
+    </DocumentTitle>
   }
 }
 
