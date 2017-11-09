@@ -36,6 +36,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
+    "react-document-title": "^2.0.3",
     "react-dom": "^15.5.4",
     "react-event-listener": "^0.4.5",
     "react-immutable-proptypes": "^2.1.0",

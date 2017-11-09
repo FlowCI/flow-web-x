@@ -7,6 +7,8 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/agent'
 
+import DocumentTitle from 'react-document-title'
+
 import Form from './form'
 
 function mapDispatchToProps (dispatch) {
@@ -31,7 +33,9 @@ export class CreateAgent extends Component {
   }
 
   render () {
-    return <Form onSubmit={this.handleSbumit} />
+    return <DocumentTitle title='添加 Agent · 控制台'>
+      <Form onSubmit={this.handleSbumit} />
+    </DocumentTitle>
   }
 }
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, formValueSelector } from 'redux-form'
 
+import DocumentTitle from 'react-document-title'
+
 import { Select, Option } from 'components/Form/reduxForm'
 import Button from 'components/Button'
 
@@ -52,33 +54,35 @@ export class CreateCredentialForm extends Component {
 
   render () {
     const { handleSubmit, invalid, submitting, i18n } = this.props
-    return <form className={classes.form} onSubmit={handleSubmit}>
-      <table>
-        <thead>
-          <tr>
-            <th className={classes.name}>类型</th>
-            <th>
-              <Select name='type'>
-                {enumTypes.map((t) => <Option key={t} value={t}
-                  title={i18n(`${t}.title`)} />)}
-              </Select>
-            </th>
-          </tr>
-        </thead>
-        {this.getChildComponent()}
-        <tfoot>
-          <tr>
-            <td>&nbsp;</td>
-            <td>
-              <Button className='btn-primary' type='submit'
-                disabled={invalid} loading={submitting}>
-                生成
-              </Button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form>
+    return <DocumentTitle title='添加证书 · 控制台'>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <table>
+          <thead>
+            <tr>
+              <th className={classes.name}>类型</th>
+              <th>
+                <Select name='type'>
+                  {enumTypes.map((t) => <Option key={t} value={t}
+                    title={i18n(`${t}.title`)} />)}
+                </Select>
+              </th>
+            </tr>
+          </thead>
+          {this.getChildComponent()}
+          <tfoot>
+            <tr>
+              <td>&nbsp;</td>
+              <td>
+                <Button className='btn-primary' type='submit'
+                  disabled={invalid} loading={submitting}>
+                  生成
+                </Button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </form>
+    </DocumentTitle>
   }
 }
 

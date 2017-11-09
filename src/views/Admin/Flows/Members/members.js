@@ -12,6 +12,8 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/member'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import Button from 'components/Button'
 
@@ -106,21 +108,23 @@ export class AdminFlowMembers extends Component {
   render () {
     const { members, loaded, i18n } = this.props
     const { selected } = this.state
-    return <div>
-      {!loaded && <Loading />}
-      {loaded && <ul className={classes.list}>
-        {members.map((member) => {
-          const n = member.get('username')
-          const email = member.get('email')
-          return <Member key={n} user={member}
-            checked={selected[email]}
-            onChange={this.handleChecked} />
-        })}
-      </ul>}
-      {loaded && <Button className='btn-primary' onClick={this.handleSave}>
-        {i18n('保存')}
-      </Button>}
-    </div>
+    return <DocumentTitle title='Flow 成员管理 · 控制台'>
+      <div>
+        {!loaded && <Loading />}
+        {loaded && <ul className={classes.list}>
+          {members.map((member) => {
+            const n = member.get('username')
+            const email = member.get('email')
+            return <Member key={n} user={member}
+              checked={selected[email]}
+              onChange={this.handleChecked} />
+          })}
+        </ul>}
+        {loaded && <Button className='btn-primary' onClick={this.handleSave}>
+          {i18n('保存')}
+        </Button>}
+      </div>
+    </DocumentTitle>
   }
 }
 

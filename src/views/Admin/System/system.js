@@ -11,6 +11,8 @@ import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/system'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import { Select, Option } from 'components/Form/Select'
 import Title from '../components/Title'
@@ -118,10 +120,12 @@ export class AdminSystemInfos extends Component {
 
   render () {
     const { loading, i18n } = this.props
-    return <div>
-      <Title title={i18n('title')} subTitle={i18n('subTitle')} />
-      {loading ? <Loading /> : this.renderContent() }
-    </div>
+    return <DocumentTitle title='系统信息 · 控制台'>
+      <div>
+        <Title title={i18n('title')} subTitle={i18n('subTitle')} />
+        {loading ? <Loading /> : this.renderContent() }
+      </div>
+    </DocumentTitle>
   }
 }
 

@@ -11,6 +11,8 @@ import language from 'util/language'
 
 import { actions as uiActions } from 'redux/modules/ui'
 
+import DocumentTitle from 'react-document-title'
+
 import { Tabs, Tab } from './components/Tabs'
 import classes from './container.scss'
 
@@ -76,17 +78,19 @@ export class FlowSettingsContainer extends Component {
   }
 
   render () {
-    const { loaded, menus, i18n, children } = this.props
+    const { flowId, loaded, menus, i18n, children } = this.props
     const { base } = this.state
-    return <div className={classes.container}>
-      <Tabs>
-        {menus.map((m, i) => <Tab key={m.path}
-          nav={m} base={base}
-          i18n={i18n.createChild('navbar')}
-        />)}
-      </Tabs>
-      {loaded && children}
-    </div>
+    return <DocumentTitle title={`${flowId} 工作流设置`}>
+      <div className={classes.container}>
+        <Tabs>
+          {menus.map((m, i) => <Tab key={m.path}
+            nav={m} base={base}
+            i18n={i18n.createChild('navbar')}
+          />)}
+        </Tabs>
+        {loaded && children}
+      </div>
+    </DocumentTitle>
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FlowSettingsContainer)

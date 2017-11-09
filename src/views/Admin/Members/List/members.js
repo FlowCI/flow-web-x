@@ -15,6 +15,8 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/member'
 import { actions as alertActions } from 'redux/modules/alert'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import Input from 'components/Form/Input'
 import Checkbox from 'components/Form/Checkbox'
@@ -282,16 +284,18 @@ export class AdminMemberList extends Component {
   render () {
     const { loaded, i18n } = this.props
     const { confirm } = this.state
-    return <div className={classes.container}>
-      {loaded && this.renderFilter()}
-      {loaded && <ActionBar i18n={i18n}
-        onRemove={this.openRemoveConfirm}
-        onChangRole={this.handleChangeRole}
-      />}
-      {loaded ? this.rendrMembers() : this.renderLoading()}
-      <Confirm title='确认删除?' isOpen={confirm}
-        onOk={this.handleRemove} onCancel={this.closeRemoveConfirm} />
-    </div>
+    return <DocumentTitle title='成员列表 · 控制台'>
+      <div className={classes.container}>
+        {loaded && this.renderFilter()}
+        {loaded && <ActionBar i18n={i18n}
+          onRemove={this.openRemoveConfirm}
+          onChangRole={this.handleChangeRole}
+        />}
+        {loaded ? this.rendrMembers() : this.renderLoading()}
+        <Confirm title='确认删除?' isOpen={confirm}
+          onOk={this.handleRemove} onCancel={this.closeRemoveConfirm} />
+      </div>
+    </DocumentTitle>
   }
 }
 
