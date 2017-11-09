@@ -8,6 +8,8 @@ import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/flow'
 import { actions as jobActions } from 'redux/modules/job'
 
+import DocumentTitle from 'react-document-title'
+
 import Editor from 'components/CodeEditor'
 import Button from 'components/Button'
 
@@ -56,16 +58,18 @@ export class FlowYmlSetting extends Component {
 
   render () {
     const { text } = this.state
-    return <div className={classes.container}>
-      <div className={classes.editorwrap}>
-        <div className={classes.header}>.flow.ci</div>
-        <Editor className={classes.editor} value={text}
-          onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
+    return <DocumentTitle title='配置 yml 工作流'>
+      <div className={classes.container}>
+        <div className={classes.editorwrap}>
+          <div className={classes.header}>.flow.ci</div>
+          <Editor className={classes.editor} value={text}
+            onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
+        </div>
+        <Button className='btn-primary' onClick={this.handleSave}>
+          保存
+        </Button>
       </div>
-      <Button className='btn-primary' onClick={this.handleSave}>
-        保存
-      </Button>
-    </div>
+    </DocumentTitle>
   }
 }
 
