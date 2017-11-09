@@ -34,16 +34,16 @@ export default class BuildGuide extends Component {
         thumbnail={require('static/images/flow_yml.png')}>
         <List>
           <Item>
-            <p>在根目录下添加 .flow.yml 文件。</p>
+            <p>填写 flow 名称</p>
           </Item>
           <Item>
             <p>
-              对于新创建的项目，flow.ci 会在根目录下自动查找 .flow.yml 项目配置文件，根据配置文件中定义的步骤，自动生成工作流。
+               配置 git 仓库
             </p>
           </Item>
           <Item>
             <div>
-              <p>如果在现有的项目中添加 .flow.yml，在收到 Push，Pull Request 等触发时，会根据配置文件自动更新工作流。</p>
+              <p>配置 yml 工作流，flowci 会根据你配置的工作流执行构建任务，之后可在“工作流设置”中修改 yml 工作流。</p>
               <a>点击查看 yml 文件编写规范</a>
             </div>
           </Item>
