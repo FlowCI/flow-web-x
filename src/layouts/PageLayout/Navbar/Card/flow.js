@@ -22,7 +22,7 @@ export default class NavbarFlowCard extends PureComponent {
       dropDown={<NavbarFlowsDropdown {...this.props} />}
     >
       {LeftIcon}
-      <span>{i18n('Flow')}</span>
+      <span>{i18n('flow')}</span>
       <Arrow up={active} className={classes.arrow} />
     </Card>
   }

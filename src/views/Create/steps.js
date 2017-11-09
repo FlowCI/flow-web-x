@@ -4,12 +4,12 @@ import ConfigView, { Thumnail as ConfigThumnailView } from './Config'
 import YmlView from './Yml'
 
 export default [{
-  name: '创建Flow',
+  name: '创建 flow',
   icon: <i className='icon icon-branches' style={{ marginRight: 5 }} />,
   component: CreateView,
   thumnail: CreateThumnailView,
 }, {
-  name: '配置Git仓库',
+  name: '配置 Git 仓库',
   icon: <i className='icon icon-settings' />,
   component: ConfigView,
   thumnail: ConfigThumnailView,

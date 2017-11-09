@@ -11,6 +11,8 @@ import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
 
+import DocumentTitle from 'react-document-title'
+
 import Loading from 'components/Loading'
 import { NavTabs, Nav } from 'components/NavTabs'
 
@@ -114,14 +116,16 @@ export class ConfigFlowView extends Component {
 
   render () {
     const { loaded } = this.props
-    return <div className={classes.container}>
-      <NavTabs>
-        {EnumKeys.map(this.renderNav)}
-      </NavTabs>
-      {loaded ? this.renderChild() : <div>
-        <Loading />
-      </div>}
-    </div>
+    return <DocumentTitle title='配置 Git 仓库'>
+      <div className={classes.container}>
+        <NavTabs>
+          {EnumKeys.map(this.renderNav)}
+        </NavTabs>
+        {loaded ? this.renderChild() : <div>
+          <Loading />
+        </div>}
+      </div>
+    </DocumentTitle>
   }
 }
 
