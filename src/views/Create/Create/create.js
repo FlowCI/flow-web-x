@@ -86,9 +86,6 @@ export class CreateFlowView extends Component {
         <div className={classes.wrapper}>
           <h5 className={classes.title}>
             {i18n('为你的 flow 起个名字')}
-            <small>
-              {i18n('（如果使用了 yml 配置文件，需与 yml 配置文件中的 flow 字段保持匹配）')}
-            </small>
           </h5>
           <Input type='text' value={name} className={classes.input}
             placeholder={i18n('例：ios-test')}
