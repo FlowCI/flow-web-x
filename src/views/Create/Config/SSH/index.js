@@ -11,6 +11,7 @@ import Button from 'components/Button'
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
 import TestButton from '../components/TestButton'
+import DeployList from './deploy'
 
 import classes from './ssh.scss'
 
@@ -43,6 +44,7 @@ export class SSHConfig extends Component {
 
   state = {
     url: this.props.defaultGitUrl,
+    deployKey: '',
   }
 
   getGitSource () {
@@ -51,10 +53,12 @@ export class SSHConfig extends Component {
   }
 
   getValues () {
-    const { url } = this.state
+    const { url, deployKey } = this.state
     return {
+      type: 'SSH',
       source: this.getGitSource(),
-      url: url
+      url: url,
+      deploy: deployKey,
     }
   }
 
@@ -65,6 +69,11 @@ export class SSHConfig extends Component {
   handleDoneCick = () => {
     const { done, flowId } = this.props
     return done(flowId, this.getValues())
+  }
+
+  handleDeploySelect = (deploy, selected) => {
+    const name = selected ? deploy.get('name') : ''
+    this.setState({ deployKey: name })
   }
 
   valid (values) {
@@ -92,12 +101,9 @@ export class SSHConfig extends Component {
 
   renderDeploy () {
     const { i18n } = this.props
-    return <Section>
-      <SectionTitle title={i18n('Deploy Key（可选）')}
-        question='link for doc'
-        subTitle={i18n('如没有 Git 仓库访问权限，请添加 Deploy Key 到 Git 仓库的项目或者用户设置')}
-      />
-    </Section>
+    const { deployKey } = this.state
+    return <DeployList i18n={i18n} selected={deployKey}
+      onSelect={this.handleDeploySelect} />
   }
 
   renderActions () {
@@ -110,7 +116,7 @@ export class SSHConfig extends Component {
         disabled={!enabled}
         onClick={this.handleDoneCick}
       >
-        {i18n('完成')}
+        {i18n('下一步')}
       </Button>
       <TestButton
         envs={values}

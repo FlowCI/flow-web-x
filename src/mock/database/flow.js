@@ -1,5 +1,8 @@
 import types from 'redux/modules/flowType'
 
+export {
+  types,
+}
 export default {
   [types.query]: function () {
     return [{
@@ -8,6 +11,7 @@ export default {
       'updatedAt': 1502418628,
       envs: {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        FLOW_STATUS: 'READY',
       },
     }, {
       'name': 'flow-a',
@@ -15,6 +19,7 @@ export default {
       'updatedAt': 1502691686,
       envs: {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        FLOW_STATUS: 'READY',
       },
     }, {
       'name': 'flow-test',
@@ -22,6 +27,7 @@ export default {
       'updatedAt': 1502691269,
       envs: {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        FLOW_STATUS: 'READY',
       },
     }]
   },
@@ -32,6 +38,7 @@ export default {
       'updatedAt': 1502418628,
       envs: {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        FLOW_STATUS: 'READY',
       },
     }
   },
@@ -42,6 +49,7 @@ export default {
       'updatedAt': 1502418628,
       envs: {
         FLOW_GIT_WEBHOOK: 'http://hooks.flow.ci/11ae50e2a9cbdfc8/eb8d1f8d05a4ff24d9760ca387b84a59',
+        FLOW_STATUS: 'READY',
       },
     }
   },

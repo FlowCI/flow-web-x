@@ -1,0 +1,12 @@
+@import "./variables.scss";
+$icomoon-font-path: "static/fonts";
+
+@font-face {
+  font-family: 'flowci';
+  src:
+    url('#{$icomoon-font-path}/flowci.ttf') format('truetype'),
+    url('#{$icomoon-font-path}/flowci.woff') format('woff'),
+    url('#{$icomoon-font-path}/flowci.svg#flowci') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

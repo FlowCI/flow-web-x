@@ -1,9 +1,12 @@
-@import 'variables';
+@import 'variables/components/control';
 
 @mixin icon-variant ($font-size, $padding) {
   font-size: $font-size;
-  :nth-child(2){
+  >:nth-child(2){
     margin-right: $padding;
+  }
+  >:last-child{
+    margin-right: 0;
   }
 }
 
@@ -34,6 +37,11 @@
 .readonly{
   cursor: default;
 }
+.disabled{
+  cursor: default;
+  pointer-events: none;
+  opacity: .7;
+}
 .sm{
   height: $control-sm-size;
   @include icon-variant($font-size-small, $control-sm-padding-horizontal);
@@ -41,4 +49,7 @@
 .lg{
   height: $control-lg-size;
   @include icon-variant($font-size-large, $control-lg-padding-horizontal);
+}
+.label{
+  flex: 1 1 auto;
 }

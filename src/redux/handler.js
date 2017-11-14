@@ -11,7 +11,8 @@ export function createInitState (initState) {
 }
 
 function getId (obj, options) {
-  return obj[options && options.id ? options.id : 'id']
+  // 强制转为 string 型
+  return obj[options && options.id ? options.id : 'id'] + ''
 }
 
 export function saveToData (state, { payload }, options) {
@@ -41,7 +42,7 @@ export function saveAllToList (state, { payload }, options = {}) {
 
 export function unshiftToList (state, { payload }, options = {}) {
   const id = getId(payload, options)
-  const set = new OrderedSet(id)
+  const set = new OrderedSet().add(id)
   return state.update('list', (list) => set.union(list))
 }
 
@@ -56,9 +57,11 @@ export function removeFromData (state, { payload }, options) {
   return state.update('data', (data) => data.delete(id))
 }
 
-export function removeAllFromData (state, { payload }, options) {
-  const ids = payload.map((data) => getId(data, options))
-  return state.update('data', (data) => data.deleteAll(ids))
+export function removeAllFromData (state, { payload }) {
+  const ids = payload
+  return state.update('data', (data) => {
+    return ids.reduce((d, id) => d.delete(id), data)
+  })
 }
 
 export function removeFromList (state, { payload }, options) {
@@ -66,12 +69,14 @@ export function removeFromList (state, { payload }, options) {
   return state.update('list', (list) => list.delete(id))
 }
 
-export function removeAllFromList (state, { payload }, options) {
-  const ids = payload.map((data) => getId(data, options))
-  return state.update('list', (list) => list.deleteAll(ids))
+export function removeAllFromList (state, { payload }) {
+  const ids = payload
+  return state.update('list', (list) => {
+    return ids.reduce((l, id) => l.delete(id), list)
+  })
 }
 
-export function bindOptions (fn, options) {
+export function bindOptions (options, fn) {
   return function (...args) {
     return fn(...args, options)
   }
@@ -88,15 +93,18 @@ export function bindOptionsCompose (options, ...funcs) {
     return funcs.reduce((s, f) => f(s, action, options), state)
   }
 }
+export function createHandlers (options) {
+  return {
+    save: bindOptionsCompose(options, saveToData, saveToList),
+    saveAll: bindOptionsCompose(options, saveAllToList, saveAllToData),
+    saveData: bindOptions(options, saveToData),
 
-export const handlers = {
-  save: composeHandler(saveToData, saveToList),
-  saveAll: composeHandler(saveAllToList, saveAllToData),
-  saveData: saveToData,
+    unshift: bindOptionsCompose(options, unshiftToList, saveToData),
+    unshiftAll: bindOptionsCompose(options, unshiftAllToList, saveAllToData),
 
-  unshift: composeHandler(unshiftToList, saveToData),
-  unshiftAll: composeHandler(unshiftAllToList, saveAllToData),
-
-  remove: composeHandler(removeFromList, removeFromData),
-  removeAll: composeHandler(removeAllFromList, removeAllFromData),
+    remove: bindOptionsCompose(options, removeFromList, removeFromData),
+    removeAll: bindOptionsCompose(options, removeAllFromList, removeAllFromData),
+  }
 }
+
+export const handlers = createHandlers()

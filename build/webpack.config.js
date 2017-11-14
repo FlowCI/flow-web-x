@@ -13,7 +13,6 @@ const LOCALES = config.languages.map((lang) => {
   return lang.replace(/[\-]/g, '\\$&')
 }).join('|')
 
-
 const webpackConfig = {
   entry: {
     main: [paths.src('main.js')],
@@ -72,7 +71,7 @@ webpackConfig.module.rules.push({
     /node_modules/,
     /static/,
   ],
-  enforce: "pre",
+  enforce: 'pre',
   use: [{
     loader: 'eslint-loader'
   }]
@@ -181,7 +180,7 @@ webpackConfig.module.rules.push({
     test    : new RegExp(`\\.${extension}$`),
     loader  : 'url-loader',
     options : {
-      name  : 'fonts/[name][contenthash].[ext]',
+      name  : 'fonts/[name][hash:8].[ext]',
       limit : 10000,
       mimetype,
     },
@@ -200,6 +199,7 @@ webpackConfig.plugins.push(new HtmlWebpackPlugin({
   },
   version: config.version,
   last_modify: new Date().toISOString(),
+  api: config.globals.__API__ || '""',
 }))
 
 // Development Tools

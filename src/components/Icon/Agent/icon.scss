@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'variables/base';
 .icon{
   border-radius: $border-radius-base;
   width: 28px;
@@ -10,13 +10,13 @@
   align-items: center;
   justify-content: center;
 }
-.OFF{
+.black{
   color: $color-black;
 }
-.IDLE{
+.yellow{
   color: #FFC854;
 }
-.BUSY{
+.green{
   color: $color-success;
 }
 

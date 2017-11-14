@@ -24,7 +24,7 @@ export default class PageLayoutFooter extends PureComponent {
             <li>{i18n('thankFor')}</li>
             <li>
               <a className={classes.navItem}
-                href='https://club.flow.ci'
+                href='https://github.com/FlowCI/flow-web/issues'
                 target='_blank' rel='noopener'>{i18n('club')}</a>
             </li>
             <li>

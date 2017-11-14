@@ -3,6 +3,9 @@ import { handleHttpActions } from 'redux-http'
 function createUIHandler (key) {
   return function (state, { status, indicator }) {
     const id = indicator ? indicator.id : undefined
+    if (!key) {
+      return state
+    }
     return state.update('ui', (ui) => {
       return id ? ui.setIn([id, key], status) : ui.set(key, status)
     })

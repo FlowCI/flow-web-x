@@ -14,8 +14,8 @@ export default function WebhookSection ({ webhook, i18n }) {
     />
     <code className={classes.code}>
       {webhook}
-      {<ClipboardButton data-clipboard-text={webhook}
-        className={classes.copy} />}
+      <ClipboardButton data-clipboard-text={webhook}
+        className={classes.copy} />
     </code>
   </Section>
 }

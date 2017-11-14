@@ -1,5 +1,5 @@
 @import '~normalize.css/normalize';
-
+@import './variables/components/_control.scss';
 *,
 *:before,
 *:after {
@@ -30,7 +30,10 @@ textarea {
 input::placeholder{
   color: $input-placeholder-color;
 }
-
+input:-webkit-autofill {
+  // 使用阴影盖住自动填充时的黄色
+  box-shadow: 0 0 0 30px white inset;
+}
 input{
   outline: none;
   border: 1px solid $input-border;

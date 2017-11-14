@@ -152,7 +152,7 @@ export default class Select extends Component {
       leftIcon, size,
       searchabled, disabled
     } = this.props
-    const rightIcon = searchabled ? undefined : <Arrow up={opened} />
+    const rightIcon = searchabled || disabled ? undefined : <Arrow up={opened} />
 
     return <Input
       value={v || ''} size={size}
@@ -226,6 +226,7 @@ export default class Select extends Component {
     const cls = [classNames.select, className]
 
     size && cls.push(classNames[size])
+    opened && cls.push(classNames.opened)
     /*
       input component will add disabled class,
       so there is no need to add disabled

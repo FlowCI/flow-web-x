@@ -1,4 +1,4 @@
-@import 'variables.scss';
+@import 'variables/components/control';
 @mixin button-size($size, $padding-vertical, $padding-horizontal) {
   .content{
     padding: $padding-vertical $padding-horizontal;

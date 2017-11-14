@@ -30,25 +30,27 @@ export default class BuildGuide extends Component {
   renderSteps () {
     const { i18n } = this.props
     return <Steps>
-      <Step title={i18n('在你的项目中添加 .flow.yml 配置文件')}>
+      <Step title={i18n('在你的项目中添加 .flow.yml 配置文件')}
+        thumbnail={require('static/images/flow_yml.png')}>
         <List>
           <Item>
-            <p>在根目录下添加 .flow.yml 文件。</p>
+            <p>填写 flow 名称</p>
           </Item>
           <Item>
             <p>
-              对于新创建的项目，flow.ci 会在根目录下自动查找 .flow.yml 项目配置文件，根据配置文件中定义的步骤，自动生成工作流。
+               配置 git 仓库
             </p>
           </Item>
           <Item>
             <div>
-              <p>如果在现有的项目中添加 .flow.yml，在收到 Push，Pull Request 等触发时，会根据配置文件自动更新工作流。</p>
+              <p>配置 yml 工作流，flowci 会根据你配置的工作流执行构建任务，之后可在“工作流设置”中修改 yml 工作流。</p>
               <a>点击查看 yml 文件编写规范</a>
             </div>
           </Item>
         </List>
       </Step>
-      <Step title={i18n('通过 git push 触发第一次构建')}>
+      <Step title={i18n('通过 git push 触发第一次构建')}
+        thumbnail={require('static/images/git.png')}>
         <div>
           <p>要开始构建，请务必完成以下操作：</p>
           <List>
@@ -64,7 +66,8 @@ export default class BuildGuide extends Component {
           <p>完成上面的操作后，你可以立即发起一次 commit 来触发构建。</p>
         </div>
       </Step>
-      <Step title={i18n('点击这里切换 flow')} />
+      <Step title={i18n('点击这里切换 flow')}
+        thumbnail={require('static/images/flow.png')} />
     </Steps>
   }
 

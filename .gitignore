@@ -5,4 +5,4 @@ dist
 coverage
 .idea/
 .yarn-cache
-.vscode/
+deploy.sh

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { Link } from 'react-router'
-import Icon from 'components/Icon/Flow'
+import Icon from 'components/Icon/Job'
 
 import classes from './flowtab.scss'
 
@@ -12,7 +12,7 @@ function mapStateToProps (state, { id }) {
   const { flow } = state
   return {
     name: flow.getIn(['data', id, 'name']),
-    status: flow.getIn(['status', id, 'status']),
+    status: flow.getIn(['status', id, 'status'], ''),
   }
 }
 

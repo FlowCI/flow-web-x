@@ -2,11 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
-import { Link } from 'react-router'
-import { push } from 'react-router-redux'
-
+import Navbar from '../../components/Navbar'
 import { FlowCard, AgentsCard, UserCard, Card } from './Card'
 
 import classes from './navbar.scss'
@@ -14,19 +11,13 @@ import classes from './navbar.scss'
 function mapStateToProps (state, props) {
   const { session, ui } = state
   return {
-    authored: session.has('user'),
+    authored: !!session.get('user'),
     avatar: session.getIn(['user', 'avatar']),
     backUrl: ui.get('backUrl'),
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    redirect: push,
-  }, dispatch)
-}
-
-export class Navbar extends PureComponent {
+export class PageLayoutNavbar extends PureComponent {
   static propTypes = {
     /*
       if false, it will only show question icon
@@ -42,9 +33,7 @@ export class Navbar extends PureComponent {
     */
     backUrl: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 
-    locatonKey: PropTypes.any,
-
-    redirect: PropTypes.func.isRequired,
+    locationKey: PropTypes.any,
 
     i18n: PropTypes.func.isRequired,
   }
@@ -56,7 +45,7 @@ export class Navbar extends PureComponent {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.locatonKey !== nextProps.locatonKey) {
+    if (this.props.locationKey !== nextProps.locationKey) {
       this.setState({ openFlows: false, openAgents: false, openMenus: false })
     }
   }
@@ -85,19 +74,13 @@ export class Navbar extends PureComponent {
 
   closeUserMenus = this.createCloseHandler('openMenus')
 
-  handleBack = (e) => {
-    const { redirect, backUrl } = this.props
-    redirect(backUrl)
-  }
-
   renderBackButton () {
-    const { i18n } = this.props
+    const { i18n, backUrl } = this.props
 
     return <Card containerClass={classes.backButton}
-      className={classes.back}
-      onActive={this.handleBack}>
+      className={classes.back} to={backUrl}>
       <i className='icon icon-arrow-left' />
-      {i18n('back')}
+      {i18n('返回')}
     </Card>
   }
 
@@ -108,10 +91,7 @@ export class Navbar extends PureComponent {
     const contentClass = [classes.content]
     !authored && contentClass.push(classes.unauthored)
 
-    return <div className={classes.navbar}>
-      <Link className={classes.logo} to='/'>
-        <i className='icon icon-logo' />
-      </Link>
+    return <Navbar>
       <div className={contentClass.join(' ')}>
         {authored && (backUrl ? this.renderBackButton()
           : <FlowCard i18n={i18n} active={openFlows}
@@ -138,8 +118,8 @@ export class Navbar extends PureComponent {
           </li>}
         </ul>
       </div>
-    </div>
+    </Navbar>
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+export default connect(mapStateToProps)(PageLayoutNavbar)

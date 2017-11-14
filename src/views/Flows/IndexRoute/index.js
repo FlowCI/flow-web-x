@@ -1,24 +1,18 @@
 // to show build guide or redirect to jobs
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { replace } from 'react-router-redux'
 
-import { STATUS } from 'redux-http'
-
-import Loading from 'components/Loading'
-import Guide from 'views/BuildGuide'
-
 function mapStateToProps (state, props) {
-  const { job } = state
-  const { location } = props
-  const status = job.getIn(['ui', 'QUERY'])
+  const { flow } = state
+  const { params: { flowId } } = props
   return {
-    hasJob: job.get('data').size > 0,
-    loaded: status > STATUS.send,
-    baseHref: location.pathname,
+    flowId,
+    flow: flow.getIn(['data', flowId]),
   }
 }
 
@@ -30,33 +24,35 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowIndexRoute extends Component {
   static propTypes = {
-    hasJob: PropTypes.bool,
-    loaded: PropTypes.bool,
-    baseHref: PropTypes.string,
-    redirect: PropTypes.func.isRequired,
+    flowId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
+    flow: ImmutablePropTypes.map.isRequired, // eslint-disable-line react/no-unused-prop-types
+    redirect: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
   }
 
-  state = {
-    loaded: this.props.loaded
+  componentDidMount () {
+    this.tryRedirect()
   }
 
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.hasJob) {
-      const { baseHref, redirect } = nextProps
-      redirect(`${baseHref}/jobs`)
-    } else if (!this.state.loaded && nextProps.loaded) {
-      this.setState({ loaded: true })
+  componentWillUpdate (nextProps, nextState) {
+    this.tryRedirect(nextProps)
+  }
+
+  tryRedirect (props = this.props) {
+    const { flow, flowId, redirect } = props
+    if (!flow) {
+      return
+    }
+    const status = flow.getIn(['envs', 'FLOW_STATUS'])
+
+    if (status === 'READY') {
+      redirect(`/flows/${flowId}/jobs`)
+    } else {
+      redirect(`/create/${flowId}`)
     }
   }
 
   render () {
-    const { loaded } = this.state
-    if (loaded) {
-      return <Guide />
-    }
-    return <div>
-      <Loading />
-    </div>
+    return <div />
   }
 }
 

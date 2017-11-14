@@ -1,0 +1,298 @@
+@import "variables";
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'flowci' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-social-github {
+  &:before {
+    content: $icon-social-github;
+  }
+}
+
+.icon-pencil {
+  &:before {
+    content: $icon-pencil;
+  }
+}
+
+.icon-warning {
+  &:before {
+    content: $icon-warning;
+  }
+}
+
+.icon-warning2 {
+  &:before {
+    content: $icon-warning2;
+  }
+}
+
+.icon-trash {
+  &:before {
+    content: $icon-trash;
+  }
+}
+
+.icon-pending {
+  &:before {
+    content: $icon-pending;
+  }
+}
+
+.icon-timeout {
+  &:before {
+    content: $icon-timeout;
+  }
+}
+
+.icon-stopped {
+  &:before {
+    content: $icon-stopped;
+  }
+}
+
+.icon-failure {
+  &:before {
+    content: $icon-failure;
+  }
+}
+
+.icon-running {
+  &:before {
+    content: $icon-running;
+  }
+}
+
+.icon-check {
+  &:before {
+    content: $icon-check;
+  }
+}
+
+.icon-cross {
+  &:before {
+    content: $icon-cross;
+  }
+}
+
+.icon-logo {
+  &:before {
+    content: $icon-logo;
+  }
+}
+
+.icon-bookmark {
+  &:before {
+    content: $icon-bookmark;
+  }
+}
+
+.icon-jigsaw {
+  &:before {
+    content: $icon-jigsaw;
+  }
+}
+
+.icon-notification {
+  &:before {
+    content: $icon-notification;
+  }
+}
+
+.icon-users {
+  &:before {
+    content: $icon-users;
+  }
+}
+
+.icon-plus-sm {
+  &:before {
+    content: $icon-plus-sm;
+  }
+}
+
+.icon-equalizer {
+  &:before {
+    content: $icon-equalizer;
+  }
+}
+
+.icon-git-branch {
+  &:before {
+    content: $icon-git-branch;
+  }
+}
+
+.icon-layergroup {
+  &:before {
+    content: $icon-layergroup;
+  }
+}
+
+.icon-off {
+  &:before {
+    content: $icon-off;
+  }
+}
+
+.icon-code {
+  &:before {
+    content: $icon-code;
+  }
+}
+
+.icon-radio-checked {
+  &:before {
+    content: $icon-radio-checked;
+  }
+}
+
+.icon-radio-checked-disabled {
+  &:before {
+    content: $icon-radio-checked-disabled;
+  }
+}
+
+.icon-radio-unchecked {
+  &:before {
+    content: $icon-radio-unchecked;
+  }
+}
+
+.icon-circle-check {
+  &:before {
+    content: $icon-circle-check;
+  }
+}
+
+.icon-search2 {
+  &:before {
+    content: $icon-search2;
+  }
+}
+
+.icon-search {
+  &:before {
+    content: $icon-search;
+  }
+}
+
+.icon-arrow-down {
+  &:before {
+    content: $icon-arrow-down;
+  }
+}
+
+.icon-arrow-left {
+  &:before {
+    content: $icon-arrow-left;
+  }
+}
+
+.icon-arrow-right {
+  &:before {
+    content: $icon-arrow-right;
+  }
+}
+
+.icon-arrow-up {
+  &:before {
+    content: $icon-arrow-up;
+  }
+}
+
+.icon-key {
+  &:before {
+    content: $icon-key;
+  }
+}
+
+.icon-user {
+  &:before {
+    content: $icon-user;
+  }
+}
+
+.icon-add_circle {
+  &:before {
+    content: $icon-add_circle;
+  }
+}
+
+.icon-control_point {
+  &:before {
+    content: $icon-control_point;
+  }
+}
+
+.icon-agents {
+  &:before {
+    content: $icon-agents;
+  }
+}
+
+.icon-branches {
+  &:before {
+    content: $icon-branches;
+  }
+}
+
+.icon-checkbox-checked {
+  &:before {
+    content: $icon-checkbox-checked;
+  }
+}
+
+.icon-checkbox-unchecked {
+  &:before {
+    content: $icon-checkbox-unchecked;
+  }
+}
+
+.icon-logout {
+  &:before {
+    content: $icon-logout;
+  }
+}
+
+.icon-question-thin {
+  &:before {
+    content: $icon-question-thin;
+  }
+}
+
+.icon-question {
+  &:before {
+    content: $icon-question;
+  }
+}
+
+.icon-settings {
+  &:before {
+    content: $icon-settings;
+  }
+}
+
+.icon-loading {
+  &:before {
+    content: $icon-loading;
+  }
+}
+
+.icon-loading1 {
+  &:before {
+    content: $icon-loading1;
+  }
+}
+

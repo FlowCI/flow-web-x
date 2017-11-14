@@ -1,9 +1,11 @@
 @import 'fonts/helveticaNeue.scss';
+@import 'icon/font';
 :global {
 
   // Some best-practice CSS that's useful for most apps
   // Just remove them if they're not what you want
-  @import './variables';
+  @import './icon/style.scss';
+  @import './variables/_base.scss';
   @import './normalize';
   @import './control';
   html {

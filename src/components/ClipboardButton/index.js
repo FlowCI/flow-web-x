@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string, func } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import clipboard from 'clipboard'
 import ClipboardButton from 'react-clipboard.js'
@@ -8,9 +8,13 @@ export const supported = clipboard.isSupported()
 
 export default class ClipboardButtonWrapper extends Component {
   static propTypes = {
-    className: string,
-    i18n: func.isRequired,
-    onSuccess: func,
+    /**
+     * @param {string} data-clipboard-text 要复制的内容
+     */
+    className: PropTypes.string,
+    size: PropTypes.oneOf(['sm', 'lg']),
+    i18n: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func,
   }
 
   static defaultProps = {
@@ -34,11 +38,15 @@ export default class ClipboardButtonWrapper extends Component {
   }
 
   render () {
-    const { i18n, className, ...other } = this.props
+    const { i18n, className, size, ...other } = this.props
     const { copied } = this.state
 
+    const cls = ['btn']
+    cls.push(supported ? className : 'hide')
+    size && cls.push(`btn-${size}`)
+
     return <ClipboardButton {...other}
-      className={`btn ${supported ? className : 'hide'}`}
+      className={cls.join(' ')}
       onSuccess={this.handleCopySuccess}
     >
       <span>

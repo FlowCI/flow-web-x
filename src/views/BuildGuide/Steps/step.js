@@ -8,7 +8,7 @@ export default class GuideStep extends PureComponent {
     index: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     children: PropTypes.node,
-    thumbnail: PropTypes.string,
+    thumbnail: PropTypes.any,
   }
 
   static defaultProps = {

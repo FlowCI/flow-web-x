@@ -76,6 +76,16 @@ export default class Input extends Component {
     return onChange(e.target.value)
   }
 
+  handleClick = (e) => {
+    const { target } = e
+    if (this.input) {
+      this.input.focus()
+      if (target !== this.input) {
+        this.input.click()
+      }
+    }
+  }
+
   render () {
     const {
       disabled, readOnly,
@@ -104,13 +114,13 @@ export default class Input extends Component {
     !divider && cls.push(classNames.noDivider)
 
     focus && cls.push('focus')
-    disabled && cls.push(classNames.disabled)
-    readOnly && cls.push(classNames.readonly)
+    disabled && cls.push('disabled')
+    readOnly && cls.push('readonly')
 
-    return <label className={cls.join(' ')}>
+    return <div className={cls.join(' ')} onClick={this.handleClick}>
       {!!leftIcon && <span className={classes.left}>{leftIcon}</span>}
       {divider && !!leftIcon && <span className={classNames.divider} />}
-      <input {...other}
+      <input {...other} ref={(input) => { this.input = input }}
         className={inputCls.join(' ')}
         onKeyUp={this.handleKeyUp}
         onFocus={this.handleFocus}
@@ -119,6 +129,6 @@ export default class Input extends Component {
       />
       {divider && !!rightIcon && <span className={classNames.divider} />}
       {!!rightIcon && <span className={classes.right}>{rightIcon}</span>}
-    </label>
+    </div>
   }
 }

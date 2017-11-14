@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import createI18n from '../i18n'
 import language from 'util/language'
 
+import { generatorJobId } from 'redux/modules/job'
+
 import { Map } from 'immutable'
 
 // import moment from 'moment'
@@ -19,7 +21,8 @@ import classes from './info.scss'
 
 function mapStateToProps (state, props) {
   const { job } = state
-  const { params: { jobId } } = props
+  const { params: { flowId, jobNumber } } = props
+  const jobId = generatorJobId(flowId, jobNumber)
   return {
     job: job.getIn(['data', jobId])
   }
@@ -41,34 +44,39 @@ export class JobInfo extends Component {
 
   renderCommit () {
     const { job, i18n } = this.props
-    const outputs = job.get('outputs', new Map())
+    const envs = job.get('envs', new Map())
+    const outputs = job.getIn(['result', 'outputs'], new Map())
+
+    const commitBlock =
+      <a target='_blank' href={outputs.get('FLOW_GIT_COMMIT_URL')}>
+        {outputs.get('FLOW_GIT_COMMIT_ID', '-')}
+      </a>
+    const compareBlock =
+      <a target='_blank' href={outputs.get('FLOW_GIT_COMPARE_URL')}>
+        {outputs.get('FLOW_GIT_COMPARE_ID')}
+      </a>
+
     return <Mapping>
       <Legend name={i18n('提交信息')} />
-      <Entry name='Commit' value={<a target='_blank'>
-        {outputs.getIn(['FLOW_GIT_COMMIT_ID', 'value'], '-')}
-      </a>} />
-      <Entry name='Author'
-        value={outputs.getIn(['FLOW_GIT_COMMITER', 'value'])} />
+      <Entry name={i18n('commit')} value={commitBlock} />
+      <Entry name={i18n('author')}
+        value={outputs.get('FLOW_GIT_AUTHOR')} />
 
-      <Entry name='Branch'
-        value={outputs.getIn(['FLOW_GIT_BRANCH', 'value'])} />
+      <Entry name={i18n('branch')}
+        value={outputs.get('FLOW_GIT_BRANCH')} />
 
-      <Entry name='Commit message'
-        value={outputs.getIn(['FLOW_GIT_CHANGELOG', 'value'])} />
+      <Entry name={i18n('commit message')}
+        value={outputs.get('FLOW_GIT_CHANGELOG')} />
 
-      <Entry name='Compare' value={<a target='_blank'>
-        {outputs.getIn(['FLOW_GIT_COMPARE_ID', 'value'])}
-      </a>} />
+      <Entry name={i18n('compare')} value={compareBlock} />
       <Legend name={i18n('Agent 信息')} />
-      <Entry name='Agent'
-        value={outputs.getIn(['FLOW_AGENT_ZONE', 'value'])} />
+      <Entry name={i18n('Agent')}
+        value={envs.get('FLOW_JOB_AGENT_INFO')} />
     </Mapping>
   }
 
   renderContent () {
-    return <div>
-      {this.renderCommit()}
-    </div>
+    return this.renderCommit()
   }
 
   render () {

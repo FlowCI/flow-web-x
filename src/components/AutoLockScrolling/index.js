@@ -1,17 +1,20 @@
-import { PureComponent } from 'react'
+import { Component } from 'react'
 import PropTypes from 'prop-types'
 
 let originalBodyOverflow = null
 let lockingCounter = 0
 
-export default class AutoLockScrolling extends PureComponent {
-
+export default class AutoLockScrolling extends Component {
   static propTypes = {
     lock: PropTypes.bool.isRequired
   }
 
+  static defaultProps = {
+    lock: false,
+  }
+
   componentDidMount () {
-    if (this.props.lock ) {
+    if (this.props.lock) {
       this.preventScrolling()
     }
   }
@@ -65,5 +68,4 @@ export default class AutoLockScrolling extends PureComponent {
   render () {
     return null
   }
-
 }

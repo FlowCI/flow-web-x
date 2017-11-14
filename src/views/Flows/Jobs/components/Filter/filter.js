@@ -13,20 +13,22 @@ import { actions as branchActions } from 'redux/modules/branch'
 
 import { Select, Option } from 'components/Form/Select'
 import Checkbox from 'components/Form/Checkbox'
+import Input from 'components/Form/Input'
 
 import classes from './filter.scss'
 
 function mapStateToProps (state, props) {
   const { branch, job } = state
-  const { id } = props
+  const { flowId } = props
 
   const status = branch.getIn(['ui', 'QUERY'])
   const filter = job.getIn(['ui', 'filter'], {})
 
   return {
-    branches: branch.getIn(['data', id], new List()),
+    branches: branch.getIn(['data', flowId], new List()),
 
     branch: filter.branch,
+    keyword: filter.keyword,
     onlySelf: !!filter.onlySelf,
     pullRequest: !!filter.pullRequest,
 
@@ -45,8 +47,9 @@ function mapDispatchToProps (dispatch) {
 
 export class JobsFilter extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    flowId: PropTypes.string.isRequired,
     branch: PropTypes.string,
+    keyword: PropTypes.string,
     onlySelf: PropTypes.bool,
     pullRequest: PropTypes.bool,
 
@@ -63,21 +66,33 @@ export class JobsFilter extends Component {
     branch: '',
   }
 
+  state = {
+    keyword: this.props.keyword || ''
+  }
+
   componentDidMount () {
-    const { id, loading, loaded, queryBranches, } = this.props
+    const { flowId, loading, loaded, queryBranches, } = this.props
     if (!loading && !loaded) {
-      queryBranches(id)
+      queryBranches(flowId)
+    }
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.keyword !== nextProps.keyword) {
+      this.setState({ keyword: nextProps.keyword })
     }
   }
 
   componentWillUnmount () {
+    clearTimeout(this.keywordTimer)
     const { freedFilter } = this.props
     freedFilter()
   }
 
   saveFilter (name, value) {
     const { branch, onlySelf, pullRequest, setFilter } = this.props
-    const filter = { branch, onlySelf, pullRequest }
+    const { keyword } = this.state
+    const filter = { branch, onlySelf, pullRequest, keyword }
     filter[name] = value
     setFilter(filter)
   }
@@ -94,8 +109,26 @@ export class JobsFilter extends Component {
     this.saveFilter('pullRequest', checked)
   }
 
+  handleKeyword = (v) => {
+    clearTimeout(this.keywordTimer)
+    this.setState({ 'keyword': v })
+    /**
+     * save state 为异步，300ms 中包含异步时间.
+     */
+    this.keywordTimer = setTimeout(this.saveKeyword, 300)
+  }
+
+  saveKeyword = () => {
+    this.saveFilter('keyword', this.state.keyword)
+  }
+
   render () {
-    const { loading, branches, branch, onlySelf, pullRequest } = this.props
+    const {
+      loading, branches,
+      branch, onlySelf,
+      pullRequest,
+    } = this.props
+    const { keyword } = this.state
     return <div className={classes.filter}>
       <Select loading={loading} className={classes.select}
         value={branch} onChange={this.handleBranch}
@@ -103,6 +136,8 @@ export class JobsFilter extends Component {
         <Option value=''>全部分支</Option>
         {branches.map((b) => <Option key={b} title={b} value={b} />)}
       </Select>
+      <Input placeholder='输入关键词搜索' value={keyword}
+        onChange={this.handleKeyword} />
       <Checkbox rightLabel='只查看我的提交' checked={onlySelf}
         onChange={this.handleOnlySelfCheck} />
       <Checkbox rightLabel='Pull Request' checked={pullRequest}

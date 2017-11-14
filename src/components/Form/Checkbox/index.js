@@ -13,7 +13,7 @@ export default class Checkbox extends Component {
     classNames: PropTypes.object.isRequired,
 
     size: PropTypes.oneOf(['sm', 'lg']),
-    meta: PropTypes.bool,
+    meta: PropTypes.object,
 
     leftLabel: PropTypes.node,
     rightLabel: PropTypes.node,
@@ -25,6 +25,7 @@ export default class Checkbox extends Component {
   }
 
   static defaultProps = {
+    checked: false,
     className: '',
     classNames: classes,
     type: 'checkbox',
@@ -55,18 +56,21 @@ export default class Checkbox extends Component {
     readOnly && cls.push(classNames.readonly)
 
     let left = icon
+    let right
     if (leftLabel) {
       left = <span className={classNames.label}>{leftLabel}</span>
+    } else if (rightLabel) {
+      left = icon
+      right = <span className={classNames.label}>
+        {rightLabel}
+      </span>
     }
-    const right = left === icon ? <span className={classNames.label}>
-      {rightLabel}
-    </span> : icon
 
     return <label className={cls.join(' ')}>
       <input {...other} className='hide'
         checked={checked}
         disabled={readOnly}
-        onChange={!!onChange && this.handleChange}
+        onChange={onChange ? this.handleChange : undefined}
       />
       {left}
       {right}

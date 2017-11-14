@@ -1,0 +1,8 @@
+@import 'variables/navbar';
+.container{
+  padding-top: $navbar-height + 1px;
+  padding-bottom: 0;
+  @media screen and (max-width: $screen-phone) {
+    padding-top: $navbar-phone-height + 1px;
+  }
+}

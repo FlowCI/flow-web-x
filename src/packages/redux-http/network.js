@@ -31,6 +31,14 @@ export default class HttpProvider extends Axios {
       conf.data = { ...conf.data, ...conf.params }
       conf.params = undefined
     }
+    if (is.string(conf.data)) {
+      const headers = conf.headers || {}
+      if (!headers['Content-Type']) {
+        // 如果不设置默认 data 为 string 时 content-type 会由浏览器设置，会导致问题
+        headers['Content-Type'] = 'text/plain;charset=UTF-8'
+        conf.headers = headers
+      }
+    }
     const { transformResponse, transformRequest } = conf
     if (transformResponse && is.func(transformResponse)) {
       conf.transformResponse = [

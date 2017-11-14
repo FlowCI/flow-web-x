@@ -11,6 +11,7 @@ import Button from 'components/Button'
 
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
+import TestButton from '../components/TestButton'
 
 import classes from './http.scss'
 
@@ -54,15 +55,26 @@ export class HTTPConfig extends Component {
   }
 
   getValues () {
-    const { url } = this.state
+    const { url, username, password } = this.state
     return {
+      type: 'HTTP',
       source: this.getGitSource(),
-      url: url
+      url: url,
+      username,
+      password,
     }
   }
 
   handleUrlChange = (value) => {
     this.setState({ url: value })
+  }
+
+  handleUsernameChange = (value) => {
+    this.setState({ username: value })
+  }
+
+  handlePasswordChange = (value) => {
+    this.setState({ password: value })
   }
 
   handleDoneCick = () => {
@@ -79,7 +91,7 @@ export class HTTPConfig extends Component {
 
   valid (values) {
     const { url } = values
-    return /^git@\w+\.\w+/.test(url)
+    return /^http/.test(url)
   }
 
   renderGitUrl () {
@@ -91,7 +103,7 @@ export class HTTPConfig extends Component {
       />
       <Input className={classes.addr} value={url}
         type='url' onChange={this.handleUrlChange}
-        placeholder={i18n('例：git@github.com:FlowCI/flow-platform.git')} />
+        placeholder={i18n('例：https://github.com/FlowCI/flow-platform.git')} />
     </Section>
   }
 
@@ -103,7 +115,7 @@ export class HTTPConfig extends Component {
         question='link for doc'
       />
       <Input value={username} className={classes.input}
-        type='text' onChange={this.handleUrlChange}
+        type='text' onChange={this.handleUsernameChange}
         placeholder={i18n('')} />
     </Section>
   }
@@ -117,7 +129,7 @@ export class HTTPConfig extends Component {
         question='link for doc'
       />
       <Input value={password} className={classes.input}
-        type='password' onChange={this.handleUrlChange}
+        type='password' onChange={this.handlePasswordChange}
         placeholder={i18n('')} />
     </Section>
   }
@@ -128,22 +140,22 @@ export class HTTPConfig extends Component {
   }
 
   renderActions () {
-    const { i18n } = this.props
-    const enabled = this.valid(this.getValues())
+    const { i18n, flowId } = this.props
+    const values = this.getValues()
+    const enabled = this.valid(values)
 
     return <div className={classes.actions}>
       <Button className='btn-primary'
         disabled={!enabled}
         onClick={this.handleDoneCick}
       >
-        {i18n('完成')}
+        {i18n('下一步')}
       </Button>
-      <Button className='btn-inverse'
-        leftIcon={<i className='icon icon-check text-success' />}
-        onClick={this.handleTestClick}
-      >
-        {i18n('连接测试')}
-      </Button>
+      <TestButton
+        envs={values}
+        i18n={i18n.createChild('test')} disabled={!enabled}
+        flowId={flowId}
+      />
     </div>
   }
 

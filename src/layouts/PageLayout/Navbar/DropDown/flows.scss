@@ -1,4 +1,6 @@
-@import 'variables';
+@import 'variables/navbar';
+@import 'variables/components/arrow';
+@import 'variables/components/control';
 
 $padding-vertical: 1.5*$padding-base-vertical;
 $padding-horizontal: 1.5*$padding-base-horizontal;
@@ -7,6 +9,9 @@ $padding-horizontal: 1.5*$padding-base-horizontal;
   left: 0;
   width: 300px;
   line-height: $line-height-base;
+  position: fixed;
+  top: $navbar-height;
+  bottom: 0px;
 }
 .arrow{
   left: ($navbar-brand-width / 2) - $arrow-size;

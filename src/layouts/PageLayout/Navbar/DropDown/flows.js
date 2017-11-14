@@ -21,44 +21,38 @@ import FlowTab from '../components/flowtab'
 
 import classes from './flows.scss'
 
-const flowsSelector = createSelector(
-  (state) => state.flow.get('list'),
-  (state) => state.flow.get('data'),
-  (ids, data) => ids.map((id) => data.get(id))
-)
-
 const filterFlowsSelector = createSelector(
-  (flows, filter) => flows,
-  (flows, filter) => filter,
-  (flows, filter) => {
-    let filted = flows
-    if (filter !== undefined && filter !== '') {
+  (names, filter) => names,
+  (names, filter) => filter,
+  (names, filter) => {
+    let filted = names
+    if (filter) {
       const reg = new RegExp(filter.replace('\\', '\\\\'), 'i')
-      filted = flows.filter((flow) => {
-        const name = flow.get('name')
-        return reg.test(name)
-      })
+      filted = names.filter((name) => reg.test(name))
     }
-    return filted.map((f) => f.get('id'))
+    return filted
   }
 )
 function mapStateToProps (state, props) {
   const { flow } = state
   const status = flow.getIn(['ui', 'QUERY_LAST_JOBS'])
 
-  const flows = flowsSelector(state)
-  const filter = flow.getIn(['ui', 'dropDownFilter'])
+  const list = flow.get('list')
+  const filter = flow.getIn(['ui', 'filter'])
+  const query = flow.getIn(['ui', 'QUERY'])
+
   return {
-    flowIds: filterFlowsSelector(flows, filter),
-    loaded:  status === STATUS.success,
+    flowIds: filterFlowsSelector(list, filter),
+    loaded: query === STATUS.success && (!list.size ||
+      status === STATUS.success),
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     queryLastJob: jobActions.queryLastest,
-    setDropDownFilter: actions.setDropDownFilter,
-    freedDropDownFilter: actions.freedDropDownFilter,
+    setFilter: actions.setFilter,
+    freedFilter: actions.freedFilter,
   }, dispatch)
 }
 
@@ -68,8 +62,8 @@ export class NavbarFlowsDropdown extends PureComponent {
     loaded: PropTypes.bool,
 
     queryLastJob: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
-    setDropDownFilter: PropTypes.func.isRequired,
-    freedDropDownFilter: PropTypes.func.isRequired,
+    setFilter: PropTypes.func.isRequired,
+    freedFilter: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -89,8 +83,8 @@ export class NavbarFlowsDropdown extends PureComponent {
   }
 
   componentWillUnmount () {
-    const { freedDropDownFilter } = this.props
-    freedDropDownFilter()
+    const { freedFilter } = this.props
+    freedFilter()
   }
 
   queryJobs (props = this.props) {
@@ -99,8 +93,8 @@ export class NavbarFlowsDropdown extends PureComponent {
   }
 
   handleSearch = (value) => {
-    const { setDropDownFilter } = this.props
-    setDropDownFilter(value)
+    const { setFilter } = this.props
+    setFilter(value)
   }
 
   renderFlows () {

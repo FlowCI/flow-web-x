@@ -15,7 +15,8 @@ export default class JobStatusHeader extends Component {
     const { base, i18n } = this.props
     return <ul className={classes.navbar}>
       <li>
-        <Link to={base} className={classes.nav} activeClassName='active'>
+        <Link to={base} className={classes.nav}
+          onlyActiveOnIndex activeClassName='active'>
           {i18n('详细信息')}
         </Link>
       </li>
@@ -24,6 +25,13 @@ export default class JobStatusHeader extends Component {
           className={classes.nav}
           activeClassName='active'>
           {i18n('构建日志')}
+        </Link>
+      </li>
+      <li>
+        <Link to={{ ...base, pathname: `${base.pathname}/yml` }}
+          className={classes.nav}
+          activeClassName='active'>
+          {i18n('yml配置')}
         </Link>
       </li>
     </ul>

@@ -11,7 +11,7 @@ import Checkbox from './Checkbox'
 import Input from './Input'
 import Radio from './Radio'
 import RadioGroups from './RadioGroups'
-import Select from './Select'
+import { Select, Option } from './Select'
 
 export function createReduxFormAdapter (Component) {
   function ReduxFormAdapter (props) {
@@ -27,10 +27,23 @@ export function createReduxFormAdapter (Component) {
   return ReduxFormAdapter
 }
 
+export function createCheckboxAdapter (Component) {
+  function CheckboxReduxFormAdapter (props) {
+    const {
+      input,
+      ...other,
+    } = props
+    return <Component {...input} {...other} checked={!!input.value} />
+  }
+  CheckboxReduxFormAdapter.propTypes = {
+    input: PropTypes.any,
+  }
+  return CheckboxReduxFormAdapter
+}
+export const CheckboxAdapter = createCheckboxAdapter(Checkbox)
+export const RadioGroupsAdapter = createCheckboxAdapter(RadioGroups)
 export const AutoCompleteAdapter = createReduxFormAdapter(AutoComplete)
-export const CheckboxAdapter = createReduxFormAdapter(Checkbox)
 export const InputAdapter = createReduxFormAdapter(Input)
-export const RadioGroupsAdapter = createReduxFormAdapter(RadioGroups)
 export const SelectAdapter = createReduxFormAdapter(Select)
 
 export function createReduxFormField (Component) {
@@ -53,4 +66,5 @@ export {
   Radio,
   ReduxFormRadioGroups as RadioGroups,
   ReduxFormSelect as Select,
+  Option,
 }

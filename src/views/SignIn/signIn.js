@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import createI18n from './i18n'
@@ -13,13 +13,13 @@ import { actions } from 'redux/modules/session'
 
 import Form from './form'
 
-import classes from './signin.scss'
+import classes from './signIn.scss'
 
 function mapStateToProps (state, props) {
   const { session } = state
   const { location } = props
   return {
-    unauthored: !session.has('user'),
+    unauthored: !session.get('user'),
     email: location.query.email,
   }
 }
@@ -31,7 +31,7 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
-export class SignIn extends PureComponent {
+export class SignIn extends Component {
   static propTypes = {
     unauthored: PropTypes.bool,
     email: PropTypes.string,

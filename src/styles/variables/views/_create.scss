@@ -1,0 +1,54 @@
+@import '../_base.scss';
+// Create Flow
+$create-flow-step-color: $color-black!default;
+$create-flow-step-bgc: #fff!default;
+$create-flow-step-border-color: $color-hr;
+
+$create-flow-step-spacing: 4*$padding-base-vertical;
+
+$create-flow-step-border-raduis: $border-radius-base!default;
+$create-flow-step-boxshadow: $base-boxshadow!default;
+
+$create-flow-step-header-height: 60px!default;
+$create-flow-step-header-vertical-padding: 1.5*$padding-base-vertical!default;
+$create-flow-step-header-horizontal-padding: 2*$padding-base-horizontal!default;
+$create-flow-step-header-color: #fff!default;
+$create-flow-step-header-bgc: #C3C8CE!default;
+
+$create-flow-step-header-active-bgc: #6668D3!default;
+$create-flow-step-header-active-color: $create-flow-step-header-color!default;
+
+$create-flow-step-icon-font-size: 25px!default;
+$create-flow-step-icon-size: 60px!default;
+$create-flow-step-icon-boxshadow: $create-flow-step-boxshadow!default;
+$create-flow-step-icon-padding-left: 4*$padding-base-horizontal;
+
+$create-flow-step-cable-color: #C3C8CE!default;
+
+$create-flow-title-color: $color-black!default;
+$create-flow-subtitle-color: #8B8C9B!default;
+$create-flow-subtitle-font-weight: normal!default;
+
+$create-flow-well-border: #A7ABB1!default;
+$create-flow-well-border-radius: $border-radius-base!default;
+$create-flow-well-vertical-padding: 1.5*$padding-base-vertical!default;
+$create-flow-well-icon-size: 26px!default;
+$create-flow-well-color: $create-flow-title-color!default;
+$create-flow-well-subtitle-color: $create-flow-subtitle-color!default;
+
+$create-flow-well-active-bgc: #F8F7FE!default;
+$create-flow-well-active-border: #9FA0D8!default;
+$create-flow-well-active-color: #6668D3!default;
+
+$create-flow-wrapper-vertical-padding: 4*$padding-base-vertical!default;
+$create-flow-wrapper-horizontal-padding: 4*$padding-base-horizontal!default;
+
+// Create Flow SSH/HTTP Config
+$create-flow-config-code-bgc: #EDEFF1!default;
+$create-flow-config-code-border-radius: $border-radius-base!default;
+$create-flow-config-copy-color: $create-flow-well-active-color!default;
+
+$create-flow-config-section-vertical-padding: 2*$padding-base-vertical!default;
+$create-flow-config-vertical-padding: $padding-base-vertical!default;
+$create-flow-config-horizontal-padding: $padding-base-horizontal!default;
+$create-flow-config-action-spacing: 3*$create-flow-config-vertical-padding!default;

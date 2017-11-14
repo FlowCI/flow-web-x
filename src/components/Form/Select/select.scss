@@ -1,5 +1,5 @@
-@import 'variables.scss';
-
+@import 'variables/zIndex';
+@import 'variables/components/control';
 @mixin select-option ($font-size, $padding) {
   font-size: $font-size;
   .option{
@@ -11,10 +11,15 @@
 .select {
   position: relative;
   display: inline-flex;
+  vertical-align: middle;
   font-size: $font-size-base;
   z-index: $zindex-select;
+  width: $input-default-width;
+  text-align: left;
 }
-
+.opened{
+  z-index: $zindex-select-opened;
+}
 .input{
   cursor: pointer;
   width: 100%;

@@ -1,40 +1,7 @@
-@import 'variables';
+@import 'variables/views/create';
 .container{
   // line-height 会比 Create 中的高 10px, 所以此处减 10px
   padding: $create-flow-wrapper-vertical-padding - 10px
     $create-flow-wrapper-horizontal-padding
     $create-flow-wrapper-vertical-padding;
-}
-.navbar{
-  display: flex;
-  border-bottom: 4px solid $create-flow-config-navbar-border;
-  line-height: 40px;
-  margin-bottom: $create-flow-config-navbar-bottom;
-}
-.nav{
-  color: $create-flow-config-navbar-color;
-  font-weight: $create-flow-config-navbar-font-weight;
-  font-size: $create-flow-config-navbar-font-size;
-  margin-right: 2*$create-flow-config-navbar-item-horizontal-padding;
-  padding: 0px $create-flow-config-navbar-item-horizontal-padding;
-  position: relative;
-  &:first-child{
-    margin-left: -$create-flow-config-navbar-item-horizontal-padding;
-  }
-  &:after{
-    content: " ";
-    width: 4px;
-    background-color: $color-black;
-    height: 0;
-    position: absolute;
-    bottom: 0;
-    left: calc(50% - 2px);
-    transition: height .15s ease-in-out;
-  }
-  &:hover, &.active{
-    color: $create-flow-config-navbar-active-color;
-    &:after{
-      height: 8px;
-    }
-  }
 }

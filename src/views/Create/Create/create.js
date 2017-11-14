@@ -10,6 +10,8 @@ import { push } from 'react-router-redux'
 
 import { actions } from 'redux/modules/flow'
 
+import DocumentTitle from 'react-document-title'
+
 import Input from 'components/Form/Input'
 import Button from 'components/Button'
 
@@ -44,7 +46,7 @@ export class CreateFlowView extends Component {
 
   state = {
     name: '',
-    git: '',
+    git: 'custom',
   }
 
   handleNameChange = (value) => {
@@ -79,38 +81,33 @@ export class CreateFlowView extends Component {
     const { name, git } = this.state
 
     const enabled = name && git
-    return <div>
-      <div className={classes.wrapper}>
-        <h5 className={classes.title}>
-          {i18n('为你的 Flow 起个名字')}
-          <small>{i18n('（如果使用了 yml 配置文件，需与 yml 配置文件中的 flow 字段保持匹配）')}</small>
-        </h5>
-        <Input type='text' value={name} className={classes.input}
-          placeholder={i18n('例：ios-test')}
-          onChange={this.handleNameChange} />
+    return <DocumentTitle title='创建 flow'>
+      <div>
+        <div className={classes.wrapper}>
+          <h5 className={classes.title}>
+            {i18n('为你的 flow 起个名字')}
+          </h5>
+          <Input type='text' value={name} className={classes.input}
+            placeholder={i18n('例：ios-test')}
+            onChange={this.handleNameChange} />
+        </div>
+        <hr />
+        <div className={classes.wrapper}>
+          <ul className={classes.gits}>
+            <li>
+              {this.renderWell('custom', <i className='icon icon-equalizer' />,
+                i18n('手动配置 Git 仓库'),
+                i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
+              )}
+            </li>
+          </ul>
+          <Button disabled={!enabled} onClick={this.handleNext}
+            className={`btn btn-primary ${classes.next}`}>
+            下一步
+          </Button>
+        </div>
       </div>
-      <hr />
-      <div className={classes.wrapper}>
-        <ul className={classes.gits}>
-          <li>
-            {this.renderWell('custom', <i className='icon icon-equalizer' />,
-              i18n('手动配置 Git 仓库'),
-              i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
-            )}
-          </li>
-          <li>
-            {this.renderWell('gitlab', <i className='icon icon-equalizer' />,
-              i18n('手动配置 Git 仓库'),
-              i18n('适合所有 Git 仓库，需手动配置 WebHook 地址 或 Deploy key')
-            )}
-          </li>
-        </ul>
-        <Button disabled={!enabled} onClick={this.handleNext}
-          className={`btn btn-primary ${classes.next}`}>
-          下一步
-        </Button>
-      </div>
-    </div>
+    </DocumentTitle>
   }
 }
 

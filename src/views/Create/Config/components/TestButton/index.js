@@ -18,7 +18,7 @@ function mapStateToProps (state, { flowId }) {
   const status = f.getIn(['envs', 'FLOW_YML_STATUS'])
   const n = Mapping[status]
   return {
-    loading: n > 0 && n < Mapping.FOUND,
+    loading: n > 0 && n < Mapping.GIT_LOADING,
     status,
     message: f.getIn(['envs', 'FLOW_YML_ERROR_MSG']),
   }
@@ -34,6 +34,7 @@ function mapDispatchToProps (dispatch) {
 export class TestButton extends Component {
   static propTypes = {
     loading: bool,
+    disabled: bool,
     flowId: string.isRequired,
     status: string,
     message: string,
@@ -89,8 +90,9 @@ export class TestButton extends Component {
   }
 
   renderButton () {
-    const { i18n } = this.props
+    const { i18n, disabled } = this.props
     return <Button className={classes.button}
+      disabled={disabled}
       onClick={this.handleClick}
     >
       {i18n('连接测试')}
@@ -100,13 +102,13 @@ export class TestButton extends Component {
   renderLoading () {
     const { i18n } = this.props
     return <span className={classes.text}>
-      <i className={`icon icon-sync ${classes.loading}`} />
+      <i className={`icon icon-running ${classes.loading}`} />
       {i18n('正在测试')}
     </span>
   }
 
-  renderError () {
-    const { i18n, message } = this.props
+  renderError (message) {
+    const { i18n } = this.props
     return <span className={`${classes.text} text-danger`}>
       <i className='icon icon-warning' />
       测试失败: {message}
@@ -116,9 +118,13 @@ export class TestButton extends Component {
     </span>
   }
 
+  renderNotFound () {
+
+  }
+
   renderStatus (status) {
     if (status === 'ERROR') {
-      return this.renderError()
+      return this.renderError(this.props.message || '未找到 .flow.yml 配置文件')
     }
     const { i18n } = this.props
     return <span className={classes.text}>
@@ -134,7 +140,7 @@ export class TestButton extends Component {
     }
     if (checked) {
       const { status } = this.props
-      if (status !== 'GIT_CONNECTING') {
+      if (status && status !== 'GIT_CONNECTING') {
         return this.renderStatus(status)
       }
     }

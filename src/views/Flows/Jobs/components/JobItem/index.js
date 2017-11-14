@@ -8,19 +8,20 @@ import { connect } from 'react-redux'
 
 import moment from 'moment'
 
+import JobIcon from 'components/Icon/JobText'
+
 import classes from './jobItem.scss'
 
-function mapStateToProps (state, { id }) {
+function mapStateToProps (state, { jobId }) {
   const { job } = state
 
   return {
-    job: job.getIn(['data', id])
+    job: job.getIn(['data', jobId])
   }
 }
 
 export class JobItem extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     job: ImmutablePropTypes.map.isRequired,
 
     onClick: PropTypes.func.isRequired,
@@ -28,8 +29,8 @@ export class JobItem extends Component {
   }
 
   handleClick = () => {
-    const { onClick, id, job } = this.props
-    onClick(id, job)
+    const { onClick, job } = this.props
+    onClick(job)
   }
 
   renderItem (name, value) {
@@ -41,35 +42,34 @@ export class JobItem extends Component {
 
   render () {
     const { job, i18n } = this.props
-    const outputs = job.get('outputs', new Map())
-    const startedAt = job.get('startedAt')
+    const envs = job.get('envs', new Map())
+    const startedAt = job.getIn(['result', 'startTime'])
+    const status = job.get('status')
 
+    const duration = job.getIn(['result', 'duration'])
     return <div className={classes.job} onClick={this.handleClick}>
-      <span className={classes.icon}>
-        <i className='icon icon-check' />
-        {i18n('构建成功')}
-      </span>
+      <JobIcon status={status} colored />
       <div className={classes.info}>
         <h4>
           #{job.get('number')}&nbsp;&nbsp;
-          {outputs.getIn(['FLOW_GIT_BRANCH', 'value'])}
+          {envs.get('FLOW_GIT_BRANCH')}
         </h4>
         <small>
-          {outputs.getIn(['FLOW_GIT_CHANGELOG', 'value'])}
+          {job.get('createdBy')}&nbsp;
+          {envs.get('FLOW_GIT_CHANGELOG')}
         </small>
       </div>
       <div className={classes.detail}>
-        <div className={classes.itemRow}>
-          {this.renderItem(i18n('Commit'),
-            outputs.getIn(['FLOW_GIT_COMMIT_ID', 'value'], '-'))}
-
-          {this.renderItem(i18n('Compare'),
-            outputs.getIn(['FLOW_GIT_COMPARE_ID', 'value'], '-'))}
+        <div className={`${classes.itemCol} ${classes.firstCol}`}>
+          {this.renderItem(i18n('commit'),
+            envs.get('FLOW_GIT_COMMIT_ID', '-'))}
+          {this.renderItem(i18n('duration'), duration || '')}
         </div>
-        <div className={classes.itemRow}>
-          {this.renderItem(i18n('Builded'),
+        <div className={classes.itemCol}>
+          {this.renderItem(i18n('compare'),
+            envs.get('FLOW_GIT_COMPARE_ID', '-'))}
+          {this.renderItem(i18n('built'),
             startedAt ? moment(startedAt * 1000).fromNow() : '-')}
-          {this.renderItem(i18n('Duration'), job.get('duration', ''))}
         </div>
       </div>
     </div>
