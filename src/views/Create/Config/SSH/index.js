@@ -116,7 +116,7 @@ export class SSHConfig extends Component {
         disabled={!enabled}
         onClick={this.handleDoneCick}
       >
-        {i18n('完成')}
+        {i18n('下一步')}
       </Button>
       <TestButton
         envs={values}
