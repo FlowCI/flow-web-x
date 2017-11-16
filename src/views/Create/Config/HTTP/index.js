@@ -77,7 +77,7 @@ export class HTTPConfig extends Component {
     this.setState({ password: value })
   }
 
-  handleDoneCick = () => {
+  handleDoneClick = () => {
     const { done, flowId } = this.props
     return done(flowId, this.getValues())
   }
@@ -147,7 +147,7 @@ export class HTTPConfig extends Component {
     return <div className={classes.actions}>
       <Button className='btn-primary'
         disabled={!enabled}
-        onClick={this.handleDoneCick}
+        onClick={this.handleDoneClick}
       >
         {i18n('下一步')}
       </Button>
