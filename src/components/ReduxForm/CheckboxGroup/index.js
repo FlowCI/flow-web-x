@@ -1,10 +1,9 @@
 import createAdapter from '../createAdapter'
 import createField from '../createField'
 
-import Checkbox from 'react-little-liar/src/Checkbox'
-import CheckboxGroup from 'react-little-liar/src/CheckboxGroup'
+import { Checkbox, CheckboxGroup } from 'react-little-liar'
 
-export const CheckboxGroupAdapter = createAdapter(CheckboxGroup)
+export const CheckboxGroupAdapter = createAdapter(CheckboxGroup, [])
 
 const CheckboxGroupField = createField(CheckboxGroupAdapter)
 
