@@ -7,7 +7,7 @@ import classes from './form.scss'
 
 export default class FormItem extends Component {
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node,
     classNames: PropTypes.object.isRequired,
     children: PropTypes.node,
   }
