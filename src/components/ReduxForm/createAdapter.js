@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import classes from './form.scss'
 
-export default function createAdapter (component) {
-  const disabledInvalid = component.propTypes && component.propTypes.invalid
+export default function createAdapter (component, emptyValue) {
+  const enabledInvalid = component.propTypes && component.propTypes.invalid
   class FormAdapter extends Component {
     static propTypes = {
       adapterClassName: PropTypes.string,
@@ -26,7 +26,7 @@ export default function createAdapter (component) {
     static defaultProps = {
       input: {},
       meta: {},
-      i18n: function () { return '' },
+      i18n: function (n) { return n },
     }
 
     renderField (invalid) {
@@ -39,8 +39,11 @@ export default function createAdapter (component) {
       const props = {
         ...other,
         ...input,
+        placeholder: i18n('placeholder'),
+        value: input.value || (input.value === false ? false
+          : emptyValue || input.value)
       }
-      if (!disabledInvalid) {
+      if (enabledInvalid) {
         props.invalid = invalid
       }
       return React.createElement(component, props)
