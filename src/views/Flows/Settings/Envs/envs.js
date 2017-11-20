@@ -63,7 +63,7 @@ export class FlowEnvsSetting extends Component {
   render () {
     const { envs } = this.props
     return <div>
-      <Header title='全局环境变量'
+      <Header title='全局环境变量' className={classes.formHeader}
         subTitle='环境变量作用域为整个 flow 流程   查看帮助文档'>
         <Form className={classes.form} onSubmit={this.handleSubmit} />
       </Header>

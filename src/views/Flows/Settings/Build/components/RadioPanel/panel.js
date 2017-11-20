@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import RadioGroups from 'components/Form/RadioGroups'
-import Radio from 'components/Form/Radio'
-import Button from 'components/Button'
+import RadioGroup from 'react-little-liar/src/RadioGroup'
+import Radio from 'react-little-liar/src/Radio'
+import Button from 'components/Buttonx'
 
 import Panel from '../Panel'
 import classes from './panel.scss'
@@ -51,13 +51,16 @@ export default class FlowBuildSettingRadioPanel extends Component {
     const { radioValue, filter } = this.state
     const { enabled } = this.props
     return <Panel {...this.props}>
-      {enabled && <RadioGroups value={radioValue} onChange={this.handleRadioChange}>
-        <Radio rightLabel='所有分支' value='*' />
-        <Radio rightLabel='正则匹配' value='-' />
-      </RadioGroups>}
+      {enabled && <RadioGroup value={radioValue}
+        className={classes.radioGroup}
+        onChange={this.handleRadioChange}>
+        <Radio label='所有分支' value='*' />
+        <Radio label='正则匹配' value='-' />
+      </RadioGroup>}
       {enabled && radioValue !== '*' && <textarea className={classes.editor}
         value={filter} onChange={this.handleFilterChange} />}
-      {enabled && radioValue !== '*' && <Button className='btn-primary' disabled={filter === this.props.filter}
+      {enabled && radioValue !== '*' && <Button type='primary'
+        disabled={filter === this.props.filter}
         onClick={this.handleSave}
       >
         保存
