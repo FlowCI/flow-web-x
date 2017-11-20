@@ -20,7 +20,7 @@ import Form from './form'
 
 const settingSelectors = createSelector(
   (setting) => setting,
-  (setting) => setting.toJSON()
+  (setting) => setting ? setting.toJSON() : {}
 )
 function mapStateToProps (state, props) {
   const { notifySetting } = state
