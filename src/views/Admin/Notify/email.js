@@ -57,11 +57,15 @@ export class AdminNotifyEmail extends Component {
   }
 
   handleSave = (values) => {
+    const params = { ...values }
+    const { isAuthenticated } = values
+    if (!isAuthenticated) {
+      params.username = undefined
+      params.password = undefined
+    }
     const { save, alert } = this.props
-    return save(values).then(() => {
+    return save(params).then(() => {
       alert('success', '保存成功')
-    }, () => {
-      alert('failure', '保存失败')
     })
   }
 
@@ -69,8 +73,6 @@ export class AdminNotifyEmail extends Component {
     const { test, alert } = this.props
     return test(values).then(() => {
       alert('success', '测试成功')
-    }, () => {
-      alert('failure', '测试发送失败')
     })
   }
 

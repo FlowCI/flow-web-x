@@ -4,7 +4,7 @@
 }
 .label {
   flex: 0 0 auto;
-  margin-right: 10px;
+  margin-right: 20px;
   text-align: right;
 }
 .control {
@@ -12,8 +12,9 @@
 }
 
 .field {
-  // display: inline-block;
-  // vertical-align: top;
+  display: inline-flex;
+  vertical-align: baseline;
+  flex-direction: column;
   margin-bottom: 20px;
   &:global(.invalid), &:global(.extra) {
     margin-bottom: 0;
@@ -21,12 +22,13 @@
 }
 .error, .extra {
   font-size: 12px;
-  line-height: 20px;
+  line-height: 16px;
+  margin-bottom: 4px;
   -webkit-font-smoothing: auto;
+  min-height: 16px;
 }
 .error {
   color: #E56065;
-  line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
