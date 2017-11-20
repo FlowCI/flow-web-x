@@ -15,9 +15,10 @@ import { actions as alertActions } from 'redux/modules/alert'
 import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
+import CheckboxGroup from 'react-little-liar/src/CheckboxGroup'
+import Checkbox from 'react-little-liar/src/Checkbox'
 
-import Member from './member'
 import classes from './members.scss'
 
 const membersSelector = createSelector(
@@ -58,6 +59,9 @@ export class AdminFlowMembers extends Component {
   }
 
   state = {
+    /**
+     * selected {array} [emails]
+     */
     selected: this.getInitSelected()
   }
 
@@ -80,15 +84,16 @@ export class AdminFlowMembers extends Component {
     return members.reduce((state, member) => {
       const email = member.get('email')
       const flows = permission.getIn([email, 'flows'])
-      state[email] = flows.includes(flowName)
+      if (flows.includes(flowName)) {
+        state.push(email)
+      }
       return state
-    }, {})
+    }, [])
   }
 
   getCheckeds () {
     const { selected } = this.state
-    const keys = Object.keys(selected)
-    return keys.filter((k) => selected[k])
+    return selected
   }
 
   handleSave = () => {
@@ -99,10 +104,8 @@ export class AdminFlowMembers extends Component {
     })
   }
 
-  handleChecked = (user, checked) => {
-    const { selected } = this.state
-    const email = user.get('email')
-    this.setState({ selected: { ...selected, [email]: checked } })
+  handleChecked = (values) => {
+    this.setState({ selected: values })
   }
 
   render () {
@@ -111,16 +114,16 @@ export class AdminFlowMembers extends Component {
     return <DocumentTitle title='Flow 成员管理 · 控制台'>
       <div>
         {!loaded && <Loading />}
-        {loaded && <ul className={classes.list}>
+        {loaded && <CheckboxGroup className={classes.list}
+          value={selected} onChange={this.handleChecked}>
           {members.map((member) => {
             const n = member.get('username')
             const email = member.get('email')
-            return <Member key={n} user={member}
-              checked={selected[email]}
-              onChange={this.handleChecked} />
+            return <Checkbox key={n} value={email} label={n}
+              className={classes.checkbox} />
           })}
-        </ul>}
-        {loaded && <Button className='btn-primary' onClick={this.handleSave}>
+        </CheckboxGroup>}
+        {loaded && <Button type='primary' onClick={this.handleSave}>
           {i18n('保存')}
         </Button>}
       </div>

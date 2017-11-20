@@ -91,8 +91,8 @@ export class TestButton extends Component {
 
   renderButton () {
     const { disabled, i18n } = this.props
-    return <Button className={classes.button}
-      plain type='secondary' disabled={disabled}
+    return <Button plain
+      type='secondary' disabled={disabled}
       onClick={this.handleClick}
     >
       {i18n('连接测试')}

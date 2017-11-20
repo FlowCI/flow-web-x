@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux'
 
 import { actions } from 'redux/modules/flow'
 
-import Input from 'components/Form/Input'
-import Button from 'components/Button'
+import Input from 'react-little-liar/src/Input'
+import Button from 'components/Buttonx'
 
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
@@ -145,7 +145,7 @@ export class HTTPConfig extends Component {
     const enabled = this.valid(values)
 
     return <div className={classes.actions}>
-      <Button className='btn-primary'
+      <Button type='primary'
         disabled={!enabled}
         onClick={this.handleDoneCick}
       >
