@@ -37,9 +37,9 @@ export default function createAdapter (component, emptyValue) {
         ...other
       } = this.props
       const props = {
-        ...other,
-        ...input,
         placeholder: i18n('placeholder'),
+        ...input,
+        ...other,
         value: input.value || (input.value === false ? false
           : emptyValue || input.value)
       }
