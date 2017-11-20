@@ -3,23 +3,10 @@
   padding: 20px 0px;
   width: 100%;
   text-align: left;
-  input{
-    font-size: $font-size-base;
-  }
-  button{
-    padding-left: 2*$padding-base-horizontal;
-    padding-right: 2*$padding-base-horizontal;
-  }
-  td, th{
-    padding: 5px 10px;
-    vertical-align: baseline;
-  }
 }
-.name{
-  text-align: right;
+.label {
   font-weight: bold;
-  // font-weight: bold;
+  width: 50px;
 }
-.input{
-  width: 300px;
+.control{
 }
