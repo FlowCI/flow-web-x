@@ -28,6 +28,7 @@ export class EmailSettingForm extends Component {
     values: PropTypes.object.isRequired,
     valid: PropTypes.bool,
     submitting: PropTypes.bool,
+    pristine: PropTypes.bool,
     i18n: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onTest: PropTypes.func.isRequired,
@@ -45,7 +46,8 @@ export class EmailSettingForm extends Component {
   render () {
     const {
       values: { isAuthenticated },
-      i18n, handleSubmit, submitting
+      i18n, handleSubmit, submitting,
+      pristine
     } = this.props
     const itemClass = {
       label: classes.label,
@@ -90,7 +92,8 @@ export class EmailSettingForm extends Component {
       </Collapse>
       <FormItem classNames={itemClass}>
         <Button size='lg' type='primary' htmlType='submit'
-          onClick={handleSubmit} loading={submitting}>
+          onClick={handleSubmit} loading={submitting}
+          disabled={pristine}>
           {i18n('save')}
         </Button>
       </FormItem>
@@ -100,5 +103,5 @@ export class EmailSettingForm extends Component {
 
 export default reduxForm({
   form: formName,
-  destroyOnUnmount: true,
+  enableReinitialize: true
 })(connect(mapStateToProps)(EmailSettingForm))
