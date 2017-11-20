@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Button from 'components/Button'
-import Input from 'components/Form/Input'
+import Button from 'components/Buttonx'
+import Input from 'react-little-liar/src/Input'
 
 import ClickAwayListener from 'components/ClickAwayListener'
 
@@ -65,7 +65,7 @@ export default class CreateDeployPopover extends Component {
           <Input value={name} onChange={this.handleNameChange}
             className='block' placeholder='输入 key 名称' />
         </div>
-        <Button type='submit' className='btn-primary'
+        <Button htmlType='submit' type='primary'
           disabled={!enabled} onClick={this.handleSubmit}>
           生成
         </Button>
@@ -77,7 +77,7 @@ export default class CreateDeployPopover extends Component {
     const { i18n } = this.props
     const { opened } = this.state
     return <div className={classes.popover}>
-      <Button className='btn-link' size='sm' onClick={this.handleClick}>
+      <Button type='text' size='sm' onClick={this.handleClick}>
         {i18n('新建一个')}
       </Button>
       {opened && this.renderDialog()}

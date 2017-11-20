@@ -7,7 +7,7 @@ import autoCancel from 'react-promise-cancel'
 
 import { actions } from 'redux/modules/flow'
 
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import Mapping from './mapping'
 import classes from './button.scss'
@@ -90,9 +90,9 @@ export class TestButton extends Component {
   }
 
   renderButton () {
-    const { i18n, disabled } = this.props
+    const { disabled, i18n } = this.props
     return <Button className={classes.button}
-      disabled={disabled}
+      plain type='secondary' disabled={disabled}
       onClick={this.handleClick}
     >
       {i18n('连接测试')}
@@ -112,7 +112,7 @@ export class TestButton extends Component {
     return <span className={`${classes.text} text-danger`}>
       <i className='icon icon-warning' />
       测试失败: {message}
-      <Button className='btn-link' loading={false} onClick={this.handleClick}>
+      <Button type='text' loading={false} onClick={this.handleClick}>
         {i18n('重新测试')}
       </Button>
     </span>
