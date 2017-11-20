@@ -10,11 +10,9 @@ export default {
   Envs: {
     name: {
       placeholder: 'key',
-      required: '必填',
     },
     value: {
       placeholder: 'value',
-      required: '必填',
     }
   },
 }

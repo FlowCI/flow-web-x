@@ -12,28 +12,22 @@ export default {
     username: {
       label: '*用户名',
       placeholder: '用户名（推荐使用员工姓名拼音）',
-      required: '必填',
     },
     email: {
       label: '*邮箱',
       placeholder: '',
-      required: '必填',
-      'not email': '请填写正确的邮箱',
     },
     password: {
       label: '*初始密码',
       placeholder: '',
-      required: '必填',
     },
     role: {
       label: '角色',
       placeholder: '选择角色',
-      required: '必填',
     },
     flow: {
       label: 'Flow 授权',
       placeholder: '',
-      required: '必填',
     },
     isSendEmail: {
       label: '发送用户通知',

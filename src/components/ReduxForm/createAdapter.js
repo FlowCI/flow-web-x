@@ -50,9 +50,9 @@ export default function createAdapter (component, emptyValue) {
     }
 
     renderWarning () {
-      const { meta: { error }, i18n } = this.props
+      const { meta: { error } } = this.props
       return <div className={classes.error}>
-        {i18n(error)}
+        {error}
       </div>
     }
 

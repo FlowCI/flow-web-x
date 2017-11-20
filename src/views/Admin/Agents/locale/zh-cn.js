@@ -14,12 +14,10 @@ export default {
     zone: {
       label: 'Zone',
       placeholder: '',
-      required: '必填',
     },
     name: {
       label: 'Name',
       placeholder: '',
-      required: '必填',
     }
   }
 }

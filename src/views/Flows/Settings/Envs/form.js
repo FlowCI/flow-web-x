@@ -6,7 +6,7 @@ import language from 'util/language'
 
 import { reduxForm } from 'redux-form'
 
-import V from 'util/validate'
+import V from 'validates'
 import Input from 'components/ReduxForm/Input'
 import Button from 'components/Buttonx'
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { reduxForm } from 'redux-form'
 
-import V from 'util/validate'
+import V from 'validates'
 import { FormItem } from 'components/ReduxForm'
 import Input from 'components/ReduxForm/Input'
 import Button from 'components/Buttonx'

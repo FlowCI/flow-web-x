@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { reduxForm, getFormValues } from 'redux-form'
 
-import V from 'util/validate'
+import V from 'validates'
 import Button from 'components/Buttonx'
 import { FormItem } from 'components/ReduxForm'
 import Input from 'components/ReduxForm/Input'
