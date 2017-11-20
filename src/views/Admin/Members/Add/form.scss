@@ -2,26 +2,14 @@
 .form{
   padding: 20px 0px;
   width: 100%;
-  input{
-    font-size: $font-size-base;
-  }
-  td{
-    padding: 5px 10px;
-    vertical-align: middle;
-  }
 }
-.table{
-  width: 100%;
+.label{
+  width: 100px;
+  font-weight: bold;
 }
-.name{
-  text-align: right;
-  width: 130px;
-  // font-weight: bold;
+.roles{
+  width: 100px;
 }
-.input{
-  width: 300px;
-}
-.select{
+.flows{
   width: 150px;
-  font-size: 14px;
 }

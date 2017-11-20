@@ -4,33 +4,17 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import { reduxForm } from 'redux-form'
 
-import Button from 'components/Button'
-import { Input, Select, Option, Checkbox } from 'components/Form/reduxForm'
-
-import FieldSet from './fieldset'
+import V from 'util/validate'
+import { FormItem } from 'components/ReduxForm'
+import Input from 'components/ReduxForm/Input'
+import Checkbox from 'components/ReduxForm/Checkbox'
+import { Select, Option } from 'components/ReduxForm/Select'
+import Button from 'components/Buttonx'
 
 import classes from './form.scss'
 
-export function validate (values) {
-  const errors = {}
-  if (!values.username) {
-    errors.username = 'Required'
-  }
-  if (!values.email) {
-    errors.email = 'Required'
-  }
-  if (!values.password) {
-    errors.password = 'Required'
-  }
-  if (!values.role) {
-    errors.role = 'Required'
-  }
-  return errors
-}
-
 export class CreateMemberForm extends Component {
   static propTypes = {
-    invalid: PropTypes.bool,
     submitting: PropTypes.bool,
     // error: PropTypes.object,
     loadedRoles: PropTypes.bool,
@@ -48,55 +32,57 @@ export class CreateMemberForm extends Component {
       flows, roles,
       loadedFlows, loadedRoles,
       i18n, submitting,
-      handleSubmit, invalid
+      handleSubmit
     } = this.props
+    const itemClass = {
+      label: classes.label,
+      control: classes.control,
+    }
+
     return <form onSubmit={handleSubmit} className={classes.form}>
-      <table className={classes.table}>
-        <tbody>
-          <FieldSet required text={i18n('用户名')}>
-            <Input name='username' size='lg' className={classes.input} />
-          </FieldSet>
-          <FieldSet required text={i18n('邮箱')}>
-            <Input type='email' name='email'
-              size='lg' className={classes.input} />
-          </FieldSet>
-          <FieldSet required text={i18n('初始密码')}>
-            <Input type='password' name='password'
-              size='lg' className={classes.input} />
-          </FieldSet>
-          <FieldSet text={i18n('角色')}>
-            <Select size='lg' name='role'
-              loading={!loadedRoles}
-              className={classes.select}>
-              {roles.map((n) => <Option key={n} value={n} title={n} />)}
-            </Select>
-          </FieldSet>
-          <FieldSet text={i18n('Flow授权')}>
-            <Select size='lg' name='flow'
-              loading={!loadedFlows}
-              className={classes.select}>
-              <Option value={false} title='无授权' />
-              {flows.map((f) => <Option key={f} value={f} title={f} />)}
-            </Select>
-          </FieldSet>
-          <FieldSet text={i18n('发送用户通知')}>
-            <Checkbox name='isSendEmail' rightLabel={i18n('发送账户详情电子邮件')} />
-          </FieldSet>
-          <FieldSet>
-            <Button className='btn-primary'
-              loading={submitting} disabled={invalid}
-              size='lg' type='submit'>
-              {i18n('添加成员')}
-            </Button>
-          </FieldSet>
-        </tbody>
-      </table>
+      <FormItem label={i18n('username.label')} classNames={itemClass}>
+        <Input name='username' i18n={i18n.createChild('username')}
+          size='lg' validate={[V.required]} />
+      </FormItem>
+      <FormItem label={i18n('email.label')} classNames={itemClass}>
+        <Input name='email' type='email' i18n={i18n.createChild('email')}
+          size='lg' validate={[V.required, V.email]} />
+      </FormItem>
+      <FormItem label={i18n('password.label')} classNames={itemClass}>
+        <Input name='password' type='password'
+          i18n={i18n.createChild('password')}
+          size='lg' validate={[V.required]} />
+      </FormItem>
+      <FormItem label={i18n('role.label')} classNames={itemClass}>
+        <Select name='role' size='lg' loading={!loadedRoles}
+          i18n={i18n.createChild('role')}
+          className={classes.roles}>
+          {roles.map((n) => <Option key={n} value={n} label={n} />)}
+        </Select>
+      </FormItem>
+      <FormItem label={i18n('flow.label')} classNames={itemClass}>
+        <Select name='flow' size='lg' loading={!loadedFlows}
+          i18n={i18n.createChild('flow')}
+          className={classes.flows}>
+          <Option value={false} label='无授权' />
+          {flows.map((n) => <Option key={n} value={n} label={n} />)}
+        </Select>
+      </FormItem>
+      <FormItem label={i18n('isSendEmail.label')} classNames={itemClass}>
+        <Checkbox name='isSendEmail' label={i18n('isSendEmail.desc')} />
+      </FormItem>
+      <FormItem classNames={itemClass}>
+        <Button type='primary'
+          loading={submitting}
+          size='lg' htmlType='submit'>
+          {i18n('save')}
+        </Button>
+      </FormItem>
     </form>
   }
 }
 
 export default reduxForm({
-  validate,
   form: 'createMemberForm',
   initialValues: {
     flow: false,
