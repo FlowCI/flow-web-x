@@ -12,8 +12,8 @@ import { actions } from 'redux/modules/flow'
 
 import DocumentTitle from 'react-document-title'
 
-import Input from 'components/Form/Input'
-import Button from 'components/Button'
+import Input from 'react-little-liar/src/Input'
+import Button from 'components/Buttonx'
 
 import Well from './components/Well'
 
@@ -88,7 +88,7 @@ export class CreateFlowView extends Component {
             {i18n('为你的 flow 起个名字')}
           </h5>
           <Input type='text' value={name} className={classes.input}
-            placeholder={i18n('例：ios-test')}
+            placeholder={i18n('例：ios_test')}
             onChange={this.handleNameChange} />
         </div>
         <hr />
@@ -101,8 +101,9 @@ export class CreateFlowView extends Component {
               )}
             </li>
           </ul>
-          <Button disabled={!enabled} onClick={this.handleNext}
-            className={`btn btn-primary ${classes.next}`}>
+          <Button disabled={!enabled} type='primary'
+            onClick={this.handleNext}
+            className={classes.next}>
             下一步
           </Button>
         </div>
