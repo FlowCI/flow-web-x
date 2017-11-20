@@ -15,7 +15,7 @@ export default function createSwitchAdapter (Component) {
     return <Component {...input}
       {...other}
       checked={!!input.value}
-      className={classnames(classes.field, className)}
+      className={classnames(classes.switch, className)}
     />
   }
   SwitchAdapter.propTypes = {
