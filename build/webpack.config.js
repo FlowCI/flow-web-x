@@ -10,7 +10,7 @@ const __PROD__ = config.env === 'production'
 const paths = config.pathUtils
 
 const LOCALES = config.languages.map((lang) => {
-  return lang.replace(/[\-]/g, '\\$&')
+  return lang.replace(/[-]/g, '\\$&')
 }).join('|')
 
 const webpackConfig = {
@@ -34,6 +34,9 @@ const webpackConfig = {
       'node_modules',
     ],
     extensions: ['*', '.js', '.jsx', '.json'],
+    alias: {
+      'liar-theme': 'liar-theme-default/src'
+    }
   },
   module: {
     rules: [],
@@ -45,9 +48,9 @@ const webpackConfig = {
       __TEST__,
       __PROD__,
     }, config.globals)),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/,
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/,
       new RegExp(LOCALES)),
-    new webpack.ContextReplacementPlugin(/src[\/\\]views\S*[\/\\]locale$/,
+    new webpack.ContextReplacementPlugin(/src[/\\]views\S*[/\\]locale$/,
       new RegExp(LOCALES)),
   ],
 }
@@ -92,6 +95,19 @@ webpackConfig.module.rules.push({
   }],
 })
 
+webpackConfig.module.rules.push({
+  test: /\.js$/,
+  include: [
+    /react-little-liar/
+  ],
+  use: [{
+    loader: 'babel-loader',
+    query: {
+      cacheDirectory: true,
+    },
+  }],
+})
+
 // test
 webpackConfig.module.rules.push({
   test: /\.spec\.js$/,
@@ -120,7 +136,7 @@ webpackConfig.module.rules.push({
         options: {
           sourceMap: __DEV__,
           modules: true, // use css module
-          localIdentName: __DEV__ ? '[name]_[local]_[hash:base64:5]'
+          localIdentName: __DEV__ ? '[local]_[hash:base64:5]'
             : '[hash:base64:5]',
           minimize: {
             autoprefixer: {

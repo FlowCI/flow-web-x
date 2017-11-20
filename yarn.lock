@@ -3748,6 +3748,10 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+"liar-theme-default@git://github.com/oowangoo/liar-theme-default.git#1.0.2":
+  version "1.0.2"
+  resolved "git://github.com/oowangoo/liar-theme-default.git#7ab09604adf73fda1f778dd17b3e2bc35a9b209a"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/load-json-file/download/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -5182,6 +5186,13 @@ react-event-listener@^0.4.5:
 react-immutable-proptypes@^2.1.0:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/react-immutable-proptypes/download/react-immutable-proptypes-2.1.0.tgz#023d6f39bb15c97c071e9e60d00d136eac5fa0b4"
+
+"react-little-liar@git://github.com/oowangoo/react-little-liar.git#1.0.0":
+  version "1.0.0"
+  resolved "git://github.com/oowangoo/react-little-liar.git#bc155e5c36e91dd4aedbd23af776c0f6be154c4d"
+  dependencies:
+    classnames "^2.2.5"
+    keycode "^2.1.9"
 
 react-modal@^3.0.0:
   version "3.1.0"
