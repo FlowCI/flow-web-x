@@ -9,6 +9,15 @@ export default {
     },
   },
   create: {
-    title: '添加 Agent'
+    title: '添加 Agent',
+    save: '生成',
+    zone: {
+      label: 'Zone',
+      placeholder: '',
+    },
+    name: {
+      label: 'Name',
+      placeholder: '',
+    }
   }
 }

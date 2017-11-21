@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import createI18n from '../i18n'
+import language from 'util/language'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
@@ -59,7 +62,7 @@ export class CreateMember extends Component {
   }
 
   static defaultProps = {
-    i18n: function (n) { return n },
+    i18n: createI18n(language).createChild('add'),
   }
 
   componentDidMount () {
@@ -76,7 +79,7 @@ export class CreateMember extends Component {
     const params = {
       ...values,
       flows: values.flow === false ? [] : [values.flow],
-      roles: [values.role],
+      roles: values.role ? [values.role] : [],
     }
     delete params.flow
     delete params.role

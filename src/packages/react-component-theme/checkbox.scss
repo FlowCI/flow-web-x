@@ -1,0 +1,47 @@
+@import './variables/_checkbox.scss';
+@import './mixins/_checkbox.scss';
+
+.wrapper{
+  display: inline-flex;
+  align-items: center;
+  vertical-align: baseline;
+
+  font-size: $checkbox-font-size;
+  cursor: pointer;
+  user-select: none;
+  color: $checkbox-color;
+  :global(.icon){
+    color: $checkbox-icon-unchecked-color;
+  }
+  &:global(.checked), &:global(.indeterminate) {
+    :global(.icon){
+      color: $checkbox-icon-checked-color;
+    }
+  }
+  &:hover,
+  &:focus {
+    :global(.icon) {
+      color: $checkbox-icon-checked-color;
+    }
+  }
+
+  &:global(.disabled) {
+    cursor: not-allowed;
+    color: $checkbox-disabled-color;
+    :global(.icon) {
+      color: $checkbox-disabled-icon-unchecked-color;
+      background-color: $checkbox-disabled-icon-unchecked-bgc;
+    }
+    &:global(.checked) {
+      :global(.icon) {
+        color: $checkbox-disabled-icon-checked-color;
+      }
+    }
+  }
+}
+.left{
+  margin-right: $checkbox-padding-horizontal;
+}
+.right{
+  margin-left: $checkbox-padding-horizontal;
+}

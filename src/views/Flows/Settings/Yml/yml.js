@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 
 import { actions } from 'redux/modules/flow'
 import Editor from 'components/CodeEditor'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 import Header from '../components/Header'
 
 import classes from './yml.scss'
@@ -70,7 +70,7 @@ export class FlowYmlSetting extends Component {
       <div className={classes.editorwrap}>
         <Editor className={classes.editor} value={text}
           onChange={this.handleEditorChange} />
-        <Button className='btn-primary' disabled={yml === text}
+        <Button type='primary' disabled={yml === text}
           onClick={this.handleSave}
         >
           保存

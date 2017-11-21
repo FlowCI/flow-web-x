@@ -11,7 +11,7 @@ import { actions as jobActions } from 'redux/modules/job'
 import DocumentTitle from 'react-document-title'
 
 import Editor from 'components/CodeEditor'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import classes from './yml.scss'
 
@@ -65,7 +65,7 @@ export class FlowYmlSetting extends Component {
           <Editor className={classes.editor} value={text}
             onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
         </div>
-        <Button className='btn-primary' onClick={this.handleSave}>
+        <Button type='primary' onClick={this.handleSave}>
           保存
         </Button>
       </div>

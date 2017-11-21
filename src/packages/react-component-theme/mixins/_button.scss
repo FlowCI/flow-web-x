@@ -1,0 +1,50 @@
+@mixin button-variant ($color, $bgc, $border-color) {
+  color: $color;
+  background-color: $bgc;
+  border-color: $border-color;
+
+  &:hover, &:focus{
+    color: $color;
+    background-color: lighten($bgc, $btn-lighten-percent);
+    border-color: lighten($border-color, $btn-lighten-percent);
+  }
+  &:active{
+    color: $color;
+    background-color: darken($bgc, $btn-darken-percent);
+    border-color: darken($border-color, $btn-darken-percent);
+  }
+  &.plain{
+    color: $btn-plain-color;
+    border-color: $btn-plain-border-color;
+    background-color: $btn-plain-bgc;
+    &:hover, &:focus{
+      background-color: $bgc;
+      color: $color;
+      border-color: $border-color;
+    }
+    &:active{
+      background-color: darken($bgc, $btn-darken-percent);
+      border-color: darken($border-color, $btn-darken-percent);
+    }
+  }
+}
+
+@mixin button-size($height, $padding-horizontal, $border-radius) {
+  height: $height;
+  padding: 0 $padding-horizontal;
+  border-radius: $border-radius;
+}
+
+@mixin button-disabled () {
+  color: $btn-disabled-color!important;
+  cursor: not-allowed!important;
+  background-image: none!important;
+  background-color: $btn-disabled-bgc!important;
+  border-color: $btn-disabled-border-color!important;
+}
+
+@mixin button-loading () {
+  cursor: default!important;
+  opacity: $btn-loading-opacity;
+  pointer-events: none;
+}

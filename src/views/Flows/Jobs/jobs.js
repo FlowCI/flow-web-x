@@ -15,8 +15,10 @@ import { STATUS } from 'redux-http'
 
 import { actions as jobActions } from 'redux/modules/job'
 
+import { Link } from 'react-router'
+
 import Loading from 'components/Loading'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import { JobStatusSubscriber } from '../Socket'
 
@@ -146,7 +148,7 @@ export class JobsView extends Component {
         <i className='icon icon-layergroup' />{flowName}
       </div>
       <Button to={`/flows/${flowId}/settings`}
-        className='btn btn-inverse'
+        component={Link} type='secondary' plain
         leftIcon={<i className='icon icon-settings' />}>
         工作流设置
       </Button>
@@ -176,7 +178,7 @@ export class JobsView extends Component {
     return <div className={classes.container}>
       {this.renderFlowHeader()}
       <div className={classes.actions}>
-        <Button className='btn-primary' onClick={this.openBranchDialog}>
+        <Button type='primary' onClick={this.openBranchDialog}>
           {i18n('运行工作流')}
         </Button>
         <Filter flowId={flowId} i18n={i18n} />

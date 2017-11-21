@@ -1,0 +1,32 @@
+@import './_input.scss';
+$select-bgc: #fff!default;
+$select-border-radius: 3px!default;
+$select-arrow-size: 12px!default;
+$select-width: 250px!default;
+
+// dropdown options
+$select-dropdown-zindex: 2!default;
+$select-dropdown-offset: 5px!default;
+$select-dropdown-boder: #d4dce3!default;
+$select-dropdown-box-shadow: 0 4px 15px rgba(0, 0, 0, .15)!default;
+$select-dropdown-min-width: 240px!default;
+$select-dropdown-max-height: 270px!default;
+
+// options
+$select-options-padding-vertical: 5px!default;
+
+// option
+$select-option-padding-horizontal: 9px!default;
+$select-option-font-size: 14px!default;
+// hover
+$select-option-hover-bgc: #ecf6fd!default;
+
+// disabled
+$select-option-disabled-opacity: .25!default;
+
+// selected
+$select-option-selected-color: #55575c!default;
+$select-option-selected-bgc: #ededed!default;
+
+// loading
+$select-loading-color: #575fb7!default;

@@ -1,21 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import createI18n from '../i18n'
+import language from 'util/language'
+
 import { reduxForm } from 'redux-form'
-import { Input } from 'components/Form/reduxForm'
-import Button from 'components/Button'
+
+import V from 'validates'
+import Input from 'components/ReduxForm/Input'
+import Button from 'components/Buttonx'
 
 import classes from './form.scss'
-export function validate (values) {
-  const errors = {}
-  if (!values.name) {
-    errors.name = 'Required'
-  }
-  if (!values.value) {
-    errors.value = 'Required'
-  }
-  return errors
-}
 
 export class FlowEnvForm extends Component {
   static propTypes = {
@@ -24,6 +19,11 @@ export class FlowEnvForm extends Component {
     submitting: PropTypes.bool,
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    i18n: createI18n(language).createChild('Envs'),
   }
 
   componentWillReceiveProps (nextProps) {
@@ -34,14 +34,14 @@ export class FlowEnvForm extends Component {
   }
 
   render () {
-    const { className, submitting, handleSubmit } = this.props
+    const { className, submitting, handleSubmit, i18n } = this.props
     return (
       <form className={className}>
-        <Input name='name' size='lg' placeholder='key'
-          className={classes.control} />
-        <Input name='value' size='lg' placeholder='value'
-          className={classes.control} />
-        <Button className={classes.save} size='lg'
+        <Input name='name' size='lg' i18n={i18n.createChild('name')}
+          className={classes.control} validate={[V.required]} />
+        <Input name='value' size='lg' i18n={i18n.createChild('value')}
+          className={classes.control} validate={[V.required]} />
+        <Button size='lg' type='secondary'
           loading={submitting} onClick={handleSubmit}>
           添加
         </Button>
@@ -52,5 +52,4 @@ export class FlowEnvForm extends Component {
 
 export default reduxForm({
   form: 'FlowEnvForm',
-  validate,
 })(FlowEnvForm)

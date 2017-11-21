@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, bool, string, object } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -7,7 +7,7 @@ import autoCancel from 'react-promise-cancel'
 
 import { actions } from 'redux/modules/flow'
 
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import Mapping from './mapping'
 import classes from './button.scss'
@@ -33,21 +33,35 @@ function mapDispatchToProps (dispatch) {
 
 export class TestButton extends Component {
   static propTypes = {
-    loading: bool,
-    disabled: bool,
-    flowId: string.isRequired,
-    status: string,
-    message: string,
+    loading: PropTypes.bool,
+    disabled: PropTypes.bool,
+    flowId: PropTypes.string.isRequired,
+    status: PropTypes.string,
+    message: PropTypes.string,
 
-    envs: object,
+    envs: PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      source: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      /**
+       * SSH
+       */
+      deploy: PropTypes.string,
+      /**
+       * HTTP
+       */
+      username: PropTypes.string,
+      password: PropTypes.string,
 
-    i18n: func.isRequired,
-    test: func.isRequired,
-    getTestResult: func.isRequired,
+    }).isRequired,
+
+    i18n: PropTypes.func.isRequired,
+    test: PropTypes.func.isRequired,
+    getTestResult: PropTypes.func.isRequired,
 
     // event callback
-    onTest: func,
-    onTestFinish: func,
+    onTest: PropTypes.func,
+    onTestFinish: PropTypes.func,
   }
 
   state = {
@@ -90,9 +104,9 @@ export class TestButton extends Component {
   }
 
   renderButton () {
-    const { i18n, disabled } = this.props
-    return <Button className={classes.button}
-      disabled={disabled}
+    const { disabled, i18n } = this.props
+    return <Button plain
+      type='secondary' disabled={disabled}
       onClick={this.handleClick}
     >
       {i18n('连接测试')}
@@ -112,7 +126,7 @@ export class TestButton extends Component {
     return <span className={`${classes.text} text-danger`}>
       <i className='icon icon-warning' />
       测试失败: {message}
-      <Button className='btn-link' loading={false} onClick={this.handleClick}>
+      <Button type='text' loading={false} onClick={this.handleClick}>
         {i18n('重新测试')}
       </Button>
     </span>

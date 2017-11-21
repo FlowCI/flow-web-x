@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import Checkbox from 'components/Form/Checkbox'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 import ClipboardButton from 'components/ClipboardButton'
 
 import classes from './deploy.scss'
@@ -38,7 +38,7 @@ export default class DeployListItem extends Component {
       <span>{deploy.get('name')}</span>
       <ul className={classes.actions}>
         <li>
-          <Button className='btn-link' size='sm' onClick={this.toggle}>
+          <Button type='text' size='sm' onClick={this.toggle}>
             显示完整内容
           </Button>
         </li>

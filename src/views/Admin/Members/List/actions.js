@@ -10,8 +10,8 @@ import autoCancel from 'react-promise-cancel'
 
 import { actions } from 'redux/modules/role'
 
-import Button from 'components/Button'
-import { Select, Option } from 'components/Form/Select'
+import Button from 'components/Buttonx'
+import { Select, Option } from 'rc-components//Select'
 
 import classes from './members.scss'
 
@@ -75,7 +75,7 @@ export class AdminMemberListActions extends Component {
       onChange={this.handleRoleSelect}>
       {roles.map((r) => {
         const name = r.get('name')
-        return <Option key={name} value={name} title={name} />
+        return <Option key={name} value={name} label={name} />
       })}
     </Select>
   }
@@ -83,13 +83,14 @@ export class AdminMemberListActions extends Component {
   render () {
     const { i18n, onRemove } = this.props
     return <div className={classes.actions}>
-      <Button className={`btn-default ${classes.action}`}
-        onClick={onRemove}>
+      <Button className={classes.action}
+        type='danger' plain onClick={onRemove}>
         {i18n('删除')}
       </Button>
       <div className={classes.group}>
         {this.renderRoles()}
-        <Button className={`btn-default ${classes.action}`}
+        <Button className={classes.action}
+          type='primary' plain
           onClick={this.handleRole}>
           {i18n('应用')}
         </Button>

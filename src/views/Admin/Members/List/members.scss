@@ -8,13 +8,13 @@
 
 .actions{
   margin-bottom: $admin-toolbar-vertical-padding;
-}
-.action{
-  margin-right: 2*$padding-base-horizontal;
+  .action{
+    margin-right: 2*$padding-base-horizontal;
+    border-color: #d1dbe5;
+  }
 }
 .group{
   display: inline-block;
-  vertical-align: middle;
   .action{
     margin: 0 0 0 $padding-base-horizontal;
   }

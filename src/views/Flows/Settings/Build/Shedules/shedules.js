@@ -11,9 +11,9 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/flow'
 import { actions as branchActions } from 'redux/modules/branch'
 
-import { Select, Option } from 'components/Form/Select'
-import Input from 'components/Form/Input'
-import Button from 'components/Button'
+import { Select, Option } from 'rc-components/Select'
+import Input from 'rc-components/Input'
+import Button from 'components/Buttonx'
 
 import classes from './shedules.scss'
 
@@ -125,7 +125,7 @@ export class FlowShedulesSetting extends Component {
     const { edit } = this.state
     const actions = []
     if (edit) {
-      actions.push(<Button key='save' className='btn-primary'
+      actions.push(<Button key='save' type='primary'
         onClick={this.handleSave}>
         保存
       </Button>)
@@ -133,7 +133,7 @@ export class FlowShedulesSetting extends Component {
       actions.push(<Button key='edit' onClick={this.handleEdit}>编辑</Button>)
     }
     if (branch) {
-      actions.push(<Button key='remove' className='btn-danger'
+      actions.push(<Button key='remove' type='danger'
         onClick={this.handleRemove}>
         删除
       </Button>)

@@ -1,0 +1,31 @@
+@mixin toggle-size ($height) {
+  height: $height;
+  min-width: 2*$height;
+  line-height: $height;
+  border-radius: $height/2;
+}
+
+@mixin toggle-dot-size ($size, $padding, $color) {
+  padding: $padding;
+  width: $size + 2*$padding;
+  height: $size + 2*$padding;
+  box-sizing: border-box;
+  background-clip: content-box;
+  background-color: $color;
+}
+
+@mixin toggle-label-size ($fontSize, $padding) {
+  font-size: $fontSize;
+  padding: 0 $padding;
+}
+
+@mixin toggle-disabled ($bgc, $color, $dotColor) {
+  cursor: not-allowed;
+  background-color: $bgc;
+  .dot{
+    background-color: $dotColor;
+  }
+  .label{
+    color: $color;
+  }
+}

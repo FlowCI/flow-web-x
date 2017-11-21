@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import createI18n from '../i18n'
+import language from 'util/language'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -22,6 +25,11 @@ export class CreateAgent extends Component {
   static propTypes = {
     create: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    i18n: createI18n(language).createChild('create'),
   }
 
   handleSbumit = (values) => {
@@ -33,8 +41,9 @@ export class CreateAgent extends Component {
   }
 
   render () {
+    const { i18n } = this.props
     return <DocumentTitle title='添加 Agent · 控制台'>
-      <Form onSubmit={this.handleSbumit} />
+      <Form onSubmit={this.handleSbumit} i18n={i18n} />
     </DocumentTitle>
   }
 }

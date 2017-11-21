@@ -2,17 +2,18 @@ import React from 'react'
 import { node, string } from 'prop-types'
 
 import IconButton from 'components/IconButton'
-
+import classnames from 'classnames'
 import classes from './section.scss'
 
-export function Section ({ children }) {
-  return <section className={classes.section}>
+export function Section ({ children, className }) {
+  return <section className={classnames(classes.section, className)}>
     {children}
   </section>
 }
 
 Section.propTypes = {
-  children: node.isRequired
+  children: node.isRequired,
+  className: string,
 }
 
 export function SectionTitle ({ title, subTitle, question, action }) {

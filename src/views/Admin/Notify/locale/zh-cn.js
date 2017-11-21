@@ -2,20 +2,30 @@ export default {
   title: '邮件设置',
   subTitle: '用于发送邮件，目前只提供 SMTP 模式',
 
-  smtpUrl: 'SMTP 服务器',
-  smtpUrlPlaceholder: 'smtp.example.com',
+  smtpUrl: {
+    label: 'SMTP 服务器',
+    placeholder: 'smtp.example.com',
+  },
 
-  smtpPort: 'SMTP 端口',
-  smtpPortPlaceholder: '',
+  smtpPort: {
+    label: 'SMTP 端口',
+    placeholder: '',
+  },
 
-  sender: '发信人邮箱',
-  senderPlaceholder: 'email@example.com',
+  sender: {
+    label: '发信人邮箱',
+    placeholder: 'email@example.com',
+  },
 
-  username: '验证用户名',
-  usernamePlaceholder: '',
+  username: {
+    label: '验证用户名',
+    placeholder: '',
+  },
 
-  password: '验证密码',
-  passwordPlaceholder: '',
+  password: {
+    label: '验证密码',
+    placeholder: '',
+  },
 
   test: '测试发送',
   save: '保存',
