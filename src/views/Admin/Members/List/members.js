@@ -18,8 +18,8 @@ import { actions as alertActions } from 'redux/modules/alert'
 import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
-import Input from 'react-little-liar/src/Input'
-import Checkbox from 'react-little-liar/src/Checkbox'
+import Input from 'rc-components/Input'
+import Checkbox from 'rc-components/Checkbox'
 import { Confirm } from 'components/Modal'
 
 import {

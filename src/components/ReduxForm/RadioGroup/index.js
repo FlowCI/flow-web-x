@@ -1,8 +1,8 @@
 import createAdapter from '../createAdapter'
 import createField from '../createField'
 
-import Radio from 'react-little-liar/src/Radio'
-import RadioGroup from 'react-little-liar/src/RadioGroup'
+import Radio from 'rc-components/Radio'
+import RadioGroup from 'rc-components/RadioGroup'
 
 export const RadioGroupAdapter = createAdapter(RadioGroup, [])
 

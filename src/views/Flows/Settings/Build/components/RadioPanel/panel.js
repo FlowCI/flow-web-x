@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import RadioGroup from 'react-little-liar/src/RadioGroup'
-import Radio from 'react-little-liar/src/Radio'
+import RadioGroup from 'rc-components/RadioGroup'
+import Radio from 'rc-components/Radio'
 import Button from 'components/Buttonx'
 
 import Panel from '../Panel'

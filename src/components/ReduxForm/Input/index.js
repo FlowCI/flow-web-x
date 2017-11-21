@@ -1,7 +1,7 @@
 import createAdapter from '../createAdapter'
 import createField from '../createField'
 
-import Input from 'react-little-liar/src/Input'
+import Input from 'rc-components/Input'
 
 export const InputAdapter = createAdapter(Input)
 

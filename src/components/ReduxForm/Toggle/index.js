@@ -1,7 +1,7 @@
 import createSwitchAdapter from '../createSwitchAdapter'
 import createField from '../createField'
 
-import Toggle from 'react-little-liar/src/Toggle'
+import Toggle from 'rc-components/Toggle'
 
 export const ToggleAdapter = createSwitchAdapter(Toggle)
 

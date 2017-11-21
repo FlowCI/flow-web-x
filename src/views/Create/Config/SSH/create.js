@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Button from 'components/Buttonx'
-import Input from 'react-little-liar/src/Input'
+import Input from 'rc-components/Input'
 
 import ClickAwayListener from 'components/ClickAwayListener'
 

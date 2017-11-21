@@ -13,7 +13,7 @@ import { actions } from 'redux/modules/flow'
 import DocumentTitle from 'react-document-title'
 
 import V from 'validates'
-import Input from 'react-little-liar/src/Input'
+import Input from 'rc-components/Input'
 import { FieldSet } from 'components/ReduxForm/createAdapter'
 import Button from 'components/Buttonx'
 

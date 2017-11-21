@@ -1,0 +1,5 @@
+@mixin input-size ($height, $padding-vertical, $padding-horizontal, $radius) {
+  height: $height;
+  padding: $padding-vertical $padding-horizontal;
+  border-radius: $radius;
+}

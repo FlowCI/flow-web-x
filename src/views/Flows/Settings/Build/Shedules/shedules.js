@@ -11,8 +11,8 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/flow'
 import { actions as branchActions } from 'redux/modules/branch'
 
-import { Select, Option } from 'react-little-liar/src/Select'
-import Input from 'react-little-liar/src/Input'
+import { Select, Option } from 'rc-components/Select'
+import Input from 'rc-components/Input'
 import Button from 'components/Buttonx'
 
 import classes from './shedules.scss'

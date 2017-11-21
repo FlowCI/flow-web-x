@@ -35,7 +35,8 @@ const webpackConfig = {
     ],
     extensions: ['*', '.js', '.jsx', '.json'],
     alias: {
-      'liar-theme': 'liar-theme-default/src'
+      'rc-components': paths.src('./packages/react-component'),
+      'rc-theme': paths.src('./packages/react-component-theme')
     }
   },
   module: {
@@ -86,19 +87,6 @@ webpackConfig.module.rules.push({
   exclude: [
     /node_modules/,
     /static/,
-  ],
-  use: [{
-    loader: 'babel-loader',
-    query: {
-      cacheDirectory: true,
-    },
-  }],
-})
-
-webpackConfig.module.rules.push({
-  test: /\.js$/,
-  include: [
-    /react-little-liar/
   ],
   use: [{
     loader: 'babel-loader',

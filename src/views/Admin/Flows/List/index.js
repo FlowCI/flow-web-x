@@ -14,7 +14,7 @@ import { actions as alertActions } from 'redux/modules/alert'
 
 import DocumentTitle from 'react-document-title'
 
-import Input from 'react-little-liar/src/Input'
+import Input from 'rc-components/Input'
 import { Confirm } from 'components/Modal'
 
 import {

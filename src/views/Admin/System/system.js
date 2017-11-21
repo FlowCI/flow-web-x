@@ -14,7 +14,7 @@ import { actions } from 'redux/modules/system'
 import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
-import { Select, Option } from 'react-little-liar/src/Select'
+import { Select, Option } from 'rc-components/Select'
 import Title from '../components/Title'
 
 import {

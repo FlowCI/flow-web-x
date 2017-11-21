@@ -16,8 +16,8 @@ import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
 import Button from 'components/Buttonx'
-import CheckboxGroup from 'react-little-liar/src/CheckboxGroup'
-import Checkbox from 'react-little-liar/src/Checkbox'
+import CheckboxGroup from 'rc-components/CheckboxGroup'
+import Checkbox from 'rc-components/Checkbox'
 
 import classes from './members.scss'
 

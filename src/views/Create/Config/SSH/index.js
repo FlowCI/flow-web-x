@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { actions } from 'redux/modules/flow'
 
 import V from 'validates'
-import Input from 'react-little-liar/src/Input'
+import Input from 'rc-components/Input'
 import { FieldSet } from 'components/ReduxForm/createAdapter'
 import Button from 'components/Buttonx'
 import { Section, SectionTitle } from '../components/Section'

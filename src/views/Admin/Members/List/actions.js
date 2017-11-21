@@ -11,7 +11,7 @@ import autoCancel from 'react-promise-cancel'
 import { actions } from 'redux/modules/role'
 
 import Button from 'components/Buttonx'
-import { Select, Option } from 'react-little-liar/src//Select'
+import { Select, Option } from 'rc-components//Select'
 
 import classes from './members.scss'
 

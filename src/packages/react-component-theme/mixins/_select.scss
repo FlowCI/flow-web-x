@@ -1,0 +1,8 @@
+@mixin select-dropdown-size ($height, $offset) {
+  top: $height + $offset;
+}
+
+@mixin select-option-size ($height, $padding-horizontal) {
+  line-height: $height;
+  padding: 0 $padding-horizontal;
+}

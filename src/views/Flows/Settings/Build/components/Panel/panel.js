@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Toggle from 'react-little-liar/src/Toggle'
+import Toggle from 'rc-components/Toggle'
 
 import classes from './panel.scss'
 
