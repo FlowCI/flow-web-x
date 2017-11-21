@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import escapeHtml from 'util/escapeHtml'
 import ansiHTMLFactory from 'ansiToHtml'
 
-import Button from 'components/Button'
 import Loading from 'components/Loading'
 
 import classes from './node.scss'
@@ -17,11 +16,6 @@ export default function JobNodeContent ({ fetching, log, emptyText, onClose }) {
   return <code className={classes.code}>
     {!show && <Loading size={20} />}
     {show && <div dangerouslySetInnerHTML={{ __html: h }} />}
-    {show && !!log && <Button className={`btn-primary hide ${classes.close}`}
-      size='sm' useSpinner={false} onClick={onClose}
-    >
-      Close
-    </Button>}
   </code>
 }
 JobNodeContent.propTypes = {
