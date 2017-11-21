@@ -61,7 +61,7 @@ export class FlowYmlSetting extends Component {
     return <DocumentTitle title='配置 yml 工作流'>
       <div className={classes.container}>
         <div className={classes.editorwrap}>
-          <div className={classes.header}>.flow.ci</div>
+          <div className={classes.header}>.flow.yml</div>
           <Editor className={classes.editor} value={text}
             onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
         </div>
