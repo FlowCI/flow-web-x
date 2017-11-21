@@ -12,11 +12,14 @@ import { actions } from 'redux/modules/flow'
 
 import DocumentTitle from 'react-document-title'
 
+import V from 'validates'
 import Input from 'react-little-liar/src/Input'
+import { FieldSet } from 'components/ReduxForm/createAdapter'
 import Button from 'components/Buttonx'
 
 import Well from './components/Well'
 
+import classnames from 'classnames'
 import classes from './create.scss'
 
 function mapStateToProps (state, props) {
@@ -50,7 +53,8 @@ export class CreateFlowView extends Component {
   }
 
   handleNameChange = (value) => {
-    this.setState({ name: value })
+    const error = V.flowName(value)
+    this.setState({ name: value, error })
   }
 
   selectGit = (git) => {
@@ -58,7 +62,10 @@ export class CreateFlowView extends Component {
   }
 
   handleNext = async () => {
-    const { name, git } = this.state
+    const { name, git, error } = this.state
+    if (error) {
+      return
+    }
     const { location, create, redirect } = this.props
     const { data: flow } = await create(name)
     const next = git === 'custom' ? '' : git
@@ -78,18 +85,23 @@ export class CreateFlowView extends Component {
 
   render () {
     const { i18n } = this.props
-    const { name, git } = this.state
+    const { name, git, error } = this.state
 
     const enabled = name && git
     return <DocumentTitle title='创建 flow'>
       <div>
-        <div className={classes.wrapper}>
+        <div className={classnames(classes.wrapper, classes.form)}>
           <h5 className={classes.title}>
             {i18n('为你的 flow 起个名字')}
           </h5>
-          <Input type='text' value={name} className={classes.input}
-            placeholder={i18n('例：ios_test')}
-            onChange={this.handleNameChange} />
+          <FieldSet error={error} invalid={!!error}
+            adapterClassName={classes.field}>
+            <Input type='text' value={name} className={classes.input}
+              invalid={!!error}
+              placeholder={i18n('例：ios_test')}
+              onChange={this.handleNameChange}
+              onPressEnter={this.handleNext} />
+          </FieldSet>
         </div>
         <hr />
         <div className={classes.wrapper}>

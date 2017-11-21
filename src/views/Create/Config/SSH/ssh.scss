@@ -1,4 +1,12 @@
 @import 'variables/views/create';
+.form{
+  margin-bottom: 0;
+}
+
+.field{
+  display: flex;
+}
+
 .addr{
   width: 90%;
   max-width: 580px;

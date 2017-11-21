@@ -22,10 +22,20 @@ export function number (value) {
   return value && isNaN(Number(value)) ? i18n('not number') : undefined
 }
 
+export function flowName (value = '') {
+  return /\w{4,100}/.test(value) ? undefined : i18n('flow name invalid')
+}
+
+export function git (value = '') {
+  return /^git@\w+\.\w+/.test(value) ? undefined : i18n('not git url')
+}
+
 export default {
   required,
   email,
   url,
   host,
   number,
+  flowName,
+  git,
 }

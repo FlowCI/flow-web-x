@@ -4,6 +4,39 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import classes from './form.scss'
 
+export class FieldSet extends Component {
+  static propTypes = {
+    adapterClassName: PropTypes.string,
+    children: PropTypes.node,
+
+    invalid: PropTypes.bool,
+    extra: PropTypes.node,
+    error: PropTypes.node,
+  }
+
+  renderWarning (error) {
+    return <div className={classes.error}>
+      {error}
+    </div>
+  }
+
+  render () {
+    const {
+      invalid, extra, error,
+      children, adapterClassName,
+    } = this.props
+
+    return <div className={classnames(classes.field, adapterClassName, {
+      invalid,
+      extra,
+    })}>
+      {children}
+      {invalid && this.renderWarning(error)}
+      {!!extra && <div className={classes.extra}>{extra}</div>}
+    </div>
+  }
+}
+
 export default function createAdapter (component, emptyValue) {
   const enabledInvalid = component.propTypes && component.propTypes.invalid
   class FormAdapter extends Component {
@@ -49,26 +82,17 @@ export default function createAdapter (component, emptyValue) {
       return React.createElement(component, props)
     }
 
-    renderWarning () {
-      const { meta: { error } } = this.props
-      return <div className={classes.error}>
-        {error}
-      </div>
-    }
-
     render () {
       const { meta, extra, adapterClassName } = this.props
       const { error, pristine, submitFailed } = meta
       // 防止初始状态下为 invalid
       const invalid = !pristine || submitFailed ? !!error : false
-      return <div className={classnames(classes.field, adapterClassName, {
-        invalid,
-        extra,
-      })}>
+
+      return <FieldSet invalid={invalid} extra={extra}
+        adapterClassName={adapterClassName}
+        error={error}>
         {this.renderField(invalid)}
-        {invalid && this.renderWarning()}
-        {!!extra && <div className={classes.extra}>{extra}</div>}
-      </div>
+      </FieldSet>
     }
   }
   return FormAdapter
