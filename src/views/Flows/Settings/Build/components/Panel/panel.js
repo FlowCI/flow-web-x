@@ -21,10 +21,10 @@ export default class FlowBuildSettingPanel extends Component {
   render () {
     const { title, enabled, children } = this.props
     return <div className={classes.panel}>
-      <h4>
+      <h5>
         {title}
         <Toggle size='sm' checked={enabled} onChange={this.handleToggle} />
-      </h4>
+      </h5>
       {children}
     </div>
   }
