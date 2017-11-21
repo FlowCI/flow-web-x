@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, bool, string, object } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -33,21 +33,35 @@ function mapDispatchToProps (dispatch) {
 
 export class TestButton extends Component {
   static propTypes = {
-    loading: bool,
-    disabled: bool,
-    flowId: string.isRequired,
-    status: string,
-    message: string,
+    loading: PropTypes.bool,
+    disabled: PropTypes.bool,
+    flowId: PropTypes.string.isRequired,
+    status: PropTypes.string,
+    message: PropTypes.string,
 
-    envs: object,
+    envs: PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      source: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      /**
+       * SSH
+       */
+      deploy: PropTypes.string,
+      /**
+       * HTTP
+       */
+      username: PropTypes.string,
+      password: PropTypes.string,
 
-    i18n: func.isRequired,
-    test: func.isRequired,
-    getTestResult: func.isRequired,
+    }).isRequired,
+
+    i18n: PropTypes.func.isRequired,
+    test: PropTypes.func.isRequired,
+    getTestResult: PropTypes.func.isRequired,
 
     // event callback
-    onTest: func,
-    onTestFinish: func,
+    onTest: PropTypes.func,
+    onTestFinish: PropTypes.func,
   }
 
   state = {

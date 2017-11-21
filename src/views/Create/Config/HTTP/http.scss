@@ -1,4 +1,10 @@
 @import 'variables/views/create';
+.section{
+  margin: 0;
+}
+.block{
+  display: flex;
+}
 .addr{
   width: 90%;
   max-width: 580px;
