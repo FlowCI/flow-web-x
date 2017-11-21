@@ -53,7 +53,7 @@ const config = {
 // ------------------------------------
 const pkg = require('../package.json')
 config.version = pkg.version
-
+config.globals.VERSION = `"${config.version}"`
 // Utilities
 // ------------------------------------
 config.pathUtils = (() => {
