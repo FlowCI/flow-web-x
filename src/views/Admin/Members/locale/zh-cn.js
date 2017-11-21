@@ -26,7 +26,7 @@ export default {
       placeholder: '选择角色',
     },
     flow: {
-      label: 'Flow 授权',
+      label: 'flow 授权',
       placeholder: '',
     },
     isSendEmail: {

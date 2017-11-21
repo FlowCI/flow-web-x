@@ -1,5 +1,5 @@
 /**
- * 用户 - 权限 - Flow 表
+ * 用户 - 权限 - flow 表
  */
 
 import { handleActions } from 'redux-actions'

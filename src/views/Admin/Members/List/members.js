@@ -267,7 +267,7 @@ export class AdminMemberList extends Component {
             {i18n('电子邮件')}
           </ListHeadCol>
           <ListHeadCol className={classes.flows}>
-            {i18n('Flow 授权')}
+            {i18n('flow 授权')}
           </ListHeadCol>
           <ListHeadCol className={classes.roles}>
             {i18n('角色')}

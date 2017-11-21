@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string, max-len */
 
 export default {
-  FLOW_NAME: 'Flow Name',
+  FLOW_NAME: 'flow 名称',
   FLOW_GIT_SOURCE: '创建方式',
   FLOW_GIT_URL: '仓库',
   FLOW_GIT_WEBHOOK: 'Webhook',

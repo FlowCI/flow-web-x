@@ -111,7 +111,7 @@ export class AdminFlowMembers extends Component {
   render () {
     const { members, loaded, i18n } = this.props
     const { selected } = this.state
-    return <DocumentTitle title='Flow 成员管理 · 控制台'>
+    return <DocumentTitle title='flow 成员管理 · 控制台'>
       <div>
         {!loaded && <Loading />}
         {loaded && <CheckboxGroup className={classes.list}
