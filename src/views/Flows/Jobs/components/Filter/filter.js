@@ -11,9 +11,9 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/job'
 import { actions as branchActions } from 'redux/modules/branch'
 
-import { Select, Option } from 'components/Form/Select'
-import Checkbox from 'components/Form/Checkbox'
-import Input from 'components/Form/Input'
+import { Select, Option } from 'rc-components/Select'
+import Checkbox from 'rc-components/Checkbox'
+import Input from 'rc-components/Input'
 
 import classes from './filter.scss'
 
@@ -130,17 +130,17 @@ export class JobsFilter extends Component {
     } = this.props
     const { keyword } = this.state
     return <div className={classes.filter}>
-      <Select loading={loading} className={classes.select}
-        value={branch} onChange={this.handleBranch}
+      <Select loading={loading} value={branch}
+        onChange={this.handleBranch}
         leftIcon={<i className='icon icon-git-branch' />}>
         <Option value=''>全部分支</Option>
-        {branches.map((b) => <Option key={b} title={b} value={b} />)}
+        {branches.map((b) => <Option key={b} label={b} value={b} />)}
       </Select>
       <Input placeholder='输入关键词搜索' value={keyword}
         onChange={this.handleKeyword} />
-      <Checkbox rightLabel='只查看我的提交' checked={onlySelf}
+      <Checkbox label='只查看我的提交' checked={onlySelf}
         onChange={this.handleOnlySelfCheck} />
-      <Checkbox rightLabel='Pull Request' checked={pullRequest}
+      <Checkbox label='Pull Request' checked={pullRequest}
         onChange={this.handlePullRequestCheck} />
     </div>
   }
