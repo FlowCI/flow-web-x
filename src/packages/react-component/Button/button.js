@@ -66,7 +66,6 @@ export default class Button extends Component {
   static defaultProps = {
     classNames: classes,
     component: 'button',
-    htmlType: 'button',
     spinner: <i className='icon icon-loading' />,
     disabled: false,
     loading: false,
@@ -138,7 +137,7 @@ export default class Button extends Component {
 
     const props = {
       ...other,
-      type: htmlType,
+      type: htmlType || (component === 'button' ? 'button' : ''),
       disabled: loading || disabled,
       className: classnames(classNames.btn, {
         'loading': loading,
