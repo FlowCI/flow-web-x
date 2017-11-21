@@ -119,7 +119,8 @@ export class AdminFlowMembers extends Component {
           {members.map((member) => {
             const n = member.get('username')
             const email = member.get('email')
-            return <Checkbox key={n} value={email} label={n}
+            const label = `${n} ( ${email} )`
+            return <Checkbox key={n} value={email} label={label}
               className={classes.checkbox} />
           })}
         </CheckboxGroup>}
