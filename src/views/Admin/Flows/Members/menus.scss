@@ -23,6 +23,8 @@
 }
 .active{
   font-weight: bold;
+  background-color: darken($admin-flows-member-menus-bgc, 5%);
+
   &:after{
     content: ' ';
     display: inline-block;
