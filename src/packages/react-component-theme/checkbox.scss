@@ -41,7 +41,13 @@
 }
 .left{
   margin-right: $checkbox-padding-horizontal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .right{
   margin-left: $checkbox-padding-horizontal;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
