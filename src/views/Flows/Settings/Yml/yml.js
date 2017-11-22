@@ -51,8 +51,8 @@ export class FlowYmlSetting extends Component {
     }
   }
 
-  handleEditorChange = (e) => {
-    this.setState({ text: e.target.value })
+  handleEditorChange = (value) => {
+    this.setState({ text: value })
   }
 
   handleSave = () => {

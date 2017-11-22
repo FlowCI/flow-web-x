@@ -1,27 +1,17 @@
 @import 'variables/colors';
 .container {
-  padding: 30px 40px 40px;
-  :global(.btn-primary){
-    min-width: 100px;
-  }
-
-}
-.editorwrap{
-  border: 1px solid $color-hr;
-  border-radius: 3px;
-  margin-bottom: 10px;
-  overflow: hidden;
+  padding: 0px;
 }
 
 .header{
-  background-color: #fafbfc;
-  border-bottom: 1px solid lighten($color-hr, 5%);
+  background-color: #fff;
+  // border-bottom: 1px solid #d4dce3;
   font-weight: bold;
   line-height: 20px;
-  padding: 10px;
+  padding: 10px 20px;
 }
-.editor{
-  background-color: #fff;
-  color: $color-black;
-  border: none;
+.save{
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 10px;
 }

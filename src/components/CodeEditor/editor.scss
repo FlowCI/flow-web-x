@@ -1,14 +1,11 @@
 @import 'variables/colors';
+// 用于当编辑器还未加载出来时显示
 .editor{
-  background-color: $color-black;
-  color: #fff;
+  background-color: #282c34;
   display: block;
   width: 100%;
-  height: 50vh;
-  resize: none;
-  padding: 10px;
-  outline: none;
-  &:focus{
-    outline: none;
+  height: 500px;
+  &:global(.theme){
+    background-color: #282C34;
   }
 }
