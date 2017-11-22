@@ -69,6 +69,7 @@ export default class CodeEditor extends Component {
   }
 
   editorDidMount = (editor, monaco) => {
+    editor.getModel().updateOptions({ tabSize: 2 })
     this.editor = editor
   }
 

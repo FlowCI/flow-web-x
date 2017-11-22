@@ -42,8 +42,8 @@ export class FlowYmlSetting extends Component {
     text: ''
   }
 
-  handleEditorChange = (e) => {
-    this.setState({ text: e.target.value })
+  handleEditorChange = (value) => {
+    this.setState({ text: value })
   }
 
   handleSave = () => {
@@ -61,13 +61,17 @@ export class FlowYmlSetting extends Component {
     return <DocumentTitle title='配置 yml 工作流'>
       <div className={classes.container}>
         <div className={classes.editorwrap}>
-          <div className={classes.header}>.flow.yml</div>
-          <Editor className={classes.editor} value={text}
-            onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
+          <div className={classes.header}>
+            .flow.yml
+            <Button type='success' size='sm'
+              plain className={classes.save}
+              onClick={this.handleSave}>
+              保存
+            </Button>
+          </div>
+          <Editor value={text} onChange={this.handleEditorChange} />
         </div>
-        <Button type='primary' onClick={this.handleSave}>
-          保存
-        </Button>
+
       </div>
     </DocumentTitle>
   }
