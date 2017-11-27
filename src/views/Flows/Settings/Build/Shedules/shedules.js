@@ -150,7 +150,7 @@ export class FlowShedulesSetting extends Component {
       <Select className={classes.control} loading={querying}
         placeholder='选择项目分支' disabled={!edit}
         value={branch || ''} onChange={this.handleBranchChange}>
-        {branches.map((b) => <Option key={b} value={b} title={b} />)}
+        {branches.map((b) => <Option key={b} value={b} label={b} />)}
       </Select>
       <Input className={classes.control} placeholder='填写 crontab 命令'
         value={content || ''} disabled={!edit}
