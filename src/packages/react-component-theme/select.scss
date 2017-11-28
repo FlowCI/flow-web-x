@@ -54,7 +54,7 @@
   max-height: $select-dropdown-max-height;
   overflow: auto;
 
-  @include select-dropdown-size($input-size, $select-dropdown-offset);
+  @include select-dropdown-offset($input-size, $select-dropdown-offset);
 }
 
 .options{
@@ -100,18 +100,18 @@
 // xs
 .xs{
   &.dropdown {
-    @include select-dropdown-size($input-xs-size, $select-dropdown-offset);
+    @include select-dropdown-offset($input-xs-size, $select-dropdown-offset);
   }
 }
 // sm
 .sm{
   &.dropdown {
-    @include select-dropdown-size($input-sm-size, $select-dropdown-offset);
+    @include select-dropdown-offset($input-sm-size, $select-dropdown-offset);
   }
 }
 // lg
 .lg{
   &.dropdown {
-    @include select-dropdown-size($input-lg-size, $select-dropdown-offset);
+    @include select-dropdown-offset($input-lg-size, $select-dropdown-offset);
   }
 }
