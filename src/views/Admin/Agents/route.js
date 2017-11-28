@@ -4,17 +4,17 @@ import CreateComponent from './Create'
 export default function (store) {
   return {
     indexRoute: {
-      onEnter: (nextState, replace) => replace('/admin/agents/list'),
+      navbar: 'list',
+      component: ListComponent,
     },
     component: Component,
     childRoutes: [{
-      path: 'list',
-      navbar: true,
-      component: ListComponent,
-    }, {
       path: 'create',
-      navbar: true,
+      navbar: 'create',
       component: CreateComponent,
+    }, {
+      path: '*',
+      onEnter: (state, replace) => replace('/admin/agents'),
     }],
   }
 }

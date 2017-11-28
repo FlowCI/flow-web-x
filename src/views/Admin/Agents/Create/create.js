@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import createI18n from '../i18n'
-import language from 'util/language'
+import i18n from '../i18n'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { push } from 'react-router-redux'
 import { actions } from 'redux/modules/agent'
-
-import DocumentTitle from 'react-document-title'
 
 import Form from './form'
 
@@ -29,7 +26,7 @@ export class CreateAgent extends Component {
   }
 
   static defaultProps = {
-    i18n: createI18n(language).createChild('create'),
+    i18n: i18n.createChild('create'),
   }
 
   handleSbumit = (values) => {
@@ -42,9 +39,7 @@ export class CreateAgent extends Component {
 
   render () {
     const { i18n } = this.props
-    return <DocumentTitle title='添加 Agent · 控制台'>
-      <Form onSubmit={this.handleSbumit} i18n={i18n} />
-    </DocumentTitle>
+    return <Form onSubmit={this.handleSbumit} i18n={i18n} />
   }
 }
 

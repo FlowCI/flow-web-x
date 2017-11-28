@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
-import { bool, func } from 'prop-types'
-import { list } from 'react-immutable-proptypes'
+import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import createI18n from '../i18n'
-import language from 'util/language'
+import i18n from '../i18n'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import autoCancel from 'react-promise-cancel'
-import { STATUS } from 'redux-http'
+import { isSuccess } from 'redux-http'
 
 import { actions } from 'redux/modules/agent'
 import { actions as jobActions } from 'redux/modules/job'
 import { actions as alertActions } from 'redux/modules/alert'
-
-import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
 import { Confirm } from 'components/Modal'
@@ -40,7 +37,7 @@ function mapStateToProps (state, props) {
   const { agent } = state
   return {
     agents: agent.get('list'),
-    loading: agent.getIn(['ui', 'QUERY']) !== STATUS.success,
+    loading: !isSuccess(agent.getIn(['ui', 'QUERY'])),
   }
 }
 
@@ -56,19 +53,19 @@ function mapDispatchToProps (dispatch) {
 
 export class AdminAgentView extends Component {
   static propTypes = {
-    agents: list.isRequired,
-    loading: bool,
+    agents: ImmutablePropTypes.list.isRequired,
+    loading: PropTypes.bool,
 
-    query: func.isRequired,
-    stop: func.isRequired,
-    close: func.isRequired,
-    remove: func.isRequired,
-    alert: func.isRequired,
-    i18n: func.isRequired,
+    query: PropTypes.func.isRequired,
+    stop: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    i18n: createI18n(language).createChild('list'),
+    i18n: i18n.createChild('list'),
   }
 
   state = {
@@ -219,19 +216,17 @@ export class AdminAgentView extends Component {
     const { openConfirm, openConfig, selected } = this.state
     const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
     : 'Confirm'
-    return <DocumentTitle title='Agent 列表 · 控制台'>
-      <div className={classes.container}>
-        {!loading && this.renderFilter()}
-        {loading ? this.renderLoading() : this.renderAgents()}
-        <Confirm isOpen={openConfirm} title={confirmTitle}
-          onCancel={this.closeConfirm}
-          onOk={this.handleRemove}
-        />
-        <ConfigDialog agent={selected} isOpen={openConfig}
-          onRequestClose={this.closeConfig}
-        />
-      </div>
-    </DocumentTitle>
+    return <div className={classes.container}>
+      {!loading && this.renderFilter()}
+      {loading ? this.renderLoading() : this.renderAgents()}
+      <Confirm isOpen={openConfirm} title={confirmTitle}
+        onCancel={this.closeConfirm}
+        onOk={this.handleRemove}
+      />
+      <ConfigDialog agent={selected} isOpen={openConfig}
+        onRequestClose={this.closeConfig}
+      />
+    </div>
   }
 }
 
