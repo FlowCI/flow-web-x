@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Input from '../Input'
-
+import ClickAwayListener from '../ClickAwayListener'
 import classnames from 'classnames'
 import classes from 'rc-theme/select.scss'
 
@@ -79,7 +79,7 @@ export default class Select extends Component {
   handleBlur = () => {
     if (this.state.opened) {
       // 由于现在是直接删 dom，太快可能不会触发 li 的 click 事件，所以添加延迟
-      setTimeout(() => this.setState({ opened: false }), 100)
+      this.setState({ opened: false })
     }
   }
 
@@ -93,6 +93,7 @@ export default class Select extends Component {
     if (value !== v) {
       onChange && onChange(value)
     }
+    this.setState({ opened: false })
   }
 
   cloneOption = (selected, option, index) => {
@@ -141,9 +142,11 @@ export default class Select extends Component {
     const selected = this.getSelected()
     return <div className={classnames(classNames.select, className, {
       'disabled': disabled,
-    })} onBlur={this.handleBlur}>
+    })}>
       {this.renderInputField(selected)}
-      {opened && this.renderDropDown(selected)}
+      {opened && <ClickAwayListener onClickAway={this.handleBlur}>
+        {this.renderDropDown(selected)}
+      </ClickAwayListener>}
     </div>
   }
 }
