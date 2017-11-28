@@ -1,4 +1,4 @@
-@mixin select-dropdown-size ($height, $offset) {
+@mixin select-dropdown-offset ($height, $offset) {
   top: $height + $offset;
 }
 
