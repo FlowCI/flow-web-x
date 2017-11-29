@@ -14,6 +14,7 @@ export default {
     build: '任务',
     token: 'Token',
     actions: '操作',
+
     'stop build': '停止任务',
     'shut down': '停止',
     'see more': '查看',
@@ -31,5 +32,10 @@ export default {
       label: 'Name',
       placeholder: '',
     }
+  },
+  configDialog: {
+    title: '环境信息',
+    key: '名称',
+    value: '值'
   }
 }
