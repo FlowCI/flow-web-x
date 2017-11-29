@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 import Wrapper, { classes as WrapperClass } from './wrapper'
 import classes from './confirm.scss'
 
@@ -46,10 +46,10 @@ export default class Confirm extends Component {
         {children}
       </div>}
       <div className={classNames.footer}>
-        {cancelable && <Button className='btn-default' onClick={onCancel}>
+        {cancelable && <Button onClick={onCancel}>
           Cancel
         </Button>}
-        <Button className='btn-primary' onClick={onOk}>
+        <Button type='primary' onClick={onOk}>
           Ok
         </Button>
       </div>
