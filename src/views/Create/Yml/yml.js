@@ -30,6 +30,8 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
+const defaultYml = '# flow.ci templates\n\nflow:\n  - envs:\n      FLOW_WELCOME_MESSAGE: "hello.world"\n      \n    steps:\n      - name: Init\n        script: |\n          echo ${FLOW_WELCOME_MESSAGE}' // eslint-disable-line
+
 export class FlowYmlSetting extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired,
@@ -39,7 +41,7 @@ export class FlowYmlSetting extends Component {
   }
 
   state = {
-    text: ''
+    text: defaultYml
   }
 
   handleEditorChange = (value) => {
