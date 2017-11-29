@@ -7,7 +7,7 @@ import language from 'util/language'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 
-import { NavTabs, Nav, classes as navClasses } from 'components/NavTabs'
+import { NavTabs, Nav } from 'components/NavTabs'
 
 import classes from './container.scss'
 
@@ -43,7 +43,6 @@ export class AdminCredentialContainer extends Component {
       <NavTabs className={classes.navbar}>
         {menus.map((menu) => <Nav
           key={menu.path}
-          activeClassName={navClasses.active}
           to={`${base}/${menu.path}`}
         >
           {i18n(`${menu.path}.title`)}

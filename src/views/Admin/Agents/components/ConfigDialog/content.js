@@ -13,6 +13,7 @@ export default class AgentDialogContent extends Component {
   static propTypes = {
     agent: map,
     getSystemInfo: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
   }
 
   state = {
@@ -41,14 +42,15 @@ export default class AgentDialogContent extends Component {
   }
 
   renderContent () {
+    const { i18n } = this.props
     const { system } = this.state
     const { useMemory, totalMemory, ...other } = system
     const keys = Object.keys(other)
     return <table className={classes.table}>
       <thead>
         <tr className={classes.header}>
-          <th>名称</th>
-          <th>值</th>
+          <th>{i18n('key')}</th>
+          <th>{i18n('value')}</th>
         </tr>
       </thead>
       <tbody>
