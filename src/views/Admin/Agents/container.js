@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import i18n from './i18n'
-
 import { connect } from 'react-redux'
 import { createNavbarSelector, createActiveNavbarSelector } from 'util/route'
 
@@ -30,29 +28,27 @@ export class AdminAgentContainer extends PureComponent {
     children: PropTypes.node,
 
     base: PropTypes.string.isRequired,
-    i18n: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     base: '/admin/agents',
-    i18n: i18n,
   }
 
   render () {
     const {
-      i18n, base, menus,
+      base, menus,
       activeMenu, children
     } = this.props
     return <div>
       <NavTabs className={classes.navbar}>
         {menus.map((menu) => {
           const path = menu.path || ''
-          return <Nav key={path} to={`${base}/${path}`}>
-            {i18n(`${menu.navbar}.navbar`)}
+          return <Nav key={path} to={`${base}/${path}`} onlyActiveOnIndex>
+            {menu.navbar}
           </Nav>
         })}
       </NavTabs>
-      <DocumentTitle title={i18n(`${activeMenu.navbar}.title`)}>
+      <DocumentTitle title={activeMenu.title}>
         {children}
       </DocumentTitle>
     </div>
