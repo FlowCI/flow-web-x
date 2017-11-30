@@ -12,10 +12,10 @@ import classes from './container.scss'
 const navbarSelector = createNavbarSelector()
 const activeNavbarSelector = createActiveNavbarSelector()
 
-function mapStateToProps (state, props) {
+function mapStateToProps (state, { routes, route }) {
   return {
-    menus: navbarSelector(props),
-    activeMenu: activeNavbarSelector(props)
+    menus: navbarSelector(route),
+    activeMenu: activeNavbarSelector(routes, route)
   }
 }
 
