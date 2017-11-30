@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { string, node, any, func } from 'prop-types'
+import PropTypes from 'prop-types'
 
+import { Ul } from 'components/InlineUl'
+
+import classnames from 'classnames'
 import classes from './bars.scss'
 
 export default class TabBars extends Component {
   static propTypes = {
-    className: string,
-    children: node,
-    value: any,
-    onChange: func,
+    className: PropTypes.string,
+    children: PropTypes.node,
+    value: PropTypes.any,
+    onChange: PropTypes.func,
   }
 
   handleActive = (v) => {
@@ -28,10 +31,8 @@ export default class TabBars extends Component {
 
   render () {
     const { className, children } = this.props
-    const cls = [classes.bars]
-    className && cls.push(className)
-    return <ul className={cls.join(' ')}>
+    return <Ul className={classnames(classes.bars, className)}>
       {React.Children.map(children, this.cloneChild)}
-    </ul>
+    </Ul>
   }
 }

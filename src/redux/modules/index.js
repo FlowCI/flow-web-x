@@ -11,6 +11,7 @@ import alert from './alert'
 import member from './member'
 import role from './role'
 import permission from './permission'
+import plugin from './plugin'
 
 export default {
   session,
@@ -24,4 +25,5 @@ export default {
   member,
   role,
   permission,
+  plugin,
 }

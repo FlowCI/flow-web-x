@@ -1,0 +1,12 @@
+.ul{
+  display: inline-flex;
+  align-items: center;
+}
+.li{
+  &:not(:last-child) {
+    &:after {
+      content: '|';
+      margin: 0px 10px;
+    }
+  }
+}

@@ -13,8 +13,9 @@
 .th{
   height: $admin-list-header;
   line-height: $admin-list-header;
-  font-weight: bold;
+  font-weight: 500;
   padding: 0px $admin-list-header-horizontal-padding;
+  vertical-align: middle;
 }
 .tr{
   border-bottom: 1px solid $admin-list-divier-color;

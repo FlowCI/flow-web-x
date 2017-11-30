@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { string, node, bool, any, func } from 'prop-types'
 
+import { Li } from 'components/InlineUl'
+
+import classnames from 'classnames'
 import classes from './bars.scss'
 
 export default class Tab extends Component {
@@ -20,12 +23,12 @@ export default class Tab extends Component {
 
   render () {
     const { text, children, active } = this.props
-    const cls = [classes.item]
-    active && cls.push(classes.active)
-    return <li className={cls.join(' ')}>
+    return <Li className={classnames(classes.item, {
+      [classes.active]: active,
+    })}>
       <a href='#' title={text} onClick={this.handleClick}>
         {text || children}
       </a>
-    </li>
+    </Li>
   }
 }
