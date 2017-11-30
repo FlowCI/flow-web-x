@@ -1,20 +1,17 @@
 import Component from './index'
 import ListComponent from './List'
 import CreateComponent from './Create'
-import i18n from './i18n'
 
 export default function (store) {
   return {
+    component: Component,
     indexRoute: {
-      navbar: i18n('list.navbar'),
-      title: i18n('list.title'),
+      navbar: 'list',
       component: ListComponent,
     },
-    component: Component,
     childRoutes: [{
       path: 'create',
-      navbar: i18n('create.navbar'),
-      title: i18n('create.title'),
+      navbar: true,
       component: CreateComponent,
     }, {
       path: '*',

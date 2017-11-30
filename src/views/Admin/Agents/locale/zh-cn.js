@@ -1,7 +1,13 @@
 export default {
+  document: {
+    list: 'Agent · 控制台',
+    create: '添加 Agent · 控制台',
+  },
+  navbar: {
+    list: 'Agent',
+    create: '添加 Agent',
+  },
   list: {
-    title: 'Agent · 控制台',
-    navbar: 'Agent',
     toolbar: {
       ALL: '全部 ( :count )',
       BUSY: '运行中 ( :count )',
@@ -21,8 +27,6 @@ export default {
     'delete': '删除',
   },
   create: {
-    title: '添加 Agent · 控制台',
-    navbar: '添加 Agent',
     save: '生成',
     zone: {
       label: 'Zone',
