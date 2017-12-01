@@ -9,7 +9,9 @@ function set (name, value, options) {
   } else {
     throw new Error(`unabled to storge with ${typeof value}`)
   }
-  localStorage.setItem(name, str)
+  try {
+    localStorage.setItem(name, str)
+  } catch (e) {}
 }
 
 function get (name, options) {
