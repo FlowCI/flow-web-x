@@ -1,0 +1,63 @@
+@import './variables/_toggle.scss';
+@import './mixins/_toggle.scss';
+
+.toggle{
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+
+  background-color: $toggle-off-bgc;
+  user-select: none;
+  cursor: pointer;
+  transition: background-color .3s;
+
+  @include toggle-size($toggle-size);
+
+  &:global(.checked) {
+    background-color: $toggle-on-bgc;
+    .dot{
+      left: calc(100% - #{$toggle-dot-size + 2*$toggle-dot-padding});
+    }
+    .label{
+      text-align: left;
+    }
+  }
+  &:global(.disabled) {
+    @include toggle-disabled($toggle-disabled-bgc, $toggle-disabled-label-color,
+      $toggle-disabled-dot-color)
+  }
+}
+.dot {
+  border-radius: 50%;
+  display: inline-block;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: left .3s;
+  @include toggle-dot-size($toggle-dot-size, $toggle-dot-padding,
+    $toggle-dot-color);
+}
+.label{
+  display: block;
+  text-align: right;
+  color: $toggle-label-color;
+  @include toggle-label-size($toggle-label-font-size, $toggle-label-padding);
+}
+
+.sm{
+  @include toggle-size($toggle-sm-size);
+  .dot{
+    @include toggle-dot-size($toggle-sm-dot-size, $toggle-sm-dot-padding, $toggle-dot-color);
+  }
+  .label {
+    @include toggle-label-size($toggle-sm-label-font-size,
+      $toggle-sm-label-padding);
+  }
+  &:global(.checked) {
+    .dot{
+      left: calc(100% - #{$toggle-sm-dot-size + 2*$toggle-sm-dot-padding});
+    }
+  }
+}

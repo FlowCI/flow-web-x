@@ -1,14 +1,5 @@
 @import 'variables/colors';
 .control{
   margin-right: 10px;
-}
-
-.save{
-  background-color: $color-black;
-  color: #fff;
-  padding-left: 20px;
-  padding-right: 20px;
-  &:hover, &:focus{
-    background-color: darken($color-black, 10%);
-  }
+  width: 250px;
 }

@@ -8,7 +8,7 @@ export default {
     copied: '复制成功',
   },
   members: {
-    title: 'Flow 成员管理',
+    title: 'flow 成员管理',
     toolbar: {
       all: '全部 ( :count ) '
     },

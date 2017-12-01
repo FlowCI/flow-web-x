@@ -6,8 +6,20 @@ import { defaultInitState, createHandlers } from 'redux/handler'
 
 import types from './systemType'
 
-const initialState = defaultInitState.set('services', new Map())
 const handlers = createHandlers({ id: 'name' })
+/**
+ * 将 web 版本号添加进去
+ */
+const initialState = handlers.save(
+  defaultInitState.set('services', new Map()),
+  {
+    payload: {
+      name: 'Web',
+      version: VERSION,
+    }
+  }
+)
+
 export const actions = {
   query: function () {
     return {

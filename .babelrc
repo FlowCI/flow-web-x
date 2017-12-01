@@ -2,26 +2,26 @@
 // for webpack, which can be found in ~/build/webpack.config.
 //
 {
-  plugins: [
+  "plugins": [
     "babel-plugin-transform-class-properties",
     "babel-plugin-syntax-dynamic-import",
     "babel-plugin-transform-runtime",
     [
       "babel-plugin-transform-object-rest-spread",
       {
-        useBuiltIns: true
+        "useBuiltIns": true
       }
     ],
     "babel-plugin-transform-export-extensions"
   ],
-  presets: [
+  "presets": [
     "babel-preset-react",
     ["babel-preset-env", {
-      modules: false,
+      "modules": false,
       "targets": {
         "browsers": ["last 2 versions"]
       },
-      uglify: true
-    }],
+      "uglify": true
+    }]
   ]
 }

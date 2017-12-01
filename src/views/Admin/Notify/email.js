@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { bool, func } from 'prop-types'
-import { record } from 'react-immutable-proptypes'
+import PropTypes from 'prop-types'
 
 import createI18n from './i18n'
 import language from 'util/language'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { createSelector } from 'reselect'
 import { STATUS } from 'redux-http'
 
 import { actions } from 'redux/modules/notifySetting'
@@ -18,11 +18,15 @@ import Loading from 'components/Loading'
 import Title from '../components/Title'
 import Form from './form'
 
+const settingSelectors = createSelector(
+  (setting) => setting,
+  (setting) => setting ? setting.toJSON() : {}
+)
 function mapStateToProps (state, props) {
   const { notifySetting } = state
   return {
     loading: notifySetting.getIn(['ui', 'GET_EMAIL']) !== STATUS.success,
-    setting: notifySetting.get('email')
+    setting: settingSelectors(notifySetting.get('email'))
   }
 }
 
@@ -37,14 +41,14 @@ function mapDispatchToProps (dispatch) {
 
 export class AdminNotifyEmail extends Component {
   static propTypes = {
-    loading: bool,
-    setting: record,
+    loading: PropTypes.bool,
+    setting: PropTypes.object,
 
-    get: func.isRequired,
-    test: func.isRequired,
-    save: func.isRequired,
-    i18n: func.isRequired,
-    alert: func.isRequired,
+    get: PropTypes.func.isRequired,
+    test: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -57,11 +61,19 @@ export class AdminNotifyEmail extends Component {
   }
 
   handleSave = (values) => {
+    /**
+     * 由于 isAuthenticated 为 false 时，values 里面还会包含 username、password
+     * 所以删除掉
+     */
+    const params = { ...values }
+    const { isAuthenticated } = values
+    if (!isAuthenticated) {
+      params.username = undefined
+      params.password = undefined
+    }
     const { save, alert } = this.props
-    return save(values).then(() => {
+    return save(params).then(() => {
       alert('success', '保存成功')
-    }, () => {
-      alert('failure', '保存失败')
     })
   }
 
@@ -69,8 +81,6 @@ export class AdminNotifyEmail extends Component {
     const { test, alert } = this.props
     return test(values).then(() => {
       alert('success', '测试成功')
-    }, () => {
-      alert('failure', '测试发送失败')
     })
   }
 
@@ -80,8 +90,8 @@ export class AdminNotifyEmail extends Component {
       <div>
         <Title title={i18n('title')} subTitle={i18n('subTitle')} />
         {loading ? <Loading />
-          : <Form initialValues={setting.toJSON()} i18n={i18n}
-            enableReinitialize onSubmit={this.handleSave}
+          : <Form initialValues={setting} i18n={i18n} pure
+            onSubmit={this.handleSave}
             onTest={this.handleTest} />
         }
       </div>

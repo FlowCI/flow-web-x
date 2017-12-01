@@ -1,3 +1,3 @@
-import Component from './agents'
+import Component from './controller'
 
 export default Component

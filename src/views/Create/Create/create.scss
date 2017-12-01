@@ -3,6 +3,10 @@
   padding: $create-flow-wrapper-vertical-padding
     $create-flow-wrapper-horizontal-padding;
 }
+.form{
+  padding-bottom: $create-flow-wrapper-horizontal-padding - 20px;
+}
+
 .title{
   line-height: 30px;
   color: $create-flow-title-color;
@@ -11,6 +15,10 @@
     font-weight: $create-flow-subtitle-font-weight;
   }
 }
+.field{
+  display: flex;
+}
+
 .input{
   width: 80%;
   max-width: 580px;

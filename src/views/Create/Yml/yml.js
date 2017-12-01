@@ -11,7 +11,7 @@ import { actions as jobActions } from 'redux/modules/job'
 import DocumentTitle from 'react-document-title'
 
 import Editor from 'components/CodeEditor'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import classes from './yml.scss'
 
@@ -30,6 +30,8 @@ function mapDispatchToProps (dispatch) {
   }, dispatch)
 }
 
+const defaultYml = '# flow.ci templates\n\nflow:\n  - envs:\n      FLOW_WELCOME_MESSAGE: "hello.world"\n      \n    steps:\n      - name: Init\n        script: |\n          echo ${FLOW_WELCOME_MESSAGE}' // eslint-disable-line
+
 export class FlowYmlSetting extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired,
@@ -39,11 +41,11 @@ export class FlowYmlSetting extends Component {
   }
 
   state = {
-    text: ''
+    text: defaultYml
   }
 
-  handleEditorChange = (e) => {
-    this.setState({ text: e.target.value })
+  handleEditorChange = (value) => {
+    this.setState({ text: value })
   }
 
   handleSave = () => {
@@ -61,13 +63,17 @@ export class FlowYmlSetting extends Component {
     return <DocumentTitle title='配置 yml 工作流'>
       <div className={classes.container}>
         <div className={classes.editorwrap}>
-          <div className={classes.header}>.flow.ci</div>
-          <Editor className={classes.editor} value={text}
-            onChange={this.handleEditorChange} placeholder='请填写 yml 内容' />
+          <div className={classes.header}>
+            .flow.yml
+            <Button type='success' size='sm'
+              plain className={classes.save}
+              onClick={this.handleSave}>
+              保存
+            </Button>
+          </div>
+          <Editor value={text} onChange={this.handleEditorChange} />
         </div>
-        <Button className='btn-primary' onClick={this.handleSave}>
-          保存
-        </Button>
+
       </div>
     </DocumentTitle>
   }

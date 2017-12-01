@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { reduxForm } from 'redux-form'
 
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 import { Input } from 'components/Form/reduxForm'
 
 import classes from './form.scss'
@@ -41,9 +41,9 @@ export class SignInForm extends Component {
       <Input type='password' name='password'
         leftIcon={<i className='icon icon-key' />}
         divider size='hg' className='block' />
-      <Button className={`block btn-primary`}
+      <Button className='block' type='primary'
         loading={submitting}
-        size='lg' type='submit'>
+        size='lg' htmlType='submit'>
         {i18n('登录')}
       </Button>
     </form>

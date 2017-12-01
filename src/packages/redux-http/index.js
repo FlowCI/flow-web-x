@@ -1,4 +1,4 @@
-export STATUS from './status'
+export STATUS, { isSuccess, isSend } from './status'
 
 export makeIndicator from './indicator'
 

@@ -12,7 +12,7 @@ import { STATUS } from 'redux-http'
 import { actions } from 'redux/modules/branch'
 
 import Modal from 'components/Modal'
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 import Loading from 'components/Loading'
 import Cogs from 'components/Icon/Cogs'
 
@@ -68,7 +68,7 @@ export class BranchDialog extends Component {
   }
 
   renderActions () {
-    return <Button className='btn-default' onClick={this.handleRefresh}
+    return <Button onClick={this.handleRefresh}
       leftIcon={<i className='icon icon-running' />}
     >
       Refresh

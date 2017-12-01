@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const config = require('../config')
 
 const __DEV__ = config.env === 'development'
@@ -10,7 +11,7 @@ const __PROD__ = config.env === 'production'
 const paths = config.pathUtils
 
 const LOCALES = config.languages.map((lang) => {
-  return lang.replace(/[\-]/g, '\\$&')
+  return lang.replace(/[-]/g, '\\$&')
 }).join('|')
 
 const webpackConfig = {
@@ -34,6 +35,10 @@ const webpackConfig = {
       'node_modules',
     ],
     extensions: ['*', '.js', '.jsx', '.json'],
+    alias: {
+      'rc-components': paths.src('./packages/react-component'),
+      'rc-theme': paths.src('./packages/react-component-theme'),
+    }
   },
   module: {
     rules: [],
@@ -45,9 +50,9 @@ const webpackConfig = {
       __TEST__,
       __PROD__,
     }, config.globals)),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/,
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/,
       new RegExp(LOCALES)),
-    new webpack.ContextReplacementPlugin(/src[\/\\]views\S*[\/\\]locale$/,
+    new webpack.ContextReplacementPlugin(/src[/\\]views\S*[/\\]locale$/,
       new RegExp(LOCALES)),
   ],
 }
@@ -120,7 +125,7 @@ webpackConfig.module.rules.push({
         options: {
           sourceMap: __DEV__,
           modules: true, // use css module
-          localIdentName: __DEV__ ? '[name]_[local]_[hash:base64:5]'
+          localIdentName: __DEV__ ? '[local]_[hash:base64:5]'
             : '[hash:base64:5]',
           minimize: {
             autoprefixer: {
@@ -186,6 +191,15 @@ webpackConfig.module.rules.push({
     },
   })
 })
+
+// monaco-editor
+// ------------------------------------
+webpackConfig.plugins.push(new CopyWebpackPlugin([
+  {
+    from: 'node_modules/monaco-editor/min/vs',
+    to: 'vs'
+  }
+]))
 
 // HTML Template
 // ------------------------------------

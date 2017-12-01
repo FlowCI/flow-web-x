@@ -14,7 +14,7 @@ export const createRoutes = (store) => ({
   childRoutes: [{
     path: 'flows',
     icon: 'icon-branches',
-    text: 'Flow',
+    text: 'flow',
     navbar: true,
     ...FlowsRoute(store),
   }, {

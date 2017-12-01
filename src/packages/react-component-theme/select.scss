@@ -1,0 +1,117 @@
+@import './variables/_input.scss';
+@import './variables/_select.scss';
+@import './mixins/_select.scss';
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.select{
+  display: inline-block;
+  vertical-align: baseline;
+  width: $select-width;
+  position: relative;
+  .input-wrapper{
+    width: 100%;
+  }
+}
+.input{
+  user-select: none;
+  &:global(.readonly) {
+    cursor: pointer;
+    background-color: $select-bgc;
+  }
+}
+.arrow{
+  font-size: $select-arrow-size;
+  transition: transform .3s;
+  transform: rotate(0deg);
+
+  // 防止挡住 input 事件
+  pointer-events: none;
+  &:global(.up) {
+    transform: rotate(180deg);
+  }
+}
+
+.dropdown{
+  position: absolute;
+  z-index: $select-dropdown-zindex;
+  left: 0;
+  right: 0;
+
+  background-color: $select-bgc;
+  border: 1px solid $select-dropdown-boder;
+  box-shadow: $select-dropdown-box-shadow;
+  border-radius: $select-border-radius;
+
+  min-width: $select-dropdown-min-width;
+  max-height: $select-dropdown-max-height;
+  overflow: auto;
+
+  @include select-dropdown-offset($input-size, $select-dropdown-offset);
+}
+
+.options{
+  list-style: none;
+  margin: 0;
+  padding: $select-options-padding-vertical 0;
+  width: 100%;
+  >li{
+    @include select-option-size($input-size, $select-option-padding-horizontal);
+    font-size: $select-option-font-size;
+  }
+
+  :global(.icon-loading) {
+    display: inline-block;
+    animation: rotating linear 1s infinite;
+  }
+}
+.option {
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  &:hover,
+  &:focus {
+    background-color: $select-option-hover-bgc;
+  }
+  &:global(.disabled) {
+    opacity: $select-option-disabled-opacity;
+    cursor: not-allowed;
+    background-color: transparent!important;
+  }
+  &:global(.selected) {
+    font-weight: bold;
+    color: $select-option-selected-color;
+    background-color: $select-option-selected-bgc;
+  }
+}
+
+.loading{
+  color: $select-loading-color;
+}
+
+// xs
+.xs{
+  &.dropdown {
+    @include select-dropdown-offset($input-xs-size, $select-dropdown-offset);
+  }
+}
+// sm
+.sm{
+  &.dropdown {
+    @include select-dropdown-offset($input-sm-size, $select-dropdown-offset);
+  }
+}
+// lg
+.lg{
+  &.dropdown {
+    @include select-dropdown-offset($input-lg-size, $select-dropdown-offset);
+  }
+}

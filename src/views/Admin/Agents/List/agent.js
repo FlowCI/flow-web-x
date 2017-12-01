@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { func } from 'prop-types'
+import PropTypes from 'prop-types'
 import { map } from 'react-immutable-proptypes'
 
 import { Link } from 'react-router'
@@ -16,15 +16,16 @@ export default class Agent extends PureComponent {
   static propTypes = {
     agent: map.isRequired,
 
-    stop: func.isRequired,
-    close: func.isRequired,
-    remove: func.isRequired,
-    openDetail: func.isRequired,
+    stop: PropTypes.func.isRequired,
+    close: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
+    openDetail: PropTypes.func.isRequired,
+    i18n: PropTypes.func.isRequired,
   }
 
   handleStop = () => {
     const { stop, agent } = this.props
-    return stop(agent.get('flowName'), agent.get('number'))
+    return stop(agent)
   }
 
   handleClose = () => {
@@ -43,7 +44,7 @@ export default class Agent extends PureComponent {
   }
 
   render () {
-    const { agent } = this.props
+    const { agent, i18n } = this.props
     const status = agent.get('agentStatus')
     const flow = agent.get('flowName')
     const number = agent.get('number')
@@ -80,19 +81,19 @@ export default class Agent extends PureComponent {
       <ListCol className={classes.actions}>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleStop} disabled={!isBusy}>
-          停止任务
+          {i18n('stop build')}
         </Button>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleClose} disabled={!isOnline}>
-          停止
+          {i18n('shut down')}
         </Button>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleCheck} disabled={!isOnline}>
-          查看
+          {i18n('see more')}
         </Button>
         <Button size='sm' className='btn-inverse'
           onClick={this.handleRemove}>
-          删除
+          {i18n('delete')}
         </Button>
       </ListCol>
     </ListRow>

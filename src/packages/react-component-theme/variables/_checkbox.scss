@@ -1,0 +1,16 @@
+$checkbox-color: #55575c!default;
+$checkbox-font-size: 14px!default;
+
+// checked
+$checkbox-icon-checked-color: $checkbox-color!default;
+
+// unchecked
+$checkbox-icon-unchecked-color: #a2a8b1!default;
+
+// disabled
+$checkbox-disabled-color: #d1dbe5!default;
+$checkbox-disabled-icon-checked-color: $checkbox-disabled-color!default;
+$checkbox-disabled-icon-unchecked-color: $checkbox-disabled-color!default;
+$checkbox-disabled-icon-unchecked-bgc: #eef1f6!default;
+
+$checkbox-padding-horizontal: 10px!default;

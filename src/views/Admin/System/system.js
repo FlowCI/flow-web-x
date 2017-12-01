@@ -14,7 +14,7 @@ import { actions } from 'redux/modules/system'
 import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
-import { Select, Option } from 'components/Form/Select'
+import { Select, Option } from 'rc-components/Select'
 import Title from '../components/Title'
 
 import {
@@ -111,8 +111,8 @@ export class AdminSystemInfos extends Component {
       {this.renderSystemInfo()}
       <Select value={system} onChange={this.selectSystem}
         className={classes.dropdown}>
-        <Option value='api' title='API 信息' />
-        <Option value='cc' title='Control Center' />
+        <Option value='api' label='API 信息' />
+        <Option value='cc' label='Control Center' />
       </Select>
       <Services system={system} i18n={i18n} />
     </div>

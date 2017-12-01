@@ -14,7 +14,7 @@ import { actions as alertActions } from 'redux/modules/alert'
 
 import DocumentTitle from 'react-document-title'
 
-import Input from 'components/Form/Input'
+import Input from 'rc-components/Input'
 import { Confirm } from 'components/Modal'
 
 import {
@@ -131,7 +131,7 @@ export class AdminFlowList extends Component {
     return <ListHead>
       <ListRow>
         <ListHeadCol className={classes.name}>
-          Flow
+          flow
         </ListHeadCol>
         <ListHeadCol className={classes.author}>
           创建人
@@ -177,7 +177,7 @@ export class AdminFlowList extends Component {
     const { selected, openConfirm } = this.state
     const confirmTitle = selected ? `确认删除 ${selected.get('name')} ?`
       : 'Confirm'
-    return <DocumentTitle title='Flow 列表 · 控制台'>
+    return <DocumentTitle title='flow 列表 · 控制台'>
       <div>
         {this.renderToolBars()}
         <div className={classes.scroller}>

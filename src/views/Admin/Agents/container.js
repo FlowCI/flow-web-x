@@ -1,54 +1,56 @@
 import React, { PureComponent } from 'react'
-import { array, node, string, func } from 'prop-types'
-
-import createI18n from './i18n'
-import language from 'util/language'
+import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { createSelector } from 'reselect'
+import { createNavbarSelector, createActiveNavbarSelector } from 'util/route'
 
+import DocumentTitle from 'react-document-title'
 import { NavTabs, Nav } from 'components/NavTabs'
 
 import classes from './container.scss'
 
-const navbarSelectors = createSelector(
-  (props) => props.route.childRoutes,
-  (routes) => routes.filter((route) => route.navbar)
-)
+const navbarSelector = createNavbarSelector()
+const activeNavbarSelector = createActiveNavbarSelector()
 
 function mapStateToProps (state, props) {
-  const navbars = navbarSelectors(props)
   return {
-    menus: navbars,
+    menus: navbarSelector(props),
+    activeMenu: activeNavbarSelector(props)
   }
 }
 
 export class AdminAgentContainer extends PureComponent {
   static propTypes = {
-    menus: array.isRequired,
-    children: node,
+    menus: PropTypes.array.isRequired,
+    activeMenu: PropTypes.shape({
+      navbar: PropTypes.string.isRequired,
+    }).isRequired,
+    children: PropTypes.node,
 
-    base: string.isRequired,
-    i18n: func.isRequired,
+    base: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
     base: '/admin/agents',
-    i18n: createI18n(language),
   }
 
   render () {
-    const { i18n, base, menus, children } = this.props
+    const {
+      base, menus,
+      activeMenu, children
+    } = this.props
     return <div>
       <NavTabs className={classes.navbar}>
-        {menus.map((menu) => <Nav
-          key={menu.path}
-          to={`${base}/${menu.path}`}
-        >
-          {i18n(`${menu.path}.title`)}
-        </Nav>)}
+        {menus.map((menu) => {
+          const path = menu.path || ''
+          return <Nav key={path} to={`${base}/${path}`} onlyActiveOnIndex>
+            {menu.navbar}
+          </Nav>
+        })}
       </NavTabs>
-      {children}
+      <DocumentTitle title={activeMenu.title}>
+        {children}
+      </DocumentTitle>
     </div>
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Button from 'components/Button'
+import Button from 'components/Buttonx'
 
 import classes from './dialog.scss'
 
@@ -21,7 +21,7 @@ export default class Branch extends Component {
     return <li>
       <div className={classes.item}>
         <span>{branch}</span>
-        <Button className={`btn-success ${classes.build}`}
+        <Button className={classes.build} type='success'
           size='sm' onClick={this.handleClick}>
           构建
         </Button>

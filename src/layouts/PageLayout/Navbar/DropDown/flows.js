@@ -114,7 +114,7 @@ export class NavbarFlowsDropdown extends PureComponent {
       </div>
       <hr />
       <div className={classes.header}>
-        {i18n('我的 Flow')}<IconButton className={classes.plus}
+        {i18n('我的 flow')}<IconButton className={classes.plus}
           size='sm' to='/create'>
           <i className='icon icon-plus-sm' />
         </IconButton>

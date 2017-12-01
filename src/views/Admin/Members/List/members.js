@@ -18,8 +18,8 @@ import { actions as alertActions } from 'redux/modules/alert'
 import DocumentTitle from 'react-document-title'
 
 import Loading from 'components/Loading'
-import Input from 'components/Form/Input'
-import Checkbox from 'components/Form/Checkbox'
+import Input from 'rc-components/Input'
+import Checkbox from 'rc-components/Checkbox'
 import { Confirm } from 'components/Modal'
 
 import {
@@ -252,11 +252,13 @@ export class AdminMemberList extends Component {
     const { i18n, currentEmail } = this.props
     const { checks, checkAll } = this.state
     const list = this.getMemberIds()
+    const hasCheck = list.some((email) => checks[email])
     return <List className={classes.agents}>
       <ListHead>
         <ListRow>
           <ListHeadCol className={classes.checkbox}>
-            <Checkbox checked={checkAll} onChange={this.toggleAll} />
+            <Checkbox checked={checkAll} onChange={this.toggleAll}
+              indeterminate={!checkAll && hasCheck} />
           </ListHeadCol>
           <ListHeadCol className={classes.username}>
             {i18n('用户名')}
@@ -265,7 +267,7 @@ export class AdminMemberList extends Component {
             {i18n('电子邮件')}
           </ListHeadCol>
           <ListHeadCol className={classes.flows}>
-            {i18n('Flow 授权')}
+            {i18n('flow 授权')}
           </ListHeadCol>
           <ListHeadCol className={classes.roles}>
             {i18n('角色')}

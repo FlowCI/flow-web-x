@@ -1,20 +1,5 @@
 @import 'variables/views/create';
 @import 'variables/components/control';
-.button{
-  border-color: #A7ABB1;
-  &:focus, &:hover{
-    background-color: darken(#fff, 10%);
-  }
-  &:global(.loading) {
-    border-color: transparent;
-    &:focus, &:hover{
-      background-color: #fff;
-    }
-    &[disabled] {
-      opacity: 1;
-    }
-  }
-}
 .text{
   font-weight: bold;
   height: $control-base-size;

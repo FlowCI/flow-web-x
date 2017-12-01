@@ -1,11 +1,19 @@
 @import 'variables/views/create';
+.form{
+  margin-bottom: 0;
+}
+
+.field{
+  display: flex;
+}
+
 .addr{
   width: 90%;
   max-width: 580px;
 }
 .actions{
   margin-top: $create-flow-config-action-spacing;
-  >:global(.btn){
+  >button{
     margin-right: $create-flow-config-horizontal-padding;
     min-width: 100px;
   }

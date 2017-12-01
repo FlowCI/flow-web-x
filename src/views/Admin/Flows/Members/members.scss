@@ -1,5 +1,4 @@
 .list{
-  display: block;
   margin-bottom: 20px;
 }
 .item{
@@ -9,5 +8,8 @@
   vertical-align: middle;
 }
 .checkbox{
-  width: 100%;
+  width: 40%;
+  min-width: 200px;
+  max-width: 300px;
+  height: 34px;
 }

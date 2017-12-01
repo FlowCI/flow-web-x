@@ -6,8 +6,10 @@ import { bindActionCreators } from 'redux'
 
 import { actions } from 'redux/modules/flow'
 
-import Input from 'components/Form/Input'
-import Button from 'components/Button'
+import V from 'validates'
+import Input from 'rc-components/Input'
+import { FieldSet } from 'components/ReduxForm/createAdapter'
+import Button from 'components/Buttonx'
 import { Section, SectionTitle } from '../components/Section'
 import WebhookSection from '../components/WebhookSection'
 import TestButton from '../components/TestButton'
@@ -63,7 +65,8 @@ export class SSHConfig extends Component {
   }
 
   handleUrlChange = (value) => {
-    this.setState({ url: value })
+    const error = V.git(value)
+    this.setState({ url: value, error })
   }
 
   handleDoneCick = () => {
@@ -76,21 +79,20 @@ export class SSHConfig extends Component {
     this.setState({ deployKey: name })
   }
 
-  valid (values) {
-    const { url } = values
-    return /^git@\w+\.\w+/.test(url)
-  }
-
   renderGitUrl () {
     const { i18n } = this.props
-    const { url } = this.state
-    return <Section>
+    const { url, error } = this.state
+    return <Section className={classes.form}>
       <SectionTitle title={i18n('输入 Git 仓库地址')}
         question='link for doc'
       />
-      <Input className={classes.addr} value={url}
-        type='url' onChange={this.handleUrlChange}
-        placeholder={i18n('例：git@github.com:FlowCI/flow-platform.git')} />
+      <FieldSet error={error} invalid={!!error}
+        adapterClassName={classes.field}>
+        <Input className={classes.addr} value={url}
+          invalid={!!error} type='url'
+          onChange={this.handleUrlChange}
+          placeholder={i18n('例：git@github.com:FlowCI/flow-platform.git')} />
+      </FieldSet>
     </Section>
   }
 
@@ -108,11 +110,12 @@ export class SSHConfig extends Component {
 
   renderActions () {
     const { i18n, flowId } = this.props
+    const { error, url } = this.state
     const values = this.getValues()
-    const enabled = this.valid(values)
+    const enabled = url && !error
 
     return <div className={classes.actions}>
-      <Button className='btn-primary'
+      <Button type='primary'
         disabled={!enabled}
         onClick={this.handleDoneCick}
       >
