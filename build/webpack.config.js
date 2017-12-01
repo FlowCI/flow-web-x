@@ -16,6 +16,7 @@ const LOCALES = config.languages.map((lang) => {
 
 const webpackConfig = {
   entry: {
+    polyfill: 'babel-polyfill',
     main: [paths.src('main.js')],
   },
   // devtool: __DEV__ ? 'source-map' : false,
@@ -185,8 +186,8 @@ webpackConfig.module.rules.push({
     test    : new RegExp(`\\.${extension}$`),
     loader  : 'url-loader',
     options : {
-      name  : 'fonts/[name][hash:8].[ext]',
-      limit : 10000,
+      name  : 'fonts/[name].[hash:8].[ext]',
+      limit : 100,
       mimetype,
     },
   })
