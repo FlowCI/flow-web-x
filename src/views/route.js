@@ -22,8 +22,11 @@ export default function (store) {
       childRoutes: [{
         ...SignInRoute(store),
         path: 'signin',
-      }, {
-        component: NeedSession,
+      }]
+    }, {
+      component: NeedSession,
+      childRoutes: [{
+        component: PageLayout,
         indexRoute: {
           component: Index
         },
@@ -34,16 +37,13 @@ export default function (store) {
           ...CreateRoute(store),
           path: 'create'
         }]
-      }]
-    }, {
-      component: NeedSession,
-      childRoutes: [{
+      }, {
         component: AdminLayout,
         childRoutes: [{
           path: 'admin',
           ...AdminRoute(store),
         }]
-      }]
+      }],
     }]
   }
   // return <Route path='/' component={PageLayout}>
