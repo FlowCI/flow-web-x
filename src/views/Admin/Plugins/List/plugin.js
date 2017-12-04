@@ -19,7 +19,6 @@ export default class Plugin extends Component {
      */
     remove: PropTypes.func,
     upgrade: PropTypes.func,
-    i18n: PropTypes.func.isRequired,
   }
 
   setDisabled = () => {
