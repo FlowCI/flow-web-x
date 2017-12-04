@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import { PluginList } from '../components/Plugins'
 import Plugin from './plugin'
-import classes from './plugin.scss'
 
-export default class PluginList extends Component {
+export default class PluginsController extends Component {
   static propTypes = {
     plugins: ImmutablePropTypes.list.isRequired,
 
@@ -28,19 +28,8 @@ export default class PluginList extends Component {
 
   render () {
     const { plugins, i18n } = this.props
-    return <div className={classes.plugins}>
-      <div className={classes.header}>
-        <div className={classes.icon}>{' '}</div>
-        <div className={classes.plugin}>
-          {i18n('plugin')}
-        </div>
-        <div className={classes.desc}>
-          {i18n('desc')}
-        </div>
-      </div>
-      <div className={classes.body}>
-        {plugins.map(this.renderPlugin)}
-      </div>
-    </div>
+    return <PluginList i18n={i18n}>
+      {plugins.map(this.renderPlugin)}
+    </PluginList>
   }
 }
