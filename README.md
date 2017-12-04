@@ -1,8 +1,33 @@
-## Use
-react redux react-redux react-router(^3) reselect immutable-js
+- [简体中文介绍](README.zh-CN.md)
 
-## Require
+## Introduction
+flowci 前端项目
+
+## Quick Start
+### Require
 Node > 6
+### Install
+```
+$ git clone git@github.com:FlowCI/flow-web.git
+$ cd flow-web
+$ npm install
+```
+### Configuration
+Find config/index.js to overwrite some configuration.
+
+> Modify the API address to use the FLOW_WEB_API environment variable directly
+
+
+### Start
+#### develop
+```
+$ npm start
+```
+#### production
+In production mode, please compile. After compiling, all static files will be generated under dist folder. You can use the server to make it accessible.
+```
+$ npm run build
+```
 
 ## License
 

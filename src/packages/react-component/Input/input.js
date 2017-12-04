@@ -12,7 +12,7 @@ import classes from 'rc-theme/input.scss'
 export default class Input extends Component {
   static propTypes = {
     size: PropTypes.oneOf(['xs', 'sm', 'lg']),
-
+    type: PropTypes.string,
     className: PropTypes.string,
     inputClassName: PropTypes.string,
     classNames: PropTypes.object.isRequired,
@@ -64,6 +64,7 @@ export default class Input extends Component {
   }
 
   static defaultProps = {
+    type: 'text',
     classNames: classes,
     spinner: <i className='icon icon-loading' />,
   }
