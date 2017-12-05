@@ -14,7 +14,7 @@ export default [{
   component: ConfigView,
   thumnail: ConfigThumnailView,
 }, {
-  name: '配置 yml 工作流',
+  name: '配置 YML 工作流',
   icon: <i className='icon icon-code' />,
   component: YmlView,
 }]
