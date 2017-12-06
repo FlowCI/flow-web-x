@@ -11,9 +11,6 @@ MAINTAINER admin@flow.ci
 ENV FLOW_WEB_SOURCE=/tmp/flow-web
 ENV FLOW_WEB_DIR=/var/www/flow-web
 ENV FLOW_WEB_API=:FLOWCI:
-# taobao proxy
-ENV PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs/
-ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
 
 COPY . $FLOW_WEB_SOURCE
 COPY ./docker/nginx.conf /etc/nginx/sites-enabled/default
@@ -21,9 +18,14 @@ COPY ./docker/flow-web.sh $FLOW_WEB_DIR/flow-web.sh
 
 WORKDIR $FLOW_WEB_SOURCE
 
+# if use want build local, please add proxy
+# taobao proxy
+#ENV PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs/
+#ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
+#RUN yarn config set registry 'https://registry.npm.taobao.org' 
+
 # install yarn and install package
-RUN 	yarn config set registry 'https://registry.npm.taobao.org' \
-		&& yarn install \
+RUN 	yarn install \
         && npm run build \
         && mkdir -p $FLOW_WEB_DIR \
         && cp -r $FLOW_WEB_SOURCE/dist/* $FLOW_WEB_DIR 
