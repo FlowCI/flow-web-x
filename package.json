@@ -38,6 +38,8 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
+    "react-dnd": "^2.5.4",
+    "react-dnd-html5-backend": "^2.5.4",
     "react-document-title": "^2.0.3",
     "react-dom": "^15.5.4",
     "react-event-listener": "^0.4.5",
