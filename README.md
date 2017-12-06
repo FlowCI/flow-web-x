@@ -17,5 +17,5 @@ flow-web is an open source project, sponsored by https://www.fir.im/ under the [
 	docker run \
 		-p 3000:80 \
 		-e FLOW_API_DOMAIN=http://localhost:8080/flow-api \
-		flow.web.test
+		flowci/flow-web
 ```
