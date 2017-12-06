@@ -23,7 +23,7 @@ $ npm config set sass-binary-site https://npm.taobao.org/mirrors/node-sass
 $ PHANTOMJS_CDNURL https://npm.taobao.org/dist/phantomjs npm install
 ```
 ### 配置文件
-找到 config/index.js 将需要替换的字段换成自己的配置的配置即可
+找到 config/index.js 将需要替换的字段换成自己的配置的配置即可
 >可使用 `FLOW_WEB_API` 环境变量 设置 api 地址
 
 ### 启动
