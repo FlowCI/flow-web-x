@@ -1,12 +1,8 @@
-FROM node:6.12.1
+FROM flowci/flow-web-base:latest
 
 ENV FLOW_WEB_SOURCE=/flow-web
 ENV FLOW_WEB_DIR=/var/www/flow-web
 ENV FLOW_WEB_API=:FLOWCI:
-
-RUN apt-get update \
-        && apt-get install -y apt-utils  git nginx vim curl \
-        && npm install -g yarn
 
 RUN mkdir -p $FLOW_WEB_DIR
 
@@ -17,7 +13,8 @@ COPY ./docker/flow-web.sh $FLOW_WEB_DIR
 WORKDIR $FLOW_WEB_SOURCE
 
 # install yarn
-RUN yarn install \
+RUN 	yarn config set registry 'https://registry.npm.taobao.org' \
+		&& yarn install \
         && npm run build \
         && mkdir -p $FLOW_WEB_DIR \
         && cp -r $FLOW_WEB_SOURCE/dist/* $FLOW_WEB_DIR 
