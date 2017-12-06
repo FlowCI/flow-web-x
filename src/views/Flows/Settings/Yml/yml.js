@@ -65,8 +65,8 @@ export class FlowYmlSetting extends Component {
     const { yml } = this.props
     const { text } = this.state
     return <div>
-      <Header title='配置 yml 工作流'
-        subTitle='点击查看 yml 文件编写文档（内含 Demo）' />
+      <Header title='配置 YML 工作流'
+        subTitle='点击查看 YML 文件编写文档（内含 Demo）' />
       <div className={classes.editorwrap}>
         <Editor className={classes.editor} value={text}
           onChange={this.handleEditorChange} />

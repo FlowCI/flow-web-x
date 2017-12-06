@@ -60,7 +60,7 @@ export class FlowYmlSetting extends Component {
 
   render () {
     const { text } = this.state
-    return <DocumentTitle title='配置 yml 工作流'>
+    return <DocumentTitle title='配置 YML 工作流'>
       <div className={classes.container}>
         <div className={classes.editorwrap}>
           <div className={classes.header}>

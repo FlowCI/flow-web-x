@@ -31,7 +31,7 @@ export default class JobStatusHeader extends Component {
         <Link to={{ ...base, pathname: `${base.pathname}/yml` }}
           className={classes.nav}
           activeClassName='active'>
-          {i18n('yml配置')}
+          {i18n('YML 配置')}
         </Link>
       </li>
     </ul>

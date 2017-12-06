@@ -4,7 +4,7 @@ export default {
   navbar: {
     Build: '构建设置',
     Envs: '环境变量',
-    Yml: '配置 yml 工作流',
+    Yml: '配置 YML 工作流',
     Info: '基本信息',
   },
   Envs: {
