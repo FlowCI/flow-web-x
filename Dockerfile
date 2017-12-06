@@ -1,18 +1,23 @@
-
+#
+# FlowWeb Dockerfile
+#
+# https://github.com/FlowCI/flow-web
+#
 FROM flowci/flow-web-base:latest
 
-ENV FLOW_WEB_SOURCE=/flow-web
+MAINTAINER admin@flow.ci
+
+# add env to docker
+ENV FLOW_WEB_SOURCE=/tmp/flow-web
 ENV FLOW_WEB_DIR=/var/www/flow-web
 ENV FLOW_WEB_API=:FLOWCI:
 # taobao proxy
 ENV PHANTOMJS_CDNURL=https://npm.taobao.org/mirrors/phantomjs/
 ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
 
-RUN mkdir -p $FLOW_WEB_DIR
-
 COPY . $FLOW_WEB_SOURCE
 COPY ./docker/nginx.conf /etc/nginx/sites-enabled/default
-COPY ./docker/flow-web.sh $FLOW_WEB_DIR
+COPY ./docker/flow-web.sh $FLOW_WEB_DIR/flow-web.sh
 
 WORKDIR $FLOW_WEB_SOURCE
 
