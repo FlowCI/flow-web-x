@@ -1,37 +1,14 @@
 import React from 'react'
+import { Route, IndexRoute, Redirect } from 'react-router'
 
 import Component from './index'
 
-const NoopComponent = function () {
-  return <div />
+export default function (path, store) {
+  return <Route path={path} component={Component}>
+    <IndexRoute step={0} />
+    <Route path=':flowId' step={1}>
+      <Route path='yml' step={2} />
+      <Redirect from='*' to='/create/:flowId' />
+    </Route>
+  </Route>
 }
-
-export const createRoutes = (store) => ({
-  component: Component,
-  indexRoute: {
-    step: 0,
-    component: NoopComponent,
-  },
-  childRoutes: [{
-    path: ':flowId',
-    step: 1,
-    component: NoopComponent,
-    childRoutes: [{
-      path: 'yml',
-      step: 2,
-      component: NoopComponent,
-    }, {
-      path: '*',
-      onEnter: (nextState, replace) => {
-        const { params } = nextState
-        replace(`/create/${params.flowId}`)
-      }
-    }]
-  }]
-})
-// , {
-//     path: ':git',
-//   step: 1,
-//   component: NoopComponent,
-//   }
-export default createRoutes

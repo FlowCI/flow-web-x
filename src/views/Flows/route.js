@@ -1,26 +1,16 @@
-import { injectReducer } from 'redux/reducers'
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
 
-import Component, { reducers } from './index'
+import Component from './index'
 import IndexRouteComponent from './IndexRoute'
 
 import JobsRoute from './Jobs/route'
 import SettingRoute from './Settings/route'
 
-export default function (store) {
-  return {
-    getComponent: function (state, callback) {
-      injectReducer(store, reducers)
-      callback(null, Component)
-    },
-    indexRoute: {
-      component: IndexRouteComponent,
-    },
-    childRoutes: [{
-      ...JobsRoute(store),
-      path: 'jobs',
-    }, {
-      ...SettingRoute(store),
-      path: 'settings'
-    }]
-  }
+export default function (path, store) {
+  return <Route path={path} component={Component}>
+    <IndexRoute component={IndexRouteComponent} />
+    {JobsRoute('jobs', store)}
+    {SettingRoute('settings', store)}
+  </Route>
 }

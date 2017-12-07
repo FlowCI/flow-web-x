@@ -1,21 +1,14 @@
+import React from 'react'
+import { Route, IndexRedirect } from 'react-router'
 import Component from './index'
 import ListComponent from './List'
 import CeateComponent from './Create'
 
-export default function (store) {
-  return {
-    component: Component,
-    indexRoute: {
-      onEnter: (nextState, replace) => replace('/admin/credentials/list'),
-    },
-    childRoutes: [{
-      path: 'list',
-      navbar: true,
-      component: ListComponent,
-    }, {
-      path: 'create',
-      navbar: true,
-      component: CeateComponent,
-    }]
-  }
+export default function (path, store) {
+  return <Route path={path} component={Component}
+    icon='icon-bookmark' text='Credentials' navbar>
+    <IndexRedirect to='/admin/credentials/list' />
+    <Route path='list' navbar component={ListComponent} />
+    <Route path='create' navbar component={CeateComponent} />
+  </Route>
 }
