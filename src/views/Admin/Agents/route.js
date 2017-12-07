@@ -1,5 +1,6 @@
 import React from 'react'
-import { Route, IndexRoute, Redirect } from 'react-router'
+import { Route, IndexRoute } from 'react-router'
+import { RedirectToIndex } from 'components/Route'
 
 import Component from './index'
 import ListComponent from './List'
@@ -14,6 +15,6 @@ export default function (path, store) {
     <Route path='create' navbar={i18n('create.navbar')}
       title={i18n('create.title')}
       component={CreateComponent} />
-    <Redirect from='*' to='/admin/agents' />
+    <RedirectToIndex from='*' />
   </Route>
 }

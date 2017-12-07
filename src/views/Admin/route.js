@@ -12,7 +12,7 @@ import SystemRoute from './System/route'
 
 export const createRoutes = (path, store) => {
   return <Route path={path} component={Component}>
-    <IndexRedirect to='/admin/flows' />
+    <IndexRedirect to='flows' />
     {FlowsRoute('flows', store)}
     {MembersRoute('members', store)}
     {AgentsRoute('agents', store)}

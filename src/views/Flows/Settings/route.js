@@ -9,8 +9,8 @@ import Info from './Info'
 
 export default function (path, store) {
   return <Route path={path} component={Container}>
-    <IndexRedirect to={`/flows/:flowId/${path}/build`} />
-    <Route path='build'text='build' component={Build} navbar />
+    <IndexRedirect to='build' />
+    <Route path='build' text='build' component={Build} navbar />
     <Route path='envs' text='envs' component={Envs} navbar />
     <Route path='yml' text='yml' component={Yml} navbar />
     <Route path='info' text='info' component={Info} navbar />
