@@ -3,6 +3,9 @@
 import session from './session'
 import agent from './agent'
 import flow from './flow'
+import job from './job'
+import node from './node'
+import branch from './branch'
 import ui from './ui'
 import credential from './credential'
 import notifySetting from './notifySetting'
@@ -17,6 +20,9 @@ export default {
   session,
   agent,
   flow,
+  job,
+  node,
+  branch,
   ui,
   credential,
   notifySetting,
