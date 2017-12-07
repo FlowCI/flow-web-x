@@ -21,7 +21,7 @@ export default class FlowSettingTab extends Component {
 
   render () {
     const { base, nav, i18n } = this.props
-    return <Link to={`${base}/${nav.path}`}
+    return <Link to={`${base}${nav.path}`}
       className={classes.tab}
       activeClassName={classes.active}>
       {i18n(nav.text)}

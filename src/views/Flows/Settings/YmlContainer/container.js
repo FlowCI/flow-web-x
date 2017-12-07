@@ -2,14 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-
 import { createSelector } from 'reselect'
 
 import createI18n from '../i18n'
 import language from 'util/language'
-
-import { actions as uiActions } from 'redux/modules/ui'
+import { createBasePathSelector } from 'util/route'
 
 import { Tabs, Tab } from '../components/Tabs'
 import classes from './container.scss'
@@ -18,6 +15,7 @@ const navbarSelectors = createSelector(
   (props) => props.route.childRoutes,
   (routes) => routes.filter((route) => route.navbar)
 )
+const baseSelectors = createBasePathSelector(true)
 
 function mapStateToProps (state, props) {
   const navbars = navbarSelectors(props)
@@ -25,27 +23,18 @@ function mapStateToProps (state, props) {
   const { params: { flowId } } = props
   return {
     menus: navbars,
-    flowId,
     loaded: !!flow.getIn(['data', flowId]),
+    base: baseSelectors(props)
   }
-}
-
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    setBackUrl: uiActions.setBackUrl,
-    freedBackUrl: uiActions.freedBackUrl
-  }, dispatch)
 }
 
 export class FlowYmlSettingsContainer extends Component {
   static propTypes = {
     children: PropTypes.node,
     menus: PropTypes.array.isRequired,
-    flowId: PropTypes.string.isRequired,
+    base: PropTypes.string.isRequired,
     loaded: PropTypes.bool.isRequired,
 
-    setBackUrl: PropTypes.func.isRequired,
-    freedBackUrl: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -53,31 +42,8 @@ export class FlowYmlSettingsContainer extends Component {
     i18n: createI18n(language)
   }
 
-  state = {
-    base: `/flows/${this.props.flowId}/settings/yml`
-  }
-
-  componentDidMount () {
-    const { setBackUrl, flowId } = this.props
-    setBackUrl(`/flows/${flowId}`)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.flowId !== nextProps.flowId) {
-      this.setState({
-        base: `/flows/${nextProps.flowId}/settings/yml`
-      })
-    }
-  }
-
-  componentWillUnmount () {
-    const { freedBackUrl } = this.props
-    freedBackUrl()
-  }
-
   render () {
-    const { loaded, menus, i18n, children } = this.props
-    const { base } = this.state
+    const { base, loaded, menus, i18n, children } = this.props
     return <div className={classes.container}>
       <Tabs>
         {menus.map((m, i) => <Tab key={m.path}
@@ -89,4 +55,4 @@ export class FlowYmlSettingsContainer extends Component {
     </div>
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FlowYmlSettingsContainer)
+export default connect(mapStateToProps)(FlowYmlSettingsContainer)
