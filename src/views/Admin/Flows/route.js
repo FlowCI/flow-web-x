@@ -1,21 +1,17 @@
+import React from 'react'
+import { Route, IndexRedirect } from 'react-router'
+import { RedirectToIndex } from 'components/Route'
+
 import Component from './index'
 import ListComponent from './List'
 import MembersComponent from './Members'
 
-export default function (store) {
-  return {
-    indexRoute: {
-      onEnter: (nextState, replace) => replace('/admin/flows/list'),
-    },
-    component: Component,
-    childRoutes: [{
-      path: 'list',
-      navbar: true,
-      component: ListComponent,
-    }, {
-      path: 'members',
-      navbar: true,
-      component: MembersComponent,
-    }],
-  }
+export default function (path, store) {
+  return <Route path={path} component={Component}
+    icon='icon-branches' text='flow' navbar>
+    <IndexRedirect to='list' />
+    <Route path='list' navbar component={ListComponent} />
+    <Route path='members' navbar component={MembersComponent} />
+    <RedirectToIndex from='*' />
+  </Route>
 }

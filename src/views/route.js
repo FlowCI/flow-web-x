@@ -1,5 +1,5 @@
-// import React from 'react'
-// import { Route, IndexRoute } from 'react-router'
+import React from 'react'
+import { Route, IndexRoute } from 'react-router'
 
 import CoreLayout from 'layouts/CoreLayout'
 import PageLayout from 'layouts/PageLayout'
@@ -14,44 +14,19 @@ import CreateRoute from './Create/route'
 import AdminRoute from './Admin/route'
 
 export default function (store) {
-  return {
-    path: '/',
-    component: CoreLayout,
-    childRoutes: [{
-      component: PageLayout,
-      childRoutes: [{
-        ...SignInRoute(store),
-        path: 'signin',
-      }]
-    }, {
-      component: NeedSession,
-      childRoutes: [{
-        component: PageLayout,
-        indexRoute: {
-          component: Index
-        },
-        childRoutes: [{
-          ...FlowsRoute(store),
-          path: 'flows/:flowId',
-        }, {
-          ...CreateRoute(store),
-          path: 'create'
-        }]
-      }, {
-        component: AdminLayout,
-        childRoutes: [{
-          path: 'admin',
-          ...AdminRoute(store),
-        }]
-      }],
-    }]
-  }
-  // return <Route path='/' component={PageLayout}>
-  //   <Route path='/signin' {...SignInRoute(store)} />
-  //   <Route component={NeedSession}>
-  //     <IndexRoute component={Index} />
-  //     <Route path='/next' component={Next} />
-  //   </Route>
-
-  // </Route>
+  return <Route path='/' component={CoreLayout}>
+    <Route component={PageLayout}>
+      {SignInRoute('signin', store)}
+    </Route>
+    <Route component={NeedSession}>
+      <Route component={PageLayout}>
+        <IndexRoute component={Index} />
+        {FlowsRoute('flows/:flowId', store)}
+        {CreateRoute('create', store)}
+      </Route>
+      <Route component={AdminLayout}>
+        {AdminRoute('admin', store)}
+      </Route>
+    </Route>
+  </Route>
 }
