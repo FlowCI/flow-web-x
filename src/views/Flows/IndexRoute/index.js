@@ -25,7 +25,7 @@ function mapDispatchToProps (dispatch) {
 export class FlowIndexRoute extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
-    flow: ImmutablePropTypes.map.isRequired, // eslint-disable-line react/no-unused-prop-types
+    flow: ImmutablePropTypes.map, // eslint-disable-line react/no-unused-prop-types
     redirect: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
   }
 
