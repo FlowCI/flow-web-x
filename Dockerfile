@@ -28,7 +28,8 @@ WORKDIR $FLOW_WEB_SOURCE
 RUN 	yarn install \
         && npm run build \
         && mkdir -p $FLOW_WEB_DIR \
-        && cp -r $FLOW_WEB_SOURCE/dist/* $FLOW_WEB_DIR 
+        && cp -r $FLOW_WEB_SOURCE/dist/* $FLOW_WEB_DIR \
+        && rm -rf $FLOW_WEB_SOURCE
 
 
 WORKDIR $FLOW_WEB_DIR
