@@ -106,7 +106,8 @@ export class PageLayoutNavbar extends PureComponent {
             />
           </li>}
           <li>
-            <Card href='//docs.flow.ci' target='_blank'>
+            <Card href='https://github.com/FlowCI/docs' target='_blank'
+              rel='noopener'>
               <i className='icon icon-question' />
             </Card>
           </li>

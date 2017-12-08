@@ -37,6 +37,16 @@ $ npm start
 # 编译
 $ npm run build
 ```
+## Start With Docker
+> - `FLOW_API_DOMAIN`: Flow Api 的地址
+> - `80` 对外暴露的端口是80
+
+```
+	docker run \
+		-p 3000:80 \
+		-e FLOW_API_DOMAIN=http://localhost:8080/flow-api \
+		flowci/flow-web
+```
 
 ## License
 
