@@ -17,17 +17,18 @@ import JobNode from '../components/JobNode'
 import classes from './logs.scss'
 
 function mapStateToProps (state, props) {
-  const { node, job } = state
+  const { node, job, session } = state
   const { params: { jobNumber, flowId, } } = props
 
   const jobId = generatorJobId(flowId, jobNumber)
+  const token = session.get('token')
 
   return {
     jobId,
     flowId,
     jobNumber,
     nodeIds: node.getIn([jobId, 'list']),
-    downloadHref: job.getIn(['data', jobId, 'envs', 'FLOW_JOB_LOG_PATH'])
+    downloadHref: job.getIn(['data', jobId, 'envs', 'FLOW_JOB_LOG_PATH']) + '?token=' + token
   }
 }
 
@@ -56,6 +57,7 @@ export class JobLogsView extends Component {
 
   render () {
     const { jobId, downloadHref, nodeIds } = this.props
+
     return <div>
       <h4 className={classes.header}>
         <span>构建日志</span>

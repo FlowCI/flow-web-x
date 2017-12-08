@@ -1,10 +1,10 @@
 const express = require('express')
-const path = require('path')
 const webpack = require('webpack')
 const logger = require('../build/lib/logger')
 const webpackConfig = require('../build/webpack.config')
 const projectConfig = require('../config')
 const compress = require('compression')
+const fs = require('fs');
 
 const app = express()
 app.use(compress())
@@ -62,6 +62,17 @@ if (projectConfig.env === 'development') {
   // the web server and not the app server, but this helps to demo the
   // server in production.
   app.use(express.static(projectConfig.pathUtils.dist()))
+  app.use('*', function (req, res, next) {
+    const filename = projectConfig.pathUtils.dist('index.html')
+    fs.readFile(filename, (err, result) => {
+      if (err) {
+        return next(err)
+      }
+      res.set('content-type', 'text/html')
+      res.send(result)
+      res.end()
+    })
+  })
 }
 
 module.exports = app

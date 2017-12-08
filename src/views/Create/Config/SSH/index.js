@@ -69,7 +69,7 @@ export class SSHConfig extends Component {
     this.setState({ url: value, error })
   }
 
-  handleDoneCick = () => {
+  handleDoneClick = () => {
     const { done, flowId } = this.props
     return done(flowId, this.getValues())
   }
@@ -117,7 +117,7 @@ export class SSHConfig extends Component {
     return <div className={classes.actions}>
       <Button type='primary'
         disabled={!enabled}
-        onClick={this.handleDoneCick}
+        onClick={this.handleDoneClick}
       >
         {i18n('下一步')}
       </Button>

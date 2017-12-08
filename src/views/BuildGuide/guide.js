@@ -43,7 +43,7 @@ export default class BuildGuide extends Component {
           </Item>
           <Item>
             <div>
-              <p>配置 yml 工作流，flowci 会根据你配置的工作流执行构建任务，之后可在“工作流设置”中修改 yml 工作流。</p>
+              <p>配置 YML 工作流，flowci 会根据你配置的工作流执行构建任务，之后可在“工作流设置”中修改 YML 工作流。</p>
               <a>点击查看 yml 文件编写规范</a>
             </div>
           </Item>
