@@ -11,6 +11,8 @@ MAINTAINER admin@flow.ci
 ENV FLOW_WEB_SOURCE=/tmp/flow-web
 ENV FLOW_WEB_DIR=/var/www/flow-web
 ENV FLOW_WEB_API=:FLOWCI:
+ENV NPM_CACHE=/root/.npm
+ENV PHANTOMJS_CACHE=/tmp/phantomjs
 
 COPY . $FLOW_WEB_SOURCE
 COPY ./docker/nginx.conf /etc/nginx/sites-enabled/default
@@ -24,12 +26,14 @@ WORKDIR $FLOW_WEB_SOURCE
 #ENV SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
 #RUN yarn config set registry 'https://registry.npm.taobao.org' 
 
-# install yarn and install package
+# install yarn and install package and delete no use cache
 RUN 	yarn install \
         && npm run build \
         && mkdir -p $FLOW_WEB_DIR \
         && cp -r $FLOW_WEB_SOURCE/dist/* $FLOW_WEB_DIR \
-        && rm -rf $FLOW_WEB_SOURCE
+        && rm -rf $FLOW_WEB_SOURCE \
+      	&& rm -rf $NPM_CACHE \
+      	&& rm -rf $PHANTOMJS_CACHE
 
 
 WORKDIR $FLOW_WEB_DIR
