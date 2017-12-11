@@ -3,12 +3,12 @@ const regANSI = /(?:(?:\u001b\[)|\u009b)(?:(?:[0-9]{1,3})?(?:(?:;[0-9]{0,3})*)?[
 
 const defColors = {
   black: '000',
-  red: 'FE423E',
-  green: '209805',
+  red: 'c91b00',
+  green: '00c200',
   yellow: 'e8bf03',
-  blue: '108ee9',
-  magenta: 'ff00ff',
-  cyan: '00ffee',
+  blue: '0069d9',
+  magenta: 'ca30c7',
+  cyan: '00c5c7',
   lightgrey: 'f0f0f0',
   darkgrey: '888'
 }
