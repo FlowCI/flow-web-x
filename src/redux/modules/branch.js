@@ -27,11 +27,19 @@ function transformResponse (data) {
 }
 
 export const actions = {
-  query: function (flowId) {
+  /**
+   * 查询分支列表
+   * @param {string} flowId flow唯一主键
+   * @param {object} options
+   * @param {bool} options.refresh 是否强制刷新
+   *
+   */
+  query: function (flowId, { refresh } = {}) {
     return {
       url: '/flows/:flowName/branches',
       params:{
         flowName: flowId,
+        refresh,
       },
       name: Types.query,
       indicator: {
