@@ -58,7 +58,7 @@ export class BranchDialog extends Component {
 
   handleRefresh = () => {
     const { refresh, flowId } = this.props
-    return refresh(flowId)
+    return refresh(flowId, { refresh: true })
   }
 
   handleBuild = (branch) => {
