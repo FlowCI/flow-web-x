@@ -1,5 +1,4 @@
 @import "./variables";
-
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'flowci' !important;
@@ -14,51 +13,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-radio-checked {
+.icon-drag {
   &:before {
-    content: $icon-radio-checked;
-  }
-}
-
-.icon-radio-unchecked {
-  &:before {
-    content: $icon-radio-unchecked;
-  }
-}
-
-.icon-checkbox-checked {
-  &:before {
-    content: $icon-checkbox-checked;
-  }
-}
-
-.icon-checkbox-unchecked {
-  &:before {
-    content: $icon-checkbox-unchecked;
-  }
-}
-
-.icon-checkbox-indeterminate {
-  &:before {
-    content: $icon-checkbox-indeterminate;
-  }
-}
-
-.icon-caretdown {
-  &:before {
-    content: $icon-caretdown;
-  }
-}
-
-.icon-pencil {
-  &:before {
-    content: $icon-pencil;
-  }
-}
-
-.icon-settings {
-  &:before {
-    content: $icon-settings;
+    content: $icon-drag;
   }
 }
 
@@ -275,6 +232,54 @@
 .icon-loading1 {
   &:before {
     content: $icon-loading1;
+  }
+}
+
+.icon-radio-checked {
+  &:before {
+    content: $icon-radio-checked;
+  }
+}
+
+.icon-radio-unchecked {
+  &:before {
+    content: $icon-radio-unchecked;
+  }
+}
+
+.icon-checkbox-checked {
+  &:before {
+    content: $icon-checkbox-checked;
+  }
+}
+
+.icon-checkbox-unchecked {
+  &:before {
+    content: $icon-checkbox-unchecked;
+  }
+}
+
+.icon-checkbox-indeterminate {
+  &:before {
+    content: $icon-checkbox-indeterminate;
+  }
+}
+
+.icon-caretdown {
+  &:before {
+    content: $icon-caretdown;
+  }
+}
+
+.icon-pencil {
+  &:before {
+    content: $icon-pencil;
+  }
+}
+
+.icon-settings {
+  &:before {
+    content: $icon-settings;
   }
 }
 
