@@ -1,0 +1,14 @@
+@import 'variables/colors';
+
+.start {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  color: $color-success;
+  background-color: currentColor;
+  border-radius: 50%;
+  border: 1px solid;
+}
+.active{
+  border-color: $color-black;
+}

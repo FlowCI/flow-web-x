@@ -25,6 +25,46 @@ const plugins = [{
   tags: ['flow-plugin'],
   link: 'https://baidu.com',
   desc: '使用模拟器运行你的单元测试',
+}, {
+  name: '邮件消息插件',
+  enabled: true,
+  version: '2.0',
+  lastest: '2.1',
+  tags: ['flow-plugin'],
+  link: 'https://baidu.com',
+  desc: '使用模拟器运行你的单元测试',
+}, {
+  name: '邮件消息插件2',
+  enabled: true,
+  version: '2.0',
+  lastest: '2.1',
+  tags: ['flow-plugin'],
+  link: 'https://baidu.com',
+  desc: '使用模拟器运行你的单元测试',
+}, {
+  name: '邮件消息插件3',
+  enabled: true,
+  version: '2.0',
+  lastest: '2.1',
+  tags: ['flow-plugin'],
+  link: 'https://baidu.com',
+  desc: '使用模拟器运行你的单元测试',
+}, {
+  name: '邮件消息插件4',
+  enabled: true,
+  version: '2.0',
+  lastest: '2.1',
+  tags: ['flow-plugin'],
+  link: 'https://baidu.com',
+  desc: '使用模拟器运行你的单元测试',
+}, {
+  name: '邮件消息插件5',
+  enabled: true,
+  version: '2.0',
+  lastest: '2.1',
+  tags: ['flow-plugin'],
+  link: 'https://baidu.com',
+  desc: '使用模拟器运行你的单元测试',
 }]
 
 const handlers = createHandlers({ id: 'name' })
