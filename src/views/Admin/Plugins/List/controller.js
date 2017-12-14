@@ -70,7 +70,7 @@ export class PluginController extends Component {
 
   state = {
     category: 'ALL',
-    search: '',
+    keyword: '',
   }
 
   componentDidMount () {
@@ -87,8 +87,14 @@ export class PluginController extends Component {
     this.setState({ category: v })
   }
 
-  handleSearch = () => {
+  handleSearch = (keyword) => {
+    this.setState({ keyword }, this.refresh)
+  }
 
+  refresh = () => {
+    const { query } = this.props
+    const { keyword } = this.state
+    query(keyword)
   }
 
   handleUpgrade = (plugin) => {
