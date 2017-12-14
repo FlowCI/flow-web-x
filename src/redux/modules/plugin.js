@@ -44,6 +44,20 @@ export const actions = {
     }
   },
 
+  uninstall (pluginName) {
+    return {
+      method: 'delete',
+      url: '/plugins/uninstall/:name',
+      params: {
+        name: pluginName,
+      },
+      name: types.uninstall,
+      indicator: {
+        name: pluginName
+      }
+    }
+  },
+
   freed () {
     return {
       type: types.freed,
@@ -67,6 +81,11 @@ export default handleActions({
   }),
   [types.install]: handleHttp('INSTALL', {
     success: handlers.save,
+  }),
+  [types.uninstall]: handleHttp('UNINSTALL', {
+    success: function (state, { indicator: { name } }) {
+      return handlers.remove(state, { name })
+    }
   }),
   [types.frred]: function () {
     return initState
