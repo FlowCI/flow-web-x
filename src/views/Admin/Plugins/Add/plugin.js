@@ -24,7 +24,7 @@ export default class AddPluginController extends Component {
     const status = plugin.get('status')
     if (status === 'INSTALLED') {
       return
-    } else if (status === 'INSTALLING') {
+    } else if (status === 'INSTALLING' || status === 'IN_QUEUE') {
       return <Button size='xs'>正在安装</Button>
     }
     return <Button size='xs' type='primary' onClick={this.handleInstall}>
