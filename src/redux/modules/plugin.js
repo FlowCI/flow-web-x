@@ -87,7 +87,7 @@ export default handleActions({
       return handlers.remove(state, { payload: { name } })
     }
   }),
-  [types.frred]: function () {
+  [types.freed]: function () {
     return initState
   }
 }, initState)
