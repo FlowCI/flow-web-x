@@ -53,9 +53,10 @@ export default class Plugin extends Component {
   }
 
   renderUpdateInfo () {
-    const name = this.props.plugin.get('name')
+    const { plugin } = this.props
+    const name = plugin.get('name')
     return <div className={classes.update}>
-      {name} 有新版本可用。<a href='http://baidu.com' target='_blank'>
+      {name} 有新版本可用。<a href={plugin.get('details')} target='_blank'>
         查看详情
       </a> 或 <a
         onClick={this.handleUpgrade}>
