@@ -12,7 +12,7 @@ export default class AddPluginsList extends Component {
     /**
      * 安装插件  function (plugin: Plugin) {}
      */
-    install: PropTypes.func,
+    install: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 

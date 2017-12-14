@@ -38,6 +38,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
     queryLabels: actions.queryLabels,
+    install: actions.install,
     freed: actions.freed,
   }, dispatch)
 }
@@ -51,6 +52,7 @@ export class AddPluginController extends Component {
 
     query: PropTypes.func.isRequired,
     queryLabels: PropTypes.func.isRequired,
+    install: PropTypes.func.isRequired,
     freed: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
@@ -85,6 +87,11 @@ export class AddPluginController extends Component {
     this.setState({ keyword }, this.refresh)
   }
 
+  handleInstall = (plugin) => {
+    const { install } = this.props
+    return install(plugin.get('name'))
+  }
+
   refresh = () => {
     const { query } = this.props
     const { label, keyword } = this.state
@@ -97,7 +104,7 @@ export class AddPluginController extends Component {
     return <div>
       <Toolbar tags={labels} current={label} onChange={this.handleLabelChange}
         onSearch={this.handleSearch} />
-      {<Plugins plugins={plugins} i18n={i18n} />}
+      {<Plugins plugins={plugins} i18n={i18n} install={this.handleInstall} />}
     </div>
   }
 }

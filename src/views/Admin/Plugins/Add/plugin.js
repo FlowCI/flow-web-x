@@ -11,12 +11,12 @@ export default class AddPluginController extends Component {
     /**
      * 设置 是否启用 function (plugin: Plugin) {}
      */
-    install: PropTypes.func,
+    install: PropTypes.func.isRequired,
   }
 
   handleInstall = () => {
     const { install, plugin } = this.props
-    return install && install(plugin)
+    return install(plugin)
   }
 
   renderActions () {
