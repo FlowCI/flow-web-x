@@ -29,7 +29,7 @@ export default class AddPluginToolBar extends Component {
 
   static defaultProps = {
     tags: [],
-    current: '全部',
+    current: '',
     delay: 300
   }
 
@@ -51,8 +51,8 @@ export default class AddPluginToolBar extends Component {
     this.doSearch(v)
   }
 
-  renderItem (tag) {
-    return <Tab key={tag} value={tag} text={tag} />
+  renderItem (tag, value) {
+    return <Tab key={tag} value={value} text={tag} />
   }
 
   render () {
@@ -60,8 +60,8 @@ export default class AddPluginToolBar extends Component {
     const { search } = this.state
     return <Toolbar className={classes.toolbar}>
       <TabBars value={current} onChange={onChange}>
-        {this.renderItem('全部')}
-        {tags.map((tag) => this.renderItem(tag))}
+        {this.renderItem('全部', '')}
+        {tags.map((tag) => this.renderItem(tag, tag))}
       </TabBars>
       <Input placeholder='搜索'
         leftIcon={<i className='icon icon-search2' />}
