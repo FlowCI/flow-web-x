@@ -38,6 +38,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
     queryLabels: actions.queryLabels,
+    freed: actions.freed,
   }, dispatch)
 }
 
@@ -50,6 +51,7 @@ export class AddPluginController extends Component {
 
     query: PropTypes.func.isRequired,
     queryLabels: PropTypes.func.isRequired,
+    freed: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -68,6 +70,11 @@ export class AddPluginController extends Component {
     const { query, queryLabels } = this.props
     query()
     queryLabels()
+  }
+
+  componentWillUnmount () {
+    const { freed } = this.props
+    freed()
   }
 
   handleLabelChange = (label) => {

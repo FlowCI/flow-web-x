@@ -38,6 +38,7 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.queryInstalled,
+    freed: actions.freed,
   }, dispatch)
 }
 
@@ -53,6 +54,7 @@ export class PluginController extends Component {
     plugins: ImmutablePropTypes.list.isRequired,
 
     query: PropTypes.func.isRequired,
+    freed: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
@@ -68,6 +70,11 @@ export class PluginController extends Component {
   componentDidMount () {
     const { query } = this.props
     query()
+  }
+
+  componentWillUnmount () {
+    const { freed } = this.props
+    freed()
   }
 
   handleCateChange = (v) => {
