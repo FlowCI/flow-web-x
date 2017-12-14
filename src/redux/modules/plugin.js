@@ -46,7 +46,7 @@ export const actions = {
 
   freed () {
     return {
-      type: types.frred,
+      type: types.freed,
     }
   }
 }
