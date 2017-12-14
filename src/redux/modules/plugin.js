@@ -84,7 +84,7 @@ export default handleActions({
   }),
   [types.uninstall]: handleHttp('UNINSTALL', {
     success: function (state, { indicator: { name } }) {
-      return handlers.remove(state, { name })
+      return handlers.remove(state, { payload: { name } })
     }
   }),
   [types.frred]: function () {
