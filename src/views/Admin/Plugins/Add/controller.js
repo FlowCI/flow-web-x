@@ -95,7 +95,7 @@ export class AddPluginController extends Component {
   refresh = () => {
     const { query } = this.props
     const { label, keyword } = this.state
-    query(undefined, label, keyword).catch(console.log)
+    query(undefined, label, keyword)
   }
 
   render () {
