@@ -39,7 +39,7 @@ function mapDispatchToProps (dispatch) {
 export class FlowPlugins extends Component {
   static propTypes = {
     plugins: ImmutablePropTypes.list.isRequired,
-    onActive: PropTypes.func,
+    onActive: PropTypes.func, // eslint-disable-line
   }
 
   state = {

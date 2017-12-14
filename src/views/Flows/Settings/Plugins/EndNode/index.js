@@ -6,7 +6,7 @@ import classes from './end.scss'
 
 export default class FlowEndNode extends Component {
   static propTypes = {
-    onActive: PropTypes.func,
+    onActive: PropTypes.func, // eslint-disable-line
   }
 
   render () {
