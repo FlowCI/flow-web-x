@@ -7,7 +7,7 @@ import { PluginListItem } from '../components/Plugins'
 
 import classes from './plugin.scss'
 
-export default class PluginController extends Component {
+export default class Plugin extends Component {
   static propTypes = {
     plugin: ImmutablePropTypes.map.isRequired,
     /**
