@@ -37,7 +37,7 @@ function mapStateToProps (state, props) {
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    query: actions.query,
+    query: actions.queryInstalled,
   }, dispatch)
 }
 

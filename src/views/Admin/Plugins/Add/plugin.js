@@ -14,9 +14,22 @@ export default class AddPluginController extends Component {
     install: PropTypes.func,
   }
 
+  handleInstall = () => {
+    const { install, plugin } = this.props
+    return install && install(plugin)
+  }
+
   renderActions () {
-    const { install } = this.props
-    return <Button onClick={install} size='xs' type='primary'>安装</Button>
+    const { plugin } = this.props
+    const status = plugin.get('status')
+    if (status === 'INSTALLED') {
+      return
+    } else if (status === 'INSTALLING') {
+      return <Button size='xs'>正在安装</Button>
+    }
+    return <Button size='xs' type='primary' onClick={this.handleInstall}>
+      安装
+    </Button>
   }
 
   render () {

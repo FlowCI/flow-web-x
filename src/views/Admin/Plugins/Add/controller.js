@@ -20,60 +20,86 @@ const pluginsSelector = createSelector(
   (list, data) => list.map((id) => data.get(id)).toList()
 )
 
+const labelsSelector = createSelector(
+  (state) => state.get('labels'),
+  (labels) => labels.toArray()
+)
+
 function mapStateToProps (state, props) {
   const { plugin } = state
   const plugins = pluginsSelector(plugin)
   return {
     plugins,
+    labels: labelsSelector(plugin)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
+    queryLabels: actions.queryLabels,
   }, dispatch)
 }
+
+function noop () {}
 
 export class AddPluginController extends Component {
   static propTypes = {
     plugins: ImmutablePropTypes.list.isRequired,
+    labels: PropTypes.array.isRequired,
 
-    query: PropTypes.func,
+    query: PropTypes.func.isRequired,
+    queryLabels: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    i18n: _i18n
+    i18n: _i18n,
+    query: noop,
+    queryLabels: noop,
   }
 
   state = {
-    tag: undefined
+    label: undefined,
+    keyword: undefined,
   }
 
   componentDidMount () {
+    const { query, queryLabels } = this.props
+    query()
+    queryLabels()
+  }
+
+  handleLabelChange = (label) => {
+    this.setState({ label }, this.refresh)
+  }
+
+  handleSearch = (keyword) => {
+    this.setState({ keyword }, this.refresh)
+  }
+
+  refresh = () => {
     const { query } = this.props
-    query && query()
-  }
-
-  handleTagChange = () => {
-
-  }
-
-  handleSearch = () => {
-
+    const { label, keyword } = this.state
+    query(undefined, label, keyword).catch(console.log)
   }
 
   render () {
-    const { plugins, i18n } = this.props
-    const { tag } = this.state
+    const { plugins, labels, i18n } = this.props
+    const { label } = this.state
     return <div>
-      <Toolbar current={tag} onChange={this.handleTagChange}
+      <Toolbar tags={labels} current={label} onChange={this.handleLabelChange}
         onSearch={this.handleSearch} />
-      <Plugins plugins={plugins} i18n={i18n} />
+      {<Plugins plugins={plugins} i18n={i18n} />}
     </div>
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  autoCancel({ funcs: ['query'] })(AddPluginController)
+  autoCancel([{
+    funcs: ['queryLabels']
+  }, {
+    funcs: ['query'],
+    trigger: 'unique'
+  }])(AddPluginController)
 )

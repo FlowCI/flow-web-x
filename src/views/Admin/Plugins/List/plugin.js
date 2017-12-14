@@ -66,8 +66,8 @@ export default class PluginController extends Component {
 
   render () {
     const { plugin } = this.props
-    const version = plugin.get('version')
-    const lastest = plugin.get('lastest')
+    const version = plugin.get('tag')
+    const lastest = plugin.get('currentTag')
     const canUpgrade = lastest && lastest !== version
     const enabled = plugin.get('enabled')
     return <PluginListItem plugin={plugin}

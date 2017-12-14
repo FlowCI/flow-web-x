@@ -24,7 +24,7 @@
 
 .item{
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   border-bottom: 1px solid #D7D9DC;
 }
 .update{
@@ -75,4 +75,5 @@
 .tags{
   font-size: 12px;
   color: #8B8C9B;
+  line-height: 20px;
 }

@@ -26,14 +26,14 @@ export default class PluginListItem extends Component {
 
   renderDesc () {
     const { plugin } = this.props
-    const tags = plugin.get('tags')
+    const labels = plugin.get('labels')
     return <div className={classes.desc}>
-      <h5 className={classes.strong}>{plugin.get('desc')}</h5>
+      <h5 className={classes.strong}>{plugin.get('description')}</h5>
       <Ul className={classes.tags}>
-        <Li>版本: {plugin.get('version')}</Li>
-        {tags.map((t) => <Li key={t}>{t}</Li>)}
+        <Li>版本: {plugin.get('currentTag')}</Li>
+        {labels.map((t) => <Li key={t}>{t}</Li>)}
         <Li>
-          <a href={plugin.get('link')} target='_blank'>使用帮助</a>
+          <a href={plugin.get('details')} target='_blank'>使用帮助</a>
         </Li>
       </Ul>
     </div>

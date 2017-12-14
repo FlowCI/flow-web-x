@@ -1,83 +1,74 @@
 import { handleActions } from 'redux-actions'
+import { handleHttp } from '../util'
 import { defaultInitState, createHandlers } from 'redux/handler'
 import types from './pluginType'
 
-const plugins = [{
-  name: 'fir 上传插件',
-  enabled: false,
-  version: '1.0',
-  tags: ['Docker'],
-  link: 'https://baidu.com',
-  desc: '自动将生成的应用包上传到 fir.im',
-}, {
-  name: '自定义脚本',
-  enabled: true,
-  version: '1.2',
-  lastest: '2.1',
-  tags: ['Jar'],
-  link: 'https://baidu.com',
-  desc: '编辑自定义脚本，通过脚本实现更多功能',
-}, {
-  name: '邮件消息插件',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}, {
-  name: '邮件消息插件',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}, {
-  name: '邮件消息插件2',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}, {
-  name: '邮件消息插件3',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}, {
-  name: '邮件消息插件4',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}, {
-  name: '邮件消息插件5',
-  enabled: true,
-  version: '2.0',
-  lastest: '2.1',
-  tags: ['flow-plugin'],
-  link: 'https://baidu.com',
-  desc: '使用模拟器运行你的单元测试',
-}]
+import { List, fromJS } from 'immutable'
 
 const handlers = createHandlers({ id: 'name' })
-const initState = handlers.saveAll(defaultInitState, { payload: plugins })
+const initState = defaultInitState.set('labels', new List())
 
 export const actions = {
-  query: function () {
+  queryLabels () {
     return {
-      type: types.query,
+      url: 'plugins/labels',
+      name: types.queryLabels,
+    }
+  },
+
+  query: function (status, label, keyword) {
+    return {
+      method: 'post',
+      url: '/plugins',
+      name: types.query,
+      params: {
+        status: status ? [status] : undefined,
+        labels: label ? [label] : undefined,
+        keyword: keyword,
+      }
+    }
+  },
+
+  queryInstalled (keyword) {
+    return actions.query('INSTALLED', undefined, keyword)
+  },
+
+  install (pluginName) {
+    return {
+      method: 'post',
+      url: '/plugins/install/:name',
+      params: {
+        name: pluginName,
+      },
+      name: types.install,
+    }
+  },
+
+  freed () {
+    return {
+      type: types.frred,
     }
   }
 }
 
 export default handleActions({
-
+  [types.query]: handleHttp('QUERY', {
+    success: function (state, action) {
+      // replace list and data
+      const nextState = state.set('list', initState.get('list'))
+        .set('data', initState.get('data'))
+      return handlers.saveAll(nextState, action)
+    }
+  }),
+  [types.queryLabels]: handleHttp('QUERY_LABELS', {
+    success: function (state, { payload }) {
+      return state.update('labels', () => fromJS(payload))
+    }
+  }),
+  [types.install]: handleHttp('INSTALL', {
+    success: handlers.save,
+  }),
+  [types.frred]: function () {
+    return initState
+  }
 }, initState)
