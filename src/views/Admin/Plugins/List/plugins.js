@@ -17,13 +17,18 @@ export default class PluginsController extends Component {
      * 删除 plugin function (plugin: Plugin) {}
      */
     remove: PropTypes.func,
+    /**
+     * 更新 plugin function (plugin: Plugin) {}
+     */
+    upgrade: PropTypes.func,
+
     i18n: PropTypes.func.isRequired,
   }
 
   renderPlugin = (plugin) => {
-    const { i18n, toggle, remove } = this.props
+    const { i18n, toggle, remove, upgrade } = this.props
     return <Plugin key={plugin.get('name')} plugin={plugin} i18n={i18n}
-      toggle={toggle} remove={remove} />
+      toggle={toggle} remove={remove} upgrade={upgrade} />
   }
 
   render () {

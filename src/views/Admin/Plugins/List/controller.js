@@ -38,6 +38,10 @@ function mapStateToProps (state, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.queryInstalled,
+
+    upgrade: actions.install,
+    remove: actions.uninstall,
+
     freed: actions.freed,
   }, dispatch)
 }
@@ -54,6 +58,8 @@ export class PluginController extends Component {
     plugins: ImmutablePropTypes.list.isRequired,
 
     query: PropTypes.func.isRequired,
+    upgrade: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
     freed: PropTypes.func.isRequired,
     i18n: PropTypes.func.isRequired,
   }
@@ -85,6 +91,16 @@ export class PluginController extends Component {
 
   }
 
+  handleUpgrade = (plugin) => {
+    const { upgrade } = this.props
+    return upgrade(plugin.get('name'))
+  }
+
+  handleRemove = (plugin) => {
+    const { remove } = this.props
+    return remove(plugin.get('name'))
+  }
+
   render () {
     const { counts, i18n, plugins } = this.props
     const { category } = this.state
@@ -94,7 +110,8 @@ export class PluginController extends Component {
         onChange={this.handleCateChange}
         onSearch={this.handleSearch}
       />
-      <Plugins plugins={plugins} i18n={i18n.createChild('list')} />
+      <Plugins plugins={plugins} i18n={i18n.createChild('list')}
+        remove={this.handleRemove} upgrade={this.handleUpgrade} />
     </div>
   }
 }
