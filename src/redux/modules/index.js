@@ -15,6 +15,7 @@ import member from './member'
 import role from './role'
 import permission from './permission'
 import plugin from './plugin'
+import step from './step'
 
 export default {
   session,
@@ -32,4 +33,5 @@ export default {
   role,
   permission,
   plugin,
+  step,
 }

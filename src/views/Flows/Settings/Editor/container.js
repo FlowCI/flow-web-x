@@ -5,7 +5,7 @@ import { Map } from 'immutable'
 
 import { connect } from 'react-redux'
 
-import Plugins from '../Plugins'
+import Steps from '../Steps'
 
 import classes from './container.scss'
 
@@ -36,7 +36,7 @@ export class FlowEditorContainer extends Component {
           <h4 className={classes.title}>{name}</h4>
           <h5 className={classes.subTitle}>{git}</h5>
         </div>
-        <Plugins flowId={flowId} />
+        <Steps flowId={flowId} />
       </div>
       {children}
     </div>

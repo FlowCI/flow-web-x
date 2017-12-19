@@ -6,23 +6,23 @@ import Card from './Card'
 import Node from './Node'
 
 import classnames from 'classnames'
-import classes from './plugins.scss'
+import classes from './steps.scss'
 
-export default class FlowPlugin extends Component {
+export default class FlowStep extends Component {
   static propTypes = {
     actived: PropTypes.bool,
-    plugin: ImmutablePropTypes.map.isRequired,
+    step: ImmutablePropTypes.map.isRequired,
     index: PropTypes.number.isRequired,
   }
 
   render () {
     const {
-      index, plugin, actived,
+      index, step, actived,
       ...other
     } = this.props
-    const name = plugin.get('name')
+    const name = step.get('name')
     return <Node>
-      <Card className={classnames(classes.plugin, {
+      <Card className={classnames(classes.step, {
         [classes.active]: actived,
       })}
         index={index} data={{ name }} {...other}>
