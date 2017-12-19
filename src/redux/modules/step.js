@@ -16,6 +16,14 @@ export const actions = {
       }
     }
   },
+  update (flowId, steps) {
+    return {
+      url: `/flows/${flowId}/steps`,
+      method: 'post',
+      data: steps,
+      names: types.update,
+    }
+  },
   freed () {
     return {
       type: types.freed,

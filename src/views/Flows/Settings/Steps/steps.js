@@ -36,6 +36,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     query: actions.query,
     freed: actions.freed,
+    save: actions.update,
   }, dispatch)
 }
 
@@ -44,6 +45,7 @@ export class FlowSteps extends Component {
     flowId: PropTypes.string.isRequired,
     steps: ImmutablePropTypes.list.isRequired,
     query: PropTypes.func.isRequired,
+    save: PropTypes.func.isRequired,
     freed: PropTypes.func.isRequired,
   }
 
@@ -73,8 +75,17 @@ export class FlowSteps extends Component {
 
   handleEndDrag = (endIndex) => {
     const { begin } = this.state
-    // call save state
     console.log(begin, 'to', endIndex)
+    if (begin === endIndex) {
+      return
+    }
+    this.save()
+  }
+
+  save () {
+    const { save, flowId } = this.props
+    const { steps } = this.state
+    save(flowId, steps.toJS())
   }
 
   moveItem = (dragIndex, hoverIndex) => {
