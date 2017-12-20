@@ -70,13 +70,15 @@ export class FlowSteps extends Component {
   }
 
   handleBeginDrag = (beginIndex) => {
+    /**
+     * 不需要重新渲染
+     */
     this.state.begin = beginIndex
   }
 
-  handleEndDrag = (endIndex) => {
-    const { begin } = this.state
-    console.log(begin, 'to', endIndex)
-    if (begin === endIndex) {
+  handleEndDrag = () => {
+    const { begin, end } = this.state
+    if (begin === end) {
       return
     }
     this.save()
@@ -92,7 +94,7 @@ export class FlowSteps extends Component {
     const { steps } = this.state
     const dragItem = steps.get(dragIndex)
     const p = steps.splice(dragIndex, 1).splice(hoverIndex, 0, dragItem)
-    this.setState({ steps: p })
+    this.setState({ steps: p, end: hoverIndex })
   }
 
   render () {
