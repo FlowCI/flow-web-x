@@ -85,6 +85,7 @@ export class FlowSteps extends Component {
   }
 
   save () {
+    console.log('save steps')
     const { save, flowId } = this.props
     const { steps } = this.state
     save(flowId, steps.toJS())
@@ -94,7 +95,15 @@ export class FlowSteps extends Component {
     const { steps } = this.state
     const dragItem = steps.get(dragIndex)
     const p = steps.splice(dragIndex, 1).splice(hoverIndex, 0, dragItem)
-    this.setState({ steps: p, end: hoverIndex })
+    /**
+     * 使用同步赋值，防止在 endDrag 时还未进行完 setState，
+     * 从而导致 steps 获取到的值不正确
+     */
+    this.state.steps = p
+    /**
+     * 通知刷新
+     */
+    this.setState({ end: hoverIndex })
   }
 
   render () {
