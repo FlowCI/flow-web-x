@@ -16,12 +16,15 @@ const cardSource = {
       data: data
     }
   },
+  /**
+   * 由于每个 DropTarget 大小可能不一致，在响应 hover 时会重新排列，导致原本应该在
+   * DropTarget 上的 DragSource 在重排后并不在 DropTarget 上，从而导致在其父元素上
+   * 触发 drag 事件，从而 monitor.didDrop() 为 false，所以并不能以 endDrag 时的状态
+   * 为最终排序结果。 endDrag 方法仅作为拖拽结束标识。
+   */
   endDrag (props, monitor, component) {
-    if (monitor.didDrop()) {
-      // call end drag callback to set end index
-      const { index, data, endDrag } = props
-      endDrag && endDrag(index, data)
-    }
+    const { endDrag } = props
+    endDrag && endDrag()
   }
 }
 const cardTarget = {
@@ -42,7 +45,7 @@ const cardTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     monitor.getItem().index = hoverIndex
-  },
+  }
 }
 
 export class FlowDragCard extends Component {
@@ -74,7 +77,7 @@ export class FlowDragCard extends Component {
       connectDragPreview,
       onClick,
     } = this.props
-    return connectDropTarget(connectDragPreview(
+    return connectDragPreview(connectDropTarget(
       <span className={classnames(className, {
         dragging: isDragging,
       })} onClick={onClick}>

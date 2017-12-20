@@ -1,5 +1,5 @@
 @import 'variables/colors';
-.plugins{
+.steps{
   padding: 0px 30px;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@
   color: $color-muted;
 }
 
-.plugin{
+.step{
   cursor: pointer;
   background-color: #fff;
   padding: 10px 20px 10px 0px;
