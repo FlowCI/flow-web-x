@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import EventListener from 'react-event-listener'
+import debounce from 'lodash/debounce'
 import MonacoEditor from 'react-monaco-editor'
 import { dark } from './theme'
 
@@ -42,6 +44,10 @@ export default class CodeEditor extends Component {
     theme: 'dark',
   }
 
+  componentDidMount () {
+    this.debounceHandleResize = debounce(this.handleResize, 300)
+  }
+
   getOptions (props = this.props) {
     const { options, readOnly } = props
     return {
@@ -73,18 +79,19 @@ export default class CodeEditor extends Component {
     this.editor = editor
   }
 
+  handleResize = () => {
+    this.editor && this.editor.layout()
+  }
+
   render () {
     const { className, theme } = this.props
     const options = this.getOptions()
     return <div className={classnames(classes.editor, className, theme)}>
-      <MonacoEditor
-        {...this.props}
-        options={options}
-        width='100%' height='500'
+      <EventListener target='window' onResize={this.debounceHandleResize} />
+      <MonacoEditor {...this.props} options={options} width='100%' height='500'
         editorWillMount={this.editorWillMount}
         editorDidMount={this.editorDidMount}
-        requireConfig={requireConfig}
-      />
+        requireConfig={requireConfig} />
     </div>
   }
 }
