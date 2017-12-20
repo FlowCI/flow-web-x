@@ -85,7 +85,6 @@ export class FlowSteps extends Component {
   }
 
   save () {
-    console.log('save steps')
     const { save, flowId } = this.props
     const { steps } = this.state
     save(flowId, steps.toJS())
