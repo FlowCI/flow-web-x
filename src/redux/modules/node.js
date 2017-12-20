@@ -27,7 +27,6 @@ import types from './nodeType'
  * }
  */
 const initState = new Map()
-
 function createState () {
   return defaultInitState.set('log', new Map())
 }
@@ -73,6 +72,16 @@ export const actions = {
   }
 }
 
+const maxLogLength = 1000
+
+function beforeStoreLog (log, maxLength = maxLogLength) {
+  const array = log.split('\n')
+  if (array.length < maxLength) {
+    return log
+  }
+  return array.slice(array.length - maxLength).join('\n')
+}
+
 export default handleActions({
   [jobTypes.get]: handleHttpActions({
     success: function (state, { payload }) {
@@ -91,7 +100,7 @@ export default handleActions({
       const { jobId, nodeId } = indicator
       const line = (payload + '').split('\n').length
       return state.updateIn([jobId, 'log', nodeId], (old) => {
-        return new Map({ line, str: payload })
+        return new Map({ line, str: beforeStoreLog(payload) })
       }).setIn([jobId, 'ui', nodeId, 'GET_LOG'], status)
     },
     failure: function (state, { indicator, status }) {
@@ -121,11 +130,11 @@ export default handleActions({
         if (old.get('line') < number) {
           return new Map({
             line: number,
-            str: [old.get('str'), content].join('\n'),
+            str: beforeStoreLog([old.get('str'), content].join('\n')),
           })
         }
       } else {
-        return new Map({ line: number, str: content })
+        return new Map({ line: number, str: beforeStoreLog(content) })
       }
     })
   }
