@@ -33,7 +33,7 @@ export default class PluginListItem extends Component {
         <Li>版本: {plugin.get('currentTag')}</Li>
         {labels.map((t) => <Li key={t}>{t}</Li>)}
         <Li>
-          <a href={plugin.get('details')} target='_blank'>使用帮助</a>
+          <a href={plugin.get('source')} target='_blank'>使用帮助</a>
         </Li>
       </Ul>
     </div>

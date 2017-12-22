@@ -7,11 +7,14 @@ import autoCancel from 'react-promise-cancel'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
+import is from 'util/is'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createSelector } from 'reselect'
 
 import { actions } from 'redux/modules/step'
+import { push } from 'react-router-redux'
 
 import Step from './step'
 import StartNode from './StartNode'
@@ -37,6 +40,7 @@ function mapDispatchToProps (dispatch) {
     query: actions.query,
     freed: actions.freed,
     save: actions.update,
+    redirect: push,
   }, dispatch)
 }
 
@@ -44,9 +48,11 @@ export class FlowSteps extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired,
     steps: ImmutablePropTypes.list.isRequired,
+    active: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     query: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
     freed: PropTypes.func.isRequired,
+    redirect: PropTypes.func.isRequired,
   }
 
   state = {
@@ -105,15 +111,32 @@ export class FlowSteps extends Component {
     this.setState({ end: hoverIndex })
   }
 
+  handleActive = (event, step) => {
+    event.stopPropagation()
+
+    const { redirect, flowId } = this.props
+    const name = encodeURI(step.get('name'))
+
+    redirect(`/flows/${flowId}/settings/editor/plugin/${name}`)
+  }
+
   render () {
+    const { active } = this.props
     const { steps } = this.state
+    const isPluginActive = is.string(active)
+
+    // 不写空字符串是为了防止名字刚好没有
+    const activeName = isPluginActive ? decodeURI(active) : {}
+
     return <div className={classes.steps}>
-      <StartNode />
+      <StartNode actived={!isPluginActive && !active.path} />
       {steps.map((p, i) => <Step key={p.get('name')} step={p}
+        actived={p.get('name') === activeName}
         index={i} move={this.moveItem}
+        onActive={this.handleActive}
         beginDrag={this.handleBeginDrag}
         endDrag={this.handleEndDrag} />)}
-      <EndNode />
+      <EndNode actived={!isPluginActive && active.path} />
     </div>
   }
 }

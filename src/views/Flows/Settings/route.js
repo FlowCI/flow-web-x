@@ -8,6 +8,7 @@ import Envs from './Envs'
 import Yml from './Yml'
 import Info from './Info'
 import Editor from './Editor'
+import Step from './Step'
 
 export default function (path, store) {
   return <Route path={path} component={Container}>
@@ -28,8 +29,9 @@ export default function (path, store) {
         <Route path='edit' text='ymledit' component={Yml} navbar />
         <Route path='info' text='info' component={Info} navbar />
       </Route>
+      <Route path='add' step='add' />
       <Route path='plugin'>
-        <Route path=':pluginId' />
+        <Route path=':pluginId' component={Step} />
       </Route>
     </Route>
   </Route>

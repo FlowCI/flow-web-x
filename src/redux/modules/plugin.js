@@ -16,6 +16,16 @@ export const actions = {
     }
   },
 
+  get (name) {
+    return {
+      url: '/plugins/:name',
+      params: {
+        name,
+      },
+      name: types.get,
+    }
+  },
+
   query: function (status, label, keyword) {
     return {
       method: 'post',

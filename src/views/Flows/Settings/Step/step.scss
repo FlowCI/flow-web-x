@@ -1,0 +1,34 @@
+@import 'variables/colors';
+
+.step, .loading {
+  margin: 20px 30px;
+  border: 1px solid $color-hr;
+  border-radius: 3px;
+}
+
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+}
+.info{
+
+}
+.actions{
+  display: flex;
+  align-items: center;
+}
+.toggle{
+  margin-right: 20px;
+}
+
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0px;
+  >button{
+    margin-right: 10px;
+  }
+}

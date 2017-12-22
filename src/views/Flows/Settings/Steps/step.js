@@ -13,18 +13,25 @@ export default class FlowStep extends Component {
     actived: PropTypes.bool,
     step: ImmutablePropTypes.map.isRequired,
     index: PropTypes.number.isRequired,
+    onActive: PropTypes.func.isRequired,
+  }
+
+  handleClick = (e) => {
+    const { onActive, step } = this.props
+    onActive(e, step)
   }
 
   render () {
     const {
       index, step, actived,
+      onActive, // eslint-disable-line no-unused-vars
       ...other
     } = this.props
     const name = step.get('name')
     return <Node>
       <Card className={classnames(classes.step, {
         [classes.active]: actived,
-      })}
+      })} onClick={this.handleClick}
         index={index} data={{ name }} {...other}>
         {name}
       </Card>
