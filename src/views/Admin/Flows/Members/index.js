@@ -11,7 +11,7 @@ import { createSelector } from 'reselect'
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 
 import Menus from './menus'
 import Members from './members'
