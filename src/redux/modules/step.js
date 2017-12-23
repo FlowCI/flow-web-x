@@ -44,7 +44,7 @@ export const actions = {
       url: `/flows/${flowId}/steps`,
       method: 'post',
       data: steps,
-      names: types.update,
+      name: types.update,
     }
   },
   updateStep: getStepsWrapper(updateStep),
