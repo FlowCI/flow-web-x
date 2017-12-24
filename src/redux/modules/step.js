@@ -29,6 +29,47 @@ function removeStep (steps, flowId, stepName) {
   return actions.update(flowId, list)
 }
 
+function createIncreasingName (name, index, check) {
+  index = index || 0
+  const nextName = index ? `${name}${index}` : name
+  if (check(nextName)) {
+    return nextName
+  }
+  return createIncreasingName(name, index + 1, check)
+}
+
+function checkRepeat (list, name) {
+  return !list.includes(name)
+}
+
+function addCustomStep (steps, flowId, name, script) {
+  const list = steps.get('list')
+  const data = steps.get('data')
+
+  const checkName = (name) => {
+    return checkRepeat(list, name)
+  }
+  const saveName = createIncreasingName(name, 0, checkName)
+  const saveSteps = list.map((id) => data.get(id)).toJS()
+  saveSteps.push({ name: saveName, script })
+  return actions.update(flowId, saveSteps)
+}
+
+function addPlugin (steps, flowId, plugin) {
+  const list = steps.get('list')
+  const data = steps.get('data')
+  const stepName = plugin.get('name')
+
+  const checkName = (name) => {
+    return checkRepeat(list, name)
+  }
+
+  const saveName = createIncreasingName(stepName, 0, checkName)
+  const saveSteps = list.map((id) => data.get(id)).toJS()
+
+  saveSteps.push({ name: saveName, plugin: stepName })
+  return actions.update(flowId, saveSteps)
+}
 export const actions = {
   query (flowId) {
     return {
@@ -49,6 +90,8 @@ export const actions = {
   },
   updateStep: getStepsWrapper(updateStep),
   removeStep: getStepsWrapper(removeStep),
+  addCustomStep: getStepsWrapper(addCustomStep),
+  addPlugin: getStepsWrapper(addPlugin),
   freed () {
     return {
       type: types.freed,
