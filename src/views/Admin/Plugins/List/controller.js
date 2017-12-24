@@ -94,7 +94,7 @@ export class PluginController extends Component {
   refresh = () => {
     const { query } = this.props
     const { keyword } = this.state
-    query(keyword)
+    query(undefined, keyword)
   }
 
   handleUpgrade = (plugin) => {

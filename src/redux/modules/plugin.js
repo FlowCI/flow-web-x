@@ -39,8 +39,8 @@ export const actions = {
     }
   },
 
-  queryInstalled (keyword) {
-    return actions.query('INSTALLED', undefined, keyword)
+  queryInstalled (label, keyword) {
+    return actions.query('INSTALLED', label, keyword)
   },
 
   install (pluginName) {
