@@ -19,7 +19,7 @@ import { push } from 'react-router-redux'
 import Step from './step'
 import StartNode from './StartNode'
 import EndNode from './EndNode'
-
+import DashedNode from './DashedNode'
 import classes from './steps.scss'
 
 const stepsSelector = createSelector(
@@ -120,6 +120,18 @@ export class FlowSteps extends Component {
     redirect(`/flows/${flowId}/settings/editor/plugin/${name}`)
   }
 
+  handleAddActive = (event) => {
+    event.stopPropagation()
+
+    const { redirect, flowId } = this.props
+    redirect(`/flows/${flowId}/settings/editor/add`)
+  }
+
+  redirectToDefault = () => {
+    const { redirect, flowId } = this.props
+    redirect(`/flows/${flowId}/settings/editor/build`)
+  }
+
   render () {
     const { active } = this.props
     const { steps } = this.state
@@ -128,6 +140,7 @@ export class FlowSteps extends Component {
     // 不写空字符串是为了防止名字刚好没有
     const activeName = isPluginActive ? decodeURI(active) : {}
 
+    const isAdd = !isPluginActive && active.path
     return <div className={classes.steps}>
       <StartNode actived={!isPluginActive && !active.path} />
       {steps.map((p, i) => <Step key={p.get('name')} step={p}
@@ -136,7 +149,9 @@ export class FlowSteps extends Component {
         onActive={this.handleActive}
         beginDrag={this.handleBeginDrag}
         endDrag={this.handleEndDrag} />)}
-      <EndNode actived={!isPluginActive && active.path} />
+      {isAdd && <DashedNode remove={this.redirectToDefault} />}
+      <EndNode actived={isAdd}
+        onActive={this.handleAddActive} />
     </div>
   }
 }

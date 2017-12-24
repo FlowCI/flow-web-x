@@ -1,0 +1,17 @@
+.dashed{
+  font-size: 12px;
+  border: 1px dashed #55575c;
+  border-radius: 3px;
+  height: 40px;
+  width: 100px;
+  position: relative;
+  background-color: #fff;
+}
+.close{
+  position: absolute;
+  right: 0px;
+  color: #a2a8b1;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

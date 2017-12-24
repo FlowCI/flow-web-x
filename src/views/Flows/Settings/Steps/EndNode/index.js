@@ -10,8 +10,9 @@ export default class FlowEndNode extends Component {
   }
 
   render () {
+    const { onActive } = this.props
     return <Node>
-      <span className={classes.end}>
+      <span className={classes.end} onClick={onActive}>
         <i className='icon icon-plus-sm' />
       </span>
     </Node>
