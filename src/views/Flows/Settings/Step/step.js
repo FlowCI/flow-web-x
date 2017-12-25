@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { createSelector } from 'reselect'
 import autoCancel from 'react-promise-cancel'
 import { STATUS } from 'redux-http'
 
@@ -13,11 +14,19 @@ import { actions as pluginActions } from 'redux/modules/plugin'
 import { push } from 'react-router-redux'
 
 import Toggle from 'rc-components/Toggle'
+import Input from 'rc-components/Input'
 import Button from 'components/Buttonx'
 import Loading from 'components/Loading'
 import Editor from 'components/CodeEditor'
+
+import ConfigPlugin from '../ConfigPlugin'
+
 import classes from './step.scss'
 
+const envsSelector = createSelector(
+  (step) => step.get('envs'),
+  (envs) => envs.toJS()
+)
 function mapStateToProps (state, props) {
   const { step: steps, plugin: plugins } = state
   const { params: { flowId, pluginId } } = props
@@ -89,6 +98,12 @@ export class FlowStepConfig extends Component {
 
   componentWillReceiveProps (nextProps) {
     const { loading, step } = nextProps
+    if (step && !this.props.step) {
+      const { pluginName, plugin, getPlugin } = nextProps
+      if (pluginName && !plugin) {
+        getPlugin(pluginName)
+      }
+    }
     if (!loading && !step) {
       const { flowId, redirect } = nextProps
       redirect(`/flows/${flowId}/settings/editor`)
@@ -115,6 +130,16 @@ export class FlowStepConfig extends Component {
     this.setState(this.calcState())
   }
 
+  saveEnvs = (plugin, envs) => {
+    const { save, flowId, step } = this.props
+    const nextStep = step.set('envs', new Map(envs))
+    return save(flowId, nextStep)
+  }
+
+  cancelEnvsEdit = (plugin, envs) => {
+
+  }
+
   remove = () => {
     const { remove, step, flowId, redirect } = this.props
     return remove(flowId, step.get('name')).then(() => {
@@ -134,7 +159,7 @@ export class FlowStepConfig extends Component {
     return <div className={classes.header}>
       <div className={classes.info}>
         <h5>
-          {step.get('name')}
+          <Input value={step.get('name')} readOnly />
           {plugin && <small>
             <a href={plugin.get('source')} target='_blank'>使用帮助</a>
           </small>}
@@ -142,9 +167,6 @@ export class FlowStepConfig extends Component {
         {plugin && <h6>{plugin.get('description')}</h6>}
       </div>
       <div className={classes.actions}>
-        <div className={classes.toggle}>
-          禁用插件 <Toggle />
-        </div>
         <div className={classes.toggle}>
           允许失败 <Toggle checked={allowFailure}
             onChange={this.toggleAllowFailure} />
@@ -162,10 +184,6 @@ export class FlowStepConfig extends Component {
       onChange={this.handleEditorChange} />
   }
 
-  renderPlugin () {
-
-  }
-
   renderStepFooter () {
     return <div className={classes.footer}>
       <Button type='primary' onClick={this.save}>保存</Button>
@@ -173,12 +191,20 @@ export class FlowStepConfig extends Component {
     </div>
   }
 
+  renderPlugin () {
+    const { plugin, step } = this.props
+    const envs = envsSelector(step)
+    return <ConfigPlugin plugin={plugin} envs={envs}
+      save={this.saveEnvs}
+      cancel={this.cancelEnvsEdit} />
+  }
+
   renderContent () {
     const { plugin } = this.props
     return <div className={classes.step}>
       {this.renderStepHeader()}
       {plugin ? this.renderPlugin() : this.renderScript()}
-      {this.renderStepFooter()}
+      {!plugin && this.renderStepFooter()}
     </div>
   }
 

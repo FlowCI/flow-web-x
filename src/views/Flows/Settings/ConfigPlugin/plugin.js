@@ -10,7 +10,7 @@ export default class ConfigPlugin extends Component {
     plugin: ImmutablePropTypes.map.isRequired,
     envs: PropTypes.object.isRequired,
     save: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
+    cancel: PropTypes.func,
   }
 
   static defaultProps = {
@@ -58,13 +58,19 @@ export default class ConfigPlugin extends Component {
 
   handleCancel = () => {
     const { cancel } = this.props
-    cancel()
+    this.setState({ envs: this.props.envs || {} })
+    cancel && cancel()
   }
 
   render () {
-    const { plugin } = this.props
+    const { plugin, envs: defaultValues } = this.props
     const { envs, errors } = this.state
     const items = plugin.getIn(['detail', 'properties'])
+
+    const hasChange = items.some((item) => {
+      const key = item.get('name')
+      return envs[key] !== defaultValues[key]
+    })
 
     return <div>
       {items.map((item) => {
@@ -76,8 +82,14 @@ export default class ConfigPlugin extends Component {
         />
       })}
       <div>
-        <Button type='primary' onClick={this.handleSave}>保存</Button>
-        <Button type='text' onClick={this.handleCancel}>取消</Button>
+        <Button type='primary' disabled={!hasChange}
+          onClick={this.handleSave}>
+          保存
+        </Button>
+        <Button type='text' disabled={!hasChange}
+          onClick={this.handleCancel}>
+          取消
+        </Button>
       </div>
     </div>
   }

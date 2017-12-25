@@ -16,7 +16,7 @@ export const actions = {
     }
   },
 
-  get (name) {
+  get: function (name) {
     return {
       url: '/plugins/:name',
       params: {
@@ -83,6 +83,9 @@ export default handleActions({
         .set('data', initState.get('data'))
       return handlers.saveAll(nextState, action)
     }
+  }),
+  [types.get]: handleHttp('GET', {
+    success: handlers.saveData
   }),
   [types.queryLabels]: handleHttp('QUERY_LABELS', {
     success: function (state, { payload }) {
