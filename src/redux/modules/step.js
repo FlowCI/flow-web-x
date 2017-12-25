@@ -55,7 +55,7 @@ function addCustomStep (steps, flowId, name, script) {
   return actions.update(flowId, saveSteps)
 }
 
-function addPlugin (steps, flowId, plugin) {
+function addPlugin (steps, flowId, plugin, envs) {
   const list = steps.get('list')
   const data = steps.get('data')
   const stepName = plugin.get('name')
@@ -67,7 +67,7 @@ function addPlugin (steps, flowId, plugin) {
   const saveName = createIncreasingName(stepName, 0, checkName)
   const saveSteps = list.map((id) => data.get(id)).toJS()
 
-  saveSteps.push({ name: saveName, plugin: stepName })
+  saveSteps.push({ name: saveName, plugin: stepName, envs })
   return actions.update(flowId, saveSteps)
 }
 export const actions = {

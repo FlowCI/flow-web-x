@@ -1,0 +1,11 @@
+.item{
+  display: flex;
+  align-items: center;
+}
+.name{
+  flex: 0 0 auto;
+  width: 200px;
+}
+.control{
+  flex: 1;
+}

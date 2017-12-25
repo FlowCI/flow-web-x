@@ -10,6 +10,7 @@ import autoCancel from 'react-promise-cancel'
 import { actions as pluginActions } from 'redux/modules/plugin'
 import { actions } from 'redux/modules/step'
 
+import ConfigPlugin from '../ConfigPlugin'
 import Toolbar from './toolbar'
 import Plugins from './plugins'
 
@@ -57,6 +58,7 @@ export class FlowPluginController extends Component {
   state = {
     label: undefined,
     keyword: undefined,
+    selected: undefined,
   }
 
   componentDidMount () {
@@ -82,19 +84,46 @@ export class FlowPluginController extends Component {
     query(label, keyword)
   }
 
-  handleInstall = (plugin) => {
-    const { install, flowId } = this.props
-    return install(flowId, plugin)
+  handleSelect = (plugin) => {
+    this.setState({ selected: plugin })
   }
 
-  render () {
+  resetSelected = () => {
+    this.setState({ selected: undefined })
+  }
+
+  handleInstall = (plugin, envs) => {
+    const { flowId, install } = this.props
+    install(flowId, plugin, envs)
+  }
+
+  renderList () {
     const { plugins, labels } = this.props
     const { label } = this.state
     return <div className={classes.container}>
-      <Toolbar tags={labels} current={label} onChange={this.handleLabelChange}
+      <Toolbar tags={labels} current={label}
+        onChange={this.handleLabelChange}
         onSearch={this.handleSearch} />
-      {<Plugins plugins={plugins} install={this.handleInstall} />}
+      {<Plugins plugins={plugins} install={this.handleSelect} />}
     </div>
+  }
+
+  renderConfig () {
+    const { selected } = this.state
+    return <div>
+      <h5>配置 {selected.get('name')} 插件</h5>
+      <ConfigPlugin plugin={selected}
+        save={this.handleInstall}
+        cancel={this.resetSelected} />
+    </div>
+  }
+
+  render () {
+    const { selected } = this.state
+    if (!selected) {
+      return this.renderList()
+    }
+    return this.renderConfig()
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(
