@@ -37,13 +37,20 @@
   display: flex;
   align-items: center;
   max-width: 300px;
+  line-height: 20px;
   border-radius: 3px;
+  color: #8A9097;
   &:global(.dragging) {
     opacity: 0.4;
+  }
+  &:hover{
+    color: $color-black;
+    border-color: $color-black;
   }
 }
 .active{
   border-color: $color-black;
+  color: $color-black;
 }
 .drag{
   flex: 0 0 auto;
