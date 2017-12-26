@@ -60,6 +60,11 @@ export default class FlowStepEnvs extends Component {
     save(values)
   }
 
+  reset = () => {
+    const { values } = this.props
+    this.setState({ values })
+  }
+
   renderProperty = (prop) => {
     const { values, errors } = this.state
     const name = prop.get('name')
@@ -81,15 +86,21 @@ export default class FlowStepEnvs extends Component {
   }
 
   render () {
-    const { properties } = this.props
-    const { errors } = this.state
+    const { properties, values: defaultValues } = this.props
+    const { errors, values } = this.state
+
     const invalid = !Object.keys(errors)
+    const changed = values !== defaultValues
 
     return <div className={classes.envs}>
       {properties.map(this.renderProperty)}
-      <Button type='secondary' disabled={invalid}
+      <Button type='secondary' disabled={!changed || invalid}
         onClick={this.handleSave}>
         保存
+      </Button>
+      <Button type='text' disabled={!changed}
+        onClick={this.reset}>
+        取消
       </Button>
     </div>
   }

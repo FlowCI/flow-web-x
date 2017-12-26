@@ -34,11 +34,11 @@ export default class FlowStep extends Component {
   }
 
   handleSaveScript = (script) => {
-
+    this.handleSaveStep({ script })
   }
 
   handleSaveEnvs = (envs) => {
-
+    this.handleSaveStep({ envs })
   }
 
   handleSaveStep = (changedStep) => {
