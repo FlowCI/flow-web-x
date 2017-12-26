@@ -7,7 +7,12 @@ import classes from './dashed.scss'
 
 export default class FlowDottedNode extends Component {
   static propTypes = {
+    text: PropTypes.string,
     remove: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    text: '',
   }
 
   handleClick = (e) => {
@@ -15,10 +20,12 @@ export default class FlowDottedNode extends Component {
   }
 
   render () {
-    const { remove } = this.props
+    const { text, remove } = this.props
     return <Node>
       <span className={classes.dashed} onClick={this.handleClick}>
-        <IconButton className={classes.close} onClick={remove}>
+        {text}&nbsp;
+        <IconButton size='sm' className={classes.close}
+          onClick={remove}>
           <i className='icon icon-cross' />
         </IconButton>
       </span>

@@ -1,9 +1,9 @@
 .dashed{
-  font-size: 12px;
-  border: 1px dashed #55575c;
+  border: 2px dashed #55575c;
   border-radius: 3px;
-  height: 40px;
-  width: 100px;
+  padding: 10px 20px 10px 10px;
+  line-height: (20px - 2*1px);
+  min-width: 100px;
   position: relative;
   background-color: #fff;
 }
