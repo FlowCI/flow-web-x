@@ -20,6 +20,8 @@ export default class Input extends Component {
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
 
+    autofocus: PropTypes.bool,
+
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
     /**
@@ -69,6 +71,13 @@ export default class Input extends Component {
     spinner: <i className='icon icon-loading' />,
   }
 
+  componentDidMount () {
+    const { autofocus } = this.props
+    if (autofocus && this.input) {
+      this.input.focus()
+    }
+  }
+
   getIcons () {
     const { loading, spinner, leftIcon, rightIcon } = this.props
     if (!loading || !spinner) {
@@ -107,6 +116,7 @@ export default class Input extends Component {
       classNames, size,
       disabled, readOnly,
       invalid,
+      autofocus,
       leftIcon: l, rightIcon: r, // eslint-disable-line no-unused-vars
       input, meta, spinner, // eslint-disable-line no-unused-vars
       loading, // eslint-disable-line no-unused-vars
@@ -142,6 +152,7 @@ export default class Input extends Component {
         })} disabled={disabled} readOnly={readOnly}
         onKeyUp={this.handleKeyUp}
         onChange={this.handleChange}
+        ref={(el) => { this.input = el }}
       />
     </span>
   }
