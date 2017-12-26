@@ -3,6 +3,8 @@ import { handleHttp } from '../util'
 import { defaultInitState, createHandlers } from 'redux/handler'
 import types from './stepType'
 
+import { Map, fromJS } from 'immutable'
+
 const handlers = createHandlers({ id: 'name' })
 const initState = defaultInitState
 
@@ -92,6 +94,17 @@ export const actions = {
   removeStep: getStepsWrapper(removeStep),
   addCustomStep: getStepsWrapper(addCustomStep),
   addPlugin: getStepsWrapper(addPlugin),
+  setAbstractStep (flowId, step) {
+    return {
+      type: types.saveAbstractStep,
+      payload: step,
+    }
+  },
+  freedAbstractStep () {
+    return {
+      type: types.freedAbstractStep,
+    }
+  },
   freed () {
     return {
       type: types.freed,
@@ -109,6 +122,18 @@ export default handleActions({
       return handlers.saveAll(ns, action)
     }
   }),
+  [types.saveAbstractStep]: function (state, { payload }) {
+    const step = Map.isMap(payload) ? payload : fromJS(payload)
+
+    return state.update('ui', (ui) => {
+      return ui.set('abstractStep', step)
+    })
+  },
+  [types.freedAbstractStep]: function (state) {
+    return state.update('ui', (ui) => {
+      return ui.remove('abstractStep')
+    })
+  },
   [types.freed]: function () {
     return initState
   }
