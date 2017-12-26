@@ -21,7 +21,7 @@ const childRouteSelector = createSelector(
 
 function mapStateToProps (state, props) {
   const { flow } = state
-  const { params: { flowId, pluginId } } = props
+  const { params: { flowId, stepName } } = props
   const f = flow.getIn(['data', flowId], new Map())
   const childRoute = childRouteSelector(props)
 
@@ -29,7 +29,7 @@ function mapStateToProps (state, props) {
     flowId,
     git: f.getIn(['envs', 'FLOW_GIT_URL'], ''),
     name: f.get('name', ''),
-    active: pluginId || childRoute // 开始及结束节点用 route 表示状态， 插件使用插件名
+    active: stepName || childRoute // 开始及结束节点用 route 表示状态， 插件使用插件名
   }
 }
 function mapDispatchToProps (dispatch) {

@@ -31,8 +31,8 @@ export default function (path, store) {
         <Route path='info' text='info' component={Info} navbar />
       </Route>
       <Route path='add' component={AddPlugin} />
-      <Route path='plugin'>
-        <Route path=':pluginId' component={Step} />
+      <Route path='step'>
+        <Route path=':stepName' component={Step} />
       </Route>
     </Route>
   </Route>

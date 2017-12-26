@@ -31,7 +31,8 @@ const stepsSelector = createSelector(
 function mapStateToProps (state, props) {
   const { step } = state
   return {
-    steps: stepsSelector(step)
+    steps: stepsSelector(step),
+    abstractStep: step.getIn(['ui', 'abstractStep']),
   }
 }
 
@@ -48,6 +49,8 @@ export class FlowSteps extends Component {
   static propTypes = {
     flowId: PropTypes.string.isRequired,
     steps: ImmutablePropTypes.list.isRequired,
+    abstractStep: ImmutablePropTypes.map,
+
     active: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     query: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
@@ -117,7 +120,7 @@ export class FlowSteps extends Component {
     const { redirect, flowId } = this.props
     const name = encodeURI(step.get('name'))
 
-    redirect(`/flows/${flowId}/settings/editor/plugin/${name}`)
+    redirect(`/flows/${flowId}/settings/editor/step/${name}`)
   }
 
   handleAddActive = (event) => {
@@ -133,7 +136,7 @@ export class FlowSteps extends Component {
   }
 
   render () {
-    const { active } = this.props
+    const { active, abstractStep } = this.props
     const { steps } = this.state
     const isPluginActive = is.string(active)
 
@@ -149,7 +152,8 @@ export class FlowSteps extends Component {
         onActive={this.handleActive}
         beginDrag={this.handleBeginDrag}
         endDrag={this.handleEndDrag} />)}
-      {isAdd && <DashedNode remove={this.redirectToDefault} />}
+      {isAdd && <DashedNode text={abstractStep ? abstractStep.get('name') : ''}
+        remove={this.redirectToDefault} />}
       <EndNode actived={isAdd}
         onActive={this.handleAddActive} />
     </div>
