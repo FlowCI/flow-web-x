@@ -33,7 +33,8 @@ function removeStep (steps, flowId, stepName) {
 
 function createIncreasingName (name, index, check) {
   index = index || 0
-  const nextName = index ? `${name}${index}` : name
+  // 自动补名从 2 开始
+  const nextName = index ? `${name}${index + 1}` : name
   if (check(nextName)) {
     return nextName
   }
@@ -44,34 +45,47 @@ function checkRepeat (list, name) {
   return !list.includes(name)
 }
 
-function addCustomStep (steps, flowId, name, script) {
+function addStep (steps, flowId, step) {
   const list = steps.get('list')
   const data = steps.get('data')
 
-  const checkName = (name) => {
-    return checkRepeat(list, name)
-  }
-  const saveName = createIncreasingName(name, 0, checkName)
-  const saveSteps = list.map((id) => data.get(id)).toJS()
-  saveSteps.push({ name: saveName, script })
-  return actions.update(flowId, saveSteps)
-}
-
-function addPlugin (steps, flowId, plugin, envs) {
-  const list = steps.get('list')
-  const data = steps.get('data')
-  const stepName = plugin.get('name')
+  const stepName = step.get('name')
 
   const checkName = (name) => {
     return checkRepeat(list, name)
   }
 
   const saveName = createIncreasingName(stepName, 0, checkName)
+  const envs = step.get('envs')
+  const saveStep = {
+    name: saveName,
+    plugin: step.get('plugin'),
+    allowFailure: step.get('allowFailure'),
+    envs: envs ? envs.toJS() : undefined,
+    script: step.get('script'),
+  }
+
   const saveSteps = list.map((id) => data.get(id)).toJS()
 
-  saveSteps.push({ name: saveName, plugin: stepName, envs })
+  saveSteps.push(saveStep)
   return actions.update(flowId, saveSteps)
 }
+
+function addAbstractStep (steps, flowId, _step) {
+  const list = steps.get('list')
+  const step = Map.isMap(_step) ? _step : fromJS(_step)
+  const stepName = step.get('name')
+
+  const checkName = (name) => {
+    return checkRepeat(list, name)
+  }
+  const saveName = createIncreasingName(stepName, 0, checkName)
+  return {
+    type: types.saveAbstractStep,
+    payload: step.set('name', saveName)
+  }
+}
+
 export const actions = {
   query (flowId) {
     return {
@@ -92,14 +106,8 @@ export const actions = {
   },
   updateStep: getStepsWrapper(updateStep),
   removeStep: getStepsWrapper(removeStep),
-  addCustomStep: getStepsWrapper(addCustomStep),
-  addPlugin: getStepsWrapper(addPlugin),
-  setAbstractStep (flowId, step) {
-    return {
-      type: types.saveAbstractStep,
-      payload: step,
-    }
-  },
+  addStep: getStepsWrapper(addStep),
+  setAbstractStep: getStepsWrapper(addAbstractStep),
   freedAbstractStep () {
     return {
       type: types.freedAbstractStep,
