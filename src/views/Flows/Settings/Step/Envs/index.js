@@ -13,6 +13,8 @@ export default class FlowStepEnvs extends Component {
   static propTypes = {
     properties: ImmutablePropTypes.list.isRequired,
     values: ImmutablePropTypes.map.isRequired,
+
+    resetable: PropTypes.bool,
     save: PropTypes.func.isRequired,
   }
 
@@ -86,7 +88,7 @@ export default class FlowStepEnvs extends Component {
   }
 
   render () {
-    const { properties, values: defaultValues } = this.props
+    const { resetable, properties, values: defaultValues } = this.props
     const { errors, values } = this.state
 
     const invalid = !Object.keys(errors)
@@ -98,10 +100,10 @@ export default class FlowStepEnvs extends Component {
         onClick={this.handleSave}>
         保存
       </Button>
-      <Button type='text' disabled={!changed}
+      {resetable && <Button type='text' disabled={!changed}
         onClick={this.reset}>
         取消
-      </Button>
+      </Button>}
     </div>
   }
 }

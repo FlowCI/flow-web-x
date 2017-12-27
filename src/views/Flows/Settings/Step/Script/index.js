@@ -9,6 +9,7 @@ import classes from './script.scss'
 export default class FlowStepScript extends Component {
   static propTypes = {
     script: PropTypes.string.isRequired,
+    resetable: PropTypes.bool,
 
     save: PropTypes.func.isRequired,
   }
@@ -39,6 +40,7 @@ export default class FlowStepScript extends Component {
   }
 
   render () {
+    const { resetable } = this.props
     const { script } = this.state
     const changed = this.props.script !== script
 
@@ -50,10 +52,10 @@ export default class FlowStepScript extends Component {
         onClick={this.handleSave}>
         保存
       </Button>
-      <Button type='text' disabled={!changed}
+      {resetable && <Button type='text' disabled={!changed}
         onClick={this.reset}>
         取消
-      </Button>
+      </Button>}
     </div>
   }
 }

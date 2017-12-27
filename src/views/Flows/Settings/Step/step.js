@@ -20,10 +20,18 @@ export default class FlowStep extends Component {
       envs: ImmutablePropTypes.map,
     }).isRequired,
 
+    resetable: PropTypes.bool,
     className: PropTypes.string,
-
+    /**
+     * @param {function} function (flowId, nextStep, options) {}
+     * @param options.click {bool} 表明是否是点击保存按钮
+     */
     save: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    resetable: true
   }
 
   state = {
@@ -37,19 +45,19 @@ export default class FlowStep extends Component {
   }
 
   handleSaveScript = (script) => {
-    this.handleSaveStep({ script })
+    this.handleSaveStep({ script }, { click: true })
   }
 
   handleSaveEnvs = (envs) => {
-    this.handleSaveStep({ envs })
+    this.handleSaveStep({ envs }, { click: true })
   }
 
-  handleSaveStep = (changedStep) => {
+  handleSaveStep = (changedStep, options) => {
     const { flowId, save } = this.props
     const { step } = this.state
     const nextStep = step.merge(new Map(changedStep))
     this.setState({ step: nextStep })
-    return save(flowId, nextStep)
+    return save(flowId, nextStep, options || {})
   }
 
   handleRemove = () => {
@@ -58,18 +66,21 @@ export default class FlowStep extends Component {
   }
 
   renderEnvs () {
-    const { plugin } = this.props
+    const { plugin, resetable } = this.props
     const { step } = this.state
 
     const properties = plugin.getIn(['detail', 'properties'])
     const envs = step.get('envs', new Map())
-    return <Envs properties={properties} values={envs}
+    return <Envs resetable={resetable}
+      properties={properties} values={envs}
       save={this.handleSaveEnvs} />
   }
 
   renderScript () {
+    const { resetable } = this.props
     const { step } = this.state
-    return <Script script={step.get('script')} save={this.handleSaveScript} />
+    return <Script resetable={resetable} script={step.get('script')}
+      save={this.handleSaveScript} />
   }
 
   render () {
