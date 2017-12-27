@@ -8,6 +8,7 @@ import Envs from './Envs'
 import Script from './Script'
 
 import classes from './step.scss'
+import classnames from 'classnames'
 
 export default class FlowStep extends Component {
   static propTypes = {
@@ -18,6 +19,8 @@ export default class FlowStep extends Component {
       allowFailure: PropTypes.bool,
       envs: ImmutablePropTypes.map,
     }).isRequired,
+
+    className: PropTypes.string,
 
     save: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
@@ -70,11 +73,11 @@ export default class FlowStep extends Component {
   }
 
   render () {
-    const { plugin } = this.props
+    const { plugin, className } = this.props
     const { step } = this.state
     const allowFailure = step.get('allowFailure')
 
-    return <div className={classes.panel}>
+    return <div className={classnames(classes.panel, className)}>
       <Header name={step.get('name')} plugin={plugin}
         allowFailure={allowFailure}
         save={this.handleSaveStep}
