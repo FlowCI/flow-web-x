@@ -51,11 +51,11 @@ export default class Input extends Component {
      */
     onChange: PropTypes.func,
     /**
-     * function (event, value) { }, 先触发 onKeyup 事件后触发此方法
+     * function (value) { }, 先触发 onKeyup 事件后触发此方法
      */
     onPressEnter: PropTypes.func,
     /**
-     * function (event, value) { }, 先触发 onKeyup 事件后触发此方法
+     * function (value) { }, 先触发 onKeyup 事件后触发此方法
      */
     onPressEsc: PropTypes.func,
     /**
@@ -95,11 +95,11 @@ export default class Input extends Component {
     switch (keycode(e)) {
       case 'enter':
         const { onPressEnter } = this.props
-        onPressEnter && onPressEnter(e, e.target.value)
+        onPressEnter && onPressEnter(e.target.value)
         break
       case 'esc':
         const { onPressEsc } = this.props
-        onPressEsc && onPressEsc(e, e.target.value)
+        onPressEsc && onPressEsc(e.target.value)
         break
     }
   }
