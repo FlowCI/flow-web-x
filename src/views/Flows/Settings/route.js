@@ -30,8 +30,12 @@ export default function (path, store) {
         <Route path='edit' text='ymledit' component={Yml} navbar />
         <Route path='info' text='info' component={Info} navbar />
       </Route>
-      <Route path='add' component={AddPlugin} />
+      <Route path='add/step' component={AddPlugin} />
+      <Route path='add/afterStep' isAfterStep component={AddPlugin} />
       <Route path='step'>
+        <Route path=':stepName' component={Step} />
+      </Route>
+      <Route path='afterStep' isAfterStep>
         <Route path=':stepName' component={Step} />
       </Route>
     </Route>

@@ -26,6 +26,7 @@ function mapStateToProps (state, props) {
 
   return {
     key: name,
+    base: `/flows/${flowId}/settings/editor`,
     step,
     flowId,
     pluginName,
@@ -45,6 +46,7 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowStepContainer extends Component {
   static propTypes = {
+    base: PropTypes.string.isRequired,
     flowId: PropTypes.string.isRequired,
     step: ImmutablePropTypes.map,
     plugin: ImmutablePropTypes.map,
@@ -90,14 +92,15 @@ export class FlowStepContainer extends Component {
   }
 
   redirectToDefault (props = this.props) {
-    const { flowId, redirect } = props
-    redirect(`/flows/${flowId}/settings/editor`)
+    const { base, redirect } = props
+    redirect(base)
   }
 
   redirectToStep (step) {
-    const { flowId, redirect } = this.props
-    const name = step.get('name')
-    redirect(`/flows/${flowId}/settings/editor/step/${name}`)
+    const { base, redirect } = this.props
+    const name = encodeURIComponent(step.get('name'))
+    const isFinal = step.get('isFinal')
+    redirect(`${base}/${isFinal ? 'afterStep' : 'step'}/${name}`)
   }
 
   handleSave = (flowId, nextStep) => {

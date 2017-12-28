@@ -30,6 +30,8 @@ function updateStep (steps, flowId, step) {
   const nextSteps = steps.updateIn(['data', step.get('id')], () => step)
   const data = nextSteps.get('data')
   const list = nextSteps.get('list').map((id) => data.get(id)).toJS()
+  // remove id prop
+  list.forEach((d) => { d.id = undefined })
   return actions.update(flowId, list)
 }
 
@@ -67,17 +69,20 @@ function addStep (steps, flowId, step) {
   const saveName = createIncreasingName(stepName, 0, checkName)
   const envs = step.get('envs')
   const saveStep = {
-    id: saveName,
     name: saveName,
     plugin: step.get('plugin'),
     allowFailure: step.get('allowFailure'),
     envs: envs ? envs.toJS() : undefined,
     script: step.get('script'),
+    isFinal: step.get('isFinal'),
   }
 
   const saveSteps = list.map((id) => data.get(id)).toJS()
+  const saveIndex = saveStep.isFinal ? saveSteps.length
+    : saveSteps.findIndex((step) => step.isFinal)
+  // 将isFinal step 插至最后，将 非 isFinal step 插在第一个 isFinal step 前
+  saveSteps.splice(saveIndex, 0, saveStep)
 
-  saveSteps.push(saveStep)
   return actions.update(flowId, saveSteps)
 }
 

@@ -2,19 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import autoCancel from 'react-promise-cancel'
-
-import { DragDropContext } from 'react-dnd'
-import HTML5Backend from 'react-dnd-html5-backend'
-
 import is from 'util/is'
-
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { createSelector } from 'reselect'
-
-import { actions } from 'redux/modules/step'
-import { push } from 'react-router-redux'
 
 import Step from './step'
 import StartNode from './StartNode'
@@ -22,30 +10,7 @@ import EndNode from './EndNode'
 import DashedNode from './DashedNode'
 import classes from './steps.scss'
 
-const stepsSelector = createSelector(
-  (state) => state.get('list'),
-  (state) => state.get('data'),
-  (list, data) => list.map((id) => data.get(id)).toList()
-)
-
-function mapStateToProps (state, props) {
-  const { step } = state
-  return {
-    steps: stepsSelector(step),
-    abstractStep: step.getIn(['ui', 'abstractStep']),
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return bindActionCreators({
-    query: actions.query,
-    freed: actions.freed,
-    save: actions.update,
-    redirect: push,
-  }, dispatch)
-}
-
-export class FlowSteps extends Component {
+export default class FlowSteps extends Component {
   static propTypes = {
     base: PropTypes.string.isRequired,
     isFinal: PropTypes.bool,
@@ -53,10 +18,11 @@ export class FlowSteps extends Component {
     steps: ImmutablePropTypes.list.isRequired,
     abstractStep: ImmutablePropTypes.map,
 
-    active: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    query: PropTypes.func.isRequired,
+    active: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
     save: PropTypes.func.isRequired,
-    freed: PropTypes.func.isRequired,
     redirect: PropTypes.func.isRequired,
   }
 
@@ -64,20 +30,10 @@ export class FlowSteps extends Component {
     steps: this.props.steps,
   }
 
-  componentDidMount () {
-    const { query, flowId } = this.props
-    query(flowId)
-  }
-
   componentWillReceiveProps (nextProps) {
     if (this.props.steps !== nextProps.steps) {
       this.setState({ steps: nextProps.steps })
     }
-  }
-
-  componentWillUnmount () {
-    const { freed, flowId } = this.props
-    freed(flowId)
   }
 
   handleBeginDrag = (beginIndex) => {
@@ -96,9 +52,9 @@ export class FlowSteps extends Component {
   }
 
   save () {
-    const { save, flowId } = this.props
+    const { save, isFinal, flowId } = this.props
     const { steps } = this.state
-    save(flowId, steps.toJS())
+    save(flowId, steps, { isFinal })
   }
 
   moveItem = (dragIndex, hoverIndex) => {
@@ -120,7 +76,7 @@ export class FlowSteps extends Component {
     event.stopPropagation()
 
     const { base, isFinal, redirect } = this.props
-    const name = encodeURI(step.get('name'))
+    const name = encodeURIComponent(step.get('name'))
 
     redirect(`${base}/${isFinal ? 'afterStep' : 'step'}/${name}`)
   }
@@ -129,7 +85,7 @@ export class FlowSteps extends Component {
     event.stopPropagation()
 
     const { redirect, isFinal, base } = this.props
-    redirect(`${base}/${isFinal ? 'afterStep' : 'step'}/add`)
+    redirect(`${base}/add/${isFinal ? 'afterStep' : 'step'}`)
   }
 
   redirectToDefault = () => {
@@ -138,17 +94,22 @@ export class FlowSteps extends Component {
   }
 
   render () {
-    const { active, abstractStep } = this.props
+    const { active = {}, abstractStep, isFinal } = this.props
     const { steps } = this.state
     const isPluginActive = is.string(active)
 
     // 不写空字符串是为了防止名字刚好没有
     const activeName = isPluginActive ? decodeURI(active) : {}
 
-    const isAdd = !isPluginActive && active.path
+    const isAfterStep = active && active.isAfterStep
+
+    const isAdd = (isAfterStep === isFinal) && !isPluginActive && active.path
+    const isStarted = !isFinal && !isPluginActive && !active.path
+
     return <div className={classes.steps}>
-      <StartNode actived={!isPluginActive && !active.path} />
+      <StartNode actived={isStarted} />
       {steps.map((p, i) => <Step key={p.get('id')} step={p}
+        type={isFinal ? 'AFTER_STEP' : 'STEP'}
         actived={p.get('name') === activeName}
         index={i} move={this.moveItem}
         onActive={this.handleActive}
@@ -161,8 +122,3 @@ export class FlowSteps extends Component {
     </div>
   }
 }
-export default DragDropContext(HTML5Backend)(
-  connect(mapStateToProps, mapDispatchToProps)(
-    autoCancel({ funcs: ['query'] })(FlowSteps)
-  )
-)

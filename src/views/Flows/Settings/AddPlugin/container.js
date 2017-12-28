@@ -17,10 +17,12 @@ import { Step } from '../Step'
 import classes from './container.scss'
 
 function mapStateToProps (state, props) {
-  const { params: { flowId } } = props
+  const { params: { flowId }, route } = props
   const { step } = state
   return {
+    base: `/flows/${flowId}/settings/editor`,
     flowId,
+    isAfterStep: route.isAfterStep,
     selected: step.getIn(['ui', 'abstractStep']),
   }
 }
@@ -43,9 +45,10 @@ const customStep = new Map({
 
 export class FlowPluginContainer extends Component {
   static propTypes = {
+    base: PropTypes.string.isRequired,
     flowId: PropTypes.string.isRequired,
     selected: ImmutablePropTypes.map,
-
+    isAfterStep: PropTypes.bool,
     /**
      * @param {function} function (flowId, plugin) {}
      */
@@ -73,22 +76,20 @@ export class FlowPluginContainer extends Component {
   }
 
   handleStepChange = (flowId, step, { click }) => {
-    const { select, install } = this.props
+    const { select, install, isAfterStep } = this.props
     if (!click) {
       return select(flowId, step)
     }
-    return install(flowId, step).then((resp) => {
-      const { data } = resp
-      const last = data[data.length - 1]
-      const stepName = encodeURIComponent(last.name)
-      const { redirect, flowId } = this.props
-      redirect(`/flows/${flowId}/settings/editor/step/${stepName}`)
+    const name = encodeURIComponent(step.get('name'))
+    return install(flowId, step.set('isFinal', isAfterStep)).then(() => {
+      const { base, redirect } = this.props
+      redirect(`${base}/${isAfterStep ? 'afterStep' : 'step'}/${name}`)
     })
   }
 
   cancel = () => {
-    const { redirect, flowId } = this.props
-    redirect(`/flows/${flowId}/settings/editor`)
+    const { base, redirect } = this.props
+    redirect(base)
   }
 
   renderAddText () {

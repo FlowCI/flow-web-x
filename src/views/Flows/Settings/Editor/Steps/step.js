@@ -10,10 +10,15 @@ import classes from './steps.scss'
 
 export default class FlowStep extends Component {
   static propTypes = {
+    type: PropTypes.string.isRequired,
     actived: PropTypes.bool,
     step: ImmutablePropTypes.map.isRequired,
     index: PropTypes.number.isRequired,
     onActive: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    type: 'FlowStep',
   }
 
   handleClick = (e) => {
