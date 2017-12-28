@@ -8,8 +8,6 @@ import { generatorJobId, actions } from 'redux/modules/job'
 
 import Code from 'components/Code'
 
-import classes from './yml.scss'
-
 function mapStateToProps (state, props) {
   const { job } = state
   const { params: { jobNumber, flowId, } } = props
@@ -45,7 +43,6 @@ export class JobYml extends Component {
   render () {
     const { yml } = this.props
     return <div>
-      <h4 className={classes.header}>.flow.yml</h4>
       <Code className='code black' code={yml} />
     </div>
   }
