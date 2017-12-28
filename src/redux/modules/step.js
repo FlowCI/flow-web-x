@@ -1,12 +1,21 @@
 import { handleActions } from 'redux-actions'
 import { handleHttp } from '../util'
-import { defaultInitState, createHandlers } from 'redux/handler'
+import { defaultInitState, handlers } from 'redux/handler'
 import types from './stepType'
 
+import is from 'util/is'
 import { Map, fromJS } from 'immutable'
 
-const handlers = createHandlers({ id: 'name' })
 const initState = defaultInitState
+
+function transformResponse (data) {
+  if (is.array(data)) {
+    data.forEach((d) => { d.id = d.name })
+  } else if (is.object(data) && data.name) {
+    data.id = data.name
+  }
+  return data
+}
 
 function getStepsWrapper (fn) {
   return function (...args) {
@@ -18,14 +27,14 @@ function getStepsWrapper (fn) {
 }
 
 function updateStep (steps, flowId, step) {
-  const nextSteps = steps.updateIn(['data', step.get('name')], () => step)
+  const nextSteps = steps.updateIn(['data', step.get('id')], () => step)
   const data = nextSteps.get('data')
   const list = nextSteps.get('list').map((id) => data.get(id)).toJS()
   return actions.update(flowId, list)
 }
 
-function removeStep (steps, flowId, stepName) {
-  const names = steps.get('list').filter((name) => name !== stepName)
+function removeStep (steps, flowId, stepId) {
+  const names = steps.get('list').filter((id) => id !== stepId)
   const data = steps.get('data')
   const list = names.map((name) => data.get(name)).toJS()
   return actions.update(flowId, list)
@@ -58,6 +67,7 @@ function addStep (steps, flowId, step) {
   const saveName = createIncreasingName(stepName, 0, checkName)
   const envs = step.get('envs')
   const saveStep = {
+    id: saveName,
     name: saveName,
     plugin: step.get('plugin'),
     allowFailure: step.get('allowFailure'),
@@ -93,7 +103,8 @@ export const actions = {
       name: types.query,
       params: {
         flowName: flowId,
-      }
+      },
+      transformResponse,
     }
   },
   update (flowId, steps) {
@@ -102,6 +113,7 @@ export const actions = {
       method: 'post',
       data: steps,
       name: types.update,
+      transformResponse,
     }
   },
   updateStep: getStepsWrapper(updateStep),
