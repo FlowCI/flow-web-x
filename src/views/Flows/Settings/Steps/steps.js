@@ -146,7 +146,7 @@ export class FlowSteps extends Component {
     const isAdd = !isPluginActive && active.path
     return <div className={classes.steps}>
       <StartNode actived={!isPluginActive && !active.path} />
-      {steps.map((p, i) => <Step key={p.get('name')} step={p}
+      {steps.map((p, i) => <Step key={p.get('id')} step={p}
         actived={p.get('name') === activeName}
         index={i} move={this.moveItem}
         onActive={this.handleActive}
