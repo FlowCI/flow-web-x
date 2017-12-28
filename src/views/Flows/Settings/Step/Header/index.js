@@ -5,7 +5,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Map } from 'immutable'
 
 import Button from 'components/Buttonx'
+// import IconButton from 'components/IconButton'
 import Toggle from 'rc-components/Toggle'
+import Input from 'rc-components/Input'
 
 import classes from './header.scss'
 
@@ -23,14 +25,37 @@ export default class FlowStepHeader extends Component {
     plugin: new Map(),
   }
 
+  state = {
+    edit: false,
+    name: this.props.name
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.name !== nextProps.name) {
+      this.setState({ name: nextProps.name })
+    }
+  }
+
   handleAllowFailureToggle = (v) => {
     const { save } = this.props
     return save({ allowFailure: v })
   }
 
   handleNameChange = (v) => {
-    const { save } = this.props
-    return save({ name: v })
+    this.setState({ name: v })
+  }
+
+  handleEdit = () => {
+    this.setState({ edit: true })
+  }
+
+  handleNameSaved = () => {
+    const { save, name: defaultName } = this.props
+    const { name } = this.state
+    if (defaultName !== name) {
+      save({ name })
+    }
+    this.setState({ edit: false })
   }
 
   renderToggle (value, text, onChange) {
@@ -42,7 +67,8 @@ export default class FlowStepHeader extends Component {
   }
 
   render () {
-    const { name, allowFailure, plugin, remove } = this.props
+    const { allowFailure, plugin, remove } = this.props
+    const { edit, name } = this.state
     // const name = plugin.get('name')
     const description = plugin.get('description', '')
     const href = plugin.get('source', '')
@@ -52,8 +78,23 @@ export default class FlowStepHeader extends Component {
         <i className='icon icon-jigsaw' />
       </span>
       <div className={classes.grow}>
-        <h4 className={classes.name}>
-          {name}
+        <h4 className={classes.title}>
+          {!edit && <span className={classes.name}>
+            {name}
+            <Button size='sm' className={classes.edit}
+              onClick={this.handleEdit}>
+              <i className='icon icon-pencil' />
+            </Button>
+          </span>}
+          {edit && <span className={classes.name}>
+            <Input value={name} size='sm' className={classes.nameInput}
+              onChange={this.handleNameChange} />
+            <Button type='primary' size='sm'
+              onClick={this.handleNameSaved}>
+              保存
+            </Button>
+            <Button type='text' size='sm'>取消</Button>
+          </span>}
           {!!href && <a className={classes.help} href={href}
             target='_blank' rel='noopener'>
             查看帮助文档
@@ -62,7 +103,7 @@ export default class FlowStepHeader extends Component {
         <div className={classes.desc}>{description}</div>
       </div>
       <div className={classes.toggles}>
-        {this.renderToggle(allowFailure, '禁用插件',
+        {this.renderToggle(allowFailure, '允许失败',
           this.handleAllowFailureToggle)}
       </div>
       <div className={classes.actions}>
