@@ -47,6 +47,8 @@ function mapDispatchToProps (dispatch) {
 
 export class FlowSteps extends Component {
   static propTypes = {
+    base: PropTypes.string.isRequired,
+    isFinal: PropTypes.bool,
     flowId: PropTypes.string.isRequired,
     steps: ImmutablePropTypes.list.isRequired,
     abstractStep: ImmutablePropTypes.map,
@@ -117,22 +119,22 @@ export class FlowSteps extends Component {
   handleActive = (event, step) => {
     event.stopPropagation()
 
-    const { redirect, flowId } = this.props
+    const { base, isFinal, redirect } = this.props
     const name = encodeURI(step.get('name'))
 
-    redirect(`/flows/${flowId}/settings/editor/step/${name}`)
+    redirect(`${base}/${isFinal ? 'afterStep' : 'step'}/${name}`)
   }
 
   handleAddActive = (event) => {
     event.stopPropagation()
 
-    const { redirect, flowId } = this.props
-    redirect(`/flows/${flowId}/settings/editor/add`)
+    const { redirect, isFinal, base } = this.props
+    redirect(`${base}/${isFinal ? 'afterStep' : 'step'}/add`)
   }
 
   redirectToDefault = () => {
-    const { redirect, flowId } = this.props
-    redirect(`/flows/${flowId}/settings/editor/build`)
+    const { redirect, base } = this.props
+    redirect(`${base}/build`)
   }
 
   render () {

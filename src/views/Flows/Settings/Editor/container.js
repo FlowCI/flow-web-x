@@ -61,13 +61,14 @@ export class FlowEditorContainer extends Component {
 
   render () {
     const { flowId, git, name, active, children } = this.props
+    const base = `/flows/${flowId}/settings/editor`
     return <div>
       <div className={classes.panel} onClick={this.handleClick}>
         <div className={classes.header}>
           <h4 className={classes.title}>{name}</h4>
           <h5 className={classes.subTitle}>{git}</h5>
         </div>
-        <Steps flowId={flowId} active={active} />
+        <Steps base={base} flowId={flowId} active={active} />
       </div>
       {children}
     </div>
