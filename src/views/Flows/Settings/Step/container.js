@@ -94,6 +94,21 @@ export class FlowStepContainer extends Component {
     redirect(`/flows/${flowId}/settings/editor`)
   }
 
+  redirectToStep (step) {
+    const { flowId, redirect } = this.props
+    const name = step.get('name')
+    redirect(`/flows/${flowId}/settings/editor/step/${name}`)
+  }
+
+  handleSave = (flowId, nextStep) => {
+    const { step, save } = this.props
+    return save(flowId, nextStep).then(() => {
+      if (step.get('name') !== nextStep.get('name')) {
+        this.redirectToStep(nextStep)
+      }
+    })
+  }
+
   shouldWaiting () {
     const { step, pluginName, plugin } = this.props
     return !step || (pluginName && !plugin)
@@ -109,9 +124,9 @@ export class FlowStepContainer extends Component {
     if (this.shouldWaiting()) {
       return this.renderLoading()
     }
-    const { flowId, step, plugin, save, remove } = this.props
+    const { flowId, step, plugin, remove } = this.props
     return <Step flowId={flowId} step={step} plugin={plugin}
-      save={save} remove={remove} />
+      save={this.handleSave} remove={remove} />
   }
 }
 

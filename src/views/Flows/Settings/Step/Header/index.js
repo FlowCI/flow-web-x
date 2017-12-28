@@ -58,6 +58,11 @@ export default class FlowStepHeader extends Component {
     this.setState({ edit: false })
   }
 
+  handleNameReset = () => {
+    const { name } = this.props
+    this.setState({ name, edit: false })
+  }
+
   renderToggle (value, text, onChange) {
     return <div className={classes.toggle}>
       <Toggle className={classes.block} size='sm'
@@ -88,12 +93,15 @@ export default class FlowStepHeader extends Component {
           </span>}
           {edit && <span className={classes.name}>
             <Input value={name} size='sm' className={classes.nameInput}
+              onPressEnter={this.handleNameSaved}
               onChange={this.handleNameChange} />
             <Button type='primary' size='sm'
               onClick={this.handleNameSaved}>
               保存
             </Button>
-            <Button type='text' size='sm'>取消</Button>
+            <Button type='text' size='sm' onClick={this.handleNameReset}>
+              取消
+            </Button>
           </span>}
           {!!href && <a className={classes.help} href={href}
             target='_blank' rel='noopener'>
