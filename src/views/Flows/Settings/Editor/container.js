@@ -56,6 +56,7 @@ function mapStateToProps (state, props) {
     afterSteps: s.afterSteps,
 
     abstractStep: step.getIn(['ui', 'abstractStep']),
+    yml: flow.getIn(['yml', flowId])
   }
 }
 
@@ -76,6 +77,7 @@ export class FlowEditorContainer extends Component {
     flowId: PropTypes.string.isRequired,
     git: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    yml: PropTypes.string,
     steps: ImmutablePropTypes.list.isRequired,
     afterSteps: ImmutablePropTypes.list.isRequired,
     abstractStep: ImmutablePropTypes.map,
@@ -93,6 +95,13 @@ export class FlowEditorContainer extends Component {
   componentDidMount () {
     const { query, flowId } = this.props
     query(flowId)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.yml && this.props.yml !== nextProps.yml) {
+      const { query, flowId } = nextProps
+      query(flowId)
+    }
   }
 
   componentWillUnmount () {
