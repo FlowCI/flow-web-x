@@ -261,6 +261,12 @@ export const actions = {
       }
     }
   },
+  freedYml: function (flowId) {
+    return {
+      type: Types.freedYml,
+      indicator: { flowId }
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.setFilter,
@@ -321,7 +327,11 @@ export default handleActions({
       return state.setIn(['yml', flowId], payload || '')
     }
   }),
-
+  [Types.freedYml]: function (state, { indicator: { flowId } }) {
+    return state.update('yml', (yml) => {
+      return yml.remove(flowId)
+    })
+  },
   [Types.getEditEnvs]: handleHttp('GET_EDIT_ENVS', {
     success: function (state, { indicator, payload }) {
       const { flowId } = indicator

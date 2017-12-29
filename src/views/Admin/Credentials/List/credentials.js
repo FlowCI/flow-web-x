@@ -19,7 +19,7 @@ import Loading from 'components/Loading'
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 
 import RSAList from './RSA'
 

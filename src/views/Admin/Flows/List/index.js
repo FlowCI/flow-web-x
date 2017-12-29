@@ -28,7 +28,7 @@ import {
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 
 import FlowItem from './flow'
 

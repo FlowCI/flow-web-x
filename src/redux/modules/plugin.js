@@ -16,6 +16,16 @@ export const actions = {
     }
   },
 
+  get: function (name) {
+    return {
+      url: '/plugins/:name',
+      params: {
+        name,
+      },
+      name: types.get,
+    }
+  },
+
   query: function (status, label, keyword) {
     return {
       method: 'post',
@@ -29,8 +39,8 @@ export const actions = {
     }
   },
 
-  queryInstalled (keyword) {
-    return actions.query('INSTALLED', undefined, keyword)
+  queryInstalled (label, keyword) {
+    return actions.query('INSTALLED', label, keyword)
   },
 
   install (pluginName) {
@@ -73,6 +83,9 @@ export default handleActions({
         .set('data', initState.get('data'))
       return handlers.saveAll(nextState, action)
     }
+  }),
+  [types.get]: handleHttp('GET', {
+    success: handlers.saveData
   }),
   [types.queryLabels]: handleHttp('QUERY_LABELS', {
     success: function (state, { payload }) {

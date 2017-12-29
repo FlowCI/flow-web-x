@@ -10,9 +10,13 @@ export default class FlowNode extends Component {
 
   }
 
+  handleClick = (e) => {
+    e.stopPropagation()
+  }
+
   render () {
     const { children } = this.props
-    return <span className={classes.node}>
+    return <span className={classes.node} onClick={this.handleClick}>
       <Connector />
       {children}
     </span>

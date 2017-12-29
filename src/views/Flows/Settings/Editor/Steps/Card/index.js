@@ -89,13 +89,27 @@ export class FlowDragCard extends Component {
   }
 }
 
-export const type = 'FlowPluginDrag'
-export default DropTarget(type, cardTarget, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-}))(
-  DragSource(type, cardSource, (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview(),
-    isDragging: monitor.isDragging(),
-  }))(FlowDragCard)
-)
+export default class FlowDragCardHightOrderComponent extends Component {
+  static propTypes = {
+    type: PropTypes.string.isRequired
+  }
+
+  constructor (props, context) {
+    super(props, context)
+    const { type } = props
+
+    this.renderComponent = DropTarget(type, cardTarget, (connect, monitor) => ({
+      connectDropTarget: connect.dropTarget(),
+    }))(
+      DragSource(type, cardSource, (connect, monitor) => ({
+        connectDragSource: connect.dragSource(),
+        connectDragPreview: connect.dragPreview(),
+        isDragging: monitor.isDragging(),
+      }))(FlowDragCard)
+    )
+  }
+
+  render () {
+    return React.createElement(this.renderComponent, this.props)
+  }
+}

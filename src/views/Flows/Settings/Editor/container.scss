@@ -4,9 +4,15 @@
   border: 1px solid $color-hr;
   border-radius: 3px;
   background-color: #fafbfc;
+  position: relative;
+}
+.ymlLink{
+  position: absolute;
+  top: 20px;
+  right: 30px;
 }
 .header{
-  padding: 20px 30px;
+  padding: 20px;
 }
 .title{
   font-size: 18px;
@@ -14,4 +20,7 @@
 
 .subTitle{
   color: $color-muted;
+}
+.stepHeader{
+  padding: 0px 20px;
 }

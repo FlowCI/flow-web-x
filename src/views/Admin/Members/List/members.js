@@ -32,7 +32,7 @@ import {
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 import Member from './member'
 import ActionBar from './actions'
 

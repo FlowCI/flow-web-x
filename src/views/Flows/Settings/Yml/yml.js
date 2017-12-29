@@ -23,6 +23,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     get: actions.getYml,
     save: actions.saveYml,
+    freed: actions.freedYml,
   }, dispatch)
 }
 
@@ -32,6 +33,7 @@ export class FlowYmlSetting extends Component {
     flowId: PropTypes.string.isRequired,
     get: PropTypes.func.isRequired,
     save: PropTypes.func.isRequired,
+    freed: PropTypes.func.isRequired,
   }
 
   state = {
@@ -49,6 +51,11 @@ export class FlowYmlSetting extends Component {
     if (this.props.yml !== nextProps.yml) {
       this.setState({ text: nextProps.yml })
     }
+  }
+
+  componentWillUnmount () {
+    const { freed, flowId } = this.props
+    freed(flowId)
   }
 
   handleEditorChange = (value) => {

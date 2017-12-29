@@ -1,0 +1,27 @@
+@import 'variables/colors';
+.plugins{
+  margin-bottom: 30px;
+  border-top: 1px solid $color-hr;
+}
+.plugin{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $color-hr;
+  padding: 20px 30px;
+}
+.action{
+  flex: 0 0 70px;
+}
+.install{
+  font-size: 25px;
+}
+.name{
+  flex: 1 1 0;
+}
+.labels{
+  color: $color-muted;
+  font-size: 12px;
+}
+.desc{
+  flex: 1 1 0;
+}

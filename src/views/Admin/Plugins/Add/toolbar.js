@@ -7,7 +7,7 @@ import Input from 'rc-components/Input'
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 import Toolbar from '../../components/Toolbar'
 
 import classes from './toolbar.scss'
