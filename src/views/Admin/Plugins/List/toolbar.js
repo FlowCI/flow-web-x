@@ -17,8 +17,6 @@ export default class PluginToolBar extends Component {
     category: PropTypes.string.isRequired,
     counts: PropTypes.shape({
       ALL: PropTypes.number,
-      ENABLED: PropTypes.number,
-      DISABLED: PropTypes.number,
       UPDATEABLED: PropTypes.number,
     }).isRequired,
     delay: PropTypes.number,
@@ -62,8 +60,6 @@ export default class PluginToolBar extends Component {
     return <Toolbar className={classes.toolbar}>
       <TabBars value={category} onChange={onChange}>
         {this.renderItem('ALL', counts)}
-        {this.renderItem('ENABLED', counts)}
-        {this.renderItem('DISABLED', counts)}
         {this.renderItem('UPDATEABLED', counts)}
       </TabBars>
       <Input placeholder='搜索'

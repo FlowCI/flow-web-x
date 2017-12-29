@@ -47,7 +47,6 @@ export default class Plugin extends Component {
         className={classes.grey}>
         停用
       </a></Li>}
-      {!enabled && <Li><a onClick={this.setEnabled}>启用</a></Li>}
       {!enabled && <Li><a onClick={this.handleRemove}>删除</a></Li>}
     </Ul>
   }
