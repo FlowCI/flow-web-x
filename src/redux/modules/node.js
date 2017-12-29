@@ -133,6 +133,7 @@ export default handleActions({
             str: beforeStoreLog([old.get('str'), content].join('\n')),
           })
         }
+        return old
       } else {
         return new Map({ line: number, str: beforeStoreLog(content) })
       }
