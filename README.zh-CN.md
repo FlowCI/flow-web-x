@@ -20,7 +20,7 @@ $ npm config set registry https://registry.npm.taobao.org/
 $ npm config set sass-binary-site https://npm.taobao.org/mirrors/node-sass
 
 # 设置模拟器下载地址并安装依赖包
-$ PHANTOMJS_CDNURL https://npm.taobao.org/dist/phantomjs npm install
+$ PHANTOMJS_CDNURL=https://npm.taobao.org/dist/phantomjs npm install
 ```
 ### 配置文件
 找到 config/index.js 将需要替换的字段换成自己的配置的配置即可
