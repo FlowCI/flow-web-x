@@ -110,6 +110,10 @@ export class FlowEditorContainer extends Component {
     freed(flowId)
   }
 
+  stopPropagation = (e) => {
+    e.stopPropagation()
+  }
+
   handleClick = () => {
     const { base, redirect, location } = this.props
     const href = `${base}/build`
@@ -140,7 +144,9 @@ export class FlowEditorContainer extends Component {
 
     return <div>
       <div className={classes.panel} onClick={this.handleClick}>
-        <Link to={`/flows/${flowId}/settings/editor/edit`} className={classes.ymlLink}>
+        <Link to={`/flows/${flowId}/settings/editor/edit`}
+          onClick={this.stopPropagation}
+          className={classes.ymlLink}>
           通过 yml 配置工作流
         </Link>
         <div className={classes.header}>
