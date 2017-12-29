@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {
   TabBars,
   Tab
-} from '../../components/TabBars'
+} from 'components/TabBars'
 import Toolbar from '../../components/Toolbar'
 
 export default class AgentToolBar extends Component {

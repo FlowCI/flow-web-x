@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import classnames from 'classnames'
 import classes from './header.scss'
-export default class FlowBuildSettingHeader extends Component {
+export default class FlowSettingPanelHeader extends Component {
   static propTypes = {
     title: PropTypes.node.isRequired,
     className: PropTypes.string,

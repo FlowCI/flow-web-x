@@ -20,6 +20,8 @@ export default class Input extends Component {
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
 
+    autofocus: PropTypes.bool,
+
     readOnly: PropTypes.bool,
     disabled: PropTypes.bool,
     /**
@@ -49,11 +51,11 @@ export default class Input extends Component {
      */
     onChange: PropTypes.func,
     /**
-     * function (event, value) { }, 先触发 onKeyup 事件后触发此方法
+     * function (value) { }, 先触发 onKeyup 事件后触发此方法
      */
     onPressEnter: PropTypes.func,
     /**
-     * function (event, value) { }, 先触发 onKeyup 事件后触发此方法
+     * function (value) { }, 先触发 onKeyup 事件后触发此方法
      */
     onPressEsc: PropTypes.func,
     /**
@@ -67,6 +69,13 @@ export default class Input extends Component {
     type: 'text',
     classNames: classes,
     spinner: <i className='icon icon-loading' />,
+  }
+
+  componentDidMount () {
+    const { autofocus } = this.props
+    if (autofocus && this.input) {
+      this.input.focus()
+    }
   }
 
   getIcons () {
@@ -86,11 +95,11 @@ export default class Input extends Component {
     switch (keycode(e)) {
       case 'enter':
         const { onPressEnter } = this.props
-        onPressEnter && onPressEnter(e, e.target.value)
+        onPressEnter && onPressEnter(e.target.value)
         break
       case 'esc':
         const { onPressEsc } = this.props
-        onPressEsc && onPressEsc(e, e.target.value)
+        onPressEsc && onPressEsc(e.target.value)
         break
     }
   }
@@ -107,6 +116,7 @@ export default class Input extends Component {
       classNames, size,
       disabled, readOnly,
       invalid,
+      autofocus,
       leftIcon: l, rightIcon: r, // eslint-disable-line no-unused-vars
       input, meta, spinner, // eslint-disable-line no-unused-vars
       loading, // eslint-disable-line no-unused-vars
@@ -142,6 +152,7 @@ export default class Input extends Component {
         })} disabled={disabled} readOnly={readOnly}
         onKeyUp={this.handleKeyUp}
         onChange={this.handleChange}
+        ref={(el) => { this.input = el }}
       />
     </span>
   }

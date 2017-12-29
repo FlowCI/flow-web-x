@@ -1,0 +1,64 @@
+@import 'variables/colors';
+.header{
+  padding: 20px 0px;
+  border-bottom: 1px solid $color-hr;
+  display: flex;
+  align-items: center;
+}
+
+.icon{
+  font-size: 25px;
+  line-height: 40px;
+  padding: 0px 20px;
+  border-right: 1px solid $color-black;
+  margin-right: 20px;
+}
+.grow{
+  flex: 1 1 auto;
+  margin-right: 20px;
+  overflow: hidden;
+}
+.title, .name{
+  display: flex;
+  align-items: center;
+}
+.edit{
+  border: none;
+  width: 28px;
+}
+.nameInput{
+  margin-right: 10px;
+}
+.help{
+  font-size: 12px;
+  margin-left: 10px;
+  font-weight: normal;
+}
+.desc{
+  color: $color-muted;
+}
+.toggles{
+  flex: 0 0 auto;
+  margin-right: 40px;
+}
+.block{
+  display: block;
+}
+.toggle{
+
+}
+.actions{
+  flex: 0 0 auto;
+  margin-right: 20px;
+}
+.remove{
+  font-weight: normal;
+  color: $color-muted;
+  border-color: $color-hr;
+  background-color: #fff;
+  &:hover, &:focus{
+    background-color: $color-danger;
+    border-color: $color-danger;
+    color: #fff;
+  }
+}

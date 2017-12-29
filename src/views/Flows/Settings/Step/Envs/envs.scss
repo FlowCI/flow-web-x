@@ -1,0 +1,18 @@
+.envs{
+  padding: 20px;
+}
+.env{
+  margin-bottom: 20px;
+}
+.label{
+  margin-bottom: 5px;
+}
+.strong{
+  font-weight: bold;
+}
+.desc{
+  margin-left: 10px;
+}
+.block{
+  width: 100%; // 防止有些组件使用的是 flex 所以未使用 display 属性
+}

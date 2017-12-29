@@ -4,7 +4,7 @@ export default {
   navbar: {
     build: '构建设置',
     envs: '环境变量',
-    yml: '配置 YML 工作流',
+    ymledit: '配置 YML 工作流',
     info: '基本信息',
   },
   Envs: {
