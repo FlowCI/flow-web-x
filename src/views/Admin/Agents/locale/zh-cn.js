@@ -1,10 +1,10 @@
 export default {
   document: {
-    list: 'Agent · 控制台',
+    index: 'Agent · 控制台',
     create: '添加 Agent · 控制台',
   },
   navbar: {
-    list: 'Agent',
+    index: 'Agent',
     create: '添加 Agent',
   },
   list: {
