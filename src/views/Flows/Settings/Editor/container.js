@@ -15,6 +15,7 @@ import autoCancel from 'react-promise-cancel'
 import { actions } from 'redux/modules/step'
 import { push } from 'react-router-redux'
 
+import { Link } from 'react-router'
 import Steps from './Steps'
 
 import classes from './container.scss'
@@ -139,6 +140,9 @@ export class FlowEditorContainer extends Component {
 
     return <div>
       <div className={classes.panel} onClick={this.handleClick}>
+        <Link to={`/flows/${flowId}/settings/editor/edit`} className={classes.ymlLink}>
+          通过 yml 配置工作流
+        </Link>
         <div className={classes.header}>
           <h4 className={classes.title}>{name}</h4>
           <h5 className={classes.subTitle}>{git}</h5>
