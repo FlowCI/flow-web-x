@@ -11,6 +11,7 @@ export default {
   updateTrigger: 'FLOW_TRIGGER_UPDATE',
   getYml: 'FLOW_GET_YML',
   saveYml: 'FLOW_SAVE_YML',
+  freedYml: 'FLOW_FREED_YML',
 
   getEditEnvs: 'FLOW_GET_EDIT_ENVS',
   saveEditEnvs: 'FLOW_SAVE_EDIT_ENVS',
