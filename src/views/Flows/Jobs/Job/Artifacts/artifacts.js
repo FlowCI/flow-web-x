@@ -11,9 +11,9 @@ export default class JobArtifacts extends Component {
   }
 
   renderEmpty () {
-    return <h5 className={classes.empty}>
+    return <h4 className={classes.empty}>
       本次构建时没有添加产物存储
-    </h5>
+    </h4>
   }
 
   render () {
