@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 import { handleHttp } from 'redux/util'
 
 import { defaultInitState, handlers } from 'redux/handler'
-import { Map } from 'immutable'
+import { Map, fromJS } from 'immutable'
 
 import is from 'util/is'
 
@@ -10,6 +10,7 @@ import Types from './jobType'
 import FlowTypes from './flowType'
 
 const initialState = defaultInitState.set('yml', new Map())
+  .set('artifacts', new Map())
 
 export function generatorJobId (flowId, jobNumber) {
   return `${flowId}-${jobNumber}`
@@ -142,6 +143,19 @@ export const actions = {
       }
     }
   },
+  queryArtifact (flowId, jobNumber) {
+    return {
+      url: '/jobs/:flowName/:number/artifacts',
+      name: Types.queryArtifact,
+      params: {
+        flowName: flowId,
+        number: jobNumber,
+      },
+      indicator: {
+        id: generatorJobId(flowId, jobNumber),
+      },
+    }
+  },
   setFilter: function (filter) {
     return {
       type: Types.updateFilter,
@@ -205,6 +219,14 @@ export default handleActions({
         return data.set(id, payload)
       })
     },
+  }),
+  [Types.queryArtifact]: handleHttp('', {
+    success (state, { indicator, payload }) {
+      const { id } = indicator
+      return state.update('artifacts', (data) => {
+        return data.set(id, fromJS(payload))
+      })
+    }
   }),
   [Types.updateFilter]: function (state, { payload }) {
     return state.update('ui', (ui) => ui.set('filter', payload))
