@@ -34,6 +34,13 @@ export default class JobStatusHeader extends Component {
           {i18n('YML 配置')}
         </Link>
       </li>
+      <li>
+        <Link to={{ ...base, pathname: `${base.pathname}/artifacts` }}
+          className={classes.nav}
+          activeClassName='active'>
+          {i18n('产物存储')}
+        </Link>
+      </li>
     </ul>
   }
 }

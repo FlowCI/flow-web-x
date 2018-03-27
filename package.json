@@ -37,6 +37,7 @@
     "monaco-editor": "^0.10.1",
     "normalize.css": "^7.0.0",
     "prop-types": "^15.5.10",
+    "qrcode.react": "^0.7.2",
     "react": "^15.5.4",
     "react-clipboard.js": "^1.1.2",
     "react-dnd": "^2.5.4",
