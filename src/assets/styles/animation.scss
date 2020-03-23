@@ -1,0 +1,26 @@
+$rotate-seconds: 2s;
+
+.rotate {
+  -webkit-animation: rotate $rotate-seconds linear infinite;
+  -moz-animation: rotate $rotate-seconds linear infinite;
+  -ms-animation: rotate $rotate-seconds linear infinite;
+  -o-animation: rotate $rotate-seconds linear infinite;
+  animation: rotate $rotate-seconds linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}

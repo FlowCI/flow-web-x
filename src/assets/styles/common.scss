@@ -1,0 +1,35 @@
+.full-height {
+  height: 100%;
+}
+
+.full-size {
+  height: 100%;
+  width: 100%;
+}
+
+.bottom-border {
+  border-bottom: 1px solid #e1e4e8
+}
+
+.error-message {
+  background-color: #FFEBEE;
+  color: #EF5350;
+}
+
+.info-message {
+  background-color: #E1F5FE;
+  color: #0277BD;
+}
+
+
+// customize vuetify //
+tr.v-data-table__empty-wrapper {
+  td {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .v-alert {
+    margin-bottom: 0;
+  }
+}

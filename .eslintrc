@@ -1,26 +1,17 @@
 {
-  "parser": "babel-eslint",
-  "extends": [
-    "standard",
-  ],
-  "plugins": [
-    "babel",
-  ],
+  "root": true,
   "env": {
-    "browser" : true
+    "node": true
   },
-  "globals": {
-    "__DEV__"      : false,
-    "__TEST__"     : false,
-    "__PROD__"     : false,
-    "__COVERAGE__" : false,
-    "LANGUAGES"    : false,
-    "VERSION"      : false
-  },
+  "extends": [
+    "plugin:vue/essential",
+    "eslint:recommended"
+  ],
   "rules": {
-    "key-spacing"          : "off",
-    "max-len"              : [2, 120, 2],
-    "object-curly-spacing" : [2, "always"],
-    "comma-dangle"         : "off"
+    "no-unused-vars": "off",
+    "no-console": "off"
+  },
+  "parserOptions": {
+    "parser": "babel-eslint"
   }
 }

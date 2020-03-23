@@ -1,68 +1,191 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import createStore from './redux/createStore'
+import Vue from 'vue'
+import { mapState } from 'vuex'
+import VueI18n from 'vue-i18n'
+import VueClipboard from 'vue-clipboard2'
 
-import createBrowserHistory from 'history/lib/createBrowserHistory'
-import { useRouterHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import App from './App'
 
-import './styles/core.scss'
+import router from './router'
+import messages from './i18n/index'
+import store from './store/index'
+import actions from './store/actions'
+import code from './util/code'
 
-// Store Initialization
-// ------------------------------------
-const browserHistory = useRouterHistory(createBrowserHistory)()
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
 
-const store = createStore(window.__INITIAL_STATE__, browserHistory)
-const history = syncHistoryWithStore(browserHistory, store, {
-  selectLocationState: (state) => state.router
+import 'babel-polyfill'
+import './assets/styles/style.scss'
+
+import 'xterm/css/xterm.css'
+import G6 from "@antv/g6"
+
+Vue.config.productionTip = false
+VueClipboard.config.autoSetContainer = true
+
+Vue.use(Vuetify)
+Vue.use(VueI18n)
+Vue.use(VueClipboard)
+
+Vue.filter('Status', function (status) {
+  switch (status) {
+    case 'TIMEOUT':
+      return 'blue-grey'
+    case 'RUNNING':
+      return 'info'
+    case 'SUCCESS':
+      return 'success'
+    case 'ENQUEUE':
+      return 'info'
+  }
 })
-// Render Setup
-// ------------------------------------
-const MOUNT_NODE = document.getElementById('root')
 
-let render = () => {
-  const App = require('./app').default
-  const routes = require('./views/route').default(store)
+Vue.mixin({
+  computed: {
+    ...mapState({
+      user: state => state.auth.user,
+      hasLogin: state => state.auth.hasLogin
+    }),
 
-  ReactDOM.render(
-    <App store={store} routes={routes} history={history} />,
-    MOUNT_NODE
-  )
-}
+    isLoginPage () {
+      return this.$route.name === 'Login'
+    },
 
-// Development Tools
-// ------------------------------------
-if (__DEV__) {
-  if (module.hot) {
-    const renderApp = render
-    const renderError = (error) => {
-      const RedBox = require('redbox-react').default
-
-      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
+    appVersion () {
+      return process.env.APP_VERSION
     }
+  },
+  methods: {
+    redirectToLogin () {
+      if (!this.isLoginPage) {
+        this.$router.replace('/login')
+      }
+    },
 
-    render = () => {
-      try {
-        renderApp()
-      } catch (e) {
-        console.error(e)
-        renderError(e)
+    showSnackBar (text, color) {
+      color = color || 'info'
+      this.$store.commit(actions.app.showSnackbar, {text, color})
+    }
+  }
+})
+
+G6.registerNode(
+  'background-animate',
+  {
+    afterDraw(cfg, group) {
+      let r = cfg.size / 2;
+      if (isNaN(r)) {
+        r = cfg.size[0] / 2;
+      }
+      const back1 = group.addShape('circle', {
+        zIndex: -3,
+        attrs: {
+          x: 0,
+          y: 0,
+          r,
+          fill: cfg.color,
+          opacity: 0.6,
+        },
+      });
+      const back2 = group.addShape('circle', {
+        zIndex: -2,
+        attrs: {
+          x: 0,
+          y: 0,
+          r,
+          fill: 'blue',
+          opacity: 0.6,
+        },
+      });
+      const back3 = group.addShape('circle', {
+        zIndex: -1,
+        attrs: {
+          x: 0,
+          y: 0,
+          r,
+          fill: 'green',
+          opacity: 0.6,
+        },
+      });
+      group.sort();
+
+      back1.animate(
+        {
+          r: r + 10,
+          opacity: 0.1,
+          repeat: true
+        },
+        3000,
+        'easeCubic',
+        null,
+        0,
+      );
+
+      back2.animate(
+        {
+          r: r + 10,
+          opacity: 0.1,
+          repeat: true
+        },
+        3000,
+        'easeCubic',
+        null,
+        1000,
+      );
+
+      back3.animate(
+        {
+          r: r + 10,
+          opacity: 0.1,
+          repeat: true
+        },
+        3000,
+        'easeCubic',
+        null,
+        2000,
+      );
+    },
+  },
+  'circle',
+);
+
+new Vue({
+  i18n: new VueI18n({
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages
+  }),
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'mdi',
+    },
+  }),
+  router,
+  store,
+  render: h => h(App),
+  beforeCreate () {
+    this.$store.dispatch(actions.auth.load)
+      .then(() => {
+        console.log('token has been loaded...')
+      })
+      .catch((err) => {
+        // error handling on load will be on the global
+      })
+  },
+  computed: {
+    ...mapState({
+      error: state => state.err.error
+    })
+  },
+  watch: {
+    error: {
+      immediate: true,
+      handler: function (value) {
+        if (value.code === code.error.auth) {
+          this.redirectToLogin()
+        }
       }
     }
-
-    // Setup hot module replacement
-    module.hot.accept([
-      './app',
-      './views/route',
-    ], () =>
-      setImmediate(() => {
-        ReactDOM.unmountComponentAtNode(MOUNT_NODE)
-        render()
-      })
-    )
   }
-}
-
-// Let's Go!
-// ------------------------------------
-if (!__TEST__) render()
+}).$mount('#app')

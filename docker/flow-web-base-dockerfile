@@ -1,8 +1,0 @@
-# Flow Web Base Image
-
-FROM node:6.12.1
-
-# Install Dependency
-RUN apt-get update \
-        && apt-get install -y apt-utils  git nginx vim curl \
-        && npm install -g yarn

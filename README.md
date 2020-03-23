@@ -1,44 +1,28 @@
-- [简体中文介绍](README.zh-CN.md)
+flow-web-x
+============
 
-## Introduction
-flowci 前端项目
+[![LICENSE](https://img.shields.io/github/license/pingcap/tidb.svg)](https://github.com/pingcap/tidb/blob/master/LICENSE)  
 
-## Quick Start
-### Require
-Node > 6
-### Install
-```
-$ git clone git@github.com:FlowCI/flow-web.git
-$ cd flow-web
-$ npm install
-```
-### Configuration
-Find config/index.js to overwrite some configuration.
+The flow.ci web component
 
-> Modify the API address to use the FLOW_WEB_API environment variable directly
+## How to start
 
+- [Start from docker](https://github.com/FlowCI/docker)
 
-### Start
-#### develop
-```
-$ npm start
-```
-#### production
-In production mode, please compile. After compiling, all static files will be generated under dist folder. You can use the server to make it accessible.
-```
-$ npm run build
-```
-## Start With Docker
-> - `FLOW_API_DOMAIN`: Flow Api 的地址
-> - `80` 对外暴露的端口是80
+- For more detail, please refer [doc](https://github.com/flowci/docs)
 
-```
-	docker run \
-		-p 3000:80 \
-		-e FLOW_API_DOMAIN=http://localhost:8080/flow-api \
-		flowci/flow-web
-```
-## License
+## Build Setup
 
-flow-web is an open source project, sponsored by https://www.fir.im/ under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+``` bash
+# install dependencies
+npm install
 
+# serve with hot reload at localhost:3000
+npm start
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```

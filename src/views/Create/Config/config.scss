@@ -1,7 +1,0 @@
-@import 'variables/views/create';
-.container{
-  // line-height 会比 Create 中的高 10px, 所以此处减 10px
-  padding: $create-flow-wrapper-vertical-padding - 10px
-    $create-flow-wrapper-horizontal-padding
-    $create-flow-wrapper-vertical-padding;
-}
