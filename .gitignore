@@ -6,3 +6,4 @@ coverage
 .idea/
 .yarn-cache
 deploy.sh
+.vscode/
