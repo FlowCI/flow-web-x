@@ -1,6 +1,6 @@
 <template>
   <div class="step-logging">
-    <div 
+    <div
       class="root"
       v-for="(item, i) in items"
       :key="i"
@@ -9,7 +9,7 @@
       <v-expansion-panels
         tile
         multiple
-        accordion 
+        accordion
         focusable>
         <v-expansion-panel>
           <v-expansion-panel-header>
@@ -27,7 +27,7 @@
                   <v-btn icon x-small @click="onLogDownload(item.id)">
                     <v-icon x-small>flow-icon-download</v-icon>
                   </v-btn>
-                  
+
                   <span class="ml-2">{{ item.duration }}</span>
                   <span class="ml-1">s</span>
                 </v-col>
@@ -45,14 +45,15 @@
 </template>
 
 <script>
-import actions from '@/store/actions'
-import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
-import { StepWrapper } from '@/util/steps'
-import { Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit';
-import { mapState } from 'vuex'
+  import actions from '@/store/actions'
+  import Base64Binary from "@/util/base64-binary";
+  import {subscribeTopic, unsubscribeTopic} from '@/store/subscribe'
+  import {StepWrapper} from '@/util/steps'
+  import {Terminal} from 'xterm'
+  import {FitAddon} from 'xterm-addon-fit';
+  import {mapState} from 'vuex'
 
-export default {
+  export default {
   name: 'StepLogging',
   data () {
     return {
@@ -63,7 +64,7 @@ export default {
   destroyed () {
     for (let item of this.items) {
       unsubscribeTopic.logs(item.id)
-      
+
       const t = this.terminals[item.id]
       if (t) {
         t.dispose()
@@ -118,9 +119,17 @@ export default {
   methods: {
     writeLog(stepId, logWrapper) {
       const terminal = this.terminals[stepId]
-      if (terminal) {
-        terminal.writeln(logWrapper.log)
+      if (!terminal) {
+        return
       }
+
+      if (logWrapper.isBase64) {
+        const decoded = Base64Binary.decode(logWrapper.log)
+        terminal.write(decoded)
+        return
+      }
+
+      terminal.write(logWrapper.log)
     },
 
     onLogDownload(stepId) {
@@ -134,9 +143,8 @@ export default {
         t = this.terminals[wrapper.id] = new Terminal({
           fontSize: 12,
           disableStdin: true,
-          rows: 30,
-          lineHeight: 1.2,
           cursorStyle: 'bar',
+          convertEol: true,
           theme: {
             background: '#333333',
             foreground: '#f5f5f5'
@@ -182,7 +190,7 @@ export default {
       min-height: 38px;
     }
 
-    .v-expansion-panel--active 
+    .v-expansion-panel--active
     .v-expansion-panel-header {
       padding-top: 0;
       padding-bottom: 0;

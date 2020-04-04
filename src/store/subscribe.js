@@ -98,9 +98,8 @@ export const subscribeTopic = {
   // subscribe realtime logging without vuex store since performance
   logs (cmdId, callback) {
     subscribe('/topic/logs/' + cmdId, (data) => {
-      let message = atob(data.body);
-
-      const wrapper = new LogWrapper(cmdId, message)
+      const wrapper = new LogWrapper(cmdId, data.body)
+      wrapper.isBase64 = true
       callback(wrapper)
     })
   },
