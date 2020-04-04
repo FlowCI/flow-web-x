@@ -33,8 +33,9 @@
     "vue-router": "^3.0.3",
     "vuetify": "^2.1.9",
     "vuex": "^3.0.1",
-    "xterm": "^4.3.0",
-    "xterm-addon-fit": "^0.3.0"
+    "xterm": "^4.4.0",
+    "xterm-addon-fit": "^0.3.0",
+    "xterm-addon-unicode11": "^0.1.1"
   },
   "devDependencies": {
     "@mdi/font": "^4.5.95",

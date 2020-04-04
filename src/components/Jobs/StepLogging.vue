@@ -51,6 +51,7 @@
   import {StepWrapper} from '@/util/steps'
   import {Terminal} from 'xterm'
   import {FitAddon} from 'xterm-addon-fit';
+  import {Unicode11Addon} from 'xterm-addon-unicode11';
   import {mapState} from 'vuex'
 
   export default {
@@ -151,8 +152,12 @@
           }
         })
 
-        let fitAddon = new FitAddon();
+        const fitAddon = new FitAddon();
         t.loadAddon(fitAddon);
+
+        const unicode11Addon = new Unicode11Addon();
+        t.loadAddon(unicode11Addon);
+        t.unicode.activeVersion = '11';
 
         t.open(document.getElementById(`${wrapper.id}-terminal`))
         fitAddon.fit();
