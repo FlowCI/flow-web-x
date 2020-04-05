@@ -46,7 +46,6 @@
 
 <script>
   import actions from '@/store/actions'
-  import Base64Binary from "@/util/base64-binary";
   import {subscribeTopic, unsubscribeTopic} from '@/store/subscribe'
   import {StepWrapper} from '@/util/steps'
   import {Terminal} from 'xterm'
@@ -121,12 +120,6 @@
     writeLog(stepId, logWrapper) {
       const terminal = this.terminals[stepId]
       if (!terminal) {
-        return
-      }
-
-      if (logWrapper.isBase64) {
-        const decoded = Base64Binary.decode(logWrapper.log)
-        terminal.write(decoded)
         return
       }
 

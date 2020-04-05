@@ -1,8 +1,7 @@
 export class LogWrapper {
   constructor (cmdId, body) {
     this.cmdId = cmdId
-    this.body = body
-    this.base64 = false
+    this.body = body // binary
   }
 
   get id () {
@@ -11,13 +10,5 @@ export class LogWrapper {
 
   get log () {
     return this.body
-  }
-
-  get isBase64() {
-    return this.base64
-  }
-
-  set isBase64(val) {
-    this.base64 = val
   }
 }
