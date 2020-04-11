@@ -61,7 +61,7 @@ export class StepWrapper {
   }
 
   get isSuccessButFailure() {
-    return this.step.status === STATUS_SUCCESS && this.step.code !== 0
+    return this.step.allowFailure && this.step.status === STATUS_SUCCESS && this.step.code !== 0
   }
 
   get duration() {
