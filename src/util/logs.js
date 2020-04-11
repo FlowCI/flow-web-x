@@ -1,7 +1,7 @@
 export class LogWrapper {
   constructor (cmdId, body) {
     this.cmdId = cmdId
-    this.body = body
+    this.body = body // binary
   }
 
   get id () {

@@ -6,7 +6,8 @@ import { LogWrapper } from '../util/logs'
 const url = process.env.VUE_APP_API_URL
 
 // config websocket instance
-const socket = new SockJS(`${url}/ws`)
+const wsUrl = url.replace('http', 'ws').replace('https', 'wss')
+const socket = new WebSocket(`${wsUrl}/ws`);
 const stompClient = Stomp.over(socket)
 
 // remove debug log
@@ -98,8 +99,8 @@ export const subscribeTopic = {
   // subscribe realtime logging without vuex store since performance
   logs (cmdId, callback) {
     subscribe('/topic/logs/' + cmdId, (data) => {
-      const wrapper = new LogWrapper(cmdId, data.body)
-      callback(wrapper)
+      let byteArray = data.body;
+      callback(new LogWrapper(cmdId, byteArray))
     })
   },
 

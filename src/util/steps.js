@@ -9,7 +9,7 @@ const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
 export class StepWrapper {
-  constructor (step, index) {
+  constructor(step, index) {
     this.step = step
     this.stepIndex = index
 
@@ -21,69 +21,77 @@ export class StepWrapper {
     this.stepName = cmdId.substring(slashIndex + 1)
   }
 
-  get rawInstance () {
+  get rawInstance() {
     return this.step
   }
 
-  get id () {
+  get id() {
     return this.step.id
   }
 
-  get index () {
+  get index() {
     return this.stepIndex
   }
 
-  get startAt () {
+  get startAt() {
     if (!this.step.startAt) {
       return '-'
     }
     return moment(this.step.startAt).format('kk:mm:ss SSS')
   }
 
-  get finishAt () {
+  get finishAt() {
     if (!this.step.finishAt) {
       return '-'
     }
     return moment(this.step.finishAt).format('kk:mm:ss SSS')
   }
 
-  get flow () {
+  get flow() {
     return this.flowName
   }
 
-  get name () {
+  get name() {
     return this.stepName
   }
 
-  get status () {
-    let status = mapping[ this.step.status ]
+  get status() {
+    let status = mapping[this.step.status]
     return !status ? mapping.default : status
   }
 
-  get duration () {
+  get isSuccessButFailure() {
+    return this.step.allowFailure && this.step.status === STATUS_SUCCESS && this.step.code !== 0
+  }
+
+  get duration() {
     const start = moment(this.step.startAt)
     const end = moment(this.step.finishAt)
     return end.diff(start, 'seconds')
   }
 
-  get isPending () {
+  get exitCode() {
+    return this.step.code
+  }
+
+  get isPending() {
     return this.step.status === STATUS_PENDING
   }
 
-  get isRunning () {
+  get isRunning() {
     return this.step.status === STATUS_RUNNING
   }
 
-  get isFinished () {
+  get isFinished() {
     return isStepFinished(this.step)
   }
 
-  set rawStatus (newStatus) {
+  set rawStatus(newStatus) {
     this.step.status = newStatus
   }
 }
 
-export function isStepFinished (step) {
+export function isStepFinished(step) {
   return step.status !== STATUS_PENDING && step.status !== STATUS_RUNNING
 }
 
@@ -99,7 +107,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_PENDING ]: {
+  [STATUS_PENDING]: {
     icon: 'flow-icon-pending grey--text',
     text: 'pending',
     config: {
@@ -111,7 +119,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_RUNNING ]: {
+  [STATUS_RUNNING]: {
     icon: 'mdi-settings rotate blue--text',
     text: 'running',
     config: {
@@ -123,7 +131,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_SUCCESS ]: {
+  [STATUS_SUCCESS]: {
     icon: 'flow-icon-check green--text',
     text: 'success',
     config: {
@@ -135,7 +143,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_SKIPPED ]: {
+  [STATUS_SKIPPED]: {
     icon: 'flow-icon-stopped grey--text',
     text: 'skipped',
     shape: 'circle',
@@ -148,7 +156,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_EXCEPTION ]: {
+  [STATUS_EXCEPTION]: {
     icon: 'flow-icon-failure red--text',
     text: 'failure',
     shape: 'circle',
@@ -161,7 +169,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_KILLED ]: {
+  [STATUS_KILLED]: {
     icon: 'flow-icon-stopped grey--text',
     text: 'killed',
     config: {
@@ -174,7 +182,7 @@ export const mapping = {
     }
   },
 
-  [ STATUS_TIMEOUT ]: {
+  [STATUS_TIMEOUT]: {
     icon: 'flow-icon-timeout orange--text',
     text: 'pending',
     shape: 'circle',
