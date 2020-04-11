@@ -1,16 +1,16 @@
 <template>
   <div class="step-logging">
-    <div 
-      class="root"
-      v-for="(item, i) in items"
-      :key="i"
-      @click="onPanelClick(item)">
+    <div
+        class="root"
+        v-for="(item, i) in items"
+        :key="i"
+        @click="onPanelClick(item)">
 
       <v-expansion-panels
-        tile
-        multiple
-        accordion 
-        focusable>
+          tile
+          multiple
+          accordion
+          focusable>
         <v-expansion-panel>
           <v-expansion-panel-header>
             <template v-slot:default="{ open }">
@@ -20,6 +20,14 @@
                 <v-col cols="2">
                   <v-icon small>mdi-chevron-right</v-icon>
                   <span class="caption ml-2">{{ item.name }}</span>
+
+                  <v-tooltip right content-class="body">
+                    <template v-slot:activator="{ on }">
+                      <v-icon small v-if="item.isSuccessButFailure" v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    </template>
+                    <span>allow failure, exit code : {{ item.exitCode }}</span>
+                  </v-tooltip>
+
                 </v-col>
                 <v-col cols="9">
                 </v-col>
@@ -27,7 +35,7 @@
                   <v-btn icon x-small @click="onLogDownload(item.id)">
                     <v-icon x-small>flow-icon-download</v-icon>
                   </v-btn>
-                  
+
                   <span class="ml-2">{{ item.duration }}</span>
                   <span class="ml-1">s</span>
                 </v-col>
@@ -45,119 +53,125 @@
 </template>
 
 <script>
-import actions from '@/store/actions'
-import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
-import { StepWrapper } from '@/util/steps'
-import { Terminal } from 'xterm'
-import { FitAddon } from 'xterm-addon-fit';
-import { mapState } from 'vuex'
+  import actions from '@/store/actions'
+  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
+  import { StepWrapper } from '@/util/steps'
+  import { Terminal } from 'xterm'
+  import { FitAddon } from 'xterm-addon-fit';
+  import { Unicode11Addon } from 'xterm-addon-unicode11';
+  import { mapState } from 'vuex'
 
-export default {
-  name: 'StepLogging',
-  data () {
-    return {
-      items: [],
-      terminals: {}
-    }
-  },
-  destroyed () {
-    for (let item of this.items) {
-      unsubscribeTopic.logs(item.id)
-      
-      const t = this.terminals[item.id]
-      if (t) {
-        t.dispose()
+  export default {
+    name: 'StepLogging',
+    data() {
+      return {
+        items: [],
+        terminals: {}
       }
-    }
-
-    this.terminals = null
-  },
-  computed: {
-    ...mapState({
-      steps: state => state.steps.items,
-      stepChange: state => state.steps.change,
-      logs: state => state.logs.items
-    }),
-  },
-  watch: {
-    steps (after) {
-      this.items.length = 0
-      this.terminals = {}
-
-      after.forEach((s, index) => {
-        const wrapper = new StepWrapper(s, index)
-        this.items.push(wrapper)
-
-        unsubscribeTopic.logs(wrapper.id)
-
-        if (!wrapper.isFinished) {
-          subscribeTopic.logs(wrapper.id, (logWrapper) => {
-            this.writeLog(wrapper.id, logWrapper)
-          })
-        }
-      })
     },
+    destroyed() {
+      for (let item of this.items) {
+        unsubscribeTopic.logs(item.id)
 
-    stepChange (after) {
-      for (let i = 0; i < this.items.length; i++) {
-        const item = this.items[i]
-        if (item.id === after.id) {
-          this.$set(this.items, i, new StepWrapper(after, i))
-          return
+        const t = this.terminals[item.id]
+        if (t) {
+          t.dispose()
         }
       }
+
+      this.terminals = null
     },
-
-    logs(after, before) {
-      for (let logWrapper of after) {
-        const stepId = logWrapper.id
-        this.writeLog(stepId, logWrapper)
-      }
-    }
-  },
-  methods: {
-    writeLog(stepId, logWrapper) {
-      const terminal = this.terminals[stepId]
-      if (terminal) {
-        terminal.writeln(logWrapper.log)
-      }
+    computed: {
+      ...mapState({
+        steps: state => state.steps.items,
+        stepChange: state => state.steps.change,
+        logs: state => state.logs.items
+      }),
     },
+    watch: {
+      steps(after) {
+        this.items.length = 0
+        this.terminals = {}
 
-    onLogDownload(stepId) {
-      this.$store.dispatch(actions.jobs.logs.download, stepId).then()
-    },
+        after.forEach((s, index) => {
+          const wrapper = new StepWrapper(s, index)
+          this.items.push(wrapper)
 
-    onPanelClick(wrapper) {
-      let t = this.terminals[wrapper.id]
+          unsubscribeTopic.logs(wrapper.id)
 
-      if (!t) {
-        t = this.terminals[wrapper.id] = new Terminal({
-          fontSize: 12,
-          disableStdin: true,
-          rows: 30,
-          lineHeight: 1.2,
-          cursorStyle: 'bar',
-          theme: {
-            background: '#333333',
-            foreground: '#f5f5f5'
+          if (!wrapper.isFinished) {
+            subscribeTopic.logs(wrapper.id, (logWrapper) => {
+              this.writeLog(wrapper.id, logWrapper)
+            })
           }
         })
+      },
 
-        let fitAddon = new FitAddon();
-        t.loadAddon(fitAddon);
+      stepChange(after) {
+        for (let i = 0; i < this.items.length; i++) {
+          const item = this.items[i]
+          if (item.id === after.id) {
+            this.$set(this.items, i, new StepWrapper(after, i))
+            return
+          }
+        }
+      },
 
-        t.open(document.getElementById(`${wrapper.id}-terminal`))
-        fitAddon.fit();
-
-        // load logs from server
-        if (wrapper.isFinished) {
-          this.$store.dispatch(actions.jobs.logs.load, wrapper.id).then()
+      logs(after, before) {
+        for (let logWrapper of after) {
+          const stepId = logWrapper.id
+          this.writeLog(stepId, logWrapper)
+        }
+      }
+    },
+    methods: {
+      writeLog(stepId, logWrapper) {
+        const terminal = this.terminals[stepId]
+        if (!terminal) {
+          return
         }
 
+        terminal.write(logWrapper.log)
+      },
+
+      onLogDownload(stepId) {
+        this.$store.dispatch(actions.jobs.logs.download, stepId).then()
+      },
+
+      onPanelClick(wrapper) {
+        let t = this.terminals[wrapper.id]
+
+        if (!t) {
+          t = this.terminals[wrapper.id] = new Terminal({
+            fontSize: 12,
+            disableStdin: true,
+            cursorStyle: 'bar',
+            convertEol: true,
+            theme: {
+              background: '#333333',
+              foreground: '#f5f5f5'
+            }
+          })
+
+          const fitAddon = new FitAddon();
+          t.loadAddon(fitAddon);
+
+          const unicode11Addon = new Unicode11Addon();
+          t.loadAddon(unicode11Addon);
+          t.unicode.activeVersion = '11';
+
+          t.open(document.getElementById(`${wrapper.id}-terminal`))
+          fitAddon.fit();
+
+          // load logs from server
+          if (wrapper.isFinished) {
+            this.$store.dispatch(actions.jobs.logs.load, wrapper.id).then()
+          }
+
+        }
       }
     }
   }
-}
 </script>
 
 <style lang="scss">
@@ -182,7 +196,7 @@ export default {
       min-height: 38px;
     }
 
-    .v-expansion-panel--active 
+    .v-expansion-panel--active
     .v-expansion-panel-header {
       padding-top: 0;
       padding-bottom: 0;
