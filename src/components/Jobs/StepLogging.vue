@@ -1,8 +1,18 @@
 <template>
   <div>
     <step-logging-item
-        v-for="(item, i) in items"
-        :key="i"
+        v-for="(item) in items"
+        :key="item.id"
+        :bus="buses[item.id]"
+        :wrapper="item">
+    </step-logging-item>
+
+    <v-divider class="mt-4"></v-divider>
+    <v-subheader class="mb-2">After</v-subheader>
+
+    <step-logging-item
+        v-for="(item) in after"
+        :key="item.id"
         :bus="buses[item.id]"
         :wrapper="item">
     </step-logging-item>
@@ -36,13 +46,14 @@
     computed: {
       ...mapState({
         steps: state => state.steps.items,
-        stepChange: state => state.steps.change,
+        change: state => state.steps.change,
         logs: state => state.logs.items
       }),
     },
     watch: {
       steps(after) {
         this.items.length = 0
+        this.after.length = 0
         this.buses = {}
 
         after.forEach((s, index) => {
@@ -65,14 +76,8 @@
         })
       },
 
-      stepChange(newVal) {
-        for (let i = 0; i < this.items.length; i++) {
-          const item = this.items[i]
-          if (item.id === newVal.id) {
-            this.$set(this.items, i, new StepWrapper(newVal, i))
-            return
-          }
-        }
+      change(newVal) {
+        // ignore
       },
 
       logs(after, before) {
