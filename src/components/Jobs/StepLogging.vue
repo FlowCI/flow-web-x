@@ -1,5 +1,8 @@
 <template>
   <div>
+    <v-divider></v-divider>
+    <v-subheader>Steps</v-subheader>
+
     <step-logging-item
         v-for="(item) in items"
         :key="item.id"
@@ -7,8 +10,8 @@
         :wrapper="item">
     </step-logging-item>
 
-    <v-divider class="mt-4"></v-divider>
-    <v-subheader class="mb-2">After</v-subheader>
+    <v-divider class="mt-4" v-if="after.length > 0"></v-divider>
+    <v-subheader class="mb-2" v-if="after.length > 0">After</v-subheader>
 
     <step-logging-item
         v-for="(item) in after"
