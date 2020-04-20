@@ -1,85 +1,37 @@
 <template>
-  <div class="step-logging">
-    <div
-        class="root"
+  <div>
+    <step-logging-item
         v-for="(item, i) in items"
         :key="i"
-        @click="onPanelClick(item)">
-
-      <v-expansion-panels
-          tile
-          multiple
-          accordion
-          focusable>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            <template v-slot:default="{ open }">
-              <div class="status" :style="{backgroundColor: item.status.config.style.fill}"></div>
-
-              <v-row no-gutters class="ml-4">
-                <v-col cols="2">
-                  <v-icon small>mdi-chevron-right</v-icon>
-                  <span class="caption ml-2">{{ item.name }}</span>
-
-                  <v-tooltip right content-class="body">
-                    <template v-slot:activator="{ on }">
-                      <v-icon small v-if="item.isSuccessButFailure" v-on="on" class="ml-2">flow-icon-warning</v-icon>
-                    </template>
-                    <span>allow failure, exit code : {{ item.exitCode }}</span>
-                  </v-tooltip>
-
-                </v-col>
-                <v-col cols="9">
-                </v-col>
-                <v-col cols="1" class="caption" v-if="item.isFinished">
-                  <v-btn icon x-small @click="onLogDownload(item.id)">
-                    <v-icon x-small>flow-icon-download</v-icon>
-                  </v-btn>
-
-                  <span class="ml-2">{{ item.duration }}</span>
-                  <span class="ml-1">s</span>
-                </v-col>
-              </v-row>
-            </template>
-          </v-expansion-panel-header>
-
-          <v-expansion-panel-content>
-            <div :id="`${item.id}-terminal`" class="terminal"></div>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
+        :bus="buses[item.id]"
+        :wrapper="item">
+    </step-logging-item>
   </div>
 </template>
 
 <script>
-  import actions from '@/store/actions'
+  import Vue from 'vue'
+  import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
   import { StepWrapper } from '@/util/steps'
-  import { Terminal } from 'xterm'
-  import { FitAddon } from 'xterm-addon-fit';
-  import { Unicode11Addon } from 'xterm-addon-unicode11';
   import { mapState } from 'vuex'
 
   export default {
     name: 'StepLogging',
+    components: {
+      StepLoggingItem
+    },
     data() {
       return {
         items: [],
-        terminals: {}
+        after: [],
+        buses: {}
       }
     },
     destroyed() {
       for (let item of this.items) {
         unsubscribeTopic.logs(item.id)
-
-        const t = this.terminals[item.id]
-        if (t) {
-          t.dispose()
-        }
       }
-
-      this.terminals = null
     },
     computed: {
       ...mapState({
@@ -91,11 +43,17 @@
     watch: {
       steps(after) {
         this.items.length = 0
-        this.terminals = {}
+        this.buses = {}
 
         after.forEach((s, index) => {
-          const wrapper = new StepWrapper(s, index)
-          this.items.push(wrapper)
+          const wrapper = new StepWrapper(s)
+          this.buses[wrapper.id] = new Vue()
+
+          if (wrapper.isAfter) {
+            this.after.push(wrapper)
+          } else {
+            this.items.push(wrapper)
+          }
 
           unsubscribeTopic.logs(wrapper.id)
 
@@ -107,11 +65,11 @@
         })
       },
 
-      stepChange(after) {
+      stepChange(newVal) {
         for (let i = 0; i < this.items.length; i++) {
           const item = this.items[i]
-          if (item.id === after.id) {
-            this.$set(this.items, i, new StepWrapper(after, i))
+          if (item.id === newVal.id) {
+            this.$set(this.items, i, new StepWrapper(newVal, i))
             return
           }
         }
@@ -126,48 +84,9 @@
     },
     methods: {
       writeLog(stepId, logWrapper) {
-        const terminal = this.terminals[stepId]
-        if (!terminal) {
-          return
-        }
-
-        terminal.write(logWrapper.log)
-      },
-
-      onLogDownload(stepId) {
-        this.$store.dispatch(actions.jobs.logs.download, stepId).then()
-      },
-
-      onPanelClick(wrapper) {
-        let t = this.terminals[wrapper.id]
-
-        if (!t) {
-          t = this.terminals[wrapper.id] = new Terminal({
-            fontSize: 12,
-            disableStdin: true,
-            cursorStyle: 'bar',
-            convertEol: true,
-            theme: {
-              background: '#333333',
-              foreground: '#f5f5f5'
-            }
-          })
-
-          const fitAddon = new FitAddon();
-          t.loadAddon(fitAddon);
-
-          const unicode11Addon = new Unicode11Addon();
-          t.loadAddon(unicode11Addon);
-          t.unicode.activeVersion = '11';
-
-          t.open(document.getElementById(`${wrapper.id}-terminal`))
-          fitAddon.fit();
-
-          // load logs from server
-          if (wrapper.isFinished) {
-            this.$store.dispatch(actions.jobs.logs.load, wrapper.id).then()
-          }
-
+        let bus = this.buses[stepId];
+        if (bus) {
+          bus.$emit("writeLog", logWrapper)
         }
       }
     }
@@ -175,44 +94,5 @@
 </script>
 
 <style lang="scss">
-  .step-logging {
-    .status {
-      position: absolute;
-      min-width: 10px;
-      max-width: 20px;
-      top: 0;
-      bottom: 0;
-    }
 
-    .v-expansion-panels {
-      border-radius: 0;
-    }
-
-    .v-expansion-panel-header {
-      padding-top: 0;
-      padding-bottom: 0;
-      padding-left: 1px;
-      padding-right: 3px;
-      min-height: 38px;
-    }
-
-    .v-expansion-panel--active
-    .v-expansion-panel-header {
-      padding-top: 0;
-      padding-bottom: 0;
-      padding-left: 1px;
-      padding-right: 3px;
-      min-height: 38px;
-    }
-
-    .v-expansion-panel-header__icon {
-      display: none;
-    }
-
-    .v-expansion-panel-content__wrap {
-      padding-left: 1px;
-      padding-bottom: 0;
-      padding-right: 0;
-    }
-  }
 </style>

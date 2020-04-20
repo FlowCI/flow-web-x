@@ -9,9 +9,8 @@ const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
 export class StepWrapper {
-  constructor(step, index) {
+  constructor(step) {
     this.step = step
-    this.stepIndex = index
 
     let cmdId = atob(this.step.id)
     let dashIndex = cmdId.indexOf('-')
@@ -29,8 +28,8 @@ export class StepWrapper {
     return this.step.id
   }
 
-  get index() {
-    return this.stepIndex
+  get isAfter() {
+    return this.step.after
   }
 
   get startAt() {
