@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import actions from './actions'
+import jobMsg from '../util/job_protos'
 import { LogWrapper } from '../util/logs'
 
 const url = process.env.VUE_APP_API_URL
@@ -97,10 +98,13 @@ export const subscribeTopic = {
   },
 
   // subscribe realtime logging without vuex store since performance
-  logs (cmdId, callback) {
-    subscribe('/topic/logs/' + cmdId, (data) => {
+  logs (callback) {
+    subscribe('/topic/logs', (data) => {
       let byteArray = data.body;
-      callback(new LogWrapper(cmdId, byteArray))
+      let msg = jobMsg.LogItem.deserializeBinary(byteArray);
+
+      let wrapper = new LogWrapper(msg);
+      callback(wrapper)
     })
   },
 
@@ -131,8 +135,8 @@ export const unsubscribeTopic = {
     unsubscribe('/topic/steps/' + jobId)
   },
 
-  logs (cmdId) {
-    unsubscribe('/topic/logs/' + cmdId)
+  logs () {
+    unsubscribe('/topic/logs')
   },
 
   hosts () {

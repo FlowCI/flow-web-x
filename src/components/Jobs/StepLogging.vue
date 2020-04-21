@@ -41,10 +41,13 @@
         buses: {}
       }
     },
+    mounted() {
+      subscribeTopic.logs((logWrapper) => {
+        this.writeLog(logWrapper)
+      })
+    },
     destroyed() {
-      for (let item of this.items) {
-        unsubscribeTopic.logs(item.id)
-      }
+      unsubscribeTopic.logs()
     },
     computed: {
       ...mapState({
@@ -68,14 +71,6 @@
           } else {
             this.items.push(wrapper)
           }
-
-          unsubscribeTopic.logs(wrapper.id)
-
-          if (!wrapper.isFinished) {
-            subscribeTopic.logs(wrapper.id, (logWrapper) => {
-              this.writeLog(wrapper.id, logWrapper)
-            })
-          }
         })
       },
 
@@ -91,10 +86,10 @@
       }
     },
     methods: {
-      writeLog(stepId, logWrapper) {
-        let bus = this.buses[stepId];
+      writeLog(logWrapper) {
+        let bus = this.buses[logWrapper.id];
         if (bus) {
-          bus.$emit("writeLog", logWrapper)
+          bus.$emit("writeLog", logWrapper.log)
         }
       }
     }

@@ -77,12 +77,12 @@
       }
     },
     methods: {
-      writeLog(logWrapper) {
+      writeLog(log) {
         if (!this.terminal) {
           return
         }
 
-        this.terminal.write(logWrapper.log)
+        this.terminal.write(log)
       },
 
       onLogDownload() {

@@ -1,14 +1,18 @@
 export class LogWrapper {
-  constructor (cmdId, body) {
-    this.cmdId = cmdId
-    this.body = body // binary
+
+  constructor (msg) {
+    this.msg = msg
   }
 
   get id () {
-    return this.cmdId
+    return this.msg.getCmdid()
+  }
+
+  get jobId () {
+    return this.msg.getJobid()
   }
 
   get log () {
-    return this.body
+    return this.msg.getContent()
   }
 }
