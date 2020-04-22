@@ -65,8 +65,12 @@
     },
     data () {
       return {
+        buffer: [],
         terminal: null
       }
+    },
+    mounted() {
+      this.bus.$on('writeLog', this.writeLog)
     },
     destroyed() {
       if (this.terminal) {
@@ -76,9 +80,10 @@
     methods: {
       writeLog(log) {
         if (!this.terminal) {
+          this.buffer.push(log)
           return
         }
-        console.log(log)
+
         this.terminal.write(log)
       },
 
@@ -102,17 +107,20 @@
           }
         })
 
-        const fitAddon = new FitAddon();
-        this.terminal.loadAddon(fitAddon);
+        const fitAddon = new FitAddon()
+        this.terminal.loadAddon(fitAddon)
 
-        const unicode11Addon = new Unicode11Addon();
+        const unicode11Addon = new Unicode11Addon()
         this.terminal.loadAddon(unicode11Addon);
-        this.terminal.unicode.activeVersion = '11';
+        this.terminal.unicode.activeVersion = '11'
 
         this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
-        fitAddon.fit();
+        fitAddon.fit()
 
-        this.bus.$on('writeLog', this.writeLog)
+        for (let buf of this.buffer) {
+          this.terminal.write(buf)
+        }
+        this.buffer.length = 0
 
         // load logs from server
         if (this.wrapper.isFinished) {
