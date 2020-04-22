@@ -1,11 +1,11 @@
 import http from '../http'
 import { browserDownload } from '../util'
-import { LogWrapper } from '@/util/logs'
+import { LogFromLoad } from '@/util/logs'
 
 const commitLog = (commit, cmdId, blob) => {
   const reader = new FileReader()
   reader.onload = (event) => {
-    commit('update', [ new LogWrapper(cmdId, event.target.result) ])
+    commit('update', [ new LogFromLoad(cmdId, event.target.result) ])
   }
   reader.readAsText(blob)
 }

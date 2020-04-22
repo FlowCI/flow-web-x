@@ -1,8 +1,7 @@
-import SockJS from 'sockjs-client'
 import Stomp from 'stompjs'
 import actions from './actions'
 import jobMsg from '../util/job_protos'
-import { LogWrapper } from '../util/logs'
+import { LogFromProto } from '../util/logs'
 
 const url = process.env.VUE_APP_API_URL
 
@@ -103,7 +102,7 @@ export const subscribeTopic = {
       let byteArray = data.body;
       let msg = jobMsg.LogItem.deserializeBinary(byteArray);
 
-      let wrapper = new LogWrapper(msg);
+      let wrapper = new LogFromProto(msg);
       callback(wrapper)
     })
   },

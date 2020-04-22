@@ -68,9 +68,6 @@
         terminal: null
       }
     },
-    mounted() {
-      this.bus.$on('writeLog', this.writeLog)
-    },
     destroyed() {
       if (this.terminal) {
         this.terminal.dispose()
@@ -114,6 +111,8 @@
 
         this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
         fitAddon.fit();
+
+        this.bus.$on('writeLog', this.writeLog)
 
         // load logs from server
         if (this.wrapper.isFinished) {
