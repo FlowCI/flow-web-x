@@ -97,13 +97,13 @@ export const subscribeTopic = {
   },
 
   // subscribe realtime logging without vuex store since performance
-  logs (callback) {
+  logs (store) {
     subscribe('/topic/logs', (data) => {
       let byteArray = data.body;
       let msg = jobMsg.LogItem.deserializeBinary(byteArray);
 
       let wrapper = new LogFromProto(msg);
-      callback(wrapper)
+      store.dispatch(actions.jobs.logs.push, wrapper)
     })
   },
 

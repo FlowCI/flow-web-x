@@ -78,7 +78,7 @@
         if (!this.terminal) {
           return
         }
-
+        console.log(log)
         this.terminal.write(log)
       },
 

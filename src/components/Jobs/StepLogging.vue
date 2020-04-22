@@ -25,7 +25,7 @@
 <script>
   import Vue from 'vue'
   import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
-  import { subscribeTopic } from '@/store/subscribe'
+  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
   import { StepWrapper } from '@/util/steps'
   import { mapState } from 'vuex'
 
@@ -42,15 +42,17 @@
       }
     },
     mounted() {
-      subscribeTopic.logs((logWrapper) => {
-        this.writeLog(logWrapper)
-      })
+      subscribeTopic.logs(this.$store)
+    },
+    destroyed() {
+      unsubscribeTopic.logs()
     },
     computed: {
       ...mapState({
         steps: state => state.steps.items,
         change: state => state.steps.change,
-        logs: state => state.logs.items
+        loaded: state => state.logs.loaded,
+        pushed: state => state.logs.pushed
       }),
     },
     watch: {
@@ -75,8 +77,14 @@
         // ignore
       },
 
-      logs(after, before) {
-        for (let logWrapper of after) {
+      // action from pushed log
+      pushed(logWrapper) {
+        this.writeLog(logWrapper)
+      },
+
+      // action from loaded logs
+      loaded(logs) {
+        for (let logWrapper of logs) {
           this.writeLog(logWrapper)
         }
       }
