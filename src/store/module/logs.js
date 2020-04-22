@@ -1,23 +1,28 @@
 import http from '../http'
 import { browserDownload } from '../util'
-import { LogWrapper } from '@/util/logs'
+import { LogFromLoad } from '@/util/logs'
 
 const commitLog = (commit, cmdId, blob) => {
   const reader = new FileReader()
   reader.onload = (event) => {
-    commit('update', [ new LogWrapper(cmdId, event.target.result) ])
+    commit('update', [ new LogFromLoad(cmdId, event.target.result) ])
   }
   reader.readAsText(blob)
 }
 
 const state = {
-  items: [], // LogWrapper list been loaded
-  cached: {} // {cmdId, blob}
+  loaded: [], // LogWrapper list been loaded
+  cached: {}, // {cmdId, blob}
+  pushed: {}, // Protobuf pushed
 }
 
 const mutations = {
   update (state, logs) {
-    state.items = logs
+    state.loaded = logs
+  },
+
+  pushed (state, log) {
+    state.pushed = log
   },
 
   addCache (state, {cmdId, blob}) {
@@ -48,6 +53,10 @@ const actions = {
       const url = window.URL.createObjectURL(new Blob([ data ]))
       browserDownload(url, file)
     })
+  },
+
+  push ({commit, state}, logFromProto) {
+    commit('pushed', logFromProto)
   }
 }
 

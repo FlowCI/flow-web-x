@@ -1,14 +1,38 @@
-export class LogWrapper {
-  constructor (cmdId, body) {
-    this.cmdId = cmdId
-    this.body = body // binary
+const decoder = new TextDecoder("utf-8")
+
+export class LogFromProto {
+
+  constructor (msg) {
+    this.msg = msg
   }
 
-  get id () {
-    return this.cmdId
+  // or step id
+  get cmdId () {
+    return this.msg.getCmdid()
+  }
+
+  get jobId () {
+    return this.msg.getJobid()
   }
 
   get log () {
-    return this.body
+    // decode from uint8array
+    return decoder.decode(this.msg.getContent())
+  }
+}
+
+export class LogFromLoad {
+
+  constructor(cmdId, content) {
+    this.id = cmdId
+    this.content = content
+  }
+
+  get cmdId () {
+    return this.id
+  }
+
+  get log () {
+    return this.content
   }
 }

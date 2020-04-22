@@ -9,16 +9,10 @@ const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
 export class StepWrapper {
-  constructor(step, index) {
+  constructor(step) {
     this.step = step
-    this.stepIndex = index
-
-    let cmdId = atob(this.step.id)
-    let dashIndex = cmdId.indexOf('-')
-    let slashIndex = cmdId.lastIndexOf('/')
-
-    this.flowName = cmdId.substring(0, dashIndex)
-    this.stepName = cmdId.substring(slashIndex + 1)
+    let slashIndex = this.step.nodePath.lastIndexOf('/')
+    this.stepName = this.step.nodePath.substring(slashIndex + 1)
   }
 
   get rawInstance() {
@@ -29,8 +23,8 @@ export class StepWrapper {
     return this.step.id
   }
 
-  get index() {
-    return this.stepIndex
+  get isAfter() {
+    return this.step.after
   }
 
   get startAt() {
@@ -48,7 +42,7 @@ export class StepWrapper {
   }
 
   get flow() {
-    return this.flowName
+    return this.step.flowId
   }
 
   get name() {

@@ -60,6 +60,7 @@ export default {
       update: 'steps/update'
     },
     logs: {
+      push: 'logs/push',
       load: 'logs/load',
       download: 'logs/download'
     },

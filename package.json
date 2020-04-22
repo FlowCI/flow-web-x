@@ -18,6 +18,7 @@
     "core-js": "^2.6.5",
     "echarts": "^4.3.0",
     "fast-deep-equal": "^2.0.1",
+    "google-protobuf": "^3.11.4",
     "js-base64": "^2.4.9",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
