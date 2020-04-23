@@ -50,6 +50,11 @@
           <v-icon>mdi-stop</v-icon>
           {{ $t('cancel') }}
         </v-btn>
+
+        <v-btn text @click="onRerunClick" v-if="finished">
+          <v-icon>mdi-restart</v-icon>
+          {{ $t('restart') }}
+        </v-btn>
       </v-col>
     </v-row>
 
@@ -191,6 +196,14 @@
       onStopClick () {
         let payload = {flow: this.flow, buildNumber: this.number}
         this.$store.dispatch(actions.jobs.cancel, payload).then()
+      },
+
+      onRerunClick () {
+        this.$store.dispatch(actions.jobs.rerun, this.job.id)
+            .then()
+            .catch(reason => {
+              console.log(reason)
+            })
       }
     }
   }

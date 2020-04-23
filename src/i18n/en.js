@@ -12,6 +12,7 @@ export default {
   login: 'Login',
   password: 'Password',
   confirm: 'Confirm',
+  restart: 'Restart',
 
   menu: {
     signedInAs: 'Signed in as ',

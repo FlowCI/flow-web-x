@@ -131,6 +131,10 @@ const actions = {
     await http.post('jobs/run', emptyFunc, {flow, inputs})
   },
 
+  async rerun ({commit}, jobId) {
+    await http.post('jobs/rerun', emptyFunc, {jobId})
+  },
+
   async cancel ({commit}, {flow, buildNumber}) {
     await http.post(`jobs/${flow}/${buildNumber}/cancel`, emptyFunc)
   },

@@ -221,7 +221,7 @@ export class JobWrapper {
 }
 
 export function isJobFinished(job) {
-    return job.status !== STATUS_QUEUED && job.status !== STATUS_RUNNING
+    return job.status !== STATUS_QUEUED && job.status !== STATUS_RUNNING && job.status !== STATUS_CANCELLING
 }
 
 export const mapping = {
