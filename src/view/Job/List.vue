@@ -30,7 +30,6 @@
   import { mapState } from 'vuex'
   import JobListItem from '@/components/Jobs/ListItem'
   import actions from '@/store/actions'
-  import { subscribeTopic } from '@/store/subscribe'
 
   export default {
     name: 'JobList',
@@ -64,7 +63,6 @@
       JobListItem
     },
     mounted () {
-      subscribeTopic.jobs(this.$store)
       this.loadJobList()
     },
     computed: {

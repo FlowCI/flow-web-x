@@ -71,7 +71,7 @@ const mutations = {
     })
 
     // update job selected
-    if (state.selected.id === updatedJob.id) {
+    if (state.selected && state.selected.id === updatedJob.id) {
       state.selected = state.items[ itemIndex ]
     }
   },

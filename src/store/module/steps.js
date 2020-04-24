@@ -23,9 +23,11 @@ const mutations = {
     for (let item of state.items) {
       for (let newItem of steps) {
         if (item.id === newItem.id && item.status !== newItem.status) {
+          console.log("status change: " + item.id + " " + newItem.status)
+
           Object.assign(item, newItem)
           state.change = newItem
-          break;
+          break
         }
       }
     }

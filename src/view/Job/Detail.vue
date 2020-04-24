@@ -142,6 +142,9 @@
     mounted () {
       this.load()
     },
+    destroyed () {
+      unsubscribeTopic.steps(this.job.id)
+    },
     computed: {
       ...mapState({
         job: state => state.jobs.selected,
@@ -165,9 +168,6 @@
         return isJobFinished(this.job)
       }
     },
-    destroyed () {
-      unsubscribeTopic.steps(this.job.id)
-    },
     watch: {
       flow () {
         this.load()
@@ -179,10 +179,6 @@
 
       // subscribe steps change when job been loaded
       job (newJob, oldJob) {
-        if (isJobFinished(newJob)) {
-          return
-        }
-
         subscribeTopic.steps(newJob.id, this.$store)
       }
     },

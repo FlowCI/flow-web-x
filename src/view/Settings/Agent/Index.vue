@@ -114,8 +114,6 @@
         this.$store.dispatch(actions.agents.list).then(() => {
           this.buildAgents()
         })
-
-        subscribeTopic.hosts(this.$store)
       })
     },
     beforeDestroy () {

@@ -130,6 +130,14 @@ export const unsubscribeTopic = {
     unsubscribe('/topic/flows/git/test/' + flowId)
   },
 
+  jobs () {
+    unsubscribe('/topic/jobs')
+  },
+
+  agents () {
+    unsubscribe('/topic/agents')
+  },
+
   steps (jobId) {
     unsubscribe('/topic/steps/' + jobId)
   },
