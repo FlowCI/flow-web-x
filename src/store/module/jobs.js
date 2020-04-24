@@ -14,7 +14,7 @@ const state = {
     total: 0
   },
   JobsStatus: {},
-  selected: {},
+  selected: {}, // current selected job
   yml: '',
   latest: [], // latest job object array
   reports: [],
@@ -72,7 +72,7 @@ const mutations = {
 
     // update job selected
     if (state.selected && state.selected.id === updatedJob.id) {
-      state.selected = state.items[ itemIndex ]
+      state.selected = updatedJob
     }
   },
 

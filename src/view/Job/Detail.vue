@@ -78,8 +78,8 @@
         {{ $t('job.tab.yml') }}
       </v-tab>
       <v-tab v-for="report in reports"
-              :key="report.id"
-              :href="'#' + report.name">
+             :key="report.id"
+             :href="'#' + report.name">
         {{ report.name }}
       </v-tab>
       <v-tab href="#artifacts" class="ml-0 elevation-1">
@@ -127,7 +127,7 @@
 
   export default {
     name: 'JobDetail',
-    data () {
+    data() {
       return {
         agentIcons: icons
       }
@@ -139,10 +139,10 @@
       DetailTabArtifact,
       DetailHtmlReport
     },
-    mounted () {
+    mounted() {
       this.load()
     },
-    destroyed () {
+    destroyed() {
       unsubscribeTopic.steps(this.job.id)
     },
     computed: {
@@ -152,49 +152,50 @@
         steps: state => state.steps.items,
       }),
 
-      flow () {
+      flow() {
         return this.$route.params.id
       },
 
-      number () {
+      number() {
         return this.$route.params.num
       },
 
-      wrapper () {
+      wrapper() {
         return new JobWrapper(this.job)
       },
 
-      finished () {
+      finished() {
         return isJobFinished(this.job)
       }
     },
     watch: {
-      flow () {
+      flow() {
         this.load()
       },
 
-      number () {
+      number() {
         this.load()
       },
 
       // subscribe steps change when job been loaded
-      job (newJob, oldJob) {
-        subscribeTopic.steps(newJob.id, this.$store)
+      job(obj) {
+        subscribeTopic.steps(obj.id, this.$store)
       }
     },
     methods: {
-      load () {
+      load() {
         let payload = {flow: this.flow, buildNumber: this.number}
+        this.$store.dispatch(actions.jobs.select, payload).then()
         this.$store.dispatch(actions.jobs.steps.get, payload).then()
         this.$store.dispatch(actions.jobs.reports.list, payload).then()
       },
 
-      onStopClick () {
+      onStopClick() {
         let payload = {flow: this.flow, buildNumber: this.number}
         this.$store.dispatch(actions.jobs.cancel, payload).then()
       },
 
-      onRerunClick () {
+      onRerunClick() {
         this.$store.dispatch(actions.jobs.rerun, this.job.id)
             .then()
             .catch(reason => {
@@ -221,12 +222,15 @@
       .v-tabs-bar {
         height: 6%;
       }
+
       .v-window {
         height: 93%;
       }
+
       .v-window__container {
         height: 99%;
       }
+
       .v-window-item {
         height: 99%;
       }
