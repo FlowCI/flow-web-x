@@ -12,6 +12,7 @@ export default {
   login: '登录',
   password: '密码',
   confirm: '确认',
+  restart: '重新开始',
 
   menu: {
     signedInAs: '当前用户 ',

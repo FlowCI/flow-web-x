@@ -42,6 +42,7 @@ export default {
     latest: 'jobs/latest',
     start: 'jobs/start',
     create: 'jobs/create',
+    rerun: 'jobs/rerun',
     cancel: 'jobs/cancel',
     list: 'jobs/list',
     statusUpdate: 'jobs/statusUpdate',

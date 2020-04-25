@@ -25,7 +25,7 @@ const mutations = {
         if (item.id === newItem.id && item.status !== newItem.status) {
           Object.assign(item, newItem)
           state.change = newItem
-          break;
+          break
         }
       }
     }
