@@ -19,7 +19,7 @@
           <v-col cols="4">
             <v-switch inset
                       :loading="loading"
-                      :label="isYamlFromRepo ? 'Load from branch' : 'Disabled'"
+                      :label="isYamlFromRepo ? 'Load from' : 'Disabled'"
                       v-model="isYamlFromRepo"
                       @change="onSwitchChange"
             ></v-switch>
@@ -50,7 +50,7 @@
   import { mapState } from 'vuex'
 
   export default {
-    name: 'OptionFlowName',
+    name: 'OptionFlowSettings',
     props: {
       flow: {
         required: true,
