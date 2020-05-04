@@ -1,7 +1,7 @@
 <template>
   <div class="full-size">
     <v-row>
-      <v-col class="py-1">
+      <v-col class="py-1 plugin-tags">
         <v-chip
             v-for="item in tagList"
             :key="item.name"
@@ -17,8 +17,46 @@
       </v-col>
     </v-row>
 
-    <v-row class="full-height">
+    <v-row class="plugin-list">
+      <v-col cols="2" md="3" class="py-1">
+        <v-list dense>
+          <v-list-item-group v-model="selected" color="primary">
+            <v-list-item v-for="plugin in pluginList"
+                         :key="plugin.id"
+                         @click="getReadMe(plugin)"
+            >
+              <v-list-item-icon>
+                <v-icon v-if="plugin.isDefaultIcon" small>mdi-view-grid-plus-outline</v-icon>
+                <v-img v-if="plugin.isHttpLinkIcon"
+                       :src="plugin.icon"
+                       max-height="24"
+                       max-width="16"
+                ></v-img>
+                <img v-if="plugin.isRepoSrcIcon"
+                     class="plugin-icon"
+                     :id="plugin.id"
+                     alt=""
+                >
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span>{{ plugin.name }}</span>
+                </v-list-item-title>
+                <v-list-item-subtitle>
+                  <span>{{ plugin.version }}</span>
+                </v-list-item-subtitle>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-icon v-if="isInstalledOnFlow(plugin)" x-small>mdi-checkbox-marked</v-icon>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-col>
 
+      <v-col class="pa-0">
+        <iframe id="markdown" class="markdown"></iframe>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -153,7 +191,7 @@
           `<style type="text/css">
             body {
               margin: 0;
-              padding: 0px;
+              padding: 0;
               font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
               height: 100%;
             }
@@ -219,6 +257,14 @@
 </script>
 
 <style lang="scss" scoped>
+  .plugin-tags {
+    height: 15%;
+  }
+
+  .plugin-list {
+    height: 90%;
+  }
+
   .plugin-icon {
     max-height: 60px;
     max-width: 32px;
@@ -226,7 +272,7 @@
 
   .markdown {
     width: 100%;
-    height: 95%;
+    height: 100%;
     border: 0;
     background: #fbfbfb;
   }

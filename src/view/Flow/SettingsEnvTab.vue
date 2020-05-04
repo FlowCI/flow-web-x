@@ -4,9 +4,7 @@
     <v-row align="center">
       <v-col class="mb-4">
       <span class="font-weight-light title">Variables
-        <v-btn icon
-               @click="onAddLocalVar"
-        >
+        <v-btn icon @click="onAddLocalVar">
           <v-icon class="font-weight-bold">mdi-plus</v-icon>
         </v-btn>
       </span>
@@ -68,35 +66,35 @@
 
       localVars: []
     }),
-    mounted () {
+    mounted() {
       this.loadLocalVars(this.flow)
     },
     computed: {
-      ymlVars () {
+      ymlVars() {
         return this.toVarObjectList(this.flow.variables, false)
       }
     },
     watch: {
-      flow (after) {
+      flow(after) {
         this.loadLocalVars(after)
       }
     },
     methods: {
-      loadLocalVars (flow) {
+      loadLocalVars(flow) {
         if (!flow.locally || Object.keys(flow.locally).length === 0) {
           const copy = _.cloneDeep(this.empty)
-          this.localVars = [ copy ]
+          this.localVars = [copy]
           return
         }
 
         this.localVars = this.toVarObjectList(flow.locally, false)
       },
 
-      toVarObjectList (varsMap, edit) {
+      toVarObjectList(varsMap, edit) {
         let list = []
 
         for (let name in varsMap) {
-          let value = varsMap[ name ]
+          let value = varsMap[name]
 
           if (typeof (value) === 'string') {
             list.push({
@@ -122,17 +120,17 @@
         return list
       },
 
-      onAddLocalVar () {
+      onAddLocalVar() {
         const copy = _.cloneDeep(this.empty)
         this.localVars.push(copy)
       },
 
-      onVarSaved (oldVal, newVal) {
+      onVarSaved(oldVal, newVal) {
       },
 
-      onVarRemoved (val) {
+      onVarRemoved(val) {
         for (let i = 0; i < this.localVars.length; i++) {
-          if (this.localVars[ i ].name === val.name) {
+          if (this.localVars[i].name === val.name) {
             this.localVars.splice(i, 1)
             break
           }
@@ -143,8 +141,8 @@
 </script>
 
 <style scoped>
-.env-tab {
-  padding-left: 5px;
-  width: 90%;
-}
+  .env-tab {
+    padding-left: 5px;
+    width: 90%;
+  }
 </style>
