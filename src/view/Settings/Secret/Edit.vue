@@ -99,7 +99,7 @@
       AuthEditor
     },
     props: {
-      credentialObj: {
+      secretObj: {
         type: Object,
         required: false,
         default () {
@@ -144,29 +144,29 @@
       },
 
       name () {
-        return this.credentialObj.name
+        return this.secretObj.name
       },
 
       isSshRsa () {
-        return this.credentialObj.category === CATEGORY_SSH_RSA
+        return this.secretObj.category === CATEGORY_SSH_RSA
       },
 
       isAuth () {
-        return this.credentialObj.category === CATEGORY_AUTH
+        return this.secretObj.category === CATEGORY_AUTH
       },
 
       instance() {
         if (this.isSshRsa) {
           return {
             selected: '',
-            pair: this.credentialObj.pair
+            pair: this.secretObj.pair
           }
         }
 
         if (this.isAuth) {
           return {
             selected: '',
-            pair: this.credentialObj.pair
+            pair: this.secretObj.pair
           }
         }
 
@@ -175,11 +175,11 @@
     },
     methods: {
       onBackClick () {
-        this.$router.push('/settings/credentials')
+        this.$router.push('/settings/secrets')
       },
 
       onDeleteClick () {
-        this.$store.dispatch(actions.secrets.delete, this.credentialObj).then(() => {
+        this.$store.dispatch(actions.secrets.delete, this.secretObj).then(() => {
           this.onBackClick()
         })
       }
