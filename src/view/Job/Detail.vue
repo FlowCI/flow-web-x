@@ -45,13 +45,13 @@
         <v-btn text
                color="error"
                @click="onStopClick"
-               v-if="!finished"
+               v-if="!wrapper.isFinished"
         >
           <v-icon>mdi-stop</v-icon>
           {{ $t('cancel') }}
         </v-btn>
 
-        <v-btn text @click="onRerunClick" v-if="finished">
+        <v-btn text @click="onRerunClick" v-if="wrapper.isFinished">
           <v-icon>mdi-restart</v-icon>
           {{ $t('restart') }}
         </v-btn>
@@ -114,7 +114,7 @@
   import actions from '@/store/actions'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
-  import { isJobFinished, JobWrapper } from '@/util/jobs'
+  import { JobWrapper } from '@/util/jobs'
   import { icons } from '@/util/agents'
   import { mapState } from 'vuex'
 
@@ -162,10 +162,6 @@
 
       wrapper() {
         return new JobWrapper(this.job)
-      },
-
-      finished() {
-        return isJobFinished(this.job)
       }
     },
     watch: {

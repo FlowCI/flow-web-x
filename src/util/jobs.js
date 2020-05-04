@@ -142,6 +142,13 @@ export class JobWrapper {
         return '-'
     }
 
+    get isFinished() {
+        return this.job.status === STATUS_CANCELLED ||
+          this.job.status === STATUS_SUCCESS ||
+          this.job.status === STATUS_FAILURE ||
+          this.job.status === STATUS_TIMEOUT
+    }
+
     get agentInfo() {
         return this.job.agentInfo || {
             name: '-',
@@ -218,13 +225,6 @@ export class JobWrapper {
     get isRunning() {
         return this.status.text === STATUS_RUNNING
     }
-}
-
-export function isJobFinished(job) {
-    return job.status === STATUS_CANCELLED ||
-        job.status === STATUS_SUCCESS ||
-        job.status === STATUS_FAILURE ||
-        job.status === STATUS_TIMEOUT
 }
 
 export const mapping = {
