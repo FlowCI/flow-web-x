@@ -18,45 +18,7 @@
     </v-row>
 
     <v-row class="full-height">
-      <v-col cols="2" md="3" class="py-1">
-        <v-list dense>
-          <v-list-item-group v-model="selected" color="primary">
-            <v-list-item v-for="plugin in pluginList"
-                         :key="plugin.id"
-                         @click="getReadMe(plugin)"
-            >
-              <v-list-item-icon>
-                <v-icon v-if="plugin.isDefaultIcon" small>mdi-view-grid-plus-outline</v-icon>
-                <v-img v-if="plugin.isHttpLinkIcon"
-                       :src="plugin.icon"
-                       max-height="24"
-                       max-width="16"
-                ></v-img>
-                <img v-if="plugin.isRepoSrcIcon"
-                     class="plugin-icon"
-                     :id="plugin.id"
-                     alt=""
-                >
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span>{{ plugin.name }}</span>
-                </v-list-item-title>
-                <v-list-item-subtitle>
-                  <span>{{ plugin.version }}</span>
-                </v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon v-if="isInstalledOnFlow(plugin)" x-small>mdi-checkbox-marked</v-icon>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-col>
 
-      <v-col class="pa-0">
-        <iframe id="markdown" class="markdown"></iframe>
-      </v-col>
     </v-row>
   </div>
 </template>
@@ -258,8 +220,8 @@
 
 <style lang="scss" scoped>
   .plugin-icon {
-    max-height: 24px;
-    max-width: 16px;
+    max-height: 60px;
+    max-width: 32px;
   }
 
   .markdown {
