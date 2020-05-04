@@ -221,9 +221,9 @@ export class JobWrapper {
 }
 
 export function isJobFinished(job) {
-    return job.status === STATUS_CANCELLED &&
-        job.status === STATUS_SUCCESS &&
-        job.status === STATUS_FAILURE &&
+    return job.status === STATUS_CANCELLED ||
+        job.status === STATUS_SUCCESS ||
+        job.status === STATUS_FAILURE ||
         job.status === STATUS_TIMEOUT
 }
 
