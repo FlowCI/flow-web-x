@@ -5,12 +5,11 @@
         <v-form ref="userForm" lazy-validation>
           <text-box label="Email" v-model="instance.email"></text-box>
           <text-box label="Password" v-model="instance.password"></text-box>
-          <v-select
+          <text-select
               :items="['Admin', 'Developer']"
               label="Role"
-              dense
               v-model="instance.role"
-          ></v-select>
+          ></text-select>
         </v-form>
       </v-col>
     </v-row>
@@ -27,11 +26,13 @@
 <script>
   import actions from '@/store/actions'
   import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
 
   export default {
     name: 'SettingsUsersNew',
     components: {
-      TextBox
+      TextBox,
+      TextSelect
     },
     data () {
       return {

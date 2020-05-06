@@ -3,22 +3,16 @@
     <v-row>
       <v-col cols="8">
         <v-form ref="nameForm" lazy-validation>
-          <v-text-field label="Name"
-                        :rules="nameRules"
-                        v-model="name"
-                        dense
-          ></v-text-field>
+          <text-box label="Name"
+                    :rules="nameRules"
+                    v-model="name"
+          ></text-box>
         </v-form>
-      </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="8">
-        <v-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
-                  label="Category"
-                  v-model="category"
-                  dense
-        ></v-select>
+        <text-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
+                     label="Category"
+                     v-model="category"
+        ></text-select>
       </v-col>
     </v-row>
 
@@ -51,6 +45,8 @@
 <script>
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
+  import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
   import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
   import { secretAndConfigNameRules } from '@/util/rules'
@@ -58,6 +54,8 @@
   export default {
     name: 'SettingsSecretNew',
     components: {
+      TextBox,
+      TextSelect,
       SshRsaEditor,
       AuthEditor
     },

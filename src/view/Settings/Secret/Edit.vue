@@ -2,13 +2,9 @@
   <div>
     <v-row>
       <v-col cols="8">
-        <v-text-field label="Name"
-                      readonly
-                      v-model="name"
-        ></v-text-field>
+        <text-box label="Name" readonly v-model="name"></text-box>
       </v-col>
     </v-row>
-
 
     <v-row>
       <v-col cols="8" v-if="isSshRsa">
@@ -87,12 +83,14 @@
   import actions from '@/store/actions'
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
+  import TextBox from '@/components/Common/TextBox'
   import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
     name: 'SettingsSecretEdit',
     components: {
+      TextBox,
       SshRsaEditor,
       AuthEditor
     },

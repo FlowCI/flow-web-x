@@ -8,20 +8,18 @@
                     v-model="configObj.name"
           ></text-box>
         </v-form>
-      </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="8">
-        <v-select :items="[CATEGORY_SMTP]"
-                  label="Category"
-                  v-model="configObj.category"
-                  dense
-        ></v-select>
+        <text-select :items="[CATEGORY_SMTP]"
+                     label="Category"
+                     v-model="configObj.category"
+        ></text-select>
       </v-col>
     </v-row>
 
     <v-row v-if="configObj.category === CATEGORY_SMTP">
+      <v-col cols="9">
+        <v-divider></v-divider>
+      </v-col>
       <v-col cols="8">
         <config-smtp :configObj="configObj"></config-smtp>
       </v-col>
@@ -40,6 +38,7 @@
   import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
   import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
   import { CATEGORY_SMTP } from '@/util/configs'
   import { secretAndConfigNameRules } from '@/util/rules'
 
@@ -47,6 +46,7 @@
     name: "SettingsNewConfig",
     components: {
       TextBox,
+      TextSelect,
       ConfigSmtp
     },
     data() {
