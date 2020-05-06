@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="8">
         <v-form ref="nameForm" lazy-validation>
-          <text-box title="Name"
+          <text-box label="Name"
                     :rules="nameRules"
                     v-model="configObj.name"
           ></text-box>

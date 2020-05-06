@@ -1,6 +1,6 @@
 <template>
   <div class="text-box">
-    <v-subheader>{{ title }}</v-subheader>
+    <v-subheader>{{ label }}</v-subheader>
     <v-text-field
         solo
         dense
@@ -16,7 +16,7 @@
   export default {
     name: 'TextBox',
     props: {
-      title: {
+      label: {
         type: String,
         required: true
       },
@@ -43,9 +43,6 @@
       return {
         adaptor: this.value
       }
-    },
-    mounted() {
-      console.log(this.value)
     },
     watch: {
       adaptor(val) {

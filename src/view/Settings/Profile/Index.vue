@@ -2,11 +2,11 @@
   <div>
     <v-row>
       <v-col cols="8">
-        <text-box title="E-Mail"
+        <text-box label="E-Mail"
                   v-model="user.email"
                   readonly
         ></text-box>
-        <text-box title="Role"
+        <text-box label="Role"
                   v-model="user.role"
                   readonly
         ></text-box>
@@ -24,17 +24,17 @@
 
         <v-form ref="passwordForm"
                 lazy-validation>
-          <text-box title="Old password"
+          <text-box label="Old password"
                     password
                     v-model="passwords.old"
                     :rules="notEmptyRules"
           ></text-box>
-          <text-box title="New password"
+          <text-box label="New password"
                     password
                     v-model="passwords.newOne"
                     :rules="notEmptyRules"
           ></text-box>
-          <text-box title="Confirm New password"
+          <text-box label="Confirm New password"
                     password
                     v-model="passwords.confirm"
                     :rules="confirmedRules"
@@ -44,11 +44,9 @@
     </v-row>
 
     <v-row>
-      <v-col cols="3">
+      <v-col cols="8" class="text-end">
         <v-btn color="primary" tile @click="onUpdatePasswordClick">Update password</v-btn>
-      </v-col>
-      <v-col cols="3">
-        <v-btn color="info" outlined @click="onForgotPasswordClick">I forgot my password</v-btn>
+        <v-btn color="info" outlined @click="onForgotPasswordClick" class="ml-4">I forgot my password</v-btn>
       </v-col>
     </v-row>
 
@@ -91,7 +89,7 @@
         ],
         confirmedRules: [
           v => !!v || this.$t('settings.profile.password_not_empty'),
-          v => v === this.passwords.newOne.data || this.$t('settings.profile.password_not_same')
+          v => v === this.passwords.newOne || this.$t('settings.profile.password_not_same')
         ]
       }
     },

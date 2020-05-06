@@ -1,22 +1,22 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <text-box title="SMTP Server"
+      <text-box label="SMTP Server"
                 :rules="rules.required"
                 v-model="configObj.server"
       ></text-box>
 
-      <text-box title="SMTP Port"
+      <text-box label="SMTP Port"
                 :rules="rules.required"
                 v-model="configObj.port"
       ></text-box>
 
-      <text-box title="SMTP Username"
+      <text-box label="SMTP Username"
                 :rules="rules.required"
                 v-model="configObj.username"
       ></text-box>
 
-      <text-box title="SMTP password"
+      <text-box label="SMTP password"
                 v-model="configObj.password"
       ></text-box>
 
