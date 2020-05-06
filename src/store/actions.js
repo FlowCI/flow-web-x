@@ -85,6 +85,13 @@ export default {
     delete: 'secrets/delete'
   },
 
+  configs: {
+    createSmtp: 'configs/createSmtp',
+    list: 'configs/list',
+    get: 'configs/get',
+    delete: 'configs/delete'
+  },
+
   users: {
     listAll: 'users/listAll',
     create: 'users/create',

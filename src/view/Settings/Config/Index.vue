@@ -1,6 +1,6 @@
 <template>
   <v-data-table
-      :items="secrets"
+      :items="configs"
       :loading="loading"
       hide-default-footer
       hide-default-headers>
@@ -29,7 +29,7 @@
     <template slot="no-data">
       <v-alert :value="true">
         <v-icon small>mdi-alert-outline</v-icon>
-        <span class="caption ml-1">Click '+' to create a secret</span>
+        <span class="caption ml-1">Click '+' to create a config</span>
       </v-alert>
     </template>
   </v-data-table>
@@ -40,7 +40,7 @@
   import actions from '@/store/actions'
 
   export default {
-    name: 'SettingsSecretHome',
+    name: "SettingsConfigHome",
     data () {
       return {
         loading: false
@@ -50,36 +50,31 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Secrets'
+            text: 'Configuration'
           }
         ],
         showAddBtn: true
       })
 
       this.loading = true
-      this.$store.dispatch(actions.secrets.list).then(() => {
+      this.$store.dispatch(actions.configs.list).then(() => {
         this.loading = false
       })
     },
     computed: {
       ...mapState({
-        secrets: state => state.secrets.items
+        configs: state => state.configs.items
       })
     },
     methods: {
       onAddBtnClick () {
         this.$router.push({
-          name: 'SettingsSecretNew'
+          name: 'SettingsConfigNew'
         })
       },
 
-      onEditClick (secret) {
-        this.$router.push({
-          name: 'SettingsSecretEdit',
-          params: {
-            secretObj: secret
-          }
-        })
+      onEditClick(config) {
+
       }
     }
   }

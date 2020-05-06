@@ -40,8 +40,12 @@
             path: 'agents'
           },
           {
-            i18n: 'settings.li.credential',
+            i18n: 'settings.li.secret',
             path: 'secrets'
+          },
+          {
+            i18n: 'settings.li.config',
+            path: 'configs'
           }
         ]
       }

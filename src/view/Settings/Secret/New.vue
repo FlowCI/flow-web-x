@@ -6,6 +6,7 @@
           <v-text-field label="Name"
                         :rules="nameRules"
                         v-model="name"
+                        dense
           ></v-text-field>
         </v-form>
       </v-col>
@@ -16,6 +17,7 @@
         <v-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
                   label="Category"
                   v-model="category"
+                  dense
         ></v-select>
       </v-col>
     </v-row>

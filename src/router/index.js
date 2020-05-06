@@ -27,6 +27,10 @@ import SettingsSecretHome from '@/view/Settings/Secret/Index'
 import SettingsSecretNew from '@/view/Settings/Secret/New'
 import SettingsSecretEdit from '@/view/Settings/Secret/Edit'
 
+import SettingsConfigHome from '@/view/Settings/Config/Index'
+import SettingsConfigNew from '@/view/Settings/Config/New'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -138,6 +142,17 @@ export default new Router({
           name: 'SettingsSecretEdit',
           component: SettingsSecretEdit,
           props: true
+        },
+
+        {
+          path: 'configs',
+          name: 'SettingsConfigHome',
+          component: SettingsConfigHome
+        },
+        {
+          path: 'configs/new',
+          name: 'SettingsConfigNew',
+          component: SettingsConfigNew
         }
       ]
     }
