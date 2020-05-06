@@ -57,5 +57,9 @@
     .v-subheader {
       padding: 0;
     }
+
+    .v-input {
+      font-size: 14px
+    }
   }
 </style>
