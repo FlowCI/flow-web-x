@@ -1,14 +1,13 @@
 <template>
-  <div>
-    <div class="subheading font-weight-medium my-1">{{ title }}</div>
+  <div class="text-box">
+    <v-subheader>{{ title }}</v-subheader>
     <v-text-field
         solo
         dense
         :readonly="readonly"
-        v-model="model.data"
+        v-model="adaptor"
         :rules="rules"
         :type="password ? 'password' : 'text'"
-        class="text-box"
     ></v-text-field>
   </div>
 </template>
@@ -21,13 +20,8 @@
         type: String,
         required: true
       },
-      model: {
-        type: Object,
-        default () {
-          return {
-            data: ''
-          }
-        }
+      value: {
+        type: String
       },
       readonly: {
         type: Boolean,
@@ -44,10 +38,27 @@
         type: Boolean,
         default: false
       }
+    },
+    data () {
+      return {
+        adaptor: this.value
+      }
+    },
+    mounted() {
+      console.log(this.value)
+    },
+    watch: {
+      adaptor(val) {
+        this.$emit('input', val)
+      }
     }
   }
 </script>
 
 <style lang="scss">
-
+  .text-box {
+    .v-subheader {
+      padding: 0;
+    }
+  }
 </style>

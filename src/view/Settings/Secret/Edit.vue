@@ -28,8 +28,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="5"></v-col>
-      <v-col cols="2">
+      <v-col cols="8" class="text-end">
         <v-dialog
             v-model="dialog"
             width="500"
@@ -77,9 +76,8 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-col>
-      <v-col cols="1">
-        <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
+
+        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
       </v-col>
     </v-row>
   </div>

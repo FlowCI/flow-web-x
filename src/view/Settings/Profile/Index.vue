@@ -1,24 +1,24 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="6">
+      <v-col cols="8">
         <text-box title="E-Mail"
-                  :model="{data: user.email}"
+                  v-model="user.email"
                   readonly
         ></text-box>
         <text-box title="Role"
-                  :model="{data: user.role}"
+                  v-model="user.role"
                   readonly
         ></text-box>
       </v-col>
 
-      <v-col cols="5" class="mt-2 ml-4">
+      <v-col cols="3" class="mt-2 ml-4">
         <div class="subheading font-weight-medium">Profile picture here</div>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="6">
+      <v-col cols="8">
         <div>Change Password</div>
         <v-divider class="my-2"></v-divider>
 
@@ -26,17 +26,17 @@
                 lazy-validation>
           <text-box title="Old password"
                     password
-                    :model="passwords.old"
+                    v-model="passwords.old"
                     :rules="notEmptyRules"
           ></text-box>
           <text-box title="New password"
                     password
-                    :model="passwords.newOne"
+                    v-model="passwords.newOne"
                     :rules="notEmptyRules"
           ></text-box>
           <text-box title="Confirm New password"
                     password
-                    :model="passwords.confirm"
+                    v-model="passwords.confirm"
                     :rules="confirmedRules"
           ></text-box>
         </v-form>
@@ -82,9 +82,9 @@
       return {
         dialog: false,
         passwords: {
-          old: {data: ''},
-          newOne: {data: ''},
-          confirm: {data: ''}
+          old: '',
+          newOne: '',
+          confirm: ''
         },
         notEmptyRules: [
           v => !!v || this.$t('settings.profile.password_not_empty')
@@ -111,11 +111,7 @@
           return
         }
 
-        this.$store.dispatch(actions.users.changePassword, {
-          old: this.passwords.old.data,
-          newOne: this.passwords.newOne.data,
-          confirm: this.passwords.confirm.data
-        }).then(() => {
+        this.$store.dispatch(actions.users.changePassword, this.passwords).then(() => {
           this.dialog = true
         }).catch((err) => {
           console.log(err)
