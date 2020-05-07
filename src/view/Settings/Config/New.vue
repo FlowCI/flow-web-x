@@ -1,29 +1,30 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="8">
-        <v-form ref="nameForm" lazy-validation>
+    <v-form ref="nameForm" lazy-validation>
+      <v-row>
+        <v-col cols="8">
           <text-box label="Name"
                     :rules="nameRules"
                     v-model="configObj.name"
           ></text-box>
-        </v-form>
+          <text-select :items="[CATEGORY_SMTP]"
+                       label="Category"
+                       v-model="configObj.category"
+          ></text-select>
+        </v-col>
+      </v-row>
+    </v-form>
 
-        <text-select :items="[CATEGORY_SMTP]"
-                     label="Category"
-                     v-model="configObj.category"
-        ></text-select>
-      </v-col>
-    </v-row>
-
-    <v-row v-if="configObj.category === CATEGORY_SMTP">
-      <v-col cols="9">
-        <v-divider></v-divider>
-      </v-col>
-      <v-col cols="8">
-        <config-smtp :configObj="configObj"></config-smtp>
-      </v-col>
-    </v-row>
+    <v-form ref="contentForm" lazy-validation>
+      <v-row v-if="configObj.category === CATEGORY_SMTP">
+        <v-col cols="9">
+          <v-divider></v-divider>
+        </v-col>
+        <v-col cols="8">
+          <config-smtp :configObj="configObj"></config-smtp>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
       <v-col cols="8" class="text-end">
@@ -55,7 +56,7 @@
         nameRules: secretAndConfigNameRules(this),
 
         configObj: {
-          name: 'abc',
+          name: '',
           category: CATEGORY_SMTP,
         }
       }
@@ -80,20 +81,26 @@
       },
     },
     methods: {
-      onCreateConfig() {
-        this.$store.dispatch(actions.configs.createSmtp, this.configObj)
-      },
-
       onBackClick() {
         this.$router.push('/settings/configs')
       },
 
       onSaveClick() {
-        console.log(this.configObj)
-
         if (!this.$refs.nameForm.validate()) {
           return
         }
+
+        if (!this.$refs.contentForm.validate()) {
+          return
+        }
+
+        this.$store.dispatch(actions.configs.createSmtp, this.configObj)
+            .then(() => {
+              this.onBackClick()
+            })
+            .catch(e => {
+              console.log(e)
+            })
       }
     }
   }
