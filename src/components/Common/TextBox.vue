@@ -21,7 +21,7 @@
         required: true
       },
       value: {
-        type: String
+        type: [Number, String]
       },
       readonly: {
         type: Boolean,

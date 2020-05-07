@@ -76,7 +76,12 @@
       },
 
       onEditClick(config) {
-
+        this.$router.push({
+          name: 'SettingsConfigEdit',
+          params: {
+            configObj: config
+          }
+        })
       }
     }
   }

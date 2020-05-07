@@ -70,13 +70,8 @@
     computed: {
       navs() {
         return [
-          {
-            text: 'Configuration',
-            href: '#/settings/configs'
-          },
-          {
-            text: 'New'
-          }
+          {text: 'Configuration', href: '#/settings/configs'},
+          {text: 'New'}
         ]
       },
     },

@@ -25,55 +25,30 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-dialog
-            v-model="dialog"
-            width="500"
-        >
-          <template v-slot:activator="{ on }">
-            <v-btn
-                outlined
-                color="error"
-                v-on="on"
-            >{{ $t('delete') }}
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title
-                class="red--text subheading"
-                primary-title
-            >Delete credential {{ name }}?
-            </v-card-title>
-
-            <!-- list the flows which are connected with credential -->
-            <v-card-text>
-              <div>
-                You are going to credential {{ name }}.
-                Removed credential CANNOT be restored!
-              </div>
-
-              <div class="mt-3 red--text" v-if="connectedFlows.length > 0">
-                <span>The following flow will be affected!</span>
-
-                <ul>
-                  <li v-for="flow in connectedFlows"
-                      :key="flow.id"
-                  >{{ flow.name }}
-                  </li>
-                </ul>
-              </div>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="dialog = false">{{ $t('cancel') }}</v-btn>
-              <v-btn outlined color="error" @click="onDeleteClick">{{ $t('delete') }}</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
         <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
+
+        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete secret {{ name }}?
+            </span>
+          </template>
+          <template v-slot:content>
+            <div>
+              You are going to delete the secret {{ name }}.
+              Deleted secret CANNOT be restored!
+            </div>
+            <div class="mt-3 red--text" v-if="connectedFlows.length > 0">
+              <span>The following flow will be affected!</span>
+              <ul>
+                <li v-for="flow in connectedFlows"
+                    :key="flow.id"
+                >{{ flow.name }}
+                </li>
+              </ul>
+            </div>
+          </template>
+        </confirm-btn>
       </v-col>
     </v-row>
   </div>
@@ -84,12 +59,14 @@
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
   import TextBox from '@/components/Common/TextBox'
-  import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
+  import { CATEGORY_AUTH, CATEGORY_SSH_RSA } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
     name: 'SettingsSecretEdit',
     components: {
+      ConfirmBtn,
       TextBox,
       SshRsaEditor,
       AuthEditor
@@ -126,16 +103,8 @@
 
       navs () {
         return [
-          {
-            text: 'Secrets',
-            href: '#/settings/secrets'
-          },
-          {
-            text: 'Edit'
-          },
-          {
-            text: this.name
-          }
+          {text: 'Secrets', href: '#/settings/secrets'},
+          {text: this.name}
         ]
       },
 
