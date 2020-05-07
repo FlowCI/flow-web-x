@@ -1,5 +1,5 @@
 import vars from '@/util/vars'
-import moment from 'moment'
+import { timeDurationInSeconds, timeFormat, timeFormatFromNow } from "./time"
 
 // status
 const STATUS_UNKNOWN = 'UNKNOWN'
@@ -65,7 +65,7 @@ export class JobWrapper {
     }
 
     get fromNow() {
-        return moment(this.job.createdAt).fromNow()
+        return timeFormatFromNow(this.job.createdAt)
     }
 
     get branch() {
@@ -120,7 +120,7 @@ export class JobWrapper {
 
     get duration() {
         if (this.job.startAt && this.job.finishAt) {
-            return moment(this.job.finishAt).diff(moment(this.job.startAt), 'seconds')
+            return timeDurationInSeconds(this.job.finishedAt, this.job.startAt)
         }
 
         return '-'
@@ -128,7 +128,7 @@ export class JobWrapper {
 
     get finishedAt() {
         if (this.job.finishAt) {
-            return moment(this.job.finishAt).fromNow()
+            return timeFormatFromNow(this.job.finishedAt)
         }
 
         return '-'
@@ -136,7 +136,7 @@ export class JobWrapper {
 
     get finishedAtInStr() {
         if (this.job.finishAt) {
-            return moment(this.job.finishAt).format('YYYY-MM-DD kk:mm:ss')
+            return timeFormat(this.job.finishedAt)
         }
 
         return '-'

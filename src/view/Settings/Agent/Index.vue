@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-treeview hoverable dense :items="items">
+    <v-treeview hoverable open-on-click :open.sync="open" dense :items="items">
       <template v-slot:prepend="{ item }">
         <v-icon small>{{ item.icon }}</v-icon>
       </template>
@@ -75,7 +75,6 @@
   import { mapState } from 'vuex'
   import { AgentWrapper } from '@/util/agents'
   import { HostWrapper } from '@/util/hosts'
-  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
   import actions from '@/store/actions'
 
   export default {
@@ -94,8 +93,9 @@
             id: 2,
             name: 'Hosts:',
             children: []
-          }
-        ]
+          },
+        ],
+        open: []
       }
     },
     mounted () {
@@ -116,9 +116,6 @@
         })
       })
     },
-    beforeDestroy () {
-      unsubscribeTopic.hosts()
-    },
     computed: {
       ...mapState({
         hosts: state => state.hosts.items,
@@ -128,6 +125,8 @@
     methods: {
       buildHosts () {
         let hosts = this.items[ 1 ]
+        this.open.push(hosts.id)
+
         hosts.children = []
         this.hostMap = {}
 
@@ -154,6 +153,8 @@
 
           agents.children.push(new AgentWrapper(agent))
         }
+
+        this.open.push(agents.id)
       },
 
       onAddBtnClick () {
