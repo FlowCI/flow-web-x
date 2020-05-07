@@ -4,6 +4,7 @@
     <v-select :items="items"
               v-model="adaptor"
               :rules="rules"
+              :readonly="readonly"
               dense
               solo
     ></v-select>

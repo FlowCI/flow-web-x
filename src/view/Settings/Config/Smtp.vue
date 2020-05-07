@@ -12,7 +12,6 @@
       ></text-box>
 
       <text-box label="SMTP Username"
-                :rules="rules.required"
                 v-model="configObj.username"
       ></text-box>
 
@@ -21,13 +20,13 @@
       ></text-box>
 
       <div>
-        <v-radio-group v-model="configObj.isSSL"
+        <v-radio-group v-model="configObj.isSecure"
                        row
                        dense
                        :rules="rules.required"
         >
-          <v-radio label="None" value="false"></v-radio>
-          <v-radio label="TLS/SSL" value="true"></v-radio>
+          <v-radio label="None" :value=false></v-radio>
+          <v-radio label="TLS/SSL" :value=true></v-radio>
         </v-radio-group>
       </div>
     </v-col>

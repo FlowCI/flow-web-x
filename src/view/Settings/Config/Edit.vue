@@ -27,14 +27,14 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-btn color="warning" outlined @click="onBackClick">{{ $t('back') }}</v-btn>
-        <confirm-btn :text="$t('delete')" color="error" clazz="ml-4" @click="onDeleteClick">
+        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Delete config {{ configObj.name }}?
             </span>
           </template>
         </confirm-btn>
+        <v-btn color="warning" outlined @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
         <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
       </v-col>
     </v-row>
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+  import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
@@ -92,7 +93,13 @@
       },
 
       onDeleteClick() {
-
+        this.$store.dispatch(actions.configs.delete, this.configObj.name)
+            .then(() => {
+              this.onBackClick()
+            })
+            .catch((err) => {
+              console.log(err)
+            })
       },
 
       onSaveClick() {

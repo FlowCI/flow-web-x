@@ -25,8 +25,6 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
-
         <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
@@ -49,6 +47,8 @@
             </div>
           </template>
         </confirm-btn>
+
+        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
       </v-col>
     </v-row>
   </div>

@@ -68,6 +68,11 @@ export function authFormRules (vue) {
 
 export function required (message) {
   return [
-    v => !!v || message,
+    v => {
+      if (v === undefined || v === null || v === '') {
+        return message
+      }
+      return true
+    },
   ]
 }
