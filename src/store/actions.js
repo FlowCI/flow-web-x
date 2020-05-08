@@ -86,7 +86,7 @@ export default {
   },
 
   configs: {
-    createSmtp: 'configs/createSmtp',
+    saveSmtp: 'configs/saveSmtp',
     list: 'configs/list',
     get: 'configs/get',
     delete: 'configs/delete'

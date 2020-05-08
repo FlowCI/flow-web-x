@@ -35,10 +35,10 @@ const actions = {
     })
   },
 
-  async createSmtp ({commit}, smtpObj) {
-    await http.post('configs/smtp', (c) => {
+  async saveSmtp ({commit}, smtpConfig) {
+    await http.post(`configs/${smtpConfig.name}/smtp`, (c) => {
       commit('add', c)
-    }, smtpObj)
+    }, smtpConfig.smtp)
   },
 
   async delete ({commit}, name) {

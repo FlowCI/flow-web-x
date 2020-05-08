@@ -21,7 +21,7 @@
           <v-divider></v-divider>
         </v-col>
         <v-col cols="8">
-          <config-smtp :configObj="configObj"></config-smtp>
+          <config-smtp :smtpOption="configObj.smtp"></config-smtp>
         </v-col>
       </v-row>
     </v-form>
@@ -58,6 +58,9 @@
         configObj: {
           name: '',
           category: CATEGORY_SMTP,
+          smtp: {
+            auth: {},
+          }
         }
       }
     },
@@ -89,7 +92,7 @@
           return
         }
 
-        this.$store.dispatch(actions.configs.createSmtp, this.configObj)
+        this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
             .then(() => {
               this.onBackClick()
             })

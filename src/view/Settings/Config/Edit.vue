@@ -20,7 +20,7 @@
           <v-divider></v-divider>
         </v-col>
         <v-col cols="8">
-          <config-smtp :configObj="configObj"></config-smtp>
+          <config-smtp :smtpOption="configObj.smtp"></config-smtp>
         </v-col>
       </v-row>
     </v-form>
@@ -103,7 +103,13 @@
       },
 
       onSaveClick() {
-
+        this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
+            .then(() => {
+              this.onBackClick()
+            })
+            .catch(e => {
+              console.log(e)
+            })
       }
     }
   }
