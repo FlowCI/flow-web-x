@@ -16,6 +16,7 @@
       ></text-box>
 
       <text-box label="SMTP password"
+                password
                 v-model="smtpOption.auth.password"
       ></text-box>
 

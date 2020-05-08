@@ -7,7 +7,9 @@
         :readonly="readonly"
         v-model="adaptor"
         :rules="rules"
-        :type="password ? 'password' : 'text'"
+        :type="password ? (showPassword ? 'text' : 'password') : 'text'"
+        :append-icon="password ? (showPassword ? 'mdi-eye' : 'mdi-eye-off') : ''"
+        @click:append="showPassword = !showPassword"
     ></v-text-field>
   </div>
 </template>
@@ -41,7 +43,8 @@
     },
     data () {
       return {
-        adaptor: this.value
+        adaptor: this.value,
+        showPassword: false
       }
     },
     watch: {
