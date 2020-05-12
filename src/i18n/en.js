@@ -117,7 +117,8 @@ export default {
       users: 'Users',
       security: 'Security',
       agent: 'Agents',
-      credential: 'Secrets'
+      secret: 'Secrets',
+      config: 'Config'
     },
 
     profile: {

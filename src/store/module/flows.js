@@ -329,18 +329,18 @@ const actions = {
     return http.get(`flows/${name}/users`, onSuccess)
   },
 
-  async addUser ({commit}, {name, userId}) {
+  async addUser ({commit}, {name, userEmail}) {
     const onSuccess = (list) => {
       commit('addUsers', list)
     }
-    await http.post(`flows/${name}/users`, onSuccess, [ userId ])
+    await http.post(`flows/${name}/users`, onSuccess, [ userEmail ])
   },
 
-  async removeUser ({commit}, {name, userId}) {
+  async removeUser ({commit}, {name, userEmail}) {
     const onSuccess = (list) => {
       commit('removeUsers', list)
     }
-    await http.delete(`flows/${name}/users`, onSuccess, [ userId ])
+    await http.delete(`flows/${name}/users`, onSuccess, [ userEmail ])
   },
 
   async addVar ({commit}, {flow, name, value, type}) {

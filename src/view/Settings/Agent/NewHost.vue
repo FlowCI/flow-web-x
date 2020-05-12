@@ -58,7 +58,7 @@
     </v-row>
 
     <v-row>
-      <v-col>
+      <v-col cols="8" class="text-end">
         <host-test-btn :host="wrapper.rawInstance"
                        v-if="isEditMode"
                        :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"></host-test-btn>

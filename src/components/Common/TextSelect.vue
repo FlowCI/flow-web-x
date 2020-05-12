@@ -1,29 +1,26 @@
 <template>
-  <div class="text-box">
+  <div class="text-select">
     <v-subheader>{{ label }}</v-subheader>
-    <v-text-field
-        solo
-        dense
-        :readonly="readonly"
-        v-model="adaptor"
-        :rules="rules"
-        :type="password ? (showPassword ? 'text' : 'password') : 'text'"
-        :append-icon="password ? (showPassword ? 'mdi-eye' : 'mdi-eye-off') : ''"
-        @click:append="showPassword = !showPassword"
-    ></v-text-field>
+    <v-select :items="items"
+              v-model="adaptor"
+              :rules="rules"
+              :readonly="readonly"
+              dense
+              solo
+    ></v-select>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'TextBox',
+    name: "TextSelect",
     props: {
       label: {
         type: String,
         required: true
       },
       value: {
-        type: [Number, String]
+        type: String
       },
       readonly: {
         type: Boolean,
@@ -32,19 +29,20 @@
       },
       rules: {
         type: Array,
-        default () {
+        default() {
           return []
         }
       },
-      password: {
-        type: Boolean,
-        default: false
+      items: {
+        type: Array,
+        default() {
+          return []
+        }
       }
     },
-    data () {
+    data() {
       return {
-        adaptor: this.value,
-        showPassword: false
+        adaptor: this.value
       }
     },
     watch: {
@@ -56,13 +54,13 @@
 </script>
 
 <style lang="scss">
-  .text-box {
+  .text-select {
     .v-subheader {
       padding: 0;
     }
 
     .v-input {
-      font-size: 14px
+      font-size: 12px
     }
   }
 </style>

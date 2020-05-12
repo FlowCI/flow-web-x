@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="6">
+  <v-col cols="10">
     <v-card flat>
       <v-card-title>
         <v-autocomplete
@@ -70,7 +70,7 @@
         type: Object
       }
     },
-    data () {
+    data() {
       return {
         model: null,
         searchText: '',
@@ -83,7 +83,7 @@
         allUsers: state => state.users.items
       }),
 
-      notInFlowUsers () {
+      notInFlowUsers() {
         if (this.flowUsers.length === 0 || this.allUsers.length === 0) {
           return []
         }
@@ -91,28 +91,34 @@
         return this.allUsers.filter(x => !this.flowUsers.some(y => x.id === y.id))
       }
     },
-    mounted () {
+    mounted() {
       this.$store.dispatch(actions.flows.users.list, this.flow.name).catch(() => {
       })
       this.$store.dispatch(actions.users.listAll, {page: 1, size: 99999}).catch(() => {
       })
     },
     watch: {
-      searchText (val) {
+      searchText(val) {
         this.searchResult = this.notInFlowUsers.filter(x => x.email.includes(val))
       }
     },
     methods: {
-      onAddClick (user) {
-        let payload = {name: this.flow.name, userId: user.id}
-        this.$store.dispatch(actions.flows.users.add, payload).catch((err) => {
-        })
-        this.searchText = ''
+      onAddClick(user) {
+        let payload = {name: this.flow.name, userEmail: user.email}
+        this.$store.dispatch(actions.flows.users.add, payload)
+            .then(() => {
+              this.searchText = ''
+            })
+            .catch((err) => {
+              console.log(err)
+              this.searchText = ''
+            })
       },
 
-      onRemoveClick (user) {
-        let payload = {name: this.flow.name, userId: user.id}
+      onRemoveClick(user) {
+        let payload = {name: this.flow.name, userEmail: user.email}
         this.$store.dispatch(actions.flows.users.remove, payload).catch((err) => {
+          console.log(err)
         })
       }
     }

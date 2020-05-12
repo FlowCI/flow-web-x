@@ -115,7 +115,8 @@ export default {
       users: 'Users',
       security: '安全',
       agent: 'Agents',
-      credential: '秘钥'
+      secret: '秘钥',
+      config: '配置'
     },
 
     profile: {

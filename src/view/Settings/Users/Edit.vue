@@ -1,28 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="7">
+      <v-col cols="8">
         <v-form ref="userForm" lazy-validation>
-          <v-text-field label="Email"
-                        readonly
-                        v-model="userObj.email"
-          ></v-text-field>
-          <v-select
+          <text-box label="Email"
+                    readonly
+                    v-model="userObj.email"
+          ></text-box>
+          <text-select
               :items="['Admin', 'Developer']"
               label="Role"
               v-model="userObj.role"
-          ></v-select>
+          ></text-select>
         </v-form>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="5"></v-col>
-      <v-col cols="1">
+      <v-col cols="8" class="text-end">
         <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="primary" @click="onSaveClick">{{ $t('save') }}</v-btn>
+        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -30,9 +27,15 @@
 
 <script>
   import actions from '@/store/actions'
+  import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
 
   export default {
     name: 'Edit',
+    components: {
+      TextSelect,
+      TextBox
+    },
     props: {
       userObj: {
         type: Object,
