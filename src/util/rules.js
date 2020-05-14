@@ -14,7 +14,7 @@ export function gitUrlRules (vue) {
   ]
 }
 
-export function credentialNameRules (vue) {
+export function secretAndConfigNameRules (vue) {
   return [
     v => !!v || vue.$t('credential.hint.name_required'),
     v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
@@ -68,6 +68,11 @@ export function authFormRules (vue) {
 
 export function required (message) {
   return [
-    v => !!v || message,
+    v => {
+      if (v === undefined || v === null || v === '') {
+        return message
+      }
+      return true
+    },
   ]
 }

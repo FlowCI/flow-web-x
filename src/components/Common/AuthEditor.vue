@@ -98,17 +98,17 @@
     },
     mounted () {
       if (this.showSelection) {
-        this.$store.dispatch(actions.credentials.listNameOnly, CATEGORY_AUTH).then()
+        this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_AUTH).then()
       }
     },
     computed: {
       ...mapState({
-        credentials: state => state.credentials.items,
+        secrets: state => state.secrets.items,
       }),
 
       names () {
         const nameList = []
-        for (let c of this.credentials) {
+        for (let c of this.secrets) {
           nameList.push(c.name)
         }
         return nameList

@@ -83,7 +83,7 @@ export class FlowWrapper {
   }
 
   get webhook () {
-    return this.flow.webhook || ''
+    return this.fetchVars(vars.flow.webhook) || ''
   }
 
   get webhookStatus () {

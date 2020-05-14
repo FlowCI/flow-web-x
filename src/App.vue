@@ -53,7 +53,9 @@
   import AgentMenu from '@/view/Common/AgentMenu'
   import ProfileMenu from '@/view/Common/ProfileMenu'
   import SupportMenu from '@/view/Common/SupportMenu'
-  import {mapState} from 'vuex'
+  import { mapState } from 'vuex'
+  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
+
 
   export default {
     name: 'App',
@@ -63,10 +65,20 @@
       ProfileMenu,
       SupportMenu
     },
-    data () {
+    data() {
       return {
         flowNavDrawer: true
       }
+    },
+    mounted() {
+      subscribeTopic.agents(this.$store)
+      subscribeTopic.jobs(this.$store)
+      subscribeTopic.hosts(this.$store)
+    },
+    destroyed() {
+      unsubscribeTopic.jobs()
+      unsubscribeTopic.agents()
+      unsubscribeTopic.hosts()
     },
     computed: {
       ...mapState({
@@ -74,8 +86,8 @@
       })
     },
     methods: {
-      refs (name) {
-        return this.$refs[ name ]
+      refs(name) {
+        return this.$refs[name]
       }
     }
   }

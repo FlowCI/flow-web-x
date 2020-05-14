@@ -1,42 +1,42 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="6">
-        <text-box title="E-Mail"
-                  :model="{data: user.email}"
+      <v-col cols="8">
+        <text-box label="E-Mail"
+                  v-model="user.email"
                   readonly
         ></text-box>
-        <text-box title="Role"
-                  :model="{data: user.role}"
+        <text-box label="Role"
+                  v-model="user.role"
                   readonly
         ></text-box>
       </v-col>
 
-      <v-col cols="5" class="mt-2 ml-4">
+      <v-col cols="3" class="mt-2 ml-4">
         <div class="subheading font-weight-medium">Profile picture here</div>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="6">
+      <v-col cols="8">
         <div>Change Password</div>
         <v-divider class="my-2"></v-divider>
 
         <v-form ref="passwordForm"
                 lazy-validation>
-          <text-box title="Old password"
+          <text-box label="Old password"
                     password
-                    :model="passwords.old"
+                    v-model="passwords.old"
                     :rules="notEmptyRules"
           ></text-box>
-          <text-box title="New password"
+          <text-box label="New password"
                     password
-                    :model="passwords.newOne"
+                    v-model="passwords.newOne"
                     :rules="notEmptyRules"
           ></text-box>
-          <text-box title="Confirm New password"
+          <text-box label="Confirm New password"
                     password
-                    :model="passwords.confirm"
+                    v-model="passwords.confirm"
                     :rules="confirmedRules"
           ></text-box>
         </v-form>
@@ -44,11 +44,9 @@
     </v-row>
 
     <v-row>
-      <v-col cols="3">
+      <v-col cols="8" class="text-end">
         <v-btn color="primary" tile @click="onUpdatePasswordClick">Update password</v-btn>
-      </v-col>
-      <v-col cols="3">
-        <v-btn color="info" outlined @click="onForgotPasswordClick">I forgot my password</v-btn>
+        <v-btn color="info" outlined @click="onForgotPasswordClick" class="ml-4">I forgot my password</v-btn>
       </v-col>
     </v-row>
 
@@ -82,16 +80,16 @@
       return {
         dialog: false,
         passwords: {
-          old: {data: ''},
-          newOne: {data: ''},
-          confirm: {data: ''}
+          old: '',
+          newOne: '',
+          confirm: ''
         },
         notEmptyRules: [
           v => !!v || this.$t('settings.profile.password_not_empty')
         ],
         confirmedRules: [
           v => !!v || this.$t('settings.profile.password_not_empty'),
-          v => v === this.passwords.newOne.data || this.$t('settings.profile.password_not_same')
+          v => v === this.passwords.newOne || this.$t('settings.profile.password_not_same')
         ]
       }
     },
@@ -111,11 +109,7 @@
           return
         }
 
-        this.$store.dispatch(actions.users.changePassword, {
-          old: this.passwords.old.data,
-          newOne: this.passwords.newOne.data,
-          confirm: this.passwords.confirm.data
-        }).then(() => {
+        this.$store.dispatch(actions.users.changePassword, this.passwords).then(() => {
           this.dialog = true
         }).catch((err) => {
           console.log(err)

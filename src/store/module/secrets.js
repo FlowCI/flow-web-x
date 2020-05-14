@@ -10,21 +10,21 @@ const state = {
 }
 
 const mutations = {
-  add (state, credential) {
-    state.items.push(credential)
+  add (state, secrets) {
+    state.items.push(secrets)
   },
 
-  remove (state, credential) {
+  remove (state, secrets) {
     for (let i = 0; i < state.items.length; i++) {
-      if (state.items[i].id === credential.id) {
+      if (state.items[i].id === secrets.id) {
         state.items.splice(i, 1)
         return
       }
     }
   },
 
-  list (state, credentials) {
-    state.items = credentials
+  list (state, secrets) {
+    state.items = secrets
   },
 
   loaded (state, credential) {

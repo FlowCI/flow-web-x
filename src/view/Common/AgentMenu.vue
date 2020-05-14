@@ -41,7 +41,6 @@
     },
     mounted() {
       this.$store.dispatch(actions.agents.list).then()
-      subscribeTopic.agents(this.$store)
     },
     computed: {
       ...mapState({

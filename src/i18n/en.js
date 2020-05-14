@@ -12,6 +12,7 @@ export default {
   login: 'Login',
   password: 'Password',
   confirm: 'Confirm',
+  restart: 'Restart',
 
   menu: {
     signedInAs: 'Signed in as ',
@@ -116,7 +117,8 @@ export default {
       users: 'Users',
       security: 'Security',
       agent: 'Agents',
-      credential: 'Secrets'
+      secret: 'Secrets',
+      config: 'Config'
     },
 
     profile: {

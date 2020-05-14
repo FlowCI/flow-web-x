@@ -30,7 +30,6 @@
 <script>
   import { mapState } from 'vuex'
   import actions from '@/store/actions'
-  import Nav from '@/components/Common/Nav'
   import SettingsOptionTab from '@/view/Flow/SettingsOptionTab'
   import SettingsEnvTab from '@/view/Flow/SettingsEnvTab'
   import SettingsConfigTab from '@/view/Flow/SettingsConfigTab'
@@ -49,19 +48,19 @@
         steps: state => state.flows.steps,
         flow: state => state.flows.selected.obj
       }),
-      name () {
+      name() {
         return this.$route.params.id
       }
     },
     watch: {
-      name (after) {
+      name(after) {
         if (after !== this.flow.name) {
           this.$store.dispatch(actions.flows.select, after).then()
         }
       }
     },
     methods: {
-      onBackClick () {
+      onBackClick() {
         this.$router.push({path: `/flows/${this.name}/jobs`})
       }
     }
@@ -69,9 +68,21 @@
 </script>
 
 <style lang="scss">
-.flow-settings {
-  height: 100%;
-  position: relative;
-  overflow-y: auto;
-}
+  .flow-settings {
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+
+    .v-tabs-items {
+      height: 93%;
+
+      .v-window__container {
+        height: 100%;
+
+        .v-window-item {
+          height: 100%;
+        }
+      }
+    }
+  }
 </style>

@@ -14,7 +14,7 @@ const state = {
     total: 0
   },
   JobsStatus: {},
-  selected: {},
+  selected: {}, // current selected job
   yml: '',
   latest: [], // latest job object array
   reports: [],
@@ -71,8 +71,8 @@ const mutations = {
     })
 
     // update job selected
-    if (state.selected.id === updatedJob.id) {
-      state.selected = state.items[ itemIndex ]
+    if (state.selected && state.selected.id === updatedJob.id) {
+      state.selected = updatedJob
     }
   },
 
@@ -129,6 +129,10 @@ const actions = {
     }
 
     await http.post('jobs/run', emptyFunc, {flow, inputs})
+  },
+
+  async rerun ({commit}, jobId) {
+    await http.post('jobs/rerun', emptyFunc, {jobId})
   },
 
   async cancel ({commit}, {flow, buildNumber}) {

@@ -45,10 +45,15 @@
         <v-btn text
                color="error"
                @click="onStopClick"
-               v-if="!finished"
+               v-if="!wrapper.isFinished"
         >
           <v-icon>mdi-stop</v-icon>
           {{ $t('cancel') }}
+        </v-btn>
+
+        <v-btn text @click="onRerunClick" v-if="wrapper.isFinished">
+          <v-icon>mdi-restart</v-icon>
+          {{ $t('restart') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -73,8 +78,8 @@
         {{ $t('job.tab.yml') }}
       </v-tab>
       <v-tab v-for="report in reports"
-              :key="report.id"
-              :href="'#' + report.name">
+             :key="report.id"
+             :href="'#' + report.name">
         {{ report.name }}
       </v-tab>
       <v-tab href="#artifacts" class="ml-0 elevation-1">
@@ -109,7 +114,7 @@
   import actions from '@/store/actions'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
-  import { isJobFinished, JobWrapper } from '@/util/jobs'
+  import { JobWrapper } from '@/util/jobs'
   import { icons } from '@/util/agents'
   import { mapState } from 'vuex'
 
@@ -122,7 +127,7 @@
 
   export default {
     name: 'JobDetail',
-    data () {
+    data() {
       return {
         agentIcons: icons
       }
@@ -134,8 +139,11 @@
       DetailTabArtifact,
       DetailHtmlReport
     },
-    mounted () {
+    mounted() {
       this.load()
+    },
+    destroyed() {
+      unsubscribeTopic.steps(this.job.id)
     },
     computed: {
       ...mapState({
@@ -144,53 +152,51 @@
         steps: state => state.steps.items,
       }),
 
-      flow () {
+      flow() {
         return this.$route.params.id
       },
 
-      number () {
+      number() {
         return this.$route.params.num
       },
 
-      wrapper () {
+      wrapper() {
         return new JobWrapper(this.job)
-      },
-
-      finished () {
-        return isJobFinished(this.job)
       }
     },
-    destroyed () {
-      unsubscribeTopic.steps(this.job.id)
-    },
     watch: {
-      flow () {
+      flow() {
         this.load()
       },
 
-      number () {
+      number() {
         this.load()
       },
 
       // subscribe steps change when job been loaded
-      job (newJob, oldJob) {
-        if (isJobFinished(newJob)) {
-          return
-        }
-
-        subscribeTopic.steps(newJob.id, this.$store)
+      job(obj) {
+        subscribeTopic.steps(obj.id, this.$store)
       }
     },
     methods: {
-      load () {
+      load() {
         let payload = {flow: this.flow, buildNumber: this.number}
+        this.$store.dispatch(actions.jobs.select, payload).then()
         this.$store.dispatch(actions.jobs.steps.get, payload).then()
         this.$store.dispatch(actions.jobs.reports.list, payload).then()
       },
 
-      onStopClick () {
+      onStopClick() {
         let payload = {flow: this.flow, buildNumber: this.number}
         this.$store.dispatch(actions.jobs.cancel, payload).then()
+      },
+
+      onRerunClick() {
+        this.$store.dispatch(actions.jobs.rerun, this.job.id)
+            .then()
+            .catch(reason => {
+              console.log(reason)
+            })
       }
     }
   }
@@ -212,12 +218,15 @@
       .v-tabs-bar {
         height: 6%;
       }
+
       .v-window {
         height: 93%;
       }
+
       .v-window__container {
         height: 99%;
       }
+
       .v-window-item {
         height: 99%;
       }

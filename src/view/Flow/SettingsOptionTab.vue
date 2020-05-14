@@ -8,7 +8,7 @@
       </v-col>
 
       <v-col cols="7">
-        <option-flow-name :flow="flow"></option-flow-name>
+        <option-flow-settings :flow="flow"></option-flow-settings>
       </v-col>
 
       <!-- Git Access Option -->
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import OptionFlowName from '@/components/Flow/OptionFlowName'
+  import OptionFlowSettings from '@/components/Flow/OptionFlowSettings'
   import OptionGitAccess from '@/components/Flow/OptionGitAccess'
   import OptionDeleteFlow from '@/components/Flow/OptionDeleteFlow'
 
@@ -47,7 +47,7 @@
       }
     },
     components: {
-      OptionFlowName,
+      OptionFlowSettings,
       OptionGitAccess,
       OptionDeleteFlow
     },

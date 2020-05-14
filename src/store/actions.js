@@ -42,6 +42,7 @@ export default {
     latest: 'jobs/latest',
     start: 'jobs/start',
     create: 'jobs/create',
+    rerun: 'jobs/rerun',
     cancel: 'jobs/cancel',
     list: 'jobs/list',
     statusUpdate: 'jobs/statusUpdate',
@@ -60,6 +61,7 @@ export default {
       update: 'steps/update'
     },
     logs: {
+      push: 'logs/push',
       load: 'logs/load',
       download: 'logs/download'
     },
@@ -81,6 +83,13 @@ export default {
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',
     delete: 'secrets/delete'
+  },
+
+  configs: {
+    saveSmtp: 'configs/saveSmtp',
+    list: 'configs/list',
+    get: 'configs/get',
+    delete: 'configs/delete'
   },
 
   users: {

@@ -14,6 +14,7 @@ import { Store as SecretsStore } from './module/secrets'
 import { Store as UserStore } from './module/users'
 import { Store as StatsStore } from './module/stats'
 import { Store as PluginStore } from './module/plugins'
+import { Store as ConfigStore } from './module/configs'
 
 Vue.use(Vuex)
 
@@ -31,7 +32,8 @@ const store = new Vuex.Store({
     'secrets': SecretsStore,
     'users': UserStore,
     'stats': StatsStore,
-    'plugins': PluginStore
+    'plugins': PluginStore,
+    'configs': ConfigStore
   }
 })
 

@@ -53,7 +53,7 @@ export default {
         return
       }
 
-      const wrapper = new StepWrapper(after, 0)
+      const wrapper = new StepWrapper(after)
       this.graph.updateItem(node, wrapper.status.config)
     }
   },
@@ -104,14 +104,14 @@ export default {
 
     buildGraphData () {
       let nodes = []
-      
+
       const start = _.cloneDeep(this.points.terminal)
       start.id = 'Start'
       start.label = 'Start'
       nodes.push(start)
 
       this.steps.forEach((s, index) => {
-        const wrapper = new StepWrapper(s, index)
+        const wrapper = new StepWrapper(s)
         const node = {
           id: wrapper.id,
           label: wrapper.name

@@ -130,6 +130,6 @@
 
 <style scoped>
   .editor {
-    height: 90%;
+    height: 95%;
   }
 </style>

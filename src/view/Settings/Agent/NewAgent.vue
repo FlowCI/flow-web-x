@@ -27,12 +27,9 @@
     </v-row>
 
     <v-row>
-      <v-col cols="6"></v-col>
-      <v-col cols="1">
+      <v-col cols="8" class="text-end">
         <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="primary" @click="onSaveClick">{{ $t('save') }}</v-btn>
+        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
       </v-col>
     </v-row>
   </div>

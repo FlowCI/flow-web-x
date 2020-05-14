@@ -3,20 +3,16 @@
     <v-row>
       <v-col cols="8">
         <v-form ref="nameForm" lazy-validation>
-          <v-text-field label="Name"
-                        :rules="nameRules"
-                        v-model="name"
-          ></v-text-field>
+          <text-box label="Name"
+                    :rules="nameRules"
+                    v-model="name"
+          ></text-box>
         </v-form>
-      </v-col>
-    </v-row>
 
-    <v-row>
-      <v-col cols="8">
-        <v-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
-                  label="Category"
-                  v-model="category"
-        ></v-select>
+        <text-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
+                     label="Category"
+                     v-model="category"
+        ></text-select>
       </v-col>
     </v-row>
 
@@ -38,13 +34,9 @@
     </v-row>
 
     <v-row>
-      <v-col cols="6">
-      </v-col>
-      <v-col cols="1">
+      <v-col cols="8" class="text-end">
         <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-      </v-col>
-      <v-col cols="1">
-        <v-btn color="primary" @click="onSaveClick">{{ $t('save') }}</v-btn>
+        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -53,13 +45,17 @@
 <script>
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
+  import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
   import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
-  import { credentialNameRules } from '@/util/rules'
+  import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
     name: 'SettingsSecretNew',
     components: {
+      TextBox,
+      TextSelect,
       SshRsaEditor,
       AuthEditor
     },
@@ -67,7 +63,7 @@
       return {
         CATEGORY_SSH_RSA,
         CATEGORY_AUTH,
-        nameRules: credentialNameRules(this),
+        nameRules: secretAndConfigNameRules(this),
 
         name: '',
         category: CATEGORY_SSH_RSA,
@@ -156,8 +152,6 @@
           this.$store.dispatch(actions.secrets.createAuth, param).then(() => {
             this.onBackClick()
           })
-
-          return
         }
       }
     }

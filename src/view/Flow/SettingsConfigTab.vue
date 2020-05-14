@@ -11,10 +11,10 @@
       <span class="tab-text">Plugins</span>
     </v-tab>
     <v-tab-item value="tab-yaml">
-      <edit-yaml :flow="flow" class="mt-2 editor"></edit-yaml>
+      <edit-yaml :flow="flow" class="editor"></edit-yaml>
     </v-tab-item>
     <v-tab-item value="tab-plugins">
-      <plugins :flow="flow" :steps="steps" class="mt-2"></plugins>
+      <plugins :flow="flow" :steps="steps"></plugins>
     </v-tab-item>
   </v-tabs>
 </template>
@@ -46,17 +46,27 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
   .flow-yml-settings {
-    width: 98%
-  }
+    width: 98% !important;
+    height: 100%;
 
-  .tab-text {
-    min-width: 65px;
-    text-align: left;
-  }
+    .tab-text {
+      min-width: 65px;
+      text-align: left;
+    }
 
-  .editor {
-    height: 700px;
+    .v-tabs-items {
+      margin-left: 5px;
+      height: 100% !important;
+
+      .v-window__container {
+        height: 100%;
+
+        .v-window-item {
+          height: 100%;
+        }
+      }
+    }
   }
 </style>

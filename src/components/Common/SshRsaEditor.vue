@@ -121,19 +121,19 @@
     mounted () {
       if (this.showSelection) {
         this.$store
-          .dispatch(actions.credentials.listNameOnly, CATEGORY_SSH_RSA)
+          .dispatch(actions.secrets.listNameOnly, CATEGORY_SSH_RSA)
           .then()
       }
     },
     computed: {
       ...mapState({
-        credentials: state => state.credentials.items,
+        secrets: state => state.secrets.items,
         sshRsa: state => state.flows.sshRsa
       }),
 
       names () {
         const nameList = []
-        for (let c of this.credentials) {
+        for (let c of this.secrets) {
           nameList.push(c.name)
         }
         return nameList

@@ -2,13 +2,9 @@
   <div>
     <v-row>
       <v-col cols="8">
-        <v-text-field label="Name"
-                      readonly
-                      v-model="name"
-        ></v-text-field>
+        <text-box label="Name" readonly v-model="name"></text-box>
       </v-col>
     </v-row>
-
 
     <v-row>
       <v-col cols="8" v-if="isSshRsa">
@@ -28,58 +24,31 @@
     </v-row>
 
     <v-row>
-      <v-col cols="5"></v-col>
-      <v-col cols="2">
-        <v-dialog
-            v-model="dialog"
-            width="500"
-        >
-          <template v-slot:activator="{ on }">
-            <v-btn
-                outlined
-                color="error"
-                v-on="on"
-            >{{ $t('delete') }}
-            </v-btn>
+      <v-col cols="8" class="text-end">
+        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete secret {{ name }}?
+            </span>
           </template>
-          <v-card>
-            <v-card-title
-                class="red--text subheading"
-                primary-title
-            >Delete credential {{ name }}?
-            </v-card-title>
+          <template v-slot:content>
+            <div>
+              You are going to delete the secret {{ name }}.
+              Deleted secret CANNOT be restored!
+            </div>
+            <div class="mt-3 red--text" v-if="connectedFlows.length > 0">
+              <span>The following flow will be affected!</span>
+              <ul>
+                <li v-for="flow in connectedFlows"
+                    :key="flow.id"
+                >{{ flow.name }}
+                </li>
+              </ul>
+            </div>
+          </template>
+        </confirm-btn>
 
-            <!-- list the flows which are connected with credential -->
-            <v-card-text>
-              <div>
-                You are going to credential {{ name }}.
-                Removed credential CANNOT be restored!
-              </div>
-
-              <div class="mt-3 red--text" v-if="connectedFlows.length > 0">
-                <span>The following flow will be affected!</span>
-
-                <ul>
-                  <li v-for="flow in connectedFlows"
-                      :key="flow.id"
-                  >{{ flow.name }}
-                  </li>
-                </ul>
-              </div>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="dialog = false">{{ $t('cancel') }}</v-btn>
-              <v-btn outlined color="error" @click="onDeleteClick">{{ $t('delete') }}</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-col>
-      <v-col cols="1">
-        <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
+        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -89,17 +58,21 @@
   import actions from '@/store/actions'
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
-  import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
+  import TextBox from '@/components/Common/TextBox'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
+  import { CATEGORY_AUTH, CATEGORY_SSH_RSA } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
     name: 'SettingsSecretEdit',
     components: {
+      ConfirmBtn,
+      TextBox,
       SshRsaEditor,
       AuthEditor
     },
     props: {
-      credentialObj: {
+      secretObj: {
         type: Object,
         required: false,
         default () {
@@ -130,43 +103,35 @@
 
       navs () {
         return [
-          {
-            text: 'Secrets',
-            href: '#/settings/secrets'
-          },
-          {
-            text: 'Edit'
-          },
-          {
-            text: this.name
-          }
+          {text: 'Secrets', href: '#/settings/secrets'},
+          {text: this.name}
         ]
       },
 
       name () {
-        return this.credentialObj.name
+        return this.secretObj.name
       },
 
       isSshRsa () {
-        return this.credentialObj.category === CATEGORY_SSH_RSA
+        return this.secretObj.category === CATEGORY_SSH_RSA
       },
 
       isAuth () {
-        return this.credentialObj.category === CATEGORY_AUTH
+        return this.secretObj.category === CATEGORY_AUTH
       },
 
       instance() {
         if (this.isSshRsa) {
           return {
             selected: '',
-            pair: this.credentialObj.pair
+            pair: this.secretObj.pair
           }
         }
 
         if (this.isAuth) {
           return {
             selected: '',
-            pair: this.credentialObj.pair
+            pair: this.secretObj.pair
           }
         }
 
@@ -175,11 +140,11 @@
     },
     methods: {
       onBackClick () {
-        this.$router.push('/settings/credentials')
+        this.$router.push('/settings/secrets')
       },
 
       onDeleteClick () {
-        this.$store.dispatch(actions.secrets.delete, this.credentialObj).then(() => {
+        this.$store.dispatch(actions.secrets.delete, this.secretObj).then(() => {
           this.onBackClick()
         })
       }

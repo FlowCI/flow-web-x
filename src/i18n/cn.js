@@ -12,6 +12,7 @@ export default {
   login: '登录',
   password: '密码',
   confirm: '确认',
+  restart: '重新开始',
 
   menu: {
     signedInAs: '当前用户 ',
@@ -114,7 +115,8 @@ export default {
       users: 'Users',
       security: '安全',
       agent: 'Agents',
-      credential: '秘钥'
+      secret: '秘钥',
+      config: '配置'
     },
 
     profile: {

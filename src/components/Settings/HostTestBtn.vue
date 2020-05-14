@@ -86,8 +86,6 @@
     },
     methods: {
       onClick () {
-        subscribeTopic.hosts(this.$store)
-
         this.$store.dispatch(actions.hosts.createOrUpdate, this.wrapper.rawInstance).then(() => {
           this.loading = true
 

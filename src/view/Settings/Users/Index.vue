@@ -11,7 +11,8 @@
       <tr class="caption">
         <td>{{ item.email }}</td>
         <td>{{ item.role }}</td>
-        <td>{{ item.createdAt }}</td>
+        <td>{{ timeFormat(item.createdAt) }}</td>
+        <td>{{ item.createdBy }}</td>
         <td>
           <v-btn icon class="ma-0" @click="onEditBtnClick(item)">
             <v-icon small>mdi-pencil</v-icon>
@@ -31,11 +32,13 @@
 <script>
   import actions from '@/store/actions'
   import { mapState } from 'vuex'
+  import { timeFormat } from "@/util/time"
 
   export default {
     name: 'SettingsUsersHome',
     data () {
       return {
+        timeFormat,
         searchText: '',
         loading: false,
         pagination: {
@@ -51,7 +54,8 @@
           },
           {text: 'Role', value: 'role'},
           {text: 'Created At', value: 'createdAt'},
-          {text: '', value: ''}
+          {text: 'Created By', value: 'createdBy'},
+          {text: '', value: '', align: 'right'}
         ]
       }
     },
