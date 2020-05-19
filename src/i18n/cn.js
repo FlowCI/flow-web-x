@@ -49,6 +49,14 @@ export default {
 
     more_template: 'More template',
 
+    tab: {
+      options: '设置',
+      variables: '环境变量',
+      yaml: 'YAML 配置',
+      notification: '消息通知',
+      members: '成员',
+    },
+
     hint: {
       name_required: '请输入 Flow 名称',
       name_size: 'Flow 名称长度需要小于 20 个字符',

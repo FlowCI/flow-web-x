@@ -49,6 +49,14 @@ export default {
 
     more_template: 'More template',
 
+    tab: {
+      options: 'Options',
+      variables: 'Variables',
+      yaml: 'YAML',
+      notification: 'Notification',
+      members: 'Members',
+    },
+
     hint: {
       name_required: 'Flow name is required',
       name_size: 'Flow name must be less than 20 character',

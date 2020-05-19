@@ -1,6 +1,5 @@
 <template>
   <div class="env-tab">
-
     <v-row align="center">
       <v-col class="mb-4">
       <span class="font-weight-light title">Variables
