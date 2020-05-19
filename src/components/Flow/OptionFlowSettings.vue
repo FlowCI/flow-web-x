@@ -95,7 +95,7 @@
 
         this.loading = true
 
-        this.$store.dispatch(actions.flows.update, payload).then(() => {
+        this.$store.dispatch(actions.flows.setYmlSource, payload).then(() => {
           this.loading = false
         }).catch(() => {
           this.loading = false
