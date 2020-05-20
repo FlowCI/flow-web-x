@@ -30,6 +30,10 @@ export default {
       add: 'flows/addVar',
       remove: 'flows/removeVar'
     },
+    notify: {
+      save: 'flows/saveNotify',
+      remove: 'flows/removeNotify'
+    },
     yml: {
       load: 'flows/loadYml',
       save: 'flows/saveYml'

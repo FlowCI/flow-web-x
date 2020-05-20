@@ -1,8 +1,8 @@
 <template>
   <div class="notify-tab">
     <v-row>
-      <v-col cols="3" v-for="item in items" :key="item.name">
-        <option-notify-item :wrapper="item"></option-notify-item>
+      <v-col cols="4" v-for="item in items" :key="item.name">
+        <option-notify-item :wrapper="item" :flow="flow"></option-notify-item>
       </v-col>
     </v-row>
   </div>
