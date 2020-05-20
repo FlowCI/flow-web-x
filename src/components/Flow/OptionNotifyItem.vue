@@ -1,48 +1,33 @@
 <template>
-  <v-card
-      class="mx-auto"
-      color="#26c6da"
-      dark
-      max-width="400"
-  >
+  <v-card max-width="400" class="notify-plugin">
     <v-card-title>
-      <v-icon
-          large
-          left
-      >
+      <v-icon large left>
         mdi-twitter
       </v-icon>
-      <span class="title font-weight-light">Twitter</span>
+      <span class="title">{{ wrapper.name }}</span>
+      <v-spacer></v-spacer>
+
+      <span class="subtitle-2">{{ wrapper.version }}</span>
+      <v-btn icon :href="wrapper.source" target="_blank">
+        <v-icon small>mdi-link</v-icon>
+      </v-btn>
     </v-card-title>
 
-    <v-card-text class="headline font-weight-bold">
-      "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."
+    <v-card-subtitle>
+      {{ wrapper.desc }}
+    </v-card-subtitle>
+
+    <v-card-text>
+      <v-row class="plugin-input">
+        <v-col v-for="input in wrapper.inputs" :key="input.name" cols="12">
+          <v-text-field :label="input.name" dense></v-text-field>
+        </v-col>
+      </v-row>
     </v-card-text>
 
     <v-card-actions>
-      <v-list-item class="grow">
-        <v-list-item-avatar color="grey darken-3">
-          <v-img
-              class="elevation-6"
-              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-          ></v-img>
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>Evan You</v-list-item-title>
-        </v-list-item-content>
-
-        <v-row
-            align="center"
-            justify="end"
-        >
-          <v-icon class="mr-1">mdi-heart</v-icon>
-          <span class="subheading mr-2">256</span>
-          <span class="mr-1">·</span>
-          <v-icon class="mr-1">mdi-share-variant</v-icon>
-          <span class="subheading">45</span>
-        </v-row>
-      </v-list-item>
+      <v-spacer></v-spacer>
+      <v-switch class="mx-2"></v-switch>
     </v-card-actions>
   </v-card>
 </template>
@@ -59,6 +44,35 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+  .notify-plugin {
+    .v-label {
+      font-size: 12px;
+    }
 
+    .v-input--selection-controls {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+
+    .v-card__actions {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .v-subheader {
+      padding: 0;
+    }
+
+    .v-input {
+      font-size: 14px
+    }
+
+    .plugin-input {
+      .col {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+    }
+  }
 </style>

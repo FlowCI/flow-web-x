@@ -26,6 +26,18 @@ export class PluginWrapper {
     return this.plugin.version
   }
 
+  get desc() {
+    return this.plugin.description
+  }
+
+  get source() {
+    return this.plugin.source
+  }
+
+  get inputs() {
+    return this.plugin.inputs
+  }
+
   get isDefaultIcon() {
     return !this.plugin.icon
   }

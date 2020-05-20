@@ -1,7 +1,9 @@
 import http from '../http'
+import { TagNotification } from "@/util/plugins";
 
 const state = {
   items: [],
+  notifies: [],
   readme: {},
   icon: {},
   tags:[], // tag set
@@ -20,6 +22,13 @@ const mutations = {
     state.tags = [...tags]
   },
 
+  setNotifies (state, items) {
+    state.notifies = []
+    for (let item of items) {
+      state.notifies.push(item)
+    }
+  },
+
   setReadMe (state, {name, content}) {
     state.readme[name] = content
   },
@@ -30,10 +39,16 @@ const mutations = {
 }
 
 const actions = {
-  async list({commit}, tags) {
+  async list({commit}) {
     await http.get('plugins', (plugins) => {
       commit('setItems', plugins)
-    }, {tags})
+    })
+  },
+
+  async notifies({commit}) {
+    await http.get('plugins', (plugins) => {
+      commit('setNotifies', plugins)
+    }, {tags: TagNotification})
   },
 
   async readme({commit}, name) {

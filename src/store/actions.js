@@ -109,6 +109,7 @@ export default {
 
   plugins: {
     list: 'plugins/list',
+    notifies: 'plugins/notifies',
     readme: 'plugins/readme',
     icon: 'plugins/icon'
   },
