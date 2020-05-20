@@ -1,3 +1,5 @@
+export const TagNotification = 'notification'
+
 export class PluginWrapper {
 
   constructor(plugin) {

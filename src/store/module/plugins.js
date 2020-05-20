@@ -30,10 +30,10 @@ const mutations = {
 }
 
 const actions = {
-  async list({commit}) {
+  async list({commit}, tags) {
     await http.get('plugins', (plugins) => {
       commit('setItems', plugins)
-    })
+    }, {tags})
   },
 
   async readme({commit}, name) {
