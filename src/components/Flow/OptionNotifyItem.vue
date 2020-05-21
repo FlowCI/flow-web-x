@@ -20,7 +20,15 @@
     <v-card-text>
       <v-row class="plugin-input">
         <v-col v-for="input in wrapper.inputs" :key="input.name" cols="12">
-          <span class="v-label">{{ input.name }} : </span>
+          <span class="v-label">
+            <span>{{ input.name }} :</span>
+            <span class="ml-1" v-if="input.value">
+              (default = {{ input.value }})
+            </span>
+            <span class="ml-1" v-if="valuesFromFlow[input.name]">
+              (flow variable = {{ valuesFromFlow[input.name] }})
+            </span>
+          </span>
           <v-text-field single-line
                         dense
                         v-model="inputs[input.name]"
@@ -47,6 +55,7 @@
 
 <script>
   import actions from '@/store/actions'
+  import { FlowWrapper } from "@/util/flows";
 
   export default {
     name: "OptionNotifyItem",
@@ -65,6 +74,7 @@
       return {
         enabled: false,
         inputs: {},
+        valuesFromFlow: {},
         edit: false
       }
     },
@@ -74,8 +84,18 @@
         return
       }
 
+      // set value from flow notify to local data
       this.enabled = notify.enabled
       this.inputs = notify.inputs
+
+      // try to get value from flow level variables
+      let flowWrapper = new FlowWrapper(this.flow)
+      for (let input of this.wrapper.inputs) {
+        let value = flowWrapper.fetchVars(input.name)
+        if (value) {
+          this.valuesFromFlow[input.name] = value
+        }
+      }
     },
     methods: {
       getNotifyObjFromFlow() {
