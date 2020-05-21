@@ -21,13 +21,18 @@
       <v-row class="plugin-input">
         <v-col v-for="input in wrapper.inputs" :key="input.name" cols="12">
           <span class="v-label">{{ input.name }} : </span>
-          <v-text-field single-line :solo="edit" :disabled="!edit" dense></v-text-field>
+          <v-text-field single-line
+                        dense
+                        v-model="inputs[input.name]"
+                        :solo="edit"
+                        :disabled="!edit"
+          ></v-text-field>
         </v-col>
       </v-row>
     </v-card-text>
 
     <v-card-actions>
-      <v-switch class="mx-2" :disabled="!edit" v-model="isEnabled"></v-switch>
+      <v-switch class="mx-2" :disabled="!edit" v-model="enabled"></v-switch>
       <v-spacer></v-spacer>
       <v-btn icon @click="edit = false" v-if="edit">
         <v-icon small>mdi-undo</v-icon>
@@ -63,29 +68,28 @@
         edit: false
       }
     },
-    computed: {
-      isEnabled: {
-        get () {
-          let list = this.flow.notifications
-          if (!list) {
-            return false
-          }
-
-          for (let item of list) {
-            if (item.plugin === this.wrapper.name) {
-              return item.enabled
-            }
-          }
-
-          return false
-        },
-
-        set (newValue) {
-          this.enabled = newValue
-        }
+    mounted() {
+      let notify = this.getNotifyObjFromFlow()
+      if (!notify) {
+        return
       }
+
+      this.enabled = notify.enabled
+      this.inputs = notify.inputs
     },
     methods: {
+      getNotifyObjFromFlow() {
+        let list = this.flow.notifications
+        if (list) {
+          for (let item of list) {
+            if (item.plugin === this.wrapper.name) {
+              return item
+            }
+          }
+        }
+        return null
+      },
+
       onEditClick() {
         if (this.edit) {
           let params = {
@@ -100,7 +104,7 @@
           return
         }
 
-        this.edit = true
+        this.edit = !this.edit
       }
     }
   }
