@@ -18,6 +18,10 @@ export class PluginWrapper {
     return this.plugin.tags
   }
 
+  get docker() {
+    return this.plugin.docker
+  }
+
   get icon() {
     return this.plugin.icon
   }

@@ -1,13 +1,24 @@
 <template>
   <v-card max-width="600" class="notify-plugin">
     <v-card-title>
-      <v-icon large left>
-        mdi-twitter
-      </v-icon>
+      <span class="mr-1">
+        <v-icon v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
+        <v-img v-if="wrapper.isHttpLinkIcon"
+               :src="wrapper.icon"
+               max-height="24"
+               max-width="16"
+        ></v-img>
+        <img v-if="wrapper.isRepoSrcIcon"
+             class="plugin-icon"
+             :id="wrapper.id"
+             alt=""/>
+      </span>
+
       <span class="title">{{ wrapper.name }}</span>
       <v-spacer></v-spacer>
 
-      <span class="subtitle-2">{{ wrapper.version }}</span>
+      <span class="subtitle-2 mr-1">{{ wrapper.version }}</span>
+      <v-icon small v-if="wrapper.docker">mdi-docker</v-icon>
       <v-btn icon :href="wrapper.source" target="_blank">
         <v-icon small>mdi-link</v-icon>
       </v-btn>
@@ -56,6 +67,7 @@
 <script>
   import actions from '@/store/actions'
   import { FlowWrapper } from "@/util/flows";
+  import { mapState } from "vuex";
 
   export default {
     name: "OptionNotifyItem",
@@ -70,7 +82,7 @@
         type: Object
       }
     },
-    data () {
+    data() {
       return {
         enabled: false,
         inputs: {},
@@ -79,6 +91,8 @@
       }
     },
     mounted() {
+      this.setSrcIcon(this.wrapper)
+
       let notify = this.getNotifyObjFromFlow()
       if (!notify) {
         return
@@ -97,6 +111,11 @@
         }
       }
     },
+    computed: {
+      ...mapState({
+        iconCache: state => state.plugins.icon
+      })
+    },
     methods: {
       getNotifyObjFromFlow() {
         let list = this.flow.notifications
@@ -108,6 +127,51 @@
           }
         }
         return null
+      },
+
+      setSrcIcon(wrapper) {
+        const element = document.getElementById(wrapper.id)
+        if (!element || element.src) {
+          return
+        }
+
+        const b64 = this.iconCache[wrapper.name]
+        if (b64) {
+          element.src = `data:${this.getMediaType(wrapper)};base64,${b64}`
+          return
+        }
+
+        this.$store.dispatch(actions.plugins.icon, wrapper.name).then(() => {
+          const b64 = this.iconCache[wrapper.name]
+          element.src = `data:${this.getMediaType(wrapper)};base64,${b64}`
+        })
+      },
+
+      getMediaType(plugin) {
+        if (!plugin.icon) {
+          return 'image/svg+xml'
+        }
+
+        const dotIndex = plugin.icon.lastIndexOf('.')
+        if (dotIndex < 0) {
+          return 'image/svg+xml'
+        }
+
+        const suffix = plugin.icon.substring(dotIndex + 1)
+
+        if (suffix === 'jpg' || suffix === 'jpeg') {
+          return 'image/jpeg'
+        }
+
+        if (suffix === 'gif') {
+          return 'image/gif'
+        }
+
+        if (suffix === 'png') {
+          return 'image/png'
+        }
+
+        return 'image/svg+xml'
       },
 
       onEditClick() {
@@ -132,6 +196,12 @@
 
 <style lang="scss">
   .notify-plugin {
+    .plugin-icon {
+      max-height: 60px;
+      max-width: 32px;
+      vertical-align: middle;
+    }
+
     .v-label {
       font-size: 12px;
     }
