@@ -26,7 +26,7 @@
                          @click="getReadMe(plugin)"
             >
               <v-list-item-icon>
-                <v-icon v-if="plugin.isDefaultIcon" small>mdi-view-grid-plus-outline</v-icon>
+                <v-icon v-if="plugin.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
                 <v-img v-if="plugin.isHttpLinkIcon"
                        :src="plugin.icon"
                        max-height="24"

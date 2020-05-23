@@ -9,9 +9,6 @@
     <v-tab href="#tab-config">
       {{ $t('flow.tab.yaml') }}
     </v-tab>
-    <v-tab href="#tab-notify">
-      {{ $t('flow.tab.notification') }}
-    </v-tab>
     <v-tab href="#tab-users">
       {{ $t('flow.tab.members') }}
     </v-tab>
@@ -23,9 +20,6 @@
     </v-tab-item>
     <v-tab-item value="tab-config">
       <settings-config-tab :flow="flow" :steps="steps"></settings-config-tab>
-    </v-tab-item>
-    <v-tab-item value="tab-notify">
-      <settings-notify-tab :flow="flow"></settings-notify-tab>
     </v-tab-item>
     <v-tab-item value="tab-users">
       <settings-member-tab :flow="flow"></settings-member-tab>
@@ -39,7 +33,6 @@
   import SettingsOptionTab from '@/view/Flow/SettingsOptionTab'
   import SettingsEnvTab from '@/view/Flow/SettingsEnvTab'
   import SettingsConfigTab from '@/view/Flow/SettingsConfigTab'
-  import SettingsNotifyTab from '@/view/Flow/SettingsNotifyTab'
   import SettingsMemberTab from '@/view/Flow/SettingsMemberTab'
 
   export default {
@@ -49,7 +42,6 @@
       SettingsEnvTab,
       SettingsOptionTab,
       SettingsMemberTab,
-      SettingsNotifyTab
     },
     computed: {
       ...mapState({

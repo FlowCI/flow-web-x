@@ -28,7 +28,7 @@
       {{ wrapper.desc }}
     </v-card-subtitle>
 
-    <v-card-text>
+    <v-card-text v-if="showInputs">
       <v-row class="plugin-input">
         <v-col v-for="input in wrapper.inputs" :key="input.name" cols="12">
           <span class="v-label">
@@ -80,6 +80,13 @@
       wrapper: {
         required: true,
         type: Object
+      },
+      showInputs: {
+        required: false,
+        type: Boolean,
+        default () {
+          return true
+        }
       }
     },
     data() {
@@ -175,18 +182,19 @@
       },
 
       onEditClick() {
-        if (this.edit) {
-          let params = {
-            flow: this.flow,
-            plugin: this.wrapper.name,
-            inputs: this.inputs,
-            enabled: this.enabled
-          }
-          this.$store.dispatch(actions.flows.notify.save, params).then(() => {
-            this.edit = false
-          })
-          return
-        }
+        // !! comment out since notification edit from YAML
+        // if (this.edit) {
+        //   let params = {
+        //     flow: this.flow,
+        //     plugin: this.wrapper.name,
+        //     inputs: this.inputs,
+        //     enabled: this.enabled
+        //   }
+        //   this.$store.dispatch(actions.flows.notify.save, params).then(() => {
+        //     this.edit = false
+        //   })
+        //   return
+        // }
 
         this.edit = !this.edit
       }
