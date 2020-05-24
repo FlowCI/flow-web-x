@@ -81,7 +81,10 @@ export default {
 
       stats_invalid_date: 'Invalid statistic date',
 
-      yaml_from_git: '当前 YAML 配置将从 Git 仓库中的 {0} 分支获得'
+      yaml_from_git: '当前 YAML 配置将从 Git 仓库中的 {0} 分支获得',
+
+      plugin_docker_run: '需要从 Docker 运行',
+      plugin_installed: '已使用'
     }
   },
 

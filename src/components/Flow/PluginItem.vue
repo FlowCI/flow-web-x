@@ -18,8 +18,21 @@
       <v-spacer></v-spacer>
 
       <span class="subtitle-2 mx-1">{{ wrapper.version }}</span>
-      <v-icon small v-if="isInstalled" color="green">mdi-check-circle</v-icon>
-      <v-icon small v-if="wrapper.docker" class="mx-1" color="blue lighten-1">mdi-docker</v-icon>
+
+      <v-tooltip bottom v-if="isInstalled">
+        <template v-slot:activator="{ on }">
+          <v-icon small color="green" v-on="on">mdi-check-circle</v-icon>
+        </template>
+        <span>{{ $t('flow.hint.plugin_installed') }}</span>
+      </v-tooltip>
+
+      <v-tooltip bottom v-if="wrapper.docker">
+        <template v-slot:activator="{ on }">
+          <v-icon small class="mx-1" color="blue lighten-1" v-on="on">mdi-docker</v-icon>
+        </template>
+        <span>{{ $t('flow.hint.plugin_docker_run') }}</span>
+      </v-tooltip>
+
       <v-btn icon x-small :href="wrapper.source" target="_blank">
         <v-icon small>mdi-link</v-icon>
       </v-btn>

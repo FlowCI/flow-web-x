@@ -81,7 +81,10 @@ export default {
 
       stats_invalid_date: 'Invalid statistic date',
 
-      yaml_from_git: 'Current yaml will be loaded from Git repo on branch {0}'
+      yaml_from_git: 'Current yaml will be loaded from Git repo on branch {0}',
+
+      plugin_docker_run: 'Run from docker',
+      plugin_installed: 'Applied'
     }
   },
 
