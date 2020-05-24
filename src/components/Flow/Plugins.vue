@@ -26,7 +26,10 @@
                          @click="getReadMe(plugin)"
             >
               <v-list-item-content>
-                <plugin-item :wrapper="plugin" :flow="flow"></plugin-item>
+                <plugin-item :wrapper="plugin"
+                             :flow="flow"
+                             :is-installed="isInstalledOnFlow(plugin)"
+                ></plugin-item>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -76,11 +79,6 @@
           this.getReadMe(plugin.name)
         }
       })
-    },
-    updated() {
-      for (let wrapper of this.pluginList) {
-        this.setSrcIcon(wrapper)
-      }
     },
     computed: {
       ...mapState({
@@ -164,6 +162,12 @@
           }
         }
 
+        for (let n of this.flow.notifications) {
+          if (n.plugin && n.plugin === plugin.name) {
+            return true
+          }
+        }
+
         return false
       },
 
@@ -189,51 +193,6 @@
             <head>${css}</head>
             <body><div>${marked(raw)}</div></body>
           </html>`
-      },
-
-      setSrcIcon(wrapper) {
-        const element = document.getElementById(wrapper.id)
-        if (!element || element.src) {
-          return
-        }
-
-        const b64 = this.iconCache[wrapper.name]
-        if (b64) {
-          element.src = `data:${this.getMediaType(wrapper)};base64,${b64}`
-          return
-        }
-
-        this.$store.dispatch(actions.plugins.icon, wrapper.name).then(() => {
-          const b64 = this.iconCache[wrapper.name]
-          element.src = `data:${this.getMediaType(wrapper)};base64,${b64}`
-        })
-      },
-
-      getMediaType(plugin) {
-        if (!plugin.icon) {
-          return 'image/svg+xml'
-        }
-
-        const dotIndex = plugin.icon.lastIndexOf('.')
-        if (dotIndex < 0) {
-          return 'image/svg+xml'
-        }
-
-        const suffix = plugin.icon.substring(dotIndex + 1)
-
-        if (suffix === 'jpg' || suffix === 'jpeg') {
-          return 'image/jpeg'
-        }
-
-        if (suffix === 'gif') {
-          return 'image/gif'
-        }
-
-        if (suffix === 'png') {
-          return 'image/png'
-        }
-
-        return 'image/svg+xml'
       }
     }
   }

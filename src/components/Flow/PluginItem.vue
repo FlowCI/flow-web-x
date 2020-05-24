@@ -5,8 +5,8 @@
         <v-icon v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
         <v-img v-if="wrapper.isHttpLinkIcon"
                :src="wrapper.icon"
-               max-height="24"
-               max-width="16"
+               max-height="25"
+               max-width="25"
         ></v-img>
         <img v-if="wrapper.isRepoSrcIcon"
              class="plugin-icon"
@@ -17,9 +17,10 @@
       <span class="title">{{ wrapper.name }}</span>
       <v-spacer></v-spacer>
 
-      <span class="subtitle-2 mr-1">{{ wrapper.version }}</span>
-      <v-icon small v-if="wrapper.docker">mdi-docker</v-icon>
-      <v-btn icon :href="wrapper.source" target="_blank">
+      <span class="subtitle-2 mx-1">{{ wrapper.version }}</span>
+      <v-icon small v-if="isInstalled" color="green">mdi-check-circle</v-icon>
+      <v-icon small v-if="wrapper.docker" class="mx-1" color="blue lighten-1">mdi-docker</v-icon>
+      <v-btn icon x-small :href="wrapper.source" target="_blank">
         <v-icon small>mdi-link</v-icon>
       </v-btn>
     </v-card-title>
@@ -46,7 +47,7 @@
         required: true,
         type: Object
       },
-      showInputs: {
+      isInstalled: {
         required: false,
         type: Boolean,
         default() {
@@ -120,8 +121,8 @@
 <style lang="scss">
   .notify-plugin {
     .plugin-icon {
-      max-height: 25px;
-      max-width: 25px;
+      height: 25px;
+      width: 25px;
       vertical-align: middle;
     }
 
