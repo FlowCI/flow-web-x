@@ -1,16 +1,16 @@
 <template>
   <v-tabs left class="flow-settings">
     <v-tab href="#tab-options">
-      Options
+      {{ $t('flow.tab.options') }}
     </v-tab>
     <v-tab href="#tab-env">
-      Environment
+      {{ $t('flow.tab.variables') }}
     </v-tab>
     <v-tab href="#tab-config">
-      Configuration
+      {{ $t('flow.tab.yaml') }}
     </v-tab>
     <v-tab href="#tab-users">
-      Members
+      {{ $t('flow.tab.members') }}
     </v-tab>
     <v-tab-item value="tab-options">
       <settings-option-tab :flow="flow"></settings-option-tab>
@@ -41,7 +41,7 @@
       SettingsConfigTab,
       SettingsEnvTab,
       SettingsOptionTab,
-      SettingsMemberTab
+      SettingsMemberTab,
     },
     computed: {
       ...mapState({

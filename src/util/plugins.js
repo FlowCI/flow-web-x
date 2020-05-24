@@ -1,3 +1,5 @@
+export const TagNotification = 'notification'
+
 export class PluginWrapper {
 
   constructor(plugin) {
@@ -16,12 +18,28 @@ export class PluginWrapper {
     return this.plugin.tags
   }
 
+  get docker() {
+    return this.plugin.docker
+  }
+
   get icon() {
     return this.plugin.icon
   }
 
   get version() {
     return this.plugin.version
+  }
+
+  get desc() {
+    return this.plugin.description
+  }
+
+  get source() {
+    return this.plugin.source
+  }
+
+  get inputs() {
+    return this.plugin.inputs
   }
 
   get isDefaultIcon() {

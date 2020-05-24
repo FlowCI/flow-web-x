@@ -234,13 +234,23 @@ const actions = {
     await confirmFunc()
   },
 
-  async update ({commit}, {name, isYamlFromRepo, yamlRepoBranch}) {
+  async rename ({commit}, {name, newName}) {
     await http.post(
-      `flows/${name}/update`,
+      `flows/${name}/rename`,
       (flow) => {
         commit('update', flow)
       },
-      {name, isYamlFromRepo, yamlRepoBranch}
+      {name: newName}
+    )
+  },
+
+  async setYmlSource({commit}, {name, isYamlFromRepo, yamlRepoBranch}) {
+    await http.post(
+        `flows/${name}/sourceOfYaml`,
+        (flow) => {
+          commit('update', flow)
+        },
+        {isYamlFromRepo, yamlRepoBranch}
     )
   },
 
@@ -350,22 +360,30 @@ const actions = {
         type: type
       }
     }
-
     const onSuccess = () => {
       commit('addVar', {flow, name, value})
     }
-
     await http.post(`flows/${flow.name}/variables`, onSuccess, payload)
   },
 
   async removeVar ({commit}, {flow, name}) {
     const payload = [ name ]
-
     const onSuccess = () => {
       commit('removeVar', {flow, name})
     }
-
     await http.delete(`flows/${flow.name}/variables`, onSuccess, payload)
+  },
+
+  async saveNotify({commit}, {flow, plugin, inputs, enabled}) {
+    const payload = {plugin, inputs, enabled}
+    const onSuccess = () => {
+      // commit('saveNotify', {flow, name})
+    }
+    await http.post(`flows/${flow.name}/notify`, onSuccess, payload)
+  },
+
+  async removeNotify({commit}, {flow, plugin}) {
+
   }
 }
 

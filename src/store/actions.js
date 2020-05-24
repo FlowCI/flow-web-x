@@ -15,7 +15,8 @@ export default {
     create: 'flows/create',
     createSshRsa: 'flows/createSshRsa',
     confirm: 'flows/confirm',
-    update: 'flows/update',
+    setYmlSource: 'flows/setYmlSource',
+    rename: 'flows/rename',
     list: 'flows/list',
     listByCredential: 'flows/listByCredential',
     select: 'flows/select',
@@ -108,6 +109,7 @@ export default {
 
   plugins: {
     list: 'plugins/list',
+    notifies: 'plugins/notifies',
     readme: 'plugins/readme',
     icon: 'plugins/icon'
   },
