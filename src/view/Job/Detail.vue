@@ -183,6 +183,7 @@
         let payload = {flow: this.flow, buildNumber: this.number}
         this.$store.dispatch(actions.jobs.select, payload).then()
         this.$store.dispatch(actions.jobs.steps.get, payload).then()
+        this.$store.dispatch(actions.jobs.steps.tasks, payload).then()
         this.$store.dispatch(actions.jobs.reports.list, payload).then()
       },
 

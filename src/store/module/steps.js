@@ -6,6 +6,7 @@ const state = {
   flow: null,
   buildNumber: null,
   items: [],
+  tasks: [],
   change: {}, // latest updated object needs to watch
 }
 
@@ -17,6 +18,10 @@ const mutations = {
 
   setSteps (state, steps) {
     state.items = steps
+  },
+
+  setTasks (state, tasks) {
+    state.tasks = tasks
   },
 
   updateSteps (state, steps) {
@@ -39,11 +44,16 @@ const actions = {
    */
   get ({commit}, {flow, buildNumber}) {
     commit('setJob', {flow, buildNumber})
-
-    let url = 'jobs/' + flow + '/' + buildNumber + '/steps'
-
+    let url = `jobs/${flow}/${buildNumber}/steps`
     http.get(url, (steps) => {
       commit('setSteps', steps)
+    })
+  },
+
+  getTasks({commit}, {flow, buildNumber}) {
+    let url = `jobs/${flow}/${buildNumber}/tasks`
+    http.get(url, (steps) => {
+      commit('setTasks', steps)
     })
   },
 

@@ -50,6 +50,7 @@
     computed: {
       ...mapState({
         steps: state => state.steps.items,
+        tasks: state => state.steps.tasks,
         change: state => state.steps.change,
         loaded: state => state.logs.loaded,
         pushed: state => state.logs.pushed
