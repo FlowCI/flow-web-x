@@ -14,7 +14,7 @@
       <edit-yaml :flow="flow" class="editor"></edit-yaml>
     </v-tab-item>
     <v-tab-item value="tab-plugins">
-      <plugins :flow="flow" :steps="steps"></plugins>
+      <plugins :flow="flow" :steps="steps" :notifications="notifications"></plugins>
     </v-tab-item>
   </v-tabs>
 </template>
@@ -31,6 +31,10 @@
         type: Object
       },
       steps: {
+        required: true,
+        type: Array
+      },
+      notifications: {
         required: true,
         type: Array
       }

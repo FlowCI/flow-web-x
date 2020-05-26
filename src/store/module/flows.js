@@ -11,7 +11,8 @@ const state = {
   gitBranches: [],
   itemsByCredential: [],
   users: [], // flow users
-  steps: [] // flow steps from yml
+  steps: [], // flow steps from yml
+  notifications: [] // flow notification from yml
 }
 
 const mutations = {
@@ -153,8 +154,9 @@ const mutations = {
     }
   },
 
-  setSteps (state, steps) {
-    state.steps = steps
+  setYmlObj (state, flowNode) {
+    state.steps = flowNode.children
+    state.notifications = flowNode.notifications
   }
 }
 
@@ -283,8 +285,8 @@ const actions = {
       commit('select', flow)
     })
 
-    await http.get(`flows/${name}/yml/steps`, (steps) => {
-      commit('setSteps', steps)
+    await http.get(`flows/${name}/yml/obj`, (flowNode) => {
+      commit('setYmlObj', flowNode)
     })
   },
 
