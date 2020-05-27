@@ -100,6 +100,10 @@
       },
 
       onPanelClick() {
+        if (!this.showLog) {
+          return
+        }
+
         if (this.terminal) {
           return
         }
