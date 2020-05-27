@@ -1,6 +1,7 @@
 <template>
   <div class="step-logging-item" @click="onPanelClick">
     <v-expansion-panels
+        :readonly="!showLog"
         tile
         multiple
         accordion
@@ -26,7 +27,7 @@
               <v-col cols="9">
               </v-col>
               <v-col cols="1" class="caption" v-if="wrapper.isFinished">
-                <v-btn icon x-small @click="onLogDownload">
+                <v-btn icon x-small @click="onLogDownload" :disabled="!showLog">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
 
@@ -37,7 +38,7 @@
           </template>
         </v-expansion-panel-header>
 
-        <v-expansion-panel-content>
+        <v-expansion-panel-content v-if="showLog">
           <div :id="`${wrapper.id}-terminal`" class="terminal"></div>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -59,7 +60,7 @@
         type: Object
       },
       bus: {
-        required: true,
+        required: false,
         type: Object
       }
     },
@@ -70,11 +71,18 @@
       }
     },
     mounted() {
-      this.bus.$on('writeLog', this.writeLog)
+      if (this.showLog) {
+        this.bus.$on('writeLog', this.writeLog)
+      }
     },
     destroyed() {
       if (this.terminal) {
         this.terminal.dispose()
+      }
+    },
+    computed: {
+      showLog() {
+        return !!this.bus
       }
     },
     methods: {
@@ -92,6 +100,10 @@
       },
 
       onPanelClick() {
+        if (!this.showLog) {
+          return
+        }
+
         if (this.terminal) {
           return
         }

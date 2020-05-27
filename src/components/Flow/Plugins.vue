@@ -60,6 +60,10 @@
       steps: {
         required: true,
         type: Array
+      },
+      notifications: {
+        required: true,
+        type: Array
       }
     },
     components: {
@@ -162,7 +166,7 @@
           }
         }
 
-        for (let n of this.flow.notifications) {
+        for (let n of this.notifications) {
           if (n.plugin && n.plugin === plugin.name) {
             return true
           }
