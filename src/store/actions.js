@@ -59,8 +59,9 @@ export default {
     },
     steps: {
       get: 'steps/get',
-      tasks: 'steps/getTasks',
-      update: 'steps/update'
+      update: 'steps/update',
+      getTasks: 'steps/getTasks',
+      updateTasks: 'steps/updateTasks',
     },
     logs: {
       push: 'logs/push',

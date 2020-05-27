@@ -34,6 +34,17 @@ const mutations = {
         }
       }
     }
+  },
+
+  updateTasks (state, tasks) {
+    for (let item of state.tasks) {
+      for (let newItem of tasks) {
+        if (item.id === newItem.id && item.status !== newItem.status) {
+          Object.assign(item, newItem)
+          break
+        }
+      }
+    }
   }
 }
 
@@ -50,6 +61,13 @@ const actions = {
     })
   },
 
+  /**
+   * Step update from ws push
+   */
+  update ({commit}, steps) {
+    commit('updateSteps', steps)
+  },
+
   getTasks({commit}, {flow, buildNumber}) {
     let url = `jobs/${flow}/${buildNumber}/tasks`
     http.get(url, (steps) => {
@@ -57,11 +75,8 @@ const actions = {
     })
   },
 
-  /**
-   * Step update from ws push
-   */
-  update ({commit}, steps) {
-    commit('updateSteps', steps)
+  updateTasks({commit}, tasks) {
+    commit('updateTasks', tasks)
   }
 }
 

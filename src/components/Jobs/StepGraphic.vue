@@ -38,7 +38,7 @@ export default {
   computed: {
     ...mapState({
       steps: state => state.steps.items,
-      stepChange: state => state.steps.change
+      change: state => state.steps.change
     }),
   },
   watch: {
@@ -47,7 +47,7 @@ export default {
       this.graph.render()
     },
 
-    stepChange (after) {
+    change (after) {
       const node = this.graph.findById(after.id)
       if (!node) {
         return

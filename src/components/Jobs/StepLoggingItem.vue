@@ -1,6 +1,7 @@
 <template>
   <div class="step-logging-item" @click="onPanelClick">
     <v-expansion-panels
+        :readonly="!showLog"
         tile
         multiple
         accordion
@@ -37,7 +38,7 @@
           </template>
         </v-expansion-panel-header>
 
-        <v-expansion-panel-content>
+        <v-expansion-panel-content v-if="showLog">
           <div :id="`${wrapper.id}-terminal`" class="terminal"></div>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -59,7 +60,7 @@
         type: Object
       },
       bus: {
-        required: true,
+        required: false,
         type: Object
       }
     },
@@ -70,11 +71,18 @@
       }
     },
     mounted() {
-      this.bus.$on('writeLog', this.writeLog)
+      if (this.showLog) {
+        this.bus.$on('writeLog', this.writeLog)
+      }
     },
     destroyed() {
       if (this.terminal) {
         this.terminal.dispose()
+      }
+    },
+    computed: {
+      showLog() {
+        return !!this.bus
       }
     },
     methods: {
