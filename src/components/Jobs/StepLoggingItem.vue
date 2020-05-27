@@ -27,7 +27,7 @@
               <v-col cols="9">
               </v-col>
               <v-col cols="1" class="caption" v-if="wrapper.isFinished">
-                <v-btn icon x-small @click="onLogDownload">
+                <v-btn icon x-small @click="onLogDownload" :disabled="!showLog">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
 
