@@ -27,27 +27,21 @@
 
     <div v-if="isEditOption">
       <v-row>
-        <v-col>
-          <v-text-field
+        <v-col cols="12">
+          <text-box
               label="Username"
               v-model="model.pair.username"
               :rules="authFormRules"
               :readonly="isReadOnly"
-          ></v-text-field>
-        </v-col>
-      </v-row>
+          ></text-box>
 
-      <v-row>
-        <v-col>
-          <v-text-field
+          <text-box
               label="Password"
-              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              password
               v-model="model.pair.password"
-              :type="showPassword ? 'text' : 'password'"
               :rules="authFormRules"
               :readonly="isReadOnly"
-              @click:append="showPassword = !showPassword"
-          ></v-text-field>
+          ></text-box>
         </v-col>
       </v-row>
     </div>
@@ -56,6 +50,7 @@
 
 <script>
   import actions from '@/store/actions'
+  import TextBox from '@/components/Common/TextBox'
   import { mapState } from 'vuex'
   import { authFormRules } from '@/util/rules'
   import { CATEGORY_AUTH } from '@/util/secrets'
@@ -89,10 +84,12 @@
         }
       }
     },
+    components: {
+      TextBox
+    },
     data () {
       return {
         option: 'edit',
-        showPassword: false,
         authFormRules: authFormRules(this)
       }
     },
