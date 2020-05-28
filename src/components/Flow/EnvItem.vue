@@ -6,6 +6,7 @@
           :readonly="!edit"
           v-model="obj.name"
           :error-messages="errors"
+          append-outer-icon="mdi-equal"
           solo
       ></v-text-field>
     </v-col>
@@ -155,6 +156,10 @@
 
     .v-input__slot {
       font-size: 12px !important;
+    }
+
+    .v-input__append-outer {
+      margin-top: 5px !important;
     }
   }
 </style>
