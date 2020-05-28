@@ -61,6 +61,10 @@ export class StepWrapper {
     return this.step.allowFailure && this.step.status === STATUS_SUCCESS && this.step.code !== 0
   }
 
+  get isTimeoutButAllowFailure() {
+    return this.step.allowFailure && this.step.status === STATUS_TIMEOUT
+  }
+
   get duration() {
     const start = moment(this.step.startAt)
     const end = moment(this.step.finishAt)

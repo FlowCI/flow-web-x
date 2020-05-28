@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="11">
+      <v-col cols="10">
         <span class="caption grey--text text--darken-1">{{ `Flow Name (${vars.flow.name})` }}</span>
         <v-text-field
             class="pt-1"
@@ -18,10 +18,8 @@
         <v-row align="center">
           <v-col cols="4">
             <v-switch inset
-                      :loading="loading"
-                      :label="isYamlFromRepo ? 'Load from' : 'Disabled'"
-                      v-model="isYamlFromRepo"
-                      @change="onSwitchChange"
+                      :label="flow.yamlFromRepo ? 'Load from' : 'Disabled'"
+                      v-model="flow.yamlFromRepo"
             ></v-switch>
           </v-col>
 
@@ -31,13 +29,40 @@
                         class="flow-branch-combo"
                         prepend-icon="mdi-source-branch"
                         :items="gitBranches"
-                        :disabled="!isYamlFromRepo"
-                        v-model="yamlRepoBranch"
-                        @change="onBranchChange"
+                        :disabled="!flow.yamlFromRepo"
+                        v-model="flow.yamlRepoBranch"
                         label="branch:">
             </v-combobox>
           </v-col>
         </v-row>
+      </v-col>
+    </v-row>
+
+    <v-row align="center">
+      <v-col cols="5">
+        <span class="caption grey--text text--darken-1">Queueing Timeout (seconds)</span>
+        <v-text-field
+            class="pt-1"
+            v-model="flow.jobTimeout"
+            type="number"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="5">
+        <span class="caption grey--text text--darken-1">Step Timeout (seconds)</span>
+        <v-text-field
+            class="pt-1"
+            v-model="flow.stepTimeout"
+            type="number"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-btn color="success"
+               @click="onUpdateClick"
+               :loading="loading"
+        >Update Settings</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -57,12 +82,10 @@
         type: Object
       }
     },
-    data () {
+    data() {
       return {
         vars: vars,
         flowNameRules: flowNameRules(this),
-        isYamlFromRepo: false,
-        yamlRepoBranch: 'master',
         loading: false
       }
     },
@@ -71,31 +94,18 @@
         gitBranches: state => state.flows.gitBranches
       })
     },
-    watch: {
-      flow (val) {
-        this.isYamlFromRepo = val.yamlFromRepo || false
-        this.yamlRepoBranch = val.yamlRepoBranch || 'master'
-      }
-    },
     methods: {
-      onSwitchChange(val) {
-        this.updateFlowObj(val, this.yamlRepoBranch)
-      },
-
-      onBranchChange(val) {
-        this.updateFlowObj(this.isYamlFromRepo, val)
-      },
-
-      updateFlowObj(isYamlFromRepo, yamlRepoBranch) {
+      onUpdateClick() {
         const payload = {
           name: this.flow.name,
-          isYamlFromRepo,
-          yamlRepoBranch
+          isYamlFromRepo: this.flow.yamlFromRepo,
+          yamlRepoBranch: this.flow.yamlRepoBranch,
+          jobTimeout: this.flow.jobTimeout,
+          stepTimeout: this.flow.stepTimeout,
         }
 
         this.loading = true
-
-        this.$store.dispatch(actions.flows.setYmlSource, payload).then(() => {
+        this.$store.dispatch(actions.flows.update, payload).then(() => {
           this.loading = false
         }).catch(() => {
           this.loading = false

@@ -236,23 +236,18 @@ const actions = {
     await confirmFunc()
   },
 
-  async rename ({commit}, {name, newName}) {
+  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout}) {
     await http.post(
-      `flows/${name}/rename`,
-      (flow) => {
-        commit('update', flow)
-      },
-      {name: newName}
-    )
-  },
-
-  async setYmlSource({commit}, {name, isYamlFromRepo, yamlRepoBranch}) {
-    await http.post(
-        `flows/${name}/sourceOfYaml`,
+        `flows/${name}/settings`,
         (flow) => {
           commit('update', flow)
         },
-        {isYamlFromRepo, yamlRepoBranch}
+        {
+          isYamlFromRepo,
+          yamlRepoBranch,
+          jobTimeout,
+          stepTimeout
+        }
     )
   },
 

@@ -16,11 +16,18 @@
                 <v-icon small>mdi-chevron-right</v-icon>
                 <span class="caption ml-2">{{ wrapper.name }}</span>
 
-                <v-tooltip right content-class="body">
+                <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-if="wrapper.isSuccessButFailure" v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
                   </template>
                   <span>allow failure, exit code : {{ wrapper.exitCode }}</span>
+                </v-tooltip>
+
+                <v-tooltip right content-class="body" v-if="wrapper.isTimeoutButAllowFailure">
+                  <template v-slot:activator="{ on }">
+                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                  </template>
+                  <span>Timeout, but allow failure</span>
                 </v-tooltip>
 
               </v-col>
