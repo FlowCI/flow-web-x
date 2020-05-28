@@ -40,7 +40,7 @@
 
     <v-row align="center">
       <v-col cols="5">
-        <span class="caption grey--text text--darken-1">Job Timeout (seconds)</span>
+        <span class="caption grey--text text--darken-1">Queueing Timeout (seconds)</span>
         <v-text-field
             class="pt-1"
             v-model="flow.jobTimeout"
