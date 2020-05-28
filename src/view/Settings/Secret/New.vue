@@ -147,28 +147,31 @@
           return
         }
 
-        if (this.isSshRsa && this.$refs.sshForm.validate()) {
-          const param = {
-            name: this.name,
-            publicKey: this.instance.pair.publicKey,
-            privateKey: this.instance.pair.privateKey
-          }
+        const payload = {
+          name: this.name
+        }
 
-          this.$store.dispatch(actions.secrets.createRsa, param).then(() => {
+        if (this.isSshRsa && this.$refs.sshForm.validate()) {
+          payload.publicKey = this.instance.pair.publicKey
+          payload.privateKey = this.instance.pair.privateKey
+          this.$store.dispatch(actions.secrets.createRsa, payload).then(() => {
             this.onBackClick()
           })
-
           return
         }
 
         if (this.isAuth && this.$refs.authForm.validate()) {
-          const param = {
-            name: this.name,
-            username: this.instance.pair.username,
-            password: this.instance.pair.password
-          }
+          payload.username = this.instance.pair.username
+          payload.password = this.instance.pair.password
+          this.$store.dispatch(actions.secrets.createAuth, payload).then(() => {
+            this.onBackClick()
+          })
+          return
+        }
 
-          this.$store.dispatch(actions.secrets.createAuth, param).then(() => {
+        if (this.isToken && this.$refs.tokenForm.validate()) {
+          payload.token = this.instance.token.data
+          this.$store.dispatch(actions.secrets.createToken, payload).then(() => {
             this.onBackClick()
           })
         }

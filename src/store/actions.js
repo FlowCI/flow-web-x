@@ -81,6 +81,7 @@ export default {
   secrets: {
     createRsa: 'secrets/createRsa',
     createAuth: 'secrets/createAuth',
+    createToken: 'secrets/createToken',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',

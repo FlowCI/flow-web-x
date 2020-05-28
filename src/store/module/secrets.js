@@ -65,6 +65,12 @@ const actions = {
     })
   },
 
+  async createToken({commit}, {name, token}) {
+    await http.post('secrets/token', (c) => {
+      commit('add', c)
+    }, {name, token})
+  },
+
   async delete ({commit}, credential) {
     await http.delete(`secrets/${credential.name}`, (c) => {
       commit('remove', c)

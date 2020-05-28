@@ -37,6 +37,7 @@
 
           <text-box
               label="Password"
+              password
               v-model="model.pair.password"
               :rules="authFormRules"
               :readonly="isReadOnly"

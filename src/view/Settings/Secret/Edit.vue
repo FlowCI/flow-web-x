@@ -21,6 +21,13 @@
             :model="instance"
         ></auth-editor>
       </v-col>
+
+      <v-col cols="8" v-if="isToken">
+        <token-editor
+            :is-read-only="true"
+            :model="instance"
+        ></token-editor>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -58,9 +65,10 @@
   import actions from '@/store/actions'
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
+  import TokenEditor from '@/components/Common/TokenEditor'
   import TextBox from '@/components/Common/TextBox'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA } from '@/util/secrets'
+  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
@@ -69,7 +77,8 @@
       ConfirmBtn,
       TextBox,
       SshRsaEditor,
-      AuthEditor
+      AuthEditor,
+      TokenEditor
     },
     props: {
       secretObj: {
@@ -120,6 +129,10 @@
         return this.secretObj.category === CATEGORY_AUTH
       },
 
+      isToken () {
+        return this.secretObj.category === CATEGORY_TOKEN
+      },
+
       instance() {
         if (this.isSshRsa) {
           return {
@@ -133,6 +146,10 @@
             selected: '',
             pair: this.secretObj.pair
           }
+        }
+
+        if (this.isToken) {
+          return this.secretObj
         }
 
         return {}
