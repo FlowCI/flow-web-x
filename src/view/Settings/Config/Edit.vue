@@ -27,10 +27,10 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
+        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
-              Delete config {{ configObj.name }}?
+              Revoke config {{ configObj.name }}?
             </span>
           </template>
         </confirm-btn>

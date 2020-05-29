@@ -32,15 +32,15 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
+        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
-              Delete secret {{ name }}?
+              Revoke secret {{ name }}?
             </span>
           </template>
           <template v-slot:content>
             <div>
-              You are going to delete the secret {{ name }}.
+              You are going to revoke the secret {{ name }}.
               Deleted secret CANNOT be restored!
             </div>
             <div class="mt-3 red--text" v-if="connectedFlows.length > 0">

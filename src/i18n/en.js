@@ -13,6 +13,7 @@ export default {
   password: 'Password',
   confirm: 'Confirm',
   restart: 'Restart',
+  revoke: 'Revoke',
 
   menu: {
     signedInAs: 'Signed in as ',

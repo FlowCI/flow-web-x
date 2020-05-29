@@ -13,6 +13,7 @@ export default {
   password: '密码',
   confirm: '确认',
   restart: '重新开始',
+  revoke: '删除',
 
   menu: {
     signedInAs: '当前用户 ',
