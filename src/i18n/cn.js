@@ -1,4 +1,5 @@
 export default {
+  welcome: '欢迎来到 flow.ci',
   back: '返回',
   save: '保存',
   reset: '重置',

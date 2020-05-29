@@ -1,4 +1,5 @@
 export default {
+  welcome: 'Welcome to flow.ci',
   back: 'Back',
   save: 'Save',
   reset: 'Reset',
