@@ -7,7 +7,7 @@
                     :rules="nameRules"
                     v-model="configObj.name"
           ></text-box>
-          <text-select :items="[CATEGORY_SMTP]"
+          <text-select :items="[CATEGORY_SMTP, CATEGORY_TEXT]"
                        label="Category"
                        v-model="configObj.category"
           ></text-select>
@@ -22,6 +22,21 @@
         </v-col>
         <v-col cols="8">
           <config-smtp :smtpOption="configObj.smtp"></config-smtp>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="configObj.category === CATEGORY_TEXT">
+        <v-col cols="9">
+          <v-divider></v-divider>
+        </v-col>
+
+        <v-col cols="8">
+          <v-textarea
+              outlined
+              rows="20"
+              label="Input free text"
+              :value="configObj.text"
+          ></v-textarea>
         </v-col>
       </v-row>
     </v-form>
@@ -40,7 +55,7 @@
   import ConfigSmtp from './Smtp'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
-  import { CATEGORY_SMTP } from '@/util/configs'
+  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -53,6 +68,7 @@
     data() {
       return {
         CATEGORY_SMTP,
+        CATEGORY_TEXT,
         nameRules: secretAndConfigNameRules(this),
 
         configObj: {
@@ -60,7 +76,8 @@
           category: CATEGORY_SMTP,
           smtp: {
             auth: {},
-          }
+          },
+          text: ''
         }
       }
     },
@@ -92,13 +109,27 @@
           return
         }
 
-        this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
-            .then(() => {
-              this.onBackClick()
-            })
-            .catch(e => {
-              console.log(e)
-            })
+        if (this.configObj.category === CATEGORY_SMTP) {
+          this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
+              .then(() => {
+                this.onBackClick()
+              })
+              .catch(e => {
+                console.log(e)
+              })
+          return
+        }
+
+        if (this.configObj.category === CATEGORY_TEXT) {
+          this.$store.dispatch(actions.configs.saveText, this.configObj)
+              .then(() => {
+                this.onBackClick()
+              })
+              .catch(e => {
+                console.log(e)
+              })
+        }
+
       }
     }
   }

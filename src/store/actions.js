@@ -90,6 +90,7 @@ export default {
 
   configs: {
     saveSmtp: 'configs/saveSmtp',
+    saveText: 'configs/saveText',
     list: 'configs/list',
     get: 'configs/get',
     delete: 'configs/delete'

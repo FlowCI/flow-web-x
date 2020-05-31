@@ -41,6 +41,12 @@ const actions = {
     }, smtpConfig.smtp)
   },
 
+  async saveText ({commit}, textConfig) {
+    await http.post(`configs/${textConfig.name}/text`, (c) => {
+      commit('add', c)
+    }, {data: textConfig.text})
+  },
+
   async delete ({commit}, name) {
     await http.delete(`configs/${name}`, (c) => {
       commit('remove', c)
