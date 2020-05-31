@@ -35,7 +35,7 @@
               outlined
               rows="20"
               label="Input free text"
-              :value="configObj.text"
+              v-model="configObj.text"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -129,7 +129,6 @@
                 console.log(e)
               })
         }
-
       }
     }
   }
