@@ -42,6 +42,8 @@
       </v-col>
 
       <v-col cols="1">
+        <v-btn text color="primary" @click="onDebugClick">debug</v-btn>
+
         <v-btn text
                color="error"
                @click="onStopClick"
@@ -124,6 +126,7 @@
   import DetailTabArtifact from '@/view/Job/DetailTabArtifact'
 
   import DetailHtmlReport from '@/view/Job/DetailHtmlReport'
+  import { Store } from "../../store/module/tty";
 
   export default {
     name: 'JobDetail',
@@ -145,12 +148,14 @@
     destroyed() {
       unsubscribeTopic.steps(this.job.id)
       unsubscribeTopic.tasks(this.job.id)
+      unsubscribeTopic.tty(this.job.id)
     },
     computed: {
       ...mapState({
         job: state => state.jobs.selected,
         reports: state => state.jobs.reports,
         steps: state => state.steps.items,
+        ttyOut: state => state.tty.out,
       }),
 
       flow() {
@@ -178,6 +183,10 @@
       job(obj) {
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
+      },
+
+      ttyOut(val) {
+        console.log(val)
       }
     },
     methods: {
@@ -200,6 +209,11 @@
             .catch(reason => {
               console.log(reason)
             })
+      },
+
+      onDebugClick() {
+        subscribeTopic.tty(this.job.id, this.$store)
+        this.$store.dispatch(actions.tty.connect, this.job.id)
       }
     }
   }

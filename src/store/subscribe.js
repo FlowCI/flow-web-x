@@ -59,6 +59,10 @@ stompClient.connect({}, function () {
   })
 })
 
+export function send(topic, body) {
+  stompClient.send(topic, {}, body)
+}
+
 export const subscribeTopic = {
   // subscribe flow git test
   gitTest(store, flowId) {
@@ -100,9 +104,6 @@ export const subscribeTopic = {
     subscribe('/topic/tasks/' + jobId, (data) => {
       let message = JSON.parse(data.body)
       let tasks = message.body
-      console.log("------")
-      console.log(tasks)
-      console.log("------")
       store.dispatch(actions.jobs.steps.updateTasks, tasks)
     })
   },
@@ -138,6 +139,17 @@ export const subscribeTopic = {
       let host = message.body
       store.dispatch(actions.hosts.updated, host)
     })
+  },
+
+  tty(jobId, store) {
+    subscribe(`/topic/tty/action/${jobId}`, (data) => {
+      let message = JSON.parse(data.body)
+      store.commit('tty/setOut', message.body)
+    })
+
+    subscribe(`/topic/tty/logs/${jobId}`, (data) => {
+      console.log(data)
+    })
   }
 }
 
@@ -168,5 +180,10 @@ export const unsubscribeTopic = {
 
   hosts() {
     unsubscribe('/topic/hosts')
+  },
+
+  tty(jobId) {
+    unsubscribe(`/topic/tty/action/${jobId}`)
+    unsubscribe(`/topic/tty/logs/${jobId}`)
   }
 }
