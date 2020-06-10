@@ -69,6 +69,8 @@
       </v-col>
     </v-row>
 
+    <job-tty :job="job" v-model="showTty"></job-tty>
+
     <v-tabs fixed-tabs class="mt-1 tab-wrapper">
       <v-tab href="#summary" class="ml-0 elevation-1">
         {{ $t('job.tab.summary') }}
@@ -124,14 +126,14 @@
   import DetailTabContext from '@/view/Job/DetailTabContext'
   import DetailTabYml from '@/view/Job/DetailTabYml'
   import DetailTabArtifact from '@/view/Job/DetailTabArtifact'
-
   import DetailHtmlReport from '@/view/Job/DetailHtmlReport'
-  import { Store } from "../../store/module/tty";
+  import JobTty from '@/components/Jobs/TTY'
 
   export default {
     name: 'JobDetail',
     data() {
       return {
+        showTty: false,
         agentIcons: icons
       }
     },
@@ -140,7 +142,8 @@
       DetailTabSummary,
       DetailTabYml,
       DetailTabArtifact,
-      DetailHtmlReport
+      DetailHtmlReport,
+      JobTty
     },
     mounted() {
       this.load()
@@ -155,7 +158,6 @@
         job: state => state.jobs.selected,
         reports: state => state.jobs.reports,
         steps: state => state.steps.items,
-        ttyOut: state => state.tty.out,
       }),
 
       flow() {
@@ -183,10 +185,6 @@
       job(obj) {
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
-      },
-
-      ttyOut(val) {
-        console.log(val)
       }
     },
     methods: {
@@ -212,8 +210,9 @@
       },
 
       onDebugClick() {
-        subscribeTopic.tty(this.job.id, this.$store)
-        this.$store.dispatch(actions.tty.connect, this.job.id)
+        this.showTty = true
+        // subscribeTopic.tty(this.job.id, this.$store)
+        // this.$store.dispatch(actions.tty.connect, this.job.id)
       }
     }
   }
