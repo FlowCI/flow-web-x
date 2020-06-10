@@ -100,7 +100,6 @@
         }
 
         this.terminal.write(log)
-        this.terminal.prompt()
       },
 
       onLogDownload() {

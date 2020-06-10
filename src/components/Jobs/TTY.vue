@@ -64,6 +64,7 @@
 
           if (ev.keyCode === 13) {
             console.log("new line...")
+            this.term.writeln("")
             return
           }
 
