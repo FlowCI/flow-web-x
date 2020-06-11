@@ -127,6 +127,8 @@ export default {
   },
 
   tty: {
-    connect: 'tty/connect'
+    connect: 'tty/connect',
+    shell: 'tty/shell',
+    close: 'tty/close'
   }
 }

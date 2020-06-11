@@ -211,8 +211,6 @@
 
       onDebugClick() {
         this.showTty = true
-        // subscribeTopic.tty(this.job.id, this.$store)
-        // this.$store.dispatch(actions.tty.connect, this.job.id)
       }
     }
   }
