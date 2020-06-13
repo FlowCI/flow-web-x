@@ -148,7 +148,7 @@ export const subscribeTopic = {
     })
 
     subscribe(`/topic/tty/logs/${jobId}`, (data) => {
-      store.commit('tty/setLog', data.body)
+      store.commit('tty/setLog', atob(data.body))
     })
   }
 }
