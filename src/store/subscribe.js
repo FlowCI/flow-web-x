@@ -111,15 +111,9 @@ export const subscribeTopic = {
   // subscribe realtime logging without vuex store since performance
   logs(store) {
     subscribe('/topic/logs', (data) => {
-      let logItemStr = data.body
-      if (logItemStr < 2) {
-        return
-      }
-
-      const cmdIdLen = logItemStr.charCodeAt(0)
-      const cmdId = logItemStr.substring(2, cmdIdLen + 2)
-      const content = logItemStr.substring(cmdIdLen + 3)
-
+      const message = JSON.parse(data.body)
+      const cmdId = message.id
+      const content = atob(message.content)
       store.dispatch(actions.jobs.logs.push, new LogWrapper(cmdId, content))
     })
   },
