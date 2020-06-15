@@ -152,7 +152,7 @@
     destroyed() {
       unsubscribeTopic.steps(this.job.id)
       unsubscribeTopic.tasks(this.job.id)
-      unsubscribeTopic.tty(this.job.id)
+      unsubscribeTopic.logs(this.job.id)
     },
     computed: {
       ...mapState({
@@ -186,6 +186,7 @@
       job(obj) {
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
+        subscribeTopic.logs(obj.id, this.$store)
       }
     },
     methods: {

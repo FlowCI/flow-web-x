@@ -92,7 +92,7 @@ export const subscribeTopic = {
 
   // subscribe step changes
   steps(jobId, store) {
-    subscribe('/topic/steps/' + jobId, (data) => {
+    subscribe(`/topic/steps/${jobId}`, (data) => {
       let message = JSON.parse(data.body)
       let steps = message.body
       store.dispatch(actions.jobs.steps.update, steps)
@@ -101,7 +101,7 @@ export const subscribeTopic = {
 
   // subscribe tasks changes
   tasks(jobId, store) {
-    subscribe('/topic/tasks/' + jobId, (data) => {
+    subscribe(`/topic/tasks/${jobId}`, (data) => {
       let message = JSON.parse(data.body)
       let tasks = message.body
       store.dispatch(actions.jobs.steps.updateTasks, tasks)
@@ -109,11 +109,12 @@ export const subscribeTopic = {
   },
 
   // subscribe realtime logging without vuex store since performance
-  logs(store) {
-    subscribe('/topic/logs', (data) => {
+  logs(jobId, store) {
+    subscribe(`/topic/logs/${jobId}`, (data) => {
       const message = JSON.parse(data.body)
       const cmdId = message.id
       const content = atob(message.content)
+
       store.dispatch(actions.jobs.logs.push, new LogWrapper(cmdId, content))
     })
   },
@@ -149,7 +150,7 @@ export const subscribeTopic = {
 
 export const unsubscribeTopic = {
   gitTest(flowId) {
-    unsubscribe('/topic/flows/git/test/' + flowId)
+    unsubscribe(`/topic/flows/git/test/${flowId}`)
   },
 
   jobs() {
@@ -161,15 +162,15 @@ export const unsubscribeTopic = {
   },
 
   steps(jobId) {
-    unsubscribe('/topic/steps/' + jobId)
+    unsubscribe(`/topic/steps/${jobId}`)
   },
 
   tasks(jobId) {
-    unsubscribe('/topic/tasks/' + jobId)
+    unsubscribe(`/topic/tasks/${jobId}`)
   },
 
-  logs() {
-    unsubscribe('/topic/logs')
+  logs(jobId) {
+    unsubscribe(`/topic/logs/${jobId}`)
   },
 
   hosts() {

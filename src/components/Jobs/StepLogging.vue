@@ -24,7 +24,6 @@
 <script>
   import Vue from 'vue'
   import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
-  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
   import { StepWrapper } from '@/util/steps'
   import { mapState } from 'vuex'
 
@@ -39,12 +38,6 @@
         taskItems: [],
         buses: {}
       }
-    },
-    mounted() {
-      subscribeTopic.logs(this.$store)
-    },
-    destroyed() {
-      unsubscribeTopic.logs()
     },
     computed: {
       ...mapState({
