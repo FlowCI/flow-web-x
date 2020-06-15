@@ -135,14 +135,14 @@ export const subscribeTopic = {
     })
   },
 
-  tty(jobId, store) {
+  tty(jobId, onCmdCallBack, onLogCallBack) {
     subscribe(`/topic/tty/action/${jobId}`, (data) => {
       let message = JSON.parse(data.body)
-      store.commit('tty/setOut', message.body)
+      onCmdCallBack(message.body) // TtyCmd.Out
     })
 
     subscribe(`/topic/tty/logs/${jobId}`, (data) => {
-      store.commit('tty/setLog', atob(data.body))
+      onLogCallBack(atob(data.body))
     })
   }
 }

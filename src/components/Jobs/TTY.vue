@@ -40,27 +40,6 @@
         script: ''
       }
     },
-    computed: {
-      ...mapState({
-        ttyOut: state => state.tty.out,
-        ttyLog: state => state.tty.log,
-      }),
-    },
-    watch: {
-      ttyOut(val) {
-        console.log(val)
-
-        if (val.action === TTY_ACTION_OPEN) {
-          if (val.success) {
-            this.connecting = false
-          }
-        }
-      },
-
-      ttyLog(val) {
-        this.term.write(val);
-      }
-    },
     methods: {
       initTerm() {
         this.term = new Terminal({
@@ -75,40 +54,31 @@
         fitAddon.fit()
 
         this.term.onKey((event) => {
-          const ev = event.domEvent;
-          const printable = !ev.altKey && !ev.ctrlKey && !ev.metaKey;
-
-          if (ev.keyCode === 13) {
-            this.onEnter(this.script)
-            this.script = ''
-            this.term.writeln('')
-            return
-          }
-
-          if (ev.keyCode === 8) {
-            // Do not delete the prompt
-            if (this.term._core.buffer.x > 2) {
-              this.term.write('\b \b');
-            }
-            return
-          }
-
-          if (printable) {
-            this.script = this.script.concat(event.key)
-            this.term.write(event.key);
-          }
+          this.onKey(event.key)
         });
+      },
+
+      onTtyCmdOut(val) {
+        if (val.action === TTY_ACTION_OPEN) {
+          if (val.success) {
+            this.connecting = false
+          }
+        }
+      },
+
+      onTtyLogOutput(output) {
+        this.term.write(output)
       },
 
       onConnect() {
         this.initTerm()
         this.connecting = true
-        subscribeTopic.tty(this.job.id, this.$store)
+        subscribeTopic.tty(this.job.id, this.onTtyCmdOut, this.onTtyLogOutput)
         this.$store.dispatch(actions.tty.connect, this.job.id)
       },
 
-      onEnter(script) {
-        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: script})
+      onKey(key) {
+        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: key})
       },
 
       onClose() {

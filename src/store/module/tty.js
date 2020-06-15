@@ -1,18 +1,9 @@
 import { send } from '../subscribe'
 
 const state = {
-  out: {},
-  log: ''
 }
 
 const mutations = {
-  setOut(state, out) {
-    state.out = out
-  },
-
-  setLog(state, log) {
-    state.log = log
-  }
 }
 
 const actions = {
