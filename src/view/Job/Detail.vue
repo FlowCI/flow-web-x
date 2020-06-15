@@ -42,20 +42,21 @@
       </v-col>
 
       <v-col cols="1">
-        <v-btn text color="primary" @click="onDebugClick">debug</v-btn>
+        <v-tooltip bottom v-if="!wrapper.isFinished">
+          <template v-slot:activator="{ on }">
+            <v-btn icon color="black" @click="onDebugClick" v-on="on">
+              <v-icon>mdi-console</v-icon>
+            </v-btn>
+          </template>
+          <span class="body-2">{{ $t('job.hint.tty') }}</span>
+        </v-tooltip>
 
-        <v-btn text
-               color="error"
-               @click="onStopClick"
-               v-if="!wrapper.isFinished"
-        >
+        <v-btn icon color="error" @click="onStopClick" v-if="!wrapper.isFinished">
           <v-icon>mdi-stop</v-icon>
-          {{ $t('cancel') }}
         </v-btn>
 
-        <v-btn text @click="onRerunClick" v-if="wrapper.isFinished">
+        <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
           <v-icon>mdi-restart</v-icon>
-          {{ $t('restart') }}
         </v-btn>
       </v-col>
     </v-row>

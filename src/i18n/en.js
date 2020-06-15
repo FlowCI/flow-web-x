@@ -103,6 +103,7 @@ export default {
     },
 
     hint: {
+      tty: 'Run bash in current step terminal',
       missing_agent: 'There is NO agents, the job will be started until agent has been created'
     }
   },
