@@ -6,8 +6,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="onConnect" :loading="connecting" class="mr-3">Connect</v-btn>
-        <v-btn @click="onClose" class="mr-10">Close</v-btn>
+        <v-btn @click="onConnectClick" :loading="connecting" class="mr-3">Connect</v-btn>
+        <v-btn @click="onCloseClick" class="mr-10">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-overlay>
@@ -16,8 +16,7 @@
 <script>
   import actions from '@/store/actions'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
-  import { TTY_ACTION_OPEN, TTY_ACTION_CLOSE } from '@/util/tty'
-  import { mapState } from "vuex";
+  import { TTY_ACTION_OPEN, TTY_ACTION_CLOSE, RED, GREEN, END } from '@/util/tty'
   import { Terminal } from "xterm";
   import { FitAddon } from "xterm-addon-fit";
 
@@ -40,6 +39,9 @@
         script: ''
       }
     },
+    destroyed() {
+      unsubscribeTopic.tty(this.job.id)
+    },
     methods: {
       initTerm() {
         this.term = new Terminal({
@@ -61,8 +63,17 @@
       onTtyCmdOut(val) {
         if (val.action === TTY_ACTION_OPEN) {
           if (val.success) {
-            this.connecting = false
+            this.writeSuccessMessage('Connected')
+          } else {
+            this.writeErrMessage(val.error)
           }
+          this.connecting = false
+          return
+        }
+
+        if (val.action === TTY_ACTION_CLOSE) {
+          unsubscribeTopic.tty(this.job.id)
+          this.$emit('input', false)
         }
       },
 
@@ -70,8 +81,10 @@
         this.term.write(output)
       },
 
-      onConnect() {
+      onConnectClick() {
         this.initTerm()
+        this.writeSuccessMessage('Connecting.....')
+
         this.connecting = true
         subscribeTopic.tty(this.job.id, this.onTtyCmdOut, this.onTtyLogOutput)
         this.$store.dispatch(actions.tty.connect, this.job.id)
@@ -81,8 +94,18 @@
         this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: key})
       },
 
-      onClose() {
-        this.$emit('input', false)
+      onCloseClick() {
+        this.$store.dispatch(actions.tty.close, this.job.id)
+      },
+
+      writeSuccessMessage(msg) {
+        const line = GREEN + msg + END
+        this.term.writeln(line)
+      },
+
+      writeErrMessage(msg) {
+        const line = RED + msg + END
+        this.term.writeln(line)
       }
     }
   }
