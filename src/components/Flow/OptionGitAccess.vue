@@ -36,7 +36,7 @@
         <span class="caption grey--text text--darken-1">{{ `Credential (${vars.git.credential})` }}</span>
         <v-text-field
             class="pt-0"
-            v-model="wrapper.credential"
+            v-model="wrapper.secret"
             append-icon="mdi-help-circle-outline"
             :rules="[rules.credential]"
             @click:append="onHelpClick('url')"

@@ -180,7 +180,7 @@ const actions = {
       },
       {
         gitUrl: wrapper.gitUrl,
-        credential: wrapper.credential,
+        secret: wrapper.secret,
         ssh: wrapper.ssh,
         auth: wrapper.auth
       })
@@ -189,7 +189,7 @@ const actions = {
   async confirm ({commit}, wrapper) {
     let gitSettings = {
       gitUrl: wrapper.gitUrl,
-      credential: wrapper.credential
+      secret: wrapper.secret
     }
 
     const confirmFunc = () => {
