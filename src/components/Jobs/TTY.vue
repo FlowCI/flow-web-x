@@ -44,6 +44,11 @@
     },
     methods: {
       initTerm() {
+        if (this.term) {
+          this.term.open(document.getElementById("tty-terminal"))
+          return
+        }
+
         this.term = new Terminal({
           fontSize: 14,
           cursorStyle: 'bar',
@@ -54,6 +59,20 @@
         this.term.loadAddon(fitAddon)
         this.term.open(document.getElementById("tty-terminal"))
         fitAddon.fit()
+
+        this.term.attachCustomKeyEventHandler(e => {
+          if ((e.metaKey || e.ctrlKey) && (e.key === 'c')) {
+            document.execCommand('copy');
+            return false;
+          }
+
+          if ((e.metaKey || e.ctrlKey) && (e.key === 'v')) {
+            navigator.clipboard.readText().then(text => {
+              this.onKey(text)
+            });
+            return false;
+          }
+        })
 
         this.term.onKey((event) => {
           this.onKey(event.key)
@@ -90,8 +109,8 @@
         this.$store.dispatch(actions.tty.connect, this.job.id)
       },
 
-      onKey(key) {
-        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: key})
+      onKey(input) {
+        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: input})
       },
 
       onCloseClick() {
