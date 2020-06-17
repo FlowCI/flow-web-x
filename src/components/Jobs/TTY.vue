@@ -52,6 +52,7 @@
         this.term = new Terminal({
           fontSize: 14,
           cursorStyle: 'bar',
+          cursorBlink: true,
           convertEol: true
         })
 
