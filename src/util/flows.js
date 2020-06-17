@@ -105,7 +105,7 @@ export class FlowWrapper {
     return this.fetchVars(vars.git.url)
   }
 
-  get credential () {
+  get secret () {
     return this.fetchVars(vars.git.credential)
   }
 
@@ -171,12 +171,12 @@ export class FlowWrapper {
     this.authObj = authObj
   }
 
-  set credential (credentialName) {
+  set secret (secretName) {
     if (!this.flow.variables) {
       this.flow.variables = {}
     }
 
-    return this.flow.variables[ vars.git.credential ] = credentialName
+    return this.flow.variables[ vars.git.credential ] = secretName
   }
 
   set latestJob (jobObj) {
