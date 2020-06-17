@@ -206,9 +206,9 @@ const actions = {
     if (wrapper.hasSSH) {
       await http.post(
         `flows/${wrapper.name}/secret/rsa`,
-        (credential) => {
-          console.log('[DONE]: setup credential: ' + credential)
-          gitSettings.credential = credential
+        (secret) => {
+          console.log('[DONE]: setup secret: ' + secret)
+          gitSettings.secret = secret
         },
         wrapper.ssh
       ).then(() => {
@@ -221,9 +221,9 @@ const actions = {
     if (wrapper.hasAuth) {
       await http.post(
         `flows/${wrapper.name}/secret/auth`,
-        (credential) => {
-          console.log('[DONE]: setup credential: ' + credential)
-          gitSettings.credential = credential
+        (secret) => {
+          console.log('[DONE]: setup secret: ' + secret)
+          gitSettings.secret = secret
         },
         wrapper.auth
       ).then(() => {
