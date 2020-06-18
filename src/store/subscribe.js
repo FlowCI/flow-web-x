@@ -59,8 +59,16 @@ stompClient.connect({}, function () {
   })
 })
 
+
+export const ws = {
+  token: process.env.VUE_APP_TOKEN,
+  setToken(t) {
+    this.token = t
+  }
+}
+
 export function send(topic, body) {
-  stompClient.send(topic, {}, body)
+  stompClient.send(topic, {Token: ws.token}, body)
 }
 
 export const subscribeTopic = {
@@ -136,14 +144,14 @@ export const subscribeTopic = {
     })
   },
 
-  tty(jobId, onCmdCallBack, onLogCallBack) {
+  tty(jobId, onCmdCallback, onLogCallback, onErrorCallback) {
     subscribe(`/topic/tty/action/${jobId}`, (data) => {
       let message = JSON.parse(data.body)
-      onCmdCallBack(message.body) // TtyCmd.Out
+      onCmdCallback(message.body) // TtyCmd.Out
     })
 
     subscribe(`/topic/tty/logs/${jobId}`, (data) => {
-      onLogCallBack(atob(data.body))
+      onLogCallback(atob(data.body))
     })
   }
 }

@@ -81,11 +81,13 @@
       },
 
       onTtyCmdOut(val) {
+        if (!val.success) {
+          this.writeErrMessage(val.error)
+        }
+
         if (val.action === TTY_ACTION_OPEN) {
           if (val.success) {
             this.writeSuccessMessage('Connected')
-          } else {
-            this.writeErrMessage(val.error)
           }
           this.connecting = false
           return

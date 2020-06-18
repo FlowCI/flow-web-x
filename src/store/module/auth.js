@@ -1,4 +1,5 @@
 import http from '../http'
+import { ws } from "../subscribe"
 import md5 from 'blueimp-md5'
 import jwtDecode from 'jwt-decode'
 import moment from 'moment'
@@ -40,6 +41,7 @@ const mutations = {
     state.hasLogin = true
 
     http.setTokens(token, refreshToken)
+    ws.setToken(token)
   },
 
   save (state, {token, refreshToken}) {
@@ -49,6 +51,7 @@ const mutations = {
     state.hasLogin = true
 
     http.setTokens(token, refreshToken)
+    ws.setToken(token)
 
     localStorage.setItem('token', token)
     localStorage.setItem('refreshToken', refreshToken)
@@ -61,6 +64,7 @@ const mutations = {
     state.hasLogin = false
 
     http.setTokens('', '')
+    ws.setToken('')
 
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
