@@ -49,7 +49,7 @@ export default {
     stats_date_select: 'Select Statistic Date:',
     summary_rate_text: 'Success rate',
 
-    more_template: 'More template',
+    more_template: 'More templates',
 
     tab: {
       options: 'Options',

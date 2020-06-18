@@ -49,7 +49,7 @@ export default {
     stats_date_select: '选择统计日期',
     summary_rate_text: '成功率',
 
-    more_template: 'More template',
+    more_template: '更多的模板',
 
     tab: {
       options: '设置',
