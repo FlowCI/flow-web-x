@@ -3,7 +3,6 @@
     <v-expansion-panels
         :readonly="!showLog"
         tile
-        multiple
         accordion
         focusable>
       <v-expansion-panel>
@@ -74,7 +73,8 @@
     data () {
       return {
         buffer: [],
-        terminal: null
+        terminal: null,
+        fitAddon: new FitAddon(),
       }
     },
     mounted() {
@@ -98,7 +98,6 @@
           this.buffer.push(log)
           return
         }
-
         this.terminal.write(log)
       },
 
@@ -126,15 +125,16 @@
           }
         })
 
-        const fitAddon = new FitAddon()
-        this.terminal.loadAddon(fitAddon)
+        this.terminal.loadAddon(this.fitAddon)
 
         const unicode11Addon = new Unicode11Addon()
         this.terminal.loadAddon(unicode11Addon);
         this.terminal.unicode.activeVersion = '11'
 
-        this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
-        fitAddon.fit()
+        setTimeout(function () {
+          this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
+          this.fitAddon.fit()
+        }.bind(this), 50);
 
         for (let buf of this.buffer) {
           this.terminal.write(buf)
@@ -189,6 +189,10 @@
       padding-left: 1px;
       padding-bottom: 0;
       padding-right: 0;
+    }
+
+    .terminal {
+      height: 300px;
     }
   }
 </style>
