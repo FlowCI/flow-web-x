@@ -42,18 +42,21 @@
       </v-col>
 
       <v-col cols="1">
-        <v-btn text
-               color="error"
-               @click="onStopClick"
-               v-if="!wrapper.isFinished"
-        >
+        <v-tooltip bottom v-if="!wrapper.isFinished">
+          <template v-slot:activator="{ on }">
+            <v-btn icon color="black" @click="onDebugClick" v-on="on">
+              <v-icon>mdi-console</v-icon>
+            </v-btn>
+          </template>
+          <span class="body-2">{{ $t('job.hint.tty') }}</span>
+        </v-tooltip>
+
+        <v-btn icon color="error" @click="onStopClick" v-if="!wrapper.isFinished">
           <v-icon>mdi-stop</v-icon>
-          {{ $t('cancel') }}
         </v-btn>
 
-        <v-btn text @click="onRerunClick" v-if="wrapper.isFinished">
+        <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
           <v-icon>mdi-restart</v-icon>
-          {{ $t('restart') }}
         </v-btn>
       </v-col>
     </v-row>
@@ -66,6 +69,8 @@
         </div>
       </v-col>
     </v-row>
+
+    <job-tty :job="job" v-model="showTty"></job-tty>
 
     <v-tabs fixed-tabs class="mt-1 tab-wrapper">
       <v-tab href="#summary" class="ml-0 elevation-1">
@@ -122,13 +127,14 @@
   import DetailTabContext from '@/view/Job/DetailTabContext'
   import DetailTabYml from '@/view/Job/DetailTabYml'
   import DetailTabArtifact from '@/view/Job/DetailTabArtifact'
-
   import DetailHtmlReport from '@/view/Job/DetailHtmlReport'
+  import JobTty from '@/components/Jobs/TTY'
 
   export default {
     name: 'JobDetail',
     data() {
       return {
+        showTty: false,
         agentIcons: icons
       }
     },
@@ -137,7 +143,8 @@
       DetailTabSummary,
       DetailTabYml,
       DetailTabArtifact,
-      DetailHtmlReport
+      DetailHtmlReport,
+      JobTty
     },
     mounted() {
       this.load()
@@ -145,6 +152,7 @@
     destroyed() {
       unsubscribeTopic.steps(this.job.id)
       unsubscribeTopic.tasks(this.job.id)
+      unsubscribeTopic.logs(this.job.id)
     },
     computed: {
       ...mapState({
@@ -178,6 +186,7 @@
       job(obj) {
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
+        subscribeTopic.logs(obj.id, this.$store)
       }
     },
     methods: {
@@ -200,6 +209,10 @@
             .catch(reason => {
               console.log(reason)
             })
+      },
+
+      onDebugClick() {
+        this.showTty = true
       }
     }
   }

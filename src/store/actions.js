@@ -124,5 +124,11 @@ export default {
     delete: 'hosts/delete',
     test: 'hosts/test',
     updated: 'hosts/updated'
+  },
+
+  tty: {
+    connect: 'tty/connect',
+    shell: 'tty/shell',
+    close: 'tty/close'
   }
 }

@@ -102,6 +102,7 @@ export default {
       artifacts: 'Artifacts'
     },
     hint: {
+      tty: '打开当前任务的 Terminal 中运行 bash',
       missing_agent: 'There is NO agents, the job will be started until agent has been created'
     }
   },
