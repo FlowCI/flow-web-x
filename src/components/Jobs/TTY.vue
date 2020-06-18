@@ -7,7 +7,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="onConnectClick" :loading="connecting" class="mr-3">Connect</v-btn>
-        <v-btn @click="onCloseClick" class="mr-10">Close</v-btn>
+        <v-btn @click="onCloseClick" :loading="closing" class="mr-10">Close</v-btn>
       </v-card-actions>
     </v-card>
   </v-overlay>
@@ -36,6 +36,7 @@
       return {
         term: null,
         connecting: false,
+        closing: false,
         script: ''
       }
     },
@@ -96,6 +97,7 @@
         if (val.action === TTY_ACTION_CLOSE) {
           unsubscribeTopic.tty(this.job.id)
           this.$emit('input', false)
+          this.closing = false
         }
       },
 
@@ -117,6 +119,7 @@
       },
 
       onCloseClick() {
+        this.closing = true
         this.$store.dispatch(actions.tty.close, this.job.id)
       },
 
