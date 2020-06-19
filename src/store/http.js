@@ -140,6 +140,11 @@ instance.interceptors.response.use(
 
     const apiMsg = response.data
 
+    // should redirect to login page and login again
+    if (apiMsg.code === code.error.auth) {
+      errorCommit(code.error.auth, 'Failed to auth, should login again')
+    }
+
     if (apiMsg.code !== code.ok) {
       return Promise.reject({
         code: apiMsg.code,
