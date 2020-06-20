@@ -58,7 +58,9 @@ export default {
     },
     steps: {
       get: 'steps/get',
-      update: 'steps/update'
+      update: 'steps/update',
+      getTasks: 'steps/getTasks',
+      updateTasks: 'steps/updateTasks',
     },
     logs: {
       push: 'logs/push',
@@ -79,6 +81,7 @@ export default {
   secrets: {
     createRsa: 'secrets/createRsa',
     createAuth: 'secrets/createAuth',
+    createToken: 'secrets/createToken',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',
@@ -87,6 +90,7 @@ export default {
 
   configs: {
     saveSmtp: 'configs/saveSmtp',
+    saveText: 'configs/saveText',
     list: 'configs/list',
     get: 'configs/get',
     delete: 'configs/delete'
@@ -108,6 +112,7 @@ export default {
 
   plugins: {
     list: 'plugins/list',
+    notifies: 'plugins/notifies',
     readme: 'plugins/readme',
     icon: 'plugins/icon'
   },
@@ -119,5 +124,11 @@ export default {
     delete: 'hosts/delete',
     test: 'hosts/test',
     updated: 'hosts/updated'
+  },
+
+  tty: {
+    connect: 'tty/connect',
+    shell: 'tty/shell',
+    close: 'tty/close'
   }
 }

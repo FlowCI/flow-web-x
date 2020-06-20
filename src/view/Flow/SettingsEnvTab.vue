@@ -1,13 +1,11 @@
 <template>
   <div class="env-tab">
-
     <v-row align="center">
       <v-col class="mb-4">
-      <span class="font-weight-light title">Variables
-        <v-btn icon @click="onAddLocalVar">
+        <span class="font-weight-bold title">Variables</span>
+        <v-btn outlined x-small icon color="primary" class="ml-2 mb-1" @click="onAddLocalVar">
           <v-icon class="font-weight-bold">mdi-plus</v-icon>
         </v-btn>
-      </span>
         <v-divider></v-divider>
       </v-col>
     </v-row>
@@ -24,7 +22,7 @@
 
     <v-row>
       <v-col>
-        <span class="font-weight-light title">YAML</span>
+        <span class="font-weight-bold title">YAML</span>
         <v-divider></v-divider>
       </v-col>
     </v-row>

@@ -4,19 +4,18 @@
     <v-subheader>Steps</v-subheader>
 
     <step-logging-item
-        v-for="(item) in items"
+        v-for="(item) in stepItems"
         :key="item.id"
         :bus="buses[item.id]"
         :wrapper="item">
     </step-logging-item>
 
-    <v-divider class="mt-4" v-if="after.length > 0"></v-divider>
-    <v-subheader class="mb-2" v-if="after.length > 0">After</v-subheader>
+    <v-divider class="mt-4" v-if="taskItems.length > 0"></v-divider>
+    <v-subheader class="mb-2" v-if="taskItems.length > 0">Notifications</v-subheader>
 
     <step-logging-item
-        v-for="(item) in after"
+        v-for="(item) in taskItems"
         :key="item.id"
-        :bus="buses[item.id]"
         :wrapper="item">
     </step-logging-item>
   </div>
@@ -25,7 +24,6 @@
 <script>
   import Vue from 'vue'
   import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
-  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
   import { StepWrapper } from '@/util/steps'
   import { mapState } from 'vuex'
 
@@ -36,45 +34,37 @@
     },
     data() {
       return {
-        items: [],
-        after: [],
+        stepItems: [],
+        taskItems: [],
         buses: {}
       }
-    },
-    mounted() {
-      subscribeTopic.logs(this.$store)
-    },
-    destroyed() {
-      unsubscribeTopic.logs()
     },
     computed: {
       ...mapState({
         steps: state => state.steps.items,
-        change: state => state.steps.change,
+        tasks: state => state.steps.tasks,
         loaded: state => state.logs.loaded,
         pushed: state => state.logs.pushed
       }),
     },
     watch: {
-      steps(after) {
-        this.items.length = 0
-        this.after.length = 0
+      steps(steps) {
+        this.stepItems.length = 0
         this.buses = {}
 
-        after.forEach((s, index) => {
+        steps.forEach((s, index) => {
           const wrapper = new StepWrapper(s)
           this.buses[wrapper.id] = new Vue()
-
-          if (wrapper.isAfter) {
-            this.after.push(wrapper)
-          } else {
-            this.items.push(wrapper)
-          }
+          this.stepItems.push(wrapper)
         })
       },
 
-      change(newVal) {
-        // ignore
+      tasks(tasks) {
+        this.taskItems.length = 0
+        tasks.forEach((s, index) => {
+          const wrapper = new StepWrapper(s)
+          this.taskItems.push(wrapper)
+        })
       },
 
       // action from pushed log

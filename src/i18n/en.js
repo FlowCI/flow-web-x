@@ -1,4 +1,5 @@
 export default {
+  welcome: 'Welcome to flow.ci',
   back: 'Back',
   save: 'Save',
   reset: 'Reset',
@@ -13,6 +14,7 @@ export default {
   password: 'Password',
   confirm: 'Confirm',
   restart: 'Restart',
+  revoke: 'Revoke',
 
   menu: {
     signedInAs: 'Signed in as ',
@@ -47,7 +49,15 @@ export default {
     stats_date_select: 'Select Statistic Date:',
     summary_rate_text: 'Success rate',
 
-    more_template: 'More template',
+    more_template: 'More templates',
+
+    tab: {
+      options: 'Options',
+      variables: 'Variables',
+      yaml: 'YAML',
+      notification: 'Notification',
+      members: 'Members',
+    },
 
     hint: {
       name_required: 'Flow name is required',
@@ -73,7 +83,10 @@ export default {
 
       stats_invalid_date: 'Invalid statistic date',
 
-      yaml_from_git: 'Current yaml will be loaded from Git repo on branch {0}'
+      yaml_from_git: 'Current yaml will be loaded from Git repo on branch {0}',
+
+      plugin_docker_run: 'Run from docker',
+      plugin_installed: 'Applied'
     }
   },
 
@@ -90,6 +103,7 @@ export default {
     },
 
     hint: {
+      tty: 'Run bash in current step terminal',
       missing_agent: 'There is NO agents, the job will be started until agent has been created'
     }
   },

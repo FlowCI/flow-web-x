@@ -1,8 +1,8 @@
 <template>
   <div class="step-logging-item" @click="onPanelClick">
     <v-expansion-panels
+        :readonly="!showLog"
         tile
-        multiple
         accordion
         focusable>
       <v-expansion-panel>
@@ -15,18 +15,25 @@
                 <v-icon small>mdi-chevron-right</v-icon>
                 <span class="caption ml-2">{{ wrapper.name }}</span>
 
-                <v-tooltip right content-class="body">
+                <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-if="wrapper.isSuccessButFailure" v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
                   </template>
                   <span>allow failure, exit code : {{ wrapper.exitCode }}</span>
+                </v-tooltip>
+
+                <v-tooltip right content-class="body" v-if="wrapper.isTimeoutButAllowFailure">
+                  <template v-slot:activator="{ on }">
+                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                  </template>
+                  <span>Timeout, but allow failure</span>
                 </v-tooltip>
 
               </v-col>
               <v-col cols="9">
               </v-col>
               <v-col cols="1" class="caption" v-if="wrapper.isFinished">
-                <v-btn icon x-small @click="onLogDownload">
+                <v-btn icon x-small @click="onLogDownload" :disabled="!showLog">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
 
@@ -37,7 +44,7 @@
           </template>
         </v-expansion-panel-header>
 
-        <v-expansion-panel-content>
+        <v-expansion-panel-content v-if="showLog">
           <div :id="`${wrapper.id}-terminal`" class="terminal"></div>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -59,22 +66,30 @@
         type: Object
       },
       bus: {
-        required: true,
+        required: false,
         type: Object
       }
     },
     data () {
       return {
         buffer: [],
-        terminal: null
+        terminal: null,
+        fitAddon: new FitAddon(),
       }
     },
     mounted() {
-      this.bus.$on('writeLog', this.writeLog)
+      if (this.showLog) {
+        this.bus.$on('writeLog', this.writeLog)
+      }
     },
     destroyed() {
       if (this.terminal) {
         this.terminal.dispose()
+      }
+    },
+    computed: {
+      showLog() {
+        return !!this.bus
       }
     },
     methods: {
@@ -83,7 +98,6 @@
           this.buffer.push(log)
           return
         }
-
         this.terminal.write(log)
       },
 
@@ -92,6 +106,10 @@
       },
 
       onPanelClick() {
+        if (!this.showLog) {
+          return
+        }
+
         if (this.terminal) {
           return
         }
@@ -107,15 +125,16 @@
           }
         })
 
-        const fitAddon = new FitAddon()
-        this.terminal.loadAddon(fitAddon)
+        this.terminal.loadAddon(this.fitAddon)
 
         const unicode11Addon = new Unicode11Addon()
         this.terminal.loadAddon(unicode11Addon);
         this.terminal.unicode.activeVersion = '11'
 
-        this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
-        fitAddon.fit()
+        setTimeout(function () {
+          this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
+          this.fitAddon.fit()
+        }.bind(this), 50);
 
         for (let buf of this.buffer) {
           this.terminal.write(buf)
@@ -170,6 +189,10 @@
       padding-left: 1px;
       padding-bottom: 0;
       padding-right: 0;
+    }
+
+    .terminal {
+      height: 300px;
     }
   }
 </style>

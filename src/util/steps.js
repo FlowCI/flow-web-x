@@ -8,11 +8,18 @@ const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
+/**
+ * Wrapper for both ExecutedCmd and ExecutedLocalTask
+ */
 export class StepWrapper {
   constructor(step) {
     this.step = step
-    let slashIndex = this.step.nodePath.lastIndexOf('/')
-    this.stepName = this.step.nodePath.substring(slashIndex + 1)
+    this.stepName = step.name
+
+    if (step.nodePath) {
+      let slashIndex = this.step.nodePath.lastIndexOf('/')
+      this.stepName = this.step.nodePath.substring(slashIndex + 1)
+    }
   }
 
   get rawInstance() {
@@ -21,10 +28,6 @@ export class StepWrapper {
 
   get id() {
     return this.step.id
-  }
-
-  get isAfter() {
-    return this.step.after
   }
 
   get startAt() {
@@ -56,6 +59,10 @@ export class StepWrapper {
 
   get isSuccessButFailure() {
     return this.step.allowFailure && this.step.status === STATUS_SUCCESS && this.step.code !== 0
+  }
+
+  get isTimeoutButAllowFailure() {
+    return this.step.allowFailure && this.step.status === STATUS_TIMEOUT
   }
 
   get duration() {

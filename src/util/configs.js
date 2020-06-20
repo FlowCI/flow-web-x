@@ -1,6 +1,5 @@
 export const CATEGORY_SMTP = 'SMTP'
-export const CATEGORY_FILE = 'FILE'
-export const CATEGORY_JSON = 'JSON'
+export const CATEGORY_TEXT = 'TEXT'
 
 export const SECURE_NONE = 'NONE'
 export const SECURE_SSL = 'SSL'

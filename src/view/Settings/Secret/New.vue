@@ -9,7 +9,7 @@
           ></text-box>
         </v-form>
 
-        <text-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH]"
+        <text-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH, CATEGORY_TOKEN]"
                      label="Category"
                      v-model="category"
         ></text-select>
@@ -31,6 +31,12 @@
           <auth-editor :model="instance"></auth-editor>
         </v-form>
       </v-col>
+
+      <v-col cols="8" v-if="isToken">
+        <v-form ref="tokenForm" lazy-validation>
+          <token-editor :model="instance"></token-editor>
+        </v-form>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -45,10 +51,11 @@
 <script>
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
+  import TokenEditor from '@/components/Common/TokenEditor'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
-  import { CATEGORY_SSH_RSA, CATEGORY_AUTH } from '@/util/secrets'
+  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -57,19 +64,21 @@
       TextBox,
       TextSelect,
       SshRsaEditor,
-      AuthEditor
+      AuthEditor,
+      TokenEditor
     },
-    data () {
+    data() {
       return {
         CATEGORY_SSH_RSA,
         CATEGORY_AUTH,
-        nameRules: secretAndConfigNameRules(this),
+        CATEGORY_TOKEN,
 
         name: '',
+        nameRules: secretAndConfigNameRules(this),
         category: CATEGORY_SSH_RSA,
 
         credential: {
-          [ CATEGORY_SSH_RSA ]: {
+          [CATEGORY_SSH_RSA]: {
             selected: '',
             pair: {
               publicKey: '',
@@ -77,24 +86,30 @@
             }
           },
 
-          [ CATEGORY_AUTH ]: {
+          [CATEGORY_AUTH]: {
             selected: '',
             pair: {
               username: '',
               password: ''
             }
+          },
+
+          [CATEGORY_TOKEN]: {
+            token: {
+              data: ''
+            }
           }
         }
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
         navs: this.navs,
         showAddBtn: false
       })
     },
     computed: {
-      navs () {
+      navs() {
         return [
           {
             text: 'Secrets',
@@ -106,50 +121,57 @@
         ]
       },
 
-      instance () {
-        return this.credential[ this.category ]
+      instance() {
+        return this.credential[this.category]
       },
 
-      isSshRsa () {
+      isSshRsa() {
         return this.category === CATEGORY_SSH_RSA
       },
 
-      isAuth () {
+      isAuth() {
         return this.category === CATEGORY_AUTH
+      },
+
+      isToken() {
+        return this.category === CATEGORY_TOKEN
       }
     },
     methods: {
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/secrets')
       },
 
-      onSaveClick () {
+      onSaveClick() {
         if (!this.$refs.nameForm.validate()) {
           return
         }
 
-        if (this.isSshRsa && this.$refs.sshForm.validate()) {
-          const param = {
-            name: this.name,
-            publicKey: this.instance.pair.publicKey,
-            privateKey: this.instance.pair.privateKey
-          }
+        const payload = {
+          name: this.name
+        }
 
-          this.$store.dispatch(actions.secrets.createRsa, param).then(() => {
+        if (this.isSshRsa && this.$refs.sshForm.validate()) {
+          payload.publicKey = this.instance.pair.publicKey
+          payload.privateKey = this.instance.pair.privateKey
+          this.$store.dispatch(actions.secrets.createRsa, payload).then(() => {
             this.onBackClick()
           })
-
           return
         }
 
         if (this.isAuth && this.$refs.authForm.validate()) {
-          const param = {
-            name: this.name,
-            username: this.instance.pair.username,
-            password: this.instance.pair.password
-          }
+          payload.username = this.instance.pair.username
+          payload.password = this.instance.pair.password
+          this.$store.dispatch(actions.secrets.createAuth, payload).then(() => {
+            this.onBackClick()
+          })
+          return
+        }
 
-          this.$store.dispatch(actions.secrets.createAuth, param).then(() => {
+        if (this.isToken && this.$refs.tokenForm.validate()) {
+          payload.token = this.instance.token.data
+          this.$store.dispatch(actions.secrets.createToken, payload).then(() => {
             this.onBackClick()
           })
         }

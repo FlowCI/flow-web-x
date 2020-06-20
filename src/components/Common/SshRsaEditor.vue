@@ -31,7 +31,7 @@
       <v-flex class="mt-1">
         <v-textarea
             filled
-            label="Public Key"
+            :label="`Public Key: ${model.md5Fingerprint || ''}`"
             rows="4"
             class="font-weight-medium caption"
             :rules="sshPublicKeyRules"
@@ -46,7 +46,7 @@
         <v-textarea
             filled
             class="font-weight-medium caption"
-            label="Private Key"
+            label="Private Key:"
             rows="8"
             :rules="sshPrivateKeyRules"
             :append-outer-icon="showHelp ? 'mdi-help-circle-outline' : ''"
@@ -79,7 +79,8 @@
        *   pair: {
        *     privateKey: '',
        *     publicKey: ''
-       *   }
+       *   },
+       *   md5Fingerprint: ''
        * }
        */
       model: {

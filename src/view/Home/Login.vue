@@ -2,8 +2,8 @@
   <v-row align="center" justify="center">
     <v-col cols="4">
       <v-card>
-        <v-card-title class="pb-0">
-          <span class="title font-weight-bold">{{ $t('login') }}</span>
+        <v-card-title class="justify-center">
+          <span class="title font-weight-bold">{{ $t('welcome') }}</span>
         </v-card-title>
         <v-card-text>
           <v-text-field

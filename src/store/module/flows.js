@@ -11,7 +11,8 @@ const state = {
   gitBranches: [],
   itemsByCredential: [],
   users: [], // flow users
-  steps: [] // flow steps from yml
+  steps: [], // flow steps from yml
+  notifications: [] // flow notification from yml
 }
 
 const mutations = {
@@ -153,8 +154,9 @@ const mutations = {
     }
   },
 
-  setSteps (state, steps) {
-    state.steps = steps
+  setYmlObj (state, flowNode) {
+    state.steps = flowNode.children
+    state.notifications = flowNode.notifications
   }
 }
 
@@ -234,13 +236,18 @@ const actions = {
     await confirmFunc()
   },
 
-  async update ({commit}, {name, isYamlFromRepo, yamlRepoBranch}) {
+  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout}) {
     await http.post(
-      `flows/${name}/update`,
-      (flow) => {
-        commit('update', flow)
-      },
-      {name, isYamlFromRepo, yamlRepoBranch}
+        `flows/${name}/settings`,
+        (flow) => {
+          commit('update', flow)
+        },
+        {
+          isYamlFromRepo,
+          yamlRepoBranch,
+          jobTimeout,
+          stepTimeout
+        }
     )
   },
 
@@ -273,8 +280,8 @@ const actions = {
       commit('select', flow)
     })
 
-    await http.get(`flows/${name}/yml/steps`, (steps) => {
-      commit('setSteps', steps)
+    await http.get(`flows/${name}/yml/obj`, (flowNode) => {
+      commit('setYmlObj', flowNode)
     })
   },
 
@@ -350,22 +357,30 @@ const actions = {
         type: type
       }
     }
-
     const onSuccess = () => {
       commit('addVar', {flow, name, value})
     }
-
     await http.post(`flows/${flow.name}/variables`, onSuccess, payload)
   },
 
   async removeVar ({commit}, {flow, name}) {
     const payload = [ name ]
-
     const onSuccess = () => {
       commit('removeVar', {flow, name})
     }
-
     await http.delete(`flows/${flow.name}/variables`, onSuccess, payload)
+  },
+
+  async saveNotify({commit}, {flow, plugin, inputs, enabled}) {
+    const payload = {plugin, inputs, enabled}
+    const onSuccess = () => {
+      // commit('saveNotify', {flow, name})
+    }
+    await http.post(`flows/${flow.name}/notify`, onSuccess, payload)
+  },
+
+  async removeNotify({commit}, {flow, plugin}) {
+
   }
 }
 

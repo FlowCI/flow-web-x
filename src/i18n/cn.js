@@ -1,4 +1,5 @@
 export default {
+  welcome: '欢迎来到 flow.ci',
   back: '返回',
   save: '保存',
   reset: '重置',
@@ -13,6 +14,7 @@ export default {
   password: '密码',
   confirm: '确认',
   restart: '重新开始',
+  revoke: '删除',
 
   menu: {
     signedInAs: '当前用户 ',
@@ -47,7 +49,15 @@ export default {
     stats_date_select: '选择统计日期',
     summary_rate_text: '成功率',
 
-    more_template: 'More template',
+    more_template: '更多的模板',
+
+    tab: {
+      options: '设置',
+      variables: '环境变量',
+      yaml: 'YAML 配置',
+      notification: '消息通知',
+      members: '成员',
+    },
 
     hint: {
       name_required: '请输入 Flow 名称',
@@ -73,7 +83,10 @@ export default {
 
       stats_invalid_date: 'Invalid statistic date',
 
-      yaml_from_git: '当前 YAML 配置将从 Git 仓库中的 {0} 分支获得'
+      yaml_from_git: '当前 YAML 配置将从 Git 仓库中的 {0} 分支获得',
+
+      plugin_docker_run: '需要从 Docker 运行',
+      plugin_installed: '已使用'
     }
   },
 
@@ -89,6 +102,7 @@ export default {
       artifacts: 'Artifacts'
     },
     hint: {
+      tty: '打开当前任务的 Terminal 中运行 bash',
       missing_agent: 'There is NO agents, the job will be started until agent has been created'
     }
   },

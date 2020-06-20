@@ -59,6 +59,18 @@ stompClient.connect({}, function () {
   })
 })
 
+
+export const ws = {
+  token: process.env.VUE_APP_TOKEN,
+  setToken(t) {
+    this.token = t
+  }
+}
+
+export function send(topic, body) {
+  stompClient.send(topic, {Token: ws.token}, body)
+}
+
 export const subscribeTopic = {
   // subscribe flow git test
   gitTest(store, flowId) {
@@ -88,24 +100,28 @@ export const subscribeTopic = {
 
   // subscribe step changes
   steps(jobId, store) {
-    subscribe('/topic/steps/' + jobId, (data) => {
+    subscribe(`/topic/steps/${jobId}`, (data) => {
       let message = JSON.parse(data.body)
       let steps = message.body
       store.dispatch(actions.jobs.steps.update, steps)
     })
   },
 
-  // subscribe realtime logging without vuex store since performance
-  logs(store) {
-    subscribe('/topic/logs', (data) => {
-      let logItemStr = data.body
-      if (logItemStr < 2) {
-        return
-      }
+  // subscribe tasks changes
+  tasks(jobId, store) {
+    subscribe(`/topic/tasks/${jobId}`, (data) => {
+      let message = JSON.parse(data.body)
+      let tasks = message.body
+      store.dispatch(actions.jobs.steps.updateTasks, tasks)
+    })
+  },
 
-      const cmdIdLen = logItemStr.charCodeAt(0)
-      const cmdId = logItemStr.substring(2, cmdIdLen + 2)
-      const content = logItemStr.substring(cmdIdLen + 3)
+  // subscribe realtime logging without vuex store since performance
+  logs(jobId, store) {
+    subscribe(`/topic/logs/${jobId}`, (data) => {
+      const message = JSON.parse(data.body)
+      const cmdId = message.id
+      const content = atob(message.content)
 
       store.dispatch(actions.jobs.logs.push, new LogWrapper(cmdId, content))
     })
@@ -126,12 +142,23 @@ export const subscribeTopic = {
       let host = message.body
       store.dispatch(actions.hosts.updated, host)
     })
+  },
+
+  tty(jobId, onCmdCallback, onLogCallback, onErrorCallback) {
+    subscribe(`/topic/tty/action/${jobId}`, (data) => {
+      let message = JSON.parse(data.body)
+      onCmdCallback(message.body) // TtyCmd.Out
+    })
+
+    subscribe(`/topic/tty/logs/${jobId}`, (data) => {
+      onLogCallback(atob(data.body))
+    })
   }
 }
 
 export const unsubscribeTopic = {
   gitTest(flowId) {
-    unsubscribe('/topic/flows/git/test/' + flowId)
+    unsubscribe(`/topic/flows/git/test/${flowId}`)
   },
 
   jobs() {
@@ -143,14 +170,23 @@ export const unsubscribeTopic = {
   },
 
   steps(jobId) {
-    unsubscribe('/topic/steps/' + jobId)
+    unsubscribe(`/topic/steps/${jobId}`)
   },
 
-  logs() {
-    unsubscribe('/topic/logs')
+  tasks(jobId) {
+    unsubscribe(`/topic/tasks/${jobId}`)
+  },
+
+  logs(jobId) {
+    unsubscribe(`/topic/logs/${jobId}`)
   },
 
   hosts() {
     unsubscribe('/topic/hosts')
+  },
+
+  tty(jobId) {
+    unsubscribe(`/topic/tty/action/${jobId}`)
+    unsubscribe(`/topic/tty/logs/${jobId}`)
   }
 }
