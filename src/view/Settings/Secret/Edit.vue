@@ -88,7 +88,7 @@
           return {
             name: '',
             privateKey: '',
-            publicKey: ''
+            publicKey: '',
           }
         }
       }
@@ -137,7 +137,8 @@
         if (this.isSshRsa) {
           return {
             selected: '',
-            pair: this.secretObj.pair
+            pair: this.secretObj.pair,
+            md5Fingerprint: this.secretObj.md5Fingerprint
           }
         }
 
