@@ -1,7 +1,7 @@
 {
   "name": "flow-web-x",
-  "version": "0.20.20",
-  "description": "new version web of flow.ci",
+  "version": "0.20.26",
+  "description": "flow.ci web ui",
   "author": "Yang Guo <32008001@qq.com>",
   "private": true,
   "scripts": {
