@@ -197,8 +197,8 @@ const actions = {
       secret: wrapper.secret
     }
 
-    const confirmFunc = () => {
-      http.post(
+    const confirmFunc = async () => {
+      await http.post(
         `flows/${wrapper.name}/confirm`,
         (flow) => {
           console.log('[DONE]: confirmed')

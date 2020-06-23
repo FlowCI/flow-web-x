@@ -6,7 +6,6 @@
           <v-radio label="Do not use template" :value="0"></v-radio>
           <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n + 1"></v-radio>
         </v-radio-group>
-        <span class="error--text" v-if="error">{{ error }}</span>
       </v-col>
     </v-row>
 
@@ -52,8 +51,6 @@
     data () {
       return {
         selected: 0,
-        yaml: '',
-        error: '',
         loading: false
       }
     },
@@ -67,22 +64,23 @@
     },
     methods: {
       async onFinishClick() {
+        let yaml = ''
+        let err = ''
+
         // load yaml
         if (this.selected > 0) {
           try {
             this.loading = true
             const url = this.templates[this.selected].url
             const response = await axios.get(url)
-            this.yaml = response.data;
-            this.loading = false
+            yaml = response.data;
           } catch (error) {
-            this.error = error
-            this.loading = false
-            return
+            err = error
           }
         }
 
-        this.onNextClick(this.yaml)
+        this.loading = false
+        this.onNextClick({yaml, err})
       }
     }
   }

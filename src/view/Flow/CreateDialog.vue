@@ -38,44 +38,8 @@
               :on-back-click="onBackClick"
               :on-next-click="onNextClick"
           ></create-select-template>
+          <span class="error--text" v-if="error">{{ `Error: ${error}` }}</span>
         </v-stepper-content>
-
-        <!--        &lt;!&ndash; step 2: to config git url &ndash;&gt;-->
-        <!--        <v-stepper-step :complete="step > 2" step="2">-->
-        <!--          {{ $t('flow.create_title_git_url') }}-->
-        <!--        </v-stepper-step>-->
-        <!--        <v-stepper-content step="2">-->
-        <!--          <create-config-git-->
-        <!--              :webhook="flow.webhook"-->
-        <!--              :on-next-click="onNextClick"-->
-        <!--              :on-back-click="onBackClick"-->
-        <!--              :on-skip-click="onSkipClick"-->
-        <!--          ></create-config-git>-->
-        <!--        </v-stepper-content>-->
-
-        <!--        &lt;!&ndash; step 3: to config git access &ndash;&gt;-->
-        <!--        <v-stepper-step :complete="step > 3" step="3">-->
-        <!--          {{ $t('flow.create_title_git_access') }}-->
-        <!--        </v-stepper-step>-->
-        <!--        <v-stepper-content step="3">-->
-        <!--          <create-config-access-->
-        <!--              :git-url="flow.gitUrl"-->
-        <!--              :on-next-click="onNextClick"-->
-        <!--              :on-back-click="onBackClick"-->
-        <!--          ></create-config-access>-->
-        <!--        </v-stepper-content>-->
-
-        <!--        &lt;!&ndash; step 4: to test git access &ndash;&gt;-->
-        <!--        <v-stepper-step :complete="step > 4" step="4">-->
-        <!--          {{ $t('flow.create_title_git_test') }}-->
-        <!--        </v-stepper-step>-->
-        <!--        <v-stepper-content step="4">-->
-        <!--          <create-test-git-->
-        <!--              :flow="flow"-->
-        <!--              :on-next-click="onNextClick"-->
-        <!--              :on-back-click="onBackClick"-->
-        <!--          ></create-test-git>-->
-        <!--        </v-stepper-content>-->
       </v-stepper>
     </v-card>
   </v-dialog>
@@ -98,7 +62,7 @@
       return {
         dialog: false,
         step: 1,
-        yaml: ''
+        error: ''
       }
     },
     computed: {
@@ -114,45 +78,45 @@
         return new FlowWrapper(this.created)
       }
     },
-    watch: {
-      step(after) {
-        if (after < 2) {
-          return
-        }
-
-        // send confirm
-        let payload = {wrapper: this.flow, yaml: this.yaml};
-        this.$store.dispatch(actions.flows.confirm, payload)
-            .then(() => {
-              this.onCancelClick()
-            })
-      }
-    },
     methods: {
       onCancelClick() {
         this.dialog = false
         this.step = 1
+        this.error = ''
       },
 
       onBackClick() {
         if (this.step > 0) {
           this.step--
+          this.error = ''
         }
       },
 
       onNextClick(data) {
-        this.beforeStepForward(data)
-        this.step++
-      },
-
-      beforeStepForward(data) {
         const handler = {
+          // step 1
           1: (name) => {
             this.flow.name = name
             console.log('flow name: ' + name)
+            this.step++
           },
-          2: (yaml) => {
-            this.yaml = yaml
+
+          // step 2
+          2: ({yaml, err}) => {
+            if (err) {
+              this.error = err
+              return
+            }
+
+            // send confirm
+            let payload = {wrapper: this.flow, yaml};
+            this.$store.dispatch(actions.flows.confirm, payload)
+                .then(() => {
+                  this.onCancelClick()
+                })
+                .catch((err) => {
+                  this.error = err.message
+                })
           }
         }
 
