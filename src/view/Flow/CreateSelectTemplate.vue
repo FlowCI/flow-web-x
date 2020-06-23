@@ -1,34 +1,29 @@
 <template>
-  <div class="template-selection">
-    <v-row dense>
-      <v-col>
-        <v-radio-group v-model="selected" :mandatory="true" dense>
-          <v-radio label="Do not use template" :value="0"></v-radio>
-          <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n + 1"></v-radio>
-        </v-radio-group>
-      </v-col>
-    </v-row>
-
-    <v-row dense>
-      <!-- finish button -->
-      <v-col cols="1">
-        <v-btn small
-               :loading="loading"
-               color="primary"
-               @click="onFinishClick"
-        >{{ $t('flow.create_btn_finish') }}</v-btn>
-      </v-col>
-
-      <!-- back button -->
-      <v-col cols="1">
-        <v-btn small
-               outlined
-               color="warning"
-               @click="onBackClick"
-        >{{ $t('back') }}</v-btn>
-      </v-col>
-    </v-row>
-  </div>
+  <v-card class="template-selection" elevation="0">
+    <v-card-subtitle>
+      {{ $t('flow.create_git_hint') }}
+    </v-card-subtitle>
+    <v-card-text>
+      <v-radio-group v-model="selected" :mandatory="true" dense>
+        <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n"></v-radio>
+      </v-radio-group>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn small
+             outlined
+             color="warning"
+             @click="onBackClick"
+      >{{ $t('back') }}
+      </v-btn>
+      <v-btn small
+             class="ml-10"
+             :loading="loading"
+             color="primary"
+             @click="onFinishClick"
+      >{{ $t('flow.create_btn_finish') }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -48,7 +43,7 @@
         type: Function
       },
     },
-    data () {
+    data() {
       return {
         selected: 0,
         loading: false
@@ -68,15 +63,13 @@
         let err = ''
 
         // load yaml
-        if (this.selected > 0) {
-          try {
-            this.loading = true
-            const url = this.templates[this.selected].url
-            const response = await axios.get(url)
-            yaml = response.data;
-          } catch (error) {
-            err = error
-          }
+        try {
+          this.loading = true
+          const url = this.templates[this.selected].url
+          const response = await axios.get(url)
+          yaml = response.data;
+        } catch (error) {
+          err = error
         }
 
         this.loading = false
@@ -87,9 +80,13 @@
 </script>
 
 <style lang="scss">
-.template-selection {
-  .v-input__slot {
-    margin-bottom: 0 !important;
+  .template-selection {
+    .v-card__subtitle {
+      padding-bottom: 0 !important;
+    }
+
+    .v-input__slot {
+      margin-bottom: 0 !important;
+    }
   }
-}
 </style>
