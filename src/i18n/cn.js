@@ -33,6 +33,7 @@ export default {
     config_yml: '配置 YML',
 
     create_title_name: '输入 Flow 名称',
+    create_title_select_template: '选择 YAML 模板',
     create_title_git_url: '配置 Git URL',
     create_title_git_access: '配置 Git 权限',
     create_title_git_test: '测试 Git 链接',

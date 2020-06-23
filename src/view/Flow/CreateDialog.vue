@@ -20,79 +20,85 @@
       <!-- content -->
       <v-stepper v-model="step" vertical>
 
-        <!-- step 1: to given a name -->
+        <!-- step 1: given a name -->
         <v-stepper-step :complete="step > 1" step="1">
           {{ $t('flow.create_title_name') }}
         </v-stepper-step>
         <v-stepper-content step="1">
-          <create-flow-name
-              :on-next-click="onNextClick"
-          ></create-flow-name>
+          <create-flow-name :on-next-click="onNextClick"></create-flow-name>
         </v-stepper-content>
 
-        <!-- step 2: to config git url -->
+        <!-- step 2:  select a template -->
         <v-stepper-step :complete="step > 2" step="2">
-          {{ $t('flow.create_title_git_url') }}
+          {{ $t('flow.create_title_select_template') }}
         </v-stepper-step>
         <v-stepper-content step="2">
-          <create-config-git
-              :webhook="flow.webhook"
-              :on-next-click="onNextClick"
+          <create-select-template
+              class="ml-2"
               :on-back-click="onBackClick"
-              :on-skip-click="onSkipClick"
-          ></create-config-git>
+              :on-next-click="onNextClick"
+          ></create-select-template>
         </v-stepper-content>
 
-        <!-- step 3: to config git access -->
-        <v-stepper-step :complete="step > 3" step="3">
-          {{ $t('flow.create_title_git_access') }}
-        </v-stepper-step>
-        <v-stepper-content step="3">
-          <create-config-access
-              :git-url="flow.gitUrl"
-              :on-next-click="onNextClick"
-              :on-back-click="onBackClick"
-          ></create-config-access>
-        </v-stepper-content>
+        <!--        &lt;!&ndash; step 2: to config git url &ndash;&gt;-->
+        <!--        <v-stepper-step :complete="step > 2" step="2">-->
+        <!--          {{ $t('flow.create_title_git_url') }}-->
+        <!--        </v-stepper-step>-->
+        <!--        <v-stepper-content step="2">-->
+        <!--          <create-config-git-->
+        <!--              :webhook="flow.webhook"-->
+        <!--              :on-next-click="onNextClick"-->
+        <!--              :on-back-click="onBackClick"-->
+        <!--              :on-skip-click="onSkipClick"-->
+        <!--          ></create-config-git>-->
+        <!--        </v-stepper-content>-->
 
-        <!-- step 4: to test git access -->
-        <v-stepper-step :complete="step > 4" step="4">
-          {{ $t('flow.create_title_git_test') }}
-        </v-stepper-step>
-        <v-stepper-content step="4">
-          <create-test-git
-              :flow="flow"
-              :on-next-click="onNextClick"
-              :on-back-click="onBackClick"
-          ></create-test-git>
-        </v-stepper-content>
+        <!--        &lt;!&ndash; step 3: to config git access &ndash;&gt;-->
+        <!--        <v-stepper-step :complete="step > 3" step="3">-->
+        <!--          {{ $t('flow.create_title_git_access') }}-->
+        <!--        </v-stepper-step>-->
+        <!--        <v-stepper-content step="3">-->
+        <!--          <create-config-access-->
+        <!--              :git-url="flow.gitUrl"-->
+        <!--              :on-next-click="onNextClick"-->
+        <!--              :on-back-click="onBackClick"-->
+        <!--          ></create-config-access>-->
+        <!--        </v-stepper-content>-->
+
+        <!--        &lt;!&ndash; step 4: to test git access &ndash;&gt;-->
+        <!--        <v-stepper-step :complete="step > 4" step="4">-->
+        <!--          {{ $t('flow.create_title_git_test') }}-->
+        <!--        </v-stepper-step>-->
+        <!--        <v-stepper-content step="4">-->
+        <!--          <create-test-git-->
+        <!--              :flow="flow"-->
+        <!--              :on-next-click="onNextClick"-->
+        <!--              :on-back-click="onBackClick"-->
+        <!--          ></create-test-git>-->
+        <!--        </v-stepper-content>-->
       </v-stepper>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
-  import CreateFlowName from '@/components/Flow/CreateFlowName'
-  import CreateConfigGit from '@/components/Flow/CreateConfigGit'
-  import CreateTestGit from '@/components/Flow/CreateTestGit'
-  import CreateConfigAccess from '@/components/Flow/CreateConfigAccess'
+  import CreateFlowName from './CreateFlowName'
+  import CreateSelectTemplate from './CreateSelectTemplate'
   import actions from '@/store/actions'
   import { FlowWrapper } from '@/util/flows'
   import { mapState } from 'vuex'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA } from '@/util/secrets'
 
   export default {
     name: 'FlowCreateDialog',
     components: {
       CreateFlowName,
-      CreateConfigGit,
-      CreateConfigAccess,
-      CreateTestGit
+      CreateSelectTemplate
     },
-    data () {
+    data() {
       return {
         dialog: false,
-        step: 1
+        step: 1,
+        yaml: ''
       }
     },
     computed: {
@@ -100,7 +106,7 @@
         created: state => state.flows.created
       }),
 
-      flow () {
+      flow() {
         if (this.created === undefined) {
           return new FlowWrapper({name: '', variables: {}})
         }
@@ -109,65 +115,49 @@
       }
     },
     watch: {
-      step (after) {
-        if (after < 5) {
+      step(after) {
+        if (after < 2) {
           return
         }
 
-        this.$store.dispatch(actions.flows.confirm, this.flow).then(() => {
-          this.onCancelClick()
-        })
+        // send confirm
+        let payload = {wrapper: this.flow, yaml: this.yaml};
+        this.$store.dispatch(actions.flows.confirm, payload)
+            .then(() => {
+              this.onCancelClick()
+            })
       }
     },
     methods: {
-      onCancelClick () {
+      onCancelClick() {
         this.dialog = false
         this.step = 1
       },
 
-      onBackClick () {
+      onBackClick() {
         if (this.step > 0) {
           this.step--
         }
       },
 
-      onSkipClick () {
-        // skip git config
-        this.step = 4
-      },
-
-      onNextClick (data) {
+      onNextClick(data) {
         this.beforeStepForward(data)
         this.step++
       },
 
-      beforeStepForward (data) {
+      beforeStepForward(data) {
         const handler = {
           1: (name) => {
             this.flow.name = name
             console.log('flow name: ' + name)
           },
-          2: (gitUrl) => {
-            this.flow.gitUrl = gitUrl
-            console.log('git url: ' + gitUrl)
-          },
-          3: (credential) => {
-            console.log('category: ' + credential.category)
-            console.log('selected: ' + credential.selected)
-
-            this.flow.credential = credential.selected
-            if (credential.category === CATEGORY_SSH_RSA) {
-              this.flow.ssh = credential.pair
-            }
-
-            if (credential.category === CATEGORY_AUTH) {
-              this.flow.auth = credential.pair
-            }
+          2: (yaml) => {
+            this.yaml = yaml
           }
         }
 
-        if (handler[ this.step ]) {
-          handler[ this.step ](data)
+        if (handler[this.step]) {
+          handler[this.step](data)
         }
       }
     }
