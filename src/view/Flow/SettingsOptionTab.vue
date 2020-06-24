@@ -13,7 +13,12 @@
 
       <!-- Git Access Option -->
       <v-col cols="12" class="mt-4 mb-4">
-        <span class="font-weight-black title">Git Access</span>
+        <span class="font-weight-black title">
+          Git Access
+          <v-btn icon link href="https://github.com/FlowCI/docs/blob/master/en/git/index.md" target="_blank">
+            <v-icon small>mdi-help-circle-outline</v-icon>
+          </v-btn>
+        </span>
         <v-divider></v-divider>
       </v-col>
 
@@ -51,11 +56,11 @@
       OptionGitAccess,
       OptionDeleteFlow
     },
-    data () {
+    data() {
       return {}
     },
     methods: {
-      onHelpClick (item) {
+      onHelpClick(item) {
         console.log(item)
       }
     }
