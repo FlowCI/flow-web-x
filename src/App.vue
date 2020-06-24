@@ -56,7 +56,6 @@
   import { mapState } from 'vuex'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
-
   export default {
     name: 'App',
     components: {

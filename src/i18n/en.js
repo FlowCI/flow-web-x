@@ -33,11 +33,13 @@ export default {
     config_yml: 'YML Config',
 
     create_title_name: 'Enter Flow Name',
+    create_title_select_template: 'Select YAML Template',
     create_title_git_url: 'Config Git URL',
     create_title_git_access: 'Config Git Access',
     create_title_git_test: 'Test Git Connection',
     create_title_yml: 'Config YML',
     create_btn_finish: 'Finish',
+    create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
 
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',

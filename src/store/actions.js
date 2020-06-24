@@ -20,6 +20,7 @@ export default {
     listByCredential: 'flows/listByCredential',
     select: 'flows/select',
     delete: 'flows/delete',
+    templates: 'flows/templates',
     users: {
       list: 'flows/listUsers',
       add: 'flows/addUser',

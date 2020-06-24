@@ -33,11 +33,13 @@ export default {
     config_yml: '配置 YML',
 
     create_title_name: '输入 Flow 名称',
+    create_title_select_template: '选择 YAML 模板',
     create_title_git_url: '配置 Git URL',
     create_title_git_access: '配置 Git 权限',
     create_title_git_test: '测试 Git 链接',
     create_title_yml: '配置 YML',
     create_btn_finish: '完成创建',
+    create_git_hint: '提示: Git 仓库可已在创建完成后配置',
 
     delete_btn: '删除当前 Flow',
     delete_desc: '删除当前 Flow 后无法恢复，请谨慎操作',
