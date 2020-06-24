@@ -23,7 +23,8 @@
         <v-btn small
                color="primary"
                @click="handleNextClick"
-        >{{ $t('next') }}</v-btn>
+        >{{ $t('next') }}
+        </v-btn>
       </v-col>
     </v-row>
   </div>
@@ -42,7 +43,7 @@
         type: Function
       }
     },
-    data () {
+    data() {
       return {
         valid: true,
         errorMsg: [],
@@ -52,38 +53,43 @@
     },
     computed: {
       ...mapState({
+        showCreateFlow: state => state.g.showCreateFlow,
         isExist: state => state.flows.isExist
       })
     },
+    watch: {
+      showCreateFlow() {
+        // reset
+        this.name = ''
+        this.errorMsg = []
+      }
+    },
     methods: {
-      handleNextClick () {
+      handleNextClick() {
         if (!this.$refs.form.validate()) {
           return
         }
 
-        this.errorMsg.length = 0
-        this.$store.dispatch(actions.flows.exist, this.name).then()
-      }
-    },
+        this.errorMsg = []
+        this.$store.dispatch(actions.flows.exist, this.name).then(() => {
+          this.onExistCallback(this.isExist)
+        })
+      },
 
-    watch: {
-      isExist(after) {
-        if (after === undefined) {
+      onExistCallback(val) {
+        if (val === true) {
+          this.errorMsg.push(this.$t('flow.hint.name_duplicate'))
           return
         }
 
-        if (after === false) {
+        if (val === false) {
           this.$store.dispatch(actions.flows.create, this.name).then(() => {
             this.onNextClick(this.name)
+            this.$store.dispatch(actions.flows.reset).then()
           }).catch((error) => {
             this.errorMsg.push(error.message)
           })
-
-          this.$store.dispatch(actions.flows.reset).then()
-          return
         }
-
-        this.errorMsg.push(this.$t('flow.hint.name_duplicate'))
       }
     }
   }

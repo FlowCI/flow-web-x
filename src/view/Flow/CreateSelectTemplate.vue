@@ -54,8 +54,16 @@
     },
     computed: {
       ...mapState({
+        showCreateFlow: state => state.g.showCreateFlow,
         templates: state => state.flows.templates
       })
+    },
+    watch: {
+      showCreateFlow() {
+        // reset
+        this.selected = 0
+        this.loading = false
+      }
     },
     methods: {
       async onFinishClick() {
