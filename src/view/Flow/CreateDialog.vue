@@ -60,15 +60,25 @@
     },
     data() {
       return {
-        dialog: false,
         step: 1,
         error: ''
       }
     },
     computed: {
       ...mapState({
+        showCreateFlow: state => state.g.showCreateFlow,
         created: state => state.flows.created
       }),
+
+      dialog: {
+        get() {
+          return this.showCreateFlow
+        },
+
+        set(val) {
+          this.popCreateFlow(val)
+        }
+      },
 
       flow() {
         if (this.created === undefined) {
@@ -80,7 +90,7 @@
     },
     methods: {
       onCancelClick() {
-        this.dialog = false
+        this.popCreateFlow(false)
         this.step = 1
         this.error = ''
       },

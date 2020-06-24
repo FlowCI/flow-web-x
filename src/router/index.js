@@ -42,6 +42,10 @@ export default new Router({
       component: Login
     },
     {
+      path: '',
+      redirect: '/flows'
+    },
+    {
       path: '/flows',
       name: 'FlowHome',
       component: FlowHome,

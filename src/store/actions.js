@@ -1,6 +1,7 @@
 export default {
   app: {
-    showSnackbar: 'g/show'
+    showSnackbar: 'g/show',
+    popCreateFlow: 'g/popCreateFlow'
   },
 
   auth: {
