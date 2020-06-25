@@ -30,14 +30,15 @@
                 </v-tooltip>
 
               </v-col>
-              <v-col cols="9">
+              <v-col cols="8">
               </v-col>
-              <v-col cols="1" class="caption" v-if="wrapper.isFinished">
+              <v-col cols="2" class="caption" v-if="wrapper.isFinished">
                 <v-btn icon x-small @click="onLogDownload" :disabled="!showLog">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
 
-                <span class="ml-2">{{ wrapper.duration }}</span>
+                <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
+                <span class="ml-1">{{ wrapper.duration }}</span>
                 <span class="ml-1">s</span>
               </v-col>
             </v-row>
