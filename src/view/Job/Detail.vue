@@ -16,10 +16,10 @@
             <template v-slot:activator="{ on }">
               <span v-on="on">
                 <v-icon small>mdi-clock-fast</v-icon>
-                {{ wrapper.duration }} sec
+                {{ duration }} sec
               </span>
             </template>
-            <span>Ran for {{ wrapper.duration }} sec</span>
+            <span>Ran for {{ duration }} sec</span>
           </v-tooltip>
         </div>
 
@@ -150,7 +150,9 @@
     data() {
       return {
         showTty: false,
-        agentIcons: icons
+        agentIcons: icons,
+        duration: '-',
+        durationInterval: null,
       }
     },
     components: {
@@ -202,6 +204,22 @@
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
         subscribeTopic.logs(obj.id, this.$store)
+      },
+
+      wrapper(w) {
+        this.duration = w.duration
+
+        if (this.durationInterval) {
+          clearInterval(this.durationInterval)
+        }
+
+        if (this.duration === '-' || w.isFinished) {
+          return
+        }
+
+        this.durationInterval = setInterval(() => {
+          this.duration += 1
+        }, 1000)
       }
     },
     methods: {
