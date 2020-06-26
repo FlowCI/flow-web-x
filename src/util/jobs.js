@@ -136,7 +136,7 @@ export class JobWrapper {
 
     get finishedAtInStr() {
         if (this.job.finishAt) {
-            return timeFormat(this.job.finishedAt)
+            return timeFormat(this.job.finishAt)
         }
 
         return '-'

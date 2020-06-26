@@ -13,7 +13,7 @@
       <v-col cols="2" class="body-2">
         <div class="pb-2">
           <v-icon small>mdi-clock-fast</v-icon>
-          {{ wrapper.finishedAt }} / {{ wrapper.duration }} (s)
+          {{ wrapper.fromNow }} / {{ wrapper.duration }} (s)
         </div>
         <div>
           <v-icon small>mdi-clock-outline</v-icon>
