@@ -45,16 +45,6 @@ export default {
     steps () {
       this.graph.data(this.buildGraphData())
       this.graph.render()
-    },
-
-    change (after) {
-      const node = this.graph.findById(after.id)
-      if (!node) {
-        return
-      }
-
-      const wrapper = new StepWrapper(after)
-      this.graph.updateItem(node, wrapper.status.config)
     }
   },
   methods: {
