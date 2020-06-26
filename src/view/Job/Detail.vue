@@ -12,12 +12,27 @@
 
       <v-col cols="2" class="body-2">
         <div class="pb-2">
-          <v-icon small>mdi-clock-fast</v-icon>
-          {{ wrapper.fromNow }} / {{ wrapper.duration }} (s)
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <span v-on="on">
+                <v-icon small>mdi-clock-fast</v-icon>
+                {{ wrapper.duration }} sec
+              </span>
+            </template>
+            <span>Ran for {{ wrapper.duration }} sec</span>
+          </v-tooltip>
         </div>
+
         <div>
-          <v-icon small>mdi-clock-outline</v-icon>
-          {{ wrapper.finishedAtInStr }}
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <span v-on="on">
+                <v-icon small>mdi-clock-outline</v-icon>
+                {{ wrapper.finishedAtInStr }}
+              </span>
+            </template>
+            <span>Finished at {{ wrapper.finishedAtInStr }} </span>
+          </v-tooltip>
         </div>
       </v-col>
 
