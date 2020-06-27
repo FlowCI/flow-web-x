@@ -213,7 +213,7 @@
           clearInterval(this.durationInterval)
         }
 
-        if (this.duration === '-' || w.isFinished) {
+        if (w.isFinished) {
           return
         }
 

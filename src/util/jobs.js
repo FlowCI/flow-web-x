@@ -123,7 +123,7 @@ export class JobWrapper {
             return timeDurationInSeconds(this.job.finishAt, this.job.startAt)
         }
 
-        return '-'
+        return 0
     }
 
     get finishedAtInStr() {
