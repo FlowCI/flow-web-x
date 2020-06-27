@@ -123,7 +123,6 @@
         }
 
         if (route.name === 'JobDetail') {
-          this.setCurrentJob()
           return [ this.baseItem, flowItem, {text: '#' + this.buildNumber, href} ]
         }
 
@@ -159,11 +158,6 @@
 
       setCurrentFlow () {
         this.$store.dispatch(actions.flows.select, this.flowName).then()
-      },
-
-      setCurrentJob () {
-        const payload = {flow: this.flowName, buildNumber: this.buildNumber}
-        this.$store.dispatch(actions.jobs.select, payload).then()
       },
 
       loadBranches () {

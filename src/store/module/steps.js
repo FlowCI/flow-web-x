@@ -22,29 +22,6 @@ const mutations = {
 
   setTasks (state, tasks) {
     state.tasks = tasks
-  },
-
-  updateSteps (state, steps) {
-    for (let item of state.items) {
-      for (let newItem of steps) {
-        if (item.id === newItem.id && item.status !== newItem.status) {
-          Object.assign(item, newItem)
-          state.change = newItem
-          break
-        }
-      }
-    }
-  },
-
-  updateTasks (state, tasks) {
-    for (let item of state.tasks) {
-      for (let newItem of tasks) {
-        if (item.id === newItem.id && item.status !== newItem.status) {
-          Object.assign(item, newItem)
-          break
-        }
-      }
-    }
   }
 }
 
@@ -65,7 +42,7 @@ const actions = {
    * Step update from ws push
    */
   update ({commit}, steps) {
-    commit('updateSteps', steps)
+    commit('setSteps', steps)
   },
 
   getTasks({commit}, {flow, buildNumber}) {
@@ -75,8 +52,11 @@ const actions = {
     })
   },
 
+  /**
+   * Task update from ws push
+   */
   updateTasks({commit}, tasks) {
-    commit('updateTasks', tasks)
+    commit('setTasks', tasks)
   }
 }
 

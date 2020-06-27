@@ -12,12 +12,27 @@
 
       <v-col cols="2" class="body-2">
         <div class="pb-2">
-          <v-icon small>mdi-clock-fast</v-icon>
-          {{ wrapper.finishedAt }} / {{ wrapper.duration }} (s)
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <span v-on="on">
+                <v-icon small>mdi-clock-fast</v-icon>
+                {{ duration }} sec
+              </span>
+            </template>
+            <span>Ran for {{ duration }} sec</span>
+          </v-tooltip>
         </div>
+
         <div>
-          <v-icon small>mdi-clock-outline</v-icon>
-          {{ wrapper.finishedAtInStr }}
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <span v-on="on">
+                <v-icon small>mdi-clock-outline</v-icon>
+                {{ wrapper.finishedAtInStr }}
+              </span>
+            </template>
+            <span>Finished at {{ wrapper.finishedAtInStr }} </span>
+          </v-tooltip>
         </div>
       </v-col>
 
@@ -135,7 +150,9 @@
     data() {
       return {
         showTty: false,
-        agentIcons: icons
+        agentIcons: icons,
+        duration: '-',
+        durationInterval: null,
       }
     },
     components: {
@@ -187,6 +204,22 @@
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
         subscribeTopic.logs(obj.id, this.$store)
+      },
+
+      wrapper(w) {
+        this.duration = w.duration
+
+        if (this.durationInterval) {
+          clearInterval(this.durationInterval)
+        }
+
+        if (w.isFinished) {
+          return
+        }
+
+        this.durationInterval = setInterval(() => {
+          this.duration += 1
+        }, 1000)
       }
     },
     methods: {

@@ -120,23 +120,19 @@ export class JobWrapper {
 
     get duration() {
         if (this.job.startAt && this.job.finishAt) {
-            return timeDurationInSeconds(this.job.finishedAt, this.job.startAt)
+            return timeDurationInSeconds(this.job.finishAt, this.job.startAt)
         }
 
-        return '-'
-    }
-
-    get finishedAt() {
-        if (this.job.finishAt) {
-            return timeFormatFromNow(this.job.finishedAt)
-        }
-
-        return '-'
+        return 0
     }
 
     get finishedAtInStr() {
+        if (!this.isFinished) {
+            return '-'
+        }
+
         if (this.job.finishAt) {
-            return timeFormat(this.job.finishedAt)
+            return timeFormat(this.job.finishAt)
         }
 
         return '-'
