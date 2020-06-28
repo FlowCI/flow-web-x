@@ -47,11 +47,11 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Users',
+            text: this.$t('settings.li.users'),
             href: '#/settings/users'
           },
           {
-            text: 'New'
+            text: this.$t('new')
           }
         ],
         showAddBtn: false

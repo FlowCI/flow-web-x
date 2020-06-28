@@ -35,7 +35,7 @@
 
   export default {
     name: "SettingsConfigHome",
-    data () {
+    data() {
       return {
         timeFormatInMins,
         loading: false,
@@ -48,13 +48,9 @@
         ]
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
-        navs: [
-          {
-            text: 'Configuration'
-          }
-        ],
+        navs: [{text: this.$t('settings.li.config')}],
         showAddBtn: true
       })
 
@@ -69,7 +65,7 @@
       })
     },
     methods: {
-      onAddBtnClick () {
+      onAddBtnClick() {
         this.$router.push({
           name: 'SettingsConfigNew'
         })

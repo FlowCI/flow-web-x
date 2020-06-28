@@ -16,6 +16,8 @@ export default {
   restart: 'Restart',
   revoke: 'Revoke',
   branch: 'Branch',
+  new: 'New',
+  edit: 'Edit',
 
   menu: {
     signedInAs: 'Signed in as ',
@@ -111,6 +113,9 @@ export default {
   },
 
   agent: {
+    agent: 'Agent',
+    host: 'Host',
+
     status: {
       busy: 'busy',
       idle: 'idle',

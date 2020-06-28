@@ -16,6 +16,8 @@ export default {
   restart: '重新开始',
   revoke: '删除',
   branch: '分支',
+  new: '新建',
+  edit: '编辑',
 
   menu: {
     signedInAs: '当前用户 ',
@@ -110,6 +112,9 @@ export default {
   },
 
   agent: {
+    agent: 'Agent',
+    host: '主机',
+
     status: {
       busy: '运行',
       idle: '空闲',
@@ -128,11 +133,11 @@ export default {
   settings: {
     li: {
       profile: '个人信息',
-      users: '用户',
+      users: '用户管理',
       security: '安全',
       agent: 'Agents',
-      secret: '秘钥',
-      config: '配置'
+      secret: '秘钥管理',
+      config: '配置管理'
     },
 
     profile: {

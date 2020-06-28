@@ -1,7 +1,7 @@
 <template>
   <v-list class="pa-0 func-list full-size">
     <v-subheader class="grey lighten-2">
-      <span class="font-weight-bold">Settings</span>
+      <span class="font-weight-bold">{{ $t('menu.settings') }}</span>
     </v-subheader>
 
     <v-divider></v-divider>

@@ -1,12 +1,6 @@
 <template>
   <div>
     <v-row>
-      <v-col>
-        <div>Create New Agent</div>
-      </v-col>
-    </v-row>
-
-    <v-row>
       <v-col cols="8">
         <v-form ref="agentNameForm"
                 lazy-validation>
@@ -57,11 +51,11 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Agents',
+            text: this.$t('settings.li.agent'),
             href: '#/settings/agents'
           },
           {
-            text: 'New Agent',
+            text: `${this.$t('new')} ${this.$t('settings.li.agent')}`,
             href: ''
           }
         ],

@@ -79,32 +79,28 @@
 
   export default {
     name: 'SettingsAgentHome',
-    data () {
+    data() {
       return {
         dialog: false,
         hostMap: {},
         items: [
           {
             id: 1,
-            name: 'Agents:',
+            name: `${this.$t('agent.agent')}:`,
             children: []
           },
           {
             id: 2,
-            name: 'Hosts:',
+            name: `${this.$t('agent.host')}:`,
             children: []
           },
         ],
         open: []
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
-        navs: [
-          {
-            text: 'Agents'
-          }
-        ],
+        navs: [{text: this.$t('settings.li.agent')}],
         showAddBtn: true
       })
 
@@ -123,8 +119,8 @@
       })
     },
     methods: {
-      buildHosts () {
-        let hosts = this.items[ 1 ]
+      buildHosts() {
+        let hosts = this.items[1]
         this.open.push(hosts.id)
 
         hosts.children = []
@@ -133,12 +129,12 @@
         for (let host of this.hosts) {
           let wrapper = new HostWrapper(host)
           hosts.children.push(wrapper)
-          this.hostMap[ wrapper.id ] = wrapper
+          this.hostMap[wrapper.id] = wrapper
         }
       },
 
-      buildAgents () {
-        let agents = this.items[ 0 ]
+      buildAgents() {
+        let agents = this.items[0]
         agents.children = []
 
         Object.values(this.hostMap).forEach(value => {
@@ -147,7 +143,7 @@
 
         for (let agent of this.agents) {
           if (agent.hostId) {
-            this.hostMap[ agent.hostId ].children.push(new AgentWrapper(agent))
+            this.hostMap[agent.hostId].children.push(new AgentWrapper(agent))
             continue
           }
 
@@ -157,19 +153,19 @@
         this.open.push(agents.id)
       },
 
-      onAddBtnClick () {
+      onAddBtnClick() {
         this.dialog = true
       },
 
-      onNewAgentClick () {
+      onNewAgentClick() {
         this.$router.push('/settings/agents/new')
       },
 
-      onNewHostClick () {
+      onNewHostClick() {
         this.$router.push('/settings/agents/host/new')
       },
 
-      onTokenCopyClick (wrapper) {
+      onTokenCopyClick(wrapper) {
         this.$copyText(wrapper.token)
           .then((e) => {
             const text = 'Token ' + e.text + ' is copied'
@@ -180,11 +176,11 @@
           })
       },
 
-      onAgentEditClick (wrapper) {
+      onAgentEditClick(wrapper) {
         this.$router.push('/settings/agents/edit/' + wrapper.name)
       },
 
-      onHostEditClick (wrapper) {
+      onHostEditClick(wrapper) {
         this.$router.push('/settings/agents/host/edit/' + wrapper.name)
       }
     }
