@@ -56,7 +56,7 @@
                       prepend-icon="mdi-source-branch"
                       :items="gitBranches"
                       v-model="selectedBranch"
-                      label="branch:">
+                      :label="`${$t('branch')}:`">
           </v-combobox>
         </v-toolbar-items>
       </v-toolbar>

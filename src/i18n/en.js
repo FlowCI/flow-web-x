@@ -15,6 +15,7 @@ export default {
   confirm: 'Confirm',
   restart: 'Restart',
   revoke: 'Revoke',
+  branch: 'Branch',
 
   menu: {
     signedInAs: 'Signed in as ',
@@ -94,13 +95,12 @@ export default {
 
   job: {
     run: 'Run',
-    triggerBy: 'Triggered By',
     list_empty_message: 'Click \'RUN\' to start your first build',
 
     tab: {
-      summary: 'Summary',
+      summary: 'Steps',
       context: 'Context',
-      yml: 'Yml',
+      yml: 'YAML',
       artifacts: 'Artifacts'
     },
 

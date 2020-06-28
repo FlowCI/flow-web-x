@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-divider></v-divider>
-    <v-subheader>Steps</v-subheader>
+    <v-subheader>{{ $t('job.tab.summary') }}</v-subheader>
 
     <step-logging-item
         v-for="(item) in stepItems"

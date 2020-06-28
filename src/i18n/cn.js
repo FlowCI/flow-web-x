@@ -15,6 +15,7 @@ export default {
   confirm: '确认',
   restart: '重新开始',
   revoke: '删除',
+  branch: '分支',
 
   menu: {
     signedInAs: '当前用户 ',
@@ -26,13 +27,13 @@ export default {
   },
 
   flow: {
-    create: '创建 Flow',
+    create: '创建工作流',
     search: '输入关键词搜索',
     settings: '设置',
     statistic: '统计',
     config_yml: '配置 YML',
 
-    create_title_name: '输入 Flow 名称',
+    create_title_name: '输入工作流名称',
     create_title_select_template: '选择 YAML 模板',
     create_title_git_url: '配置 Git URL',
     create_title_git_access: '配置 Git 权限',
@@ -62,9 +63,9 @@ export default {
     },
 
     hint: {
-      name_required: '请输入 Flow 名称',
-      name_size: 'Flow 名称长度需要小于 20 个字符',
-      name_rule: 'Flow 名称仅可包含 a-z, A-Z, 0-9, _, -',
+      name_required: '请输入工作流名称',
+      name_size: '工作流名称长度需要小于 20 个字符',
+      name_rule: '工作流名称仅可包含 a-z, A-Z, 0-9, _, -',
       name_duplicate: 'Flow 名称已使用',
 
       git_skip: '稍后配置 Git 仓库链接',
@@ -77,13 +78,13 @@ export default {
       ssh_email_title: '请输入创建 ssh-rsa 的邮箱地址',
       ssh_email_required: 'Email 是创建 ssh-rsa 的必填项',
       ssh_key_required: '请输入 SSH key',
-      ssh_public_format: 'Start with ssh-rsa',
-      ssh_private_format: 'Start with -----BEGIN RSA PRIVATE KEY-----',
+      ssh_public_format: '从 ssh-rsa 开始',
+      ssh_private_format: '从 -----BEGIN RSA PRIVATE KEY----- 开始',
 
       delete_title: '请输入要删除的 Flow 名称',
       delete_confirm_name_not_same: '输入的名称错误',
 
-      stats_invalid_date: 'Invalid statistic date',
+      stats_invalid_date: '无效的统计时间',
 
       yaml_from_git: '当前 YAML 配置将从 Git 仓库中的 {0} 分支获得',
 
@@ -94,14 +95,13 @@ export default {
 
   job: {
     run: '开始任务',
-    triggerBy: 'Triggered By',
     list_empty_message: '点击 \'RUN\' 开始任务',
 
     tab: {
-      summary: 'Summary',
-      context: 'Context',
-      yml: 'Yml',
-      artifacts: 'Artifacts'
+      summary: '任务',
+      context: '环境',
+      yml: 'YAML',
+      artifacts: '产物'
     },
     hint: {
       tty: '打开当前任务的 Terminal 中运行 bash',
@@ -128,7 +128,7 @@ export default {
   settings: {
     li: {
       profile: '个人信息',
-      users: 'Users',
+      users: '用户',
       security: '安全',
       agent: 'Agents',
       secret: '秘钥',

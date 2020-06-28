@@ -49,7 +49,6 @@
       </v-col>
 
       <v-col class="body-2" cols="3">
-        <div class="pb-2">{{ $t('job.triggerBy') }}</div>
         <div>
           <span>{{ wrapper.triggerBy }}</span>
           <v-icon small class="ml-2">{{ wrapper.triggerIcon }}</v-icon>
