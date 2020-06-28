@@ -112,7 +112,7 @@
 
       navs () {
         return [
-          {text: 'Secrets', href: '#/settings/secrets'},
+          {text: this.$t('settings.li.secret'), href: '#/settings/secrets'},
           {text: this.name}
         ]
       },

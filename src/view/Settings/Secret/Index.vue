@@ -50,7 +50,7 @@
     },
     mounted() {
       this.$emit('onConfigNav', {
-        navs: [{text: 'Secrets'}],
+        navs: [{text: this.$t('settings.li.secret')}],
         showAddBtn: true
       })
 

@@ -27,6 +27,7 @@
         <v-icon class="black--text">flow-icon-logo</v-icon>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <lang-menu></lang-menu>
       <support-menu></support-menu>
       <agent-menu v-if="!isLoginPage"></agent-menu>
       <profile-menu v-if="!isLoginPage"></profile-menu>
@@ -53,6 +54,7 @@
   import AgentMenu from '@/view/Common/AgentMenu'
   import ProfileMenu from '@/view/Common/ProfileMenu'
   import SupportMenu from '@/view/Common/SupportMenu'
+  import LangMenu from '@/view/Common/LangMenu'
   import { mapState } from 'vuex'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
@@ -62,7 +64,8 @@
       FlowMenu,
       AgentMenu,
       ProfileMenu,
-      SupportMenu
+      SupportMenu,
+      LangMenu
     },
     data() {
       return {

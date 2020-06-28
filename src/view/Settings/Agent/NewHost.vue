@@ -135,11 +135,11 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Agents',
+            text: this.$t('settings.li.agent'),
             href: '#/settings/agents'
           },
           {
-            text: this.isEditMode ? 'Edit Agent Host' : 'New Agent Host',
+            text: this.isEditMode ? `${this.$t('edit')} Agent ${this.$t('agent.host')}` : `${this.$t('new')} Agent ${this.$t('agent.host')}`,
             href: ''
           }
         ],

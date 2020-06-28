@@ -58,11 +58,8 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Users',
+            text: this.$t('settings.li.users'),
             href: '#/settings/users'
-          },
-          {
-            text: 'Edit'
           },
           {
             text: this.userObj.email
