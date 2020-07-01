@@ -9,7 +9,7 @@
           ></text-box>
         </v-form>
 
-        <text-select :items="list"
+        <text-select :items="categories"
                      label="Category"
                      v-model="category"
         ></text-select>
@@ -56,7 +56,13 @@
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
-  import { CATEGORY_ANDROID_SIGN, CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
+  import {
+    CategoriesSelection,
+    CATEGORY_ANDROID_SIGN,
+    CATEGORY_AUTH,
+    CATEGORY_SSH_RSA,
+    CATEGORY_TOKEN
+  } from '@/util/secrets'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -72,17 +78,9 @@
     data() {
       return {
         name: '',
+        categories: CategoriesSelection,
         nameRules: secretAndConfigNameRules(this),
-        categories: [CATEGORY_SSH_RSA, CATEGORY_AUTH, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN],
         category: CATEGORY_SSH_RSA,
-
-        list: [
-          {name: 'SSH key', value: CATEGORY_SSH_RSA, icon: 'mdi-key'},
-          {name: 'Auth pair', value: CATEGORY_AUTH, icon: 'mdi-account-key-outline'},
-          {name: 'Token', value: CATEGORY_TOKEN, icon: 'mdi-file-key'},
-          {name: 'Android sign', value: CATEGORY_ANDROID_SIGN, icon: 'mdi-android'}
-        ],
-
         secrets: {
           [CATEGORY_SSH_RSA]: {
             selected: '',

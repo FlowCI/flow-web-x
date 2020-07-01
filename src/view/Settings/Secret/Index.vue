@@ -8,7 +8,10 @@
     <template v-slot:item="{item}">
       <tr>
         <td>{{ item.name }}</td>
-        <td>{{ item.category }}</td>
+        <td>
+          <v-icon small class="mr-2">{{ Categories[item.category].icon }}</v-icon>
+          <span class="caption">{{ Categories[item.category].name }}</span>
+        </td>
         <td>{{ timeFormatInMins(item.createdAt) }}</td>
         <td>{{ item.createdBy }}</td>
         <td>
@@ -31,12 +34,14 @@
 <script>
   import { mapState } from 'vuex'
   import { timeFormatInMins } from "@/util/time"
+  import { Categories } from '@/util/secrets'
   import actions from '@/store/actions'
 
   export default {
     name: 'SettingsSecretHome',
     data() {
       return {
+        Categories,
         timeFormatInMins,
         loading: false,
         headers: [

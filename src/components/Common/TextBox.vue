@@ -8,9 +8,10 @@
         v-model="adaptor"
         :rules="rules"
         :type="password ? (showPassword ? 'text' : 'password') : 'text'"
+        :prepend-inner-icon="prependIcon"
         :append-icon="password ? (showPassword ? 'mdi-eye' : 'mdi-eye-off') : ''"
         @click:append="showPassword = !showPassword"
-        class="append-icon-small"
+        class="append-icon-small prepend-icon-small"
     ></v-text-field>
   </div>
 </template>
@@ -25,6 +26,11 @@
       },
       value: {
         type: [Number, String]
+      },
+      prependIcon: {
+        type: String,
+        required: false,
+        default: ''
       },
       readonly: {
         type: Boolean,

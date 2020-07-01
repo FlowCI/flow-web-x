@@ -3,6 +3,11 @@
     <v-row>
       <v-col cols="8">
         <text-box label="Name" readonly v-model="name"></text-box>
+        <text-box label="Category"
+                  readonly
+                  :prepend-icon="Categories[secretObj.category].icon"
+                  v-model="Categories[secretObj.category].name"
+        ></text-box>
       </v-col>
     </v-row>
 
@@ -73,7 +78,7 @@
   import TextBox from '@/components/Common/TextBox'
   import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN } from '@/util/secrets'
+  import { Categories, CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
@@ -101,6 +106,7 @@
     },
     data() {
       return {
+        Categories,
         dialog: false
       }
     },
