@@ -93,6 +93,7 @@ export default {
   configs: {
     saveSmtp: 'configs/saveSmtp',
     saveText: 'configs/saveText',
+    saveAndroidSign: 'configs/saveAndroidSign',
     list: 'configs/list',
     get: 'configs/get',
     delete: 'configs/delete'

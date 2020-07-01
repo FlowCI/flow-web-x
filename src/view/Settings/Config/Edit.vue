@@ -27,14 +27,17 @@
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
-
         <v-col cols="8">
-          <v-textarea
-              outlined
-              rows="20"
-              label="Input free text"
-              v-model="configObj.text"
-          ></v-textarea>
+          <config-free-text :config="configObj"></config-free-text>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="isAndroidSignConfig">
+        <v-col cols="9">
+          <v-divider></v-divider>
+        </v-col>
+        <v-col cols="8">
+          <config-android-sign :config="config"></config-android-sign>
         </v-col>
       </v-row>
     </v-form>
@@ -58,6 +61,8 @@
 <script>
   import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
+  import ConfigFreeText from './FreeText'
+  import ConfigAndroidSign from './AndroidSign'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
   import { CATEGORY_SMTP, CATEGORY_TEXT, CATEGORY_ANDROID_SIGN } from '@/util/configs'
@@ -73,6 +78,8 @@
     components: {
       ConfirmBtn,
       ConfigSmtp,
+      ConfigFreeText,
+      ConfigAndroidSign,
       TextBox,
     },
     data() {

@@ -37,7 +37,7 @@ tr.v-data-table__empty-wrapper {
   }
 }
 
-*{
+* {
   text-transform: none !important;
 }
 
@@ -47,4 +47,8 @@ tr.v-data-table__empty-wrapper {
 
 .v-btn:not(.v-btn--round).v-size--default {
   padding: 0 8px !important;
+}
+
+.no-padding {
+  padding: 0 !important;
 }
