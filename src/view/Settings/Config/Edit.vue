@@ -77,8 +77,10 @@
     },
     data() {
       return {
-        CATEGORY_SMTP,
-        CATEGORY_TEXT
+        actionMap: {
+          [CATEGORY_SMTP]: actions.configs.saveSmtp,
+          [CATEGORY_TEXT]: actions.configs.saveText
+        }
       }
     },
     mounted() {
@@ -128,26 +130,14 @@
       },
 
       onSaveClick() {
-        if (this.configObj.category === CATEGORY_SMTP) {
-          this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
-              .then(() => {
-                this.onBackClick()
-              })
-              .catch(e => {
-                console.log(e)
-              })
-          return
-        }
-
-        if (this.configObj.category === CATEGORY_TEXT) {
-          this.$store.dispatch(actions.configs.saveText, this.configObj)
-              .then(() => {
-                this.onBackClick()
-              })
-              .catch(e => {
-                console.log(e)
-              })
-        }
+        let params = {name: this.configObj.name, payload: this.configObj}
+        this.$store.dispatch(this.actionMap[this.configObj.category], params)
+          .then(() => {
+            this.onBackClick()
+          })
+          .catch(e => {
+            console.log(e)
+          })
       }
     }
   }
