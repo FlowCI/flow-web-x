@@ -10,6 +10,7 @@
         :type="password ? (showPassword ? 'text' : 'password') : 'text'"
         :append-icon="password ? (showPassword ? 'mdi-eye' : 'mdi-eye-off') : ''"
         @click:append="showPassword = !showPassword"
+        class="append-icon-small"
     ></v-text-field>
   </div>
 </template>

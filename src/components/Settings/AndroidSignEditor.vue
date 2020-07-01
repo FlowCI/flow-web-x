@@ -11,6 +11,7 @@
                       show-size
                       :rules="rules.file"
                       v-model="model.keyStore"
+                      class="append-icon-small"
         ></v-file-input>
       </div>
 

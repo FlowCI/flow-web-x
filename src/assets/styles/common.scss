@@ -25,6 +25,10 @@
   text-align: end;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 // customize vuetify //
 tr.v-data-table__empty-wrapper {
   td {
@@ -49,6 +53,11 @@ tr.v-data-table__empty-wrapper {
   padding: 0 8px !important;
 }
 
-.no-padding {
-  padding: 0 !important;
+/* set font-size to small */
+.append-icon-small{
+  .v-input__icon--append {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
 }
