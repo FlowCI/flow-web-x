@@ -6,8 +6,8 @@
       </v-btn>
     </template>
 
-    <v-list-item-group v-model="item">
-      <v-list dense>
+    <v-list dense>
+      <v-list-item-group v-model="item">
         <v-list-item @click="onLangChange('en')">
           <template v-slot:default="{ active }">
             <v-list-item-title>
@@ -25,8 +25,8 @@
             </v-list-item-title>
           </template>
         </v-list-item>
-      </v-list>
-    </v-list-item-group>
+      </v-list-item-group>
+    </v-list>
   </v-menu>
 </template>
 

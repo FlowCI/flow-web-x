@@ -44,30 +44,7 @@
       </template>
     </v-treeview>
 
-    <v-dialog v-model="dialog" max-width="500">
-      <v-card>
-        <v-card-text>
-          <v-row>
-            <v-col cols="6">
-              <v-btn min-height="150"
-                     block
-                     color="primary"
-                     @click="onNewAgentClick"
-              >Manual agent
-              </v-btn>
-            </v-col>
-            <v-col cols="6">
-              <v-btn min-height="150"
-                     block
-                     color="primary"
-                     @click="onNewHostClick"
-              >Host with auto agent
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+    <create-agent-dialog v-model="dialog"></create-agent-dialog>
   </div>
 </template>
 
@@ -76,9 +53,13 @@
   import { AgentWrapper } from '@/util/agents'
   import { HostWrapper } from '@/util/hosts'
   import actions from '@/store/actions'
+  import CreateAgentDialog from "./CreateAgentDialog";
 
   export default {
     name: 'SettingsAgentHome',
+    components: {
+      CreateAgentDialog
+    },
     data() {
       return {
         dialog: false,
@@ -155,14 +136,6 @@
 
       onAddBtnClick() {
         this.dialog = true
-      },
-
-      onNewAgentClick() {
-        this.$router.push('/settings/agents/new')
-      },
-
-      onNewHostClick() {
-        this.$router.push('/settings/agents/host/new')
       },
 
       onTokenCopyClick(wrapper) {
