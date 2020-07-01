@@ -35,16 +35,16 @@ const actions = {
     })
   },
 
-  async saveSmtp ({commit}, smtpConfig) {
-    await http.post(`configs/${smtpConfig.name}/smtp`, (c) => {
+  async saveSmtp ({commit}, {name, payload}) {
+    await http.post(`configs/${name}/smtp`, (c) => {
       commit('add', c)
-    }, smtpConfig.smtp)
+    }, payload)
   },
 
-  async saveText ({commit}, textConfig) {
-    await http.post(`configs/${textConfig.name}/text`, (c) => {
+  async saveText ({commit}, {name, payload}) {
+    await http.post(`configs/${name}/text`, (c) => {
       commit('add', c)
-    }, {data: textConfig.text})
+    }, {data: payload.text})
   },
 
   async delete ({commit}, name) {

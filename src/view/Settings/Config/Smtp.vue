@@ -3,25 +3,25 @@
     <v-col cols="12">
       <text-box label="SMTP Server"
                 :rules="rules.required"
-                v-model="smtpOption.server"
+                v-model="config.server"
       ></text-box>
 
       <text-box label="SMTP Port"
                 :rules="rules.required"
-                v-model="smtpOption.port"
+                v-model="config.port"
       ></text-box>
 
       <text-box label="SMTP Username"
-                v-model="smtpOption.auth.username"
+                v-model="config.auth.username"
       ></text-box>
 
       <text-box label="SMTP password"
                 password
-                v-model="smtpOption.auth.password"
+                v-model="config.auth.password"
       ></text-box>
 
       <div>
-        <v-radio-group v-model="smtpOption.secure"
+        <v-radio-group v-model="config.secure"
                        row
                        dense
                        :rules="rules.required"
@@ -43,7 +43,7 @@
   export default {
     name: "SettingsConfigSmtp",
     props: {
-      smtpOption: {
+      config: {
         required: true,
         type: Object
       }

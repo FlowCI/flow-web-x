@@ -6,25 +6,24 @@
                   readonly
                   v-model="configObj.name"
         ></text-box>
-        <text-select :items="[CATEGORY_SMTP, CATEGORY_TEXT]"
-                     label="Category"
-                     readonly
-                     v-model="configObj.category"
-        ></text-select>
+        <text-box label="Category"
+                  readonly
+                  v-model="configObj.category"
+        ></text-box>
       </v-col>
     </v-row>
 
     <v-form ref="contentForm" lazy-validation>
-      <v-row v-if="configObj.category === CATEGORY_SMTP">
+      <v-row v-if="isSmtpConfig">
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
         <v-col cols="8">
-          <config-smtp :smtpOption="configObj.smtp"></config-smtp>
+          <config-smtp :config="configObj"></config-smtp>
         </v-col>
       </v-row>
 
-      <v-row v-if="configObj.category === CATEGORY_TEXT">
+      <v-row v-if="isTextConfig">
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
@@ -42,7 +41,7 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
+        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Revoke config {{ configObj.name }}?
@@ -61,8 +60,7 @@
   import ConfigSmtp from './Smtp'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
-  import TextSelect from '@/components/Common/TextSelect'
-  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
+  import { CATEGORY_SMTP, CATEGORY_TEXT, CATEGORY_ANDROID_SIGN } from '@/util/configs'
 
   export default {
     name: "SettingsConfigEdit",
@@ -76,7 +74,6 @@
       ConfirmBtn,
       ConfigSmtp,
       TextBox,
-      TextSelect
     },
     data() {
       return {
@@ -101,6 +98,18 @@
           {text: this.$t('settings.li.config'), href: '#/settings/configs'},
           {text: this.configObj.name}
         ]
+      },
+
+      isSmtpConfig() {
+        return this.configObj.category === CATEGORY_SMTP
+      },
+
+      isTextConfig() {
+        return this.configObj.category === CATEGORY_TEXT
+      },
+
+      isAndroidSignConfig() {
+        return this.configObj.category === CATEGORY_ANDROID_SIGN
       }
     },
     methods: {
