@@ -8,7 +8,8 @@
         ></text-box>
         <text-box label="Category"
                   readonly
-                  v-model="configObj.category"
+                  :prepend-inner-icon="Categories[configObj.category].icon"
+                  v-model="Categories[configObj.category].name"
         ></text-box>
       </v-col>
     </v-row>
@@ -55,7 +56,7 @@
   import ConfigFreeText from './FreeText'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
-  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
+  import { Categories, CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
 
   export default {
     name: "SettingsConfigEdit",
@@ -73,6 +74,7 @@
     },
     data() {
       return {
+        Categories,
         actionMap: {
           [CATEGORY_SMTP]: actions.configs.saveSmtp,
           [CATEGORY_TEXT]: actions.configs.saveText

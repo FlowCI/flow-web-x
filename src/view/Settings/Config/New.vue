@@ -51,7 +51,7 @@
   import ConfigFreeText from './FreeText'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
-  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
+  import { CategoriesSelection, CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -66,7 +66,7 @@
       return {
         name: '',
         category: CATEGORY_SMTP,
-        categories: [CATEGORY_SMTP, CATEGORY_TEXT],
+        categories: CategoriesSelection,
         nameRules: secretAndConfigNameRules(this),
         objs: {
           [CATEGORY_SMTP]: {

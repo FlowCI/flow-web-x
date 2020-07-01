@@ -5,7 +5,7 @@
         <text-box label="Name" readonly v-model="name"></text-box>
         <text-box label="Category"
                   readonly
-                  :prepend-icon="Categories[secretObj.category].icon"
+                  :prepend-inner-icon="Categories[secretObj.category].icon"
                   v-model="Categories[secretObj.category].name"
         ></text-box>
       </v-col>
