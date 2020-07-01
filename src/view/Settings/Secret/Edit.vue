@@ -28,6 +28,10 @@
             :model="instance"
         ></token-editor>
       </v-col>
+
+      <v-col cols="8" v-if="isAndroidSign">
+        <android-sign-editor :is-read-only="true" :model="instance"></android-sign-editor>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -67,8 +71,9 @@
   import AuthEditor from '@/components/Common/AuthEditor'
   import TokenEditor from '@/components/Common/TokenEditor'
   import TextBox from '@/components/Common/TextBox'
+  import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
+  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
@@ -78,13 +83,14 @@
       TextBox,
       SshRsaEditor,
       AuthEditor,
-      TokenEditor
+      TokenEditor,
+      AndroidSignEditor
     },
     props: {
       secretObj: {
         type: Object,
         required: false,
-        default () {
+        default() {
           return {
             name: '',
             privateKey: '',
@@ -93,12 +99,12 @@
         }
       }
     },
-    data () {
+    data() {
       return {
         dialog: false
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
         navs: this.navs,
         showAddBtn: false
@@ -110,27 +116,31 @@
         connectedFlows: state => state.flows.itemsByCredential
       }),
 
-      navs () {
+      navs() {
         return [
           {text: this.$t('settings.li.secret'), href: '#/settings/secrets'},
           {text: this.name}
         ]
       },
 
-      name () {
+      name() {
         return this.secretObj.name
       },
 
-      isSshRsa () {
+      isSshRsa() {
         return this.secretObj.category === CATEGORY_SSH_RSA
       },
 
-      isAuth () {
+      isAuth() {
         return this.secretObj.category === CATEGORY_AUTH
       },
 
-      isToken () {
+      isToken() {
         return this.secretObj.category === CATEGORY_TOKEN
+      },
+
+      isAndroidSign() {
+        return this.secretObj.category === CATEGORY_ANDROID_SIGN
       },
 
       instance() {
@@ -149,7 +159,7 @@
           }
         }
 
-        if (this.isToken) {
+        if (this.isToken || this.isAndroidSign) {
           return this.secretObj
         }
 
@@ -157,11 +167,11 @@
       }
     },
     methods: {
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/secrets')
       },
 
-      onDeleteClick () {
+      onDeleteClick() {
         this.$store.dispatch(actions.secrets.delete, this.secretObj).then(() => {
           this.onBackClick()
         })
