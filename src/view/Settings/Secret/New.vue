@@ -9,35 +9,35 @@
           ></text-box>
         </v-form>
 
-        <text-select :items="[CATEGORY_SSH_RSA, CATEGORY_AUTH, CATEGORY_TOKEN]"
+        <text-select :items="categories"
                      label="Category"
                      v-model="category"
         ></text-select>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="8" v-if="isSshRsa">
-        <v-form ref="sshForm" lazy-validation>
+    <v-form ref="contentForm" lazy-validation>
+      <v-row>
+        <v-col cols="8" v-if="isSshRsa">
           <ssh-rsa-editor :showHelp="false"
                           :showCreateNew="true"
                           :model="instance"
           ></ssh-rsa-editor>
-        </v-form>
-      </v-col>
+        </v-col>
 
-      <v-col cols="8" v-if="isAuth">
-        <v-form ref="authForm" lazy-validation>
+        <v-col cols="8" v-if="isAuth">
           <auth-editor :model="instance"></auth-editor>
-        </v-form>
-      </v-col>
+        </v-col>
 
-      <v-col cols="8" v-if="isToken">
-        <v-form ref="tokenForm" lazy-validation>
+        <v-col cols="8" v-if="isToken">
           <token-editor :model="instance"></token-editor>
-        </v-form>
-      </v-col>
-    </v-row>
+        </v-col>
+
+        <v-col cols="8" v-if="isAndroidSign">
+          <android-sign-editor :model="instance"></android-sign-editor>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
       <v-col cols="8" class="text-end">
@@ -52,10 +52,11 @@
   import SshRsaEditor from '@/components/Common/SshRsaEditor'
   import AuthEditor from '@/components/Common/AuthEditor'
   import TokenEditor from '@/components/Common/TokenEditor'
+  import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
+  import { CATEGORY_ANDROID_SIGN, CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -65,39 +66,34 @@
       TextSelect,
       SshRsaEditor,
       AuthEditor,
-      TokenEditor
+      TokenEditor,
+      AndroidSignEditor
     },
     data() {
       return {
-        CATEGORY_SSH_RSA,
-        CATEGORY_AUTH,
-        CATEGORY_TOKEN,
-
         name: '',
         nameRules: secretAndConfigNameRules(this),
+        categories: [CATEGORY_SSH_RSA, CATEGORY_AUTH, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN],
         category: CATEGORY_SSH_RSA,
 
-        credential: {
+        secrets: {
           [CATEGORY_SSH_RSA]: {
             selected: '',
-            pair: {
-              publicKey: '',
-              privateKey: ''
-            }
+            pair: {publicKey: '', privateKey: ''}
           },
-
           [CATEGORY_AUTH]: {
             selected: '',
-            pair: {
-              username: '',
-              password: ''
-            }
+            pair: {username: '', password: ''}
           },
-
           [CATEGORY_TOKEN]: {
-            token: {
-              data: ''
-            }
+            token: {data: ''}
+          },
+          [CATEGORY_ANDROID_SIGN]: {
+            keyStore: null,
+            keyStoreFileName: '',
+            keyStorePassword: {data: ''},
+            keyAlias: '',
+            keyPassword: {data: ''}
           }
         }
       }
@@ -122,7 +118,7 @@
       },
 
       instance() {
-        return this.credential[this.category]
+        return this.secrets[this.category]
       },
 
       isSshRsa() {
@@ -135,6 +131,10 @@
 
       isToken() {
         return this.category === CATEGORY_TOKEN
+      },
+
+      isAndroidSign() {
+        return this.category === CATEGORY_ANDROID_SIGN
       }
     },
     methods: {
@@ -147,11 +147,15 @@
           return
         }
 
+        if (!this.$refs.contentForm.validate()) {
+          return
+        }
+
         const payload = {
           name: this.name
         }
 
-        if (this.isSshRsa && this.$refs.sshForm.validate()) {
+        if (this.isSshRsa) {
           payload.publicKey = this.instance.pair.publicKey
           payload.privateKey = this.instance.pair.privateKey
           this.$store.dispatch(actions.secrets.createRsa, payload).then(() => {
@@ -160,7 +164,7 @@
           return
         }
 
-        if (this.isAuth && this.$refs.authForm.validate()) {
+        if (this.isAuth) {
           payload.username = this.instance.pair.username
           payload.password = this.instance.pair.password
           this.$store.dispatch(actions.secrets.createAuth, payload).then(() => {
@@ -169,9 +173,25 @@
           return
         }
 
-        if (this.isToken && this.$refs.tokenForm.validate()) {
+        if (this.isToken) {
           payload.token = this.instance.token.data
           this.$store.dispatch(actions.secrets.createToken, payload).then(() => {
+            this.onBackClick()
+          })
+          return
+        }
+
+        if (this.isAndroidSign) {
+          let option = {
+            keyStorePassword: this.instance.keyStorePassword.data,
+            keyAlias: this.instance.keyAlias,
+            keyPassword: this.instance.keyPassword.data
+          }
+
+          payload.keyStore = this.instance.keyStore
+          payload.option = option
+
+          this.$store.dispatch(actions.secrets.createAndroidSign, payload).then(() => {
             this.onBackClick()
           })
         }

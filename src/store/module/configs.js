@@ -47,31 +47,6 @@ const actions = {
     }, {data: payload.text})
   },
 
-  async saveAndroidSign({commit}, {name, payload}) {
-
-    let jsonOptionData = JSON.stringify({
-      keyStorePassword: payload.keyStorePassword,
-      keyAlias: payload.keyAlias,
-      keyPassword: payload.keyPassword
-    })
-
-    let formData = new FormData()
-    formData.append("keyStore", payload.keyStore)
-    formData.append("option", new Blob([jsonOptionData], {type: "application/json"}))
-
-    await http.post(
-      `configs/${name}/android/sign`,
-      (c) => {
-        commit('add', c)
-      },
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        },
-      })
-  },
-
   async delete({commit}, name) {
     await http.delete(`configs/${name}`, (c) => {
       commit('remove', c)

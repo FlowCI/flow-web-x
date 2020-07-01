@@ -31,15 +31,6 @@
           <config-free-text :config="configObj"></config-free-text>
         </v-col>
       </v-row>
-
-      <v-row v-if="isAndroidSignConfig">
-        <v-col cols="9">
-          <v-divider></v-divider>
-        </v-col>
-        <v-col cols="8">
-          <config-android-sign :config="config"></config-android-sign>
-        </v-col>
-      </v-row>
     </v-form>
 
     <v-row>
@@ -62,10 +53,9 @@
   import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
   import ConfigFreeText from './FreeText'
-  import ConfigAndroidSign from './AndroidSign'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
-  import { CATEGORY_SMTP, CATEGORY_TEXT, CATEGORY_ANDROID_SIGN } from '@/util/configs'
+  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
 
   export default {
     name: "SettingsConfigEdit",
@@ -79,7 +69,6 @@
       ConfirmBtn,
       ConfigSmtp,
       ConfigFreeText,
-      ConfigAndroidSign,
       TextBox,
     },
     data() {
@@ -115,10 +104,6 @@
 
       isTextConfig() {
         return this.configObj.category === CATEGORY_TEXT
-      },
-
-      isAndroidSignConfig() {
-        return this.configObj.category === CATEGORY_ANDROID_SIGN
       }
     },
     methods: {
@@ -128,12 +113,12 @@
 
       onDeleteClick() {
         this.$store.dispatch(actions.configs.delete, this.configObj.name)
-            .then(() => {
-              this.onBackClick()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+          .then(() => {
+            this.onBackClick()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       },
 
       onSaveClick() {

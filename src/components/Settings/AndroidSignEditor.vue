@@ -10,23 +10,23 @@
                       label=""
                       show-size
                       :rules="rules.file"
-                      v-model="config.keyStore"
+                      v-model="model.keyStore"
         ></v-file-input>
       </div>
 
       <text-box label="Key store password"
                 password
                 :rules="rules.required"
-                v-model="config.keyStorePassword"
+                v-model="model.keyStorePassword.data"
       ></text-box>
       <text-box label="Key alias"
                 :rules="rules.required"
-                v-model="config.keyAlias"
+                v-model="model.keyAlias"
       ></text-box>
       <text-box label="Key password"
                 password
                 :rules="rules.required"
-                v-model="config.keyPassword"
+                v-model="model.keyPassword.data"
       ></text-box>
     </v-col>
   </v-row>
@@ -37,9 +37,9 @@
   import { required } from '@/util/rules'
 
   export default {
-    name: "SettingsConfigAndroidSign",
+    name: "AndroidSignEditor",
     props: {
-      config: {
+      model: {
         required: true,
         type: Object
       }

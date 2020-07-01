@@ -34,15 +34,6 @@
           <config-free-text :config="config"></config-free-text>
         </v-col>
       </v-row>
-
-      <v-row v-if="isAndroidSignConfig">
-        <v-col cols="9">
-          <v-divider></v-divider>
-        </v-col>
-        <v-col cols="8">
-          <config-android-sign :config="config"></config-android-sign>
-        </v-col>
-      </v-row>
     </v-form>
 
     <v-row>
@@ -58,10 +49,9 @@
   import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
   import ConfigFreeText from './FreeText'
-  import ConfigAndroidSign from './AndroidSign'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
-  import { CATEGORY_ANDROID_SIGN, CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
+  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
   import { secretAndConfigNameRules } from '@/util/rules'
 
   export default {
@@ -71,13 +61,12 @@
       TextSelect,
       ConfigSmtp,
       ConfigFreeText,
-      ConfigAndroidSign
     },
     data() {
       return {
         name: '',
         category: CATEGORY_SMTP,
-        categories: [CATEGORY_SMTP, CATEGORY_TEXT, CATEGORY_ANDROID_SIGN],
+        categories: [CATEGORY_SMTP, CATEGORY_TEXT],
         nameRules: secretAndConfigNameRules(this),
         objs: {
           [CATEGORY_SMTP]: {
@@ -85,13 +74,11 @@
           },
           [CATEGORY_TEXT]: {
             text: ''
-          },
-          [CATEGORY_ANDROID_SIGN]: {}
+          }
         },
         actionMap: {
           [CATEGORY_SMTP]: actions.configs.saveSmtp,
-          [CATEGORY_TEXT]: actions.configs.saveText,
-          [CATEGORY_ANDROID_SIGN]: actions.configs.saveAndroidSign
+          [CATEGORY_TEXT]: actions.configs.saveText
         }
       }
     },
@@ -119,10 +106,6 @@
 
       isTextConfig() {
         return this.category === CATEGORY_TEXT
-      },
-
-      isAndroidSignConfig() {
-        return this.category === CATEGORY_ANDROID_SIGN
       }
     },
     methods: {

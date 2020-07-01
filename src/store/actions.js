@@ -84,6 +84,7 @@ export default {
     createRsa: 'secrets/createRsa',
     createAuth: 'secrets/createAuth',
     createToken: 'secrets/createToken',
+    createAndroidSign: 'secrets/createAndroidSign',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',
@@ -93,7 +94,6 @@ export default {
   configs: {
     saveSmtp: 'configs/saveSmtp',
     saveText: 'configs/saveText',
-    saveAndroidSign: 'configs/saveAndroidSign',
     list: 'configs/list',
     get: 'configs/get',
     delete: 'configs/delete'
