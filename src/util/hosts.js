@@ -11,7 +11,7 @@ const colors = {
 
 export class HostWrapper {
 
-  constructor (host) {
+  constructor(host) {
     this.host = host || {
       tags: [],
       maxSize: 10,
@@ -22,115 +22,119 @@ export class HostWrapper {
     this.agents = []
   }
 
-  get rawInstance () {
+  get rawInstance() {
     return this.host
   }
 
-  get isHost () {
+  get isHost() {
     return true
   }
 
-  get isDefaultLocal () {
+  get isDefaultLocal() {
     return this.host.type === HOST_TYPE_LOCAL_SOCKET
   }
 
-  get id () {
+  get id() {
     return this.host.id
   }
 
-  get name () {
-    return this.host.name
+  get name() {
+    return this.host.name || ''
   }
 
-  get tags () {
+  get tags() {
     return this.host.tags
   }
 
-  get children () {
+  get children() {
     return this.agents
   }
 
-  get secret () {
+  get secret() {
     return this.host.secret
   }
 
-  get type () {
+  get type() {
     return this.host.type
   }
 
-  get user () {
+  get user() {
     return this.host.user
   }
 
-  get status () {
+  get status() {
     return this.host.status
   }
 
-  get ip () {
+  get ip() {
     return this.host.ip
   }
 
-  get maxSize () {
+  get maxSize() {
     return this.host.maxSize
   }
 
-  get maxIdle () {
+  get maxIdle() {
     return this.host.maxIdleSeconds / 60
   }
 
-  get maxOffline () {
+  get maxOffline() {
     return this.host.maxOfflineSeconds / 60
   }
 
-  get color () {
+  get color() {
     return colors[this.host.status]
   }
 
-  get icon () {
+  get icon() {
     return 'mdi-server'
   }
 
-  get error () {
+  get error() {
     return this.host.error
   }
 
-  set name (val) {
+  set name(val) {
     this.host.name = val
   }
 
-  set tags (tags) {
+  set tags(tags) {
     this.host.tags = tags
   }
 
-  set type (type) {
+  set type(type) {
     this.host.type = type
   }
 
-  set children (val) {
+  set children(val) {
     this.agents = val
   }
 
-  set secret (val) {
+  set secret(val) {
     this.host.secret = val
   }
 
-  set user (val) {
+  set user(val) {
     this.host.user = val
   }
 
-  set ip (val) {
+  set ip(val) {
     this.host.ip = val
   }
 
-  set maxSize (val) {
+  set maxSize(val) {
     this.host.maxSize = val
   }
 
-  set maxIdle (val) {
+  set maxIdle(val) {
     this.host.maxIdleSeconds = val * 60
   }
 
-  set maxOffline (val) {
+  set maxOffline(val) {
     this.host.maxOfflineSeconds = val * 60
+  }
+
+  set error(val) {
+    this.host.error = val
   }
 }

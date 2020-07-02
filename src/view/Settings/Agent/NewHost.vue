@@ -7,28 +7,22 @@
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="8">
-        <v-form ref="hostNameForm"
-                lazy-validation>
-          <v-text-field
-              dense
+    <v-form ref="hostNameForm" lazy-validation>
+      <v-row>
+        <v-col cols="8">
+          <text-box
               label="Name"
               :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
               :rules="nameRules"
               v-model="wrapper.name"
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
+          ></text-box>
+          <tag-editor :tags="wrapper.tags"
+                      :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+          ></tag-editor>
+        </v-col>
+      </v-row>
+    </v-form>
 
-    <v-row>
-      <v-col cols="8">
-        <tag-editor :tags="wrapper.tags"
-                    :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
-        ></tag-editor>
-      </v-col>
-    </v-row>
 
     <v-row v-if="!isEditMode">
       <v-col cols="8">
@@ -91,6 +85,7 @@
   import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HostWrapper } from '@/util/hosts'
   import { agentNameRules } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
+  import TextBox from '@/components/Common/TextBox'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
   import PoolSizeEditor from '@/components/Settings/PoolSizeEditor'
@@ -110,19 +105,19 @@
       HostTestBtn,
       SaveBtn,
       BackBtn,
-      ConfirmBtn
+      ConfirmBtn,
+      TextBox
     },
-    data () {
+    data() {
       return {
         HOST_TYPE_SSH,
         HOST_TYPE_LOCAL_SOCKET,
         deleteDialog: false,
-        wrapper: new HostWrapper(),
         tagInput: [],
         nameRules: agentNameRules(this),
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
         navs: [
           {
@@ -140,9 +135,7 @@
       this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_SSH_RSA).then()
 
       if (this.isEditMode) {
-        this.$store.dispatch(actions.hosts.get, this.hostName).then(() => {
-          this.wrapper = new HostWrapper(this.host)
-        })
+        this.$store.dispatch(actions.hosts.get, this.hostName).then()
       }
     },
     computed: {
@@ -152,7 +145,11 @@
         updated: state => state.hosts.updated
       }),
 
-      secretNameList () {
+      wrapper() {
+        return new HostWrapper(this.host)
+      },
+
+      secretNameList() {
         const nameList = []
         for (let c of this.secrets) {
           nameList.push(c.name)
@@ -160,31 +157,31 @@
         return nameList
       },
 
-      hostName () {
+      hostName() {
         return this.$route.params.name
       },
 
-      isEditMode () {
+      isEditMode() {
         return this.hostName !== undefined
       }
     },
     watch: {
-      updated (val) {
-        this.wrapper = new HostWrapper(val)
+      updated(val) {
+        this.wrapper.error = val.error
       }
     },
     methods: {
-      onDeleteClick () {
+      onDeleteClick() {
         this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
           this.$router.push('/settings/agents')
         })
       },
 
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/agents')
       },
 
-      onSaveClick () {
+      onSaveClick() {
         if (!this.$refs.hostNameForm.validate()) {
           return
         }

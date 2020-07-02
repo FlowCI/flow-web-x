@@ -24,7 +24,6 @@
 
 <script>
   import actions from '@/store/actions'
-  import { subscribeTopic } from '@/store/subscribe'
   import { HostWrapper, HOST_STATUS_CONNECTED, HOST_STATUS_DISCONNECTED } from '@/util/hosts'
   import { mapState } from 'vuex'
 

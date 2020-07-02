@@ -9,8 +9,8 @@
       <tr>
         <td>{{ item.name }}</td>
         <td>
-          <v-icon small class="mr-2">{{ Categories[item.category].icon }}</v-icon>
-          <span class="caption">{{ Categories[item.category].name }}</span>
+          <v-icon small class="mr-2">{{ getCategoryData(item.category).icon }}</v-icon>
+          <span class="caption">{{ getCategoryData(item.category).name }}</span>
         </td>
         <td>{{ timeFormatInMins(item.createdAt) }}</td>
         <td>{{ item.createdBy }}</td>
@@ -70,6 +70,11 @@
       })
     },
     methods: {
+      getCategoryData(category) {
+        let data = Categories[category]
+        return data || {name: '', icon: ''}
+      },
+
       onAddBtnClick() {
         this.$router.push({
           name: 'SettingsSecretNew'
