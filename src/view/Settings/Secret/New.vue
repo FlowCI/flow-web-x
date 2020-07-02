@@ -41,8 +41,8 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
+        <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+        <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -53,6 +53,8 @@
   import AuthEditor from '@/components/Common/AuthEditor'
   import TokenEditor from '@/components/Common/TokenEditor'
   import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
   import actions from '@/store/actions'
@@ -73,6 +75,8 @@
       SshRsaEditor,
       AuthEditor,
       TokenEditor,
+      SaveBtn,
+      BackBtn,
       AndroidSignEditor
     },
     data() {

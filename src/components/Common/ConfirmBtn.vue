@@ -4,12 +4,9 @@
       width="500"
   >
     <template v-slot:activator="{ on }">
-      <v-btn
-          outlined
-          :class="clazz"
-          :color="color"
-          v-on="on"
-      >{{ text }}
+      <v-btn :class="clazz" :color="color" dark v-on="on">
+        {{ text }}
+        <v-icon dark right small v-if="icon">{{ icon }}</v-icon>
       </v-btn>
     </template>
 
@@ -47,6 +44,10 @@
       },
       clazz: {
         type: [String, Array],
+        required: false
+      },
+      icon: {
+        type: String,
         required: false
       }
     },

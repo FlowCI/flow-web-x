@@ -1,6 +1,6 @@
 <template>
   <v-list :dense="dense">
-    <v-list-item-group v-model="item" @change="onItemChange">
+    <v-list-item-group v-model="item" mandatory @change="onItemChange">
       <v-list-item
           v-for="(item, i) in items"
           :key="i"

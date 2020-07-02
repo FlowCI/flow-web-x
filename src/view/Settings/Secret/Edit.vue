@@ -41,7 +41,12 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
+        <back-btn class="mr-5" :on-click="onBackClick"></back-btn>
+
+        <confirm-btn :text="$t('revoke')"
+                     color="error"
+                     icon="mdi-delete"
+                     @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Revoke secret {{ name }}?
@@ -63,8 +68,6 @@
             </div>
           </template>
         </confirm-btn>
-
-        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -77,6 +80,7 @@
   import TokenEditor from '@/components/Common/TokenEditor'
   import TextBox from '@/components/Common/TextBox'
   import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
+  import BackBtn from '@/components/Settings/BackBtn'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import { Categories, CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN } from '@/util/secrets'
   import { mapState } from 'vuex'
@@ -89,7 +93,8 @@
       SshRsaEditor,
       AuthEditor,
       TokenEditor,
-      AndroidSignEditor
+      AndroidSignEditor,
+      BackBtn
     },
     props: {
       secretObj: {
