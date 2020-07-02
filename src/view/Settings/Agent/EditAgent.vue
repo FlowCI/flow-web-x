@@ -1,38 +1,34 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="8">
-        <v-form ref="agentNameForm"
-                lazy-validation>
-          <v-text-field
+    <v-form ref="agentNameForm" lazy-validation>
+      <v-row>
+        <v-col cols="8">
+          <text-box
               label="Name"
               :rules="nameRules"
               v-model="wrapper.name"
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
+          ></text-box>
+          <tag-editor :tags="wrapper.tags"></tag-editor>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
+      <v-col cols="9" class="my-3">
+        <v-divider></v-divider>
+      </v-col>
+
       <v-col cols="8">
-        <tag-editor :tags="wrapper.tags"></tag-editor>
+        <text-box label="Token"
+                  readonly
+                  v-model="wrapper.token"
+        ></text-box>
+        <text-box label="URL"
+                  readonly
+                  v-model="wrapper.url"
+        ></text-box>
       </v-col>
     </v-row>
-
-    <v-col cols="8" class="my-3">
-      <v-divider></v-divider>
-    </v-col>
-
-    <v-col cols="8">
-      <v-text-field label="Token"
-                    readonly
-                    v-model="wrapper.token"
-      ></v-text-field>
-      <v-text-field label="URL"
-                    readonly
-                    v-model="wrapper.url"
-      ></v-text-field>
-    </v-col>
 
     <v-row>
       <v-col cols="8" class="text-end">
@@ -59,6 +55,7 @@
   import actions from '@/store/actions'
   import TagEditor from '@/components/Common/TagEditor'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
+  import TextBox from '@/components/Common/TextBox'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
   import { AgentWrapper } from '@/util/agents'
@@ -69,10 +66,11 @@
     components: {
       TagEditor,
       ConfirmBtn,
+      TextBox,
       SaveBtn,
       BackBtn
     },
-    data () {
+    data() {
       return {
         nameRules: agentNameRules(this),
         dialog: false
@@ -83,15 +81,15 @@
         loaded: state => state.agents.loaded
       }),
 
-      wrapper () {
+      wrapper() {
         return new AgentWrapper(this.loaded)
       },
 
-      name () {
+      name() {
         return this.$route.params.name
       }
     },
-    mounted () {
+    mounted() {
       this.$store.dispatch(actions.agents.get, this.name).then(() => {
         this.$emit('onConfigNav', {
           navs: [
@@ -108,12 +106,12 @@
       })
     },
     watch: {
-      name (newValue) {
+      name(newValue) {
         this.$store.dispatch(actions.agents.get, newValue)
       }
     },
     methods: {
-      onDeleteClick () {
+      onDeleteClick() {
         this.$store.dispatch(actions.agents.delete, this.wrapper.rawInstance).then(() => {
           this.$store.dispatch(actions.agents.select, {})
           this.dialog = false
@@ -121,11 +119,11 @@
         })
       },
 
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/agents')
       },
 
-      onSaveClick () {
+      onSaveClick() {
         if (!this.$refs.agentNameForm.validate()) {
           return
         }

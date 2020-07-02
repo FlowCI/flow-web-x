@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="tag-editor">
     <div>
+      <v-subheader class="no-padding">Tags</v-subheader>
       <v-text-field
           dense
-          label="Tags"
+          solo
           v-model="input"
           append-icon="mdi-plus-box"
           :error-messages="errors"
@@ -107,6 +108,10 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .tag-editor {
+    .v-input {
+      font-size: 14px
+    }
+  }
 </style>

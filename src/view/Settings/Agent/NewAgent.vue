@@ -1,24 +1,17 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="8">
-        <v-form ref="agentNameForm"
-                lazy-validation>
-          <v-text-field
-              dense
+    <v-form ref="agentNameForm" lazy-validation>
+      <v-row>
+        <v-col cols="8">
+          <text-box
               label="Name"
               :rules="nameRules"
               v-model="wrapper.name"
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="8">
-        <tag-editor :tags="wrapper.tags"></tag-editor>
-      </v-col>
-    </v-row>
+          ></text-box>
+          <tag-editor :tags="wrapper.tags"></tag-editor>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
       <v-col cols="8" class="text-end">
@@ -32,6 +25,7 @@
 <script>
   import actions from '@/store/actions'
   import TagEditor from '@/components/Common/TagEditor'
+  import TextBox from '@/components/Common/TextBox'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
   import { AgentWrapper } from '@/util/agents'
@@ -41,17 +35,18 @@
     name: 'SettingsAgentNew',
     components: {
       TagEditor,
+      TextBox,
       SaveBtn,
       BackBtn
     },
-    data () {
+    data() {
       return {
         nameRules: agentNameRules(this),
         dialog: false,
         wrapper: new AgentWrapper()
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
         navs: [
           {
@@ -67,11 +62,11 @@
       })
     },
     methods: {
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/agents')
       },
 
-      onSaveClick () {
+      onSaveClick() {
         if (!this.$refs.agentNameForm.validate()) {
           return
         }
