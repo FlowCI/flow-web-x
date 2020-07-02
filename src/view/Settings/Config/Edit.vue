@@ -36,15 +36,21 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('delete')" color="error" @click="onDeleteClick">
+        <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Revoke config {{ configObj.name }}?
             </span>
           </template>
         </confirm-btn>
-        <v-btn color="warning" outlined @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
-        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
+
+        <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -56,6 +62,8 @@
   import ConfigFreeText from './FreeText'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
   import { Categories, CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
 
   export default {
@@ -71,6 +79,8 @@
       ConfigSmtp,
       ConfigFreeText,
       TextBox,
+      SaveBtn,
+      BackBtn
     },
     data() {
       return {
