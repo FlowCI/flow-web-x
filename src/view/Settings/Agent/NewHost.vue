@@ -59,42 +59,27 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
+        <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
+
         <host-test-btn :host="wrapper.rawInstance"
                        v-if="isEditMode"
                        :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"></host-test-btn>
 
-        <v-btn class="mx-1"
-               outlined
-               color="error"
-               :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
-               @click="deleteDialog = true"
-               v-if="isEditMode"
-        >{{ $t('delete') }}
-        </v-btn>
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+                     v-if="isEditMode"
+                     @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete agent host '{{ wrapper.name }}'?
+            </span>
+          </template>
+        </confirm-btn>
 
-        <v-dialog
-            v-model="deleteDialog"
-            width="500"
-            v-if="isEditMode">
-          <v-card>
-            <v-card-title
-                class="error--text"
-                primary-title
-            >Delete agent host '{{ wrapper.name }}'?
-            </v-card-title>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="deleteDialog = false">{{ $t('cancel') }}</v-btn>
-              <v-btn outlined color="error" @click="onDeleteClick">{{ $t('delete') }}</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-        <v-btn class="mx-1" outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-        <v-btn class="mx-1" color="primary" @click="onSaveClick">{{ $t('save') }}</v-btn>
+        <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -104,9 +89,12 @@
   import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HostWrapper } from '@/util/hosts'
   import { required } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
   import PoolSizeEditor from '@/components/Settings/PoolSizeEditor'
   import HostTestBtn from '@/components/Settings/HostTestBtn'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
   import actions from '@/store/actions'
   import { mapState } from 'vuex'
   import { CATEGORY_SSH_RSA } from '@/util/secrets'
@@ -117,7 +105,10 @@
       PoolSizeEditor,
       TagEditor,
       SshHostEditor,
-      HostTestBtn
+      HostTestBtn,
+      SaveBtn,
+      BackBtn,
+      ConfirmBtn
     },
     data () {
       return {

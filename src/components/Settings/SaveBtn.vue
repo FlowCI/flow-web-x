@@ -1,6 +1,6 @@
 <template>
-  <v-btn color="primary" @click="onClick">
-    {{ $t('save') }}<v-icon dark right small>mdi-content-save</v-icon>
+  <v-btn color="primary" @click="onClick" :small="small">
+    {{ $t(text) }}<v-icon dark right small>{{ icon }}</v-icon>
   </v-btn>
 </template>
 
@@ -11,6 +11,21 @@
       onClick: {
         type: Function,
         required: false
+      },
+      text: {
+        type: String,
+        required: false,
+        default: 'save'
+      },
+      icon: {
+        type: String,
+        required: false,
+        default: 'mdi-content-save'
+      },
+      small: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     }
   }

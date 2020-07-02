@@ -1,6 +1,6 @@
 <template>
-  <v-btn color="orange darken-2" dark @click="onClick">
-    <v-icon dark left small>mdi-arrow-left</v-icon>{{ $t('back') }}
+  <v-btn color="orange darken-2" dark @click="onClick" :small="small">
+    <v-icon dark left small>{{ icon }}</v-icon>{{ $t(text) }}
   </v-btn>
 </template>
 
@@ -11,6 +11,21 @@
       onClick: {
         type: Function,
         required: false
+      },
+      text: {
+        type: String,
+        required: false,
+        default: 'back'
+      },
+      icon: {
+        type: String,
+        required: false,
+        default: 'mdi-arrow-left'
+      },
+      small: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     }
   }

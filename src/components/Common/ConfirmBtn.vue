@@ -4,7 +4,11 @@
       width="500"
   >
     <template v-slot:activator="{ on }">
-      <v-btn :class="clazz" :color="color" dark v-on="on">
+      <v-btn :class="clazz"
+             :color="color"
+             :disabled="disabled"
+             dark
+             v-on="on">
         {{ text }}
         <v-icon dark right small v-if="icon">{{ icon }}</v-icon>
       </v-btn>
@@ -49,6 +53,11 @@
       icon: {
         type: String,
         required: false
+      },
+      disabled: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     data () {
