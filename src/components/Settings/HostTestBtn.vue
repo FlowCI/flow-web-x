@@ -7,9 +7,10 @@
              :disabled="disabled"
              @click="onClick"
              :loading="loading"
+             :class="clazz"
       >
         {{ $t('test') }}
-        <v-icon small :class="['ml-2', statusClass]">{{ statusIcon }}</v-icon>
+        <v-icon small right :class="[statusClass]">{{ statusIcon }}</v-icon>
         <template v-slot:loader>
         <span class="custom-loader">
           <v-icon small light>flow-icon-loading1</v-icon>
@@ -38,6 +39,11 @@
         type: Boolean,
         required: false,
         default: false
+      },
+      clazz: {
+        type: String,
+        required: false,
+        default: ''
       }
     },
     data () {

@@ -15,7 +15,7 @@
               dense
               label="Name"
               :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
-              :rules="rules.required"
+              :rules="nameRules"
               v-model="wrapper.name"
           ></v-text-field>
         </v-form>
@@ -63,7 +63,9 @@
 
         <host-test-btn :host="wrapper.rawInstance"
                        v-if="isEditMode"
-                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"></host-test-btn>
+                       clazz="mr-5"
+                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+        ></host-test-btn>
 
         <confirm-btn :text="$t('delete')"
                      icon="mdi-delete"
@@ -87,7 +89,7 @@
 
 <script>
   import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HostWrapper } from '@/util/hosts'
-  import { required } from '@/util/rules'
+  import { agentNameRules } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
@@ -117,9 +119,7 @@
         deleteDialog: false,
         wrapper: new HostWrapper(),
         tagInput: [],
-        rules: {
-          required: required('Required')
-        }
+        nameRules: agentNameRules(this),
       }
     },
     mounted () {
