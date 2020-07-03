@@ -135,7 +135,7 @@
         setTimeout(function () {
           this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
           this.fitAddon.fit()
-        }.bind(this), 50);
+        }.bind(this), 500);
 
         for (let buf of this.buffer) {
           this.terminal.write(buf)

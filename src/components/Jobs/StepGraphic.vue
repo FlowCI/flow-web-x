@@ -32,9 +32,6 @@
         }
       };
     },
-    mounted() {
-      this.graph = this.initG6()
-    },
     computed: {
       ...mapState({
         steps: state => state.steps.items,
@@ -42,13 +39,15 @@
       }),
     },
     watch: {
-      steps(val) {
+      steps() {
+        this.graph = this.initG6()
         this.graph.data(this.buildGraphData())
         this.graph.render()
       }
     },
     methods: {
       initG6() {
+        const stepWidth = 165 * this.steps.length
         const screenWidth = document.getElementById('stepgraphic').scrollWidth - 20;
         const height = 150;
 
@@ -56,7 +55,7 @@
           container: "stepgraphic",
           width: screenWidth,
           height: height,
-          fitView: true,
+          fitView: stepWidth > screenWidth,
           defaultNode: {
             shape: 'circle',
             size: 20,
