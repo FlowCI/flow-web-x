@@ -5,40 +5,29 @@
         <v-icon>mdi-translate</v-icon>
       </v-btn>
     </template>
-
-    <v-list-item-group v-model="item">
-      <v-list dense>
-        <v-list-item @click="onLangChange('en')">
-          <template v-slot:default="{ active }">
-            <v-list-item-title>
-              <v-icon x-small>{{ active ? 'mdi-radiobox-marked' : 'mdi-radiobox-blank' }}</v-icon>
-              <span class="ml-3">English</span>
-            </v-list-item-title>
-          </template>
-        </v-list-item>
-
-        <v-list-item @click="onLangChange('cn')">
-          <template v-slot:default="{ active }">
-            <v-list-item-title>
-              <v-icon x-small>{{ active ? 'mdi-radiobox-marked' : 'mdi-radiobox-blank' }}</v-icon>
-              <span class="ml-3">简体中文</span>
-            </v-list-item-title>
-          </template>
-        </v-list-item>
-      </v-list>
-    </v-list-item-group>
+    <radio-box-list v-model="item"
+                    :items="items"
+    ></radio-box-list>
   </v-menu>
 </template>
 
 <script>
+  import RadioBoxList from "@/components/Common/RadioBoxList"
+
   export default {
     name: "LangMenu",
+    components: {RadioBoxList},
     data() {
       return {
         item: 0,
+        items: ['English', '简体中文'],
         mapping: {
           'en': 0,
           'cn': 1
+        },
+        indexes: {
+          0: 'en',
+          1: 'cn'
         }
       }
     },
@@ -47,6 +36,11 @@
       if (lang) {
         this.$i18n.locale = lang
         this.item = this.mapping[lang]
+      }
+    },
+    watch: {
+      item(val) {
+        this.onLangChange(this.indexes[val])
       }
     },
     methods: {

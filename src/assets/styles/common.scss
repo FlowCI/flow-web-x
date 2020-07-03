@@ -25,6 +25,10 @@
   text-align: end;
 }
 
+.no-padding {
+  padding: 0 !important;
+}
+
 // customize vuetify //
 tr.v-data-table__empty-wrapper {
   td {
@@ -37,7 +41,7 @@ tr.v-data-table__empty-wrapper {
   }
 }
 
-*{
+* {
   text-transform: none !important;
 }
 
@@ -47,4 +51,27 @@ tr.v-data-table__empty-wrapper {
 
 .v-btn:not(.v-btn--round).v-size--default {
   padding: 0 8px !important;
+}
+
+/* set font-size to small */
+.append-icon-small{
+  .v-input__icon--append {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+.prepend-icon-small{
+  .v-input__icon--prepend-inner {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+
+  .v-input__icon--prepend {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
 }

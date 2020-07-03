@@ -84,6 +84,7 @@ export default {
     createRsa: 'secrets/createRsa',
     createAuth: 'secrets/createAuth',
     createToken: 'secrets/createToken',
+    createAndroidSign: 'secrets/createAndroidSign',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',

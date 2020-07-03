@@ -3,6 +3,11 @@
     <v-row>
       <v-col cols="8">
         <text-box label="Name" readonly v-model="name"></text-box>
+        <text-box label="Category"
+                  readonly
+                  :prepend-inner-icon="Categories[secretObj.category].icon"
+                  v-model="Categories[secretObj.category].name"
+        ></text-box>
       </v-col>
     </v-row>
 
@@ -28,11 +33,20 @@
             :model="instance"
         ></token-editor>
       </v-col>
+
+      <v-col cols="8" v-if="isAndroidSign">
+        <android-sign-editor :is-read-only="true" :model="instance"></android-sign-editor>
+      </v-col>
     </v-row>
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
+        <back-btn class="mr-5" :on-click="onBackClick"></back-btn>
+
+        <confirm-btn :text="$t('revoke')"
+                     color="error"
+                     icon="mdi-delete"
+                     @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Revoke secret {{ name }}?
@@ -54,8 +68,6 @@
             </div>
           </template>
         </confirm-btn>
-
-        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -67,8 +79,10 @@
   import AuthEditor from '@/components/Common/AuthEditor'
   import TokenEditor from '@/components/Common/TokenEditor'
   import TextBox from '@/components/Common/TextBox'
+  import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
+  import BackBtn from '@/components/Settings/BackBtn'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
-  import { CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN } from '@/util/secrets'
+  import { Categories, CATEGORY_AUTH, CATEGORY_SSH_RSA, CATEGORY_TOKEN, CATEGORY_ANDROID_SIGN } from '@/util/secrets'
   import { mapState } from 'vuex'
 
   export default {
@@ -78,13 +92,15 @@
       TextBox,
       SshRsaEditor,
       AuthEditor,
-      TokenEditor
+      TokenEditor,
+      AndroidSignEditor,
+      BackBtn
     },
     props: {
       secretObj: {
         type: Object,
         required: false,
-        default () {
+        default() {
           return {
             name: '',
             privateKey: '',
@@ -93,12 +109,13 @@
         }
       }
     },
-    data () {
+    data() {
       return {
+        Categories,
         dialog: false
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
         navs: this.navs,
         showAddBtn: false
@@ -110,27 +127,31 @@
         connectedFlows: state => state.flows.itemsByCredential
       }),
 
-      navs () {
+      navs() {
         return [
           {text: this.$t('settings.li.secret'), href: '#/settings/secrets'},
           {text: this.name}
         ]
       },
 
-      name () {
+      name() {
         return this.secretObj.name
       },
 
-      isSshRsa () {
+      isSshRsa() {
         return this.secretObj.category === CATEGORY_SSH_RSA
       },
 
-      isAuth () {
+      isAuth() {
         return this.secretObj.category === CATEGORY_AUTH
       },
 
-      isToken () {
+      isToken() {
         return this.secretObj.category === CATEGORY_TOKEN
+      },
+
+      isAndroidSign() {
+        return this.secretObj.category === CATEGORY_ANDROID_SIGN
       },
 
       instance() {
@@ -149,7 +170,7 @@
           }
         }
 
-        if (this.isToken) {
+        if (this.isToken || this.isAndroidSign) {
           return this.secretObj
         }
 
@@ -157,11 +178,11 @@
       }
     },
     methods: {
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/secrets')
       },
 
-      onDeleteClick () {
+      onDeleteClick() {
         this.$store.dispatch(actions.secrets.delete, this.secretObj).then(() => {
           this.onBackClick()
         })

@@ -71,6 +71,27 @@ const actions = {
     }, {name, token})
   },
 
+  async createAndroidSign({commit}, {name, keyStore, option}) {
+    let jsonOptionData = JSON.stringify(option)
+
+    let formData = new FormData()
+    formData.append("name", new Blob([name], {type: "text/plain"}))
+    formData.append("keyStore", keyStore)
+    formData.append("option", new Blob([jsonOptionData], {type: "application/json"}))
+
+    await http.post(
+      `secrets/android/sign`,
+      (c) => {
+        commit('add', c)
+      },
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        },
+      })
+  },
+
   async delete ({commit}, credential) {
     await http.delete(`secrets/${credential.name}`, (c) => {
       commit('remove', c)

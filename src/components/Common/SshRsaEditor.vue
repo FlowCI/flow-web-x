@@ -12,12 +12,19 @@
       </v-col>
     </v-row>
 
-    <div v-if="showSelection & isSelectOption">
+    <div v-if="showSelection">
       <v-select dense v-model="model.selected" :items="names" label="Select Credential"></v-select>
     </div>
 
-    <div v-if="isEditOption">
-      <v-btn small outlined color="indigo" open-delay="2000" :loading="loading" @click="onCreateSSHClick">
+    <div>
+      <v-btn small
+             outlined
+             color="indigo"
+             open-delay="2000"
+             :loading="loading"
+             @click="onCreateSSHClick"
+             v-if="!isReadOnly"
+      >
         Create new SSH key
         <v-icon right small>mdi-plus-box</v-icon>
 
@@ -138,14 +145,6 @@
           nameList.push(c.name)
         }
         return nameList
-      },
-
-      isSelectOption () {
-        return this.option === 'select'
-      },
-
-      isEditOption () {
-        return this.option === 'edit'
       }
     },
     watch: {
