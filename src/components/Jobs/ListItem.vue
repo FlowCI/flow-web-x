@@ -61,8 +61,14 @@
     </v-col>
 
     <v-col cols="2">
-      <v-icon small class="mr-1">flow-icon-calendar</v-icon>
-      <time>{{ wrapper.fromNow }}</time>
+      <div>
+        <v-icon small class="mr-2">mdi-clock-fast</v-icon>
+        <span>{{ wrapper.duration }} sec</span>
+      </div>
+      <div>
+        <v-icon small class="mr-2">mdi-clock-outline</v-icon>
+        <span>{{ wrapper.fromNow }}</span>
+      </div>
     </v-col>
   </v-row>
 </template>
