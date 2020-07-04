@@ -6,7 +6,9 @@
       :options.sync="pagination"
       :server-items-length="total"
       :loading="loading"
-      footer-props.items-per-page-options="[10, 25, 50]"
+      :footer-props="{
+        itemsPerPageOptions: [10, 25, 50]
+      }"
   >
 
     <template v-slot:item="{ item }">

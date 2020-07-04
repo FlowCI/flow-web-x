@@ -38,9 +38,11 @@
         change: state => state.steps.change
       }),
     },
+    mounted() {
+      this.graph = this.initG6()
+    },
     watch: {
       steps() {
-        this.graph = this.initG6()
         this.graph.data(this.buildGraphData())
         this.graph.render()
       }
