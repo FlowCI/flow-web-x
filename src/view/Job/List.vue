@@ -65,7 +65,6 @@
       JobListItem
     },
     mounted () {
-      this.loadJobList()
     },
     computed: {
       ...mapState({
