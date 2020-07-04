@@ -157,6 +157,10 @@ export class JobWrapper {
         }
     }
 
+    get numOfArtifact() {
+        return this.job.numOfArtifact || 0
+    }
+
     get isYamlFromRepo() {
         return this.job.yamlFromRepo
     }

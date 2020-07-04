@@ -14,6 +14,13 @@
         </template>
         <span>{{ wrapper.triggerText }}</span>
       </v-tooltip>
+
+      <v-tooltip bottom v-if="wrapper.numOfArtifact > 0">
+        <template v-slot:activator="{ on }">
+          <v-icon small class="ml-3" v-on="on">mdi-package-variant-closed</v-icon>
+        </template>
+        <span>{{ wrapper.numOfArtifact }} {{ $t('job.artifact') }}</span>
+      </v-tooltip>
     </v-col>
 
     <v-col cols="8">

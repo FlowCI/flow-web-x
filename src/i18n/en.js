@@ -97,6 +97,7 @@ export default {
 
   job: {
     run: 'Run',
+    artifact: 'artifact',
     list_empty_message: 'Click \'RUN\' to start your first build',
 
     tab: {

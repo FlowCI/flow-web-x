@@ -97,6 +97,7 @@ export default {
 
   job: {
     run: '开始任务',
+    artifact: '个产物',
     list_empty_message: '点击 \'RUN\' 开始任务',
 
     tab: {
