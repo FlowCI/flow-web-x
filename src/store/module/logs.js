@@ -5,7 +5,7 @@ import { LogWrapper } from '@/util/logs'
 const commitLog = (commit, cmdId, blob) => {
   const reader = new FileReader()
   reader.onload = (event) => {
-    commit('update', [ new LogWrapper(cmdId, event.target.result) ])
+    commit('update', [new LogWrapper(cmdId, event.target.result)])
   }
   reader.readAsText(blob)
 }
@@ -17,45 +17,52 @@ const state = {
 }
 
 const mutations = {
-  update (state, logs) {
+  update(state, logs) {
     state.loaded = logs
   },
 
-  pushed (state, log) {
+  pushed(state, log) {
     state.pushed = log
   },
 
-  addCache (state, {cmdId, blob}) {
-    state.cached[ cmdId ] = blob
+  addCache(state, {cmdId, blob}) {
+    state.cached[cmdId] = blob
   }
 }
 
 const actions = {
-  load ({commit, state}, cmdId) {
-    const blob = state.cached[ cmdId ]
+  load({commit, state}, stepId) {
+    const blob = state.cached[stepId]
     if (blob) {
       console.log('cached')
-      commitLog(commit, cmdId, blob)
+      commitLog(commit, stepId, blob)
       return
     }
 
-    let url = `jobs/logs/${cmdId}/download`
+    let url = `jobs/logs/${stepId}/download`
     http.get(url, (data, _file) => {
-      let blob = new Blob([ data ], {type: 'text/plain'})
-      commitLog(commit, cmdId, blob)
-      commit('addCache', {cmdId: cmdId, blob: blob})
+      let blob = new Blob([data], {type: 'text/plain'})
+      commitLog(commit, stepId, blob)
+      commit('addCache', {cmdId: stepId, blob: blob})
     })
   },
 
-  download ({commit, state}, cmdId) {
-    let url = `jobs/logs/${cmdId}/download`
+  download({commit, state}, stepId) {
+    let url = `jobs/logs/${stepId}/download`
     http.get(url, (data, file) => {
-      const url = window.URL.createObjectURL(new Blob([ data ]))
+      const url = window.URL.createObjectURL(new Blob([data]))
       browserDownload(url, file)
     })
   },
 
-  push ({commit, state}, logFromProto) {
+  read({commit}, {stepId, onLoaded}) {
+    let url = `jobs/logs/${stepId}/read`
+    http.get(url, (data) => {
+      onLoaded(data)
+    })
+  },
+
+  push({commit, state}, logFromProto) {
     commit('pushed', logFromProto)
   }
 }

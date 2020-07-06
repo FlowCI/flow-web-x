@@ -73,9 +73,7 @@
     },
     data () {
       return {
-        buffer: [],
-        terminal: null,
-        fitAddon: new FitAddon(),
+        terminal: null
       }
     },
     mounted() {
@@ -96,7 +94,6 @@
     methods: {
       writeLog(log) {
         if (!this.terminal) {
-          this.buffer.push(log)
           return
         }
         this.terminal.write(log)
@@ -104,6 +101,14 @@
 
       onLogDownload() {
         this.$store.dispatch(actions.jobs.logs.download, this.wrapper.id).then()
+      },
+
+      onLogRead(list) {
+        for (let b64 of list) {
+          let item = JSON.parse(atob(b64))
+          let log = atob(item.content)
+          this.terminal.write(log)
+        }
       },
 
       onPanelClick() {
@@ -126,7 +131,8 @@
           }
         })
 
-        this.terminal.loadAddon(this.fitAddon)
+        let fitAddon = new FitAddon()
+        this.terminal.loadAddon(fitAddon)
 
         const unicode11Addon = new Unicode11Addon()
         this.terminal.loadAddon(unicode11Addon);
@@ -134,18 +140,21 @@
 
         setTimeout(function () {
           this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
-          this.fitAddon.fit()
+          fitAddon.fit()
         }.bind(this), 500);
 
-        for (let buf of this.buffer) {
-          this.terminal.write(buf)
-        }
-        this.buffer.length = 0
-
-        // load logs from server
+        // load full logs from server
         if (this.wrapper.isFinished) {
           this.$store.dispatch(actions.jobs.logs.load, this.wrapper.id).then()
+          return
         }
+
+        // read existing logs from server
+        let payload = {
+          stepId: this.wrapper.id,
+          onLoaded: this.onLogRead
+        }
+        this.$store.dispatch(actions.jobs.logs.read, payload).then()
       }
     }
   }
