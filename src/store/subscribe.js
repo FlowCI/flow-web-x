@@ -122,7 +122,6 @@ export const subscribeTopic = {
       const message = JSON.parse(data.body)
       const cmdId = message.id
       const content = atob(message.content)
-
       store.dispatch(actions.jobs.logs.push, new LogWrapper(cmdId, content))
     })
   },

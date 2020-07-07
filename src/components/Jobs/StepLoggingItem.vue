@@ -81,11 +81,6 @@
         this.bus.$on('writeLog', this.writeLog)
       }
     },
-    destroyed() {
-      if (this.terminal) {
-        this.terminal.dispose()
-      }
-    },
     computed: {
       showLog() {
         return !!this.bus
@@ -107,7 +102,10 @@
         for (let b64 of list) {
           let item = JSON.parse(atob(b64))
           let log = atob(item.content)
-          this.terminal.write(log)
+
+          if (this.terminal) {
+            this.terminal.write(log)
+          }
         }
       },
 
@@ -125,6 +123,7 @@
           disableStdin: true,
           cursorStyle: 'bar',
           convertEol: true,
+          rendererType: 'dom',
           theme: {
             background: '#333333',
             foreground: '#f5f5f5'
