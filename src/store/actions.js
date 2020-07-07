@@ -67,7 +67,8 @@ export default {
     logs: {
       push: 'logs/push',
       load: 'logs/load',
-      download: 'logs/download'
+      download: 'logs/download',
+      read: 'logs/read'
     },
   },
 
