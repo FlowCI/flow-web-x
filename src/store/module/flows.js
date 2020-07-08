@@ -240,7 +240,7 @@ const actions = {
     await confirmFunc()
   },
 
-  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout}) {
+  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout, cron}) {
     await http.post(
         `flows/${name}/settings`,
         (flow) => {
@@ -250,7 +250,8 @@ const actions = {
           isYamlFromRepo,
           yamlRepoBranch,
           jobTimeout,
-          stepTimeout
+          stepTimeout,
+          cron
         }
     )
   },

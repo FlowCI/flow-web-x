@@ -3,7 +3,9 @@
     <v-form ref="optionForm" lazy-validation>
       <v-row>
         <v-col cols="10">
-          <span class="caption grey--text text--darken-1">{{ `Flow Name (${vars.flow.name})` }}</span>
+          <span class="caption grey--text text--darken-1">
+            {{ $t('flow.flow_name') }} {{ ` (${vars.flow.name})` }}
+          </span>
           <v-text-field
               class="pt-1"
               :rule="flowNameRules"
@@ -15,7 +17,9 @@
 
       <v-row>
         <v-col>
-          <span class="caption grey--text text--darken-1">Is load YAML from Git (.flowci.yaml)</span>
+          <span class="caption grey--text text--darken-1">
+            {{ $t('flow.git_yaml') }}
+          </span>
           <v-row align="center">
             <v-col cols="4">
               <v-switch inset
@@ -41,7 +45,15 @@
 
       <v-row>
         <v-col cols="10">
-          <span class="caption grey--text text--darken-1">Cron Task</span>
+          <span class="caption grey--text text--darken-1">
+            {{ $t('flow.cron_task') }}
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon small class="mb-1" v-on="on">mdi-help-circle-outline</v-icon>
+              </template>
+              <span>format (0 * * * *)</span>
+            </v-tooltip>
+          </span>
           <v-text-field
               class="pt-1"
               :rules="cronRules"
@@ -107,7 +119,41 @@
               return true
             }
 
-            return v.length >= 9 || 'invalid cron format'
+            const hour = /^(\*|(1?[0-9]|2[0-3])(-(1?[0-9]|2[0-3]))?)(\/[1-9][0-9]*)?(,(\*|(1?[0-9]|2[0-3])(-(1?[0-9]|2[0-3]))?)(\/[1-9][0-9]*)?)*$/
+            const monthDay = /^(\*|([1-9]|[1-2][0-9]?|3[0-1])(-([1-9]|[1-2][0-9]?|3[0-1]))?)(\/[1-9][0-9]*)?(,(\*|([1-9]|[1-2][0-9]?|3[0-1])(-([1-9]|[1-2][0-9]?|3[0-1]))?)(\/[1-9][0-9]*)?)*$/
+            const month = /^(\*|([1-9]|1[0-2]?)(-([1-9]|1[0-2]?))?)(\/[1-9][0-9]*)?(,(\*|([1-9]|1[0-2]?)(-([1-9]|1[0-2]?))?)(\/[1-9][0-9]*)?)*$/
+            const weekDay = /^(\*|[0-6](-[0-6])?)(\/[1-9][0-9]*)?(,(\*|[0-6](-[0-6])?)(\/[1-9][0-9]*)?)*$/
+
+            const validator = [
+              (item) => {
+                return item === "0"
+              },
+              (item) => {
+                return hour.test(item)
+              },
+              (item) => {
+                return monthDay.test(item)
+              },
+              (item) => {
+                return month.test(item)
+              },
+              (item) => {
+                return weekDay.test(item)
+              },
+            ]
+
+            let items = v.split(" ");
+            if (items.length !== 5) {
+              return 'invalid cron format'
+            }
+
+            for (let index in items) {
+              if (!validator[index](items[index])) {
+                return 'invalid cron format'
+              }
+            }
+
+            return true
           }
         ],
         loading: false
@@ -136,8 +182,9 @@
         this.loading = true
         this.$store.dispatch(actions.flows.update, payload).then(() => {
           this.loading = false
-        }).catch(() => {
+        }).catch((e) => {
           this.loading = false
+          console.log(e.message)
         })
       }
     }
