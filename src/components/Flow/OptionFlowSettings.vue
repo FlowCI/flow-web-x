@@ -2,6 +2,8 @@
   <div>
     <v-form ref="optionForm" lazy-validation>
       <v-row>
+
+        <!-- flow name -->
         <v-col cols="10">
           <span class="caption grey--text text--darken-1">
             {{ $t('flow.flow_name') }} {{ ` (${vars.flow.name})` }}
@@ -13,10 +15,9 @@
               readonly
           ></v-text-field>
         </v-col>
-      </v-row>
 
-      <v-row>
-        <v-col>
+        <!-- git yaml-->
+        <v-col cols="10">
           <span class="caption grey--text text--darken-1">
             {{ $t('flow.git_yaml') }}
           </span>
@@ -27,7 +28,6 @@
                         v-model="flow.yamlFromRepo"
               ></v-switch>
             </v-col>
-
             <v-col cols="5">
               <v-combobox dense
                           outlined
@@ -41,9 +41,8 @@
             </v-col>
           </v-row>
         </v-col>
-      </v-row>
 
-      <v-row>
+        <!-- cron task -->
         <v-col cols="10">
           <span class="caption grey--text text--darken-1">
             {{ $t('flow.cron_task') }}
@@ -61,9 +60,8 @@
               clearable
           ></v-text-field>
         </v-col>
-      </v-row>
 
-      <v-row align="center">
+        <!-- timeout -->
         <v-col cols="5">
           <span class="caption grey--text text--darken-1">Queueing Timeout (seconds)</span>
           <v-text-field
@@ -79,6 +77,11 @@
               v-model="flow.stepTimeout"
               type="number"
           ></v-text-field>
+        </v-col>
+
+        <!-- error -->
+        <v-col v-if="error" cols="10">
+          <span class="error--text">{{ error }}</span>
         </v-col>
       </v-row>
     </v-form>
@@ -113,6 +116,7 @@
       return {
         vars: vars,
         flowNameRules: flowNameRules(this),
+        error: '',
         cronRules: [
           v => {
             if (!v) {
@@ -166,6 +170,8 @@
     },
     methods: {
       onUpdateClick() {
+        this.error = ''
+
         if (!this.$refs.optionForm.validate()) {
           return
         }
@@ -184,7 +190,7 @@
           this.loading = false
         }).catch((e) => {
           this.loading = false
-          console.log(e.message)
+          this.error = e.message
         })
       }
     }
