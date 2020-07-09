@@ -6,7 +6,7 @@ const emptyFunc = () => {
 }
 
 const state = {
-  name: '', // flow name
+  flowId: '',
   items: [],
   pagination: {
     page: 0,
@@ -32,8 +32,8 @@ const mutations = {
     state.pagination.total += 1
   },
 
-  setName (state, flow) {
-    state.name = flow
+  setFlowId (state, flowId) {
+    state.flowId = flowId
   },
 
   list (state, page) {
@@ -147,16 +147,18 @@ const actions = {
       return
     }
 
-    commit('add', job)
+    if (state.flowId === job.flowId) {
+      commit('add', job)
+    }
   },
 
   /**
    * Load job list by flow name
    */
-  list ({commit, state}, {flow, page, size}) {
-    commit('setName', flow)
+  list ({commit, state}, {flowObj, page, size}) {
+    commit('setFlowId', flowObj.id)
 
-    return http.get('jobs/' + flow,
+    return http.get('jobs/' + flowObj.name,
       (page) => {
         commit('list', page)
       },
@@ -171,8 +173,8 @@ const actions = {
    * Update job status
    */
   statusUpdate ({commit, state}, jobWithNewStatus) {
-    commit('updateStatus', jobWithNewStatus)
     commit('setLatest', jobWithNewStatus)
+    commit('updateStatus', jobWithNewStatus)
   },
 
   /**

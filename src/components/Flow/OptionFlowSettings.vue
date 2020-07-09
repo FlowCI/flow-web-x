@@ -50,7 +50,7 @@
               <template v-slot:activator="{ on }">
                 <v-icon small class="mb-1" v-on="on">mdi-help-circle-outline</v-icon>
               </template>
-              <span>format (0 * * * *)</span>
+              <span>&lt;minute&gt; &lt;hour&gt; &lt;day-of-month&gt; &lt;month&gt; &lt;day-of-week&gt;</span>
             </v-tooltip>
           </span>
           <v-text-field
@@ -123,6 +123,7 @@
               return true
             }
 
+            const min = /^(\*|[1-5]?[0-9](-[1-5]?[0-9])?)(\/[1-9][0-9]*)?(,(\*|[1-5]?[0-9](-[1-5]?[0-9])?)(\/[1-9][0-9]*)?)*$/
             const hour = /^(\*|(1?[0-9]|2[0-3])(-(1?[0-9]|2[0-3]))?)(\/[1-9][0-9]*)?(,(\*|(1?[0-9]|2[0-3])(-(1?[0-9]|2[0-3]))?)(\/[1-9][0-9]*)?)*$/
             const monthDay = /^(\*|([1-9]|[1-2][0-9]?|3[0-1])(-([1-9]|[1-2][0-9]?|3[0-1]))?)(\/[1-9][0-9]*)?(,(\*|([1-9]|[1-2][0-9]?|3[0-1])(-([1-9]|[1-2][0-9]?|3[0-1]))?)(\/[1-9][0-9]*)?)*$/
             const month = /^(\*|([1-9]|1[0-2]?)(-([1-9]|1[0-2]?))?)(\/[1-9][0-9]*)?(,(\*|([1-9]|1[0-2]?)(-([1-9]|1[0-2]?))?)(\/[1-9][0-9]*)?)*$/
@@ -130,7 +131,7 @@
 
             const validator = [
               (item) => {
-                return item === "0"
+                return min.test(item)
               },
               (item) => {
                 return hour.test(item)
