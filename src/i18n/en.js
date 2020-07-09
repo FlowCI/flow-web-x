@@ -35,6 +35,10 @@ export default {
     statistic: 'Statistic',
     config_yml: 'YML Config',
 
+    cron_task: 'Cron Task',
+    flow_name: 'Flow name',
+    git_yaml: 'Is load YAML from Git (.flowci.yaml)',
+
     create_title_name: 'Enter Flow Name',
     create_title_select_template: 'Select YAML Template',
     create_title_git_url: 'Config Git URL',

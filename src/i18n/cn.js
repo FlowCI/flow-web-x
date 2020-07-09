@@ -35,6 +35,10 @@ export default {
     statistic: '统计',
     config_yml: '配置 YML',
 
+    cron_task: '定时任务',
+    flow_name: '工作流名称',
+    git_yaml: '是否从 Git 仓库中获取 YAML 配置 (.flowci.yaml)',
+
     create_title_name: '输入工作流名称',
     create_title_select_template: '选择 YAML 模板',
     create_title_git_url: '配置 Git URL',

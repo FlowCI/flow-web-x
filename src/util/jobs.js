@@ -348,7 +348,7 @@ export const mapping = {
 
         [TRIGGER_SCHEDULER]: {
             text: 'scheduler',
-            icon: 'flow-icon-stopwatch'
+            icon: 'mdi-alarm'
         }
     }
 }
