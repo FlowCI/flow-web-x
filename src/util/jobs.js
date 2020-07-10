@@ -295,7 +295,7 @@ export const mapping = {
         },
 
         [STATUS_CANCELLED]: {
-            icon: 'flow-icon-stopped',
+            icon: 'mdi-cancel',
             class: 'grey--text',
             text: STATUS_CANCELLED,
             bg: 'blue-grey'

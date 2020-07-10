@@ -3,7 +3,7 @@
     <v-row align="center" class="grey lighten-5 ma-0 title" no-gutters>
       <v-col cols="2" class="pl-2">
         <span v-bind:class="[wrapper.status.class, 'body-2', 'font-weight-medium']">
-          <v-icon small v-bind:class="[wrapper.status.class]">
+          <v-icon size="20" v-bind:class="[wrapper.status.class]">
             {{ wrapper.status.icon }}
           </v-icon>
           {{ wrapper.status.text }}

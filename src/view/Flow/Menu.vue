@@ -14,7 +14,7 @@
                    class="mx-2"
                    @click="onItemClick(item)">
         <v-list-item-action>
-          <v-icon small :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
+          <v-icon size="20" :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ item.name }}</v-list-item-title>
