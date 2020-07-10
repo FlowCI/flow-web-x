@@ -25,49 +25,50 @@
 
     <v-col cols="8">
       <!-- for push and tag -->
-      <v-row align-center v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
-        <v-col cols="4">
-          <v-list-item-subtitle>
-            <i>{{ wrapper.branch }}</i>
-          </v-list-item-subtitle>
+      <v-row align="center" v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
+        <v-col cols="4" class="no-padding">
+          <span class="font-weight-medium">{{ wrapper.branch }}</span>
         </v-col>
 
-        <v-flex cols="4">
+        <v-col cols="4" class="no-padding">
           <v-list-item-subtitle>
-            <a :href="wrapper.commitUrl" target="_blank">{{ wrapper.commitId }}</a>
-            <div class="commit-text"> {{ wrapper.commitMsg }}</div>
+            <div class="commit-text caption"> {{ wrapper.commitMsg }}</div>
+            <a :href="wrapper.commitUrl" class="caption" target="_blank">{{ wrapper.commitId }}</a>
           </v-list-item-subtitle>
-        </v-flex>
+        </v-col>
       </v-row>
 
       <!-- for pr -->
       <v-row align-center v-if="wrapper.isPrOpenedTrigger || wrapper.isPrMergedTrigger">
         <v-col cols="4">
           <v-list-item-subtitle>
-            <div v-if="wrapper.prBaseRepo !== wrapper.prHeadRepo">
+            <div v-if="wrapper.prBaseRepo !== wrapper.prHeadRepo" class="caption">
               {{ wrapper.prBaseRepo }} &#x2190; {{ wrapper.prHeadRepo}}
             </div>
-            <div>{{ wrapper.prBaseBranch }} &#x2190; {{ wrapper.prHeadBranch}}</div>
+            <div class="caption">{{ wrapper.prBaseBranch }} &#x2190; {{ wrapper.prHeadBranch}}</div>
           </v-list-item-subtitle>
         </v-col>
 
         <v-col cols="6">
           <v-list-item-subtitle>
-            <a :href="wrapper.prUrl" target="_blank">#{{ wrapper.prNumber }}</a>
-            <span class="ml-1">{{ wrapper.prTitle }}</span>
+            <a :href="wrapper.prUrl" target="_blank" class="caption">#{{ wrapper.prNumber }}</a>
+            <span class="ml-1 caption">{{ wrapper.prTitle }}</span>
           </v-list-item-subtitle>
         </v-col>
       </v-row>
     </v-col>
 
-    <v-col cols="2">
+    <v-col cols="2" class="d-flex align-center">
+      <div class="vertical-bar mr-4"></div>
       <div>
-        <v-icon small class="mr-2">mdi-clock-fast</v-icon>
-        <span>{{ wrapper.duration }} sec</span>
-      </div>
-      <div>
-        <v-icon small class="mr-2">mdi-clock-outline</v-icon>
-        <span>{{ wrapper.fromNow }}</span>
+        <div>
+          <v-icon small class="mr-2">mdi-clock-fast</v-icon>
+          <span class="body-2">{{ wrapper.duration }} sec</span>
+        </div>
+        <div>
+          <v-icon small class="mr-2">mdi-clock-outline</v-icon>
+          <span class="body-2">{{ wrapper.fromNow }}</span>
+        </div>
       </div>
     </v-col>
   </v-row>
@@ -84,7 +85,7 @@
       }
     },
     computed: {
-      wrapper () {
+      wrapper() {
         return new JobWrapper(this.job)
       }
     }
@@ -93,12 +94,19 @@
 
 <style lang="scss" scoped>
   .job-item {
-    min-height: 65px;
+    min-height: 68px;
   }
 
   .commit-text {
     max-width: 300px;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: #4e4e53;
+  }
+
+  .vertical-bar {
+    display: flex;
+    height: 40px;
+    border-left: 2px solid #c6c6cb;
   }
 </style>

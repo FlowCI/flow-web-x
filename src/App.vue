@@ -7,9 +7,11 @@
         :top="true"
     >
       {{ snackbar.text }}
-      <v-btn text @click="snackbar.show = false">
-        {{ $t('close') }}
-      </v-btn>
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar = false">
+          {{ $t('close') }}
+        </v-btn>
+      </template>
     </v-snackbar>
 
     <v-navigation-drawer v-if="!isLoginPage"

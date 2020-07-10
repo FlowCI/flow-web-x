@@ -1,6 +1,6 @@
 <template>
-  <v-card class="full-size pt-0">
-    <v-card-title class="title py-0 mx-2 bottom-border">
+  <v-card class="full-size pt-0 flow-main">
+    <v-card-title class="title pa-0 mx-2 bottom-border">
       <v-toolbar flat bottom>
         <v-toolbar-title class="d-flex">
           <v-icon small class="mr-3">flow-icon-layergroup</v-icon>
@@ -172,14 +172,25 @@
   }
 </script>
 
-<style scoped>
-  .title {
-    max-height: 80px;
-    min-height: 80px;
-  }
+<style lang="scss">
+  .flow-main {
+    .title {
+      max-height: 75px;
+      min-height: 75px;
+    }
 
-  .content {
-    height: 85%;
-    position: absolute;
+    .content {
+      min-height: 90%;
+      /*position: absolute;*/
+    }
+
+    .v-toolbar__content {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    .v-breadcrumbs__divider{
+      padding: 0 !important;
+    }
   }
 </style>
