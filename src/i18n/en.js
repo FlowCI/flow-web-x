@@ -29,6 +29,7 @@ export default {
   },
 
   flow: {
+    name: 'flow',
     create: 'Create Flow',
     search: 'Search by key words',
     settings: 'Settings',

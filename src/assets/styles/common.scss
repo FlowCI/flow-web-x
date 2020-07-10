@@ -75,3 +75,12 @@ tr.v-data-table__empty-wrapper {
     }
   }
 }
+
+.v-toolbar__content {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.v-breadcrumbs__divider{
+  padding: 0 !important;
+}

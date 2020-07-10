@@ -29,6 +29,7 @@ export default {
   },
 
   flow: {
+    name: '工作流',
     create: '创建工作流',
     search: '输入关键词搜索',
     settings: '设置',
