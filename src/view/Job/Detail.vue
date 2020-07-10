@@ -1,5 +1,6 @@
 <template>
   <div class="job-detail">
+    <job-info-bar :wrapper="wrapper"></job-info-bar>
     <v-row align="center" class="grey lighten-5 ma-0 title" no-gutters>
       <v-col cols="2" class="pl-2">
         <span v-bind:class="[wrapper.status.class, 'body-2', 'font-weight-medium']">
@@ -142,6 +143,7 @@
   import DetailTabYml from '@/view/Job/DetailTabYml'
   import DetailTabArtifact from '@/view/Job/DetailTabArtifact'
   import DetailHtmlReport from '@/view/Job/DetailHtmlReport'
+  import JobInfoBar from './JobInfoBar'
   import JobTty from '@/components/Jobs/TTY'
 
   export default {
@@ -155,6 +157,7 @@
       }
     },
     components: {
+      JobInfoBar,
       DetailTabContext,
       DetailTabSummary,
       DetailTabYml,

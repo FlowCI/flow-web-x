@@ -277,7 +277,7 @@ export const mapping = {
             icon: 'mdi-check-circle',
             class: 'green--text',
             text: STATUS_SUCCESS,
-            bg: 'green'
+            bg: 'rgb(128, 174, 54)'
         },
 
         [STATUS_FAILURE]: {
