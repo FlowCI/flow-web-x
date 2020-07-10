@@ -274,14 +274,14 @@ export const mapping = {
         },
 
         [STATUS_SUCCESS]: {
-            icon: 'flow-icon-check',
+            icon: 'mdi-check-circle',
             class: 'green--text',
             text: STATUS_SUCCESS,
             bg: 'green'
         },
 
         [STATUS_FAILURE]: {
-            icon: 'flow-icon-failure',
+            icon: 'mdi-close-circle-outline',
             class: 'red--text',
             text: STATUS_FAILURE,
             bg: 'red'

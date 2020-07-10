@@ -3,7 +3,7 @@
   <!-- state, build number, commit(id, branch, message), by(user), time, re-run -->
   <v-row align="center" class="job-item">
     <v-col cols="1">
-      <v-icon small v-bind:class="[wrapper.status.class]">{{ wrapper.status.icon }}</v-icon>
+      <v-icon size="20" v-bind:class="[wrapper.status.class]">{{ wrapper.status.icon }}</v-icon>
     </v-col>
 
     <v-col cols="1">
