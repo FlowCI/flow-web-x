@@ -1,6 +1,6 @@
 <template>
   <v-card class="full-size pt-0">
-    <v-card-title class="title py-0">
+    <v-card-title class="title py-0 mx-2 bottom-border">
       <v-toolbar flat bottom>
         <v-toolbar-title class="d-flex">
           <v-icon small class="mr-3">flow-icon-layergroup</v-icon>
@@ -174,11 +174,12 @@
 
 <style scoped>
   .title {
-    height: 10%;
+    max-height: 80px;
+    min-height: 80px;
   }
 
   .content {
-    height: 90%;
+    height: 85%;
     position: absolute;
   }
 </style>
