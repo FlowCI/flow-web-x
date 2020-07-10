@@ -5,7 +5,8 @@
     </v-card-subtitle>
     <v-card-text>
       <v-radio-group v-model="selected" :mandatory="true" dense>
-        <v-radio label="Blank" :value="blankValue"></v-radio>
+        <v-radio :label="$t('flow.create_blank_template')" :value="blankValue"></v-radio>
+        <v-divider class="my-1"></v-divider>
         <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n"></v-radio>
       </v-radio-group>
     </v-card-text>

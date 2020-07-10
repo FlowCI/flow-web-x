@@ -47,6 +47,7 @@ export default {
     create_title_yml: 'Config YML',
     create_btn_finish: 'Finish',
     create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
+    create_blank_template: 'blank (updated at Flows -> Settings later)',
 
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',
