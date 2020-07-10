@@ -287,6 +287,8 @@ const actions = {
 
     await http.get(`flows/${name}/yml/obj`, (flowNode) => {
       commit('setYmlObj', flowNode)
+    }).catch((e) => {
+      console.log(e.message)
     })
   },
 

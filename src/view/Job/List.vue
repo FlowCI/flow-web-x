@@ -90,6 +90,10 @@
       },
 
       loadJobList () {
+        if (!this.flow.name) {
+          return
+        }
+
         this.loading = true
         const {page, itemsPerPage} = this.pagination
         const payload = {

@@ -5,6 +5,7 @@
     </v-card-subtitle>
     <v-card-text>
       <v-radio-group v-model="selected" :mandatory="true" dense>
+        <v-radio label="Blank" :value="blankValue"></v-radio>
         <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n"></v-radio>
       </v-radio-group>
     </v-card-text>
@@ -46,6 +47,7 @@
     data() {
       return {
         selected: 0,
+        blankValue: -1,
         loading: false
       }
     },
@@ -71,13 +73,15 @@
         let err = ''
 
         // load yaml
-        try {
-          this.loading = true
-          const url = this.templates[this.selected].url
-          const response = await axios.get(url)
-          yaml = response.data;
-        } catch (error) {
-          err = error
+        if (this.selected !== this.blankValue) {
+          try {
+            this.loading = true
+            const url = this.templates[this.selected].url
+            const response = await axios.get(url)
+            yaml = response.data;
+          } catch (error) {
+            err = error
+          }
         }
 
         this.loading = false

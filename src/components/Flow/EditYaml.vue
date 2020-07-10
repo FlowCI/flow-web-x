@@ -97,7 +97,11 @@
     },
     methods: {
       reload () {
-        this.$store.dispatch(actions.flows.yml.load, this.flow.name).then()
+        this.$store.dispatch(actions.flows.yml.load, this.flow.name)
+          .then()
+          .catch((e) => {
+            console.log(e.message)
+          })
       },
 
       onCodeChange (e) {
