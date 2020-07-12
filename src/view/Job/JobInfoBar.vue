@@ -1,13 +1,13 @@
 <template>
   <v-row :style="{'background-color': wrapper.status.bg}" align="center">
     <v-col cols="2">
-      <v-icon size="20" class="mx-2" dark>
+      <v-icon size="20" :class="['mx-2', wrapper.status.rotate ? 'rotate' : '']" dark>
         {{ wrapper.status.icon }}
       </v-icon>
       <span class="font-weight-bold">{{ wrapper.status.text }}</span>
     </v-col>
 
-    <v-col cols="1">
+    <v-col cols="2">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <span v-on="on">
@@ -31,11 +31,6 @@
       </v-tooltip>
     </v-col>
 
-    <v-col cols="1">
-      <v-icon small dark>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
-      <span class="ml-2">{{ wrapper.agentInfo.name }}</span>
-    </v-col>
-
     <!--    <v-col cols="1">-->
     <!--        <span class="body-2" v-if="wrapper.isYamlFromRepo">-->
     <!--          <div>.flowci.yaml</div>-->
@@ -43,7 +38,7 @@
     <!--        </span>-->
     <!--    </v-col>-->
 
-    <v-col cols="1">
+    <v-col cols="2">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <span v-on="on">
@@ -55,7 +50,10 @@
       <span>{{ wrapper.triggerBy }}</span>
     </v-col>
 
-    <v-spacer></v-spacer>
+    <v-col cols="2">
+      <v-icon small dark>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
+      <span class="ml-2">{{ wrapper.agentInfo.name }}</span>
+    </v-col>
 
     <v-col cols="2">
       <v-tooltip bottom v-if="!wrapper.isFinished">

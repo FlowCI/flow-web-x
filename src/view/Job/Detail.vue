@@ -1,78 +1,12 @@
 <template>
   <div class="job-detail">
-    <job-info-bar :wrapper="wrapper"></job-info-bar>
-    <v-row align="center" class="grey lighten-5 ma-0 title" no-gutters>
-      <v-col cols="2" class="pl-2">
-        <span v-bind:class="[wrapper.status.class, 'body-2', 'font-weight-medium']">
-          <v-icon size="20" v-bind:class="[wrapper.status.class]">
-            {{ wrapper.status.icon }}
-          </v-icon>
-          {{ wrapper.status.text }}
-        </span>
-      </v-col>
-
-      <v-col cols="2" class="body-2">
-        <div class="pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <span v-on="on">
-                <v-icon small>mdi-clock-fast</v-icon>
-                {{ duration }} sec
-              </span>
-            </template>
-            <span>Ran for {{ duration }} sec</span>
-          </v-tooltip>
-        </div>
-
-        <div>
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <span v-on="on">
-                <v-icon small>mdi-clock-outline</v-icon>
-                {{ wrapper.finishedAtInStr }}
-              </span>
-            </template>
-            <span>Finished at {{ wrapper.finishedAtInStr }} </span>
-          </v-tooltip>
-        </div>
-      </v-col>
-
-      <v-col cols="2">
-        <v-icon small>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
-        <span class="ml-2 body-2">{{ wrapper.agentInfo.name }}</span>
-      </v-col>
-
-      <v-col cols="2">
-        <span class="body-2" v-if="wrapper.isYamlFromRepo">
-          <div>.flowci.yaml</div>
-          <div>from branch {{ wrapper.yamlRepoBranch }}</div>
-        </span>
-      </v-col>
-
-      <v-col class="body-2" cols="3">
-        <div>
-          <span>{{ wrapper.triggerBy }}</span>
-          <v-icon small class="ml-2">{{ wrapper.triggerIcon }}</v-icon>
-        </div>
-      </v-col>
-
-      <v-col cols="1">
-        <v-tooltip bottom v-if="!wrapper.isFinished">
-          <template v-slot:activator="{ on }">
-            <v-btn icon color="black" @click="onDebugClick" v-on="on">
-              <v-icon>mdi-console</v-icon>
-            </v-btn>
-          </template>
-          <span class="body-2">{{ $t('job.hint.tty') }}</span>
-        </v-tooltip>
-
-        <v-btn icon color="error" @click="onStopClick" v-if="!wrapper.isFinished">
-          <v-icon>mdi-stop</v-icon>
-        </v-btn>
-
-        <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
-          <v-icon>mdi-restart</v-icon>
-        </v-btn>
+    <v-row align="center" no-gutters>
+      <v-col cols="12">
+        <job-info-bar :wrapper="wrapper"
+                      :on-debug-click="onDebugClick"
+                      :on-rerun-click="onRerunClick"
+                      :on-stop-click="onStopClick"
+        ></job-info-bar>
       </v-col>
     </v-row>
 
