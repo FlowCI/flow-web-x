@@ -180,7 +180,7 @@
     }
 
     .content {
-      height: 90%;
+      min-height: 90%;
     }
 
     .v-toolbar__content {

@@ -1,5 +1,5 @@
 <template>
-  <v-row :style="{'background-color': wrapper.status.bg}" align="center">
+  <v-row :style="{'background-color': wrapper.status.bg}" align="center" class="mx-0">
     <v-col cols="2">
       <v-icon size="20" :class="['mx-2', wrapper.status.rotate ? 'rotate' : '']" dark>
         {{ wrapper.status.icon }}

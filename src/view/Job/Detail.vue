@@ -1,34 +1,31 @@
 <template>
   <div class="job-detail">
-    <v-row align="center" no-gutters>
-      <v-col cols="12">
-        <job-info-bar :wrapper="wrapper"
-                      :on-debug-click="onDebugClick"
-                      :on-rerun-click="onRerunClick"
-                      :on-stop-click="onStopClick"
-        ></job-info-bar>
-      </v-col>
-    </v-row>
+    <job-info-bar :wrapper="wrapper"
+                  :on-debug-click="onDebugClick"
+                  :on-rerun-click="onRerunClick"
+                  :on-stop-click="onStopClick"
+    ></job-info-bar>
 
-    <v-row class="ma-0 info">
-      <v-col class="pa-0">
-        <v-divider></v-divider>
-        <div class="error-message" v-if="wrapper.errorMsg">
-          <span class="px-5 py-1">{{ wrapper.errorMsg }}</span>
+    <v-row v-if="wrapper.errorMsg" no-gutters>
+      <v-col>
+        <div class="error-message">
+          <span class="px-2">{{ wrapper.errorMsg }}</span>
         </div>
       </v-col>
     </v-row>
 
     <job-tty :job="job" v-model="showTty"></job-tty>
 
-    <v-tabs fixed-tabs class="mt-1 tab-wrapper">
-      <v-tab href="#summary" class="ml-0 elevation-1">
+    <v-tabs fixed-tabs height="40" class="mt-1 tab-wrapper" active-class="tab-active">
+      <v-tabs-slider color="#757575"></v-tabs-slider>
+
+      <v-tab href="#summary">
         {{ $t('job.tab.summary') }}
       </v-tab>
-      <v-tab href="#context" class="ml-0 elevation-1">
+      <v-tab href="#context" class="ml-0">
         {{ $t('job.tab.context') }}
       </v-tab>
-      <v-tab href="#yml" class="ml-0 elevation-1">
+      <v-tab href="#yml" class="ml-0">
         {{ $t('job.tab.yml') }}
       </v-tab>
       <v-tab v-for="report in reports"
@@ -36,7 +33,7 @@
              :href="'#' + report.name">
         {{ report.name }}
       </v-tab>
-      <v-tab href="#artifacts" class="ml-0 elevation-1">
+      <v-tab href="#artifacts" class="ml-0">
         {{ $t('job.tab.artifacts') }}
       </v-tab>
 
@@ -174,10 +171,10 @@
 
       onRerunClick() {
         this.$store.dispatch(actions.jobs.rerun, this.job.id)
-            .then()
-            .catch(reason => {
-              console.log(reason)
-            })
+          .then()
+          .catch(reason => {
+            console.log(reason)
+          })
       },
 
       onDebugClick() {
@@ -189,32 +186,28 @@
 
 <style lang="scss">
   .job-detail {
+    $tab-color: #757575;
+
     height: 100%;
     position: relative;
-    overflow: auto;
 
-    .title {
-      height: 14%;
+    .v-tab {
+      margin-left: 0 !important;
+      max-width: 300px !important;
+      font-weight: bold;
     }
 
-    .tab-wrapper {
-      height: 85%;
+    .tab-active {
+      color: $tab-color !important;
+    }
 
-      .v-tabs-bar {
-        height: 6%;
-      }
-
-      .v-window {
-        height: 93%;
-      }
-
-      .v-window__container {
-        height: 99%;
-      }
-
-      .v-window-item {
-        height: 99%;
-      }
+    .tab-active::after {
+      content: '';
+      height: 8px;
+      width: 5px;
+      bottom: 0;
+      position: absolute;
+      background-color: $tab-color;
     }
   }
 </style>
