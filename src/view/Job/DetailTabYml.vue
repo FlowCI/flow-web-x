@@ -54,6 +54,6 @@
 
 <style scoped>
   #yml-editor {
-    height: 580px;
+    min-height: 600px;
   }
 </style>
