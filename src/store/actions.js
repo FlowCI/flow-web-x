@@ -50,6 +50,7 @@ export default {
     statusUpdate: 'jobs/statusUpdate',
     select: 'jobs/select',
     getYml: 'jobs/getYml',
+    getDesc: 'jobs/getDesc',
     reports: {
       list: 'jobs/listReport',
       fetch: 'jobs/fetchReport'
