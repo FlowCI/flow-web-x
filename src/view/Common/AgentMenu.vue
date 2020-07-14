@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-menu offset-y>
+  <v-menu offset-y nudge-bottom="15" nudge-left="50">
     <template v-slot:activator="{ on }">
       <v-btn text v-on="on" small class="mx-0 px-0">
         <v-icon>mdi-view-grid</v-icon>
