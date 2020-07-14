@@ -1,5 +1,5 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row align="center" justify="center" class="login-view">
     <v-col cols="4">
       <v-card>
         <v-card-title class="justify-center">
@@ -8,14 +8,14 @@
         <v-card-text>
           <v-text-field
               v-model="email"
-              label="E-mail"
               required
+              prepend-inner-icon="mdi-account"
           ></v-text-field>
 
           <v-text-field
+              prepend-inner-icon="mdi-key"
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
-              :label="$t('password')"
               v-model="password"
               class="input-group--focused"
               @click:append="showPassword = !showPassword"
@@ -64,6 +64,12 @@
   }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+  .login-view {
+    .v-input__prepend-inner:after{
+      content: '';
+      margin-right: 10px;
+      position: relative;
+    }
+  }
 </style>
