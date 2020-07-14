@@ -1,5 +1,5 @@
 <template>
-  <div class="full-size plugin-view">
+  <div class="full-size plugin-view left-border">
     <div class="bottom-border">
       <v-chip
           v-for="item in tagList"
@@ -20,6 +20,7 @@
         <v-list-item-group v-model="selected" color="primary">
           <v-list-item v-for="plugin in pluginList"
                        :key="plugin.id"
+                       class="bottom-border"
                        @click="getReadMe(plugin)"
           >
             <v-list-item-content>
@@ -201,7 +202,7 @@
 
     .left-list {
       max-height: 70vh;
-      min-width: 200px;
+      min-width: 300px;
       overflow-y: auto;
     }
 
