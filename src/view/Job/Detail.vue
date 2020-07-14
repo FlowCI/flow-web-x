@@ -194,6 +194,10 @@
     height: 100%;
     position: relative;
 
+    .v-tabs-slider-wrapper {
+      height: 3px !important;
+    }
+
     .v-tab {
       margin-left: 0 !important;
       max-width: 300px !important;
