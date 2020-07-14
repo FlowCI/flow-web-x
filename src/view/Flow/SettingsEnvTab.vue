@@ -1,10 +1,10 @@
 <template>
-  <div class="env-tab">
-    <v-row align="center">
-      <v-col class="mb-4">
+  <div class="pa-2">
+    <v-row align="center" no-gutters>
+      <v-col>
         <span class="font-weight-bold title">Variables</span>
-        <v-btn outlined x-small icon color="primary" class="ml-2 mb-1" @click="onAddLocalVar">
-          <v-icon class="font-weight-bold">mdi-plus</v-icon>
+        <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar">
+          <v-icon class="font-weight-bold">mdi-plus-box</v-icon>
         </v-btn>
         <v-divider></v-divider>
       </v-col>
@@ -18,11 +18,12 @@
               :editable="obj.editable"
               :onSaved="onVarSaved"
               :onRemoved="onVarRemoved"
+              class="my-4"
     ></env-item>
 
     <v-row>
       <v-col>
-        <span class="font-weight-bold title">YAML</span>
+        <span class="font-weight-bold title">In YAML</span>
         <v-divider></v-divider>
       </v-col>
     </v-row>
@@ -33,6 +34,7 @@
               :key="`yml-${index}`"
               :obj="obj"
               :editable="obj.editable"
+              class="my-4"
     ></env-item>
 
   </div>
@@ -139,8 +141,4 @@
 </script>
 
 <style scoped>
-  .env-tab {
-    padding-left: 5px;
-    width: 90%;
-  }
 </style>
