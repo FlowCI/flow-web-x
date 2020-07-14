@@ -40,7 +40,7 @@
                      @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
-              Delete Agent {{ name }}?
+              Delete Agent {{ wrapper.name }}?
             </span>
           </template>
         </confirm-btn>
@@ -58,7 +58,6 @@
   import TextBox from '@/components/Common/TextBox'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
-  import { AgentWrapper } from '@/util/agents'
   import { agentNameRules } from '@/util/rules'
 
   export default {
@@ -70,6 +69,12 @@
       SaveBtn,
       BackBtn
     },
+    props: {
+      wrapper: {
+        type: Object,
+        required: true
+      }
+    },
     data() {
       return {
         nameRules: agentNameRules(this),
@@ -79,36 +84,16 @@
     computed: {
       ...mapState({
         loaded: state => state.agents.loaded
-      }),
-
-      wrapper() {
-        return new AgentWrapper(this.loaded)
-      },
-
-      name() {
-        return this.$route.params.name
-      }
-    },
-    mounted() {
-      this.$store.dispatch(actions.agents.get, this.name).then(() => {
-        this.$emit('onConfigNav', {
-          navs: [
-            {
-              text: this.$t('settings.li.agent'),
-              href: '#/settings/agents'
-            },
-            {
-              text: this.wrapper.name,
-            }
-          ],
-          showAddBtn: false
-        })
       })
     },
-    watch: {
-      name(newValue) {
-        this.$store.dispatch(actions.agents.get, newValue)
-      }
+    mounted() {
+      this.$emit('onConfigNav', {
+        navs: [
+          {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
+          {text: this.wrapper.name}
+        ],
+        showAddBtn: false
+      })
     },
     methods: {
       onDeleteClick() {
