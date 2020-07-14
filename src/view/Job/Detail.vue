@@ -16,7 +16,10 @@
 
     <job-tty :job="job" v-model="showTty"></job-tty>
 
-    <v-tabs fixed-tabs height="40" class="mt-1 tab-wrapper" active-class="tab-active">
+    <v-tabs fixed-tabs
+            height="40"
+            class="mt-1"
+            active-class="tab-active">
       <v-tabs-slider color="#757575"></v-tabs-slider>
 
       <v-tab href="#summary">
