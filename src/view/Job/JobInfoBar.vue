@@ -31,13 +31,6 @@
       </v-tooltip>
     </v-col>
 
-    <!--    <v-col cols="1">-->
-    <!--        <span class="body-2" v-if="wrapper.isYamlFromRepo">-->
-    <!--          <div>.flowci.yaml</div>-->
-    <!--          <div>from branch {{ wrapper.yamlRepoBranch }}</div>-->
-    <!--        </span>-->
-    <!--    </v-col>-->
-
     <v-col cols="2">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -65,11 +58,11 @@
         <span>{{ $t('job.hint.tty') }}</span>
       </v-tooltip>
 
-      <v-btn icon color="error" @click="onStopClick" v-if="!wrapper.isFinished">
+      <v-btn icon @click="onStopClick" v-if="!wrapper.isFinished">
         <v-icon dark>mdi-stop</v-icon>
       </v-btn>
 
-      <v-btn icon color="black" @click="onRerunClick" v-if="wrapper.isFinished">
+      <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
         <v-icon small>mdi-restart</v-icon>
       </v-btn>
     </v-col>

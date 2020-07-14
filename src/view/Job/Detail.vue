@@ -30,6 +30,7 @@
       </v-tab>
       <v-tab href="#yml" class="ml-0">
         {{ $t('job.tab.yml') }}
+        <span class="caption" v-if="wrapper.isYamlFromRepo">({{ wrapper.yamlRepoBranch }} branch)</span>
       </v-tab>
       <v-tab v-for="report in reports"
              :key="report.id"

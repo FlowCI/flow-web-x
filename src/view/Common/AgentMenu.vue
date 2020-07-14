@@ -13,7 +13,7 @@
         hide-default-header>
 
       <template v-slot:header="{}">
-        <div class="header">Agent Status</div>
+        <div class="header">{{ $t('agent.list_header') }}</div>
       </template>
 
       <template v-slot:item="{ item }">
@@ -35,6 +35,10 @@
             </v-row>
           </td>
         </tr>
+      </template>
+
+      <template slot="no-data">
+        <span class="caption">{{ $t('agent.list_no_data') }}</span>
       </template>
     </v-data-table>
   </v-menu>
