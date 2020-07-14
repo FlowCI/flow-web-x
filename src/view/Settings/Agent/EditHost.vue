@@ -2,12 +2,13 @@
   <div>
     <v-row>
       <v-col>
-        <div>New Agent Host</div>
+        <div v-if="isEditMode">Edit Agent Host</div>
+        <div v-else>New Agent Host</div>
       </v-col>
     </v-row>
 
     <v-form ref="hostNameForm" lazy-validation>
-      <v-row no-gutters dense>
+      <v-row>
         <v-col cols="8">
           <text-box
               label="Name"
@@ -22,7 +23,8 @@
       </v-row>
     </v-form>
 
-    <v-row>
+
+    <v-row v-if="!isEditMode">
       <v-col cols="8">
         <v-select
             :items="[HOST_TYPE_SSH]"
@@ -52,6 +54,27 @@
     <v-row>
       <v-col cols="8" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
+
+        <host-test-btn :host="wrapper.rawInstance"
+                       v-if="isEditMode"
+                       clazz="mr-5"
+                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+        ></host-test-btn>
+
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+                     v-if="isEditMode"
+                     @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete agent host '{{ wrapper.name }}'?
+            </span>
+          </template>
+        </confirm-btn>
+
         <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
     </v-row>
@@ -63,8 +86,10 @@
   import { agentNameRules } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
   import TextBox from '@/components/Common/TextBox'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
   import PoolSizeEditor from '@/components/Settings/PoolSizeEditor'
+  import HostTestBtn from '@/components/Settings/HostTestBtn'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
   import actions from '@/store/actions'
@@ -77,8 +102,10 @@
       PoolSizeEditor,
       TagEditor,
       SshHostEditor,
+      HostTestBtn,
       SaveBtn,
       BackBtn,
+      ConfirmBtn,
       TextBox
     },
     data() {
@@ -88,24 +115,39 @@
         deleteDialog: false,
         tagInput: [],
         nameRules: agentNameRules(this),
-        wrapper: new HostWrapper()
       }
     },
     mounted() {
       this.$emit('onConfigNav', {
         navs: [
-          {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
-          {text: `${this.$t('new')} Agent ${this.$t('agent.host')}`, href: ''}
+          {
+            text: this.$t('settings.li.agent'),
+            href: '#/settings/agents'
+          },
+          {
+            text: this.isEditMode ? `${this.$t('edit')} Agent ${this.$t('agent.host')}` : `${this.$t('new')} Agent ${this.$t('agent.host')}`,
+            href: ''
+          }
         ],
         showAddBtn: false
       })
 
       this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_SSH_RSA).then()
+
+      if (this.isEditMode) {
+        this.$store.dispatch(actions.hosts.get, this.hostName).then()
+      }
     },
     computed: {
       ...mapState({
+        host: state => state.hosts.loaded,
         secrets: state => state.secrets.items,
+        updated: state => state.hosts.updated
       }),
+
+      wrapper() {
+        return new HostWrapper(this.host)
+      },
 
       secretNameList() {
         const nameList = []
@@ -113,9 +155,28 @@
           nameList.push(c.name)
         }
         return nameList
+      },
+
+      hostName() {
+        return this.$route.params.name
+      },
+
+      isEditMode() {
+        return this.hostName !== undefined
+      }
+    },
+    watch: {
+      updated(val) {
+        this.wrapper.error = val.error
       }
     },
     methods: {
+      onDeleteClick() {
+        this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
+          this.$router.push('/settings/agents')
+        })
+      },
+
       onBackClick() {
         this.$router.push('/settings/agents')
       },

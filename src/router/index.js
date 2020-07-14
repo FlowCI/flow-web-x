@@ -22,6 +22,7 @@ import SettingsAgentHome from '@/view/Settings/Agent/Index'
 import SettingsAgentNew from '@/view/Settings/Agent/NewAgent'
 import SettingsAgentEdit from '@/view/Settings/Agent/EditAgent'
 import SettingsHostNew from '@/view/Settings/Agent/NewHost'
+import SettingsHostEdit from '@/view/Settings/Agent/EditHost'
 
 import SettingsSecretHome from '@/view/Settings/Secret/Index'
 import SettingsSecretNew from '@/view/Settings/Secret/New'
@@ -124,12 +125,13 @@ export default new Router({
         {
           path: 'agents/host/new',
           name: 'SettingsHostNew',
-          component: SettingsHostNew
+          component: SettingsHostNew,
         },
         {
           path: 'agents/host/edit/:name',
-          name: 'SettingsHostNew',
-          component: SettingsHostNew
+          name: 'SettingsHostEdit',
+          component: SettingsHostEdit,
+          props: true
         },
 
         {
