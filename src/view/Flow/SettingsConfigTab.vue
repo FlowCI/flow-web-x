@@ -3,13 +3,14 @@
     <v-tabs-slider></v-tabs-slider>
 
     <v-tab href="#tab-yaml">
-      <v-icon left>mdi-code-braces</v-icon>
+      <v-icon small left>mdi-code-braces</v-icon>
       <span class="tab-text">YAML</span>
     </v-tab>
     <v-tab href="#tab-plugins">
-      <v-icon left>mdi-view-grid-plus</v-icon>
+      <v-icon small left>mdi-view-grid-plus</v-icon>
       <span class="tab-text">Plugins</span>
     </v-tab>
+
     <v-tab-item value="tab-yaml">
       <edit-yaml :flow="flow" class="editor"></edit-yaml>
     </v-tab-item>
@@ -52,25 +53,11 @@
 
 <style lang="scss">
   .flow-yml-settings {
-    width: 98% !important;
-    height: 100%;
-
     .tab-text {
       min-width: 65px;
       text-align: left;
-    }
-
-    .v-tabs-items {
-      margin-left: 5px;
-      height: 100% !important;
-
-      .v-window__container {
-        height: 100%;
-
-        .v-window-item {
-          height: 100%;
-        }
-      }
+      font-size: small;
+      font-weight: bold;
     }
   }
 </style>
