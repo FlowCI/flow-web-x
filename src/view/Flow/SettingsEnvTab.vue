@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-2">
+  <div class="pa-3">
     <v-row align="center" no-gutters>
       <v-col>
         <span class="font-weight-bold title">Variables</span>

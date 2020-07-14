@@ -1,5 +1,5 @@
 <template>
-  <v-tabs vertical class="flow-yml-settings" active-class="tab-active">
+  <v-tabs vertical class="flow-yml-settings px-1" active-class="tab-active">
     <v-tabs-slider color="#757575"></v-tabs-slider>
 
     <v-tab href="#tab-yaml">

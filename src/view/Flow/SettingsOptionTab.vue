@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-2">
+  <div class="ma-3">
     <!-- Settings -->
     <v-row no-gutters>
       <v-col cols="12" class="mb-4">

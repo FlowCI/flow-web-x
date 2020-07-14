@@ -47,7 +47,7 @@
 <style lang="scss" scoped>
   .html-report {
     width: 100%;
-    min-height: 600px;
+    min-height: 68vh;
     border-width: 0;
   }
 </style>
