@@ -2,8 +2,7 @@
   <div>
     <v-row>
       <v-col>
-        <div v-if="isEditMode">Edit Agent Host</div>
-        <div v-else>New Agent Host</div>
+        <div>Edit Agent Host</div>
       </v-col>
     </v-row>
 
@@ -22,18 +21,6 @@
         </v-col>
       </v-row>
     </v-form>
-
-
-    <v-row v-if="!isEditMode">
-      <v-col cols="8">
-        <v-select
-            :items="[HOST_TYPE_SSH]"
-            label="Host Types"
-            v-model="wrapper.type"
-            dense
-        ></v-select>
-      </v-col>
-    </v-row>
 
     <v-row>
       <v-col cols="8" v-if="wrapper.type === HOST_TYPE_SSH">
@@ -56,7 +43,6 @@
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
 
         <host-test-btn :host="wrapper.rawInstance"
-                       v-if="isEditMode"
                        clazz="mr-5"
                        :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
         ></host-test-btn>
@@ -66,7 +52,6 @@
                      color="error"
                      clazz="mr-5"
                      :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
-                     v-if="isEditMode"
                      @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
@@ -108,6 +93,12 @@
       ConfirmBtn,
       TextBox
     },
+    props: {
+      wrapper: {
+        type: Object,
+        required: true
+      }
+    },
     data() {
       return {
         HOST_TYPE_SSH,
@@ -120,34 +111,19 @@
     mounted() {
       this.$emit('onConfigNav', {
         navs: [
-          {
-            text: this.$t('settings.li.agent'),
-            href: '#/settings/agents'
-          },
-          {
-            text: this.isEditMode ? `${this.$t('edit')} Agent ${this.$t('agent.host')}` : `${this.$t('new')} Agent ${this.$t('agent.host')}`,
-            href: ''
-          }
+          {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
+          {text: `${this.$t('edit')} Agent ${this.$t('agent.host')}`, href: ''}
         ],
         showAddBtn: false
       })
 
       this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_SSH_RSA).then()
-
-      if (this.isEditMode) {
-        this.$store.dispatch(actions.hosts.get, this.hostName).then()
-      }
     },
     computed: {
       ...mapState({
-        host: state => state.hosts.loaded,
         secrets: state => state.secrets.items,
         updated: state => state.hosts.updated
       }),
-
-      wrapper() {
-        return new HostWrapper(this.host)
-      },
 
       secretNameList() {
         const nameList = []
@@ -155,14 +131,6 @@
           nameList.push(c.name)
         }
         return nameList
-      },
-
-      hostName() {
-        return this.$route.params.name
-      },
-
-      isEditMode() {
-        return this.hostName !== undefined
       }
     },
     watch: {

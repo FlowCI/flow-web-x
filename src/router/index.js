@@ -117,7 +117,7 @@ export default new Router({
           component: SettingsAgentNew
         },
         {
-          path: 'agents/edit/:name',
+          path: 'agents/edit',
           name: 'SettingsAgentEdit',
           component: SettingsAgentEdit,
           props: true
@@ -128,7 +128,7 @@ export default new Router({
           component: SettingsHostNew,
         },
         {
-          path: 'agents/host/edit/:name',
+          path: 'agents/host/edit',
           name: 'SettingsHostEdit',
           component: SettingsHostEdit,
           props: true

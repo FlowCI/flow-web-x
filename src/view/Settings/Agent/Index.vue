@@ -158,7 +158,7 @@
 
       onHostEditClick(wrapper) {
         this.$router.push({
-          path: `agents/host/edit/${wrapper.name}`,
+          name: `SettingsHostEdit`,
           params: {wrapper}
         })
       }
