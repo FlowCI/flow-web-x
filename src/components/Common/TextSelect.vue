@@ -76,7 +76,9 @@
 
 <style lang="scss">
   .text-select {
+
     .v-subheader {
+      max-height: 30px;
       padding: 0;
     }
 
