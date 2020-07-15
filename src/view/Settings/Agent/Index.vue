@@ -150,11 +150,17 @@
       },
 
       onAgentEditClick(wrapper) {
-        this.$router.push('/settings/agents/edit/' + wrapper.name)
+        this.$router.push({
+          name: 'SettingsAgentEdit',
+          params: {wrapper}
+        })
       },
 
       onHostEditClick(wrapper) {
-        this.$router.push('/settings/agents/host/edit/' + wrapper.name)
+        this.$router.push({
+          name: `SettingsHostEdit`,
+          params: {wrapper}
+        })
       }
     }
   }

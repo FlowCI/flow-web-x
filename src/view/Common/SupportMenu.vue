@@ -1,13 +1,11 @@
 <template>
-  <v-menu offset-y>
+  <v-menu offset-y nudge-bottom="15" nudge-left="50">
     <template v-slot:activator="{ on }">
       <v-btn text v-on="on" small class="mx-0 px-0">
         <v-icon>mdi-help-circle</v-icon>
       </v-btn>
     </template>
     <v-list dense>
-      <v-subheader>{{ $t('menu.help') }}</v-subheader>
-
       <v-list-item href="https://github.com/FlowCI/docs" link target="_blank">
         <v-list-item-icon class="mr-3">
           <v-icon>mdi-file-document</v-icon>

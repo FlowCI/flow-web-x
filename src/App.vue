@@ -28,7 +28,9 @@
         <v-app-bar-nav-icon @click.stop="flowNavDrawer = !flowNavDrawer"></v-app-bar-nav-icon>
         <v-icon class="black--text">flow-icon-logo</v-icon>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
+
       <lang-menu></lang-menu>
       <support-menu></support-menu>
       <agent-menu v-if="!isLoginPage"></agent-menu>

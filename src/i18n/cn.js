@@ -122,6 +122,9 @@ export default {
     agent: 'Agent',
     host: '主机',
 
+    list_header: 'Agent 状态',
+    list_no_data: '没有 Agent',
+
     status: {
       busy: '运行',
       idle: '空闲',

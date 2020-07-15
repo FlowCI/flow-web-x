@@ -1,7 +1,7 @@
 <template>
-  <v-col cols="10">
-    <v-row d-block class="flow-settings-option">
-      <!-- Settings -->
+  <div class="ma-3">
+    <!-- Settings -->
+    <v-row no-gutters>
       <v-col cols="12" class="mb-4">
         <span class="font-weight-black title">Settings</span>
         <v-divider></v-divider>
@@ -10,8 +10,10 @@
       <v-col cols="7">
         <option-flow-settings :flow="flow"></option-flow-settings>
       </v-col>
+    </v-row>
 
-      <!-- Git Access Option -->
+    <!-- Git Access Option -->
+    <v-row no-gutters>
       <v-col cols="12" class="mt-4 mb-4">
         <span class="font-weight-black title">
           Git Access
@@ -25,17 +27,19 @@
       <v-col cols="7">
         <option-git-access :flow="flow"></option-git-access>
       </v-col>
+    </v-row>
 
-      <!-- Danger Zone -->
+    <!-- Danger Zone -->
+    <v-row no-gutters>
       <v-col cols="12" class="mt-4 mb-1">
         <span class="font-weight-black title">Danger Zone</span>
       </v-col>
 
-      <v-col cols="10" class="danger-zone pa-3">
+      <v-col cols="7" class="danger-zone px-2">
         <option-delete-flow :flow="flow"></option-delete-flow>
       </v-col>
     </v-row>
-  </v-col>
+  </div>
 </template>
 
 <script>
@@ -67,10 +71,10 @@
   }
 </script>
 
-<style>
-  .flow-settings-option .danger-zone {
+<style scoped>
+  .danger-zone {
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     border-color: red;
   }
 </style>

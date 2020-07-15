@@ -123,6 +123,9 @@ export default {
     agent: 'Agent',
     host: 'Host',
 
+    list_header: 'Agent Status',
+    list_no_data: 'No Agents',
+
     status: {
       busy: 'busy',
       idle: 'idle',

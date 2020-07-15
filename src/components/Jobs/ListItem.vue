@@ -25,12 +25,14 @@
 
     <v-col cols="8">
       <!-- for push and tag -->
-      <v-row align="center" v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
-        <v-col cols="4" class="no-padding">
+      <v-row align="center"
+             no-gutters
+             v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
+        <v-col cols="4">
           <span class="font-weight-medium">{{ wrapper.branch }}</span>
         </v-col>
 
-        <v-col cols="4" class="no-padding">
+        <v-col cols="4">
           <v-list-item-subtitle>
             <div class="commit-text caption"> {{ wrapper.commitMsg }}</div>
             <a :href="wrapper.commitUrl" class="caption" target="_blank">{{ wrapper.commitId }}</a>
@@ -39,7 +41,9 @@
       </v-row>
 
       <!-- for pr -->
-      <v-row align-center v-if="wrapper.isPrOpenedTrigger || wrapper.isPrMergedTrigger">
+      <v-row align-center
+             no-gutters
+             v-if="wrapper.isPrOpenedTrigger || wrapper.isPrMergedTrigger">
         <v-col cols="4">
           <v-list-item-subtitle>
             <div v-if="wrapper.prBaseRepo !== wrapper.prHeadRepo" class="caption">

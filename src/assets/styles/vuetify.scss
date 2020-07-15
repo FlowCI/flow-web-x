@@ -1,0 +1,47 @@
+// customize vuetify //
+
+tr.v-data-table__empty-wrapper {
+  td {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .v-alert {
+    margin-bottom: 0;
+  }
+}
+
+* {
+  text-transform: none !important;
+}
+
+.v-btn {
+  font-weight: 600;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+  padding: 0 8px !important;
+}
+
+/* set font-size to small */
+.append-icon-small{
+  .v-input__icon--append {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+.prepend-icon-small{
+  .v-input__icon--prepend-inner {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+
+  .v-input__icon--prepend {
+    .v-icon {
+      font-size: 16px;
+    }
+  }
+}

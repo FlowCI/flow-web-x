@@ -64,7 +64,7 @@
       ></Dialog>
     </v-card-title>
 
-    <v-card-text class="content px-2">
+    <v-card-text class="content px-1 pb-0">
       <router-view></router-view>
     </v-card-text>
   </v-card>
@@ -181,7 +181,6 @@
 
     .content {
       min-height: 90%;
-      /*position: absolute;*/
     }
 
     .v-toolbar__content {

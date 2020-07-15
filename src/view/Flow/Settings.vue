@@ -1,5 +1,7 @@
 <template>
-  <v-tabs left class="flow-settings">
+  <v-tabs fixed-tabs height="40" class="flow-settings" active-class="tab-active">
+    <v-tabs-slider color="#757575"></v-tabs-slider>
+
     <v-tab href="#tab-options">
       {{ $t('flow.tab.options') }}
     </v-tab>
@@ -12,6 +14,7 @@
     <v-tab href="#tab-users">
       {{ $t('flow.tab.members') }}
     </v-tab>
+
     <v-tab-item value="tab-options">
       <settings-option-tab :flow="flow"></settings-option-tab>
     </v-tab-item>
@@ -75,18 +78,15 @@
   .flow-settings {
     height: 100%;
     position: relative;
-    overflow-y: auto;
 
-    .v-tabs-items {
-      height: 93%;
+    .v-tab {
+      margin-left: 0 !important;
+      max-width: 200px !important;
+      font-weight: bold;
+    }
 
-      .v-window__container {
-        height: 100%;
-
-        .v-window-item {
-          height: 100%;
-        }
-      }
+    .tab-active {
+      color: #757575 !important;
     }
   }
 </style>

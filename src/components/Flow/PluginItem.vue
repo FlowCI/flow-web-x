@@ -1,8 +1,8 @@
 <template>
-  <v-card max-width="600" class="notify-plugin">
-    <v-card-title>
-      <span class="mr-1">
-        <v-icon v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
+  <div class="plugin-item pa-1">
+    <v-row no-gutters align="center" class="my-1">
+      <v-col cols="1">
+        <v-icon small v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
         <v-img v-if="wrapper.isHttpLinkIcon"
                :src="wrapper.icon"
                max-height="25"
@@ -12,36 +12,47 @@
              class="plugin-icon"
              :id="wrapper.id"
              alt=""/>
-      </span>
+      </v-col>
 
-      <span class="title">{{ wrapper.name }}</span>
-      <v-spacer></v-spacer>
+      <v-col cols="10">
+        <span class="font-weight-bold">{{ wrapper.name }}</span>
+      </v-col>
 
-      <span class="subtitle-2 mx-1">{{ wrapper.version }}</span>
+      <v-col cols="1">
+        <v-btn icon x-small :href="wrapper.source" target="_blank">
+          <v-icon small>mdi-link</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
 
-      <v-tooltip bottom v-if="isInstalled">
-        <template v-slot:activator="{ on }">
-          <v-icon small color="green" v-on="on">mdi-check-circle</v-icon>
-        </template>
-        <span>{{ $t('flow.hint.plugin_installed') }}</span>
-      </v-tooltip>
+    <v-row no-gutters class="my-1" align="center">
+      <v-col cols="2">
+        <span class="caption font-weight-bold pl-1">v{{ wrapper.version }}</span>
+      </v-col>
 
-      <v-tooltip bottom v-if="wrapper.docker">
-        <template v-slot:activator="{ on }">
-          <v-icon small class="mx-1" color="blue lighten-1" v-on="on">mdi-docker</v-icon>
-        </template>
-        <span>{{ $t('flow.hint.plugin_docker_run') }}</span>
-      </v-tooltip>
+      <v-col cols="10" class="text-end">
+        <v-tooltip bottom v-if="isInstalled">
+          <template v-slot:activator="{ on }">
+            <v-icon small class="mx-1" color="green" v-on="on">mdi-check-circle</v-icon>
+          </template>
+          <span>{{ $t('flow.hint.plugin_installed') }}</span>
+        </v-tooltip>
 
-      <v-btn icon x-small :href="wrapper.source" target="_blank">
-        <v-icon small>mdi-link</v-icon>
-      </v-btn>
-    </v-card-title>
+        <v-tooltip bottom v-if="wrapper.docker">
+          <template v-slot:activator="{ on }">
+            <v-icon small class="mx-1" color="blue lighten-1" v-on="on">mdi-docker</v-icon>
+          </template>
+          <span>{{ $t('flow.hint.plugin_docker_run') }}</span>
+        </v-tooltip>
+      </v-col>
+    </v-row>
 
-    <v-card-subtitle>
-      {{ wrapper.desc }}
-    </v-card-subtitle>
-  </v-card>
+    <v-row no-gutters class="my-1" align="center">
+      <v-col cols="12">
+        <span class="caption font-weight-medium pl-1">{{ wrapper.desc }}</span>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -132,44 +143,13 @@
 </script>
 
 <style lang="scss">
-  .notify-plugin {
+  .plugin-item {
+    width: 100%;
+
     .plugin-icon {
-      height: 25px;
-      width: 25px;
+      height: 20px;
+      width: 20px;
       vertical-align: middle;
-    }
-
-    .v-label {
-      font-size: 12px;
-    }
-
-    .v-input--selection-controls {
-      margin-top: 0 !important;
-      padding-top: 0 !important;
-    }
-
-    .v-card__actions {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-
-    .v-subheader {
-      padding: 0;
-    }
-
-    .v-input {
-      font-size: 14px
-    }
-
-    .v-input__slot {
-      margin-bottom: 0 !important;
-    }
-
-    .plugin-input {
-      .col {
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-      }
     }
   }
 </style>

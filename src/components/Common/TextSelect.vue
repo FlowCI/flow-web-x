@@ -76,12 +76,26 @@
 
 <style lang="scss">
   .text-select {
+
     .v-subheader {
+      max-height: 30px;
       padding: 0;
     }
 
     .v-input {
       font-size: 12px
+    }
+
+    .v-input__slot {
+      border: 1px solid #e1e4e8 !important;
+      background-color: #fafbfc !important;
+      margin-bottom: 0 !important;
+      -webkit-box-shadow: inset 0 1px 0 rgba(225,228,232,.2) !important;
+      box-shadow: inset 0 1px 0 rgba(225,228,232,.2) !important;
+    }
+
+    .v-text-field__details {
+      margin-bottom: 0 !important;
     }
   }
 </style>

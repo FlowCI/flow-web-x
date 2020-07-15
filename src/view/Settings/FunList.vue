@@ -4,14 +4,14 @@
       <span class="font-weight-bold">{{ $t('menu.settings') }}</span>
     </v-subheader>
 
-    <v-divider></v-divider>
-
-    <v-list-item-group v-model="selected" color="primary">
+    <v-list-item-group v-model="selected" color="primary" active-class="on-active">
       <v-list-item v-for="item in items"
                    :key="item.path"
+                   dense
+                   class="bottom-border left-border"
                    @click="onMenuItemClick(item.path)">
         <v-list-item-content>
-          <v-list-item-subtitle>
+          <v-list-item-subtitle class="font-weight-bold">
             {{ $t(`${item.i18n}`) }}
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -70,6 +70,10 @@
       position: absolute;
       top: 0;
       width: 3px;
+    }
+
+    .on-active{
+      color: #ffffff !important;
     }
   }
 </style>

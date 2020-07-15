@@ -1,61 +1,59 @@
 <template>
-  <v-col cols="10">
-    <v-card flat>
-      <v-card-title>
-        <v-autocomplete
-            v-model="model"
-            :items="searchResult"
-            :search-input.sync="searchText"
-            hide-no-data
-            item-text="email"
-            label="Search email to add member to flow"
-            prepend-inner-icon="mdi-magnify-outline"
-        >
-          <template v-slot:item="{ item }">
-            <v-list-item-content>
-              <v-list-item-title v-text="item.email"></v-list-item-title>
-              <v-list-item-subtitle v-text="item.role"></v-list-item-subtitle>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-btn icon @click="onAddClick(item)">
-                <v-icon small>mdi-plus-outline</v-icon>
+  <v-card flat color="pa-3">
+    <v-card-title>
+      <v-autocomplete
+          v-model="model"
+          :items="searchResult"
+          :search-input.sync="searchText"
+          hide-no-data
+          item-text="email"
+          label="Search email to add member to flow"
+          prepend-inner-icon="mdi-magnify-outline"
+      >
+        <template v-slot:item="{ item }">
+          <v-list-item-content>
+            <v-list-item-title v-text="item.email"></v-list-item-title>
+            <v-list-item-subtitle v-text="item.role"></v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-btn icon @click="onAddClick(item)">
+              <v-icon small>mdi-plus-outline</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </template>
+      </v-autocomplete>
+    </v-card-title>
+
+    <v-card-text>
+      <v-divider></v-divider>
+      <v-data-table
+          hide-default-header
+          hide-default-footer
+          :items="flowUsers"
+          class="user-table"
+      >
+        <template v-slot:item="{ item }">
+          <tr>
+            <td>avatar</td>
+            <td class="text-xs-left">{{ item.email }}</td>
+            <td>{{ item.role }}</td>
+            <td class="text-xs-right">
+              <v-btn text icon class="ma-0" @click="onRemoveClick(item)">
+                <v-icon small>mdi-trash-can-outline</v-icon>
               </v-btn>
-            </v-list-item-action>
-          </template>
-        </v-autocomplete>
-      </v-card-title>
+            </td>
+          </tr>
+        </template>
 
-      <v-card-text>
-        <v-divider></v-divider>
-        <v-data-table
-            hide-default-header
-            hide-default-footer
-            :items="flowUsers"
-            class="user-table"
-        >
-          <template v-slot:item="{ item }">
-            <tr>
-              <td>avatar</td>
-              <td class="text-xs-left">{{ item.email }}</td>
-              <td>{{ item.role }}</td>
-              <td class="text-xs-right">
-                <v-btn text icon class="ma-0" @click="onRemoveClick(item)">
-                  <v-icon small>mdi-trash-can-outline</v-icon>
-                </v-btn>
-              </td>
-            </tr>
-          </template>
-
-          <template v-slot:no-results>
-            <v-alert :value="true">
-              <v-icon small>mdi-alert-outline</v-icon>
-              <span class="caption ml-1"> Your search for "{{ searchText }}" found no results.</span>
-            </v-alert>
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card>
-  </v-col>
+        <template v-slot:no-results>
+          <v-alert :value="true">
+            <v-icon small>mdi-alert-outline</v-icon>
+            <span class="caption ml-1"> Your search for "{{ searchText }}" found no results.</span>
+          </v-alert>
+        </template>
+      </v-data-table>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -106,13 +104,13 @@
       onAddClick(user) {
         let payload = {name: this.flow.name, userEmail: user.email}
         this.$store.dispatch(actions.flows.users.add, payload)
-            .then(() => {
-              this.searchText = ''
-            })
-            .catch((err) => {
-              console.log(err)
-              this.searchText = ''
-            })
+          .then(() => {
+            this.searchText = ''
+          })
+          .catch((err) => {
+            console.log(err)
+            this.searchText = ''
+          })
       },
 
       onRemoveClick(user) {

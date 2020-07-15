@@ -1,36 +1,34 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <v-card v-for="(value, key) in contextData"
-            :key="key"
-            class="mb-2 elevation-1">
-      <v-card-title class="pb-1" v-if="value.show">
-        <span class="body-2 font-weight-medium">{{ value.name }}</span>
-      </v-card-title>
+      <v-data-table
+          v-for="(value, key) in contextData"
+          :key="key"
+          :items="value.data"
+          class="mb-2 bottom-border"
+          v-show="value.show"
+          hide-default-footer
+          hide-default-header>
 
-      <v-card-text class="pt-0" v-if="value.show">
-        <v-data-table
-            :items="value.data"
-            hide-default-footer
-            hide-default-header>
+        <template v-slot:header="{}">
+          <div class="header">{{ value.name }}</div>
+        </template>
 
-          <template v-slot:item="{ item }">
-            <tr>
-              <td>
-                <v-row no-gutters>
-                  <v-col cols="3" class="caption">
-                    <span>{{ item.key }}</span>
-                  </v-col>
-                  <v-col class="caption">
-                    <a v-if="item.link" :href="item.link" target="_blank">{{ item.value }}</a>
-                    <span v-if="!item.link">{{ item.value }}</span>
-                  </v-col>
-                </v-row>
-              </td>
-            </tr>
-          </template>
-        </v-data-table>
-      </v-card-text>
-    </v-card>
+        <template v-slot:item="{ item }">
+          <tr>
+            <td>
+              <v-row no-gutters>
+                <v-col cols="3" class="caption">
+                  <span>{{ item.key }}</span>
+                </v-col>
+                <v-col class="caption">
+                  <a v-if="item.link" :href="item.link" target="_blank">{{ item.value }}</a>
+                  <span v-if="!item.link">{{ item.value }}</span>
+                </v-col>
+              </v-row>
+            </td>
+          </tr>
+        </template>
+      </v-data-table>
   </div>
 
 </template>
@@ -38,7 +36,7 @@
 <script>
   export default {
     name: 'JobDetailInfo',
-    data () {
+    data() {
       return {}
     },
     props: {
@@ -48,7 +46,7 @@
       }
     },
     computed: {
-      contextData () {
+      contextData() {
         return {
           agent: {
             name: 'Agent Detail',
@@ -83,7 +81,7 @@
       }
     },
     methods: {
-      getAgentData () {
+      getAgentData() {
         return [
           {
             key: 'CPU',
@@ -100,7 +98,7 @@
         ]
       },
 
-      getPushData () {
+      getPushData() {
         return [
           {
             key: 'Repo',
@@ -130,7 +128,7 @@
         ]
       },
 
-      getTagData () {
+      getTagData() {
         return [
           {
             key: 'Repo',
@@ -156,7 +154,7 @@
         ]
       },
 
-      getPrData () {
+      getPrData() {
         return [
           {
             key: 'Repo',
@@ -200,5 +198,14 @@
 <style lang="scss" scoped>
   .text-center {
     text-align: center
+  }
+
+  .header {
+    padding: 1px 10px 1px 10px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    background-color: #E0E0E0;
   }
 </style>

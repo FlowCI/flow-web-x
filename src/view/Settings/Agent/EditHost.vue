@@ -2,12 +2,12 @@
   <div>
     <v-row>
       <v-col>
-        <div>New Agent Host</div>
+        <div>Edit Agent Host</div>
       </v-col>
     </v-row>
 
     <v-form ref="hostNameForm" lazy-validation>
-      <v-row no-gutters dense>
+      <v-row>
         <v-col cols="8">
           <text-box
               label="Name"
@@ -21,17 +21,6 @@
         </v-col>
       </v-row>
     </v-form>
-
-    <v-row>
-      <v-col cols="8">
-        <v-select
-            :items="[HOST_TYPE_SSH]"
-            label="Host Types"
-            v-model="wrapper.type"
-            dense
-        ></v-select>
-      </v-col>
-    </v-row>
 
     <v-row>
       <v-col cols="8" v-if="wrapper.type === HOST_TYPE_SSH">
@@ -52,6 +41,25 @@
     <v-row>
       <v-col cols="8" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
+
+        <host-test-btn :host="wrapper.rawInstance"
+                       clazz="mr-5"
+                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+        ></host-test-btn>
+
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+                     @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete agent host '{{ wrapper.name }}'?
+            </span>
+          </template>
+        </confirm-btn>
+
         <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
     </v-row>
@@ -63,8 +71,10 @@
   import { agentNameRules } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
   import TextBox from '@/components/Common/TextBox'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
   import PoolSizeEditor from '@/components/Settings/PoolSizeEditor'
+  import HostTestBtn from '@/components/Settings/HostTestBtn'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
   import actions from '@/store/actions'
@@ -77,9 +87,17 @@
       PoolSizeEditor,
       TagEditor,
       SshHostEditor,
+      HostTestBtn,
       SaveBtn,
       BackBtn,
+      ConfirmBtn,
       TextBox
+    },
+    props: {
+      wrapper: {
+        type: Object,
+        required: true
+      }
     },
     data() {
       return {
@@ -88,14 +106,13 @@
         deleteDialog: false,
         tagInput: [],
         nameRules: agentNameRules(this),
-        wrapper: new HostWrapper()
       }
     },
     mounted() {
       this.$emit('onConfigNav', {
         navs: [
           {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
-          {text: `${this.$t('new')} Agent ${this.$t('agent.host')}`, href: ''}
+          {text: `${this.$t('edit')} Agent ${this.$t('agent.host')}`, href: ''}
         ],
         showAddBtn: false
       })
@@ -105,6 +122,7 @@
     computed: {
       ...mapState({
         secrets: state => state.secrets.items,
+        updated: state => state.hosts.updated
       }),
 
       secretNameList() {
@@ -115,7 +133,18 @@
         return nameList
       }
     },
+    watch: {
+      updated(val) {
+        this.wrapper.error = val.error
+      }
+    },
     methods: {
+      onDeleteClick() {
+        this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
+          this.$router.push('/settings/agents')
+        })
+      },
+
       onBackClick() {
         this.$router.push('/settings/agents')
       },
