@@ -2,18 +2,11 @@
   <div>
     <v-treeview hoverable open-on-click :open.sync="open" dense :items="items">
       <template v-slot:prepend="{ item }">
-        <v-icon small>{{ item.icon }}</v-icon>
+        <v-icon small :class="[item.color]">{{ item.icon }}</v-icon>
       </template>
 
       <template v-slot:label="{ item }">
         <span>{{ item.name }}</span>
-
-        <v-icon x-small
-                class="mx-2"
-                :color="item.color"
-                v-if="item.isAgent || item.isHost"
-        >mdi-checkbox-blank-circle
-        </v-icon>
 
         <v-chip v-for="tag in item.tags"
                 :key="tag"
