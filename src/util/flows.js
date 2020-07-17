@@ -158,6 +158,10 @@ export class FlowWrapper {
     return this.flow.yamlRepoBranch
   }
 
+  get cron() {
+    return this.flow.cron
+  }
+
   // set
 
   set name (name) {
