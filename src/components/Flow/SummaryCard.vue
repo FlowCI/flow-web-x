@@ -3,7 +3,7 @@
       raised
       class="mx-auto flow-summary"
   >
-    <div :class="['title', wrapper.latestJob.status.bg]" @click="onTitleClick">
+    <div :class="['title', circleColor]" @click="onTitleClick">
       <v-card-title>
         {{ wrapper.name }}
       </v-card-title>
@@ -56,7 +56,7 @@
     data () {
       return {
         ratio: [0, 20, 50, 85, 100],
-        colors: ['red lighten-1', 'orange lighten-1', 'lime accent-4', 'green accent-4']
+        colors: ['red lighten-1', 'orange lighten-1', 'light-green darken-1', 'green darken-1']
       }
     },
     computed: {
