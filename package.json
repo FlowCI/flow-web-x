@@ -17,6 +17,7 @@
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.11.0",
     "core-js": "^2.6.5",
+    "cronstrue": "^1.96.0",
     "echarts": "^4.3.0",
     "fast-deep-equal": "^2.0.1",
     "google-protobuf": "^3.11.4",

@@ -46,9 +46,10 @@
         <v-col cols="10">
           <span class="caption grey--text text--darken-1">
             {{ $t('flow.cron_task') }}
+            <span v-if="cronDesc">{{ `(${cronDesc})` }}</span>
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-icon small class="mb-1" v-on="on">mdi-help-circle-outline</v-icon>
+                <v-icon small class="mx-1" v-on="on">mdi-help-circle-outline</v-icon>
               </template>
               <span>&lt;minute&gt; &lt;hour&gt; &lt;day-of-month&gt; &lt;month&gt; &lt;day-of-week&gt;</span>
             </v-tooltip>
@@ -102,6 +103,7 @@
   import vars from '@/util/vars'
   import actions from '@/store/actions'
   import { flowNameRules } from '@/util/rules'
+  import { getCronDesc } from '@/util/flows'
   import { mapState } from 'vuex'
 
   export default {
@@ -167,7 +169,11 @@
     computed: {
       ...mapState({
         gitBranches: state => state.flows.gitBranches
-      })
+      }),
+
+      cronDesc() {
+        return getCronDesc(this.flow.cron, this.$i18n.locale)
+      }
     },
     methods: {
       onUpdateClick() {
