@@ -95,11 +95,7 @@
     },
     mounted() {
       this.$emit('onConfigNav', {
-        navs: [
-          {
-            text: 'Profile'
-          }
-        ],
+        navs: [{text: this.$t('settings.li.profile')}],
         showAddBtn: false
       })
     },

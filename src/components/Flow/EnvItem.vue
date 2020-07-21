@@ -1,5 +1,5 @@
 <template>
-  <v-row class="env-item">
+  <v-row class="env-item" no-gutters>
     <v-col cols="4">
       <v-text-field
           :label="$t('flow.var_name')"

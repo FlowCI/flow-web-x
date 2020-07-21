@@ -11,6 +11,10 @@
   border-bottom: 1px solid #e1e4e8
 }
 
+.left-border {
+  border-left: 1px solid #e1e4e8
+}
+
 .error-message {
   background-color: #FFEBEE;
   color: #EF5350;
@@ -25,26 +29,6 @@
   text-align: end;
 }
 
-// customize vuetify //
-tr.v-data-table__empty-wrapper {
-  td {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .v-alert {
-    margin-bottom: 0;
-  }
-}
-
-*{
-  text-transform: none !important;
-}
-
-.v-btn {
-  font-weight: 600;
-}
-
-.v-btn:not(.v-btn--round).v-size--default {
-  padding: 0 8px !important;
+.no-padding {
+  padding: 0 !important;
 }

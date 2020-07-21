@@ -6,7 +6,6 @@
         <v-text-field
             class="pt-0"
             v-model="wrapper.webhook"
-            append-icon="mdi-help-circle-outline"
             @click:append="onHelpClick('hook')"
             readonly
         ></v-text-field>
@@ -22,8 +21,6 @@
         <v-text-field
             class="pt-0"
             v-model="wrapper.gitUrl"
-            append-icon="mdi-help-circle-outline"
-            append-outer-icon=""
             :rules="rules.gitUrl"
             @click:append="onHelpClick('url')"
             readonly
@@ -37,7 +34,6 @@
         <v-text-field
             class="pt-0"
             v-model="wrapper.secret"
-            append-icon="mdi-help-circle-outline"
             :rules="[rules.credential]"
             @click:append="onHelpClick('url')"
             readonly

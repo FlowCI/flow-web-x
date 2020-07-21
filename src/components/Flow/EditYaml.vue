@@ -1,7 +1,7 @@
 <template>
-  <v-card flat class="full-size">
-    <v-card-text class="editor pa-0">
-      <div id="yml-editor" class="full-height"></div>
+  <v-card flat>
+    <v-card-text class="pa-1">
+      <div id="yml-editor"></div>
 
       <div class="info-message" v-if="flow.yamlFromRepo">
         <span class="px-5 py-1">{{ $t('flow.hint.yaml_from_git', [flow.yamlRepoBranch]) }}</span>
@@ -13,30 +13,26 @@
     </v-card-text>
 
     <v-card-actions class="mt-2">
-      <v-row>
-        <v-col cols="2">
-          <a href="https://github.com/FlowCI/templates" target="_blank">{{ $t('flow.more_template') }}</a>
-        </v-col>
-        <v-col cols="6"/>
-        <v-col cols="2">
-          <v-btn color="secondary"
-                 tile
-                 @click="onResetClick"
-                 block
-                 :disabled="!isCodeChange">
-            <b>{{ $t('reset') }}</b>
-          </v-btn>
-        </v-col>
-        <v-col cols="2">
-          <v-btn color="primary"
-                 tile
-                 @click="onSaveClick"
-                 block
-                 :disabled="!isCodeChange">
-            <b>{{ $t('save') }}</b>
-          </v-btn>
-        </v-col>
-      </v-row>
+      <a href="https://github.com/FlowCI/templates" target="_blank">{{ $t('flow.more_template') }}</a>
+
+      <v-spacer></v-spacer>
+
+      <v-btn color="secondary"
+             tile
+             class="action-btn"
+             @click="onResetClick"
+             :disabled="!isCodeChange">
+        {{ $t('reset') }}
+      </v-btn>
+
+      <v-btn color="primary"
+             tile
+             class="action-btn"
+             @click="onSaveClick"
+             :disabled="!isCodeChange">
+        {{ $t('save') }}
+      </v-btn>
+
     </v-card-actions>
   </v-card>
 </template>
@@ -97,7 +93,11 @@
     },
     methods: {
       reload () {
-        this.$store.dispatch(actions.flows.yml.load, this.flow.name).then()
+        this.$store.dispatch(actions.flows.yml.load, this.flow.name)
+          .then()
+          .catch((e) => {
+            console.log(e.message)
+          })
       },
 
       onCodeChange (e) {
@@ -129,7 +129,11 @@
 </script>
 
 <style scoped>
-  .editor {
-    height: 95%;
+  #yml-editor {
+    min-height: 650px;
+  }
+
+  .action-btn {
+    min-width: 200px !important;
   }
 </style>

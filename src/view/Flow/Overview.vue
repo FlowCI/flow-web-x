@@ -1,12 +1,18 @@
 <template>
-  <v-row align="start" justify="start">
-    <v-col v-for="flow in items"
-           :key="flow.name"
-           cols="3" md="4" lg="3" sm="2"
-    >
-      <summary-card :wrapper="flow"/>
-    </v-col>
-  </v-row>
+  <div class="overview">
+    <v-row align="center" justify="center" class="full-size" v-if="items.length === 0">
+      <v-btn x-large color="info" @click="onCreateFlowClick">{{ $t('flow.create') }}</v-btn>
+    </v-row>
+
+    <v-row align="start" justify="start" v-if="items.length > 0">
+      <v-col v-for="flow in items"
+             :key="flow.name"
+             cols="3" md="4" lg="3" sm="2"
+      >
+        <summary-card :wrapper="flow"/>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -20,7 +26,7 @@
     components: {
       SummaryCard
     },
-    data () {
+    data() {
       return {
         items: []
       }
@@ -37,16 +43,20 @@
       })
     },
     watch: {
-      flows (after) {
+      flows(after) {
         this.items = toWrapperList(after)
       },
 
-      latest (after) {
+      latest(after) {
         this.setLatestJobs()
       }
     },
     methods: {
-      setLatestJobs () {
+      onCreateFlowClick() {
+        this.popCreateFlow(true)
+      },
+
+      setLatestJobs() {
         for (let wrapper of this.items) {
           for (let latestJob of this.latest) {
             if (wrapper.id === latestJob.flowId) {
@@ -57,18 +67,18 @@
         }
       },
 
-      fetchTotalStats (wrapper) {
-        let payload = {name: wrapper.name,  metaType: 'default/ci_job_status'}
+      fetchTotalStats(wrapper) {
+        let payload = {name: wrapper.name, metaType: 'default/ci_job_status'}
         this.$store.dispatch(actions.stats.total, payload).then(() => {
           let sum = 0.0
           let total = this.statsTotal
 
 
           for (const category of Object.keys(total.counter)) {
-            sum += total.counter[ category ]
+            sum += total.counter[category]
           }
 
-          let numOfSuccess = total.counter[ 'SUCCESS' ]
+          let numOfSuccess = total.counter['SUCCESS']
           let successPercent = (numOfSuccess / sum) * 100
           successPercent = successPercent.toFixed(0)
 
@@ -80,5 +90,7 @@
 </script>
 
 <style scoped>
-
+  .overview {
+    height: 80vh;
+  }
 </style>

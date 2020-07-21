@@ -30,14 +30,15 @@
                 </v-tooltip>
 
               </v-col>
-              <v-col cols="9">
+              <v-col cols="8">
               </v-col>
-              <v-col cols="1" class="caption" v-if="wrapper.isFinished">
+              <v-col cols="2" class="caption" v-if="wrapper.isFinished">
                 <v-btn icon x-small @click="onLogDownload" :disabled="!showLog">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
 
-                <span class="ml-2">{{ wrapper.duration }}</span>
+                <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
+                <span class="ml-1">{{ wrapper.duration }}</span>
                 <span class="ml-1">s</span>
               </v-col>
             </v-row>
@@ -72,19 +73,12 @@
     },
     data () {
       return {
-        buffer: [],
-        terminal: null,
-        fitAddon: new FitAddon(),
+        terminal: null
       }
     },
     mounted() {
       if (this.showLog) {
         this.bus.$on('writeLog', this.writeLog)
-      }
-    },
-    destroyed() {
-      if (this.terminal) {
-        this.terminal.dispose()
       }
     },
     computed: {
@@ -95,7 +89,6 @@
     methods: {
       writeLog(log) {
         if (!this.terminal) {
-          this.buffer.push(log)
           return
         }
         this.terminal.write(log)
@@ -103,6 +96,17 @@
 
       onLogDownload() {
         this.$store.dispatch(actions.jobs.logs.download, this.wrapper.id).then()
+      },
+
+      onLogRead(list) {
+        for (let b64 of list) {
+          let item = JSON.parse(atob(b64))
+          let log = atob(item.content)
+
+          if (this.terminal) {
+            this.terminal.write(log)
+          }
+        }
       },
 
       onPanelClick() {
@@ -119,13 +123,15 @@
           disableStdin: true,
           cursorStyle: 'bar',
           convertEol: true,
+          rendererType: 'dom',
           theme: {
             background: '#333333',
             foreground: '#f5f5f5'
           }
         })
 
-        this.terminal.loadAddon(this.fitAddon)
+        let fitAddon = new FitAddon()
+        this.terminal.loadAddon(fitAddon)
 
         const unicode11Addon = new Unicode11Addon()
         this.terminal.loadAddon(unicode11Addon);
@@ -133,18 +139,21 @@
 
         setTimeout(function () {
           this.terminal.open(document.getElementById(`${this.wrapper.id}-terminal`))
-          this.fitAddon.fit()
-        }.bind(this), 50);
+          fitAddon.fit()
+        }.bind(this), 500);
 
-        for (let buf of this.buffer) {
-          this.terminal.write(buf)
-        }
-        this.buffer.length = 0
-
-        // load logs from server
+        // load full logs from server
         if (this.wrapper.isFinished) {
           this.$store.dispatch(actions.jobs.logs.load, this.wrapper.id).then()
+          return
         }
+
+        // read existing logs from server
+        let payload = {
+          stepId: this.wrapper.id,
+          onLoaded: this.onLogRead
+        }
+        this.$store.dispatch(actions.jobs.logs.read, payload).then()
       }
     }
   }

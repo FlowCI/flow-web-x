@@ -6,7 +6,9 @@
       :options.sync="pagination"
       :server-items-length="total"
       :loading="loading"
-      footer-props.items-per-page-options="[10, 25, 50]"
+      :footer-props="{
+        itemsPerPageOptions: [10, 25, 50]
+      }"
   >
 
     <template v-slot:item="{ item }">
@@ -63,30 +65,16 @@
       JobListItem
     },
     mounted () {
-      this.loadJobList()
     },
     computed: {
       ...mapState({
         flow: state => state.flows.selected.obj,
         jobs: state => state.jobs.items,
         total: state => state.jobs.pagination.total,
-      }),
-
-      name () {
-        return this.$route.params.id
-      },
-
-      path () {
-        return [
-          {
-            text: this.name,
-            disabled: false
-          }
-        ]
-      }
+      })
     },
     watch: {
-      name () {
+      flow () {
         this.loadJobList()
       },
 
@@ -98,13 +86,23 @@
     },
     methods: {
       onItemClick (job) {
-        this.$router.push({path: `/flows/${this.name}/jobs/${job.buildNumber}`})
+        this.$router.push({path: `/flows/${this.flow.name}/jobs/${job.buildNumber}`})
       },
 
       loadJobList () {
+        if (!this.flow.name) {
+          return
+        }
+
         this.loading = true
         const {page, itemsPerPage} = this.pagination
-        this.$store.dispatch(actions.jobs.list, {flow: this.name, page, size: itemsPerPage})
+        const payload = {
+          flowObj: this.flow,
+          page,
+          size: itemsPerPage
+        };
+
+        this.$store.dispatch(actions.jobs.list, payload)
           .then(() => {
             this.loading = false
           })

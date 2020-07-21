@@ -1,19 +1,17 @@
 <template>
-  <v-card class="full-size pt-0">
-    <v-card-title class="title py-0">
+  <v-card class="full-size pt-0 flow-main">
+    <v-card-title class="title pa-0 mx-2 bottom-border">
       <v-toolbar flat bottom>
-        <v-toolbar-title>
+        <v-toolbar-title class="d-flex">
+          <v-icon small class="mr-3">flow-icon-layergroup</v-icon>
+
           <v-breadcrumbs :items="navItems" class="pa-0">
             <template v-slot:divider>
-              <v-icon>mdi-chevron-right</v-icon>
+              <v-icon>mdi-slash-forward</v-icon>
             </template>
-
             <template v-slot:item="{ item }">
-              <v-breadcrumbs-item
-                  :href="item.href"
-                  class="title font-weight-bold"
-              >
-                {{ item.text }}
+              <v-breadcrumbs-item :href="item.href">
+                <span class="text-h6 font-weight-bold">{{ item.text }}</span>
               </v-breadcrumbs-item>
             </template>
           </v-breadcrumbs>
@@ -56,7 +54,7 @@
                       prepend-icon="mdi-source-branch"
                       :items="gitBranches"
                       v-model="selectedBranch"
-                      label="branch:">
+                      :label="`${$t('branch')}:`">
           </v-combobox>
         </v-toolbar-items>
       </v-toolbar>
@@ -66,7 +64,7 @@
       ></Dialog>
     </v-card-title>
 
-    <v-card-text class="content px-2">
+    <v-card-text class="content px-1 pb-0">
       <router-view></router-view>
     </v-card-text>
   </v-card>
@@ -82,10 +80,10 @@
     components: {
       Dialog
     },
-    data () {
+    data() {
       return {
         dialog: false,
-        baseItem: {text: 'flows', href: '#/flows'},
+        baseItem: {text: 'flow', href: '#/flows'},
         selectedBranch: 'master'
       }
     },
@@ -95,11 +93,11 @@
         agents: state => state.agents.items
       }),
 
-      navItems () {
+      navItems() {
         let route = this.$route
 
         if (route.name === 'Overview') {
-          return [ this.baseItem ]
+          return [this.baseItem]
         }
 
         // flow level
@@ -109,64 +107,62 @@
 
         if (route.name === 'Jobs') {
           this.loadBranches()
-          return [ this.baseItem, flowItem ]
+          return [this.baseItem, flowItem]
         }
 
         flowItem.href = `#/flows/${this.flowName}/jobs`
 
         if (route.name === 'Settings') {
-          return [ this.baseItem, flowItem, {text: 'settings', href} ]
+          return [this.baseItem, flowItem, {text: 'settings', href}]
         }
 
         if (route.name === 'Statistic') {
-          return [ this.baseItem, flowItem, {text: 'statistic', href} ]
+          return [this.baseItem, flowItem, {text: 'statistic', href}]
         }
 
         if (route.name === 'JobDetail') {
-          this.setCurrentJob()
-          return [ this.baseItem, flowItem, {text: '#' + this.buildNumber, href} ]
+          return [this.baseItem, flowItem, {text: '#' + this.buildNumber, href}]
         }
 
         return []
       },
 
-      showFlowAction () {
+      showFlowAction() {
         return this.$route.name === 'Jobs'
       },
 
-      flowName () {
+      flowName() {
         return this.$route.params.id
       },
 
-      buildNumber () {
+      buildNumber() {
         return this.$route.params.num
       }
     },
 
     methods: {
-      onSettingsClick () {
+      onSettingsClick() {
         this.$router.push(`/flows/${this.flowName}/settings`)
       },
 
-      onStatisticClick () {
+      onStatisticClick() {
         this.$router.push(`/flows/${this.flowName}/statistic`)
       },
 
-      onRunClick () {
+      onRunClick() {
         const payload = {flow: this.flowName, branch: this.selectedBranch}
-        this.$store.dispatch(actions.jobs.start, payload).then()
+        this.$store.dispatch(actions.jobs.start, payload)
+          .then()
+          .catch((e) => {
+            this.showSnackBar(e.message, 'error')
+          })
       },
 
-      setCurrentFlow () {
+      setCurrentFlow() {
         this.$store.dispatch(actions.flows.select, this.flowName).then()
       },
 
-      setCurrentJob () {
-        const payload = {flow: this.flowName, buildNumber: this.buildNumber}
-        this.$store.dispatch(actions.jobs.select, payload).then()
-      },
-
-      loadBranches () {
+      loadBranches() {
         this.$store.dispatch(actions.flows.gitBranches, this.flowName)
           .catch((err) => {
             console.log(err)
@@ -176,13 +172,24 @@
   }
 </script>
 
-<style scoped>
-.title {
-  height: 10%;
-}
+<style lang="scss">
+  .flow-main {
+    .title {
+      max-height: 75px;
+      min-height: 75px;
+    }
 
-.content {
-  height: 90%;
-  position: absolute;
-}
+    .content {
+      min-height: 90%;
+    }
+
+    .v-toolbar__content {
+      padding-left: 5px !important;
+      padding-right: 5px !important;
+    }
+
+    .v-breadcrumbs__divider{
+      padding: 0 !important;
+    }
+  }
 </style>

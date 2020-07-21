@@ -22,6 +22,7 @@ import SettingsAgentHome from '@/view/Settings/Agent/Index'
 import SettingsAgentNew from '@/view/Settings/Agent/NewAgent'
 import SettingsAgentEdit from '@/view/Settings/Agent/EditAgent'
 import SettingsHostNew from '@/view/Settings/Agent/NewHost'
+import SettingsHostEdit from '@/view/Settings/Agent/EditHost'
 
 import SettingsSecretHome from '@/view/Settings/Secret/Index'
 import SettingsSecretNew from '@/view/Settings/Secret/New'
@@ -40,6 +41,10 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '',
+      redirect: '/flows'
     },
     {
       path: '/flows',
@@ -112,19 +117,21 @@ export default new Router({
           component: SettingsAgentNew
         },
         {
-          path: 'agents/edit/:name',
+          path: 'agents/edit',
           name: 'SettingsAgentEdit',
-          component: SettingsAgentEdit
+          component: SettingsAgentEdit,
+          props: true
         },
         {
           path: 'agents/host/new',
           name: 'SettingsHostNew',
-          component: SettingsHostNew
+          component: SettingsHostNew,
         },
         {
-          path: 'agents/host/edit/:name',
-          name: 'SettingsHostNew',
-          component: SettingsHostNew
+          path: 'agents/host/edit',
+          name: 'SettingsHostEdit',
+          component: SettingsHostEdit,
+          props: true
         },
 
         {

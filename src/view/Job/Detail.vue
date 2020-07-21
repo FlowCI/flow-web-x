@@ -1,93 +1,43 @@
 <template>
   <div class="job-detail">
-    <v-row align="center" class="grey lighten-5 ma-0 title" no-gutters>
-      <v-col cols="2" class="pl-2">
-        <span v-bind:class="[wrapper.status.class, 'body-2', 'font-weight-medium']">
-          <v-icon small v-bind:class="[wrapper.status.class]">
-            {{ wrapper.status.icon }}
-          </v-icon>
-          {{ wrapper.status.text }}
-        </span>
-      </v-col>
+    <job-info-bar :wrapper="wrapper"
+                  :on-debug-click="onDebugClick"
+                  :on-rerun-click="onRerunClick"
+                  :on-stop-click="onStopClick"
+    ></job-info-bar>
 
-      <v-col cols="2" class="body-2">
-        <div class="pb-2">
-          <v-icon small>mdi-clock-fast</v-icon>
-          {{ wrapper.finishedAt }} / {{ wrapper.duration }} (s)
-        </div>
-        <div>
-          <v-icon small>mdi-clock-outline</v-icon>
-          {{ wrapper.finishedAtInStr }}
-        </div>
-      </v-col>
-
-      <v-col cols="2">
-        <v-icon small>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
-        <span class="ml-2 body-2">{{ wrapper.agentInfo.name }}</span>
-      </v-col>
-
-      <v-col cols="2">
-        <span class="body-2" v-if="wrapper.isYamlFromRepo">
-          <div>.flowci.yaml</div>
-          <div>from branch {{ wrapper.yamlRepoBranch }}</div>
-        </span>
-      </v-col>
-
-      <v-col class="body-2" cols="3">
-        <div class="pb-2">{{ $t('job.triggerBy') }}</div>
-        <div>
-          <span>{{ wrapper.triggerBy }}</span>
-          <v-icon small class="ml-2">{{ wrapper.triggerIcon }}</v-icon>
-        </div>
-      </v-col>
-
-      <v-col cols="1">
-        <v-tooltip bottom v-if="!wrapper.isFinished">
-          <template v-slot:activator="{ on }">
-            <v-btn icon color="black" @click="onDebugClick" v-on="on">
-              <v-icon>mdi-console</v-icon>
-            </v-btn>
-          </template>
-          <span class="body-2">{{ $t('job.hint.tty') }}</span>
-        </v-tooltip>
-
-        <v-btn icon color="error" @click="onStopClick" v-if="!wrapper.isFinished">
-          <v-icon>mdi-stop</v-icon>
-        </v-btn>
-
-        <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
-          <v-icon>mdi-restart</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-
-    <v-row class="ma-0 info">
-      <v-col class="pa-0">
-        <v-divider></v-divider>
-        <div class="error-message" v-if="wrapper.errorMsg">
-          <span class="px-5 py-1">{{ wrapper.errorMsg }}</span>
+    <v-row v-if="wrapper.errorMsg" no-gutters>
+      <v-col>
+        <div class="error-message">
+          <span class="px-2">{{ wrapper.errorMsg }}</span>
         </div>
       </v-col>
     </v-row>
 
     <job-tty :job="job" v-model="showTty"></job-tty>
 
-    <v-tabs fixed-tabs class="mt-1 tab-wrapper">
-      <v-tab href="#summary" class="ml-0 elevation-1">
+    <v-tabs fixed-tabs
+            height="40"
+            class="mt-1"
+            active-class="tab-active">
+      <v-tabs-slider color="#757575"></v-tabs-slider>
+
+      <v-tab href="#summary">
         {{ $t('job.tab.summary') }}
       </v-tab>
-      <v-tab href="#context" class="ml-0 elevation-1">
+      <v-tab href="#context" class="ml-0">
         {{ $t('job.tab.context') }}
       </v-tab>
-      <v-tab href="#yml" class="ml-0 elevation-1">
+      <v-tab href="#yml" class="ml-0">
         {{ $t('job.tab.yml') }}
+        <span class="caption" v-if="wrapper.isYamlFromRepo">({{ wrapper.yamlRepoBranch }} branch)</span>
       </v-tab>
       <v-tab v-for="report in reports"
              :key="report.id"
              :href="'#' + report.name">
         {{ report.name }}
       </v-tab>
-      <v-tab href="#artifacts" class="ml-0 elevation-1">
+      <v-tab href="#artifacts" class="ml-0">
         {{ $t('job.tab.artifacts') }}
       </v-tab>
 
@@ -128,6 +78,7 @@
   import DetailTabYml from '@/view/Job/DetailTabYml'
   import DetailTabArtifact from '@/view/Job/DetailTabArtifact'
   import DetailHtmlReport from '@/view/Job/DetailHtmlReport'
+  import JobInfoBar from './JobInfoBar'
   import JobTty from '@/components/Jobs/TTY'
 
   export default {
@@ -135,10 +86,13 @@
     data() {
       return {
         showTty: false,
-        agentIcons: icons
+        agentIcons: icons,
+        duration: '-',
+        durationInterval: null,
       }
     },
     components: {
+      JobInfoBar,
       DetailTabContext,
       DetailTabSummary,
       DetailTabYml,
@@ -187,6 +141,22 @@
         subscribeTopic.steps(obj.id, this.$store)
         subscribeTopic.tasks(obj.id, this.$store)
         subscribeTopic.logs(obj.id, this.$store)
+      },
+
+      wrapper(w) {
+        this.duration = w.duration
+
+        if (this.durationInterval) {
+          clearInterval(this.durationInterval)
+        }
+
+        if (w.isFinished) {
+          return
+        }
+
+        this.durationInterval = setInterval(() => {
+          this.duration += 1
+        }, 1000)
       }
     },
     methods: {
@@ -205,10 +175,10 @@
 
       onRerunClick() {
         this.$store.dispatch(actions.jobs.rerun, this.job.id)
-            .then()
-            .catch(reason => {
-              console.log(reason)
-            })
+          .then()
+          .catch(reason => {
+            console.log(reason)
+          })
       },
 
       onDebugClick() {
@@ -220,32 +190,32 @@
 
 <style lang="scss">
   .job-detail {
+    $tab-color: #757575;
+
     height: 100%;
     position: relative;
-    overflow: auto;
 
-    .title {
-      height: 14%;
+    .v-tabs-slider-wrapper {
+      height: 3px !important;
     }
 
-    .tab-wrapper {
-      height: 85%;
+    .v-tab {
+      margin-left: 0 !important;
+      max-width: 300px !important;
+      font-weight: bold;
+    }
 
-      .v-tabs-bar {
-        height: 6%;
-      }
+    .tab-active {
+      color: $tab-color !important;
+    }
 
-      .v-window {
-        height: 93%;
-      }
-
-      .v-window__container {
-        height: 99%;
-      }
-
-      .v-window-item {
-        height: 99%;
-      }
+    .tab-active::after {
+      content: '';
+      height: 8px;
+      width: 5px;
+      bottom: 0;
+      position: absolute;
+      background-color: $tab-color;
     }
   }
 </style>

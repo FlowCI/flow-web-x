@@ -18,8 +18,8 @@
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-btn outlined color="warning" @click="onBackClick">{{ $t('back') }}</v-btn>
-        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
+        <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
+        <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -29,12 +29,16 @@
   import actions from '@/store/actions'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
 
   export default {
     name: 'Edit',
     components: {
       TextSelect,
-      TextBox
+      TextBox,
+      SaveBtn,
+      BackBtn
     },
     props: {
       userObj: {
@@ -58,11 +62,8 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Users',
+            text: this.$t('settings.li.users'),
             href: '#/settings/users'
-          },
-          {
-            text: 'Edit'
           },
           {
             text: this.userObj.email

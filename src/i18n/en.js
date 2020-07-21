@@ -15,6 +15,9 @@ export default {
   confirm: 'Confirm',
   restart: 'Restart',
   revoke: 'Revoke',
+  branch: 'Branch',
+  new: 'New',
+  edit: 'Edit',
 
   menu: {
     signedInAs: 'Signed in as ',
@@ -26,18 +29,26 @@ export default {
   },
 
   flow: {
+    name: 'flow',
     create: 'Create Flow',
     search: 'Search by key words',
     settings: 'Settings',
     statistic: 'Statistic',
     config_yml: 'YML Config',
 
+    cron_task: 'Cron Task',
+    flow_name: 'Flow name',
+    git_yaml: 'Is load YAML from Git (.flowci.yaml)',
+
     create_title_name: 'Enter Flow Name',
+    create_title_select_template: 'Select YAML Template',
     create_title_git_url: 'Config Git URL',
     create_title_git_access: 'Config Git Access',
     create_title_git_test: 'Test Git Connection',
     create_title_yml: 'Config YML',
     create_btn_finish: 'Finish',
+    create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
+    create_blank_template: 'blank (updated at Flows -> Settings later)',
 
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',
@@ -92,13 +103,13 @@ export default {
 
   job: {
     run: 'Run',
-    triggerBy: 'Triggered By',
+    artifact: 'artifact',
     list_empty_message: 'Click \'RUN\' to start your first build',
 
     tab: {
-      summary: 'Summary',
+      summary: 'Steps',
       context: 'Context',
-      yml: 'Yml',
+      yml: 'YAML',
       artifacts: 'Artifacts'
     },
 
@@ -109,6 +120,12 @@ export default {
   },
 
   agent: {
+    agent: 'Agent',
+    host: 'Host',
+
+    list_header: 'Agent Status',
+    list_no_data: 'No Agents',
+
     status: {
       busy: 'busy',
       idle: 'idle',

@@ -48,24 +48,28 @@ Vue.mixin({
       hasLogin: state => state.auth.hasLogin
     }),
 
-    isLoginPage () {
+    isLoginPage() {
       return this.$route.name === 'Login'
     },
 
-    appVersion () {
+    appVersion() {
       return process.env.APP_VERSION
     }
   },
   methods: {
-    redirectToLogin () {
+    redirectToLogin() {
       if (!this.isLoginPage) {
         this.$router.replace('/login')
       }
     },
 
-    showSnackBar (text, color) {
+    showSnackBar(text, color) {
       color = color || 'info'
       this.$store.commit(actions.app.showSnackbar, {text, color})
+    },
+
+    popCreateFlow(boolVal) {
+      this.$store.commit(actions.app.popCreateFlow, boolVal)
     }
   }
 })
@@ -164,7 +168,7 @@ new Vue({
   router,
   store,
   render: h => h(App),
-  beforeCreate () {
+  beforeCreate() {
     this.$store.dispatch(actions.auth.load)
       .then(() => {
         console.log('token has been loaded...')

@@ -1,9 +1,18 @@
 import { JobWrapper } from './jobs'
 import vars from './vars'
+import cronstrue from "cronstrue/i18n";
 
 export const GIT_TEST_FETCHING = 'FETCHING'
 export const GIT_TEST_DONE = 'DONE'
 export const GIT_TEST_ERROR = 'ERROR'
+
+export function getCronDesc(cron, local) {
+  try {
+    return cronstrue.toString(cron, {locale: local === 'cn' ? 'zh_CN' : 'en' })
+  } catch (e) {
+    return ''
+  }
+}
 
 export const gitTestStatus = {
   default: {
@@ -147,6 +156,10 @@ export class FlowWrapper {
 
   get yamlRepoBranch () {
     return this.flow.yamlRepoBranch
+  }
+
+  get cron() {
+    return this.flow.cron
   }
 
   // set

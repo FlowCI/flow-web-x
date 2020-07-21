@@ -6,51 +6,51 @@
                   readonly
                   v-model="configObj.name"
         ></text-box>
-        <text-select :items="[CATEGORY_SMTP, CATEGORY_TEXT]"
-                     label="Category"
-                     readonly
-                     v-model="configObj.category"
-        ></text-select>
+        <text-box label="Category"
+                  readonly
+                  :prepend-inner-icon="Categories[configObj.category].icon"
+                  v-model="Categories[configObj.category].name"
+        ></text-box>
       </v-col>
     </v-row>
 
     <v-form ref="contentForm" lazy-validation>
-      <v-row v-if="configObj.category === CATEGORY_SMTP">
+      <v-row v-if="isSmtpConfig">
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
         <v-col cols="8">
-          <config-smtp :smtpOption="configObj.smtp"></config-smtp>
+          <config-smtp :config="configObj"></config-smtp>
         </v-col>
       </v-row>
 
-      <v-row v-if="configObj.category === CATEGORY_TEXT">
+      <v-row v-if="isTextConfig">
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
-
         <v-col cols="8">
-          <v-textarea
-              outlined
-              rows="20"
-              label="Input free text"
-              v-model="configObj.text"
-          ></v-textarea>
+          <config-free-text :config="configObj"></config-free-text>
         </v-col>
       </v-row>
     </v-form>
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <confirm-btn :text="$t('revoke')" color="error" @click="onDeleteClick">
+        <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
               Revoke config {{ configObj.name }}?
             </span>
           </template>
         </confirm-btn>
-        <v-btn color="warning" outlined @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
-        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
+
+        <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -59,10 +59,12 @@
 <script>
   import actions from '@/store/actions'
   import ConfigSmtp from './Smtp'
+  import ConfigFreeText from './FreeText'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
-  import TextSelect from '@/components/Common/TextSelect'
-  import { CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
+  import { Categories, CATEGORY_SMTP, CATEGORY_TEXT } from '@/util/configs'
 
   export default {
     name: "SettingsConfigEdit",
@@ -75,13 +77,18 @@
     components: {
       ConfirmBtn,
       ConfigSmtp,
+      ConfigFreeText,
       TextBox,
-      TextSelect
+      SaveBtn,
+      BackBtn
     },
     data() {
       return {
-        CATEGORY_SMTP,
-        CATEGORY_TEXT
+        Categories,
+        actionMap: {
+          [CATEGORY_SMTP]: actions.configs.saveSmtp,
+          [CATEGORY_TEXT]: actions.configs.saveText
+        }
       }
     },
     mounted() {
@@ -98,9 +105,17 @@
     computed: {
       navs() {
         return [
-          {text: 'Configuration', href: '#/settings/configs'},
+          {text: this.$t('settings.li.config'), href: '#/settings/configs'},
           {text: this.configObj.name}
         ]
+      },
+
+      isSmtpConfig() {
+        return this.configObj.category === CATEGORY_SMTP
+      },
+
+      isTextConfig() {
+        return this.configObj.category === CATEGORY_TEXT
       }
     },
     methods: {
@@ -110,35 +125,23 @@
 
       onDeleteClick() {
         this.$store.dispatch(actions.configs.delete, this.configObj.name)
-            .then(() => {
-              this.onBackClick()
-            })
-            .catch((err) => {
-              console.log(err)
-            })
+          .then(() => {
+            this.onBackClick()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       },
 
       onSaveClick() {
-        if (this.configObj.category === CATEGORY_SMTP) {
-          this.$store.dispatch(actions.configs.saveSmtp, this.configObj)
-              .then(() => {
-                this.onBackClick()
-              })
-              .catch(e => {
-                console.log(e)
-              })
-          return
-        }
-
-        if (this.configObj.category === CATEGORY_TEXT) {
-          this.$store.dispatch(actions.configs.saveText, this.configObj)
-              .then(() => {
-                this.onBackClick()
-              })
-              .catch(e => {
-                console.log(e)
-              })
-        }
+        let params = {name: this.configObj.name, payload: this.configObj}
+        this.$store.dispatch(this.actionMap[this.configObj.category], params)
+          .then(() => {
+            this.onBackClick()
+          })
+          .catch(e => {
+            console.log(e)
+          })
       }
     }
   }

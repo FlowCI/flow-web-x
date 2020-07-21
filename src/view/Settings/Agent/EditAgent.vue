@@ -1,77 +1,50 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
-        <div>Edit Agent</div>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="8">
-        <v-form ref="agentNameForm"
-                lazy-validation>
-          <v-text-field
+    <v-form ref="agentNameForm" lazy-validation>
+      <v-row>
+        <v-col cols="8">
+          <text-box
               label="Name"
               :rules="nameRules"
               v-model="wrapper.name"
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
+          ></text-box>
+          <tag-editor :tags="wrapper.tags"></tag-editor>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
+      <v-col cols="9" class="my-3">
+        <v-divider></v-divider>
+      </v-col>
+
       <v-col cols="8">
-        <tag-editor :tags="wrapper.tags"></tag-editor>
+        <text-box label="Token"
+                  readonly
+                  v-model="wrapper.token"
+        ></text-box>
+        <text-box label="URL"
+                  readonly
+                  v-model="wrapper.url"
+        ></text-box>
       </v-col>
     </v-row>
-
-    <v-col cols="8" class="my-3">
-      <v-divider></v-divider>
-    </v-col>
-
-    <v-col cols="8">
-      <v-text-field label="Token"
-                    readonly
-                    v-model="wrapper.token"
-      ></v-text-field>
-      <v-text-field label="URL"
-                    readonly
-                    v-model="wrapper.url"
-      ></v-text-field>
-    </v-col>
 
     <v-row>
       <v-col cols="8" class="text-end">
-        <v-dialog
-            v-model="dialog"
-            width="500"
-        >
-          <template v-slot:activator="{ on }">
-            <v-btn
-                outlined
-                color="error"
-                v-on="on"
-            >{{ $t('delete') }}
-            </v-btn>
+        <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
+        <confirm-btn :text="$t('delete')"
+                     color="error"
+                     icon="mdi-delete"
+                     clazz="mr-5"
+                     @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete Agent {{ wrapper.name }}?
+            </span>
           </template>
-          <v-card>
-            <v-card-title
-                class="error--text"
-                primary-title
-            >Delete Agent {{ name }}?
-            </v-card-title>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" @click="dialog = false">{{ $t('cancel') }}</v-btn>
-              <v-btn outlined color="error" @click="onDeleteClick">{{ $t('delete') }}</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-btn outlined color="warning" @click="onBackClick" class="ml-4">{{ $t('back') }}</v-btn>
-        <v-btn color="primary" @click="onSaveClick" class="ml-4">{{ $t('save') }}</v-btn>
+        </confirm-btn>
+        <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
     </v-row>
   </div>
@@ -81,15 +54,28 @@
   import { mapState } from 'vuex'
   import actions from '@/store/actions'
   import TagEditor from '@/components/Common/TagEditor'
-  import { AgentWrapper } from '@/util/agents'
+  import ConfirmBtn from '@/components/Common/ConfirmBtn'
+  import TextBox from '@/components/Common/TextBox'
+  import SaveBtn from '@/components/Settings/SaveBtn'
+  import BackBtn from '@/components/Settings/BackBtn'
   import { agentNameRules } from '@/util/rules'
 
   export default {
     name: 'SettingsAgentEdit',
     components: {
-      TagEditor
+      TagEditor,
+      ConfirmBtn,
+      TextBox,
+      SaveBtn,
+      BackBtn
     },
-    data () {
+    props: {
+      wrapper: {
+        type: Object,
+        required: true
+      }
+    },
+    data() {
       return {
         nameRules: agentNameRules(this),
         dialog: false
@@ -98,40 +84,19 @@
     computed: {
       ...mapState({
         loaded: state => state.agents.loaded
-      }),
-
-      wrapper () {
-        return new AgentWrapper(this.loaded)
-      },
-
-      name () {
-        return this.$route.params.name
-      }
-    },
-    mounted () {
-      this.$store.dispatch(actions.agents.get, this.name).then(() => {
-        this.$emit('onConfigNav', {
-          navs: [
-            {
-              text: 'Agents',
-              href: '#/settings/agents'
-            },
-            {
-              text: this.wrapper.name,
-              href: ''
-            }
-          ],
-          showAddBtn: false
-        })
       })
     },
-    watch: {
-      name (newValue) {
-        this.$store.dispatch(actions.agents.get, newValue)
-      }
+    mounted() {
+      this.$emit('onConfigNav', {
+        navs: [
+          {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
+          {text: this.wrapper.name}
+        ],
+        showAddBtn: false
+      })
     },
     methods: {
-      onDeleteClick () {
+      onDeleteClick() {
         this.$store.dispatch(actions.agents.delete, this.wrapper.rawInstance).then(() => {
           this.$store.dispatch(actions.agents.select, {})
           this.dialog = false
@@ -139,11 +104,11 @@
         })
       },
 
-      onBackClick () {
+      onBackClick() {
         this.$router.push('/settings/agents')
       },
 
-      onSaveClick () {
+      onSaveClick() {
         if (!this.$refs.agentNameForm.validate()) {
           return
         }

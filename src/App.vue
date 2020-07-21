@@ -7,9 +7,11 @@
         :top="true"
     >
       {{ snackbar.text }}
-      <v-btn text @click="snackbar.show = false">
-        {{ $t('close') }}
-      </v-btn>
+      <template v-slot:action="{ attrs }">
+        <v-btn text v-bind="attrs" @click="snackbar.show = false">
+          {{ $t('close') }}
+        </v-btn>
+      </template>
     </v-snackbar>
 
     <v-navigation-drawer v-if="!isLoginPage"
@@ -26,7 +28,10 @@
         <v-app-bar-nav-icon @click.stop="flowNavDrawer = !flowNavDrawer"></v-app-bar-nav-icon>
         <v-icon class="black--text">flow-icon-logo</v-icon>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
+
+      <lang-menu></lang-menu>
       <support-menu></support-menu>
       <agent-menu v-if="!isLoginPage"></agent-menu>
       <profile-menu v-if="!isLoginPage"></profile-menu>
@@ -53,9 +58,9 @@
   import AgentMenu from '@/view/Common/AgentMenu'
   import ProfileMenu from '@/view/Common/ProfileMenu'
   import SupportMenu from '@/view/Common/SupportMenu'
+  import LangMenu from '@/view/Common/LangMenu'
   import { mapState } from 'vuex'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
-
 
   export default {
     name: 'App',
@@ -63,7 +68,8 @@
       FlowMenu,
       AgentMenu,
       ProfileMenu,
-      SupportMenu
+      SupportMenu,
+      LangMenu
     },
     data() {
       return {

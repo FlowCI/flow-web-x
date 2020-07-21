@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-divider></v-divider>
-    <v-subheader>Steps</v-subheader>
 
     <step-logging-item
         v-for="(item) in stepItems"
@@ -50,11 +49,14 @@
     watch: {
       steps(steps) {
         this.stepItems.length = 0
-        this.buses = {}
-
         steps.forEach((s, index) => {
           const wrapper = new StepWrapper(s)
-          this.buses[wrapper.id] = new Vue()
+
+          // only init event once, since step-logging-item $on in mounted
+          if (!this.buses[wrapper.id]) {
+            this.buses[wrapper.id] = new Vue()
+          }
+
           this.stepItems.push(wrapper)
         })
       },

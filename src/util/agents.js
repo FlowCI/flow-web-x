@@ -13,9 +13,9 @@ export const icons = {
 }
 
 const colors = {
-  [STATUS_BUSY]: 'blue lighten-1',
-  [STATUS_IDLE]: 'green lighten-1',
-  [STATUS_OFFLINE]: 'grey'
+  [STATUS_BUSY]: 'blue--text text--lighten-1',
+  [STATUS_IDLE]: 'green--text text--lighten-1',
+  [STATUS_OFFLINE]: 'grey--text'
 }
 
 const text = {
@@ -34,7 +34,7 @@ export const util = {
   /**
    * Convert agent list to agent wrapper list
    */
-  convert (agents) {
+  convert(agents) {
     let list = []
     for (let agent of agents) {
       list.push(new AgentWrapper(agent))
@@ -45,80 +45,97 @@ export const util = {
 
 export class AgentWrapper {
 
-  constructor (agent) {
+  constructor(agent) {
     this.agent = agent ? agent : emptyObject
+    this.descText = '-'
   }
 
   get isAgent() {
     return true
   }
 
-  get id () {
+  get isBusy() {
+    return this.agent.status === STATUS_BUSY
+  }
+
+  get id() {
     return this.agent.id
   }
 
-  get rawInstance () {
+  get rawInstance() {
     return this.agent
   }
 
-  get icon () {
+  get icon() {
     return icons[this.agent.os] || 'flow-icon-agents'
   }
 
-  get name () {
+  get desc() {
+    return this.descText
+  }
+
+  get name() {
     return this.agent.name
   }
 
-  get tags () {
+  get tags() {
     return this.agent.tags
   }
 
-  get color () {
+  get color() {
     return colors[this.agent.status]
   }
 
-  get text () {
+  get text() {
     return text[this.agent.status]
   }
 
-  get token () {
+  get token() {
     return this.agent.token
   }
 
-  get url () {
+  get url() {
     return this.agent.url ? this.agent.url : 'unknown'
   }
 
-  get hostId () {
+  get jobId() {
+    return this.agent.jobId
+  }
+
+  get hostId() {
     return this.agent.hostId
   }
 
-  get freeMemory () {
+  get freeMemory() {
     return this.fetchResource('freeMemory')
   }
 
-  get totalMemory () {
+  get totalMemory() {
     return this.fetchResource('totalMemory')
   }
 
-  get numOfCpu () {
+  get numOfCpu() {
     return this.fetchResource('cpu')
   }
 
-  get freeDisk () {
+  get freeDisk() {
     return this.fetchResource('freeDisk')
   }
 
-  get totalDisk () {
+  get totalDisk() {
     return this.fetchResource('totalDisk')
   }
 
-  set name (name) {
+  set name(name) {
     this.agent.name = name
   }
 
-  set tags (tags) {
+  set tags(tags) {
     this.agent.tags = tags
+  }
+
+  set desc(text) {
+    this.descText = text
   }
 
   fetchResource(field) {

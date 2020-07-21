@@ -8,7 +8,10 @@
     <template v-slot:item="{item}">
       <tr>
         <td>{{ item.name }}</td>
-        <td>{{ item.category }}</td>
+        <td>
+          <v-icon small class="mr-2">{{ getCategoryData(item.category).icon }}</v-icon>
+          <span class="caption">{{ getCategoryData(item.category).name }}</span>
+        </td>
         <td>{{ timeFormatInMins(item.createdAt) }}</td>
         <td>{{ item.createdBy }}</td>
         <td>
@@ -31,13 +34,15 @@
 <script>
   import { mapState } from 'vuex'
   import { timeFormatInMins } from "@/util/time"
+  import { Categories } from '@/util/configs'
   import actions from '@/store/actions'
 
   export default {
     name: "SettingsConfigHome",
-    data () {
+    data() {
       return {
         timeFormatInMins,
+        Categories,
         loading: false,
         headers: [
           {text: 'Name', value: 'name', align: 'left'},
@@ -48,13 +53,9 @@
         ]
       }
     },
-    mounted () {
+    mounted() {
       this.$emit('onConfigNav', {
-        navs: [
-          {
-            text: 'Configuration'
-          }
-        ],
+        navs: [{text: this.$t('settings.li.config')}],
         showAddBtn: true
       })
 
@@ -69,7 +70,12 @@
       })
     },
     methods: {
-      onAddBtnClick () {
+      getCategoryData(category) {
+        let data = Categories[category]
+        return data || {name: '', icon: ''}
+      },
+
+      onAddBtnClick() {
         this.$router.push({
           name: 'SettingsConfigNew'
         })

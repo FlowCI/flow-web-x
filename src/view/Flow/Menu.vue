@@ -14,10 +14,19 @@
                    class="mx-2"
                    @click="onItemClick(item)">
         <v-list-item-action>
-          <v-icon small :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
+          <v-icon size="20" :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title>{{ item.name }}</v-list-item-title>
+          <v-list-item-title>
+            {{ item.name }}
+            <v-tooltip bottom v-if="item.cron">
+              <template v-slot:activator="{ on }">
+                <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>
+              </template>
+              <span class="caption">{{ item.cron }}</span>
+              <span class="caption ml-1">({{ getCronDesc(item.cron, $i18n.locale) }})</span>
+            </v-tooltip>
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list-item-group>
@@ -32,7 +41,7 @@
 </template>
 
 <script>
-  import {toWrapperList} from '@/util/flows'
+  import {toWrapperList, getCronDesc} from '@/util/flows'
   import {mapState} from 'vuex'
   import FlowCreateDialog from './CreateDialog'
   import actions from '@/store/actions'
@@ -44,6 +53,7 @@
     },
     data() {
       return {
+        getCronDesc,
         searchVal: '',
         items: [],
       }

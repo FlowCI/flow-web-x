@@ -12,7 +12,8 @@ const state = {
   itemsByCredential: [],
   users: [], // flow users
   steps: [], // flow steps from yml
-  notifications: [] // flow notification from yml
+  notifications: [], // flow notification from yml
+  templates: []
 }
 
 const mutations = {
@@ -54,6 +55,10 @@ const mutations = {
 
   setYml (state, yml) {
     state.selected.yml = yml
+  },
+
+  setTemplates(state, templates) {
+    state.templates = templates
   },
 
   list (state, items) {
@@ -186,20 +191,19 @@ const actions = {
       })
   },
 
-  async confirm ({commit}, wrapper) {
+  async confirm ({commit}, {wrapper, yaml}) {
     let gitSettings = {
       gitUrl: wrapper.gitUrl,
       secret: wrapper.secret
     }
 
-    const confirmFunc = () => {
-      http.post(
+    const confirmFunc = async () => {
+      await http.post(
         `flows/${wrapper.name}/confirm`,
         (flow) => {
           console.log('[DONE]: confirmed')
           commit('add', flow)
-        },
-        gitSettings
+        }, {yaml}
       )
     }
 
@@ -236,7 +240,7 @@ const actions = {
     await confirmFunc()
   },
 
-  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout}) {
+  async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout, cron}) {
     await http.post(
         `flows/${name}/settings`,
         (flow) => {
@@ -246,7 +250,8 @@ const actions = {
           isYamlFromRepo,
           yamlRepoBranch,
           jobTimeout,
-          stepTimeout
+          stepTimeout,
+          cron
         }
     )
   },
@@ -282,6 +287,8 @@ const actions = {
 
     await http.get(`flows/${name}/yml/obj`, (flowNode) => {
       commit('setYmlObj', flowNode)
+    }).catch((e) => {
+      console.log(e.message)
     })
   },
 
@@ -323,6 +330,13 @@ const actions = {
       {
         data: btoa(yml)
       })
+  },
+
+  async templates({commit}) {
+    await http.get(`flows/templates`,
+        (list) => {
+          commit('setTemplates', list)
+        })
   },
 
   editor ({commit}, args) {
@@ -369,18 +383,6 @@ const actions = {
       commit('removeVar', {flow, name})
     }
     await http.delete(`flows/${flow.name}/variables`, onSuccess, payload)
-  },
-
-  async saveNotify({commit}, {flow, plugin, inputs, enabled}) {
-    const payload = {plugin, inputs, enabled}
-    const onSuccess = () => {
-      // commit('saveNotify', {flow, name})
-    }
-    await http.post(`flows/${flow.name}/notify`, onSuccess, payload)
-  },
-
-  async removeNotify({commit}, {flow, plugin}) {
-
   }
 }
 

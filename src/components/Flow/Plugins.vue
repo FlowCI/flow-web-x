@@ -1,45 +1,40 @@
 <template>
-  <div class="full-size plugin-view">
-    <v-row>
-      <v-col class="py-1 plugin-tags">
-        <v-chip
-            v-for="item in tagList"
-            :key="item.name"
-            class="ma-2"
-            color="primary"
-            filter
-            outlined
-            :input-value="item.selected"
-            @click="onTagClick(item)"
-        >
-          {{ item.name }}
-        </v-chip>
-      </v-col>
-    </v-row>
+  <div class="full-size plugin-view left-border">
+    <div class="bottom-border">
+      <v-chip
+          v-for="item in tagList"
+          :key="item.name"
+          class="ma-2 font-weight-bold"
+          label
+          small
+          outlined
+          :input-value="item.selected"
+          @click="onTagClick(item)"
+      >
+        {{ item.name }}
+      </v-chip>
+    </div>
 
-    <v-row class="plugin-content">
-      <v-col cols="4" class="list">
-        <v-list dense>
-          <v-list-item-group v-model="selected" color="primary">
-            <v-list-item v-for="plugin in pluginList"
-                         :key="plugin.id"
-                         @click="getReadMe(plugin)"
-            >
-              <v-list-item-content>
-                <plugin-item :wrapper="plugin"
-                             :flow="flow"
-                             :is-installed="isInstalledOnFlow(plugin)"
-                ></plugin-item>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-col>
+    <div class="d-flex">
+      <v-list dense class="left-list">
+        <v-list-item-group v-model="selected" color="primary">
+          <v-list-item v-for="plugin in pluginList"
+                       :key="plugin.id"
+                       class="bottom-border"
+                       @click="getReadMe(plugin)"
+          >
+            <v-list-item-content>
+              <plugin-item :wrapper="plugin"
+                           :flow="flow"
+                           :is-installed="isInstalledOnFlow(plugin)"
+              ></plugin-item>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
 
-      <v-col cols="8" class="pa-0">
-        <iframe id="markdown" class="plugin-markdown"></iframe>
-      </v-col>
-    </v-row>
+      <iframe id="markdown"></iframe>
+    </div>
   </div>
 </template>
 
@@ -205,8 +200,10 @@
 <style lang="scss">
   .plugin-view {
 
-    .plugin-tags {
-      height: 15%;
+    .left-list {
+      max-height: 70vh;
+      min-width: 300px;
+      overflow-y: auto;
     }
 
     .v-list-item {
@@ -216,21 +213,11 @@
     .v-list-item__content {
       padding: 0 !important;
     }
-
-    .plugin-content {
-      height: 90%;
-
-      .list {
-        position: relative;
-        overflow-y: auto;
-        height: 100%;
-      }
-    }
   }
 
-  .plugin-markdown {
+  #markdown {
     width: 100%;
-    height: 100%;
+    min-height: 550px;
     border: 0;
     background: #fbfbfb;
   }

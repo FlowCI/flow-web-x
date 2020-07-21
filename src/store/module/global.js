@@ -9,6 +9,7 @@ export const Store = {
       color: ''
     },
 
+    showCreateFlow: false,
     staticBaseUrl: `${http.host}/static`
   },
   mutations: {
@@ -16,6 +17,10 @@ export const Store = {
       state.snackbar.text = text;
       state.snackbar.show = true;
       state.snackbar.color = color;
+    },
+
+    popCreateFlow(state, val) {
+      state.showCreateFlow = val
     }
   }
 }

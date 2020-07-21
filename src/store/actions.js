@@ -1,6 +1,7 @@
 export default {
   app: {
-    showSnackbar: 'g/show'
+    showSnackbar: 'g/show',
+    popCreateFlow: 'g/popCreateFlow'
   },
 
   auth: {
@@ -20,6 +21,7 @@ export default {
     listByCredential: 'flows/listByCredential',
     select: 'flows/select',
     delete: 'flows/delete',
+    templates: 'flows/templates',
     users: {
       list: 'flows/listUsers',
       add: 'flows/addUser',
@@ -48,6 +50,7 @@ export default {
     statusUpdate: 'jobs/statusUpdate',
     select: 'jobs/select',
     getYml: 'jobs/getYml',
+    getDesc: 'jobs/getDesc',
     reports: {
       list: 'jobs/listReport',
       fetch: 'jobs/fetchReport'
@@ -65,7 +68,8 @@ export default {
     logs: {
       push: 'logs/push',
       load: 'logs/load',
-      download: 'logs/download'
+      download: 'logs/download',
+      read: 'logs/read'
     },
   },
 
@@ -82,6 +86,7 @@ export default {
     createRsa: 'secrets/createRsa',
     createAuth: 'secrets/createAuth',
     createToken: 'secrets/createToken',
+    createAndroidSign: 'secrets/createAndroidSign',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',

@@ -63,7 +63,7 @@
       this.$emit('onConfigNav', {
         navs: [
           {
-            text: 'Users'
+            text: this.$t('settings.li.users')
           }
         ],
         showAddBtn: true
