@@ -5,8 +5,8 @@ export const HOST_STATUS_CONNECTED = 'Connected'
 export const HOST_STATUS_DISCONNECTED = 'Disconnected'
 
 const colors = {
-  [HOST_STATUS_CONNECTED]: 'green lighten-1',
-  [HOST_STATUS_DISCONNECTED]: 'grey'
+  [HOST_STATUS_CONNECTED]: 'green--text text--lighten-1',
+  [HOST_STATUS_DISCONNECTED]: 'grey--text'
 }
 
 export class HostWrapper {
