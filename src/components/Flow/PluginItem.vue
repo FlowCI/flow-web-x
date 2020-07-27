@@ -1,8 +1,8 @@
 <template>
   <div class="plugin-item pa-1">
     <v-row no-gutters align="center" class="my-1">
-      <v-col cols="1">
-        <v-icon small v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
+      <v-col cols="2">
+        <v-icon small class="ml-2" v-if="wrapper.isDefaultIcon">mdi-view-grid-plus-outline</v-icon>
         <v-img v-if="wrapper.isHttpLinkIcon"
                :src="wrapper.icon"
                max-height="25"
@@ -14,7 +14,7 @@
              alt=""/>
       </v-col>
 
-      <v-col cols="10">
+      <v-col cols="9">
         <span class="font-weight-bold">{{ wrapper.name }}</span>
       </v-col>
 
@@ -148,7 +148,7 @@
 
     .plugin-icon {
       height: 20px;
-      width: 20px;
+      width: 35px;
       vertical-align: middle;
     }
   }
