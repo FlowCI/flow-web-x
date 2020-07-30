@@ -29,9 +29,8 @@
         </v-form>
       </v-col>
 
-      <v-col cols="8" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
+      <v-col cols="2" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
         <text-box
-            max="50"
             min="1"
             step="1"
             type="number"
@@ -51,14 +50,14 @@
 
         <host-test-btn :host="wrapper.rawInstance"
                        clazz="mr-5"
-                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+                       v-if="wrapper.type !== HOST_TYPE_LOCAL_SOCKET"
         ></host-test-btn>
 
         <confirm-btn :text="$t('delete')"
                      icon="mdi-delete"
                      color="error"
                      clazz="mr-5"
-                     :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
+                     v-if="wrapper.type !== HOST_TYPE_LOCAL_SOCKET"
                      @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
