@@ -23,7 +23,7 @@
       ></text-box>
 
       <text-box label="Key store password"
-                password
+                type="password"
                 :readonly="isReadOnly"
                 :rules="rules.required"
                 v-model="model.keyStorePassword.data"
@@ -36,7 +36,7 @@
       ></text-box>
 
       <text-box label="Key password"
-                password
+                type="password"
                 :readonly="isReadOnly"
                 :rules="rules.required"
                 v-model="model.keyPassword.data"

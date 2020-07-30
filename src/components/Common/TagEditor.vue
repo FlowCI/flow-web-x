@@ -17,9 +17,11 @@
     </div>
     <div>
       <v-chip
+          small
           close
           label
           class="mr-1"
+          close-icon="mdi-delete"
           v-for="(tag, index) in raw"
           v-model="tag.enabled"
           :key="tag.text"

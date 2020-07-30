@@ -2,12 +2,12 @@
   <div>
     <v-row>
       <v-col>
-        <div>New Agent Host</div>
+        <span class="font-weight-bold caption">New Agent Host</span>
       </v-col>
     </v-row>
 
     <v-form ref="hostNameForm" lazy-validation>
-      <v-row no-gutters dense>
+      <v-row no-gutters>
         <v-col cols="8">
           <text-box
               label="Name"
@@ -15,23 +15,19 @@
               :rules="nameRules"
               v-model="wrapper.name"
           ></text-box>
+
           <tag-editor :tags="wrapper.tags"
                       :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
           ></tag-editor>
+
+          <text-select
+              :items="[HOST_TYPE_SSH]"
+              label="Host Types"
+              v-model="wrapper.type"
+          ></text-select>
         </v-col>
       </v-row>
     </v-form>
-
-    <v-row>
-      <v-col cols="8">
-        <v-select
-            :items="[HOST_TYPE_SSH]"
-            label="Host Types"
-            v-model="wrapper.type"
-            dense
-        ></v-select>
-      </v-col>
-    </v-row>
 
     <v-row>
       <v-col cols="8" v-if="wrapper.type === HOST_TYPE_SSH">
@@ -41,7 +37,14 @@
       </v-col>
 
       <v-col cols="8" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
-        <pool-size-editor :wrapper="wrapper"></pool-size-editor>
+        <text-box
+            max="50"
+            min="1"
+            step="1"
+            type="number"
+            label="Max Pool Size"
+            v-model="wrapper.maxSize"
+        ></text-box>
       </v-col>
 
       <v-col cols="8" v-if="wrapper.error">
@@ -63,8 +66,8 @@
   import { agentNameRules } from '@/util/rules'
   import TagEditor from '@/components/Common/TagEditor'
   import TextBox from '@/components/Common/TextBox'
+  import TextSelect from '@/components/Common/TextSelect'
   import SshHostEditor from '@/components/Settings/SshHostEditor'
-  import PoolSizeEditor from '@/components/Settings/PoolSizeEditor'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
   import actions from '@/store/actions'
@@ -74,12 +77,12 @@
   export default {
     name: 'SettingsAgentNew',
     components: {
-      PoolSizeEditor,
       TagEditor,
       SshHostEditor,
       SaveBtn,
       BackBtn,
-      TextBox
+      TextBox,
+      TextSelect
     },
     data() {
       return {
