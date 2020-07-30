@@ -49,7 +49,18 @@
         error: ''
       }
     },
+    mounted() {
+      this.$store.dispatch(actions.users.hasDefault, {
+        onSuccess: this.toCreateDefaultPage
+      }).then()
+    },
     methods: {
+      toCreateDefaultPage(v) {
+        if (!v) {
+          this.$router.replace('/create')
+        }
+      },
+
       onLoginClick() {
         let data = {username: this.email, password: this.password}
         this.$store.dispatch(actions.auth.login, data)

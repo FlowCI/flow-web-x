@@ -23,6 +23,12 @@ const tokens = {
   refreshToken: ''
 }
 
+const skip = {
+  'auth/refresh': true,
+  'auth/login': true,
+  'users/default': true
+}
+
 let waitingForToken = []
 
 const helper = {
@@ -54,12 +60,8 @@ const helper = {
       .replace('"', '')
   },
 
-  isTokenRefreshRequest: (config) => {
-    return config.url === 'auth/refresh'
-  },
-
-  isLoginRequest: (config) => {
-    return config.url === 'auth/login'
+  isUrlInSkip: (config) => {
+    return skip[config.url]
   },
 
   tokenHasExpired: (token) => {
@@ -74,11 +76,7 @@ const helper = {
  */
 instance.interceptors.request.use(
   async (config) => {
-    if (helper.isTokenRefreshRequest(config)) {
-      return config
-    }
-
-    if (helper.isLoginRequest(config)) {
+    if (helper.isUrlInSkip(config)) {
       return config
     }
 

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Login from '@/view/Home/Login'
+import CreateDefaultUser from '@/view/Home/CreateDefaultUser'
 
 import FlowHome from '@/view/Flow/Index'
 import FlowOverview from '@/view/Flow/Overview'
@@ -41,6 +42,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/create',
+      name: 'CreateDefaultUser',
+      component: CreateDefaultUser
     },
     {
       path: '',
