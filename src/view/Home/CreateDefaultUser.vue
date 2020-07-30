@@ -5,6 +5,11 @@
         <v-card-title class="justify-center">
           <span class="title font-weight-bold">{{ $t('welcome') }}</span>
         </v-card-title>
+
+        <v-card-subtitle class="text-center">
+          <span>{{ $t('create_default_admin') }}</span>
+        </v-card-subtitle>
+
         <v-card-text>
           <v-text-field
               v-model="email"
@@ -16,7 +21,7 @@
           <v-text-field
               prepend-inner-icon="mdi-key"
               type="password"
-              label="Password"
+              :label="$t('password')"
               v-model="password"
               class="input-group--focused"
           ></v-text-field>
@@ -24,7 +29,7 @@
           <v-text-field
               prepend-inner-icon="mdi-key"
               type="password"
-              label="Confirm Password"
+              :label="$t('password_confirm')"
               v-model="confirmPassword"
               class="input-group--focused"
           ></v-text-field>

@@ -1,5 +1,7 @@
 export default {
   welcome: 'Welcome to flow.ci',
+  create_default_admin: 'Please create a default admin user',
+
   back: 'Back',
   save: 'Save',
   reset: 'Reset',
@@ -12,6 +14,7 @@ export default {
   delete: 'Delete',
   login: 'Login',
   password: 'Password',
+  password_confirm: 'Confirm Password',
   confirm: 'Confirm',
   restart: 'Restart',
   revoke: 'Revoke',
