@@ -102,6 +102,9 @@ export default {
   },
 
   users: {
+    hasDefault: 'users/hasDefault',
+    createDefault: 'users/createDefault',
+
     listAll: 'users/listAll',
     create: 'users/create',
     changePassword: 'users/changePassword',
