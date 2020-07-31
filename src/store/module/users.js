@@ -29,14 +29,15 @@ const mutations = {
 
 const actions = {
   hasDefault({commit}, {onSuccess}) {
-    http.get('users/default', onSuccess).then(r => {})
+    return http.get('users/default', onSuccess)
   },
 
   createDefault({commit}, {email, pw, onSuccess}) {
-    http.post('users/default', onSuccess, {
+    return http.post('users/default', onSuccess, {
       email,
-      password: md5(pw, null, false)
-    }).then(r => {})
+      password: md5(pw, null, false),
+      role: 'Admin'
+    })
   },
 
   listAll ({commit}, {page, size}) {

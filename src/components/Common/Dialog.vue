@@ -94,7 +94,6 @@
     },
     watch: {
       dialog (newVal) {
-        console.log(newVal)
         this.show = newVal
       }
     },

@@ -11,28 +11,32 @@
         </v-card-subtitle>
 
         <v-card-text>
-          <v-text-field
-              v-model="email"
-              label="Email"
-              required
-              prepend-inner-icon="mdi-account"
-          ></v-text-field>
+          <v-form ref="inputForm" lazy-validation>
+            <v-text-field
+                v-model="email"
+                label="Email"
+                :rules="emailRule"
+                prepend-inner-icon="mdi-account"
+            ></v-text-field>
 
-          <v-text-field
-              prepend-inner-icon="mdi-key"
-              type="password"
-              :label="$t('password')"
-              v-model="password"
-              class="input-group--focused"
-          ></v-text-field>
+            <v-text-field
+                prepend-inner-icon="mdi-key"
+                type="password"
+                :label="$t('password')"
+                :rules="passwordRule"
+                v-model="password"
+                class="input-group--focused"
+            ></v-text-field>
 
-          <v-text-field
-              prepend-inner-icon="mdi-key"
-              type="password"
-              :label="$t('password_confirm')"
-              v-model="confirmPassword"
-              class="input-group--focused"
-          ></v-text-field>
+            <v-text-field
+                prepend-inner-icon="mdi-key"
+                type="password"
+                :label="$t('password_confirm')"
+                :rules="confirmedRules"
+                v-model="confirmPassword"
+                class="input-group--focused"
+            ></v-text-field>
+          </v-form>
 
           <span class="error--text caption">{{ error }}</span>
         </v-card-text>
@@ -43,31 +47,104 @@
           <v-btn tile
                  block
                  color="primary"
-                 @click="onCreateClick">{{ $t('Create') }}
+                 @click="onCreateClick">{{ $t('create') }}
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
+
+    <v-dialog
+        v-model="dialog"
+        width="500"
+    >
+      <v-card>
+        <v-card-text class="pt-3">
+          <span :class="message.color">{{ message.text }}</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn small color="primary" @click="onConfirmClick">{{ $t('confirm') }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-row>
 </template>
 
 <script>
 import actions from '@/store/actions'
+import { required, email, inputRange } from '@/util/rules'
 
 export default {
   name: 'CreateDefaultUser',
   data() {
     return {
+      dialog: false,
+      message: {
+        text: '',
+        color: '',
+        isError: false
+      },
       email: '',
       password: '',
       confirmPassword: '',
       showPassword: false,
-      error: ''
+      error: '',
+      emailRule: [].concat(
+          required('Email is required'),
+          email('Illegal email format'),
+      ),
+      passwordRule: [].concat(
+          required('Password is required'),
+          inputRange(6, 50, 'Password length should between 6 - 50')
+      ),
+      confirmedRules: [].concat(
+          required('Confirmed password is required'),
+          [v => (v === this.password) || this.$t('settings.profile.password_not_same')]
+      ),
     }
   },
   methods: {
     onCreateClick() {
+      if (!this.$refs.inputForm.validate()) {
+        return
+      }
 
+      this.$store.dispatch(actions.users.createDefault, {
+        email: this.email,
+        pw: this.password,
+        onSuccess: this.onSuccess
+      }).catch((e) => {
+        this.onError(e.message)
+      })
+    },
+
+    onConfirmClick() {
+      this.dialog = false
+
+      if (this.message.isError) {
+        return
+      }
+
+      this.message = {}
+      this.$router.replace('/login')
+    },
+
+    onError(msg) {
+      this.message = {
+        text: msg,
+        color: 'red--text',
+        isError: true
+      }
+      this.dialog = true
+    },
+
+    onSuccess() {
+      this.message = {
+        text: this.$t('createAdmin.created', [this.email]),
+        isError: false
+      }
+      this.dialog = true
     }
   }
 }
@@ -75,7 +152,7 @@ export default {
 
 <style lang="scss">
 .create-default-view {
-  .v-input__prepend-inner:after{
+  .v-input__prepend-inner:after {
     content: '';
     margin-right: 10px;
     position: relative;

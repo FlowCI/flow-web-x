@@ -22,6 +22,10 @@ export default {
   new: 'New',
   edit: 'Edit',
 
+  createAdmin: {
+    created: 'The default admin user is created, please login with email {0}'
+  },
+
   menu: {
     signedInAs: 'Signed in as ',
     settings: 'Settings',

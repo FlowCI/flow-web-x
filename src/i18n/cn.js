@@ -22,6 +22,10 @@ export default {
   new: '新建',
   edit: '编辑',
 
+  createAdmin: {
+    created: '默认的管理员已经创建成功, 请用 {0} 登录'
+  },
+
   menu: {
     signedInAs: '当前用户 ',
     settings: '设置',
