@@ -15,6 +15,7 @@ export class HostWrapper {
     this.host = host || {
       tags: [],
       maxSize: 5,
+      port: 22,
       type: HOST_TYPE_SSH,
     }
     this.agents = []
@@ -72,6 +73,10 @@ export class HostWrapper {
     return this.host.maxSize
   }
 
+  get port() {
+    return this.host.port
+  }
+
   get color() {
     return colors[this.host.status]
   }
@@ -114,6 +119,10 @@ export class HostWrapper {
 
   set maxSize(val) {
     this.host.maxSize = val
+  }
+
+  set port(val) {
+    this.host.port = val
   }
 
   set error(val) {

@@ -1,4 +1,4 @@
-export function flowNameRules (vue) {
+export function flowNameRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.name_required'),
     v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('flow.hint.name_rule'),
@@ -6,7 +6,7 @@ export function flowNameRules (vue) {
   ]
 }
 
-export function gitUrlRules (vue) {
+export function gitUrlRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.git_url_required'),
     v => (/(^(http|https|ssh):\/\/)|(^git@)/g.test(v))
@@ -14,7 +14,7 @@ export function gitUrlRules (vue) {
   ]
 }
 
-export function secretAndConfigNameRules (vue) {
+export function secretAndConfigNameRules(vue) {
   return [
     v => !!v || vue.$t('credential.hint.name_required'),
     v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
@@ -22,20 +22,20 @@ export function secretAndConfigNameRules (vue) {
   ]
 }
 
-export function sshEmailRules (vue) {
+export function sshEmailRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.ssh_email_required')
   ]
 }
 
-export function sshPublicKeyRules (vue) {
+export function sshPublicKeyRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.ssh_key_required'),
     v => (/(^ssh-rsa)/g.test(v)) || vue.$t('flow.hint.ssh_public_format')
   ]
 }
 
-export function sshPrivateKeyRules (vue) {
+export function sshPrivateKeyRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.ssh_key_required'),
     v => (/(^-----BEGIN RSA PRIVATE KEY-----)/g.test(v))
@@ -43,7 +43,7 @@ export function sshPrivateKeyRules (vue) {
   ]
 }
 
-export function agentNameRules (vue) {
+export function agentNameRules(vue) {
   return [
     v => !!v || vue.$t('agent.hint.name_required'),
     v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('agent.hint.name_rule'),
@@ -51,7 +51,7 @@ export function agentNameRules (vue) {
   ]
 }
 
-export function agentTagRules (vue) {
+export function agentTagRules(vue) {
   return [
     v => !!v || vue.$t('agent.hint.tag_required'),
     v => (/^[A-Za-z0-9]+$/g.test(v)) || vue.$t('agent.hint.tag_rule'),
@@ -59,14 +59,14 @@ export function agentTagRules (vue) {
   ]
 }
 
-export function authFormRules (vue) {
+export function authFormRules(vue) {
   return [
     v => !!v || vue.$t('credential.hint.auth_required'),
     v => (v.length >= 1 && v.length <= 100) || vue.$t('credential.hint.auth_length'),
   ]
 }
 
-export function required (message) {
+export function required(message) {
   return [
     v => {
       if (v === undefined || v === null || v === '') {
@@ -74,5 +74,17 @@ export function required (message) {
       }
       return true
     },
+  ]
+}
+
+export function email(message) {
+  return [
+    v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || message
+  ]
+}
+
+export function inputRange(min, max, message) {
+  return [
+    v => (v.length >= min && v.length <= max) || message
   ]
 }

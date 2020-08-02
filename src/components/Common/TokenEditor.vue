@@ -3,7 +3,7 @@
     <v-col cols="12">
       <text-box
           label="Token"
-          password
+          type="password"
           v-model="model.token.data"
       ></text-box>
     </v-col>
