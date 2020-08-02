@@ -29,6 +29,13 @@
                   <span>Timeout, but allow failure</span>
                 </v-tooltip>
 
+                <v-tooltip right content-class="body" v-if="wrapper.isSkippedOnCondition">
+                  <template v-slot:activator="{ on }">
+                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                  </template>
+                  <span>{{ wrapper.error }}</span>
+                </v-tooltip>
+
               </v-col>
               <v-col cols="8">
               </v-col>
