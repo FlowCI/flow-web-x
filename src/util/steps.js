@@ -12,9 +12,12 @@ const STATUS_TIMEOUT = 'TIMEOUT'
  * Wrapper for both ExecutedCmd and ExecutedLocalTask
  */
 export class StepWrapper {
-  constructor(step) {
+  constructor(step, index) {
     this.step = step
+    this.index = index
     this.stepName = step.name
+    this.wrapperChildrenList = []
+    this.parentWrapper = null
 
     if (step.nodePath) {
       let slashIndex = this.step.nodePath.lastIndexOf('/')
@@ -24,6 +27,10 @@ export class StepWrapper {
 
   get rawInstance() {
     return this.step
+  }
+
+  get order() {
+    return this.index
   }
 
   get id() {
@@ -46,6 +53,22 @@ export class StepWrapper {
 
   get flow() {
     return this.step.flowId
+  }
+
+  get children() {
+    return this.step.children
+  }
+
+  get wrapperChildren() {
+    return this.wrapperChildrenList
+  }
+
+  get wrapperParent() {
+    return this.parentWrapper
+  }
+
+  get isRoot(){
+    return this.step.rootStep
   }
 
   get name() {
@@ -97,6 +120,14 @@ export class StepWrapper {
 
   set rawStatus(newStatus) {
     this.step.status = newStatus
+  }
+
+  set wrapperChildren(list) {
+    this.wrapperChildrenList = list
+  }
+
+  set wrapperParent(w) {
+    this.parentWrapper = w
   }
 }
 

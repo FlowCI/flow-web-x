@@ -50,7 +50,7 @@
       steps(steps) {
         this.stepItems.length = 0
         steps.forEach((s, index) => {
-          const wrapper = new StepWrapper(s)
+          const wrapper = new StepWrapper(s, index)
 
           // only init event once, since step-logging-item $on in mounted
           if (!this.buses[wrapper.id]) {
@@ -64,7 +64,7 @@
       tasks(tasks) {
         this.taskItems.length = 0
         tasks.forEach((s, index) => {
-          const wrapper = new StepWrapper(s)
+          const wrapper = new StepWrapper(s, index)
           this.taskItems.push(wrapper)
         })
       },
