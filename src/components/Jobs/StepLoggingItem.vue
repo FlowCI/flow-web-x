@@ -74,10 +74,6 @@ export default {
       required: true,
       type: Object
     },
-    hasGroupStep: {
-      required: true,
-      type: Boolean
-    },
     bus: {
       required: false,
       type: Object

@@ -16,6 +16,8 @@ export class StepWrapper {
     this.step = step
     this.index = index
     this.stepName = step.name
+    this.wrapperChildrenList = []
+    this.parentWrapper = null
 
     if (step.nodePath) {
       let slashIndex = this.step.nodePath.lastIndexOf('/')
@@ -55,6 +57,14 @@ export class StepWrapper {
 
   get children() {
     return this.step.children
+  }
+
+  get wrapperChildren() {
+    return this.wrapperChildrenList
+  }
+
+  get wrapperParent() {
+    return this.parentWrapper
   }
 
   get isRoot(){
@@ -110,6 +120,14 @@ export class StepWrapper {
 
   set rawStatus(newStatus) {
     this.step.status = newStatus
+  }
+
+  set wrapperChildren(list) {
+    this.wrapperChildrenList = list
+  }
+
+  set wrapperParent(w) {
+    this.parentWrapper = w
   }
 }
 
