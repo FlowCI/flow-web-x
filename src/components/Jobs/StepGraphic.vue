@@ -132,6 +132,9 @@ export default {
       wrapperItems.forEach((v, i) => {
         if (v.children) {
           let children = this.toNodes(v.wrapperChildren);
+          for (let childNode of children) {
+            childNode.label = `${childNode.label}\n(${v.name})`
+          }
           nodes = nodes.concat(children)
           return
         }
