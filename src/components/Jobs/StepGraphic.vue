@@ -37,6 +37,30 @@
         steps: state => state.steps.items,
         change: state => state.steps.change
       }),
+
+      items() {
+        let map = {}
+        let parents = []
+
+        for (let step of this.steps) {
+          map[step.nodePath] = step
+          if (step.children) {
+            parents.push(step)
+          }
+        }
+
+        for (let step of parents) {
+          let children = []
+          for (let nodePath of step.children) {
+            children.push(map[nodePath])
+          }
+          step.children = children
+        }
+
+        return this.steps.filter((a) => {
+          return a.rootStep === true
+        })
+      }
     },
     mounted() {
       this.graph = this.initG6()
@@ -103,7 +127,7 @@
         nodes.push(start)
 
         this.steps.forEach((s, index) => {
-          const wrapper = new StepWrapper(s)
+          const wrapper = new StepWrapper(s, index)
           const node = {
             id: wrapper.id,
             label: wrapper.name

@@ -12,8 +12,9 @@ const STATUS_TIMEOUT = 'TIMEOUT'
  * Wrapper for both ExecutedCmd and ExecutedLocalTask
  */
 export class StepWrapper {
-  constructor(step) {
+  constructor(step, index) {
     this.step = step
+    this.index = index
     this.stepName = step.name
 
     if (step.nodePath) {
@@ -24,6 +25,10 @@ export class StepWrapper {
 
   get rawInstance() {
     return this.step
+  }
+
+  get order() {
+    return this.index
   }
 
   get id() {
@@ -46,6 +51,14 @@ export class StepWrapper {
 
   get flow() {
     return this.step.flowId
+  }
+
+  get children() {
+    return this.step.children
+  }
+
+  get isRoot(){
+    return this.step.rootStep
   }
 
   get name() {
