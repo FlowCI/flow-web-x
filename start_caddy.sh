@@ -17,4 +17,4 @@ do
   mv ${entry} ${name}
 done
 
-caddy -conf /etc/Caddyfile
+caddy run -config /etc/caddy/Caddyfile
