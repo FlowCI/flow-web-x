@@ -16,7 +16,7 @@
       ></text-box>
 
       <text-box label="SMTP password"
-                password
+                type="password"
                 v-model="config.auth.password"
       ></text-box>
 

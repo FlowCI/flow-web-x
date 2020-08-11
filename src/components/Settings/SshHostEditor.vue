@@ -1,63 +1,86 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12">
-        <div>SSH Host Settings</div>
-      </v-col>
-      <v-col cols="12">
-        <v-select dense
-                  v-model="wrapper.secret"
-                  :items="secrets"
-                  :rules="rules.required"
-                  label="Secret"
-        ></v-select>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field dense
-                      v-model="wrapper.user"
-                      :rules="rules.required"
-                      label="Host User"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field dense
-                      v-model="wrapper.ip"
-                      :rules="rules.required"
-                      label="Host IP"
-        ></v-text-field>
+      <v-col>
+        <span class="font-weight-bold caption">SSH Host Settings</span>
       </v-col>
     </v-row>
-    <pool-size-editor :wrapper="wrapper"></pool-size-editor>
+
+    <v-row no-gutters>
+      <v-col cols="12">
+        <text-select
+            v-model="wrapper.secret"
+            :items="secrets"
+            :rules="rules.required"
+            label="Secret"
+        ></text-select>
+
+        <text-box
+            v-model="wrapper.user"
+            :rules="rules.required"
+            label="Host User"
+        ></text-box>
+
+        <text-box
+            v-model="wrapper.ip"
+            :rules="rules.required"
+            label="Host IP"
+        ></text-box>
+      </v-col>
+
+      <v-col cols="4">
+        <text-box
+            type="number"
+            label="Port"
+            v-model="wrapper.port"
+        ></text-box>
+      </v-col>
+
+      <v-col cols="1"></v-col>
+
+      <v-col cols="4">
+        <text-box
+            max="50"
+            min="1"
+            step="1"
+            type="number"
+            label="Max Pool Size"
+            v-model="wrapper.maxSize"
+        ></text-box>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-  import { required } from '@/util/rules'
-  import PoolSizeEditor from './PoolSizeEditor'
+import { required } from '@/util/rules'
+import TextBox from '@/components/Common/TextBox'
+import TextSelect from '@/components/Common/TextSelect'
 
-  export default {
-    name: 'SshHostEditor',
-    components: {
-      PoolSizeEditor
+export default {
+  name: 'SshHostEditor',
+  components: {
+    TextBox,
+    TextSelect
+  },
+  props: {
+    wrapper: {
+      type: Object,
+      required: true
     },
-    props: {
-      wrapper: {
-        type: Object,
-        required: true
-      },
-      secrets: {
-        type: Array,
-        required: true
-      }
-    },
-    data () {
-      return {
-        rules: {
-          required: required('Required')
-        }
+    secrets: {
+      type: Array,
+      required: true
+    }
+  },
+  data() {
+    return {
+      rules: {
+        required: required('Required')
       }
     }
   }
+}
 </script>
 
 <style scoped>

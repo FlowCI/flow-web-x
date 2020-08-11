@@ -25,17 +25,17 @@
         <v-form ref="passwordForm"
                 lazy-validation>
           <text-box label="Old password"
-                    password
+                    type="password"
                     v-model="passwords.old"
                     :rules="notEmptyRules"
           ></text-box>
           <text-box label="New password"
-                    password
+                    type="password"
                     v-model="passwords.newOne"
                     :rules="notEmptyRules"
           ></text-box>
           <text-box label="Confirm New password"
-                    password
+                    type="password"
                     v-model="passwords.confirm"
                     :rules="confirmedRules"
           ></text-box>

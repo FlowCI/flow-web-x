@@ -1,5 +1,7 @@
 export default {
   welcome: '欢迎来到 flow.ci',
+  create_default_admin: '请先创建一个默认的管理员',
+
   back: '返回',
   save: '保存',
   reset: '重置',
@@ -12,12 +14,17 @@ export default {
   delete: '删除',
   login: '登录',
   password: '密码',
+  password_confirm: '确认密码',
   confirm: '确认',
   restart: '重新开始',
   revoke: '删除',
   branch: '分支',
   new: '新建',
   edit: '编辑',
+
+  createAdmin: {
+    created: '默认的管理员已经创建成功, 请用 {0} 登录'
+  },
 
   menu: {
     signedInAs: '当前用户 ',

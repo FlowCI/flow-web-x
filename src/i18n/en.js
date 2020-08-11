@@ -1,5 +1,7 @@
 export default {
   welcome: 'Welcome to flow.ci',
+  create_default_admin: 'Please create a default admin user',
+
   back: 'Back',
   save: 'Save',
   reset: 'Reset',
@@ -12,12 +14,17 @@ export default {
   delete: 'Delete',
   login: 'Login',
   password: 'Password',
+  password_confirm: 'Confirm Password',
   confirm: 'Confirm',
   restart: 'Restart',
   revoke: 'Revoke',
   branch: 'Branch',
   new: 'New',
   edit: 'Edit',
+
+  createAdmin: {
+    created: 'The default admin user is created, please login with email {0}'
+  },
 
   menu: {
     signedInAs: 'Signed in as ',
