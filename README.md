@@ -1,7 +1,8 @@
 flow-web-x
 ============
 
-[![LICENSE](https://img.shields.io/github/license/pingcap/tidb.svg)](https://github.com/pingcap/tidb/blob/master/LICENSE)  
+![GitHub](https://img.shields.io/github/license/flowci/flow-web-x)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/flowci/flow-web-x)
 
 The flow.ci web component
 
