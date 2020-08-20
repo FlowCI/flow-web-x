@@ -16,6 +16,6 @@ module.exports = {
           APP_VERSION: JSON.stringify(require('./package.json').version),
         }
       })
-    ]
+    ],
   }
 }
