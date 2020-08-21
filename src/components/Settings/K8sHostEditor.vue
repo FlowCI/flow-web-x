@@ -18,7 +18,7 @@
             v-model="wrapper.secret"
             :items="secrets"
             :rules="rules.required"
-            label="Select a secret"
+            label="Secret"
         ></text-select>
       </v-col>
     </v-row>
