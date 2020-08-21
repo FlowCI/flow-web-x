@@ -21,6 +21,17 @@
             label="Secret"
         ></text-select>
       </v-col>
+
+      <v-col cols="4">
+        <text-box
+            max="50"
+            min="1"
+            step="1"
+            type="number"
+            label="Max Pool Size"
+            v-model="wrapper.maxSize"
+        ></text-box>
+      </v-col>
     </v-row>
   </div>
 </template>
