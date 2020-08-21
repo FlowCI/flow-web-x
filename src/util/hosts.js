@@ -1,5 +1,6 @@
 export const HOST_TYPE_SSH = 'SSH'
 export const HOST_TYPE_LOCAL_SOCKET = 'LocalUnixSocket'
+export const HOST_TYPE_K8S = 'K8s'
 
 export const HOST_STATUS_CONNECTED = 'Connected'
 export const HOST_STATUS_DISCONNECTED = 'Disconnected'
