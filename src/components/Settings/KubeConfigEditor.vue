@@ -41,8 +41,6 @@ export default {
       readOnly: this.isReadOnly
     })
 
-    console.log(this.model.content.data)
-
     this.instance.getDoc().setValue(this.model.content.data)
     this.instance.on('change', this.onChange)
   },

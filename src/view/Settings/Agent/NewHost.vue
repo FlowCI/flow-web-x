@@ -8,7 +8,7 @@
 
     <v-form ref="hostNameForm" lazy-validation>
       <v-row no-gutters>
-        <v-col cols="8">
+        <v-col cols="9">
           <text-box
               label="Name"
               :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
@@ -30,13 +30,13 @@
     </v-form>
 
     <v-row>
-      <v-col cols="8" v-if="wrapper.type === HOST_TYPE_SSH">
+      <v-col cols="9" v-if="wrapper.type === HOST_TYPE_SSH">
         <v-form ref="sshSettingsForm" lazy-validation>
           <ssh-host-editor :wrapper="wrapper" :secrets="secretNameList"></ssh-host-editor>
         </v-form>
       </v-col>
 
-      <v-col cols="8" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
+      <v-col cols="9" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
         <text-box
             max="50"
             min="1"
@@ -47,13 +47,13 @@
         ></text-box>
       </v-col>
 
-      <v-col cols="8" v-if="wrapper.error">
+      <v-col cols="9" v-if="wrapper.error">
         <span class="error--text">{{ wrapper.error }}</span>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
         <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>

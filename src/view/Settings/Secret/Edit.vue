@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="8">
+      <v-col cols="9">
         <text-box label="Name" readonly v-model="name"></text-box>
         <text-box label="Category"
                   readonly
@@ -12,7 +12,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="8" v-if="isSshRsa">
+      <v-col cols="9" v-if="isSshRsa">
         <ssh-rsa-editor :show-help="false"
                         :show-create-new="false"
                         :is-read-only="true"
@@ -20,31 +20,31 @@
         ></ssh-rsa-editor>
       </v-col>
 
-      <v-col cols="8" v-if="isAuth">
+      <v-col cols="9" v-if="isAuth">
         <auth-editor
             :is-read-only="true"
             :model="instance"
         ></auth-editor>
       </v-col>
 
-      <v-col cols="8" v-if="isToken">
+      <v-col cols="9" v-if="isToken">
         <token-editor
             :is-read-only="true"
             :model="instance"
         ></token-editor>
       </v-col>
 
-      <v-col cols="8" v-if="isAndroidSign">
+      <v-col cols="9" v-if="isAndroidSign">
         <android-sign-editor :is-read-only="true" :model="instance"></android-sign-editor>
       </v-col>
 
-      <v-col cols="8" v-if="isKubeconfig">
+      <v-col cols="9" v-if="isKubeconfig">
         <kube-config-editor :is-read-only="true" :model="instance"></kube-config-editor>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn class="mr-5" :on-click="onBackClick"></back-btn>
 
         <confirm-btn :text="$t('revoke')"

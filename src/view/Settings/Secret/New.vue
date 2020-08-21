@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="8">
+      <v-col cols="9">
         <v-form ref="nameForm" lazy-validation>
           <text-box label="Name"
                     :rules="nameRules"
@@ -18,39 +18,39 @@
 
     <v-form ref="contentForm" lazy-validation>
       <v-row>
-        <v-col cols="8" v-if="isSshRsa">
+        <v-col cols="9" v-if="isSshRsa">
           <ssh-rsa-editor :showHelp="false"
                           :showCreateNew="true"
                           :model="instance"
           ></ssh-rsa-editor>
         </v-col>
 
-        <v-col cols="8" v-if="isAuth">
+        <v-col cols="9" v-if="isAuth">
           <auth-editor :model="instance"></auth-editor>
         </v-col>
 
-        <v-col cols="8" v-if="isToken">
+        <v-col cols="9" v-if="isToken">
           <token-editor :model="instance"></token-editor>
         </v-col>
 
-        <v-col cols="8" v-if="isAndroidSign">
+        <v-col cols="9" v-if="isAndroidSign">
           <android-sign-editor :model="instance"></android-sign-editor>
         </v-col>
 
-        <v-col cols="8" v-if="isKubeconfig">
+        <v-col cols="9" v-if="isKubeconfig">
           <kube-config-editor :model="instance"></kube-config-editor>
         </v-col>
       </v-row>
     </v-form>
 
     <v-row no-gutters dense v-if="error">
-      <v-col cols="8">
+      <v-col cols="9">
         <span class="error--text">Error: {{ error }}</span>
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
         <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
@@ -98,7 +98,7 @@ export default {
       categories: CategoriesSelection,
       nameRules: secretAndConfigNameRules(this),
       category: CATEGORY_SSH_RSA,
-      error: '12321312',
+      error: '',
       secrets: {
         [CATEGORY_SSH_RSA]: {
           selected: '',

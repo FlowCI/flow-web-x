@@ -2,7 +2,7 @@
   <div>
     <v-form ref="nameForm" lazy-validation>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="9">
           <text-box label="Name"
                     :rules="nameRules"
                     v-model="name"
@@ -20,7 +20,7 @@
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="9">
           <config-smtp :config="config"></config-smtp>
         </v-col>
       </v-row>
@@ -30,14 +30,14 @@
           <v-divider></v-divider>
         </v-col>
 
-        <v-col cols="8">
+        <v-col cols="9">
           <config-free-text :config="config"></config-free-text>
         </v-col>
       </v-row>
     </v-form>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
         <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
