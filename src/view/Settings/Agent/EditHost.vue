@@ -176,9 +176,13 @@ export default {
         return
       }
 
-      this.$store.dispatch(actions.hosts.createOrUpdate, this.wrapper.rawInstance).then(() => {
-        this.$router.push('/settings/agents')
-      })
+      this.$store.dispatch(actions.hosts.createOrUpdate, this.wrapper.rawInstance)
+          .then(() => {
+            this.showSnackBar(`Agent host ${this.wrapper.name} has been saved`)
+          })
+          .catch((e) => {
+            this.wrapper.error = e.message
+          })
     }
   }
 }
