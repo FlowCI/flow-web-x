@@ -66,6 +66,10 @@ export class HostWrapper {
     return this.host.status
   }
 
+  get namespace() {
+    return this.host.namespace
+  }
+
   get ip() {
     return this.host.ip
   }
@@ -108,6 +112,10 @@ export class HostWrapper {
 
   set secret(val) {
     this.host.secret = val
+  }
+
+  set namespace(val) {
+    this.host.namespace = val
   }
 
   set user(val) {
