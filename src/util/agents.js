@@ -67,6 +67,9 @@ export class AgentWrapper {
   }
 
   get icon() {
+    if (this.agent.k8sCluster) {
+      return 'mdi-kubernetes'
+    }
     return icons[this.agent.os] || 'flow-icon-agents'
   }
 
