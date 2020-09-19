@@ -87,6 +87,7 @@ export default {
     createAuth: 'secrets/createAuth',
     createToken: 'secrets/createToken',
     createAndroidSign: 'secrets/createAndroidSign',
+    createKubeConfig: 'secrets/createKubeConfig',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',

@@ -8,7 +8,7 @@
 
     <v-form ref="hostNameForm" lazy-validation>
       <v-row no-gutters>
-        <v-col cols="8">
+        <v-col cols="9">
           <text-box
               label="Name"
               :disabled="wrapper.type === HOST_TYPE_LOCAL_SOCKET"
@@ -22,30 +22,34 @@
       </v-row>
     </v-form>
 
-    <v-row>
-      <v-col cols="8" v-if="wrapper.type === HOST_TYPE_SSH">
-        <v-form ref="sshSettingsForm" lazy-validation>
+    <v-form ref="sshSettingsForm" lazy-validation>
+      <v-row>
+        <v-col cols="9" v-if="wrapper.type === HOST_TYPE_SSH">
           <ssh-host-editor :wrapper="wrapper" :secrets="secretNameList"></ssh-host-editor>
-        </v-form>
-      </v-col>
+        </v-col>
 
-      <v-col cols="2" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
-        <text-box
-            min="1"
-            step="1"
-            type="number"
-            label="Max Pool Size"
-            v-model="wrapper.maxSize"
-        ></text-box>
-      </v-col>
+        <v-col cols="2" v-if="wrapper.type === HOST_TYPE_LOCAL_SOCKET">
+          <text-box
+              min="1"
+              step="1"
+              type="number"
+              label="Max Pool Size"
+              v-model="wrapper.maxSize"
+          ></text-box>
+        </v-col>
 
-      <v-col cols="8" v-if="wrapper.error">
-        <span class="error--text">{{ wrapper.error }}</span>
-      </v-col>
-    </v-row>
+        <v-col cols="9" v-if="wrapper.type === HOST_TYPE_K8S">
+          <k8s-host-editor :wrapper="wrapper" :secrets="secretNameList"></k8s-host-editor>
+        </v-col>
+
+        <v-col cols="9" v-if="wrapper.error">
+          <span class="error--text">{{ wrapper.error }}</span>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
 
         <host-test-btn :host="wrapper.rawInstance"
@@ -73,101 +77,115 @@
 </template>
 
 <script>
-  import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HostWrapper } from '@/util/hosts'
-  import { agentNameRules } from '@/util/rules'
-  import TagEditor from '@/components/Common/TagEditor'
-  import TextBox from '@/components/Common/TextBox'
-  import ConfirmBtn from '@/components/Common/ConfirmBtn'
-  import SshHostEditor from '@/components/Settings/SshHostEditor'
-  import HostTestBtn from '@/components/Settings/HostTestBtn'
-  import SaveBtn from '@/components/Settings/SaveBtn'
-  import BackBtn from '@/components/Settings/BackBtn'
-  import actions from '@/store/actions'
-  import { mapState } from 'vuex'
-  import { CATEGORY_SSH_RSA } from '@/util/secrets'
+import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HOST_TYPE_K8S } from '@/util/hosts'
+import { agentNameRules } from '@/util/rules'
+import TagEditor from '@/components/Common/TagEditor'
+import TextBox from '@/components/Common/TextBox'
+import ConfirmBtn from '@/components/Common/ConfirmBtn'
+import SshHostEditor from '@/components/Settings/SshHostEditor'
+import K8sHostEditor from '@/components/Settings/K8sHostEditor'
+import HostTestBtn from '@/components/Settings/HostTestBtn'
+import SaveBtn from '@/components/Settings/SaveBtn'
+import BackBtn from '@/components/Settings/BackBtn'
+import actions from '@/store/actions'
+import { mapState } from 'vuex'
+import { CATEGORY_KUBE_CONFIG, CATEGORY_SSH_RSA } from '@/util/secrets'
 
-  export default {
-    name: 'SettingsAgentNew',
-    components: {
-      TagEditor,
-      SshHostEditor,
-      HostTestBtn,
-      SaveBtn,
-      BackBtn,
-      ConfirmBtn,
-      TextBox
-    },
-    props: {
-      wrapper: {
-        type: Object,
-        required: true
-      }
-    },
-    data() {
-      return {
-        HOST_TYPE_SSH,
-        HOST_TYPE_LOCAL_SOCKET,
-        deleteDialog: false,
-        tagInput: [],
-        nameRules: agentNameRules(this),
-      }
-    },
-    mounted() {
-      this.$emit('onConfigNav', {
-        navs: [
-          {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
-          {text: `${this.$t('edit')} Agent ${this.$t('agent.host')}`, href: ''}
-        ],
-        showAddBtn: false
-      })
+export default {
+  name: 'SettingsAgentNew',
+  components: {
+    TagEditor,
+    SshHostEditor,
+    K8sHostEditor,
+    HostTestBtn,
+    SaveBtn,
+    BackBtn,
+    ConfirmBtn,
+    TextBox
+  },
+  props: {
+    wrapper: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      HOST_TYPE_SSH,
+      HOST_TYPE_LOCAL_SOCKET,
+      HOST_TYPE_K8S,
+      deleteDialog: false,
+      tagInput: [],
+      nameRules: agentNameRules(this),
+    }
+  },
+  mounted() {
+    this.$emit('onConfigNav', {
+      navs: [
+        {text: this.$t('settings.li.agent'), href: '#/settings/agents'},
+        {text: `${this.$t('edit')} Agent ${this.$t('agent.host')}`, href: ''}
+      ],
+      showAddBtn: false
+    })
 
+
+    if (this.wrapper.type === HOST_TYPE_SSH) {
       this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_SSH_RSA).then()
-    },
-    computed: {
-      ...mapState({
-        secrets: state => state.secrets.items,
-        updated: state => state.hosts.updated
-      }),
+    }
 
-      secretNameList() {
-        const nameList = []
-        for (let c of this.secrets) {
-          nameList.push(c.name)
-        }
-        return nameList
-      }
-    },
-    watch: {
-      updated(val) {
-        this.wrapper.error = val.error
-      }
-    },
-    methods: {
-      onDeleteClick() {
-        this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
-          this.$router.push('/settings/agents')
-        })
-      },
+    if (this.wrapper.type === HOST_TYPE_K8S) {
+      this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_KUBE_CONFIG).then()
+    }
+  },
+  computed: {
+    ...mapState({
+      secrets: state => state.secrets.items,
+      updated: state => state.hosts.updated
+    }),
 
-      onBackClick() {
+    secretNameList() {
+      const nameList = []
+      for (let c of this.secrets) {
+        nameList.push(c.name)
+      }
+      return nameList
+    }
+  },
+  watch: {
+    updated(val) {
+      this.wrapper.error = val.error
+    }
+  },
+  methods: {
+    onDeleteClick() {
+      this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
         this.$router.push('/settings/agents')
-      },
+      })
+    },
 
-      onSaveClick() {
-        if (!this.$refs.hostNameForm.validate()) {
-          return
-        }
+    onBackClick() {
+      this.$router.push('/settings/agents')
+    },
 
-        if (this.$refs.sshSettingsForm && !this.$refs.sshSettingsForm.validate()) {
-          return
-        }
-
-        this.$store.dispatch(actions.hosts.createOrUpdate, this.wrapper.rawInstance).then(() => {
-          this.$router.push('/settings/agents')
-        })
+    onSaveClick() {
+      if (!this.$refs.hostNameForm.validate()) {
+        return
       }
+
+      if (this.$refs.sshSettingsForm && !this.$refs.sshSettingsForm.validate()) {
+        return
+      }
+
+      this.$store.dispatch(actions.hosts.createOrUpdate, this.wrapper.rawInstance)
+          .then(() => {
+            this.showSnackBar(`Agent host ${this.wrapper.name} has been saved`)
+          })
+          .catch((e) => {
+            this.wrapper.error = e.message
+          })
     }
   }
+}
 </script>
 
 <style scoped>

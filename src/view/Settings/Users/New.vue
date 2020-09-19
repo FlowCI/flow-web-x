@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="8">
+      <v-col cols="9">
         <v-form ref="userForm" lazy-validation>
           <text-box label="Email" v-model="instance.email"></text-box>
           <text-box label="Password" v-model="instance.password"></text-box>
@@ -15,7 +15,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
         <save-btn :onClick="onSaveClick"></save-btn>
       </v-col>
