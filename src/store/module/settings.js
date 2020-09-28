@@ -16,6 +16,11 @@ const actions = {
       commit('set', o)
     })
   },
+
+  async save({commit}, instance) {
+    let empty = () => {};
+    await http.post('system/settings', empty, instance)
+  }
 }
 
 export const Store = {

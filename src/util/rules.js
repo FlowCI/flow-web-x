@@ -1,3 +1,5 @@
+import urlRegex from "url-regex";
+
 export function flowNameRules(vue) {
   return [
     v => !!v || vue.$t('flow.hint.name_required'),
@@ -80,6 +82,12 @@ export function required(message) {
 export function email(message) {
   return [
     v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || message
+  ]
+}
+
+export function httpUrl(message) {
+  return [
+    v => urlRegex().test(v) || message
   ]
 }
 

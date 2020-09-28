@@ -142,6 +142,7 @@ export default {
   },
 
   settings: {
-    get: 'settings/get'
+    get: 'settings/get',
+    save: 'settings/save'
   }
 }
