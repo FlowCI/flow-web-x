@@ -154,7 +154,8 @@ export default {
       security: '安全',
       agent: 'Agents',
       secret: '秘钥管理',
-      config: '配置管理'
+      config: '配置管理',
+      system: '系统设置'
     },
 
     profile: {
