@@ -139,5 +139,10 @@ export default {
     connect: 'tty/connect',
     shell: 'tty/shell',
     close: 'tty/close'
+  },
+
+  settings: {
+    get: 'settings/get',
+    save: 'settings/save'
   }
 }

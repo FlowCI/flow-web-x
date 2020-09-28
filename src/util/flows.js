@@ -91,10 +91,6 @@ export class FlowWrapper {
     return this.flow.name
   }
 
-  get webhook () {
-    return this.fetchVars(vars.flow.webhook) || ''
-  }
-
   get webhookStatus () {
     const webhookStatus = this.flow.webhookStatus
     if (webhookStatus) {

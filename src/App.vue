@@ -59,6 +59,7 @@
   import ProfileMenu from '@/view/Common/ProfileMenu'
   import SupportMenu from '@/view/Common/SupportMenu'
   import LangMenu from '@/view/Common/LangMenu'
+  import actions from '@/store/actions'
   import { mapState } from 'vuex'
   import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
@@ -80,6 +81,9 @@
       subscribeTopic.agents(this.$store)
       subscribeTopic.jobs(this.$store)
       subscribeTopic.hosts(this.$store)
+      this.$store.dispatch(actions.settings.get).catch((e) => {
+        console.log(e)
+      })
     },
     destroyed() {
       unsubscribeTopic.jobs()

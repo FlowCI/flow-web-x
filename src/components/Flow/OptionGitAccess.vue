@@ -2,10 +2,10 @@
   <v-form ref="gitAccessForm" lazy-validation>
     <v-row align="center">
       <v-col>
-        <span class="caption grey--text text--darken-1">{{ `Webhook (${vars.flow.webhook})` }}</span>
+        <span class="caption grey--text text--darken-1">{{ `Webhook` }}</span>
         <v-text-field
             class="pt-0"
-            v-model="wrapper.webhook"
+            v-model="webhook"
             @click:append="onHelpClick('hook')"
             readonly
         ></v-text-field>
@@ -51,61 +51,69 @@
 </template>
 
 <script>
-  import vars from '@/util/vars'
-  import GitTestBtn from '@/components/Flow/GitTestBtn'
+import vars from '@/util/vars'
+import GitTestBtn from '@/components/Flow/GitTestBtn'
+import { FlowWrapper } from '@/util/flows'
+import { gitUrlRules } from '@/util/rules'
+import { mapState } from 'vuex'
 
-  import { FlowWrapper } from '@/util/flows'
-  import { gitUrlRules } from '@/util/rules'
+export default {
+  name: 'OptionGitAccess',
+  props: {
+    flow: {
+      required: true,
+      type: Object
+    }
+  },
+  components: {
+    GitTestBtn
+  },
+  data() {
+    return {
+      vars: vars,
 
-  export default {
-    name: 'OptionGitAccess',
-    props: {
-      flow: {
-        required: true,
-        type: Object
-      }
-    },
-    components: {
-      GitTestBtn
-    },
-    data () {
-      return {
-        vars: vars,
+      rules: {
+        gitUrl: gitUrlRules(this),
+        credential: (value) => {
+          const gitUrl = this.wrapper.gitUrl
 
-        rules: {
-          gitUrl: gitUrlRules(this),
-          credential: (value) => {
-            const gitUrl = this.wrapper.gitUrl
-
-            if (gitUrl.startsWith('http') || gitUrl.startsWith('https')) {
-              return true
-            }
-
-            return !!value || this.$t('flow.hint.credential_name_required')
+          if (gitUrl.startsWith('http') || gitUrl.startsWith('https')) {
+            return true
           }
-        },
-      }
-    },
-    computed: {
-      wrapper () {
-        return new FlowWrapper(this.flow)
-      }
-    },
-    methods: {
-      onTestClick () {
-        return this.$refs.gitAccessForm.validate()
+
+          return !!value || this.$t('flow.hint.credential_name_required')
+        }
       },
+    }
+  },
+  computed: {
+    ...mapState({
+      settings: state => state.settings.instance
+    }),
 
-      onHelpClick (type) {
+    wrapper() {
+      return new FlowWrapper(this.flow)
+    },
 
-      }
+    webhook() {
+      return this.settings.serverUrl + '/webhooks/' + this.wrapper.name
+    }
+  },
+  methods: {
+    onTestClick() {
+      return this.$refs.gitAccessForm.validate()
+    },
+
+    onHelpClick(type) {
+
     }
   }
+}
 </script>
 
 <style>
-  .ssh-add-btn.v-btn--floating.v-btn--small {
-    height: 22px !important;
-    width: 22px !important;
-  }
+.ssh-add-btn.v-btn--floating.v-btn--small {
+  height: 22px !important;
+  width: 22px !important;
+}
 </style>

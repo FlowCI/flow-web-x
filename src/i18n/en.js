@@ -156,7 +156,8 @@ export default {
       security: 'Security',
       agent: 'Agents',
       secret: 'Secrets',
-      config: 'Config'
+      config: 'Config',
+      system: 'System'
     },
 
     profile: {
