@@ -29,8 +29,8 @@
         <v-icon right small>mdi-plus-box</v-icon>
 
         <template v-slot:loader>
-          <span class="custom-loader">
-            <v-icon light>mdi-cached</v-icon>
+          <span>
+            <v-icon light class="loading-anim">mdi-cached</v-icon>
           </span>
         </template>
       </v-btn>
@@ -168,44 +168,5 @@
 </script>
 
 <style scoped>
-  .custom-loader {
-    animation: loader 1s infinite;
-    display: flex;
-  }
 
-  @-moz-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @-webkit-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @-o-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
 </style>
