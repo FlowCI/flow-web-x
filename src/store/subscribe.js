@@ -48,6 +48,8 @@ export function connect(store) {
   let wsUrl = url.replace('http', 'ws').replace('https', 'wss')
   stompClient = Stomp.client(`${wsUrl}/ws`)
   stompClient.reconnect_delay = 5000
+  stompClient.debug = function () {
+  }
 
   let onConnected = () => {
     console.log('connected')
