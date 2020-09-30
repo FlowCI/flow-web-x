@@ -3,6 +3,7 @@ import actions from './actions'
 import { LogWrapper } from '@/util/logs'
 
 let stompClient // init from connect function
+let intervalId
 
 const url = process.env.VUE_APP_API_URL
 
@@ -24,7 +25,7 @@ function subscribe(topic, callback) {
     return
   }
 
-  if (stompClient.connected) {
+  if (stompClient && stompClient.connected) {
     subscribed[topic] = stompClient.subscribe(topic, callback)
     console.log('subscribe: ' + topic)
     return
@@ -44,32 +45,32 @@ function unsubscribe(topic) {
 }
 
 export function connect(store) {
-  try {
-    let wsUrl = url.replace('http', 'ws').replace('https', 'wss')
-    let socket = new WebSocket(`${wsUrl}/ws`)
+  let wsUrl = url.replace('http', 'ws').replace('https', 'wss')
+  stompClient = Stomp.client(`${wsUrl}/ws`)
+  stompClient.reconnect_delay = 5000
 
-    socket.addEventListener('open', (e) => {
-      stompClient = Stomp.over(socket)
+  let onConnected = () => {
+    console.log('connected')
 
-      stompClient.connect({}, () => {
-        console.log('connected')
-
-        subscribeBeforeConnected.forEach((item) => {
-          subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
-          console.log('subscribe: ' + item.topic)
-        })
-
-        store.commit(actions.app.setConnState, true)
-      })
+    subscribeBeforeConnected.forEach((item) => {
+      subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
+      console.log('subscribe: ' + item.topic)
     })
 
-    socket.addEventListener('error', (e) => {
-      store.commit(actions.app.setConnState, false)
-    })
-  } catch (e) {
-    console.log(e)
-    store.commit(actions.app.setConnState, false)
+    store.commit(actions.app.setConnState, true)
   }
+
+  let onError = (e) => {
+    console.log(e)
+    console.log('reconnect in 10 seconds')
+    store.commit(actions.app.setConnState, false)
+
+    setTimeout(() => {
+      connect(store)
+    }, 1000 * 10);
+  }
+
+  stompClient.connect({}, onConnected, onError)
 }
 
 export const ws = {
