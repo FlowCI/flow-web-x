@@ -2,16 +2,9 @@ import Stomp from 'stompjs'
 import actions from './actions'
 import { LogWrapper } from '@/util/logs'
 
+let stompClient // init from connect function
+
 const url = process.env.VUE_APP_API_URL
-
-// config websocket instance
-const wsUrl = url.replace('http', 'ws').replace('https', 'wss')
-const socket = new WebSocket(`${wsUrl}/ws`);
-const stompClient = Stomp.over(socket)
-
-// remove debug log
-stompClient.debug = function () {
-}
 
 // event type from server
 const events = {
@@ -50,15 +43,34 @@ function unsubscribe(topic) {
   }
 }
 
-stompClient.connect({}, function () {
-  console.log('connected')
+export function connect(store) {
+  try {
+    let wsUrl = url.replace('http', 'ws').replace('https', 'wss')
+    let socket = new WebSocket(`${wsUrl}/ws`)
 
-  subscribeBeforeConnected.forEach((item) => {
-    subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
-    console.log('subscribe: ' + item.topic)
-  })
-})
+    socket.addEventListener('open', (e) => {
+      stompClient = Stomp.over(socket)
 
+      stompClient.connect({}, () => {
+        console.log('connected')
+
+        subscribeBeforeConnected.forEach((item) => {
+          subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
+          console.log('subscribe: ' + item.topic)
+        })
+
+        store.commit(actions.app.setConnState, true)
+      })
+    })
+
+    socket.addEventListener('error', (e) => {
+      store.commit(actions.app.setConnState, false)
+    })
+  } catch (e) {
+    console.log(e)
+    store.commit(actions.app.setConnState, false)
+  }
+}
 
 export const ws = {
   token: process.env.VUE_APP_TOKEN,

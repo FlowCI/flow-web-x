@@ -61,7 +61,7 @@
   import LangMenu from '@/view/Common/LangMenu'
   import actions from '@/store/actions'
   import { mapState } from 'vuex'
-  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
+  import { connect, subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
   export default {
     name: 'App',
@@ -78,21 +78,33 @@
       }
     },
     mounted() {
-      subscribeTopic.agents(this.$store)
-      subscribeTopic.jobs(this.$store)
-      subscribeTopic.hosts(this.$store)
-      this.$store.dispatch(actions.settings.get).catch((e) => {
-        console.log(e)
-      })
+      connect(this.$store)
     },
     destroyed() {
       unsubscribeTopic.jobs()
       unsubscribeTopic.agents()
       unsubscribeTopic.hosts()
     },
+    watch: {
+      connection(isConnected) {
+        if (isConnected) {
+          subscribeTopic.agents(this.$store)
+          subscribeTopic.jobs(this.$store)
+          subscribeTopic.hosts(this.$store)
+
+          this.$store.dispatch(actions.settings.get).catch((e) => {
+            console.log(e)
+          })
+          return
+        }
+
+        // go to loading page
+      }
+    },
     computed: {
       ...mapState({
-        snackbar: state => state.g.snackbar
+        snackbar: state => state.g.snackbar,
+        connection: state => state.g.connection
       })
     },
     methods: {
