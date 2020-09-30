@@ -12,8 +12,13 @@
         ></text-box>
       </v-col>
 
-      <v-col cols="3" class="mt-2 ml-4">
-        <div class="subheading font-weight-medium">Profile picture here</div>
+      <v-col cols="3" class="mt-2 ml-4 text-center">
+        <v-avatar
+            color="primary"
+            size="128"
+        >
+          <span class="white--text headline">avatar</span>
+        </v-avatar>
       </v-col>
     </v-row>
 

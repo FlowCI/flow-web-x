@@ -2,16 +2,10 @@ import Stomp from 'stompjs'
 import actions from './actions'
 import { LogWrapper } from '@/util/logs'
 
+let stompClient // init from connect function
+let intervalId
+
 const url = process.env.VUE_APP_API_URL
-
-// config websocket instance
-const wsUrl = url.replace('http', 'ws').replace('https', 'wss')
-const socket = new WebSocket(`${wsUrl}/ws`);
-const stompClient = Stomp.over(socket)
-
-// remove debug log
-stompClient.debug = function () {
-}
 
 // event type from server
 const events = {
@@ -31,7 +25,7 @@ function subscribe(topic, callback) {
     return
   }
 
-  if (stompClient.connected) {
+  if (stompClient && stompClient.connected) {
     subscribed[topic] = stompClient.subscribe(topic, callback)
     console.log('subscribe: ' + topic)
     return
@@ -50,15 +44,36 @@ function unsubscribe(topic) {
   }
 }
 
-stompClient.connect({}, function () {
-  console.log('connected')
+export function connect(store) {
+  let wsUrl = url.replace('http', 'ws').replace('https', 'wss')
+  stompClient = Stomp.client(`${wsUrl}/ws`)
+  stompClient.reconnect_delay = 5000
+  stompClient.debug = function () {
+  }
 
-  subscribeBeforeConnected.forEach((item) => {
-    subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
-    console.log('subscribe: ' + item.topic)
-  })
-})
+  let onConnected = () => {
+    console.log('connected')
 
+    subscribeBeforeConnected.forEach((item) => {
+      subscribed[item.topic] = stompClient.subscribe(item.topic, item.callback)
+      console.log('subscribe: ' + item.topic)
+    })
+
+    store.commit(actions.app.setConnState, true)
+  }
+
+  let onError = (e) => {
+    console.log(e)
+    console.log('reconnect in 10 seconds')
+    store.commit(actions.app.setConnState, false)
+
+    setTimeout(() => {
+      connect(store)
+    }, 1000 * 10);
+  }
+
+  stompClient.connect({}, onConnected, onError)
+}
 
 export const ws = {
   token: process.env.VUE_APP_TOKEN,

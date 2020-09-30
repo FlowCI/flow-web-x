@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Login from '@/view/Home/Login'
 import CreateDefaultUser from '@/view/Home/CreateDefaultUser'
+import WaitConnection from '@/view/Home/WaitConnection'
 
 import FlowHome from '@/view/Flow/Index'
 import FlowOverview from '@/view/Flow/Overview'
@@ -48,6 +49,11 @@ export default new Router({
       path: '/create',
       name: 'CreateDefaultUser',
       component: CreateDefaultUser
+    },
+    {
+      path: '/loading',
+      name: 'WaitConnection',
+      component: WaitConnection
     },
     {
       path: '',

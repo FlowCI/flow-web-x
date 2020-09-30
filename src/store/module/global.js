@@ -3,6 +3,9 @@ import http from '../http'
 export const Store = {
   namespaced: true,
   state: {
+    host: http.host,
+    connection: null,
+
     snackbar: {
       show: false,
       text: '',
@@ -13,6 +16,10 @@ export const Store = {
     staticBaseUrl: `${http.host}/static`
   },
   mutations: {
+    setConnectionState(state, trueOrFalse) {
+      state.connection = trueOrFalse
+    },
+
     show (state, {text, color}) {
       state.snackbar.text = text;
       state.snackbar.show = true;
