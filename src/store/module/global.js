@@ -3,6 +3,7 @@ import http from '../http'
 export const Store = {
   namespaced: true,
   state: {
+    host: http.host,
     connection: null,
 
     snackbar: {
