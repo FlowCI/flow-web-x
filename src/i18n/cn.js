@@ -1,6 +1,7 @@
 export default {
   welcome: '欢迎来到 flow.ci',
   create_default_admin: '请先创建一个默认的管理员',
+  wait_connection: '正在连接到 ',
 
   back: '返回',
   save: '保存',
@@ -154,7 +155,8 @@ export default {
       security: '安全',
       agent: 'Agents',
       secret: '秘钥管理',
-      config: '配置管理'
+      config: '配置管理',
+      system: '系统设置'
     },
 
     profile: {

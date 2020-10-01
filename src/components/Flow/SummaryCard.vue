@@ -65,12 +65,13 @@
           const min = this.ratio[i]
           const max = this.ratio[i + 1]
           const rate = this.wrapper.successRate
+
           if (min < rate && rate <= max) {
             return this.colors[i]
           }
         }
 
-        return 'green accent-4'
+        return 'grey lighten-1'
       }
     },
     methods: {

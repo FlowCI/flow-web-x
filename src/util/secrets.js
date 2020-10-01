@@ -2,12 +2,14 @@ export const CATEGORY_SSH_RSA = 'SSH_RSA'
 export const CATEGORY_AUTH = 'AUTH'
 export const CATEGORY_TOKEN = 'TOKEN'
 export const CATEGORY_ANDROID_SIGN = 'ANDROID_SIGN'
+export const CATEGORY_KUBE_CONFIG = 'KUBE_CONFIG'
 
 export const CategoriesSelection = [
   {name: 'SSH key', value: CATEGORY_SSH_RSA, icon: 'mdi-key'},
   {name: 'Auth pair', value: CATEGORY_AUTH, icon: 'mdi-account-key-outline'},
   {name: 'Token', value: CATEGORY_TOKEN, icon: 'mdi-file-key'},
-  {name: 'Android sign', value: CATEGORY_ANDROID_SIGN, icon: 'mdi-android'}
+  {name: 'Android sign', value: CATEGORY_ANDROID_SIGN, icon: 'mdi-android'},
+  {name: 'Kubeconfig (./kube/config)', value: CATEGORY_KUBE_CONFIG, icon: 'mdi-kubernetes'}
 ]
 
 export const Categories = {
@@ -26,5 +28,9 @@ export const Categories = {
   [CATEGORY_ANDROID_SIGN]: {
     name: 'Android sign',
     icon: 'mdi-android'
+  },
+  [CATEGORY_KUBE_CONFIG]: {
+    name: 'Kubeconfig (./kube/config)',
+    icon: 'mdi-kubernetes'
   }
 }

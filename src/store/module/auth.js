@@ -94,7 +94,7 @@ const actions = {
     const onSuccess = () => {
       commit('clean')
     }
-    await http.post('auth/logout', onSuccess())
+    await http.post('auth/logout', onSuccess)
   },
 
   // load from storage

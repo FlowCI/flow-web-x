@@ -1,5 +1,6 @@
 export default {
   app: {
+    setConnState: 'g/setConnectionState',
     showSnackbar: 'g/show',
     popCreateFlow: 'g/popCreateFlow'
   },
@@ -87,6 +88,7 @@ export default {
     createAuth: 'secrets/createAuth',
     createToken: 'secrets/createToken',
     createAndroidSign: 'secrets/createAndroidSign',
+    createKubeConfig: 'secrets/createKubeConfig',
     list: 'secrets/list',
     listNameOnly: 'secrets/listNameOnly',
     get: 'secrets/get',
@@ -138,5 +140,10 @@ export default {
     connect: 'tty/connect',
     shell: 'tty/shell',
     close: 'tty/close'
+  },
+
+  settings: {
+    get: 'settings/get',
+    save: 'settings/save'
   }
 }

@@ -2,7 +2,7 @@
   <div>
     <v-form ref="agentNameForm" lazy-validation>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="9">
           <text-box
               label="Name"
               :rules="nameRules"
@@ -18,7 +18,7 @@
         <v-divider></v-divider>
       </v-col>
 
-      <v-col cols="8">
+      <v-col cols="9">
         <text-box label="Token"
                   readonly
                   v-model="wrapper.token"
@@ -31,7 +31,7 @@
     </v-row>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
         <confirm-btn :text="$t('delete')"
                      color="error"

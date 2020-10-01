@@ -30,7 +30,11 @@
               </v-col>
 
               <v-col cols="4">
-                <span>{{ item.isBusy ? item.desc || '-' : '-' }}</span>
+                <span v-if="item.isBusy">{{ item.desc }}</span>
+                <span v-if="item.isOffline || item.isIdle">-</span>
+                <span v-if="item.isStarting">
+                  <v-icon small light class="loading-anim">flow-icon-loading1</v-icon>
+                </span>
               </v-col>
             </v-row>
           </td>

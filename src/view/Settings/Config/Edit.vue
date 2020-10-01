@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="8">
+      <v-col cols="9">
         <text-box label="Name"
                   readonly
                   v-model="configObj.name"
@@ -19,7 +19,7 @@
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="9">
           <config-smtp :config="configObj"></config-smtp>
         </v-col>
       </v-row>
@@ -28,14 +28,14 @@
         <v-col cols="9">
           <v-divider></v-divider>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="9">
           <config-free-text :config="configObj"></config-free-text>
         </v-col>
       </v-row>
     </v-form>
 
     <v-row>
-      <v-col cols="8" class="text-end">
+      <v-col cols="9" class="text-end">
         <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
 
         <confirm-btn :text="$t('delete')"

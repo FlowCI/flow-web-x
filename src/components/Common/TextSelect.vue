@@ -7,6 +7,7 @@
               item-text="name"
               item-value="value"
               :readonly="readonly"
+              @change="onSelectChange"
               dense
               solo
     >
@@ -58,6 +59,10 @@
         default() {
           return []
         }
+      },
+      onChange: {
+        type: Function,
+        required: false
       }
     },
     data() {
@@ -69,6 +74,13 @@
     watch: {
       adaptor(val) {
         this.$emit('input', val)
+      }
+    },
+    methods: {
+      onSelectChange() {
+        if (this.onChange) {
+          this.onChange(this.adaptor)
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "flow-web-x",
-  "version": "0.20.32",
+  "version": "0.20.40",
   "description": "flow.ci web ui",
   "author": "Yang Guo <32008001@qq.com>",
   "private": true,
@@ -11,11 +11,12 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@antv/g6": "^3.2.8",
+    "@antv/g6": "^3.6.0",
     "@mdi/js": "^5.3.45",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.11.0",
+    "codemirror": "^5.57.0",
     "core-js": "^2.6.5",
     "cronstrue": "^1.96.0",
     "echarts": "^4.3.0",
@@ -30,6 +31,7 @@
     "monaco-editor-webpack-plugin": "^1.7.0",
     "sockjs-client": "^1.3.0",
     "stompjs": "^2.3.3",
+    "url-regex": "^5.0.0",
     "vue": "^2.6.10",
     "vue-clipboard2": "^0.3.1",
     "vue-i18n": "^7.8.0",

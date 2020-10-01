@@ -16,6 +16,7 @@ import { Store as StatsStore } from './module/stats'
 import { Store as PluginStore } from './module/plugins'
 import { Store as ConfigStore } from './module/configs'
 import { Store as TtyStore } from './module/tty'
+import { Store as SettingStore } from './module/settings'
 
 Vue.use(Vuex)
 
@@ -35,7 +36,8 @@ const store = new Vuex.Store({
     'stats': StatsStore,
     'plugins': PluginStore,
     'configs': ConfigStore,
-    'tty': TtyStore
+    'tty': TtyStore,
+    'settings': SettingStore
   }
 })
 

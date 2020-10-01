@@ -15,7 +15,6 @@ export default {
 
   flow: {
     name: 'FLOWCI_FLOW_NAME',
-    webhook: 'FLOWCI_FLOW_WEBHOOK'
   },
 
   job: {

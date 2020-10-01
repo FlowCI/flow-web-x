@@ -10,11 +10,11 @@ const state = {
 }
 
 const mutations = {
-  add (state, secrets) {
+  add(state, secrets) {
     state.items.push(secrets)
   },
 
-  remove (state, secrets) {
+  remove(state, secrets) {
     for (let i = 0; i < state.items.length; i++) {
       if (state.items[i].id === secrets.id) {
         state.items.splice(i, 1)
@@ -23,29 +23,29 @@ const mutations = {
     }
   },
 
-  list (state, secrets) {
+  list(state, secrets) {
     state.items = secrets
   },
 
-  loaded (state, credential) {
+  loaded(state, credential) {
     state.loaded = credential
   }
 }
 
 const actions = {
-  list ({commit}) {
+  list({commit}) {
     http.get('secrets', (c) => {
       commit('list', c)
     })
   },
 
-  listNameOnly ({commit}, category) {
+  listNameOnly({commit}, category) {
     http.get('secrets/list/name', (c) => {
       commit('list', c)
     }, {category})
   },
 
-  async createRsa ({commit}, {name, publicKey, privateKey}) {
+  async createRsa({commit}, {name, publicKey, privateKey}) {
     await http.post('secrets/rsa', (c) => {
       commit('add', c)
     }, {
@@ -92,13 +92,22 @@ const actions = {
       })
   },
 
-  async delete ({commit}, credential) {
+  async createKubeConfig({commit}, {name, content}) {
+    await http.post(
+      `secrets/kubeconfig`,
+      (c) => {
+        commit('add', c)
+      },
+      {name, content})
+  },
+
+  async delete({commit}, credential) {
     await http.delete(`secrets/${credential.name}`, (c) => {
       commit('remove', c)
     })
   },
 
-  get ({commit}, name) {
+  get({commit}, name) {
     http.get(`secrets/${name}`, (c) => {
       commit('loaded', c)
     })

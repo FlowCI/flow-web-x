@@ -3,6 +3,7 @@ const OS_LINUX = 'LINUX'
 const OS_WIN = 'WIN'
 
 const STATUS_OFFLINE = 'OFFLINE'
+const STATUS_STARTING = 'STARTING'
 const STATUS_IDLE = 'IDLE'
 const STATUS_BUSY = 'BUSY'
 
@@ -58,6 +59,18 @@ export class AgentWrapper {
     return this.agent.status === STATUS_BUSY
   }
 
+  get isStarting() {
+    return this.agent.status === STATUS_STARTING
+  }
+
+  get isIdle() {
+    return this.agent.status === STATUS_IDLE
+  }
+
+  get isOffline(){
+    return this.agent.status === STATUS_OFFLINE
+  }
+
   get id() {
     return this.agent.id
   }
@@ -67,6 +80,9 @@ export class AgentWrapper {
   }
 
   get icon() {
+    if (this.agent.k8sCluster) {
+      return 'mdi-kubernetes'
+    }
     return icons[this.agent.os] || 'flow-icon-agents'
   }
 

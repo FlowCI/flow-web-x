@@ -14,7 +14,7 @@
       </template>
     </v-snackbar>
 
-    <v-navigation-drawer v-if="!isLoginPage"
+    <v-navigation-drawer v-if="canDisplay"
                          v-model="flowNavDrawer"
                          :clipped="$vuetify.breakpoint.lgAndUp"
                          app>
@@ -33,8 +33,8 @@
 
       <lang-menu></lang-menu>
       <support-menu></support-menu>
-      <agent-menu v-if="!isLoginPage"></agent-menu>
-      <profile-menu v-if="!isLoginPage"></profile-menu>
+      <agent-menu v-if="canDisplay"></agent-menu>
+      <profile-menu v-if="canDisplay"></profile-menu>
     </v-app-bar>
 
     <v-content>
@@ -59,8 +59,9 @@
   import ProfileMenu from '@/view/Common/ProfileMenu'
   import SupportMenu from '@/view/Common/SupportMenu'
   import LangMenu from '@/view/Common/LangMenu'
+  import actions from '@/store/actions'
   import { mapState } from 'vuex'
-  import { subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
+  import { connect, subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
 
   export default {
     name: 'App',
@@ -77,23 +78,52 @@
       }
     },
     mounted() {
-      subscribeTopic.agents(this.$store)
-      subscribeTopic.jobs(this.$store)
-      subscribeTopic.hosts(this.$store)
+      connect(this.$store)
     },
     destroyed() {
       unsubscribeTopic.jobs()
       unsubscribeTopic.agents()
       unsubscribeTopic.hosts()
     },
+    watch: {
+      connection(isConnected) {
+        if (isConnected) {
+          console.log(this.$route.path)
+          if (this.$route.path === '/loading') {
+            this.$router.replace('/login')
+            return
+          }
+
+          this.init()
+          return
+        }
+
+        this.$router.replace('/loading')
+      }
+    },
     computed: {
       ...mapState({
-        snackbar: state => state.g.snackbar
-      })
+        snackbar: state => state.g.snackbar,
+        connection: state => state.g.connection
+      }),
+
+      canDisplay() {
+        return !this.isLoginPage && this.connection
+      }
     },
     methods: {
       refs(name) {
         return this.$refs[name]
+      },
+
+      init() {
+        subscribeTopic.agents(this.$store)
+        subscribeTopic.jobs(this.$store)
+        subscribeTopic.hosts(this.$store)
+
+        this.$store.dispatch(actions.settings.get).catch((e) => {
+          console.log(e)
+        })
       }
     }
   }

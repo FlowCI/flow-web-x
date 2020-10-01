@@ -46,6 +46,10 @@
           {
             i18n: 'settings.li.config',
             path: 'configs'
+          },
+          {
+            i18n: 'settings.li.system',
+            path: 'system'
           }
         ]
       }

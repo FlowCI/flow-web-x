@@ -80,6 +80,11 @@ instance.interceptors.request.use(
       return config
     }
 
+    if (config.url === 'auth/logout') {
+      config.headers.Token = tokens.token
+      return config
+    }
+
     if (helper.tokenHasExpired(tokens.token)) {
 
       // the current request should go into waiting list

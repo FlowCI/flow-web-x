@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Login from '@/view/Home/Login'
 import CreateDefaultUser from '@/view/Home/CreateDefaultUser'
+import WaitConnection from '@/view/Home/WaitConnection'
 
 import FlowHome from '@/view/Flow/Index'
 import FlowOverview from '@/view/Flow/Overview'
@@ -33,6 +34,7 @@ import SettingsConfigHome from '@/view/Settings/Config/Index'
 import SettingsConfigNew from '@/view/Settings/Config/New'
 import SettingsConfigEdit from '@/view/Settings/Config/Edit'
 
+import SystemSettingsHome from '@/view/Settings/System/Index'
 
 Vue.use(Router)
 
@@ -47,6 +49,11 @@ export default new Router({
       path: '/create',
       name: 'CreateDefaultUser',
       component: CreateDefaultUser
+    },
+    {
+      path: '/loading',
+      name: 'WaitConnection',
+      component: WaitConnection
     },
     {
       path: '',
@@ -174,6 +181,12 @@ export default new Router({
           name: 'SettingsConfigEdit',
           component: SettingsConfigEdit,
           props: true
+        },
+
+        {
+          path: 'system',
+          name: 'SystemSettingsHome',
+          component: SystemSettingsHome
         }
       ]
     }

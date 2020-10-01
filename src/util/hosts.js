@@ -1,5 +1,6 @@
 export const HOST_TYPE_SSH = 'SSH'
 export const HOST_TYPE_LOCAL_SOCKET = 'LocalUnixSocket'
+export const HOST_TYPE_K8S = 'K8s'
 
 export const HOST_STATUS_CONNECTED = 'Connected'
 export const HOST_STATUS_DISCONNECTED = 'Disconnected'
@@ -65,6 +66,10 @@ export class HostWrapper {
     return this.host.status
   }
 
+  get namespace() {
+    return this.host.namespace
+  }
+
   get ip() {
     return this.host.ip
   }
@@ -107,6 +112,10 @@ export class HostWrapper {
 
   set secret(val) {
     this.host.secret = val
+  }
+
+  set namespace(val) {
+    this.host.namespace = val
   }
 
   set user(val) {

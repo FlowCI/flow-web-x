@@ -1,6 +1,7 @@
 export default {
   welcome: 'Welcome to flow.ci',
   create_default_admin: 'Please create a default admin user',
+  wait_connection: 'connect to server ',
 
   back: 'Back',
   save: 'Save',
@@ -156,7 +157,8 @@ export default {
       security: 'Security',
       agent: 'Agents',
       secret: 'Secrets',
-      config: 'Config'
+      config: 'Config',
+      system: 'System'
     },
 
     profile: {

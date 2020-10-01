@@ -12,8 +12,8 @@
         {{ $t('test') }}
         <v-icon small right :class="[statusClass]">{{ statusIcon }}</v-icon>
         <template v-slot:loader>
-        <span class="custom-loader">
-          <v-icon small light>flow-icon-loading1</v-icon>
+        <span>
+          <v-icon small light class="loading-anim">flow-icon-loading1</v-icon>
         </span>
         </template>
       </v-btn>
@@ -104,44 +104,5 @@
 </script>
 
 <style scoped>
-  .custom-loader {
-    animation: loader 1s infinite;
-    display: flex;
-  }
 
-  @-moz-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @-webkit-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @-o-keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes loader {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
 </style>
