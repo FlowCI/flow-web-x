@@ -43,7 +43,7 @@
     data() {
       return {
         selected: 0,
-        items: ['Manual agent', 'Host with auto agent'],
+        items: ['Manual Agent', 'Dynamic Agent'],
         links: {
           0: '/settings/agents/new',
           1: '/settings/agents/host/new'
