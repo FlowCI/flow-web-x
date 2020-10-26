@@ -7,7 +7,7 @@
         :readonly="readonly"
         v-model="adaptor"
         :rules="rules"
-        :type="type"
+        :type="realType"
         :prepend-inner-icon="prependInnerIcon"
         :append-icon="isPassword ? (showPassword ? 'mdi-eye' : 'mdi-eye-off') : ''"
         @click:append="showPassword = !showPassword"
@@ -60,6 +60,13 @@ export default {
   computed: {
     isPassword() {
       return this.type === 'password'
+    },
+
+    realType() {
+      if (this.type === 'password') {
+        return this.showPassword ? 'text' : 'password'
+      }
+      return this.type
     }
   },
   watch: {
