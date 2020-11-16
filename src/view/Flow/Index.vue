@@ -83,7 +83,7 @@
     data() {
       return {
         dialog: false,
-        baseItem: {text: 'flow', href: '#/flows'},
+        baseItem: {text: 'flows', href: '#/flows'},
         selectedBranch: 'master'
       }
     },
