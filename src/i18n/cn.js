@@ -13,6 +13,8 @@ export default {
   create: '创建',
   test: '测试',
   delete: '删除',
+  disable: '禁用',
+  enable: '启用',
   login: '登录',
   password: '密码',
   password_confirm: '确认密码',

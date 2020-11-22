@@ -68,6 +68,7 @@
     methods: {
       onConfirmClick () {
         this.$emit('click')
+        this.dialog = false
       }
     }
   }

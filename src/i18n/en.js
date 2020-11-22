@@ -13,6 +13,8 @@ export default {
   create: 'Create',
   test: 'Test',
   delete: 'Delete',
+  disable: 'Disable',
+  enable: 'Enable',
   login: 'Login',
   password: 'Password',
   password_confirm: 'Confirm Password',
