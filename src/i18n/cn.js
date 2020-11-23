@@ -13,6 +13,10 @@ export default {
   create: '创建',
   test: '测试',
   delete: '删除',
+  disable: '禁用',
+  enable: '启用',
+  disabled: '已禁用',
+  enabled: '已启用',
   login: '登录',
   password: '密码',
   password_confirm: '确认密码',
@@ -162,6 +166,10 @@ export default {
     profile: {
       password_not_empty: '请输入密码',
       password_not_same: '密码不配备'
+    },
+
+    hint: {
+      agent_disabled: '提示: 主机已禁用'
     }
   },
 

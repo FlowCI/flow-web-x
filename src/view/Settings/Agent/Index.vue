@@ -6,16 +6,30 @@
       </template>
 
       <template v-slot:label="{ item }">
-        <span>{{ item.name }}</span>
-
-        <v-chip v-for="tag in item.tags"
-                :key="tag"
-                class="mx-1"
-                outlined
-                x-small
-                label
-        >{{ tag }}
-        </v-chip>
+        <v-row no-gutters>
+          <v-col cols="2">
+            <span>{{ item.name }}</span>
+          </v-col>
+          <v-col cols="2">
+            <v-chip v-if="item.disabled"
+                    x-small
+                    label
+                    class="mx-1"
+                    color="error"
+            >{{ $t('disabled').toLowerCase() }}
+            </v-chip>
+          </v-col>
+          <v-col cols="8">
+            <v-chip v-for="tag in item.tags"
+                    :key="tag"
+                    class="mx-1"
+                    outlined
+                    x-small
+                    label
+            >{{ tag }}
+            </v-chip>
+          </v-col>
+        </v-row>
       </template>
 
       <template v-slot:append="{ item }">
@@ -46,12 +60,12 @@
   import { AgentWrapper } from '@/util/agents'
   import { HostWrapper } from '@/util/hosts'
   import actions from '@/store/actions'
-  import CreateAgentDialog from "./CreateAgentDialog";
+  import CreateAgentDialog from "./CreateAgentDialog"
 
   export default {
     name: 'SettingsAgentHome',
     components: {
-      CreateAgentDialog
+      CreateAgentDialog,
     },
     data() {
       return {

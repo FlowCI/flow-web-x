@@ -42,6 +42,10 @@ export class HostWrapper {
     return this.host.name || ''
   }
 
+  get disabled() {
+    return this.host.disabled
+  }
+
   get tags() {
     return this.host.tags
   }
@@ -96,6 +100,10 @@ export class HostWrapper {
 
   set name(val) {
     this.host.name = val
+  }
+
+  set disabled(val) {
+    this.host.disabled = val
   }
 
   set tags(tags) {
