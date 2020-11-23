@@ -164,6 +164,10 @@ export default {
     profile: {
       password_not_empty: '请输入密码',
       password_not_same: '密码不配备'
+    },
+
+    hint: {
+      agent_disabled: '提示: 主机已禁用'
     }
   },
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
-        <span class="font-weight-bold caption">Edit Agent Host</span>
+    <v-row no-gutters class="mb-2" v-if="wrapper.disabled">
+      <v-col cols="9">
+        <message-box :message="$t('settings.hint.agent_disabled')"></message-box>
       </v-col>
     </v-row>
 
@@ -97,6 +97,7 @@ import {HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HOST_TYPE_K8S} from '@/util/hosts
 import {agentNameRules} from '@/util/rules'
 import TagEditor from '@/components/Common/TagEditor'
 import TextBox from '@/components/Common/TextBox'
+import MessageBox from '@/components/Common/MessageBox'
 import ConfirmBtn from '@/components/Common/ConfirmBtn'
 import SshHostEditor from '@/components/Settings/SshHostEditor'
 import K8sHostEditor from '@/components/Settings/K8sHostEditor'
@@ -117,7 +118,8 @@ export default {
     SaveBtn,
     BackBtn,
     ConfirmBtn,
-    TextBox
+    TextBox,
+    MessageBox
   },
   props: {
     wrapper: {
