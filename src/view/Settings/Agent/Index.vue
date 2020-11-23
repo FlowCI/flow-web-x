@@ -10,7 +10,7 @@
           <v-col cols="2">
             <span>{{ item.name }}</span>
           </v-col>
-          <v-col cols="1">
+          <v-col cols="2">
             <v-chip v-if="item.disabled"
                     x-small
                     label
@@ -19,7 +19,7 @@
             >{{ $t('disabled').toLowerCase() }}
             </v-chip>
           </v-col>
-          <v-col cols="9">
+          <v-col cols="8">
             <v-chip v-for="tag in item.tags"
                     :key="tag"
                     class="mx-1"
