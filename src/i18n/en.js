@@ -15,6 +15,8 @@ export default {
   delete: 'Delete',
   disable: 'Disable',
   enable: 'Enable',
+  disabled: 'Disabled',
+  enabled: 'Enabled',
   login: 'Login',
   password: 'Password',
   password_confirm: 'Confirm Password',

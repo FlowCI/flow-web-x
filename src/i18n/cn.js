@@ -15,6 +15,8 @@ export default {
   delete: '删除',
   disable: '禁用',
   enable: '启用',
+  disabled: '已禁用',
+  enabled: '已启用',
   login: '登录',
   password: '密码',
   password_confirm: '确认密码',
