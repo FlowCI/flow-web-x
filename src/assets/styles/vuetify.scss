@@ -21,6 +21,12 @@ tr.v-data-table__empty-wrapper {
   }
 }
 
+.v-select__slot {
+  .v-label {
+    font-size: 12px;
+  }
+}
+
 .v-btn {
   font-weight: 600;
 }
