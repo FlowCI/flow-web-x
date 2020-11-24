@@ -40,14 +40,7 @@
             {{ $t('flow.settings') }}
           </v-btn>
 
-          <v-btn
-              text
-              color="success"
-              @click="onRunClick"
-          >
-            <v-icon class="mr-1">mdi-play</v-icon>
-            {{ $t('job.run') }}:
-          </v-btn>
+          <run-dialog :dialog="runDialog"></run-dialog>
 
           <v-combobox dense
                       outlined
@@ -56,12 +49,9 @@
                       v-model="selectedBranch"
                       :label="`${$t('branch')}:`">
           </v-combobox>
+
         </v-toolbar-items>
       </v-toolbar>
-
-      <Dialog :dialog="dialog"
-              :content="$t('job.hint.missing_agent')"
-      ></Dialog>
     </v-card-title>
 
     <v-card-text class="content px-1 pb-0">
@@ -72,17 +62,15 @@
 
 <script>
   import actions from '@/store/actions'
-  import Dialog from '@/components/Common/Dialog'
   import { mapState } from 'vuex'
+  import RunDialog from "@/components/Flow/RunDialog";
 
   export default {
     name: 'FlowHome',
-    components: {
-      Dialog
-    },
+    components: {RunDialog},
     data() {
       return {
-        dialog: false,
+        runDialog: false,
         baseItem: {text: 'flows', href: '#/flows'},
         selectedBranch: 'master'
       }
@@ -150,12 +138,12 @@
       },
 
       onRunClick() {
-        const payload = {flow: this.flowName, branch: this.selectedBranch}
-        this.$store.dispatch(actions.jobs.start, payload)
-          .then()
-          .catch((e) => {
-            this.showSnackBar(e.message, 'error')
-          })
+        // const payload = {flow: this.flowName, branch: this.selectedBranch}
+        // this.$store.dispatch(actions.jobs.start, payload)
+        //   .then()
+        //   .catch((e) => {
+        //     this.showSnackBar(e.message, 'error')
+        //   })
       },
 
       setCurrentFlow() {

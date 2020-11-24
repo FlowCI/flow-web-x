@@ -15,6 +15,12 @@ tr.v-data-table__empty-wrapper {
   text-transform: none !important;
 }
 
+.v-text-field__slot {
+  .v-label {
+    font-size: 12px;
+  }
+}
+
 .v-btn {
   font-weight: 600;
 }
