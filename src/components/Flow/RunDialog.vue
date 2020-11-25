@@ -22,18 +22,32 @@
         <span class="font-weight-bold">{{ selected.obj.name }}</span>
       </v-card-title>
 
-      <v-divider class="mb-1"></v-divider>
-
       <v-card-text class="list">
+        <text-divider class="my-2" text="Git Branch"></text-divider>
+
         <parameter-item :item="branchVar"
                         :values="gitBranches"
+                        :readonly="{key: true, value: false}"
         ></parameter-item>
+
+        <text-divider class="my-2" text="Variables">
+          <template v-slot:action>
+            <v-btn small icon @click="onAddVar">
+              <v-icon>mdi-plus-box</v-icon>
+            </v-btn>
+          </template>
+        </text-divider>
 
         <parameter-item class="my-2"
                         v-for="(item, i) of vars"
                         :key="i"
-                        :item=item
-        ></parameter-item>
+                        :item=item>
+          <template v-slot:action>
+            <v-btn icon @click="onRemoveVar(i)">
+              <v-icon class="red--text" small>mdi-trash-can-outline</v-icon>
+            </v-btn>
+          </template>
+        </parameter-item>
       </v-card-text>
 
       <v-card-actions>
@@ -51,18 +65,21 @@
 
 <script>
 import ParameterItem from "@/components/Flow/ParameterItem"
+import TextDivider from "@/components/Common/TextDivider"
 import {mapState} from "vuex"
 import VarsList from "@/util/vars"
 
 export default {
   name: "RunDialog",
   components: {
-    ParameterItem
+    ParameterItem,
+    TextDivider
   },
   data() {
     return {
       VarsList,
-      show: false
+      show: false,
+      vars: []
     }
   },
   computed: {
@@ -77,41 +94,30 @@ export default {
         value: this.vars[VarsList.git.branch] || 'master'
       }
     },
-
-    vars() {
-      let flow = this.selected.obj
-      return this.toListOfItem(flow)
+  },
+  watch: {
+    selected() {
+      this.vars = []
     }
   },
   methods: {
-    toListOfItem(flow) {
-      let varsFromYaml = flow.variables || {}
-      let varsFromLocal = flow.locally || {}
-      let vars = []
+    onAddVar() {
+      this.vars.push({
+        key: '',
+        value: ''
+      })
+    },
 
-      for (let key of Object.keys(varsFromYaml)) {
-        vars.push({
-          key: key,
-          value: varsFromYaml[key]
-        })
-      }
-
-      for (let key of Object.keys(varsFromLocal)) {
-        vars.push({
-          key: key,
-          value: varsFromLocal[key].data
-        })
-      }
-
-      return vars
+    onRemoveVar(index) {
+      this.vars.splice(index, 1)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .list {
-    max-height: 400px;
-    overflow-y: auto;
-  }
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+}
 </style>

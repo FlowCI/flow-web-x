@@ -5,6 +5,7 @@
           :label="$t('flow.var_name')"
           append-outer-icon="mdi-equal"
           v-model="item.key"
+          :readonly="readonly.key"
           solo
       ></v-text-field>
     </v-col>
@@ -14,6 +15,7 @@
           class="ml-2"
           :label="$t('flow.var_value')"
           v-model="item.value"
+          :readonly="readonly.value"
           solo
       ></v-text-field>
 
@@ -23,8 +25,13 @@
           class="ml-2"
           :label="$t('flow.var_value')"
           v-model="item.value"
+          :readonly="readonly.value"
           solo
       ></v-select>
+    </v-col>
+
+    <v-col cols="1">
+      <slot name="action"></slot>
     </v-col>
   </v-row>
 </template>
@@ -39,6 +46,20 @@ export default {
     item: {
       type: Object,
       required: true
+    },
+
+    /**
+     * {key: true, value: true}
+     */
+    readonly: {
+      type: Object,
+      required: false,
+      default() {
+        return {
+          key: false,
+          value: false
+        }
+      }
     },
 
     /**

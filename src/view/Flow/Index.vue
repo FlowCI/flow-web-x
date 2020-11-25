@@ -20,6 +20,8 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="align-baseline" v-if="showFlowAction">
+          <run-dialog></run-dialog>
+
           <v-btn
               text
               color="blue-grey"
@@ -39,17 +41,6 @@
             <v-icon class="mr-1">mdi-settings</v-icon>
             {{ $t('flow.settings') }}
           </v-btn>
-
-          <run-dialog></run-dialog>
-
-          <v-combobox dense
-                      outlined
-                      prepend-icon="mdi-source-branch"
-                      :items="gitBranches"
-                      v-model="selectedBranch"
-                      :label="`${$t('branch')}:`">
-          </v-combobox>
-
         </v-toolbar-items>
       </v-toolbar>
     </v-card-title>
@@ -76,7 +67,6 @@ export default {
   },
   computed: {
     ...mapState({
-      gitBranches: state => state.flows.gitBranches,
       agents: state => state.agents.items
     }),
 
