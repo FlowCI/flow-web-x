@@ -126,15 +126,6 @@ export default {
       this.$router.push(`/flows/${this.flowName}/statistic`)
     },
 
-    onRunClick() {
-      // const payload = {flow: this.flowName, branch: this.selectedBranch}
-      // this.$store.dispatch(actions.jobs.start, payload)
-      //   .then()
-      //   .catch((e) => {
-      //     this.showSnackBar(e.message, 'error')
-      //   })
-    },
-
     setCurrentFlow() {
       this.$store.dispatch(actions.flows.select, this.flowName).then()
     },

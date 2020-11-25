@@ -6,9 +6,11 @@
           append-outer-icon="mdi-equal"
           v-model="item.key"
           :readonly="readonly.key"
+          :rules="required"
           solo
       ></v-text-field>
     </v-col>
+
     <v-col cols="6">
       <v-text-field
           v-if="!values"
@@ -16,9 +18,9 @@
           :label="$t('flow.var_value')"
           v-model="item.value"
           :readonly="readonly.value"
+          :rules="required"
           solo
       ></v-text-field>
-
       <v-select
           v-if="values"
           :items="values"
@@ -37,6 +39,8 @@
 </template>
 
 <script>
+import { required } from '@/util/rules'
+
 export default {
   name: "ParameterItem",
   props: {
@@ -69,6 +73,11 @@ export default {
       type: Array,
       required: false
     }
+  },
+  data () {
+    return {
+      required: required('required')
+    }
   }
 }
 </script>
@@ -77,11 +86,15 @@ export default {
 .param-item {
   .v-input__control {
     min-height: 32px !important;
-    max-height: 32px !important;
   }
 
   .v-input__slot {
     font-size: 14px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .v-text-field__details {
+    margin-bottom: 2px !important;
   }
 
   .v-input__append-outer, {

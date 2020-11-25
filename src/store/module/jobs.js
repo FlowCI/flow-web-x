@@ -1,5 +1,5 @@
 import http from '../http'
-import { browserDownload } from '../util'
+import {browserDownload} from '../util'
 import vars from '../../util/vars'
 
 const emptyFunc = () => {
@@ -122,17 +122,10 @@ const actions = {
     const url = `jobs/${jobId}/desc`
     return http.get(url, onCallback)
   },
-
   /**
    * Start a new job
    */
-  async start({commit, state}, {flow, branch}) {
-    let inputs = {}
-
-    if (branch) {
-      inputs[vars.git.branch] = branch
-    }
-
+  async start({commit, state}, {flow, inputs}) {
     await http.post('jobs/run', emptyFunc, {flow, inputs})
   },
 
