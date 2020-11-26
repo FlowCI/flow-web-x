@@ -1,6 +1,6 @@
 export default {
   welcome: 'Welcome to flow.ci',
-  create_default_admin: 'Please create a default admin user',
+  create_default_admin: 'Please create first admin user',
   wait_connection: 'connect to server ',
 
   back: 'Back',
