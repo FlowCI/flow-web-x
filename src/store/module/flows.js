@@ -203,7 +203,7 @@ const actions = {
         (flow) => {
           console.log('[DONE]: confirmed')
           commit('add', flow)
-        }, {yaml}
+        }, {yaml: btoa(yaml)}
       )
     }
 
@@ -285,7 +285,7 @@ const actions = {
       commit('select', flow)
     })
 
-    await http.get(`flows/${name}/yml/obj`, (flowNode) => {
+    await http.get(`flows/${name}/yml/default/obj`, (flowNode) => {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
@@ -313,7 +313,7 @@ const actions = {
       return
     }
 
-    return http.get(`flows/${name}/yml`, (base64Yml) => {
+    return http.get(`flows/${name}/yml/default`, (base64Yml) => {
       commit('setYml', atob(base64Yml))
     })
   },
@@ -323,7 +323,7 @@ const actions = {
       return
     }
 
-    await http.post(`flows/${name}/yml`,
+    await http.post(`flows/${name}/yml/default`,
       () => {
         commit('setYml', yml)
       },
