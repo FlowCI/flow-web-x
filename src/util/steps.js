@@ -8,7 +8,8 @@ const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
-const TYPE_REGULAR = 'REGULAR'
+const TYPE_STEP = 'STEP'
+const TYPE_STAGE = 'STAGE'
 const TYPE_FLOW = 'FLOW'
 const TYPE_PARALLEL = 'PARALLEL'
 
@@ -118,8 +119,12 @@ export class StepWrapper {
     return this.step.type === TYPE_PARALLEL
   }
 
-  get isRegularStep() {
-    return this.step.type = TYPE_REGULAR
+  get isStep() {
+    return this.step.type === TYPE_STEP
+  }
+
+  get isStage() {
+    return this.step.type === TYPE_STAGE
   }
 
   get error() {

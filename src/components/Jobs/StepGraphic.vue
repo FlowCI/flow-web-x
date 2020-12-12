@@ -4,8 +4,8 @@
 
 <script>
 import G6 from "@antv/g6"
-import { StepWrapper } from '@/util/steps'
-import { mapState } from 'vuex'
+import {forEachStep} from '@/util/steps'
+import {mapState} from 'vuex'
 import _ from 'lodash'
 
 export default {
@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapState({
+      root: state => state.steps.root,
       steps: state => state.steps.items,
       change: state => state.steps.change
     }),
@@ -42,7 +43,7 @@ export default {
     this.graph = this.initG6()
   },
   watch: {
-    steps() {
+    root() {
       this.graph.data(this.buildGraphData())
       this.graph.render()
     }
@@ -101,8 +102,7 @@ export default {
       start.label = 'Start'
       nodes.push(start)
 
-      let items = this.toWrapperItems(this.allRoots())
-      nodes = nodes.concat(this.toNodes(items))
+      nodes = nodes.concat(this.toNodes(this.root))
 
       const end = _.cloneDeep(this.points.terminal)
       end.id = 'End'
@@ -127,74 +127,27 @@ export default {
     },
 
     // only transfer real step to nodes
-    toNodes(wrapperItems) {
+    toNodes(root) {
       let nodes = []
-      wrapperItems.forEach((v, i) => {
-        if (v.children) {
-          let children = this.toNodes(v.wrapperChildren);
-          for (let childNode of children) {
-            childNode.label = `${childNode.label}\n(${v.name})`
-          }
-          nodes = nodes.concat(children)
+
+      forEachStep(root, (step) => {
+        if (step.isRoot || step.isStage) {
           return
         }
 
         const node = {
-          id: v.id,
-          label: v.name,
+          id: step.id,
+          label: step.name,
         }
 
-        Object.assign(node, v.status.config)
+        Object.assign(node, step.status.config)
         nodes.push(node)
       })
+
+      console.log(nodes)
+
       return nodes
-    },
-
-    toWrapperItems(rootSteps) {
-      let items = []
-
-      rootSteps.forEach((val, index) => {
-        let wrapper = new StepWrapper(val, index);
-        items.push(wrapper)
-
-        if (val.children) {
-          let children = this.toWrapperItems(val.children);
-          for (let child of children) {
-            child.wrapperParent = wrapper
-          }
-          wrapper.wrapperChildren = children
-        }
-      })
-
-      return items
-    },
-
-    allRoots() {
-      let map = {}
-      let parents = []
-
-      for (let step of this.steps) {
-        map[step.nodePath] = step
-        if (step.children) {
-          parents.push(step)
-        }
-      }
-
-      // set children and parent to step instance
-      for (let step of parents) {
-        let children = []
-        for (let nodePath of step.children) {
-          let child = map[nodePath];
-          child.parent = step
-          children.push(child)
-        }
-        step.children = children
-      }
-
-      return this.steps.filter((a) => {
-        return a.rootStep === true
-      })
-    },
+    }
   }
 };
 </script>
