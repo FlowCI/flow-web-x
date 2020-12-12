@@ -144,8 +144,6 @@ export default {
         nodes.push(node)
       })
 
-      console.log(nodes)
-
       return nodes
     }
   }

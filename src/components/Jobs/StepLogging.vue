@@ -51,7 +51,7 @@ export default {
       this.stepItems.length = 0
 
       forEachStep(root, (step) => {
-        if (step.isRoot) {
+        if (step.isRoot || step.isStage) {
           return
         }
 
