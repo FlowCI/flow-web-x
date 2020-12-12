@@ -1,26 +1,56 @@
 // store for steps of selected job
 
 import http from '../http'
+import {StepWrapper} from '@/util/steps'
 
 const state = {
   flow: null,
   buildNumber: null,
-  items: [],
+  root: {}, // root StepWrapper
+  items: [], // StepWrapper instance list
   tasks: [],
   change: {}, // latest updated object needs to watch
 }
 
 const mutations = {
-  setJob (state, {flow, buildNumber}) {
+  setJob(state, {flow, buildNumber}) {
     state.flow = flow
     state.buildNumber = buildNumber
   },
 
-  setSteps (state, steps) {
-    state.items = steps
+  setSteps(state, steps) {
+    let wrappers = []
+    let mapping = {}
+
+    // create instances
+    steps.forEach((step) => {
+      let w = new StepWrapper(step)
+      wrappers.push(w)
+      mapping[w.path] = w
+
+      if (!step.parent) {
+        state.root = w
+      }
+    })
+
+    // link next and parent
+    wrappers.forEach((w) => {
+      if (!w.nextPaths) {
+        return
+      }
+
+      for (let path of w.nextPaths) {
+        const next = mapping[path]
+        w.next.push(next)
+      }
+
+      w.parent = mapping[w.parentPath]
+    })
+
+    state.items = wrappers
   },
 
-  setTasks (state, tasks) {
+  setTasks(state, tasks) {
     state.tasks = tasks
   }
 }
@@ -30,7 +60,7 @@ const actions = {
   /**
    * Get steps for job
    */
-  get ({commit}, {flow, buildNumber}) {
+  get({commit}, {flow, buildNumber}) {
     commit('setJob', {flow, buildNumber})
     let url = `jobs/${flow}/${buildNumber}/steps`
     http.get(url, (steps) => {
@@ -41,7 +71,7 @@ const actions = {
   /**
    * Step update from ws push
    */
-  update ({commit}, steps) {
+  update({commit}, steps) {
     commit('setSteps', steps)
   },
 

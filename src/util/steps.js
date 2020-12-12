@@ -8,29 +8,39 @@ const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
+const TYPE_REGULAR = 'REGULAR'
+const TYPE_FLOW = 'FLOW'
+const TYPE_PARALLEL = 'PARALLEL'
+
+const TIME_FORMAT = 'kk:mm:ss SSS'
+
+export function forEachStep(wrapper, onStep) {
+  onStep(wrapper)
+  for (let next of wrapper.next) {
+    forEachStep(next, onStep)
+  }
+}
+
 /**
  * Wrapper for both ExecutedCmd and ExecutedLocalTask
  */
 export class StepWrapper {
-  constructor(step, index) {
+  constructor(step) {
     this.step = step
-    this.index = index
     this.stepName = step.name
-    this.wrapperChildrenList = []
-    this.parentWrapper = null
+    this.nextSteps = []
+    this.parentStep = null
+    this.isRootFlow = !step.parent;
 
-    if (step.nodePath) {
-      let slashIndex = this.step.nodePath.lastIndexOf('/')
-      this.stepName = this.step.nodePath.substring(slashIndex + 1)
+    let path = step.nodePath;
+    if (path) {
+      let slashIndex = path.lastIndexOf('/')
+      this.stepName = path.substring(slashIndex + 1)
     }
   }
 
   get rawInstance() {
     return this.step
-  }
-
-  get order() {
-    return this.index
   }
 
   get id() {
@@ -41,38 +51,46 @@ export class StepWrapper {
     if (!this.step.startAt) {
       return '-'
     }
-    return moment(this.step.startAt).format('kk:mm:ss SSS')
+    return moment(this.step.startAt, TIME_FORMAT)
   }
 
   get finishAt() {
     if (!this.step.finishAt) {
       return '-'
     }
-    return moment(this.step.finishAt).format('kk:mm:ss SSS')
+    return moment(this.step.finishAt, TIME_FORMAT)
   }
 
   get flow() {
     return this.step.flowId
   }
 
-  get children() {
-    return this.step.children
+  get nextPaths() {
+    return this.step.next
   }
 
-  get wrapperChildren() {
-    return this.wrapperChildrenList
+  get next() {
+    return this.nextSteps
   }
 
-  get wrapperParent() {
-    return this.parentWrapper
+  get parent() {
+    return this.parentStep
   }
 
-  get isRoot(){
-    return this.step.rootStep
+  get parentPath() {
+    return this.step.parent;
+  }
+
+  get isRoot() {
+    return this.isRootFlow
   }
 
   get name() {
     return this.stepName
+  }
+
+  get path() {
+    return this.step.nodePath
   }
 
   get status() {
@@ -92,14 +110,29 @@ export class StepWrapper {
     return this.step.status === STATUS_SKIPPED && this.step.error
   }
 
+  get isFlow() {
+    return this.step.type === TYPE_FLOW
+  }
+
+  get isParallel() {
+    return this.step.type === TYPE_PARALLEL
+  }
+
+  get isRegularStep() {
+    return this.step.type = TYPE_REGULAR
+  }
+
   get error() {
     return this.step.error
   }
 
   get duration() {
-    const start = moment(this.step.startAt)
-    const end = moment(this.step.finishAt)
-    return end.diff(start, 'seconds')
+    if (this.step.startAt && this.step.finishAt) {
+      const start = moment(this.step.startAt, TIME_FORMAT)
+      const end = moment(this.step.finishAt, TIME_FORMAT)
+      return end.diff(start, 'seconds')
+    }
+    return '-'
   }
 
   get exitCode() {
@@ -122,12 +155,8 @@ export class StepWrapper {
     this.step.status = newStatus
   }
 
-  set wrapperChildren(list) {
-    this.wrapperChildrenList = list
-  }
-
-  set wrapperParent(w) {
-    this.parentWrapper = w
+  set parent(p) {
+    this.parentStep = p
   }
 }
 

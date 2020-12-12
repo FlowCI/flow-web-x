@@ -112,7 +112,6 @@
       ...mapState({
         job: state => state.jobs.selected,
         reports: state => state.jobs.reports,
-        steps: state => state.steps.items,
       }),
 
       flow() {
