@@ -97,6 +97,7 @@ export default {
         layout: {
           type: 'dagre',
           rankdir: 'LR',
+          controlPoints: true,
         }
       });
     },
@@ -125,7 +126,7 @@ export default {
         })
       }
 
-      edges = edges.concat(this.toEdges(this.root.next))
+      edges = edges.concat(this.toEdges({}, this.root.next))
 
       for (let step of this.findLastSteps(this.root)) {
         edges.push({
@@ -140,7 +141,7 @@ export default {
     findNext(nextSteps) {
       let out = []
       for (let next of nextSteps) {
-        if (next.isFlow || next.isStage || next.isParallel) {
+        if (next.isFlow || next.isStage) {
           out = out.concat(this.findNext(next.next))
           continue
         }
@@ -159,18 +160,23 @@ export default {
       return lastSteps
     },
 
-    toEdges(steps) {
+    toEdges(added, steps) {
       let edges = []
       for (let step of steps) {
         let nextList = this.findNext(step.next)
 
         for (let next of nextList) {
-          edges.push({
-            source: step.path,
-            target: next.path
-          })
+          const id = step.path + "-" + next.path
 
-          edges = edges.concat(this.toEdges(nextList))
+          if (!added[id]) {
+            edges.push({
+              source: step.path,
+              target: next.path
+            })
+            added[id] = true
+          }
+
+          edges = edges.concat(this.toEdges(added, nextList))
         }
       }
 
@@ -183,7 +189,7 @@ export default {
       let added = {}
 
       forEachStep(root, (step) => {
-        if (step.isStage || step.isFlow || step.isParallel) {
+        if (step.isStage || step.isFlow) {
           return
         }
 

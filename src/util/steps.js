@@ -87,7 +87,7 @@ export class StepWrapper {
   }
 
   get name() {
-    return this.stepName
+    return this.stepName.startsWith('parallel') ? 'parallel' : this.stepName
   }
 
   get path() {

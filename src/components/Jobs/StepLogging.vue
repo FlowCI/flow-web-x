@@ -52,7 +52,7 @@ export default {
       let added = {}
 
       forEachStep(root, (step) => {
-        if (step.isStage || step.isFlow || step.isParallel) {
+        if (step.isStage || step.isFlow) {
           return
         }
 
