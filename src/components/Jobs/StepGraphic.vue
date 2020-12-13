@@ -1,5 +1,5 @@
 <template>
-  <div id="stepgraphic" class="graphic"></div>
+  <div id="stepgraphic"></div>
 </template>
 
 <script>
@@ -36,37 +36,40 @@ export default {
     ...mapState({
       root: state => state.steps.root,
       steps: state => state.steps.items,
+      maxHeight: state => state.steps.maxHeight,
       change: state => state.steps.change
     }),
   },
   mounted() {
-    this.graph = this.initG6()
+
   },
   watch: {
     root() {
+      this.graph = this.initG6()
       this.graph.data(this.buildGraphData())
       this.graph.render()
     }
   },
   methods: {
     initG6() {
-      const stepWidth = 165 * this.steps.length
-      const screenWidth = document.getElementById('stepgraphic').scrollWidth - 20;
-      const height = 150;
+      const element = document.getElementById('stepgraphic');
+      const screenWidth = element.scrollWidth - 30;
+      const height = this.maxHeight * 100;
+
+      element.style.height = height + 'px'
 
       return new G6.Graph({
         container: "stepgraphic",
         width: screenWidth,
         height: height,
+        fitView: false,
+        fitCenter: true,
+        groupByTypes: false,
         modes: {
           default: [
             'drag-canvas',
-            'zoom-canvas',
           ]
         },
-        fitView: stepWidth > screenWidth,
-        fitCenter: true,
-        groupByTypes: false,
         defaultNode: {
           type: 'circle',
           size: 20,
@@ -97,6 +100,8 @@ export default {
         layout: {
           type: 'dagre',
           rankdir: 'LR',
+          ranksep: 40,
+          nodesep: 25,
           controlPoints: true,
         }
       });
@@ -212,7 +217,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.graphic {
-  height: 150px;
-}
 </style>

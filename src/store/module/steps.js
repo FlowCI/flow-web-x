@@ -6,6 +6,7 @@ import {StepWrapper} from '@/util/steps'
 const state = {
   flow: null,
   buildNumber: null,
+  maxHeight: 1, // max parallel height
   root: {}, // root StepWrapper
   items: [], // StepWrapper instance list
   tasks: [],
@@ -21,6 +22,7 @@ const mutations = {
   setSteps(state, steps) {
     let wrappers = []
     let mapping = {}
+    state.maxHeight = 1
 
     // create instances
     steps.forEach((step) => {
@@ -39,14 +41,23 @@ const mutations = {
         return
       }
 
+      let height = 0
       for (let path of w.nextPaths) {
         const next = mapping[path]
         w.next.push(next)
+        height++
+      }
+
+      if (w.isParallel) {
+        if (state.maxHeight < height) {
+          state.maxHeight = height
+        }
       }
 
       w.parent = mapping[w.parentPath]
     })
 
+    console.log(state.maxHeight)
     state.items = wrappers
   },
 
