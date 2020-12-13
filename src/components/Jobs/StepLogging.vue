@@ -49,9 +49,10 @@ export default {
   watch: {
     root(root) {
       this.stepItems.length = 0
+      let added = {}
 
       forEachStep(root, (step) => {
-        if (step.isRoot || step.isStage) {
+        if (step.isStage || step.isFlow || step.isParallel) {
           return
         }
 
@@ -60,7 +61,10 @@ export default {
           this.buses[step.id] = new Vue()
         }
 
-        this.stepItems.push(step)
+        if (!added[step.id]) {
+          this.stepItems.push(step)
+          added[step.id] = step
+        }
       })
     },
 

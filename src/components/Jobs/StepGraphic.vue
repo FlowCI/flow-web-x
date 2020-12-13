@@ -58,6 +58,12 @@ export default {
         container: "stepgraphic",
         width: screenWidth,
         height: height,
+        modes: {
+          default: [
+            'drag-canvas',
+            'zoom-canvas',
+          ]
+        },
         fitView: stepWidth > screenWidth,
         fitCenter: true,
         groupByTypes: false,
@@ -96,6 +102,7 @@ export default {
     },
 
     buildGraphData() {
+      // build edges
       let nodes = []
       let start = _.cloneDeep(this.points.terminal)
       start.id = 'Start'
@@ -109,39 +116,87 @@ export default {
       end.label = 'End'
       nodes.push(end)
 
-      let edges = this.toEdges(nodes)
+      // build edges
+      let edges = []
+      for (let step of this.findNext(this.root.next)) {
+        edges.push({
+          source: start.id,
+          target: step.path
+        })
+      }
+
+      edges = edges.concat(this.toEdges(this.root.next))
+
+      for (let step of this.findLastSteps(this.root)) {
+        edges.push({
+          source: step.path,
+          target: end.id
+        })
+      }
+
       return {nodes, edges}
     },
 
-    toEdges(nodes) {
-      let edges = []
-      for (let i = 0; i < nodes.length - 1; i++) {
-        let current = nodes[i]
-        let next = nodes[i + 1]
-        edges.push({
-          source: current.id,
-          target: next.id
-        })
+    findNext(nextSteps) {
+      let out = []
+      for (let next of nextSteps) {
+        if (next.isFlow || next.isStage || next.isParallel) {
+          out = out.concat(this.findNext(next.next))
+          continue
+        }
+        out.push(next)
       }
+      return out
+    },
+
+    findLastSteps(root) {
+      let lastSteps = []
+      forEachStep(root, (step) => {
+        if (step.next.length === 0) {
+          lastSteps.push(step)
+        }
+      })
+      return lastSteps
+    },
+
+    toEdges(steps) {
+      let edges = []
+      for (let step of steps) {
+        let nextList = this.findNext(step.next)
+
+        for (let next of nextList) {
+          edges.push({
+            source: step.path,
+            target: next.path
+          })
+
+          edges = edges.concat(this.toEdges(nextList))
+        }
+      }
+
       return edges
     },
 
     // only transfer real step to nodes
     toNodes(root) {
       let nodes = []
+      let added = {}
 
       forEachStep(root, (step) => {
-        if (step.isRoot || step.isStage) {
+        if (step.isStage || step.isFlow || step.isParallel) {
           return
         }
 
         const node = {
-          id: step.id,
+          id: step.path,
           label: step.name,
         }
-
         Object.assign(node, step.status.config)
-        nodes.push(node)
+
+        if (!added[node.id]) {
+          nodes.push(node)
+          added[node.id] = node
+        }
       })
 
       return nodes
