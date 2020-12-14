@@ -57,7 +57,6 @@ const mutations = {
       w.parent = mapping[w.parentPath]
     })
 
-    console.log(state.maxHeight)
     state.items = wrappers
   },
 
