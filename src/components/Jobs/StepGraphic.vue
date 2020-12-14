@@ -40,30 +40,19 @@ export default {
       change: state => state.steps.change
     }),
   },
-  mounted() {
-    this.graph = this.initG6()
-  },
   watch: {
     root() {
-      this.refresh()
+      if (this.graph) {
+        this.graph.clear();
+        this.graph.destroy()
+      }
+
+      this.graph = this.initG6()
       this.graph.data(this.buildGraphData())
       this.graph.render()
     }
   },
   methods: {
-    refresh() {
-      const element = document.getElementById('stepgraphic');
-      const height = this.maxHeight * 100;
-
-      if (this.graph.height !== height) {
-        console.log('refresh graph since height changed')
-
-        element.style.height = height + 'px'
-        this.graph.height = height
-        this.graph.refresh()
-      }
-    },
-
     initG6() {
       const element = document.getElementById('stepgraphic');
       const screenWidth = element.scrollWidth - 30;
