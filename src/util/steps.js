@@ -1,6 +1,7 @@
 import moment from 'moment'
 
 const STATUS_PENDING = 'PENDING'
+const STATUS_WAITING_AGENT = 'WAITING_AGENT'
 const STATUS_RUNNING = 'RUNNING'
 const STATUS_SUCCESS = 'SUCCESS'
 const STATUS_SKIPPED = 'SKIPPED'
@@ -193,13 +194,25 @@ export const mapping = {
     }
   },
 
+  [STATUS_WAITING_AGENT]: {
+    icon: 'mdi-settings rotate blue--text',
+    text: 'waiting for agent',
+    config: {
+      shape: 'background-animate',
+      style: {
+        fill: '#BBDEFB',
+        stroke: '#FFFFFF'
+      }
+    }
+  },
+
   [STATUS_RUNNING]: {
     icon: 'mdi-settings rotate blue--text',
     text: 'running',
     config: {
       shape: 'background-animate',
       style: {
-        fill: '#E1F5FE',
+        fill: '#42A5F5',
         stroke: '#FFFFFF'
       }
     }
