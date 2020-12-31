@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { timeDurationInSeconds } from "./time"
 
 const STATUS_PENDING = 'PENDING'
 const STATUS_WAITING_AGENT = 'WAITING_AGENT'
@@ -13,8 +14,6 @@ const TYPE_STEP = 'STEP'
 const TYPE_STAGE = 'STAGE'
 const TYPE_FLOW = 'FLOW'
 const TYPE_PARALLEL = 'PARALLEL'
-
-const TIME_FORMAT = 'kk:mm:ss SSS'
 
 export function forEachStep(wrapper, onStep) {
   onStep(wrapper)
@@ -53,14 +52,14 @@ export class StepWrapper {
     if (!this.step.startAt) {
       return '-'
     }
-    return moment(this.step.startAt, TIME_FORMAT)
+    return moment(this.step.startAt)
   }
 
   get finishAt() {
     if (!this.step.finishAt) {
       return '-'
     }
-    return moment(this.step.finishAt, TIME_FORMAT)
+    return moment(this.step.finishAt)
   }
 
   get flow() {
@@ -134,9 +133,7 @@ export class StepWrapper {
 
   get duration() {
     if (this.step.startAt && this.step.finishAt) {
-      const start = moment(this.step.startAt, TIME_FORMAT)
-      const end = moment(this.step.finishAt, TIME_FORMAT)
-      return end.diff(start, 'seconds')
+      return timeDurationInSeconds(this.step.finishAt, this.step.startAt)
     }
     return '-'
   }
