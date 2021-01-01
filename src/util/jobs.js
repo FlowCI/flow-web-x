@@ -145,15 +145,17 @@ export class JobWrapper {
       this.job.status === STATUS_TIMEOUT
   }
 
-  get agentInfo() {
-    return this.job.agentInfo || {
-      name: '-',
-      os: '-',
-      cpu: 0,
-      freeMemory: 0,
-      totalMemory: 0,
-      freeDisk: 0,
-      totalDisk: 0
+  get snapshots() {
+    return this.job.snapshots || {
+      '-': {
+        name: '-',
+        os: '-',
+        cpu: 0,
+        freeMemory: 0,
+        totalMemory: 0,
+        freeDisk: 0,
+        totalDisk: 0
+      }
     }
   }
 

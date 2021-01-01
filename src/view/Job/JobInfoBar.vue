@@ -44,8 +44,12 @@
     </v-col>
 
     <v-col cols="2">
-      <v-icon small dark>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
-      <span class="ml-2">{{ wrapper.agentInfo.name }}</span>
+      <div v-for="[id, info] of Object.entries(wrapper.snapshots)"
+           :key="id">
+        <v-icon x-small dark>{{ agentIcons[info.os] }}</v-icon>
+        <span class="ml-1">{{ info.name }}</span>
+      </div>
+
     </v-col>
 
     <v-col cols="2">
@@ -70,62 +74,62 @@
 </template>
 
 <script>
-  import { icons } from '@/util/agents'
+import {icons} from '@/util/agents'
 
-  export default {
-    name: "JobInfoBar",
-    props: {
-      wrapper: {
-        type: Object,
-        required: true
-      },
-      onStopClick: {
-        type: Function,
-        required: true
-      },
-      onRerunClick: {
-        type: Function,
-        required: true
-      },
-      onDebugClick: {
-        type: Function,
-        required: true
-      }
+export default {
+  name: "JobInfoBar",
+  props: {
+    wrapper: {
+      type: Object,
+      required: true
     },
-    data() {
-      return {
-        showTty: false,
-        agentIcons: icons,
-        duration: '-',
-        durationInterval: null,
-      }
+    onStopClick: {
+      type: Function,
+      required: true
     },
-    watch: {
-      wrapper(w) {
-        this.duration = w.duration
+    onRerunClick: {
+      type: Function,
+      required: true
+    },
+    onDebugClick: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      showTty: false,
+      agentIcons: icons,
+      duration: '-',
+      durationInterval: null,
+    }
+  },
+  watch: {
+    wrapper(w) {
+      this.duration = w.duration
 
-        if (this.durationInterval) {
-          clearInterval(this.durationInterval)
-        }
-
-        if (w.isFinished) {
-          return
-        }
-
-        this.durationInterval = setInterval(() => {
-          this.duration += 1
-        }, 1000)
+      if (this.durationInterval) {
+        clearInterval(this.durationInterval)
       }
+
+      if (w.isFinished) {
+        return
+      }
+
+      this.durationInterval = setInterval(() => {
+        this.duration += 1
+      }, 1000)
     }
   }
+}
 </script>
 
 <style scoped>
-  span {
-    color: #fbfbfb;
-    text-overflow: ellipsis;
-    max-width: 150px;
-    display: inline-block;
-    white-space: nowrap;
-  }
+span {
+  color: #fbfbfb;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  display: inline-block;
+  white-space: nowrap;
+}
 </style>
