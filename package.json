@@ -13,7 +13,7 @@
   "dependencies": {
     "@antv/g6": "^3.6.0",
     "@mdi/js": "^5.3.45",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.11.0",
     "codemirror": "^5.57.0",
