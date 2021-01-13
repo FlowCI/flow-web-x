@@ -15,6 +15,7 @@ export default {
       graph: null,
       points: {
         terminal: {
+          type: 'circle',
           size: 15,
           style: {
             fill: '#808080',
@@ -22,10 +23,10 @@ export default {
           },
           labelCfg: {
             position: 'bottom',
-            offset: 14,
+            offset: 15,
             style: {
               fontSize: 14,
-              fontWeight: 'normal'
+              fontWeight: 'bold'
             }
           }
         }
@@ -50,15 +51,22 @@ export default {
       this.graph = this.initG6()
       this.graph.data(this.buildGraphData())
       this.graph.render()
+
+      this.graph.on('node:mouseenter', (e) => {
+        this.graph.setItemState(e.item, 'active', true);
+      });
+      this.graph.on('node:mouseleave', (e) => {
+        this.graph.setItemState(e.item, 'active', false);
+      });
     }
   },
   methods: {
     initG6() {
-      const element = document.getElementById('stepgraphic');
-      const screenWidth = element.scrollWidth - 30;
-      const height = this.maxHeight * 100;
+      const container = document.getElementById('stepgraphic')
+      const screenWidth = container.scrollWidth - 30
+      const height = this.maxHeight * 100
 
-      element.style.height = height + 'px'
+      container.style.height = height + 'px'
 
       return new G6.Graph({
         container: "stepgraphic",
@@ -70,23 +78,43 @@ export default {
         modes: {
           default: [
             'drag-canvas',
+            {
+              type: 'tooltip',
+              formatText: function formatText(model) {
+                return model.tip;
+              },
+              offset: 20,
+              shouldBegin: (e) => {
+                return e.item.getModel().id !== '1';
+              },
+            },
           ]
         },
         defaultNode: {
-          type: 'circle',
-          size: 20,
+          type: 'modelRect',
+          size: [70, 30],
+          logoIcon: {
+            show: false
+          },
+          stateIcon: {
+            show: false
+          },
           style: {
-            fill: '#C6E5FF',
-            stroke: '#FFFFFF',
-            lineWidth: 5,
+            stroke: '#C2C8D5',
+            lineWidth: 1,
+          },
+          preRect: {
+            show: true,
+            fill: '#C2C8D5',
+            width: 10,
           },
           labelCfg: {
-            position: 'bottom',
-            offset: 10,
+            position: 'left',
             style: {
               fontSize: 14,
-              fontWeight: 'bold'
-            }
+              fontWeight: 'bold',
+            },
+            offset: 12
           }
         },
         defaultEdge: {
@@ -95,7 +123,7 @@ export default {
             radius: 5,
             offset: 50,
             endArrow: true,
-            lineWidth: 3,
+            lineWidth: 2,
             stroke: '#C2C8D5'
           }
         },
@@ -115,6 +143,7 @@ export default {
       let start = _.cloneDeep(this.points.terminal)
       start.id = 'Start'
       start.label = 'Start'
+      start.tip = ''
       nodes.push(start)
 
       nodes = nodes.concat(this.toNodes(this.root))
@@ -122,6 +151,7 @@ export default {
       const end = _.cloneDeep(this.points.terminal)
       end.id = 'End'
       end.label = 'End'
+      end.tip = ''
       nodes.push(end)
 
       // build edges
@@ -203,8 +233,16 @@ export default {
         const node = {
           id: step.path,
           label: step.name,
+          preRect: {
+            fill: step.status.config.style.fill,
+            width: 7,
+          },
+          style: {
+            stroke: step.status.config.style.fill
+          },
+          tip: step.status.text
         }
-        Object.assign(node, step.status.config)
+        // Object.assign(node, step.status.preRect)
 
         if (!added[node.id]) {
           nodes.push(node)
