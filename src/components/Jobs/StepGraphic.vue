@@ -166,6 +166,8 @@ export default {
       edges = edges.concat(this.toEdges({}, this.root.next))
 
       for (let step of this.findLastSteps(this.root)) {
+        console.log(step.name)
+
         edges.push({
           source: step.path,
           target: end.id
@@ -188,13 +190,13 @@ export default {
     },
 
     findLastSteps(root) {
-      let lastSteps = []
+      let lastSteps = {}
       forEachStep(root, (step) => {
         if (step.next.length === 0) {
-          lastSteps.push(step)
+          lastSteps[step.id] = step
         }
       })
-      return lastSteps
+      return Object.values(lastSteps)
     },
 
     toEdges(added, steps) {
@@ -242,7 +244,20 @@ export default {
           },
           tip: step.status.text
         }
-        // Object.assign(node, step.status.preRect)
+
+        if (step.isParallel) {
+          node.type = 'circle'
+          node.size = 15
+          node.style.fill = step.status.config.style.fill
+          node.labelCfg = {
+            position: 'bottom',
+            offset: 15,
+            style: {
+              fontSize: 14,
+              fontWeight: 'bold'
+            }
+          }
+        }
 
         if (!added[node.id]) {
           nodes.push(node)
