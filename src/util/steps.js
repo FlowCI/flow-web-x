@@ -174,7 +174,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#C6E5FF',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -184,8 +183,7 @@ export const mapping = {
     text: 'pending',
     config: {
       style: {
-        fill: '#FFFFFF',
-        stroke: '#757575'
+        fill: '#BDBDBD',
       }
     }
   },
@@ -196,7 +194,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#BBDEFB',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -207,7 +204,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#42A5F5',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -218,7 +214,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#9CCC65',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -229,7 +224,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#B0BEC5',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -240,7 +234,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#E53935',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -251,8 +244,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#B0BEC5',
-        stroke: '#FFFFFF',
-        lineWidth: 3,
       }
     }
   },
