@@ -206,7 +206,7 @@
       margin-right: 10px !important;
       max-width: 260px !important;
       font-weight: bold;
-      border-bottom: 1px solid #BDBDBD;
+      border-bottom: 2px solid #BDBDBD;
     }
 
     .tab-active {

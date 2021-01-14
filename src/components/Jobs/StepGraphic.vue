@@ -124,7 +124,7 @@ export default {
             offset: 50,
             endArrow: true,
             lineWidth: 2,
-            stroke: '#C2C8D5'
+            stroke: '#EEEEEE'
           }
         },
         layout: {
