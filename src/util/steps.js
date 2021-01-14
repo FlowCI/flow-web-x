@@ -213,7 +213,7 @@ export const mapping = {
     text: 'success',
     config: {
       style: {
-        fill: '#9CCC65',
+        fill: '#66BB6A',
       }
     }
   },
