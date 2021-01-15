@@ -73,7 +73,7 @@ export default {
         width: screenWidth,
         height: height,
         fitView: false,
-        fitCenter: true,
+        fitCenter: false,
         groupByTypes: false,
         modes: {
           default: [
