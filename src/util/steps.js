@@ -164,7 +164,9 @@ export class StepWrapper {
 }
 
 export function isStepFinished(step) {
-  return step.status !== STATUS_PENDING && step.status !== STATUS_RUNNING
+  return step.status !== STATUS_PENDING
+    && step.status !== STATUS_RUNNING
+    && step.status !== STATUS_WAITING_AGENT
 }
 
 export const mapping = {

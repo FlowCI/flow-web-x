@@ -6,6 +6,7 @@
         v-for="(item) in stepItems"
         :key="item.id"
         :bus="buses[item.id]"
+        :on-debug-click="onDebugClick"
         :wrapper="item">
     </step-logging-item>
 
@@ -36,6 +37,12 @@ export default {
       stepItems: [],
       taskItems: [],
       buses: {}
+    }
+  },
+  props: {
+    onDebugClick: {
+      type: Function,
+      required: true
     }
   },
   computed: {

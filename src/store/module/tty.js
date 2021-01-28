@@ -7,16 +7,16 @@ const mutations = {
 }
 
 const actions = {
-  connect({commit}, jobId) {
-    send(`/app/tty/${jobId}/open`, 'connect')
+  connect({commit}, {jobId, nodePath}) {
+    send(`/app/tty/${jobId}/${btoa(nodePath)}/open`, 'connect')
   },
 
-  shell({commit}, {jobId, script}) {
-    send(`/app/tty/${jobId}/shell`, script)
+  shell({commit}, {jobId, nodePath, script}) {
+    send(`/app/tty/${jobId}/${btoa(nodePath)}/shell`, script)
   },
 
-  close({commit}, jobId) {
-    send(`/app/tty/${jobId}/close`, 'close')
+  close({commit}, {jobId, nodePath}) {
+    send(`/app/tty/${jobId}/${btoa(nodePath)}/close`, 'close')
   }
 }
 

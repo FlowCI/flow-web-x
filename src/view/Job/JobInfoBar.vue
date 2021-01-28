@@ -60,15 +60,6 @@
     </v-col>
 
     <v-col cols="2">
-      <v-tooltip bottom v-if="!wrapper.isFinished">
-        <template v-slot:activator="{ on }">
-          <v-btn icon color="black" @click="onDebugClick" v-on="on">
-            <v-icon small>mdi-console</v-icon>
-          </v-btn>
-        </template>
-        <span>{{ $t('job.hint.tty') }}</span>
-      </v-tooltip>
-
       <v-btn icon @click="onStopClick" v-if="!wrapper.isFinished">
         <v-icon>mdi-stop</v-icon>
       </v-btn>
@@ -95,10 +86,6 @@ export default {
       required: true
     },
     onRerunClick: {
-      type: Function,
-      required: true
-    },
-    onDebugClick: {
       type: Function,
       required: true
     }

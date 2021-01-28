@@ -1,7 +1,6 @@
 <template>
   <div class="job-detail">
     <job-info-bar :wrapper="wrapper"
-                  :on-debug-click="onDebugClick"
                   :on-rerun-click="onRerunClick"
                   :on-stop-click="onStopClick"
     ></job-info-bar>
@@ -14,7 +13,7 @@
       </v-col>
     </v-row>
 
-    <job-tty :job="job" v-model="showTty"></job-tty>
+    <job-tty :job="job" :path="ttyPath" v-model="showTty"></job-tty>
 
     <v-tabs fixed-tabs
             height="40"
@@ -46,7 +45,7 @@
 
     <v-tabs-items v-model="tab" class="mt-3">
       <v-tab-item value="summary">
-        <detail-tab-summary/>
+        <detail-tab-summary :on-debug-click="onDebugClick"/>
       </v-tab-item>
       <v-tab-item value="context">
         <detail-tab-context :wrapper="wrapper"/>
@@ -91,6 +90,7 @@
       return {
         tab: null,
         showTty: false,
+        ttyPath: '',
         agentIcons: icons,
         duration: '-',
         durationInterval: null,
@@ -185,7 +185,8 @@
           })
       },
 
-      onDebugClick() {
+      onDebugClick(nodePath) {
+        this.ttyPath = nodePath
         this.showTty = true
       }
     }
