@@ -145,15 +145,17 @@ export class JobWrapper {
       this.job.status === STATUS_TIMEOUT
   }
 
-  get agentInfo() {
-    return this.job.agentInfo || {
-      name: '-',
-      os: '-',
-      cpu: 0,
-      freeMemory: 0,
-      totalMemory: 0,
-      freeDisk: 0,
-      totalDisk: 0
+  get snapshots() {
+    return this.job.snapshots || {
+      '-': {
+        name: '-',
+        os: '-',
+        cpu: 0,
+        freeMemory: 0,
+        totalMemory: 0,
+        freeDisk: 0,
+        totalDisk: 0
+      }
     }
   }
 
@@ -279,21 +281,21 @@ export const mapping = {
       icon: 'mdi-check-circle',
       class: 'green--text',
       text: STATUS_SUCCESS,
-      bg: 'rgb(128, 174, 54)'
+      bg: '#66BB6A'
     },
 
     [STATUS_FAILURE]: {
       icon: 'mdi-close-circle-outline',
       class: 'red--text text--darken-1',
       text: STATUS_FAILURE,
-      bg: '#EF5350'
+      bg: '#E53935'
     },
 
     [STATUS_CANCELLING]: {
       icon: 'flow-icon-stopped',
       class: ['grey--text', 'rotate'],
       text: STATUS_CANCELLING,
-      bg: '#BDBDBD',
+      bg: '#B0BEC5',
       rotate: true
     },
 
@@ -301,7 +303,7 @@ export const mapping = {
       icon: 'mdi-cancel',
       class: '',
       text: STATUS_CANCELLED,
-      bg: '#BDBDBD'
+      bg: '#B0BEC5'
     },
 
     [STATUS_TIMEOUT]: {

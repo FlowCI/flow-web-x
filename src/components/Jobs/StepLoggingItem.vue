@@ -40,6 +40,17 @@
               </v-col>
               <v-col cols="8">
               </v-col>
+              <v-col cols="2" class="caption" v-if="wrapper.isRunning && onDebugClick">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn x-small icon @click="onDebugClick(wrapper.path)" v-on="on">
+                      <v-icon x-small>mdi-console</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>{{ $t('job.hint.tty') }}</span>
+                </v-tooltip>
+              </v-col>
+
               <v-col cols="2" class="caption" v-if="wrapper.isFinished && showLog">
                 <v-btn icon x-small @click="onLogDownload">
                   <v-icon x-small>flow-icon-download</v-icon>
@@ -77,6 +88,10 @@ export default {
     bus: {
       required: false,
       type: Object
+    },
+    onDebugClick: {
+      type: Function,
+      required: false
     }
   },
   data() {

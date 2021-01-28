@@ -1,11 +1,11 @@
 <template>
-  <div id="stepgraphic" class="graphic"></div>
+  <div id="stepgraphic"></div>
 </template>
 
 <script>
 import G6 from "@antv/g6"
-import { StepWrapper } from '@/util/steps'
-import { mapState } from 'vuex'
+import {forEachStep} from '@/util/steps'
+import {mapState} from 'vuex'
 import _ from 'lodash'
 
 export default {
@@ -15,6 +15,7 @@ export default {
       graph: null,
       points: {
         terminal: {
+          type: 'circle',
           size: 15,
           style: {
             fill: '#808080',
@@ -22,10 +23,10 @@ export default {
           },
           labelCfg: {
             position: 'bottom',
-            offset: 14,
+            offset: 15,
             style: {
               fontSize: 14,
-              fontWeight: 'normal'
+              fontWeight: 'bold'
             }
           }
         }
@@ -34,47 +35,86 @@ export default {
   },
   computed: {
     ...mapState({
+      root: state => state.steps.root,
       steps: state => state.steps.items,
+      maxHeight: state => state.steps.maxHeight,
       change: state => state.steps.change
     }),
   },
-  mounted() {
-    this.graph = this.initG6()
-  },
   watch: {
-    steps() {
+    root() {
+      if (this.graph) {
+        this.graph.clear();
+        this.graph.destroy()
+      }
+
+      this.graph = this.initG6()
       this.graph.data(this.buildGraphData())
       this.graph.render()
+
+      this.graph.on('node:mouseenter', (e) => {
+        this.graph.setItemState(e.item, 'active', true);
+      });
+      this.graph.on('node:mouseleave', (e) => {
+        this.graph.setItemState(e.item, 'active', false);
+      });
     }
   },
   methods: {
     initG6() {
-      const stepWidth = 165 * this.steps.length
-      const screenWidth = document.getElementById('stepgraphic').scrollWidth - 20;
-      const height = 150;
+      const container = document.getElementById('stepgraphic')
+      const screenWidth = container.scrollWidth - 30
+      const height = this.maxHeight * 100
+
+      container.style.height = height + 'px'
 
       return new G6.Graph({
         container: "stepgraphic",
         width: screenWidth,
         height: height,
-        fitView: stepWidth > screenWidth,
-        fitCenter: true,
+        fitView: false,
+        fitCenter: false,
         groupByTypes: false,
+        modes: {
+          default: [
+            'drag-canvas',
+            {
+              type: 'tooltip',
+              formatText: function formatText(model) {
+                return model.tip;
+              },
+              offset: 20,
+              shouldBegin: (e) => {
+                return e.item.getModel().id !== '1';
+              },
+            },
+          ]
+        },
         defaultNode: {
-          type: 'circle',
-          size: 20,
+          type: 'modelRect',
+          size: [70, 30],
+          logoIcon: {
+            show: false
+          },
+          stateIcon: {
+            show: false
+          },
           style: {
-            fill: '#C6E5FF',
-            stroke: '#FFFFFF',
-            lineWidth: 5,
+            stroke: '#C2C8D5',
+            lineWidth: 1,
+          },
+          preRect: {
+            show: true,
+            fill: '#C2C8D5',
+            width: 10,
           },
           labelCfg: {
-            position: 'bottom',
-            offset: 10,
+            position: 'left',
             style: {
               fontSize: 14,
-              fontWeight: 'bold'
-            }
+              fontWeight: 'bold',
+            },
+            offset: 12
           }
         },
         defaultEdge: {
@@ -83,124 +123,153 @@ export default {
             radius: 5,
             offset: 50,
             endArrow: true,
-            lineWidth: 3,
-            stroke: '#C2C8D5'
+            lineWidth: 2,
+            stroke: '#EEEEEE'
           }
         },
         layout: {
           type: 'dagre',
           rankdir: 'LR',
+          ranksep: 40,
+          nodesep: 25,
+          controlPoints: true,
         }
       });
     },
 
     buildGraphData() {
+      // build edges
       let nodes = []
       let start = _.cloneDeep(this.points.terminal)
       start.id = 'Start'
       start.label = 'Start'
+      start.tip = ''
       nodes.push(start)
 
-      let items = this.toWrapperItems(this.allRoots())
-      nodes = nodes.concat(this.toNodes(items))
+      nodes = nodes.concat(this.toNodes(this.root))
 
       const end = _.cloneDeep(this.points.terminal)
       end.id = 'End'
       end.label = 'End'
+      end.tip = ''
       nodes.push(end)
 
-      let edges = this.toEdges(nodes)
+      // build edges
+      let edges = []
+      for (let step of this.findNext(this.root.next)) {
+        edges.push({
+          source: start.id,
+          target: step.path
+        })
+      }
+
+      edges = edges.concat(this.toEdges({}, this.root.next))
+
+      for (let step of this.findLastSteps(this.root)) {
+        console.log(step.name)
+
+        edges.push({
+          source: step.path,
+          target: end.id
+        })
+      }
+
       return {nodes, edges}
     },
 
-    toEdges(nodes) {
-      let edges = []
-      for (let i = 0; i < nodes.length - 1; i++) {
-        let current = nodes[i]
-        let next = nodes[i + 1]
-        edges.push({
-          source: current.id,
-          target: next.id
-        })
+    findNext(nextSteps) {
+      let out = []
+      for (let next of nextSteps) {
+        if (next.isFlow || next.isStage) {
+          out = out.concat(this.findNext(next.next))
+          continue
+        }
+        out.push(next)
       }
+      return out
+    },
+
+    findLastSteps(root) {
+      let lastSteps = {}
+      forEachStep(root, (step) => {
+        if (step.next.length === 0) {
+          lastSteps[step.id] = step
+        }
+      })
+      return Object.values(lastSteps)
+    },
+
+    toEdges(added, steps) {
+      let edges = []
+      for (let step of steps) {
+        let nextList = this.findNext(step.next)
+
+        for (let next of nextList) {
+          const id = step.path + "-" + next.path
+
+          if (!added[id]) {
+            edges.push({
+              source: step.path,
+              target: next.path
+            })
+            added[id] = true
+          }
+
+          edges = edges.concat(this.toEdges(added, nextList))
+        }
+      }
+
       return edges
     },
 
     // only transfer real step to nodes
-    toNodes(wrapperItems) {
+    toNodes(root) {
       let nodes = []
-      wrapperItems.forEach((v, i) => {
-        if (v.children) {
-          let children = this.toNodes(v.wrapperChildren);
-          for (let childNode of children) {
-            childNode.label = `${childNode.label}\n(${v.name})`
-          }
-          nodes = nodes.concat(children)
+      let added = {}
+
+      forEachStep(root, (step) => {
+        if (step.isStage || step.isFlow) {
           return
         }
 
         const node = {
-          id: v.id,
-          label: v.name,
+          id: step.path,
+          label: step.name,
+          preRect: {
+            fill: step.status.config.style.fill,
+            width: 7,
+          },
+          style: {
+            stroke: step.status.config.style.fill
+          },
+          tip: step.status.text
         }
 
-        Object.assign(node, v.status.config)
-        nodes.push(node)
-      })
-      return nodes
-    },
-
-    toWrapperItems(rootSteps) {
-      let items = []
-
-      rootSteps.forEach((val, index) => {
-        let wrapper = new StepWrapper(val, index);
-        items.push(wrapper)
-
-        if (val.children) {
-          let children = this.toWrapperItems(val.children);
-          for (let child of children) {
-            child.wrapperParent = wrapper
+        if (step.isParallel) {
+          node.type = 'circle'
+          node.size = 15
+          node.style.fill = step.status.config.style.fill
+          node.labelCfg = {
+            position: 'bottom',
+            offset: 15,
+            style: {
+              fontSize: 14,
+              fontWeight: 'bold'
+            }
           }
-          wrapper.wrapperChildren = children
+        }
+
+        if (!added[node.id]) {
+          nodes.push(node)
+          added[node.id] = node
         }
       })
 
-      return items
-    },
-
-    allRoots() {
-      let map = {}
-      let parents = []
-
-      for (let step of this.steps) {
-        map[step.nodePath] = step
-        if (step.children) {
-          parents.push(step)
-        }
-      }
-
-      // set children and parent to step instance
-      for (let step of parents) {
-        let children = []
-        for (let nodePath of step.children) {
-          let child = map[nodePath];
-          child.parent = step
-          children.push(child)
-        }
-        step.children = children
-      }
-
-      return this.steps.filter((a) => {
-        return a.rootStep === true
-      })
-    },
+      return nodes
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.graphic {
-  height: 150px;
-}
 </style>

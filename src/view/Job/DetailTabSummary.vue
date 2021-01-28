@@ -1,7 +1,7 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
 <div>
   <step-graphic></step-graphic>
-  <step-logging></step-logging>
+  <step-logging :on-debug-click="onDebugClick"></step-logging>
 </div>
 </template>
 
@@ -15,9 +15,10 @@
       StepGraphic,
       StepLogging
     },
-    data() {
-      return {
-      
+    props: {
+      onDebugClick: {
+        type: Function,
+        required: true
       }
     }
   }
