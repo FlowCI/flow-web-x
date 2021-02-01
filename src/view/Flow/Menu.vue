@@ -13,12 +13,12 @@
                    :key="item.id"
                    class="mx-1 mb-2 item"
                    @click="onItemClick(item)">
-        <v-list-item-action>
-          <v-icon size="20" :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
-        </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>
-            {{ item.name }}
+            <v-icon small :class="['mr-2', item.latestJob.status.class]">{{ item.latestJob.status.icon }}</v-icon>
+
+            <span class="body-2 font-weight-bold">{{ item.name }}</span>
+
             <v-tooltip bottom v-if="item.cron">
               <template v-slot:activator="{ on }">
                 <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>
@@ -28,6 +28,10 @@
             </v-tooltip>
           </v-list-item-title>
         </v-list-item-content>
+
+        <v-list-item-icon>
+          <span class="caption">#{{ item.latestJob.buildNumber }}</span>
+        </v-list-item-icon>
       </v-list-item>
     </v-list-item-group>
 
@@ -158,6 +162,10 @@
     .item {
       background: #FFFFFF;
       border-bottom: 2px solid #F5F5F5;
+    }
+
+    .v-list-item__icon {
+      min-width: 32px !important;
     }
   }
 </style>
