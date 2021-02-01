@@ -45,127 +45,145 @@
 </template>
 
 <script>
-  import {toWrapperList, getCronDesc} from '@/util/flows'
-  import {mapState} from 'vuex'
-  import FlowCreateDialog from './CreateDialog'
-  import actions from '@/store/actions'
+import {toWrapperList, getCronDesc} from '@/util/flows'
+import {mapState} from 'vuex'
+import FlowCreateDialog from './CreateDialog'
+import actions from '@/store/actions'
 
-  export default {
-    name: 'FlowMenu',
-    components: {
-      FlowCreateDialog
-    },
-    data() {
-      return {
-        getCronDesc,
-        searchVal: '',
-        items: [],
-      }
-    },
-    mounted() {
-      this.$store.dispatch(actions.flows.list).then()
-    },
-    computed: {
-      ...mapState({
-        flows: state => state.flows.items,
-        // to receive job updated event and show latest job status on flow list
-        latest: state => state.jobs.latest
-      }),
+export default {
+  name: 'FlowMenu',
+  components: {
+    FlowCreateDialog
+  },
+  data() {
+    return {
+      getCronDesc,
+      searchVal: '',
+      items: [],
+    }
+  },
+  mounted() {
+    this.$store.dispatch(actions.flows.list).then()
+  },
+  computed: {
+    ...mapState({
+      flows: state => state.flows.items,
+      // to receive job updated event and show latest job status on flow list
+      latest: state => state.jobs.latest,
+      statsTotal: state => state.stats.statsTotal
+    }),
 
-      // current flow name
-      current() {
-        return this.$route.params.id
-      },
+    // current flow name
+    current() {
+      return this.$route.params.id
+    },
 
-      selected: {
-        get () {
-          for (let i = 0; i < this.items.length; i++) {
-            const item = this.items[i]
-            if (item.name === this.current) {
-              return i
-            }
+    selected: {
+      get() {
+        for (let i = 0; i < this.items.length; i++) {
+          const item = this.items[i]
+          if (item.name === this.current) {
+            return i
           }
-          return 0
-        },
-
-        set (newValue) {
-
         }
-      }
-    },
-    watch: {
-      flows(after) {
-        this.items = toWrapperList(after)
-        this.fetchLatestStatus(this.items)
+        return 0
       },
 
-      latest: {
-        handler(after) {
-          for (let latestJob of after) {
-            for (let flow of this.items) {
-              if (flow.id === latestJob.flowId) {
-                flow.latestJob = latestJob
-              }
-            }
-          }
-        },
-        deep: true,
-        immediate: true
-      },
+      set(newValue) {
 
-      searchVal(after) {
-        this.querySelections(after)
-      }
-    },
-    methods: {
-      onItemClick(flow) {
-        this.$router.push({path: `/flows/${flow.name}/jobs`})
-      },
-
-      querySelections(v) {
-        this.items = toWrapperList(this.flows.filter(e => {
-          return (e.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-        }))
-      },
-
-      fetchLatestStatus(items) {
-        items.forEach((wrapper) => {
-          this.$store.dispatch(actions.jobs.latest, wrapper.name)
-            .then(() => {
-
-              for (let latest of this.latest) {
-                if (latest.flowId === wrapper.id) {
-                  wrapper.latestJob = latest
-                  break
-                }
-              }
-            })
-            .catch(() => {
-            })
-        })
       }
     }
+  },
+  watch: {
+    flows(items) {
+      this.items = items
+      this.fetchLatestStatus(items)
+      this.fetchTotalStats(items)
+    },
+
+    latest: {
+      handler(after) {
+        for (let latestJob of after) {
+          for (let flow of this.items) {
+            if (flow.id === latestJob.flowId) {
+              flow.latestJob = latestJob
+            }
+          }
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+
+    searchVal(after) {
+      this.querySelections(after)
+    }
+  },
+  methods: {
+    onItemClick(flow) {
+      this.$router.push({path: `/flows/${flow.name}/jobs`})
+    },
+
+    querySelections(v) {
+      this.items = this.items.filter(e => {
+        return (e.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      })
+    },
+
+    fetchLatestStatus(items) {
+      items.forEach((wrapper) => {
+        this.$store.dispatch(actions.jobs.latest, wrapper.name).then(() => {
+          for (let latest of this.latest) {
+            if (latest.flowId === wrapper.id) {
+              wrapper.latestJob = latest
+              break
+            }
+          }
+        })
+      })
+    },
+
+    fetchTotalStats(items) {
+      items.forEach((wrapper) => {
+        let payload = {name: wrapper.name, metaType: 'default/ci_job_status'}
+        this.$store.dispatch(actions.stats.total, payload).then(() => {
+          let sum = 0.0
+          let total = this.statsTotal
+
+          for (const category of Object.keys(total.counter)) {
+            sum += total.counter[category]
+          }
+
+          let numOfSuccess = total.counter['SUCCESS']
+          let successPercent = (numOfSuccess / sum) * 100
+          successPercent = successPercent.toFixed(0)
+
+          wrapper.successRate = successPercent
+        })
+      })
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .flow-menu {
-    .title {
-      max-height: 80px;
-      min-height: 80px;
-    }
-
-    .btn-create {
-      align-items: center;
-    }
-
-    .item {
-      background: #FFFFFF;
-      border-bottom: 2px solid #F5F5F5;
-    }
-
-    .v-list-item__icon {
-      min-width: 32px !important;
-    }
+.flow-menu {
+  .title {
+    max-height: 80px;
+    min-height: 80px;
   }
+
+  .btn-create {
+    align-items: center;
+  }
+
+  .item {
+    background: #FFFFFF;
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  .v-list-item__icon {
+    min-width: 32px !important;
+  }
+}
 </style>
