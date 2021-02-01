@@ -33,6 +33,7 @@
     },
     mounted() {
       this.items = toWrapperList(this.flows)
+      this.loadJobStatistic()
       this.setLatestJobs()
     },
     computed: {
@@ -45,6 +46,7 @@
     watch: {
       flows(after) {
         this.items = toWrapperList(after)
+        this.loadJobStatistic()
       },
 
       latest(after) {
@@ -56,12 +58,18 @@
         this.popCreateFlow(true)
       },
 
+      loadJobStatistic() {
+        for (let wrapper of this.items) {
+          this.fetchTotalStats(wrapper)
+        }
+      },
+
       setLatestJobs() {
         for (let wrapper of this.items) {
           for (let latestJob of this.latest) {
             if (wrapper.id === latestJob.flowId) {
               wrapper.latestJob = latestJob
-              this.fetchTotalStats(wrapper)
+              break
             }
           }
         }

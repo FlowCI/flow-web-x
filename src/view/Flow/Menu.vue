@@ -1,6 +1,6 @@
 <template>
-  <v-list shaped>
-    <v-subheader>
+  <v-list class="flow-menu">
+    <v-subheader class="title">
       <v-text-field
           :placeholder="$t('flow.search')"
           single-line
@@ -8,10 +8,10 @@
           v-model="searchVal"/>
     </v-subheader>
 
-    <v-list-item-group v-model="selected">
+    <v-list-item-group v-model="selected" class="group">
       <v-list-item v-for="item in items"
                    :key="item.id"
-                   class="mx-2"
+                   class="mx-1 mb-2 item"
                    @click="onItemClick(item)">
         <v-list-item-action>
           <v-icon size="20" :class="item.latestJob.status.class">{{ item.latestJob.status.icon }}</v-icon>
@@ -145,7 +145,19 @@
 </script>
 
 <style lang="scss" scoped>
-  .btn-create {
-    align-items: center;
+  .flow-menu {
+    .title {
+      max-height: 80px;
+      min-height: 80px;
+    }
+
+    .btn-create {
+      align-items: center;
+    }
+
+    .item {
+      background: #FFFFFF;
+      border-bottom: 2px solid #F5F5F5;
+    }
   }
 </style>
