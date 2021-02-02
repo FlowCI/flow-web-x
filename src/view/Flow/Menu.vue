@@ -11,14 +11,13 @@
     <v-list-item-group v-model="selected" class="group">
       <v-list-item v-for="item in items"
                    :key="item.id"
-                   class="mx-1 mb-2 item"
+                   class="mx-1 mb-2 pa-0 item"
                    @click="onItemClick(item)">
+        <div :class="['status', 'mr-2', item.successRateColor]"></div>
+
         <v-list-item-content>
           <v-list-item-title>
-            <v-icon small :class="['mr-2', item.latestJob.status.class]">{{ item.latestJob.status.icon }}</v-icon>
-
             <span class="body-2 font-weight-bold">{{ item.name }}</span>
-
             <v-tooltip bottom v-if="item.cron">
               <template v-slot:activator="{ on }">
                 <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import {toWrapperList, getCronDesc} from '@/util/flows'
+import {getCronDesc} from '@/util/flows'
 import {mapState} from 'vuex'
 import FlowCreateDialog from './CreateDialog'
 import actions from '@/store/actions'
@@ -166,15 +165,28 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .flow-menu {
   .title {
     max-height: 80px;
     min-height: 80px;
   }
 
+  .status {
+    position: relative;
+    min-width: 10px;
+    max-width: 10px;
+    min-height: 50px;
+    max-height: 50px;
+  }
+
   .btn-create {
     align-items: center;
+  }
+
+  .v-list-item {
+    min-height: 50px;
+    max-height: 50px;
   }
 
   .item {
