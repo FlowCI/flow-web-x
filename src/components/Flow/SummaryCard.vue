@@ -7,6 +7,9 @@
       <v-card-title>
         {{ wrapper.name }}
       </v-card-title>
+      <v-card-subtitle>
+        #{{ wrapper.latestJob.buildNumber }}
+      </v-card-subtitle>
     </div>
 
     <v-card-text class="text--secondary pa-0">
@@ -66,7 +69,14 @@
     .title {
       background-color: #0E9A00;
       min-height: 100px;
-      color: #ffffff;
+    }
+
+    .v-card__title {
+      color: white;
+    }
+
+    .v-card__subtitle {
+      color: white !important;
     }
 
     .title div {
