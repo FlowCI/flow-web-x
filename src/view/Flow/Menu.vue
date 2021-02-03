@@ -131,34 +131,40 @@ export default {
 
     fetchLatestStatus(items) {
       items.forEach((wrapper) => {
-        this.$store.dispatch(actions.jobs.latest, wrapper.name).then(() => {
-          for (let latest of this.latest) {
-            if (latest.flowId === wrapper.id) {
-              wrapper.latestJob = latest
-              break
-            }
-          }
-        })
+        this.$store.dispatch(actions.jobs.latest, wrapper.name)
+            .then(() => {
+              for (let latest of this.latest) {
+                if (latest.flowId === wrapper.id) {
+                  wrapper.latestJob = latest
+                  break
+                }
+              }
+            })
+            .catch((e) => {
+            })
       })
     },
 
     fetchTotalStats(items) {
       items.forEach((wrapper) => {
         let payload = {name: wrapper.name, metaType: 'default/ci_job_status'}
-        this.$store.dispatch(actions.stats.total, payload).then(() => {
-          let sum = 0.0
-          let total = this.statsTotal
+        this.$store.dispatch(actions.stats.total, payload)
+            .then(() => {
+              let sum = 0.0
+              let total = this.statsTotal
 
-          for (const category of Object.keys(total.counter)) {
-            sum += total.counter[category]
-          }
+              for (const category of Object.keys(total.counter)) {
+                sum += total.counter[category]
+              }
 
-          let numOfSuccess = total.counter['SUCCESS']
-          let successPercent = (numOfSuccess / sum) * 100
-          successPercent = successPercent.toFixed(0)
+              let numOfSuccess = total.counter['SUCCESS']
+              let successPercent = (numOfSuccess / sum) * 100
+              successPercent = successPercent.toFixed(0)
 
-          wrapper.successRate = successPercent
-        })
+              wrapper.successRate = successPercent
+            })
+            .catch((e) => {
+            })
       })
     }
   }

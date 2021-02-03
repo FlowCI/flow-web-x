@@ -55,7 +55,7 @@ export function toWrapperList(flows) {
 export class FlowWrapper {
   constructor(flow) {
     this.flow = flow
-    this.latestJobWrapper = new JobWrapper({}) // JobWrapper
+    this.latestJobWrapper = new JobWrapper({buildNumber: 0}) // JobWrapper
     this.successPercentage = 0
     this.sshObj = {
       privateKey: '',
@@ -146,21 +146,21 @@ export class FlowWrapper {
   }
 
   get successRate() {
-    return this.successPercentage
+    return this.successPercentage || 0
   }
 
   get successRateColor() {
-      for (let i = 0; i < ratio.length - 1; i++) {
-        const min = ratio[i]
-        const max = ratio[i + 1]
-        const rate = this.successRate
+    for (let i = 0; i < ratio.length - 1; i++) {
+      const min = ratio[i]
+      const max = ratio[i + 1]
+      const rate = this.successRate
 
-        if (min < rate && rate <= max) {
-          return ratioColors[i]
-        }
+      if (min < rate && rate <= max) {
+        return ratioColors[i]
       }
+    }
 
-      return 'grey lighten-1'
+    return 'grey lighten-1'
   }
 
   get isLoadYamlFromRepo() {
