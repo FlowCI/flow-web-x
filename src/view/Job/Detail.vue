@@ -18,7 +18,7 @@
     <v-tabs fixed-tabs
             height="40"
             slider-size="10"
-            class="mt-4 tab-inactive"
+            class="tab-inactive"
             v-model="tab"
             active-class="tab-active">
       <v-tabs-slider color="#757575"></v-tabs-slider>
@@ -200,6 +200,10 @@
 
     .v-tabs-slider-wrapper {
       height: 3px !important;
+    }
+
+    .v-tabs-bar {
+      background: #FAFAFA !important;
     }
 
     .v-tab {

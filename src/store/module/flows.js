@@ -1,7 +1,8 @@
 import http from '../http'
+import {FlowWrapper} from "@/util/flows";
 
 const state = {
-  items: [],
+  items: [], // flow wrapper list
   editor: '',
   selected: {obj: {}, yml: ''},
   created: undefined, // created flow object with pending status
@@ -293,7 +294,11 @@ const actions = {
   },
 
   list ({commit}) {
-    return http.get('flows', (list) => {
+    return http.get('flows', (flows) => {
+      let list = []
+      for (let flow of flows) {
+        list.push(new FlowWrapper(flow))
+      }
       commit('list', list)
     })
   },
