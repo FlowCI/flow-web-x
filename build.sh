@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-
 ## build from docker
-build_image=node:10.16.3-jessie
+build_image=node:14
 
 docker run -it --rm \
 -v "$PWD":/usr/src/flowci.web \
