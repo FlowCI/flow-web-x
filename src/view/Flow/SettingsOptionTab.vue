@@ -50,6 +50,7 @@
   export default {
     name: 'SettingsOptionTab',
     props: {
+      // wrapper
       flow: {
         required: true,
         type: Object

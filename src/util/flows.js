@@ -164,7 +164,7 @@ export class FlowWrapper {
   }
 
   get isLoadYamlFromRepo() {
-    return this.flow.isYamlFromRepo
+    return this.flow.yamlFromRepo
   }
 
   get yamlRepoBranch() {
@@ -175,7 +175,18 @@ export class FlowWrapper {
     return this.flow.cron
   }
 
+  get jobTimeout() {
+    return this.flow.jobTimeout
+  }
+
+  get stepTimeout() {
+    return this.flow.stepTimeout
+  }
+
   // set
+  set rawInstance(flow) {
+    this.flow = flow
+  }
 
   set name(name) {
     this.flow.name = name
@@ -205,6 +216,10 @@ export class FlowWrapper {
     return this.flow.variables[vars.git.credential] = secretName
   }
 
+  set cron(cron) {
+    this.flow.cron = cron
+  }
+
   set latestJob(jobObj) {
     this.latestJobWrapper = new JobWrapper(jobObj)
   }
@@ -214,10 +229,18 @@ export class FlowWrapper {
   }
 
   set isLoadYamlFromRepo(val) {
-    this.flow.isYamlFromRepo = val
+    this.flow.yamlFromRepo = val
   }
 
   set yamlRepoBranch(branch) {
     this.flow.yamlRepoBranch = branch
+  }
+
+  set jobTimeout(timeout) {
+    this.flow.jobTimeout = timeout
+  }
+
+  set stepTimeout(timeout) {
+    this.flow.stepTimeout = timeout
   }
 }
