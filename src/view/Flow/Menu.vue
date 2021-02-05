@@ -31,6 +31,17 @@
         <v-list-item-icon>
           <span class="caption">#{{ item.latestJob.buildNumber }}</span>
         </v-list-item-icon>
+
+        <v-progress-linear
+            v-if="item.latestJob.isRunning"
+            :color="item.successRateColor"
+            buffer-value="100"
+            height="2"
+            background-opacity="0.3"
+            striped
+            indeterminate
+            class="progressbar"
+        ></v-progress-linear>
       </v-list-item>
     </v-list-item-group>
 
@@ -193,6 +204,12 @@ export default {
   .v-list-item {
     min-height: 50px;
     max-height: 50px;
+  }
+
+  .progressbar {
+    position: absolute;
+    top: 49px;
+    bottom: 0;
   }
 
   .item {
