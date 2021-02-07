@@ -33,7 +33,7 @@
         <v-col cols="6" class="text-center">
           <v-progress-circular
               rotate="90"
-              size="100"
+              size="80"
               width="6"
               :value="wrapper.successRate"
               :color="wrapper.successRateColor"
@@ -68,7 +68,13 @@
   .flow-summary {
     .title {
       background-color: #0E9A00;
-      min-height: 100px;
+      min-height: 85px;
+      max-height: 85px;
+    }
+
+    .v-card__text {
+      min-height: 115px;
+      max-height: 115px;
     }
 
     .v-card__title {
