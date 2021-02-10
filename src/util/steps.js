@@ -1,6 +1,8 @@
 import moment from 'moment'
+import { timeDurationInSeconds } from "./time"
 
 const STATUS_PENDING = 'PENDING'
+const STATUS_WAITING_AGENT = 'WAITING_AGENT'
 const STATUS_RUNNING = 'RUNNING'
 const STATUS_SUCCESS = 'SUCCESS'
 const STATUS_SKIPPED = 'SKIPPED'
@@ -8,29 +10,38 @@ const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
 const STATUS_TIMEOUT = 'TIMEOUT'
 
+const TYPE_STEP = 'STEP'
+const TYPE_STAGE = 'STAGE'
+const TYPE_FLOW = 'FLOW'
+const TYPE_PARALLEL = 'PARALLEL'
+
+export function forEachStep(wrapper, onStep) {
+  onStep(wrapper)
+  for (let next of wrapper.next) {
+    forEachStep(next, onStep)
+  }
+}
+
 /**
  * Wrapper for both ExecutedCmd and ExecutedLocalTask
  */
 export class StepWrapper {
-  constructor(step, index) {
+  constructor(step) {
     this.step = step
-    this.index = index
     this.stepName = step.name
-    this.wrapperChildrenList = []
-    this.parentWrapper = null
+    this.nextSteps = []
+    this.parentStep = null
+    this.isRootFlow = !step.parent;
 
-    if (step.nodePath) {
-      let slashIndex = this.step.nodePath.lastIndexOf('/')
-      this.stepName = this.step.nodePath.substring(slashIndex + 1)
+    let path = step.nodePath;
+    if (path) {
+      let slashIndex = path.lastIndexOf('/')
+      this.stepName = path.substring(slashIndex + 1)
     }
   }
 
   get rawInstance() {
     return this.step
-  }
-
-  get order() {
-    return this.index
   }
 
   get id() {
@@ -41,38 +52,46 @@ export class StepWrapper {
     if (!this.step.startAt) {
       return '-'
     }
-    return moment(this.step.startAt).format('kk:mm:ss SSS')
+    return moment(this.step.startAt)
   }
 
   get finishAt() {
     if (!this.step.finishAt) {
       return '-'
     }
-    return moment(this.step.finishAt).format('kk:mm:ss SSS')
+    return moment(this.step.finishAt)
   }
 
   get flow() {
     return this.step.flowId
   }
 
-  get children() {
-    return this.step.children
+  get nextPaths() {
+    return this.step.next
   }
 
-  get wrapperChildren() {
-    return this.wrapperChildrenList
+  get next() {
+    return this.nextSteps
   }
 
-  get wrapperParent() {
-    return this.parentWrapper
+  get parent() {
+    return this.parentStep
   }
 
-  get isRoot(){
-    return this.step.rootStep
+  get parentPath() {
+    return this.step.parent;
+  }
+
+  get isRoot() {
+    return this.isRootFlow
   }
 
   get name() {
-    return this.stepName
+    return this.stepName.startsWith('parallel') ? 'parallel' : this.stepName
+  }
+
+  get path() {
+    return this.step.nodePath
   }
 
   get status() {
@@ -92,14 +111,31 @@ export class StepWrapper {
     return this.step.status === STATUS_SKIPPED && this.step.error
   }
 
+  get isFlow() {
+    return this.step.type === TYPE_FLOW
+  }
+
+  get isParallel() {
+    return this.step.type === TYPE_PARALLEL
+  }
+
+  get isStep() {
+    return this.step.type === TYPE_STEP
+  }
+
+  get isStage() {
+    return this.step.type === TYPE_STAGE
+  }
+
   get error() {
     return this.step.error
   }
 
   get duration() {
-    const start = moment(this.step.startAt)
-    const end = moment(this.step.finishAt)
-    return end.diff(start, 'seconds')
+    if (this.step.startAt && this.step.finishAt) {
+      return timeDurationInSeconds(this.step.finishAt, this.step.startAt)
+    }
+    return '-'
   }
 
   get exitCode() {
@@ -122,17 +158,15 @@ export class StepWrapper {
     this.step.status = newStatus
   }
 
-  set wrapperChildren(list) {
-    this.wrapperChildrenList = list
-  }
-
-  set wrapperParent(w) {
-    this.parentWrapper = w
+  set parent(p) {
+    this.parentStep = p
   }
 }
 
 export function isStepFinished(step) {
-  return step.status !== STATUS_PENDING && step.status !== STATUS_RUNNING
+  return step.status !== STATUS_PENDING
+    && step.status !== STATUS_RUNNING
+    && step.status !== STATUS_WAITING_AGENT
 }
 
 export const mapping = {
@@ -142,7 +176,6 @@ export const mapping = {
     config: {
       style: {
         fill: '#C6E5FF',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -151,10 +184,18 @@ export const mapping = {
     icon: 'flow-icon-pending grey--text',
     text: 'pending',
     config: {
-      shape: 'circle',
       style: {
-        fill: '#FFFFFF',
-        stroke: '#757575'
+        fill: '#BDBDBD',
+      }
+    }
+  },
+
+  [STATUS_WAITING_AGENT]: {
+    icon: 'mdi-settings rotate blue--text',
+    text: 'waiting for agent',
+    config: {
+      style: {
+        fill: '#BBDEFB',
       }
     }
   },
@@ -163,10 +204,8 @@ export const mapping = {
     icon: 'mdi-settings rotate blue--text',
     text: 'running',
     config: {
-      shape: 'background-animate',
       style: {
-        fill: '#E1F5FE',
-        stroke: '#FFFFFF'
+        fill: '#42A5F5',
       }
     }
   },
@@ -175,10 +214,8 @@ export const mapping = {
     icon: 'flow-icon-check green--text',
     text: 'success',
     config: {
-      shape: 'circle',
       style: {
-        fill: '#9CCC65',
-        stroke: '#FFFFFF'
+        fill: '#66BB6A',
       }
     }
   },
@@ -186,12 +223,9 @@ export const mapping = {
   [STATUS_SKIPPED]: {
     icon: 'flow-icon-stopped grey--text',
     text: 'skipped',
-    shape: 'circle',
     config: {
-      shape: 'circle',
       style: {
         fill: '#B0BEC5',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -199,12 +233,9 @@ export const mapping = {
   [STATUS_EXCEPTION]: {
     icon: 'flow-icon-failure red--text',
     text: 'failure',
-    shape: 'circle',
     config: {
-      shape: 'circle',
       style: {
         fill: '#E53935',
-        stroke: '#FFFFFF'
       }
     }
   },
@@ -213,11 +244,8 @@ export const mapping = {
     icon: 'flow-icon-stopped grey--text',
     text: 'killed',
     config: {
-      shape: 'circle',
       style: {
         fill: '#B0BEC5',
-        stroke: '#FFFFFF',
-        lineWidth: 3,
       }
     }
   },
@@ -225,7 +253,6 @@ export const mapping = {
   [STATUS_TIMEOUT]: {
     icon: 'flow-icon-timeout orange--text',
     text: 'pending',
-    shape: 'circle',
     config: {
       style: {
         fill: '#FFE0B2',

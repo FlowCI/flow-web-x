@@ -17,6 +17,7 @@
     <v-navigation-drawer v-if="canDisplay"
                          v-model="flowNavDrawer"
                          :clipped="$vuetify.breakpoint.lgAndUp"
+                         width="20%"
                          app>
       <flow-menu></flow-menu>
     </v-navigation-drawer>

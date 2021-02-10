@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
-        <span class="font-weight-bold caption">Edit Agent Host</span>
+    <v-row no-gutters class="mb-2" v-if="wrapper.disabled">
+      <v-col cols="9">
+        <message-box :message="$t('settings.hint.agent_disabled')"></message-box>
       </v-col>
     </v-row>
 
@@ -57,6 +57,22 @@
                        v-if="wrapper.type !== HOST_TYPE_LOCAL_SOCKET"
         ></host-test-btn>
 
+        <confirm-btn :text="wrapper.disabled ? $t('enable') : $t('disable')"
+                     icon="mdi-delete"
+                     color="grey dark-1"
+                     clazz="mr-5"
+                     @click="onDisableOrEnableClick">
+          <template v-slot:title>
+            <span class="subheading" v-if="!wrapper.disabled">
+              Disable agent host '{{ wrapper.name }}'? (you can enable it later)
+            </span>
+
+            <span class="subheading" v-if="wrapper.disabled">
+              Enable agent host '{{ wrapper.name }}'?
+            </span>
+          </template>
+        </confirm-btn>
+
         <confirm-btn :text="$t('delete')"
                      icon="mdi-delete"
                      color="error"
@@ -77,10 +93,11 @@
 </template>
 
 <script>
-import { HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HOST_TYPE_K8S } from '@/util/hosts'
-import { agentNameRules } from '@/util/rules'
+import {HOST_TYPE_LOCAL_SOCKET, HOST_TYPE_SSH, HOST_TYPE_K8S} from '@/util/hosts'
+import {agentNameRules} from '@/util/rules'
 import TagEditor from '@/components/Common/TagEditor'
 import TextBox from '@/components/Common/TextBox'
+import MessageBox from '@/components/Common/MessageBox'
 import ConfirmBtn from '@/components/Common/ConfirmBtn'
 import SshHostEditor from '@/components/Settings/SshHostEditor'
 import K8sHostEditor from '@/components/Settings/K8sHostEditor'
@@ -88,8 +105,8 @@ import HostTestBtn from '@/components/Settings/HostTestBtn'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import actions from '@/store/actions'
-import { mapState } from 'vuex'
-import { CATEGORY_KUBE_CONFIG, CATEGORY_SSH_RSA } from '@/util/secrets'
+import {mapState} from 'vuex'
+import {CATEGORY_KUBE_CONFIG, CATEGORY_SSH_RSA} from '@/util/secrets'
 
 export default {
   name: 'SettingsAgentNew',
@@ -101,7 +118,8 @@ export default {
     SaveBtn,
     BackBtn,
     ConfirmBtn,
-    TextBox
+    TextBox,
+    MessageBox
   },
   props: {
     wrapper: {
@@ -161,6 +179,21 @@ export default {
       this.$store.dispatch(actions.hosts.delete, this.wrapper.name).then(() => {
         this.$router.push('/settings/agents')
       })
+    },
+
+    onDisableOrEnableClick() {
+      const value = !this.wrapper.disabled
+      const name = this.wrapper.name
+
+      this.$store.dispatch(actions.hosts.switch, {name, value})
+          .then(() => {
+            this.showSnackBar(`Agent host ${this.wrapper.name} has been updated`)
+            this.wrapper.disable = value
+            this.$router.push('/settings/agents')
+          })
+          .catch((e) => {
+            this.wrapper.error = e.message
+          })
     },
 
     onBackClick() {

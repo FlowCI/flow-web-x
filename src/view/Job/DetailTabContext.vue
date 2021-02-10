@@ -82,20 +82,20 @@
     },
     methods: {
       getAgentData() {
-        return [
-          {
-            key: 'CPU',
-            value: `${this.wrapper.agentInfo.cpu} cores`
-          },
-          {
-            key: 'Memory',
-            value: `${this.wrapper.agentInfo.freeMemory} MB (free)/ ${this.wrapper.agentInfo.totalMemory} MB`
-          },
-          {
-            key: 'Disk',
-            value: `${this.wrapper.agentInfo.freeDisk} MB (free)/ ${this.wrapper.agentInfo.totalDisk} MB`
-          }
-        ]
+        let agents = [];
+
+        for (const [_, info] of Object.entries(this.wrapper.snapshots)) {
+          let cpuInfo = `CPU: ${info.cpu} cores`
+          let memInfo = `Memory: ${info.freeMemory} MB (free) / ${info.totalMemory} MB`
+          let diskInfo = `Disk: ${info.freeDisk} MB free / ${info.totalDisk} MB`
+
+          agents.push({
+            key: info.name,
+            value: `${cpuInfo} | ${memInfo} | ${diskInfo}`
+          })
+        }
+
+        return agents
       },
 
       getPushData() {

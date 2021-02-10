@@ -20,6 +20,8 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="align-baseline" v-if="showFlowAction">
+          <run-dialog></run-dialog>
+
           <v-btn
               text
               color="blue-grey"
@@ -39,29 +41,8 @@
             <v-icon class="mr-1">mdi-settings</v-icon>
             {{ $t('flow.settings') }}
           </v-btn>
-
-          <v-btn
-              text
-              color="success"
-              @click="onRunClick"
-          >
-            <v-icon class="mr-1">mdi-play</v-icon>
-            {{ $t('job.run') }}:
-          </v-btn>
-
-          <v-combobox dense
-                      outlined
-                      prepend-icon="mdi-source-branch"
-                      :items="gitBranches"
-                      v-model="selectedBranch"
-                      :label="`${$t('branch')}:`">
-          </v-combobox>
         </v-toolbar-items>
       </v-toolbar>
-
-      <Dialog :dialog="dialog"
-              :content="$t('job.hint.missing_agent')"
-      ></Dialog>
     </v-card-title>
 
     <v-card-text class="content px-1 pb-0">
@@ -71,125 +52,112 @@
 </template>
 
 <script>
-  import actions from '@/store/actions'
-  import Dialog from '@/components/Common/Dialog'
-  import { mapState } from 'vuex'
+import actions from '@/store/actions'
+import {mapState} from 'vuex'
+import RunDialog from "@/components/Flow/RunDialog";
 
-  export default {
-    name: 'FlowHome',
-    components: {
-      Dialog
-    },
-    data() {
-      return {
-        dialog: false,
-        baseItem: {text: 'flow', href: '#/flows'},
-        selectedBranch: 'master'
+export default {
+  name: 'FlowHome',
+  components: {RunDialog},
+  data() {
+    return {
+      baseItem: {text: 'flows', href: '#/flows'},
+      selectedBranch: 'master'
+    }
+  },
+  computed: {
+    ...mapState({
+      agents: state => state.agents.items
+    }),
+
+    navItems() {
+      let route = this.$route
+
+      if (route.name === 'Overview') {
+        return [this.baseItem]
       }
-    },
-    computed: {
-      ...mapState({
-        gitBranches: state => state.flows.gitBranches,
-        agents: state => state.agents.items
-      }),
 
-      navItems() {
-        let route = this.$route
+      // flow level
+      let href = '#' + route.path
+      let flowItem = {text: this.flowName, href}
+      this.setCurrentFlow()
 
-        if (route.name === 'Overview') {
-          return [this.baseItem]
-        }
-
-        // flow level
-        let href = '#' + route.path
-        let flowItem = {text: this.flowName, href}
-        this.setCurrentFlow()
-
-        if (route.name === 'Jobs') {
-          this.loadBranches()
-          return [this.baseItem, flowItem]
-        }
-
-        flowItem.href = `#/flows/${this.flowName}/jobs`
-
-        if (route.name === 'Settings') {
-          return [this.baseItem, flowItem, {text: 'settings', href}]
-        }
-
-        if (route.name === 'Statistic') {
-          return [this.baseItem, flowItem, {text: 'statistic', href}]
-        }
-
-        if (route.name === 'JobDetail') {
-          return [this.baseItem, flowItem, {text: '#' + this.buildNumber, href}]
-        }
-
-        return []
-      },
-
-      showFlowAction() {
-        return this.$route.name === 'Jobs'
-      },
-
-      flowName() {
-        return this.$route.params.id
-      },
-
-      buildNumber() {
-        return this.$route.params.num
+      if (route.name === 'Jobs') {
+        this.loadBranches()
+        return [this.baseItem, flowItem]
       }
+
+      flowItem.href = `#/flows/${this.flowName}/jobs`
+
+      if (route.name === 'Settings') {
+        return [this.baseItem, flowItem, {text: 'settings', href}]
+      }
+
+      if (route.name === 'Statistic') {
+        return [this.baseItem, flowItem, {text: 'statistic', href}]
+      }
+
+      if (route.name === 'JobDetail') {
+        return [this.baseItem, flowItem, {text: '#' + this.buildNumber, href}]
+      }
+
+      return []
     },
 
-    methods: {
-      onSettingsClick() {
-        this.$router.push(`/flows/${this.flowName}/settings`)
-      },
+    showFlowAction() {
+      return this.$route.name === 'Jobs'
+    },
 
-      onStatisticClick() {
-        this.$router.push(`/flows/${this.flowName}/statistic`)
-      },
+    flowName() {
+      return this.$route.params.id
+    },
 
-      onRunClick() {
-        const payload = {flow: this.flowName, branch: this.selectedBranch}
-        this.$store.dispatch(actions.jobs.start, payload)
-          .then()
-          .catch((e) => {
-            this.showSnackBar(e.message, 'error')
-          })
-      },
+    buildNumber() {
+      return this.$route.params.num
+    }
+  },
 
-      setCurrentFlow() {
-        this.$store.dispatch(actions.flows.select, this.flowName).then()
-      },
+  methods: {
+    onSettingsClick() {
+      this.$router.push(`/flows/${this.flowName}/settings`)
+    },
 
-      loadBranches() {
-        this.$store.dispatch(actions.flows.gitBranches, this.flowName)
+    onStatisticClick() {
+      this.$router.push(`/flows/${this.flowName}/statistic`)
+    },
+
+    setCurrentFlow() {
+      this.$store.dispatch(actions.flows.select, this.flowName).then()
+    },
+
+    loadBranches() {
+      this.$store.dispatch(actions.flows.gitBranches, this.flowName)
           .catch((err) => {
             console.log(err)
           })
-      }
     }
   }
+}
 </script>
 
 <style lang="scss">
-  .flow-main {
-    .title {
-      max-height: 75px;
-      min-height: 75px;
-    }
-
-    .content {
-      min-height: 90%;
-    }
-
-    .v-toolbar__content {
-      padding-left: 5px !important;
-      padding-right: 5px !important;
-    }
-
-    .v-breadcrumbs__divider{
-      padding: 0 !important;
-    }
+.flow-main {
+  .title {
+    max-height: 75px;
+    min-height: 75px;
   }
+
+  .content {
+    min-height: 90%;
+  }
+
+  .v-toolbar__content {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+  .v-breadcrumbs__divider {
+    padding: 0 !important;
+  }
+}
 </style>

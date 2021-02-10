@@ -1,11 +1,5 @@
 <template>
   <div>
-    <v-row>
-      <v-col>
-        <span class="font-weight-bold caption">New Agent Host</span>
-      </v-col>
-    </v-row>
-
     <v-form ref="hostNameForm" lazy-validation>
       <v-row no-gutters>
         <v-col cols="9">

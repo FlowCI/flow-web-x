@@ -1,17 +1,24 @@
 <template>
-  <v-row :style="{'background-color': wrapper.status.bg}" align="center" class="mx-0">
+  <v-row align="center" :style="{leftBorderColor: wrapper.status.bg}" class="mx-0 info-bar">
+    <div class="status" :style="{backgroundColor: wrapper.status.bg}"></div>
+
     <v-col cols="2">
-      <v-icon size="20" :class="['mx-2', wrapper.status.rotate ? 'rotate' : '']" dark>
+      <v-icon size="20"
+              :class="['mx-2', wrapper.status.rotate ? 'rotate' : '']"
+              :style="{color: wrapper.status.bg}"
+      >
         {{ wrapper.status.icon }}
       </v-icon>
-      <span class="font-weight-bold">{{ wrapper.status.text }}</span>
+      <span class="font-weight-bold" :style="{color: wrapper.status.bg}">
+        {{ wrapper.status.text }}
+      </span>
     </v-col>
 
     <v-col cols="2">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <span v-on="on">
-            <v-icon small dark>mdi-clock-fast</v-icon>
+            <v-icon small>mdi-clock-fast</v-icon>
             {{ duration }} sec
           </span>
         </template>
@@ -23,7 +30,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <span v-on="on">
-            <v-icon small dark>mdi-clock-outline</v-icon>
+            <v-icon small>mdi-clock-outline</v-icon>
             {{ wrapper.finishedAtInStr }}
           </span>
         </template>
@@ -35,7 +42,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <span v-on="on">
-            <v-icon small dark class="mr-2">{{ wrapper.triggerIcon }}</v-icon>
+            <v-icon small class="mr-2">{{ wrapper.triggerIcon }}</v-icon>
           </span>
         </template>
         <div>{{ wrapper.triggerText }}</div>
@@ -44,22 +51,17 @@
     </v-col>
 
     <v-col cols="2">
-      <v-icon small dark>{{ agentIcons[wrapper.agentInfo.os] }}</v-icon>
-      <span class="ml-2">{{ wrapper.agentInfo.name }}</span>
+      <div v-for="[id, info] of Object.entries(wrapper.snapshots)"
+           :key="id">
+        <v-icon x-small>{{ agentIcons[info.os] }}</v-icon>
+        <span class="ml-1">{{ info.name }}</span>
+      </div>
+
     </v-col>
 
     <v-col cols="2">
-      <v-tooltip bottom v-if="!wrapper.isFinished">
-        <template v-slot:activator="{ on }">
-          <v-btn icon color="black" @click="onDebugClick" v-on="on">
-            <v-icon small>mdi-console</v-icon>
-          </v-btn>
-        </template>
-        <span>{{ $t('job.hint.tty') }}</span>
-      </v-tooltip>
-
       <v-btn icon @click="onStopClick" v-if="!wrapper.isFinished">
-        <v-icon dark>mdi-stop</v-icon>
+        <v-icon>mdi-stop</v-icon>
       </v-btn>
 
       <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
@@ -70,62 +72,74 @@
 </template>
 
 <script>
-  import { icons } from '@/util/agents'
+import {icons} from '@/util/agents'
 
-  export default {
-    name: "JobInfoBar",
-    props: {
-      wrapper: {
-        type: Object,
-        required: true
-      },
-      onStopClick: {
-        type: Function,
-        required: true
-      },
-      onRerunClick: {
-        type: Function,
-        required: true
-      },
-      onDebugClick: {
-        type: Function,
-        required: true
-      }
+export default {
+  name: "JobInfoBar",
+  props: {
+    wrapper: {
+      type: Object,
+      required: true
     },
-    data() {
-      return {
-        showTty: false,
-        agentIcons: icons,
-        duration: '-',
-        durationInterval: null,
-      }
+    onStopClick: {
+      type: Function,
+      required: true
     },
-    watch: {
-      wrapper(w) {
-        this.duration = w.duration
+    onRerunClick: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      showTty: false,
+      agentIcons: icons,
+      duration: '-',
+      durationInterval: null,
+    }
+  },
+  watch: {
+    wrapper(w) {
+      this.duration = w.duration
 
-        if (this.durationInterval) {
-          clearInterval(this.durationInterval)
-        }
-
-        if (w.isFinished) {
-          return
-        }
-
-        this.durationInterval = setInterval(() => {
-          this.duration += 1
-        }, 1000)
+      if (this.durationInterval) {
+        clearInterval(this.durationInterval)
       }
+
+      if (w.isFinished) {
+        return
+      }
+
+      this.durationInterval = setInterval(() => {
+        this.duration += 1
+      }, 1000)
     }
   }
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.info-bar {
+  min-height: 80px;
+  max-height: 80px;
+  border: 1px solid #e1e4e8;
+
   span {
-    color: #fbfbfb;
+    color: #424242;
     text-overflow: ellipsis;
     max-width: 150px;
     display: inline-block;
     white-space: nowrap;
   }
+
+  .status {
+    position: absolute;
+    min-width: 15px;
+    max-width: 15px;
+    min-height: 80px;
+    max-height: 80px;
+    top: 0;
+    bottom: 0;
+  }
+}
 </style>

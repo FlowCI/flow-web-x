@@ -3,11 +3,11 @@
     <v-col cols="4">
       <v-card>
         <v-card-title class="justify-center">
-          <span class="title font-weight-bold">{{ $t('welcome') }}</span>
+          <span class="headline font-weight-bold">{{ $t('welcome') }}</span>
         </v-card-title>
 
         <v-card-subtitle class="text-center">
-          <span>{{ $t('create_default_admin') }}</span>
+          <span class="title font-weight-bold">{{ $t('create_default_admin') }}</span>
         </v-card-subtitle>
 
         <v-card-text>

@@ -1,7 +1,8 @@
 import http from '../http'
+import {FlowWrapper} from "@/util/flows";
 
 const state = {
-  items: [],
+  items: [], // flow wrapper list
   editor: '',
   selected: {obj: {}, yml: ''},
   created: undefined, // created flow object with pending status
@@ -40,12 +41,12 @@ const mutations = {
   update (state, updatedFlow) {
     state.items.forEach((flow, index) => {
       if (flow.id === updatedFlow.id) {
-        Object.assign(flow, updatedFlow)
+        flow.rawInstance = updatedFlow
       }
     })
 
     if (state.selected.obj.id === updatedFlow.id) {
-      Object.assign(state.selected.obj, updatedFlow)
+      state.selected.obj.rawInstance = updatedFlow
     }
   },
 
@@ -202,8 +203,8 @@ const actions = {
         `flows/${wrapper.name}/confirm`,
         (flow) => {
           console.log('[DONE]: confirmed')
-          commit('add', flow)
-        }, {yaml}
+          commit('add', new FlowWrapper(flow))
+        }, {yaml: btoa(yaml)}
       )
     }
 
@@ -282,10 +283,10 @@ const actions = {
 
   async select ({commit, state}, name) {
     await http.get(`flows/${name}`, (flow) => {
-      commit('select', flow)
+      commit('select', new FlowWrapper(flow))
     })
 
-    await http.get(`flows/${name}/yml/obj`, (flowNode) => {
+    await http.get(`flows/${name}/yml/default/obj`, (flowNode) => {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
@@ -293,7 +294,11 @@ const actions = {
   },
 
   list ({commit}) {
-    return http.get('flows', (list) => {
+    return http.get('flows', (flows) => {
+      let list = []
+      for (let flow of flows) {
+        list.push(new FlowWrapper(flow))
+      }
       commit('list', list)
     })
   },
@@ -313,7 +318,7 @@ const actions = {
       return
     }
 
-    return http.get(`flows/${name}/yml`, (base64Yml) => {
+    return http.get(`flows/${name}/yml/default`, (base64Yml) => {
       commit('setYml', atob(base64Yml))
     })
   },
@@ -323,7 +328,7 @@ const actions = {
       return
     }
 
-    await http.post(`flows/${name}/yml`,
+    await http.post(`flows/${name}/yml/default`,
       () => {
         commit('setYml', yml)
       },

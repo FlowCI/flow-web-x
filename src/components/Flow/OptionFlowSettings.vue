@@ -24,8 +24,8 @@
           <v-row align="center">
             <v-col cols="4">
               <v-switch inset
-                        :label="flow.yamlFromRepo ? 'Load from' : 'Disabled'"
-                        v-model="flow.yamlFromRepo"
+                        :label="flow.isLoadYamlFromRepo ? 'Load from' : 'Disabled'"
+                        v-model="flow.isLoadYamlFromRepo"
               ></v-switch>
             </v-col>
             <v-col cols="5">
@@ -34,7 +34,7 @@
                           class="flow-branch-combo"
                           prepend-icon="mdi-source-branch"
                           :items="gitBranches"
-                          :disabled="!flow.yamlFromRepo"
+                          :disabled="!flow.isLoadYamlFromRepo"
                           v-model="flow.yamlRepoBranch"
                           label="branch:">
               </v-combobox>
@@ -185,7 +185,7 @@
 
         const payload = {
           name: this.flow.name,
-          isYamlFromRepo: this.flow.yamlFromRepo,
+          isYamlFromRepo: this.flow.isLoadYamlFromRepo,
           yamlRepoBranch: this.flow.yamlRepoBranch,
           jobTimeout: this.flow.jobTimeout,
           stepTimeout: this.flow.stepTimeout,

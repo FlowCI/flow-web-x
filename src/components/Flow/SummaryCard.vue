@@ -3,10 +3,13 @@
       raised
       class="mx-auto flow-summary"
   >
-    <div :class="['title', circleColor]" @click="onTitleClick">
+    <div :class="['title', wrapper.successRateColor]" @click="onTitleClick">
       <v-card-title>
         {{ wrapper.name }}
       </v-card-title>
+      <v-card-subtitle>
+        #{{ wrapper.latestJob.buildNumber }}
+      </v-card-subtitle>
     </div>
 
     <v-card-text class="text--secondary pa-0">
@@ -30,10 +33,10 @@
         <v-col cols="6" class="text-center">
           <v-progress-circular
               rotate="90"
-              size="100"
+              size="80"
               width="6"
               :value="wrapper.successRate"
-              :color="circleColor"
+              :color="wrapper.successRateColor"
           >
             <div class="rate">{{ wrapper.successRate }} %</div>
             <div class="rate-desc">{{ $t('flow.summary_rate_text') }}</div>
@@ -53,27 +56,6 @@
         required: true
       }
     },
-    data () {
-      return {
-        ratio: [0, 20, 50, 85, 100],
-        colors: ['red lighten-1', 'orange lighten-1', 'light-green darken-1', 'green darken-1']
-      }
-    },
-    computed: {
-      circleColor () {
-        for (let i = 0; i < this.ratio.length - 1; i++) {
-          const min = this.ratio[i]
-          const max = this.ratio[i + 1]
-          const rate = this.wrapper.successRate
-
-          if (min < rate && rate <= max) {
-            return this.colors[i]
-          }
-        }
-
-        return 'grey lighten-1'
-      }
-    },
     methods: {
       onTitleClick () {
         this.$router.push({path: `/flows/${this.wrapper.name}/jobs`})
@@ -86,8 +68,21 @@
   .flow-summary {
     .title {
       background-color: #0E9A00;
-      min-height: 100px;
-      color: #ffffff;
+      min-height: 85px;
+      max-height: 85px;
+    }
+
+    .v-card__text {
+      min-height: 115px;
+      max-height: 115px;
+    }
+
+    .v-card__title {
+      color: white;
+    }
+
+    .v-card__subtitle {
+      color: white !important;
     }
 
     .title div {

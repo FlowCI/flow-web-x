@@ -1,15 +1,22 @@
 <template>
   <div class="overview">
-    <v-row align="center" justify="center" class="full-size" v-if="items.length === 0">
-      <v-btn x-large color="info" @click="onCreateFlowClick">{{ $t('flow.create') }}</v-btn>
-    </v-row>
-
-    <v-row align="start" justify="start" v-if="items.length > 0">
-      <v-col v-for="flow in items"
+    <v-row align="start" justify="start" class="mx-0">
+      <v-col v-for="flow in flows"
              :key="flow.name"
              cols="3" md="4" lg="3" sm="2"
       >
         <summary-card :wrapper="flow"/>
+      </v-col>
+
+      <v-col cols="3" md="4" lg="3" sm="2" v-if="flows.length === 0">
+        <v-card raised class="create">
+          <v-card-title class="justify-center">
+            <v-btn large outlined color="primary" @click="onCreateFlowClick">
+              {{ $t('flow.create') }}
+              <v-icon small class="ml-1">flow-icon-control_point</v-icon>
+            </v-btn>
+          </v-card-title>
+        </v-card>
       </v-col>
     </v-row>
   </div>
@@ -26,71 +33,30 @@
     components: {
       SummaryCard
     },
-    data() {
-      return {
-        items: []
-      }
-    },
-    mounted() {
-      this.items = toWrapperList(this.flows)
-      this.setLatestJobs()
-    },
     computed: {
       ...mapState({
         flows: state => state.flows.items,
-        latest: state => state.jobs.latest,
-        statsTotal: state => state.stats.statsTotal
       })
-    },
-    watch: {
-      flows(after) {
-        this.items = toWrapperList(after)
-      },
-
-      latest(after) {
-        this.setLatestJobs()
-      }
     },
     methods: {
       onCreateFlowClick() {
         this.popCreateFlow(true)
-      },
-
-      setLatestJobs() {
-        for (let wrapper of this.items) {
-          for (let latestJob of this.latest) {
-            if (wrapper.id === latestJob.flowId) {
-              wrapper.latestJob = latestJob
-              this.fetchTotalStats(wrapper)
-            }
-          }
-        }
-      },
-
-      fetchTotalStats(wrapper) {
-        let payload = {name: wrapper.name, metaType: 'default/ci_job_status'}
-        this.$store.dispatch(actions.stats.total, payload).then(() => {
-          let sum = 0.0
-          let total = this.statsTotal
-
-
-          for (const category of Object.keys(total.counter)) {
-            sum += total.counter[category]
-          }
-
-          let numOfSuccess = total.counter['SUCCESS']
-          let successPercent = (numOfSuccess / sum) * 100
-          successPercent = successPercent.toFixed(0)
-
-          wrapper.successRate = successPercent
-        })
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .overview {
     height: 80vh;
+  }
+
+  .create {
+    min-height: 200px;
+    max-height: 200px;
+
+    .v-card__title {
+      height: 195px;
+    }
   }
 </style>

@@ -1,6 +1,6 @@
 export default {
   welcome: 'Welcome to flow.ci',
-  create_default_admin: 'Please create a default admin user',
+  create_default_admin: 'Please create first admin user',
   wait_connection: 'connect to server ',
 
   back: 'Back',
@@ -13,6 +13,10 @@ export default {
   create: 'Create',
   test: 'Test',
   delete: 'Delete',
+  disable: 'Disable',
+  enable: 'Enable',
+  disabled: 'Disabled',
+  enabled: 'Enabled',
   login: 'Login',
   password: 'Password',
   password_confirm: 'Confirm Password',
@@ -164,6 +168,10 @@ export default {
     profile: {
       password_not_empty: 'Password is required',
       password_not_same: 'Incorrect confirm password'
+    },
+
+    hint: {
+      agent_disabled: 'Hint: The host is disabled'
     }
   },
 

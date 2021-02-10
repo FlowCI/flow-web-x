@@ -1,7 +1,6 @@
 <template>
   <div class="job-detail">
     <job-info-bar :wrapper="wrapper"
-                  :on-debug-click="onDebugClick"
                   :on-rerun-click="onRerunClick"
                   :on-stop-click="onStopClick"
     ></job-info-bar>
@@ -14,11 +13,13 @@
       </v-col>
     </v-row>
 
-    <job-tty :job="job" v-model="showTty"></job-tty>
+    <job-tty :job="job" :path="ttyPath" v-model="showTty"></job-tty>
 
     <v-tabs fixed-tabs
             height="40"
-            class="mt-1"
+            slider-size="10"
+            class="tab-inactive"
+            v-model="tab"
             active-class="tab-active">
       <v-tabs-slider color="#757575"></v-tabs-slider>
 
@@ -40,9 +41,11 @@
       <v-tab href="#artifacts" class="ml-0">
         {{ $t('job.tab.artifacts') }}
       </v-tab>
+    </v-tabs>
 
+    <v-tabs-items v-model="tab" class="mt-3">
       <v-tab-item value="summary">
-        <detail-tab-summary/>
+        <detail-tab-summary :on-debug-click="onDebugClick"/>
       </v-tab-item>
       <v-tab-item value="context">
         <detail-tab-context :wrapper="wrapper"/>
@@ -61,7 +64,7 @@
       <v-tab-item value="artifacts">
         <detail-tab-artifact :flow="flow" :buildNumber="number"/>
       </v-tab-item>
-    </v-tabs>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -85,7 +88,9 @@
     name: 'JobDetail',
     data() {
       return {
+        tab: null,
         showTty: false,
+        ttyPath: '',
         agentIcons: icons,
         duration: '-',
         durationInterval: null,
@@ -112,7 +117,6 @@
       ...mapState({
         job: state => state.jobs.selected,
         reports: state => state.jobs.reports,
-        steps: state => state.steps.items,
       }),
 
       flow() {
@@ -181,7 +185,8 @@
           })
       },
 
-      onDebugClick() {
+      onDebugClick(nodePath) {
+        this.ttyPath = nodePath
         this.showTty = true
       }
     }
@@ -190,8 +195,6 @@
 
 <style lang="scss">
   .job-detail {
-    $tab-color: #757575;
-
     height: 100%;
     position: relative;
 
@@ -199,14 +202,20 @@
       height: 3px !important;
     }
 
+    .v-tabs-bar {
+      background: #FAFAFA !important;
+    }
+
     .v-tab {
       margin-left: 0 !important;
-      max-width: 300px !important;
+      margin-right: 10px !important;
+      max-width: 260px !important;
       font-weight: bold;
+      border-bottom: 2px solid #BDBDBD;
     }
 
     .tab-active {
-      color: $tab-color !important;
+      color: #757575 !important;
     }
 
     .tab-active::after {
@@ -215,7 +224,7 @@
       width: 5px;
       bottom: 0;
       position: absolute;
-      background-color: $tab-color;
+      background-color: #757575;
     }
   }
 </style>

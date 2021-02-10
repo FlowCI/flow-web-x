@@ -27,6 +27,10 @@
         type: Object,
         required: true
       },
+      path: {
+        type: String,
+        required: true
+      },
       value: {
         type: Boolean,
         required: true
@@ -107,20 +111,21 @@
 
       onConnectClick() {
         this.initTerm()
-        this.writeSuccessMessage('Connecting.....')
+        this.writeSuccessMessage(`Connecting to ${this.path}.....`)
 
         this.connecting = true
         subscribeTopic.tty(this.job.id, this.onTtyCmdOut, this.onTtyLogOutput)
-        this.$store.dispatch(actions.tty.connect, this.job.id)
+
+        this.$store.dispatch(actions.tty.connect, {jobId: this.job.id, nodePath: this.path})
       },
 
       onKey(input) {
-        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, script: input})
+        this.$store.dispatch(actions.tty.shell, {jobId: this.job.id, nodePath: this.path, script: input})
       },
 
       onCloseClick() {
         this.closing = true
-        this.$store.dispatch(actions.tty.close, this.job.id)
+        this.$store.dispatch(actions.tty.close, {jobId: this.job.id, nodePath: this.path})
       },
 
       writeSuccessMessage(msg) {

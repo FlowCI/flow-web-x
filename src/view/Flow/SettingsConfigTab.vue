@@ -27,6 +27,7 @@
   export default {
     name: 'SettingsConfigTab',
     props: {
+      // wrapper
       flow: {
         required: true,
         type: Object
