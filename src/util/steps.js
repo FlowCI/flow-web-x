@@ -62,6 +62,10 @@ export class StepWrapper {
     return moment(this.step.finishAt)
   }
 
+  get dockers() {
+    return this.step.dockers || []
+  }
+
   get flow() {
     return this.step.flowId
   }

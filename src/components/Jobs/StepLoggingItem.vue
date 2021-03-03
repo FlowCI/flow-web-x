@@ -10,10 +10,11 @@
             <div class="status" :style="{backgroundColor: wrapper.status.config.style.fill}"></div>
 
             <v-row no-gutters class="ml-4">
+              <!-- step name -->
               <v-col cols="2">
                 <v-icon small v-if="showLog">mdi-chevron-right</v-icon>
 
-                <span :class="['caption', 'ml-2', 'font-weight-bold']">{{ wrapper.name }}</span>
+                <span class='subtitle-2 ml-2 font-weight-bold'>{{ wrapper.name }}</span>
 
                 <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
@@ -37,8 +38,27 @@
                 </v-tooltip>
 
               </v-col>
-              <v-col cols="9">
+
+              <!-- docker list -->
+              <v-col cols="3">
+                <v-chip
+                    color="blue lighten-1"
+                    text-color="white"
+                    v-for="(docker, i) in wrapper.dockers"
+                    :key="i"
+                    small
+                >
+                  <v-avatar left>
+                    <v-icon small>mdi-docker</v-icon>
+                  </v-avatar>
+                  {{ docker.image }}
+                </v-chip>
               </v-col>
+
+              <!-- blank -->
+              <v-col cols="6">
+              </v-col>
+
               <v-col cols="1" class="caption" v-if="wrapper.isRunning && onDebugClick">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
@@ -204,13 +224,15 @@ export default {
 
   .v-expansion-panel-header {
     padding: 0 3px 0 1px;
-    min-height: 38px;
+    min-height: 40px;
+    max-height: 40px;
   }
 
   .v-expansion-panel--active
   .v-expansion-panel-header {
     padding: 0 3px 0 1px;
-    min-height: 38px;
+    min-height: 40px;
+    max-height: 40px;
   }
 
   .v-expansion-panel-header__icon {
@@ -224,7 +246,7 @@ export default {
   }
 
   .logging-term {
-    height: 300px;
+    height: 400px;
     padding: 2px;
     //background: #333333;
 
