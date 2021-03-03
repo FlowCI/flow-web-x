@@ -74,6 +74,10 @@ export class StepWrapper {
     return this.step.next
   }
 
+  get plugin() {
+    return this.step.plugin
+  }
+
   get next() {
     return this.nextSteps
   }

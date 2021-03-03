@@ -36,14 +36,21 @@
                   </template>
                   <span>{{ wrapper.error }}</span>
                 </v-tooltip>
-
               </v-col>
 
               <!-- docker list -->
               <v-col cols="3">
+                <v-chip v-if="wrapper.plugin" small class="mx-1">
+                  <v-avatar left>
+                    <v-icon small>mdi-view-grid-plus-outline</v-icon>
+                  </v-avatar>
+                  {{ wrapper.plugin }}
+                </v-chip>
+
                 <v-chip
                     color="blue lighten-1"
                     text-color="white"
+                    class="mx-1"
                     v-for="(docker, i) in wrapper.dockers"
                     :key="i"
                     small
