@@ -41,43 +41,47 @@
 
       <template v-slot:item="{ item }">
         <tr>
-          <td>
+          <td class="text-center">
             <span class="font-weight-bold">{{ item.name }}</span>
           </td>
-          <td>
+          <td class="text-center">
             <v-icon small :class="[item.color]">{{ item.icon }}</v-icon>
           </td>
-          <td>
-            up time
+          <td class="text-center">
+            <span v-if="!item.isOffline">up time</span>
+            <span v-if="item.isOffline">-</span>
           </td>
-          <td>
+          <td class="text-center">
             <span v-if="item.isBusy">{{ item.desc }}</span>
             <span v-if="item.isOffline || item.isIdle">-</span>
             <span v-if="item.isStarting">
               <v-icon small light class="loading-anim">flow-icon-loading1</v-icon>
             </span>
           </td>
-          <td>
+          <td class="text-center">
             <v-progress-linear :value="Math.ceil(item.freeDisk / item.totalDisk)"
                                height="25">
               <template v-slot:default="{ value }">
-                <strong>{{ Math.ceil(value) }}%</strong>
+                <strong v-if="item.isOffline">-</strong>
+                <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
               </template>
             </v-progress-linear>
           </td>
-          <td>
+          <td class="text-center">
             <v-progress-linear :value="Math.ceil(item.freeDisk / item.totalDisk)"
                                height="25">
               <template v-slot:default="{ value }">
-                <strong>{{ Math.ceil(value) }}%</strong>
+                <strong v-if="item.isOffline">-</strong>
+                <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
               </template>
             </v-progress-linear>
           </td>
-          <td>
+          <td class="text-center">
             <v-progress-linear :value="Math.ceil(item.freeMemory / item.totalMemory)"
                                height="25">
               <template v-slot:default="{ value }">
-                <strong>{{ Math.ceil(value) }}%</strong>
+                <strong v-if="item.isOffline">-</strong>
+                <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
               </template>
             </v-progress-linear>
           </td>
