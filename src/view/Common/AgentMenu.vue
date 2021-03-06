@@ -59,7 +59,7 @@
             </span>
           </td>
           <td class="text-center">
-            <v-progress-linear :value="Math.ceil(item.freeDisk / item.totalDisk)"
+            <v-progress-linear :value="fetchProfile(item.token, 'cpuUsage')"
                                height="25">
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
@@ -68,8 +68,7 @@
             </v-progress-linear>
           </td>
           <td class="text-center">
-            <v-progress-linear :value="Math.ceil(item.freeDisk / item.totalDisk)"
-                               height="25">
+            <v-progress-linear :value="memory(item.token)" height="25">
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
                 <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
@@ -77,8 +76,7 @@
             </v-progress-linear>
           </td>
           <td class="text-center">
-            <v-progress-linear :value="Math.ceil(item.freeMemory / item.totalMemory)"
-                               height="25">
+            <v-progress-linear :value="disk(item.token)" height="25">
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
                 <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
@@ -122,6 +120,7 @@ export default {
   computed: {
     ...mapState({
       agents: state => state.agents.items,
+      profiles: state => state.agents.profiles,
       updated: state => state.agents.updated,
       flows: state => state.flows.items
     })
@@ -139,9 +138,35 @@ export default {
       let info = `Agent '${wrapper.name}' ${this.$t(wrapper.text)}`
       this.showSnackBar(info, 'info')
       this.loadFlowNameAndBuildNumber(wrapper)
+    },
+
+    profiles: {
+      handler(after) {
+        console.log(after)
+      }
     }
   },
   methods: {
+    memory(token) {
+      let free = this.fetchProfile(token, 'freeMemory')
+      let total = this.fetchProfile(token, 'totalMemory')
+      return free / total * 100
+    },
+
+    disk(token) {
+      let free = this.fetchProfile(token, 'freeDisk')
+      let total = this.fetchProfile(token, 'totalDisk')
+      return free / total * 100
+    },
+
+    fetchProfile(token, prop) {
+      let p = this.profiles[token]
+      if (p) {
+        return p[prop]
+      }
+      return 0
+    },
+
     loadFlowNameAndBuildNumber(wrapper) {
       const callback = (obj) => {
         let desc = '-'
