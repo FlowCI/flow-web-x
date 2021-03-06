@@ -191,8 +191,8 @@ export default {
 
   .status {
     position: relative;
-    min-width: 10px;
-    max-width: 10px;
+    min-width: 6px;
+    max-width: 6px;
     min-height: 50px;
     max-height: 50px;
   }

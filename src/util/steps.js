@@ -62,12 +62,20 @@ export class StepWrapper {
     return moment(this.step.finishAt)
   }
 
+  get dockers() {
+    return this.step.dockers || []
+  }
+
   get flow() {
     return this.step.flowId
   }
 
   get nextPaths() {
     return this.step.next
+  }
+
+  get plugin() {
+    return this.step.plugin
   }
 
   get next() {

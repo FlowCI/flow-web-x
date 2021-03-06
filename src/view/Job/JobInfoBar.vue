@@ -134,12 +134,13 @@ export default {
 
   .status {
     position: absolute;
-    min-width: 15px;
-    max-width: 15px;
+    min-width: 8px;
+    max-width: 8px;
     min-height: 80px;
     max-height: 80px;
-    top: 0;
+    top: -1px;
     bottom: 0;
+    left: 0;
   }
 }
 </style>

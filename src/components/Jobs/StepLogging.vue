@@ -7,7 +7,8 @@
         :key="item.id"
         :bus="buses[item.id]"
         :on-debug-click="onDebugClick"
-        :wrapper="item">
+        :wrapper="item"
+    >
     </step-logging-item>
 
     <v-divider class="mt-4" v-if="taskItems.length > 0"></v-divider>
@@ -16,7 +17,8 @@
     <step-logging-item
         v-for="(item) in taskItems"
         :key="item.id"
-        :wrapper="item">
+        :wrapper="item"
+    >
     </step-logging-item>
   </div>
 </template>
@@ -59,7 +61,7 @@ export default {
       let added = {}
 
       forEachStep(root, (step) => {
-        if (step.isStage || step.isFlow) {
+        if (step.isStage || step.isFlow || step.isParallel) {
           return
         }
 

@@ -2,7 +2,6 @@
   <div class="step-logging-item" @click="onPanelClick">
     <v-expansion-panels
         :readonly="!showLog"
-        tile
         accordion
         focusable>
       <v-expansion-panel>
@@ -11,10 +10,11 @@
             <div class="status" :style="{backgroundColor: wrapper.status.config.style.fill}"></div>
 
             <v-row no-gutters class="ml-4">
+              <!-- step name -->
               <v-col cols="2">
                 <v-icon small v-if="showLog">mdi-chevron-right</v-icon>
 
-                <span :class="['caption', 'ml-2', boldOnName]">{{ wrapper.name }}</span>
+                <span class='subtitle-2 ml-2 font-weight-bold'>{{ wrapper.name }}</span>
 
                 <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
@@ -36,11 +36,37 @@
                   </template>
                   <span>{{ wrapper.error }}</span>
                 </v-tooltip>
+              </v-col>
 
+              <!-- docker list -->
+              <v-col cols="3">
+                <v-chip v-if="wrapper.plugin" small class="mx-1">
+                  <v-avatar left>
+                    <v-icon small>mdi-view-grid-plus-outline</v-icon>
+                  </v-avatar>
+                  {{ wrapper.plugin }}
+                </v-chip>
+
+                <v-chip
+                    color="blue lighten-1"
+                    text-color="white"
+                    class="mx-1"
+                    v-for="(docker, i) in wrapper.dockers"
+                    :key="i"
+                    small
+                >
+                  <v-avatar left>
+                    <v-icon small>mdi-docker</v-icon>
+                  </v-avatar>
+                  {{ docker.image }}
+                </v-chip>
               </v-col>
-              <v-col cols="8">
+
+              <!-- blank -->
+              <v-col cols="6">
               </v-col>
-              <v-col cols="2" class="caption" v-if="wrapper.isRunning && onDebugClick">
+
+              <v-col cols="1" class="caption" v-if="wrapper.isRunning && onDebugClick">
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-btn x-small icon @click="onDebugClick(wrapper.path)" v-on="on">
@@ -51,7 +77,7 @@
                 </v-tooltip>
               </v-col>
 
-              <v-col cols="2" class="caption" v-if="wrapper.isFinished && showLog">
+              <v-col cols="1" class="caption" v-if="wrapper.isFinished && showLog">
                 <v-btn icon x-small @click="onLogDownload">
                   <v-icon x-small>flow-icon-download</v-icon>
                 </v-btn>
@@ -65,7 +91,7 @@
         </v-expansion-panel-header>
 
         <v-expansion-panel-content v-if="showLog">
-          <div :id="`${wrapper.id}-terminal`" class="terminal"></div>
+          <div :id="`${wrapper.id}-terminal`" class="logging-term"></div>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -153,7 +179,6 @@ export default {
         disableStdin: true,
         cursorStyle: 'bar',
         convertEol: true,
-        rendererType: 'dom',
         theme: {
           background: '#333333',
           foreground: '#f5f5f5'
@@ -193,10 +218,11 @@ export default {
 .step-logging-item {
   .status {
     position: absolute;
-    min-width: 10px;
-    max-width: 20px;
+    min-width: 5px;
+    max-width: 5px;
     top: 0;
     bottom: 0;
+    left: 0;
   }
 
   .v-expansion-panels {
@@ -204,20 +230,16 @@ export default {
   }
 
   .v-expansion-panel-header {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 1px;
-    padding-right: 3px;
-    min-height: 38px;
+    padding: 0 3px 0 1px;
+    min-height: 40px;
+    max-height: 40px;
   }
 
   .v-expansion-panel--active
   .v-expansion-panel-header {
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 1px;
-    padding-right: 3px;
-    min-height: 38px;
+    padding: 0 3px 0 1px;
+    min-height: 40px;
+    max-height: 40px;
   }
 
   .v-expansion-panel-header__icon {
@@ -230,8 +252,14 @@ export default {
     padding-right: 0;
   }
 
-  .terminal {
-    height: 300px;
+  .logging-term {
+    height: 400px;
+    padding: 2px;
+    //background: #333333;
+
+    .terminal {
+      padding: 5px;
+    }
   }
 }
 </style>
