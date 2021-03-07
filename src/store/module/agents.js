@@ -5,7 +5,8 @@ import _ from 'lodash'
 const state = {
   items: [],
   updated: {}, // updated agent received
-  loaded: _.cloneDeep(emptyObject)
+  loaded: _.cloneDeep(emptyObject),
+  profiles: {} // key = token, value = profile
 }
 
 const mutations = {
@@ -46,6 +47,12 @@ const mutations = {
     }
   },
 
+  profile (state, p) {
+    let obj = {}
+    obj[p.id] = p
+    state.profiles = Object.assign({}, state.profiles, obj)
+  },
+
   loaded (state, agent) {
     state.loaded = agent
   }
@@ -82,6 +89,11 @@ const actions = {
 
   select ({commit}, agent) {
     commit('select', agent)
+  },
+
+  updateProfile({commit}, profile) {
+    commit('profile', profile)
+    console.log(1)
   }
 }
 

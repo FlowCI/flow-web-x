@@ -1,3 +1,5 @@
+import { utcTimeFormatFromNow } from "./time"
+
 const OS_MAC = 'MAC'
 const OS_LINUX = 'LINUX'
 const OS_WIN = 'WIN'
@@ -120,6 +122,10 @@ export class AgentWrapper {
 
   get hostId() {
     return this.agent.hostId
+  }
+
+  get upAt() {
+    return utcTimeFormatFromNow(this.agent.statusUpdatedAt)
   }
 
   get freeMemory() {
