@@ -1,5 +1,5 @@
 import vars from '@/util/vars'
-import { timeDurationInSeconds, timeFormat, timeFormatFromNow } from "./time"
+import {timeDurationInSeconds, timeFormat, timeFormatFromNow} from "./time"
 
 // status
 const STATUS_UNKNOWN = 'UNKNOWN'

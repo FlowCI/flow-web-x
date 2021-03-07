@@ -48,7 +48,7 @@
             <v-icon small :class="[item.color]">{{ item.icon }}</v-icon>
           </td>
           <td class="text-center">
-            <span v-if="!item.isOffline">up time</span>
+            <span v-if="!item.isOffline">{{ item.upAt }}</span>
             <span v-if="item.isOffline">-</span>
           </td>
           <td class="text-center">
@@ -60,7 +60,8 @@
           </td>
           <td class="text-center">
             <v-progress-linear :value="fetchProfile(item.token, 'cpuUsage')"
-                               height="25">
+                               height="25"
+                               rounded>
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
                 <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
@@ -68,7 +69,7 @@
             </v-progress-linear>
           </td>
           <td class="text-center">
-            <v-progress-linear :value="memory(item.token)" height="25">
+            <v-progress-linear :value="memory(item.token)" height="25" rounded>
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
                 <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
@@ -76,7 +77,7 @@
             </v-progress-linear>
           </td>
           <td class="text-center">
-            <v-progress-linear :value="disk(item.token)" height="25">
+            <v-progress-linear :value="disk(item.token)" height="25" rounded>
               <template v-slot:default="{ value }">
                 <strong v-if="item.isOffline">-</strong>
                 <strong v-if="!item.isOffline">{{ Math.ceil(value) }}%</strong>
