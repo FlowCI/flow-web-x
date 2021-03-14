@@ -18,6 +18,7 @@ export class HostWrapper {
       maxSize: 5,
       port: 22,
       type: HOST_TYPE_SSH,
+      exitOnIdle: 0
     }
     this.agents = []
   }
@@ -98,6 +99,10 @@ export class HostWrapper {
     return this.host.error
   }
 
+  get exitOnIdle() {
+    return this.host.exitOnIdle
+  }
+
   set name(val) {
     this.host.name = val
   }
@@ -144,5 +149,9 @@ export class HostWrapper {
 
   set error(val) {
     this.host.error = val
+  }
+
+  set exitOnIdle(val) {
+    this.host.exitOnIdle = val
   }
 }
