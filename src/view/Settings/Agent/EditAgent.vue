@@ -10,6 +10,15 @@
           ></text-box>
           <tag-editor :tags="wrapper.tags"></tag-editor>
         </v-col>
+
+        <v-col cols="4">
+          <text-box
+              label="Exit After Idle (seconds)"
+              v-model="wrapper.exitOnIdle"
+              type="number"
+              :rules="idleTimeRules"
+          ></text-box>
+        </v-col>
       </v-row>
     </v-form>
 
@@ -58,7 +67,7 @@
   import TextBox from '@/components/Common/TextBox'
   import SaveBtn from '@/components/Settings/SaveBtn'
   import BackBtn from '@/components/Settings/BackBtn'
-  import { agentNameRules } from '@/util/rules'
+  import { agentNameRules, timeRuleInSeconds } from '@/util/rules'
 
   export default {
     name: 'SettingsAgentEdit',
@@ -78,6 +87,7 @@
     data() {
       return {
         nameRules: agentNameRules(this),
+        idleTimeRules: timeRuleInSeconds(this, 'agent.hint.idle_time_rule'),
         dialog: false
       }
     },

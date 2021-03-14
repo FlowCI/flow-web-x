@@ -30,7 +30,8 @@ const text = {
 export const emptyObject = {
   name: '',
   tags: [],
-  status: STATUS_OFFLINE
+  status: STATUS_OFFLINE,
+  exitOnIdle: 0
 }
 
 export const util = {
@@ -108,6 +109,10 @@ export class AgentWrapper {
     return text[this.agent.status]
   }
 
+  get exitOnIdle() {
+    return this.agent.exitOnIdle || 0
+  }
+
   get token() {
     return this.agent.token
   }
@@ -158,6 +163,10 @@ export class AgentWrapper {
 
   set desc(text) {
     this.descText = text
+  }
+
+  set exitOnIdle(seconds) {
+    this.agent.exitOnIdle = seconds
   }
 
   fetchResource(field) {

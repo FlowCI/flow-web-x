@@ -151,6 +151,7 @@ export default {
       tag_required: 'Agent tag is required',
       tag_size: 'Agent tag length between 2 - 5 characters',
       tag_rule: 'Agent tag name only accept characters of a-z, A-Z, 0-9',
+      idle_time_rule: 'Exit on idle value in seconds must between 0 (not exit on idle) - 172800 (2 days)'
     }
   },
 

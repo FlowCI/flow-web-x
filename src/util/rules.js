@@ -61,6 +61,12 @@ export function agentTagRules(vue) {
   ]
 }
 
+export function timeRuleInSeconds(vue, i18nKey) {
+  return [
+    v => (v >= 0 && v <= 3600 * 24 * 2) || vue.$t(i18nKey) // 2 days
+  ]
+}
+
 export function authFormRules(vue) {
   return [
     v => !!v || vue.$t('credential.hint.auth_required'),
