@@ -78,13 +78,26 @@
               </v-col>
 
               <v-col cols="1" class="caption" v-if="wrapper.isFinished && showLog">
-                <v-btn icon x-small @click="onLogDownload">
-                  <v-icon x-small>flow-icon-download</v-icon>
+                <v-btn icon x-small @click="onLogDownload" v-if="wrapper.isSuccess">
+                  <v-icon small>mdi-download</v-icon>
                 </v-btn>
 
-                <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
-                <span class="ml-1">{{ wrapper.duration }}</span>
-                <span class="ml-1">s</span>
+                <v-tooltip bottom v-else-if="wrapper.isFailure">
+                  <template v-slot:activator="{ on }">
+                    <v-btn icon x-small @click="onRerunClick" v-on="on">
+                      <v-icon small>mdi-restart</v-icon>
+                    </v-btn>
+                  </template>
+                  <div>{{ $t('job.hint.rerun_step') }}</div>
+                </v-tooltip>
+
+                <v-icon small v-else>mdi-minus</v-icon>
+
+                <span>
+                  <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
+                  <span class="ml-1">{{ wrapper.duration }}</span>
+                  <span class="ml-1">s</span>
+                </span>
               </v-col>
             </v-row>
           </template>
@@ -133,13 +146,6 @@ export default {
   computed: {
     showLog() {
       return !!this.bus && !this.wrapper.children
-    },
-
-    boldOnName() {
-      if (this.wrapper.isRoot) {
-        return 'font-weight-bold'
-      }
-      return ''
     }
   },
   methods: {
@@ -150,7 +156,17 @@ export default {
       this.terminal.write(log)
     },
 
-    onLogDownload() {
+    onRerunClick(event) {
+      event.stopPropagation()
+      this.$store.dispatch(actions.jobs.rerun, {jobId: this.wrapper.jobId, fromFailureStep: true})
+          .then()
+          .catch(reason => {
+            console.log(reason)
+          })
+    },
+
+    onLogDownload(event) {
+      event.stopPropagation()
       this.$store.dispatch(actions.jobs.logs.download, this.wrapper.id).then()
     },
 

@@ -126,7 +126,9 @@ export default {
     },
     hint: {
       tty: '打开当前任务的 Terminal 中运行 bash',
-      missing_agent: 'There is NO agents, the job will be started until agent has been created'
+      missing_agent: 'There is NO agents, the job will be started until agent has been created',
+      rerun: '重新运行 Job',
+      rerun_step: '从当前 Step 重新运行 Job'
     }
   },
 

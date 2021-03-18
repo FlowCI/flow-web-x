@@ -178,7 +178,7 @@
       },
 
       onRerunClick() {
-        this.$store.dispatch(actions.jobs.rerun, this.job.id)
+        this.$store.dispatch(actions.jobs.rerun, {jobId: this.job.id})
           .then()
           .catch(reason => {
             console.log(reason)

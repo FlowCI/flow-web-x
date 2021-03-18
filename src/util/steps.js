@@ -48,6 +48,10 @@ export class StepWrapper {
     return this.step.id
   }
 
+  get jobId() {
+    return this.step.jobId
+  }
+
   get startAt() {
     if (!this.step.startAt) {
       return '-'
@@ -160,6 +164,14 @@ export class StepWrapper {
 
   get isFinished() {
     return isStepFinished(this.step)
+  }
+
+  get isSuccess() {
+    return this.step.status === STATUS_SUCCESS
+  }
+
+  get isFailure() {
+    return this.step.status === STATUS_EXCEPTION
   }
 
   set rawStatus(newStatus) {

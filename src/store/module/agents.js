@@ -93,7 +93,6 @@ const actions = {
 
   updateProfile({commit}, profile) {
     commit('profile', profile)
-    console.log(1)
   }
 }
 

@@ -139,12 +139,6 @@ export default {
       let info = `Agent '${wrapper.name}' ${this.$t(wrapper.text)}`
       this.showSnackBar(info, 'info')
       this.loadFlowNameAndBuildNumber(wrapper)
-    },
-
-    profiles: {
-      handler(after) {
-        console.log(after)
-      }
     }
   },
   methods: {

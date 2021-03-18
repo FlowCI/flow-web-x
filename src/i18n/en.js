@@ -127,7 +127,9 @@ export default {
 
     hint: {
       tty: 'Run bash in current step terminal',
-      missing_agent: 'There is NO agents, the job will be started until agent has been created'
+      missing_agent: 'There is NO agents, the job will be started until agent has been created',
+      rerun: 're-run the job',
+      rerun_step: 're-run the job from this step'
     }
   },
 
