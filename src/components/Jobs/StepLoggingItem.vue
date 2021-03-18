@@ -91,7 +91,9 @@
                   <div>{{ $t('job.hint.rerun_step') }}</div>
                 </v-tooltip>
 
-                <v-icon small v-else>mdi-minus</v-icon>
+                <v-btn icon x-small v-else>
+                  <v-icon small>mdi-minus</v-icon>
+                </v-btn>
 
                 <span>
                   <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
