@@ -13,9 +13,9 @@ export function timeFormatInMins(date) {
 }
 
 export function timeFormatFromNow(date) {
-  return moment(date).startOf('hour').fromNow()
+  return moment(date).fromNow()
 }
 
 export function utcTimeFormatFromNow(date) {
-  return moment.utc(date).startOf('hour').fromNow()
+  return moment.utc(date).fromNow()
 }

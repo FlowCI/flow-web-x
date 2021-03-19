@@ -130,7 +130,7 @@ export class AgentWrapper {
   }
 
   get upAt() {
-    return utcTimeFormatFromNow(this.agent.statusUpdatedAt)
+    return utcTimeFormatFromNow(this.agent.connectedAt)
   }
 
   get freeMemory() {
