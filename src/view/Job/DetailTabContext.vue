@@ -85,7 +85,7 @@
         let agents = [];
 
         for (const [_, info] of Object.entries(this.wrapper.snapshots)) {
-          let cpuInfo = `CPU: ${info.cpu} cores`
+          let cpuInfo = `CPU: ${info.cpuNum} cores / ${info.cpuUsage.toFixed(2)} %`
           let memInfo = `Memory: ${info.freeMemory} MB (free) / ${info.totalMemory} MB`
           let diskInfo = `Disk: ${info.freeDisk} MB free / ${info.totalDisk} MB`
 

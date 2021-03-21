@@ -150,7 +150,8 @@ export class JobWrapper {
       '-': {
         name: '-',
         os: '-',
-        cpu: 0,
+        cpuNum: 0,
+        cpuUsage: 0,
         freeMemory: 0,
         totalMemory: 0,
         freeDisk: 0,
