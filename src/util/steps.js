@@ -189,6 +189,11 @@ export function isStepFinished(step) {
     && step.status !== STATUS_WAITING_AGENT
 }
 
+export const EmptyStepWrapper = new StepWrapper({
+  name: '',
+  status: STATUS_PENDING
+})
+
 export const mapping = {
   default: {
     icon: 'flow-icon-stopped grey--text',

@@ -2,31 +2,25 @@
   <div>
     <v-divider></v-divider>
 
-    <step-logging-item
-        v-for="(item) in stepItems"
-        :key="item.id"
-        :bus="buses[item.id]"
-        :on-debug-click="onDebugClick"
-        :wrapper="item"
-    >
-    </step-logging-item>
-
-    <v-divider class="mt-4" v-if="taskItems.length > 0"></v-divider>
-    <v-subheader class="mb-2" v-if="taskItems.length > 0">Notifications</v-subheader>
-
-    <step-logging-item
-        v-for="(item) in taskItems"
-        :key="item.id"
-        :wrapper="item"
-    >
-    </step-logging-item>
+    <v-treeview dense
+                ref="tree"
+                :items="nodes"
+                item-key="pathAsString"
+                :open.sync="openIds">
+      <template v-slot:label={item}>
+        <step-logging-item :wrapper="steps[item.pathAsString] || emptyStep"
+                           :on-debug-click="onDebugClick"
+                           :bus="buses[item.pathAsString]"
+        ></step-logging-item>
+      </template>
+    </v-treeview>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
-import {forEachStep, StepWrapper} from '@/util/steps'
+import {EmptyStepWrapper, forEachStep} from '@/util/steps'
 import {mapState} from 'vuex'
 
 export default {
@@ -36,9 +30,10 @@ export default {
   },
   data() {
     return {
-      stepItems: [],
-      taskItems: [],
-      buses: {}
+      steps: {},
+      buses: {},
+      openIds: [],
+      emptyStep: EmptyStepWrapper
     }
   },
   props: {
@@ -52,36 +47,28 @@ export default {
       root: state => state.steps.root,
       tasks: state => state.steps.tasks,
       loaded: state => state.logs.loaded,
-      pushed: state => state.logs.pushed
+      pushed: state => state.logs.pushed,
+      nodes: state => state.flows.steps
     }),
   },
   watch: {
-    root(root) {
-      this.stepItems.length = 0
-      let added = {}
-
-      forEachStep(root, (step) => {
-        if (step.isStage || step.isFlow || step.isParallel) {
-          return
-        }
-
-        // only init event once, since step-logging-item $on in mounted
-        if (!this.buses[step.id]) {
-          this.buses[step.id] = new Vue()
-        }
-
-        if (!added[step.id]) {
-          this.stepItems.push(step)
-          added[step.id] = step
-        }
+    nodes(nodes) {
+      this.openIds.length = 0
+      this.forEachNodes(nodes, (n) => {
+        this.openIds.push(n.pathAsString)
       })
     },
 
-    tasks(tasks) {
-      this.taskItems.length = 0
-      tasks.forEach((s, index) => {
-        const wrapper = new StepWrapper(s, index)
-        this.taskItems.push(wrapper)
+    root(root) {
+      this.steps.length = 0
+
+      forEachStep(root, (step) => {
+        this.steps[step.path] = step
+
+        // only init event once, since step-logging-item $on in mounted
+        if (!this.buses[step.path]) {
+          this.buses[step.path] = new Vue()
+        }
       })
     },
 
@@ -102,6 +89,13 @@ export default {
       let bus = this.buses[logWrapper.cmdId];
       if (bus) {
         bus.$emit("writeLog", logWrapper.log)
+      }
+    },
+
+    forEachNodes(nodes, onNode) {
+      for (let n of nodes) {
+        onNode(n)
+        this.forEachNodes(n.children, onNode)
       }
     }
   }
