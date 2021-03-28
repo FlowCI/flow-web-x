@@ -110,7 +110,19 @@ export default {
     },
 
     onTreeExpanded() {
-      this.cleanTreeviewElement(this.$refs.tree.$el.children)
+      if (this.nodes.length === 0) {
+        return
+      }
+
+      let children = this.$refs.tree.$el.children
+      if (children.length > 0) {
+        this.cleanTreeviewElement(children)
+        return
+      }
+
+      setTimeout(() => {
+        this.cleanTreeviewElement(children)
+      }, 200)
     },
 
     cleanTreeviewElement(treeNodes) {
@@ -141,14 +153,6 @@ export default {
       if (this.isNodeLevel(first)) {
         first.remove()
       }
-    },
-
-    isNodeLeaf(el) {
-      return el.classList.contains('v-treeview-node--leaf')
-    },
-
-    isNodeRoot(el) {
-      return el.classList.contains('v-treeview-node__root')
     },
 
     getChildrenNodes(treeNode) {
