@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="step-logging">
     <v-divider></v-divider>
 
     <v-treeview dense
                 ref="tree"
                 :items="nodes"
+                @update:open="onTreeExpanded"
                 item-key="pathAsString"
                 :open.sync="openIds">
       <template v-slot:label={item}>
@@ -32,7 +33,6 @@ export default {
     return {
       steps: {},
       buses: {},
-      openIds: [],
       emptyStep: EmptyStepWrapper
     }
   },
@@ -50,20 +50,30 @@ export default {
       pushed: state => state.logs.pushed,
       nodes: state => state.flows.steps
     }),
+
+    openIds: {
+      get() {
+        let ids = []
+        this.forEachNodes(this.nodes, (n) => {
+          ids.push(n.pathAsString)
+        })
+        return ids
+      },
+      set() {
+
+      }
+    }
   },
   watch: {
-    nodes(nodes) {
-      this.openIds.length = 0
-      this.forEachNodes(nodes, (n) => {
-        this.openIds.push(n.pathAsString)
-      })
-    },
-
     root(root) {
       this.steps.length = 0
 
       forEachStep(root, (step) => {
         this.steps[step.path] = step
+
+        if (step.isParallel || step.isStage || step.isFlow) {
+          return
+        }
 
         // only init event once, since step-logging-item $on in mounted
         if (!this.buses[step.path]) {
@@ -97,11 +107,84 @@ export default {
         onNode(n)
         this.forEachNodes(n.children, onNode)
       }
+    },
+
+    onTreeExpanded() {
+      this.cleanTreeviewElement(this.$refs.tree.$el.children)
+    },
+
+    cleanTreeviewElement(treeNodes) {
+      for (let tn of treeNodes) {
+        this.removeNodeLevelOrButtonFromTreeNode(tn)
+
+        let children = this.getChildrenNodes(tn)
+        if (children.length > 0) {
+          this.cleanTreeviewElement(children)
+        }
+      }
+    },
+
+    removeNodeLevelOrButtonFromTreeNode(treeNodeLeaf) {
+      const nodeRoot = treeNodeLeaf.children[0];
+      if (!nodeRoot) {
+        return
+      }
+
+      for (let child of nodeRoot.children) {
+        if (this.isToggleBtn(child)) {
+          child.remove()
+          return
+        }
+      }
+
+      const first = nodeRoot.children[0]
+      if (this.isNodeLevel(first)) {
+        first.remove()
+      }
+    },
+
+    isNodeLeaf(el) {
+      return el.classList.contains('v-treeview-node--leaf')
+    },
+
+    isNodeRoot(el) {
+      return el.classList.contains('v-treeview-node__root')
+    },
+
+    getChildrenNodes(treeNode) {
+      if (treeNode.children.length !== 2) {
+        return []
+      }
+
+      const el = treeNode.children[1]
+      if(el.classList.contains('v-treeview-node__children')) {
+        return el.children
+      }
+
+      return []
+    },
+
+    isNodeLevel(el) {
+      return el.classList.contains('v-treeview-node__level')
+    },
+
+    isToggleBtn(el) {
+      return el.classList.contains('v-treeview-node__toggle')
     }
   }
 }
 </script>
 
 <style lang="scss">
+.step-logging {
+  .v-treeview-node {
+    .v-treeview-node__root {
+      padding-left: 0;
+    }
 
+    .v-treeview-node__content {
+      margin-left: 0;
+    }
+  }
+}
 </style>
