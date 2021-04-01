@@ -11,62 +11,62 @@
 
             <v-row no-gutters class="ml-4">
               <!-- step name -->
-              <v-col cols="2">
+              <v-col cols="5">
                 <v-icon small v-if="showLog">mdi-chevron-right</v-icon>
 
-                <span class='subtitle-2 ml-2 font-weight-bold'>{{ wrapper.name }}</span>
+                <span class='subtitle-2 mx-2 font-weight-bold'>{{ wrapper.name }}</span>
 
                 <v-tooltip right content-class="body" v-if="wrapper.isPost">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-on="on" class="ml-2">mdi-flag-outline</v-icon>
+                    <v-icon small v-on="on" class="mx-1">mdi-flag-outline</v-icon>
                   </template>
                   <span>post step</span>
                 </v-tooltip>
 
+                <!-- plugin -->
+                <v-tooltip right v-if="wrapper.plugin" class="mx-1">
+                  <template v-slot:activator="{ on }">
+                    <v-icon small class="ml-1">mdi-view-grid-plus-outline</v-icon>
+                  </template>
+                  <span>{{ wrapper.plugin }}</span>
+                </v-tooltip>
+
+                <!-- dockers -->
+                <v-tooltip
+                    right
+                    v-for="(docker, i) in wrapper.dockers"
+                    :key="i"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-icon small v-on="on"
+                            class="ml-1"
+                            color="blue lighten-1"
+                            text-color="white">mdi-docker</v-icon>
+                  </template>
+                  <span>{{ docker.image }}</span>
+                </v-tooltip>
+
+
                 <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    <v-icon small v-on="on" class="ml-1">flow-icon-warning</v-icon>
                   </template>
                   <span>allow failure, exit code : {{ wrapper.exitCode }}</span>
                 </v-tooltip>
 
                 <v-tooltip right content-class="body" v-if="wrapper.isTimeoutButAllowFailure">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    <v-icon small v-on="on" class="ml-1">flow-icon-warning</v-icon>
                   </template>
                   <span>Timeout, but allow failure</span>
                 </v-tooltip>
 
                 <v-tooltip right content-class="body" v-if="wrapper.isSkippedOnCondition">
                   <template v-slot:activator="{ on }">
-                    <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
+                    <v-icon small v-on="on" class="ml-1">flow-icon-warning</v-icon>
                   </template>
                   <span>{{ wrapper.error }}</span>
                 </v-tooltip>
-              </v-col>
-
-              <!-- docker list -->
-              <v-col cols="3">
-                <v-chip v-if="wrapper.plugin" small class="mx-1">
-                  <v-avatar left>
-                    <v-icon small>mdi-view-grid-plus-outline</v-icon>
-                  </v-avatar>
-                  {{ wrapper.plugin }}
-                </v-chip>
-
-                <v-chip
-                    color="blue lighten-1"
-                    text-color="white"
-                    class="mx-1"
-                    v-for="(docker, i) in wrapper.dockers"
-                    :key="i"
-                    small
-                >
-                  <v-avatar left>
-                    <v-icon small>mdi-docker</v-icon>
-                  </v-avatar>
-                  {{ docker.image }}
-                </v-chip>
               </v-col>
 
               <!-- blank -->
@@ -122,9 +122,9 @@
 
 <script>
 import actions from '@/store/actions'
-import { Terminal } from "xterm";
-import { FitAddon } from "xterm-addon-fit";
-import { Unicode11Addon } from "xterm-addon-unicode11";
+import {Terminal} from "xterm";
+import {FitAddon} from "xterm-addon-fit";
+import {Unicode11Addon} from "xterm-addon-unicode11";
 
 export default {
   name: "StepLoggingItem",
