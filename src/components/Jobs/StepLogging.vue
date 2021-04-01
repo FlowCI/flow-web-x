@@ -31,7 +31,6 @@ export default {
   },
   data() {
     return {
-      steps: {},
       buses: {},
       emptyStep: EmptyStepWrapper
     }
@@ -62,15 +61,19 @@ export default {
       set() {
 
       }
+    },
+
+    steps() {
+      let steps = {}
+      forEachStep(this.root, (step) => {
+        steps[step.path] = step
+      })
+      return steps
     }
   },
   watch: {
     root(root) {
-      this.steps.length = 0
-
       forEachStep(root, (step) => {
-        this.steps[step.path] = step
-
         if (step.isParallel || step.isStage || step.isFlow) {
           return
         }

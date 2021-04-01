@@ -16,6 +16,13 @@
 
                 <span class='subtitle-2 ml-2 font-weight-bold'>{{ wrapper.name }}</span>
 
+                <v-tooltip right content-class="body" v-if="wrapper.isPost">
+                  <template v-slot:activator="{ on }">
+                    <v-icon small v-on="on" class="ml-2">mdi-flag-outline</v-icon>
+                  </template>
+                  <span>post step</span>
+                </v-tooltip>
+
                 <v-tooltip right content-class="body" v-if="wrapper.isSuccessButFailure">
                   <template v-slot:activator="{ on }">
                     <v-icon small v-on="on" class="ml-2">flow-icon-warning</v-icon>
