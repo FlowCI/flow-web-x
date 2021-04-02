@@ -8,6 +8,7 @@ const STATUS_LOADING = 'LOADING'
 const STATUS_CREATED = 'CREATED'
 const STATUS_QUEUED = 'QUEUED'
 const STATUS_RUNNING = 'RUNNING'
+const STATUS_RUNNING_POST = 'RUNNING_POST'
 const STATUS_SUCCESS = 'SUCCESS'
 const STATUS_FAILURE = 'FAILURE'
 const STATUS_CANCELLING = 'CANCELLING'
@@ -244,28 +245,28 @@ export const mapping = {
     [STATUS_PENDING]: {
       icon: 'flow-icon-pending',
       class: 'grey--text',
-      text: STATUS_PENDING,
+      text: 'Pending',
       bg: 'grey'
     },
 
     [STATUS_LOADING]: {
       icon: 'mdi-git',
       class: 'grey--text',
-      text: STATUS_LOADING,
+      text: 'Loading',
       bg: 'grey'
     },
 
     [STATUS_CREATED]: {
       icon: 'flow-icon-pending',
       class: 'grey--text',
-      text: STATUS_CREATED,
+      text: 'Created',
       bg: 'grey'
     },
 
     [STATUS_QUEUED]: {
       icon: 'mdi-refresh',
       class: ['blue--text text--lighten-1', 'rotate'],
-      text: STATUS_QUEUED,
+      text: 'Enqueue',
       bg: '#42A5F5',
       rotate: true
     },
@@ -273,7 +274,15 @@ export const mapping = {
     [STATUS_RUNNING]: {
       icon: 'mdi-settings',
       class: ['blue--text text--lighten-1', 'rotate'],
-      text: STATUS_RUNNING,
+      text: 'Running',
+      bg: '#42A5F5',
+      rotate: true
+    },
+
+    [STATUS_RUNNING_POST]: {
+      icon: 'mdi-settings',
+      class: ['blue--text text--lighten-1', 'rotate'],
+      text: 'Running Post Steps',
       bg: '#42A5F5',
       rotate: true
     },
@@ -281,21 +290,21 @@ export const mapping = {
     [STATUS_SUCCESS]: {
       icon: 'mdi-check-circle',
       class: 'green--text',
-      text: STATUS_SUCCESS,
+      text: 'Success',
       bg: '#66BB6A'
     },
 
     [STATUS_FAILURE]: {
       icon: 'mdi-close-circle-outline',
       class: 'red--text text--darken-1',
-      text: STATUS_FAILURE,
+      text: 'Failure',
       bg: '#E53935'
     },
 
     [STATUS_CANCELLING]: {
       icon: 'flow-icon-stopped',
       class: ['grey--text', 'rotate'],
-      text: STATUS_CANCELLING,
+      text: 'Cancelling',
       bg: '#B0BEC5',
       rotate: true
     },
@@ -303,14 +312,14 @@ export const mapping = {
     [STATUS_CANCELLED]: {
       icon: 'mdi-cancel',
       class: '',
-      text: STATUS_CANCELLED,
+      text: 'Cancelled',
       bg: '#B0BEC5'
     },
 
     [STATUS_TIMEOUT]: {
       icon: 'mdi-clock-alert-outline',
       class: 'orange--text text--darken-1',
-      text: STATUS_TIMEOUT,
+      text: 'Timeout',
       bg: '#FB8C00'
     }
   },

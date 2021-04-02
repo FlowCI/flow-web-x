@@ -1,32 +1,27 @@
 <template>
-  <div>
+  <div class="step-logging">
     <v-divider></v-divider>
 
-    <step-logging-item
-        v-for="(item) in stepItems"
-        :key="item.id"
-        :bus="buses[item.id]"
-        :on-debug-click="onDebugClick"
-        :wrapper="item"
-    >
-    </step-logging-item>
-
-    <v-divider class="mt-4" v-if="taskItems.length > 0"></v-divider>
-    <v-subheader class="mb-2" v-if="taskItems.length > 0">Notifications</v-subheader>
-
-    <step-logging-item
-        v-for="(item) in taskItems"
-        :key="item.id"
-        :wrapper="item"
-    >
-    </step-logging-item>
+    <v-treeview dense
+                ref="tree"
+                :items="nodes"
+                @update:open="onTreeExpanded"
+                item-key="pathAsString"
+                :open.sync="openIds">
+      <template v-slot:label={item}>
+        <step-logging-item :wrapper="steps[item.pathAsString] || emptyStep"
+                           :on-debug-click="onDebugClick"
+                           :bus="buses[item.pathAsString]"
+        ></step-logging-item>
+      </template>
+    </v-treeview>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import StepLoggingItem from '@/components/Jobs/StepLoggingItem'
-import {forEachStep, StepWrapper} from '@/util/steps'
+import {EmptyStepWrapper, forEachStep} from '@/util/steps'
 import {mapState} from 'vuex'
 
 export default {
@@ -36,9 +31,8 @@ export default {
   },
   data() {
     return {
-      stepItems: [],
-      taskItems: [],
-      buses: {}
+      buses: {},
+      emptyStep: EmptyStepWrapper
     }
   },
   props: {
@@ -52,36 +46,42 @@ export default {
       root: state => state.steps.root,
       tasks: state => state.steps.tasks,
       loaded: state => state.logs.loaded,
-      pushed: state => state.logs.pushed
+      pushed: state => state.logs.pushed,
+      nodes: state => state.flows.steps
     }),
+
+    openIds: {
+      get() {
+        let ids = []
+        this.forEachNodes(this.nodes, (n) => {
+          ids.push(n.pathAsString)
+        })
+        return ids
+      },
+      set() {
+
+      }
+    },
+
+    steps() {
+      let steps = {}
+      forEachStep(this.root, (step) => {
+        steps[step.path] = step
+      })
+      return steps
+    }
   },
   watch: {
     root(root) {
-      this.stepItems.length = 0
-      let added = {}
-
       forEachStep(root, (step) => {
-        if (step.isStage || step.isFlow || step.isParallel) {
+        if (step.isParallel || step.isStage || step.isFlow) {
           return
         }
 
         // only init event once, since step-logging-item $on in mounted
-        if (!this.buses[step.id]) {
-          this.buses[step.id] = new Vue()
+        if (!this.buses[step.path]) {
+          this.buses[step.path] = new Vue()
         }
-
-        if (!added[step.id]) {
-          this.stepItems.push(step)
-          added[step.id] = step
-        }
-      })
-    },
-
-    tasks(tasks) {
-      this.taskItems.length = 0
-      tasks.forEach((s, index) => {
-        const wrapper = new StepWrapper(s, index)
-        this.taskItems.push(wrapper)
       })
     },
 
@@ -103,11 +103,95 @@ export default {
       if (bus) {
         bus.$emit("writeLog", logWrapper.log)
       }
+    },
+
+    forEachNodes(nodes, onNode) {
+      for (let n of nodes) {
+        onNode(n)
+        this.forEachNodes(n.children, onNode)
+      }
+    },
+
+    onTreeExpanded() {
+      if (this.nodes.length === 0) {
+        return
+      }
+
+      let children = this.$refs.tree.$el.children
+      if (children.length > 0) {
+        this.cleanTreeviewElement(children)
+        return
+      }
+
+      setTimeout(() => {
+        this.cleanTreeviewElement(children)
+      }, 200)
+    },
+
+    cleanTreeviewElement(treeNodes) {
+      for (let tn of treeNodes) {
+        this.removeNodeLevelOrButtonFromTreeNode(tn)
+
+        let children = this.getChildrenNodes(tn)
+        if (children.length > 0) {
+          this.cleanTreeviewElement(children)
+        }
+      }
+    },
+
+    removeNodeLevelOrButtonFromTreeNode(treeNodeLeaf) {
+      const nodeRoot = treeNodeLeaf.children[0];
+      if (!nodeRoot) {
+        return
+      }
+
+      for (let child of nodeRoot.children) {
+        if (this.isToggleBtn(child)) {
+          child.remove()
+          return
+        }
+      }
+
+      const first = nodeRoot.children[0]
+      if (this.isNodeLevel(first)) {
+        first.remove()
+      }
+    },
+
+    getChildrenNodes(treeNode) {
+      if (treeNode.children.length !== 2) {
+        return []
+      }
+
+      const el = treeNode.children[1]
+      if(el.classList.contains('v-treeview-node__children')) {
+        return el.children
+      }
+
+      return []
+    },
+
+    isNodeLevel(el) {
+      return el.classList.contains('v-treeview-node__level')
+    },
+
+    isToggleBtn(el) {
+      return el.classList.contains('v-treeview-node__toggle')
     }
   }
 }
 </script>
 
 <style lang="scss">
+.step-logging {
+  .v-treeview-node {
+    .v-treeview-node__root {
+      padding-left: 0;
+    }
 
+    .v-treeview-node__content {
+      margin-left: 0;
+    }
+  }
+}
 </style>

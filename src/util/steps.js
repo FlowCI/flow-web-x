@@ -5,6 +5,7 @@ const STATUS_PENDING = 'PENDING'
 const STATUS_WAITING_AGENT = 'WAITING_AGENT'
 const STATUS_RUNNING = 'RUNNING'
 const STATUS_SUCCESS = 'SUCCESS'
+const STATUS_KILLING = 'KILLING'
 const STATUS_SKIPPED = 'SKIPPED'
 const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
@@ -98,6 +99,10 @@ export class StepWrapper {
     return this.isRootFlow
   }
 
+  get isPost() {
+    return this.step.post
+  }
+
   get name() {
     return this.stepName.startsWith('parallel') ? 'parallel' : this.stepName
   }
@@ -189,6 +194,11 @@ export function isStepFinished(step) {
     && step.status !== STATUS_WAITING_AGENT
 }
 
+export const EmptyStepWrapper = new StepWrapper({
+  name: '',
+  status: STATUS_PENDING
+})
+
 export const mapping = {
   default: {
     icon: 'flow-icon-stopped grey--text',
@@ -226,6 +236,16 @@ export const mapping = {
     config: {
       style: {
         fill: '#42A5F5',
+      }
+    }
+  },
+
+  [STATUS_KILLING]: {
+    icon: 'mdi-settings rotate blue--text',
+    text: 'killing',
+    config: {
+      style: {
+        fill: '#4260f5',
       }
     }
   },
