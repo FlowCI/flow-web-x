@@ -19,7 +19,7 @@ export function gitUrlRules(vue) {
 export function secretAndConfigNameRules(vue) {
   return [
     v => !!v || vue.$t('credential.hint.name_required'),
-    v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
+    v => (/^[A-Za-z0-9_]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
     v => (v.length >= 2 && v.length <= 20) || vue.$t('credential.hint.name_size'),
   ]
 }

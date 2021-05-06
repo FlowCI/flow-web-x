@@ -18,6 +18,11 @@ const TYPE_PARALLEL = 'PARALLEL'
 
 export function forEachStep(wrapper, onStep) {
   onStep(wrapper)
+
+  if (!wrapper.next) {
+    return
+  }
+
   for (let next of wrapper.next) {
     forEachStep(next, onStep)
   }

@@ -8,7 +8,6 @@ const STATUS_LOADING = 'LOADING'
 const STATUS_CREATED = 'CREATED'
 const STATUS_QUEUED = 'QUEUED'
 const STATUS_RUNNING = 'RUNNING'
-const STATUS_RUNNING_POST = 'RUNNING_POST'
 const STATUS_SUCCESS = 'SUCCESS'
 const STATUS_FAILURE = 'FAILURE'
 const STATUS_CANCELLING = 'CANCELLING'
@@ -279,14 +278,6 @@ export const mapping = {
       rotate: true
     },
 
-    [STATUS_RUNNING_POST]: {
-      icon: 'mdi-settings',
-      class: ['blue--text text--lighten-1', 'rotate'],
-      text: 'Running Post Steps',
-      bg: '#42A5F5',
-      rotate: true
-    },
-
     [STATUS_SUCCESS]: {
       icon: 'mdi-check-circle',
       class: 'green--text',
@@ -302,7 +293,7 @@ export const mapping = {
     },
 
     [STATUS_CANCELLING]: {
-      icon: 'flow-icon-stopped',
+      icon: 'mdi-cancel',
       class: ['grey--text', 'rotate'],
       text: 'Cancelling',
       bg: '#B0BEC5',
