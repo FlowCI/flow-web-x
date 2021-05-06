@@ -64,9 +64,14 @@
         <v-icon>mdi-stop</v-icon>
       </v-btn>
 
-      <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished">
-        <v-icon small>mdi-restart</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon @click="onRerunClick" v-if="wrapper.isFinished" v-on="on">
+            <v-icon small>mdi-restart</v-icon>
+          </v-btn>
+        </template>
+        <div>{{ $t('job.hint.rerun') }}</div>
+      </v-tooltip>
     </v-col>
   </v-row>
 </template>
@@ -134,12 +139,13 @@ export default {
 
   .status {
     position: absolute;
-    min-width: 15px;
-    max-width: 15px;
+    min-width: 8px;
+    max-width: 8px;
     min-height: 80px;
     max-height: 80px;
-    top: 0;
+    top: -1px;
     bottom: 0;
+    left: 0;
   }
 }
 </style>

@@ -6,7 +6,7 @@
       <v-icon size="20" v-bind:class="[wrapper.status.class]">{{ wrapper.status.icon }}</v-icon>
     </v-col>
 
-    <v-col cols="1">
+    <v-col cols="2">
       <span class="font-weight-bold"># {{ wrapper.buildNumber }}</span>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -23,7 +23,7 @@
       </v-tooltip>
     </v-col>
 
-    <v-col cols="8">
+    <v-col cols="7">
       <!-- for push and tag -->
       <v-row align="center"
              no-gutters

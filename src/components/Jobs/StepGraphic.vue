@@ -166,8 +166,6 @@ export default {
       edges = edges.concat(this.toEdges({}, this.root.next))
 
       for (let step of this.findLastSteps(this.root)) {
-        console.log(step.name)
-
         edges.push({
           source: step.path,
           target: end.id

@@ -21,7 +21,7 @@
       </v-row>
     </v-form>
 
-    <v-form ref="sshSettingsForm" lazy-validation>
+    <v-form ref="hostSettingsForm" lazy-validation>
       <v-row>
         <v-col cols="9" v-if="wrapper.type === HOST_TYPE_SSH">
           <ssh-host-editor :wrapper="wrapper" :secrets="secretNameList"></ssh-host-editor>
@@ -37,6 +37,25 @@
       </v-row>
     </v-form>
 
+    <v-form ref="agentSettingForm" lazy-validation>
+      <v-row>
+        <v-col cols="12">
+          <span class="font-weight-bold caption">Agent Settings</span>
+        </v-col>
+      </v-row>
+
+      <v-row no-gutters>
+        <v-col cols="4">
+          <text-box
+              label="Exit After Idle (seconds)"
+              v-model="wrapper.exitOnIdle"
+              type="number"
+              :rules="idleTimeRules"
+          ></text-box>
+        </v-col>
+      </v-row>
+    </v-form>
+
     <v-row>
       <v-col cols="9" class="text-end">
         <back-btn :onClick="onBackClick" class="mr-5"></back-btn>
@@ -48,7 +67,7 @@
 
 <script>
 import { HOST_TYPE_SSH, HOST_TYPE_K8S, HostWrapper } from '@/util/hosts'
-import { agentNameRules } from '@/util/rules'
+import {agentNameRules, timeRuleInSeconds} from '@/util/rules'
 import TagEditor from '@/components/Common/TagEditor'
 import TextBox from '@/components/Common/TextBox'
 import TextSelect from '@/components/Common/TextSelect'
@@ -78,6 +97,7 @@ export default {
       deleteDialog: false,
       tagInput: [],
       nameRules: agentNameRules(this),
+      idleTimeRules: timeRuleInSeconds(this, 'agent.hint.idle_time_rule'),
       wrapper: new HostWrapper()
     }
   },
@@ -126,7 +146,11 @@ export default {
         return
       }
 
-      if (this.$refs.sshSettingsForm && !this.$refs.sshSettingsForm.validate()) {
+      if (!this.$refs.hostSettingsForm.validate()) {
+        return
+      }
+
+      if (!this.$refs.agentSettingForm.validate()) {
         return
       }
 

@@ -5,6 +5,7 @@ const STATUS_PENDING = 'PENDING'
 const STATUS_WAITING_AGENT = 'WAITING_AGENT'
 const STATUS_RUNNING = 'RUNNING'
 const STATUS_SUCCESS = 'SUCCESS'
+const STATUS_KILLING = 'KILLING'
 const STATUS_SKIPPED = 'SKIPPED'
 const STATUS_EXCEPTION = 'EXCEPTION'
 const STATUS_KILLED = 'KILLED'
@@ -17,6 +18,11 @@ const TYPE_PARALLEL = 'PARALLEL'
 
 export function forEachStep(wrapper, onStep) {
   onStep(wrapper)
+
+  if (!wrapper.next) {
+    return
+  }
+
   for (let next of wrapper.next) {
     forEachStep(next, onStep)
   }
@@ -48,6 +54,10 @@ export class StepWrapper {
     return this.step.id
   }
 
+  get jobId() {
+    return this.step.jobId
+  }
+
   get startAt() {
     if (!this.step.startAt) {
       return '-'
@@ -62,12 +72,20 @@ export class StepWrapper {
     return moment(this.step.finishAt)
   }
 
+  get dockers() {
+    return this.step.dockers || []
+  }
+
   get flow() {
     return this.step.flowId
   }
 
   get nextPaths() {
     return this.step.next
+  }
+
+  get plugin() {
+    return this.step.plugin
   }
 
   get next() {
@@ -84,6 +102,10 @@ export class StepWrapper {
 
   get isRoot() {
     return this.isRootFlow
+  }
+
+  get isPost() {
+    return this.step.post
   }
 
   get name() {
@@ -154,6 +176,14 @@ export class StepWrapper {
     return isStepFinished(this.step)
   }
 
+  get isSuccess() {
+    return this.step.status === STATUS_SUCCESS
+  }
+
+  get isFailure() {
+    return this.step.status === STATUS_EXCEPTION
+  }
+
   set rawStatus(newStatus) {
     this.step.status = newStatus
   }
@@ -168,6 +198,11 @@ export function isStepFinished(step) {
     && step.status !== STATUS_RUNNING
     && step.status !== STATUS_WAITING_AGENT
 }
+
+export const EmptyStepWrapper = new StepWrapper({
+  name: '',
+  status: STATUS_PENDING
+})
 
 export const mapping = {
   default: {
@@ -206,6 +241,16 @@ export const mapping = {
     config: {
       style: {
         fill: '#42A5F5',
+      }
+    }
+  },
+
+  [STATUS_KILLING]: {
+    icon: 'mdi-settings rotate blue--text',
+    text: 'killing',
+    config: {
+      style: {
+        fill: '#4260f5',
       }
     }
   },

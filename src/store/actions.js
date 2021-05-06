@@ -80,7 +80,8 @@ export default {
     delete: 'agents/delete',
     list: 'agents/list',
     update: 'agents/update',
-    select: 'agents/select'
+    select: 'agents/select',
+    updateProfile: 'agents/updateProfile'
   },
 
   secrets: {

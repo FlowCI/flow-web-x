@@ -127,7 +127,9 @@ export default {
 
     hint: {
       tty: 'Run bash in current step terminal',
-      missing_agent: 'There is NO agents, the job will be started until agent has been created'
+      missing_agent: 'There is NO agents, the job will be started until agent has been created',
+      rerun: 're-run the job',
+      rerun_step: 're-run the job from this step'
     }
   },
 
@@ -151,6 +153,7 @@ export default {
       tag_required: 'Agent tag is required',
       tag_size: 'Agent tag length between 2 - 5 characters',
       tag_rule: 'Agent tag name only accept characters of a-z, A-Z, 0-9',
+      idle_time_rule: 'Exit on idle value in seconds must between 0 (not exit on idle) - 172800 (2 days)'
     }
   },
 

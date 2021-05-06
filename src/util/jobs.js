@@ -1,5 +1,5 @@
 import vars from '@/util/vars'
-import { timeDurationInSeconds, timeFormat, timeFormatFromNow } from "./time"
+import {timeDurationInSeconds, timeFormat, timeFormatFromNow} from "./time"
 
 // status
 const STATUS_UNKNOWN = 'UNKNOWN'
@@ -150,7 +150,8 @@ export class JobWrapper {
       '-': {
         name: '-',
         os: '-',
-        cpu: 0,
+        cpuNum: 0,
+        cpuUsage: 0,
         freeMemory: 0,
         totalMemory: 0,
         freeDisk: 0,
@@ -243,28 +244,28 @@ export const mapping = {
     [STATUS_PENDING]: {
       icon: 'flow-icon-pending',
       class: 'grey--text',
-      text: STATUS_PENDING,
+      text: 'Pending',
       bg: 'grey'
     },
 
     [STATUS_LOADING]: {
       icon: 'mdi-git',
       class: 'grey--text',
-      text: STATUS_LOADING,
+      text: 'Loading',
       bg: 'grey'
     },
 
     [STATUS_CREATED]: {
       icon: 'flow-icon-pending',
       class: 'grey--text',
-      text: STATUS_CREATED,
+      text: 'Created',
       bg: 'grey'
     },
 
     [STATUS_QUEUED]: {
       icon: 'mdi-refresh',
       class: ['blue--text text--lighten-1', 'rotate'],
-      text: STATUS_QUEUED,
+      text: 'Enqueue',
       bg: '#42A5F5',
       rotate: true
     },
@@ -272,7 +273,7 @@ export const mapping = {
     [STATUS_RUNNING]: {
       icon: 'mdi-settings',
       class: ['blue--text text--lighten-1', 'rotate'],
-      text: STATUS_RUNNING,
+      text: 'Running',
       bg: '#42A5F5',
       rotate: true
     },
@@ -280,21 +281,21 @@ export const mapping = {
     [STATUS_SUCCESS]: {
       icon: 'mdi-check-circle',
       class: 'green--text',
-      text: STATUS_SUCCESS,
+      text: 'Success',
       bg: '#66BB6A'
     },
 
     [STATUS_FAILURE]: {
       icon: 'mdi-close-circle-outline',
       class: 'red--text text--darken-1',
-      text: STATUS_FAILURE,
+      text: 'Failure',
       bg: '#E53935'
     },
 
     [STATUS_CANCELLING]: {
-      icon: 'flow-icon-stopped',
+      icon: 'mdi-cancel',
       class: ['grey--text', 'rotate'],
-      text: STATUS_CANCELLING,
+      text: 'Cancelling',
       bg: '#B0BEC5',
       rotate: true
     },
@@ -302,14 +303,14 @@ export const mapping = {
     [STATUS_CANCELLED]: {
       icon: 'mdi-cancel',
       class: '',
-      text: STATUS_CANCELLED,
+      text: 'Cancelled',
       bg: '#B0BEC5'
     },
 
     [STATUS_TIMEOUT]: {
       icon: 'mdi-clock-alert-outline',
       class: 'orange--text text--darken-1',
-      text: STATUS_TIMEOUT,
+      text: 'Timeout',
       bg: '#FB8C00'
     }
   },

@@ -1,6 +1,6 @@
 {
   "name": "flow-web-x",
-  "version": "0.21.05",
+  "version": "0.21.21",
   "description": "flow.ci web ui",
   "author": "Yang Guo <32008001@qq.com>",
   "private": true,
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@antv/g6": "^4.0.3",
-    "@mdi/js": "^5.3.45",
+    "@mdi/js": "^5.9.55",
     "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.11.0",

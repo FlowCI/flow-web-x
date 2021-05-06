@@ -148,6 +148,12 @@ export const subscribeTopic = {
       let agent = message.body
       store.dispatch(actions.agents.update, agent)
     })
+
+    subscribe('/topic/agent_profile', (data) => {
+      let message = JSON.parse(data.body)
+      let profile = message.body
+      store.dispatch(actions.agents.updateProfile, profile)
+    })
   },
 
   hosts(store) {
@@ -177,6 +183,7 @@ export const unsubscribeTopic = {
 
   jobs() {
     unsubscribe('/topic/jobs')
+    unsubscribe('/topic/agent_profile')
   },
 
   agents() {

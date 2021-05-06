@@ -19,7 +19,7 @@ export function gitUrlRules(vue) {
 export function secretAndConfigNameRules(vue) {
   return [
     v => !!v || vue.$t('credential.hint.name_required'),
-    v => (/^[A-Za-z0-9_-]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
+    v => (/^[A-Za-z0-9_]+$/g.test(v)) || vue.$t('credential.hint.name_rule'),
     v => (v.length >= 2 && v.length <= 20) || vue.$t('credential.hint.name_size'),
   ]
 }
@@ -58,6 +58,12 @@ export function agentTagRules(vue) {
     v => !!v || vue.$t('agent.hint.tag_required'),
     v => (/^[A-Za-z0-9]+$/g.test(v)) || vue.$t('agent.hint.tag_rule'),
     v => (v.length >= 2 && v.length <= 5) || vue.$t('agent.hint.tag_size'),
+  ]
+}
+
+export function timeRuleInSeconds(vue, i18nKey) {
+  return [
+    v => (v >= 0 && v <= 3600 * 24 * 2) || vue.$t(i18nKey) // 2 days
   ]
 }
 
