@@ -24,7 +24,7 @@
     "google-protobuf": "^3.11.4",
     "js-base64": "^2.4.9",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "marked": "^0.7.0",
     "moment": "^2.22.2",
     "monaco-editor": "^0.17.0",
