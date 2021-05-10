@@ -37,7 +37,8 @@ export class StepWrapper {
     this.stepName = step.name
     this.nextSteps = []
     this.parentStep = null
-    this.isRootFlow = !step.parent;
+    this.isRootFlow = !step.parent
+    this.isShowStatus = false
 
     let path = step.nodePath;
     if (path) {
@@ -184,12 +185,20 @@ export class StepWrapper {
     return this.step.status === STATUS_EXCEPTION
   }
 
+  get showStatus() {
+    return this.isShowStatus
+  }
+
   set rawStatus(newStatus) {
     this.step.status = newStatus
   }
 
   set parent(p) {
     this.parentStep = p
+  }
+
+  set showStatus(val) {
+    this.isShowStatus = val
   }
 }
 

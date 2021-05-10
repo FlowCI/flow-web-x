@@ -140,6 +140,7 @@ export default {
     cleanTreeviewElement(treeNodes) {
       for (let tn of treeNodes) {
         this.removeNodeLevelOrButtonFromTreeNode(tn)
+        this.fillInStatusColor(tn)
 
         let children = this.getChildrenNodes(tn)
         if (children.length > 0) {
@@ -167,6 +168,24 @@ export default {
       }
     },
 
+    fillInStatusColor(treeNode) {
+      const nodeRoot = treeNode.children[0];
+      if (!nodeRoot) {
+        return
+      }
+
+      const stepId = this.findIdFromLoggingItem(nodeRoot)
+      const nodePath = this.pathIdMapping[stepId]
+      const wrapper = this.steps[nodePath]
+      this.addStatusDiv(nodeRoot, wrapper)
+
+      for (let child of nodeRoot.children) {
+        if (this.isNodeLevel(child)) {
+          return
+        }
+      }
+    },
+
     getChildrenNodes(treeNode) {
       if (treeNode.children.length !== 2) {
         return []
@@ -186,6 +205,25 @@ export default {
 
     isToggleBtn(el) {
       return el.classList.contains('v-treeview-node__toggle')
+    },
+
+    findIdFromLoggingItem(node) {
+      let el = node.getElementsByClassName('step-logging-item')
+      return el[0].id;
+    },
+
+    addStatusDiv(nodeRoot, wrapper) {
+      const div = document.createElement('div')
+      div.classList.add("status")
+      div.style.backgroundColor = wrapper.status.config.style.fill
+
+      const levels = nodeRoot.getElementsByClassName('v-treeview-node__level')
+      if (levels && levels.length > 0) {
+        nodeRoot.prepend(div)
+        return
+      }
+
+      wrapper.showStatus = true
     }
   }
 }
@@ -200,6 +238,20 @@ export default {
 
     .v-treeview-node__content {
       margin-left: 0;
+    }
+
+    .v-treeview-node__level {
+      max-height: 40px;
+      min-height: 40px;
+    }
+
+    .status {
+      position: absolute;
+      min-width: 5px;
+      max-width: 5px;
+      top: 0;
+      bottom: 0;
+      left: 0;
     }
   }
 }
