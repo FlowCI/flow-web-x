@@ -69,6 +69,14 @@ export default {
         steps[step.path] = step
       })
       return steps
+    },
+
+    pathIdMapping() {
+      let mapping = {}
+      forEachStep(this.root, (step) => {
+        mapping[step.id] = step.path
+      })
+      return mapping
     }
   },
   watch: {
@@ -99,7 +107,8 @@ export default {
   },
   methods: {
     writeLog(logWrapper) {
-      let bus = this.buses[logWrapper.cmdId];
+      let nodePath = this.pathIdMapping[logWrapper.cmdId]
+      let bus = this.buses[nodePath];
       if (bus) {
         bus.$emit("writeLog", logWrapper.log)
       }
