@@ -177,13 +177,13 @@ export default {
       const stepId = this.findIdFromLoggingItem(nodeRoot)
       const nodePath = this.pathIdMapping[stepId]
       const wrapper = this.steps[nodePath]
-      this.addStatusDiv(nodeRoot, wrapper)
 
-      for (let child of nodeRoot.children) {
-        if (this.isNodeLevel(child)) {
-          return
-        }
+      if (!wrapper) {
+        return
       }
+
+      this.addStatusDiv(nodeRoot, wrapper)
+      this.addDotIndicator(nodeRoot, wrapper)
     },
 
     getChildrenNodes(treeNode) {
@@ -224,6 +224,27 @@ export default {
       }
 
       wrapper.showStatus = true
+    },
+
+    addDotIndicator(nodeRoot, wrapper) {
+      const levels = nodeRoot.getElementsByClassName('v-treeview-node__level')
+      if (!levels) {
+        return
+      }
+
+      for (const level of levels) {
+        level.appendChild(this.getDotIndicator(wrapper))
+      }
+    },
+
+    getDotIndicator(wrapper) {
+      const div = document.createElement('div')
+      div.style.border = '2px'
+      div.style.borderStyle = 'dotted'
+      div.style.color = wrapper.status.config.style.fill
+      div.style.width = '100%'
+      div.style.marginLeft = '2px'
+      return div
     }
   }
 }
@@ -243,12 +264,15 @@ export default {
     .v-treeview-node__level {
       max-height: 40px;
       min-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .status {
       position: absolute;
-      min-width: 5px;
-      max-width: 5px;
+      min-width: 4px;
+      max-width: 4px;
       top: 0;
       bottom: 0;
       left: 0;
