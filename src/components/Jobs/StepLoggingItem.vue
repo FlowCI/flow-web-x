@@ -9,7 +9,7 @@
           <template v-slot:default="{ open }">
             <div class="status" :style="{backgroundColor: wrapper.status.config.style.fill}" v-if="wrapper.showStatus"></div>
 
-            <v-row no-gutters class="ml-4">
+            <v-row no-gutters class="ml-2">
               <!-- step name -->
               <v-col cols="5">
                 <v-icon small v-if="showLog">mdi-chevron-right</v-icon>
