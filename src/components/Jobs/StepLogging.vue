@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      steps: {},
       buses: {},
       emptyStep: EmptyStepWrapper
     }
@@ -63,14 +64,6 @@ export default {
       }
     },
 
-    steps() {
-      let steps = {}
-      forEachStep(this.root, (step) => {
-        steps[step.path] = step
-      })
-      return steps
-    },
-
     pathIdMapping() {
       let mapping = {}
       forEachStep(this.root, (step) => {
@@ -80,8 +73,11 @@ export default {
     }
   },
   watch: {
-    root(root) {
-      forEachStep(root, (step) => {
+    root() {
+      this.steps = {}
+      forEachStep(this.root, (step) => {
+        this.steps[step.path] = step
+
         if (step.isParallel || step.isStage || step.isFlow) {
           return
         }
@@ -91,6 +87,11 @@ export default {
           this.buses[step.path] = new Vue()
         }
       })
+
+      let children = this.$refs.tree.$el.children
+      if (children.length > 0) {
+        this.refreshStatus(children)
+      }
     },
 
     // action from pushed log
@@ -118,6 +119,17 @@ export default {
       for (let n of nodes) {
         onNode(n)
         this.forEachNodes(n.children, onNode)
+      }
+    },
+
+    refreshStatus(treeNodes) {
+      for (let tn of treeNodes) {
+        this.fillInStatusColor(tn)
+
+        let children = this.getChildrenNodes(tn)
+        if (children.length > 0) {
+          this.refreshStatus(children)
+        }
       }
     },
 
@@ -178,7 +190,7 @@ export default {
       const nodePath = this.pathIdMapping[stepId]
       const wrapper = this.steps[nodePath]
 
-      if (!wrapper) {
+      if (!wrapper || !wrapper.status) {
         return
       }
 
@@ -192,7 +204,7 @@ export default {
       }
 
       const el = treeNode.children[1]
-      if(el.classList.contains('v-treeview-node__children')) {
+      if (el.classList.contains('v-treeview-node__children')) {
         return el.children
       }
 
@@ -219,6 +231,7 @@ export default {
 
       const levels = nodeRoot.getElementsByClassName('v-treeview-node__level')
       if (levels && levels.length > 0) {
+        this.removeElementsByClass(nodeRoot, 'status')
         nodeRoot.prepend(div)
         return
       }
@@ -233,6 +246,7 @@ export default {
       }
 
       for (const level of levels) {
+        this.removeElementsByClass(level, 'dot-ind')
         level.appendChild(this.getDotIndicator(wrapper))
       }
     },
@@ -244,7 +258,19 @@ export default {
       div.style.color = wrapper.status.config.style.fill
       div.style.width = '100%'
       div.style.marginLeft = '2px'
+      div.classList.add('dot-ind')
       return div
+    },
+
+    removeElementsByClass(el, className) {
+      let all = el.getElementsByClassName(className)
+      if (!all) {
+        return
+      }
+
+      for (let item of all) {
+        item.remove()
+      }
     }
   }
 }
