@@ -233,6 +233,7 @@ export default {
         const node = {
           id: step.path,
           label: step.name,
+          size: [10 + (step.name.length * 7), 30],
           preRect: {
             fill: step.status.config.style.fill,
             width: 7,
