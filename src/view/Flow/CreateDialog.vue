@@ -37,6 +37,7 @@
               class="ml-2"
               :on-back-click="onBackClick"
               :on-next-click="onNextClick"
+              :loading="loading"
           ></create-select-template>
           <span class="error--text" v-if="error">{{ `Error: ${error}` }}</span>
         </v-stepper-content>
@@ -61,7 +62,8 @@
     data() {
       return {
         step: 1,
-        error: ''
+        error: '',
+        loading: false
       }
     },
     computed: {
@@ -112,20 +114,18 @@
           },
 
           // step 2
-          2: ({yaml, err}) => {
-            if (err) {
-              this.error = err
-              return
-            }
-
+          2: (desc) => {
             // send confirm
-            let payload = {wrapper: this.flow, yaml};
+            this.loading = true
+            let payload = {wrapper: this.flow, desc}
             this.$store.dispatch(actions.flows.confirm, payload)
                 .then(() => {
                   this.onCancelClick()
+                  this.loading = false
                 })
                 .catch((err) => {
                   this.error = err.message
+                  this.loading = false
                 })
           }
         }
