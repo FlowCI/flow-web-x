@@ -41,7 +41,8 @@
                     <v-icon small v-on="on"
                             class="ml-1"
                             color="blue lighten-1"
-                            text-color="white">mdi-docker</v-icon>
+                            text-color="white">mdi-docker
+                    </v-icon>
                   </template>
                   <span>{{ docker.image }}</span>
                 </v-tooltip>
@@ -148,13 +149,20 @@ export default {
     }
   },
   mounted() {
-    if (this.showLog) {
+    if (this.bus) {
       this.bus.$on('writeLog', this.writeLog)
     }
   },
   computed: {
     showLog() {
-      return !!this.bus && !this.wrapper.children
+      return !this.wrapper.children
+    }
+  },
+  watch: {
+    bus(value) {
+      if (value) {
+        value.$on('writeLog', this.writeLog)
+      }
     }
   },
   methods: {
