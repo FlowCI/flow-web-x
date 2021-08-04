@@ -1,4 +1,4 @@
-FROM caddy:2
+FROM caddy:2.2.1
 
 ENV CADDY_DIR=/site
 ENV SOURCE_DIR=/www/flow-web-x
