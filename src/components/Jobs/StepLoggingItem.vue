@@ -155,7 +155,7 @@ export default {
   },
   computed: {
     showLog() {
-      return !this.wrapper.children
+      return this.bus
     }
   },
   watch: {
