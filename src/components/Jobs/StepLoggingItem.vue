@@ -1,5 +1,5 @@
 <template>
-  <div class="step-logging-item" @click="onPanelClick">
+  <div class="step-logging-item" @click="onPanelClick" :id="wrapper.id">
     <v-expansion-panels
         :readonly="!showLog"
         accordion
@@ -7,9 +7,9 @@
       <v-expansion-panel>
         <v-expansion-panel-header>
           <template v-slot:default="{ open }">
-            <div class="status" :style="{backgroundColor: wrapper.status.config.style.fill}"></div>
+            <div class="status" :style="{backgroundColor: wrapper.status.config.style.fill}" v-if="wrapper.showStatus"></div>
 
-            <v-row no-gutters class="ml-4">
+            <v-row no-gutters class="ml-2">
               <!-- step name -->
               <v-col cols="5">
                 <v-icon small v-if="showLog">mdi-chevron-right</v-icon>
@@ -155,7 +155,7 @@ export default {
   },
   computed: {
     showLog() {
-      return !this.wrapper.children
+      return this.bus
     }
   },
   watch: {

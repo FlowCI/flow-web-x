@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      steps: {},
       buses: {},
       emptyStep: EmptyStepWrapper
     }
@@ -63,14 +64,6 @@ export default {
       }
     },
 
-    steps() {
-      let steps = {}
-      forEachStep(this.root, (step) => {
-        steps[step.path] = step
-      })
-      return steps
-    },
-
     pathIdMapping() {
       let mapping = {}
       forEachStep(this.root, (step) => {
@@ -80,8 +73,11 @@ export default {
     }
   },
   watch: {
-    root(root) {
-      forEachStep(root, (step) => {
+    root() {
+      this.steps = {}
+      forEachStep(this.root, (step) => {
+        this.steps[step.path] = step
+
         if (step.isParallel || step.isStage || step.isFlow) {
           return
         }
@@ -91,6 +87,11 @@ export default {
           this.buses[step.path] = new Vue()
         }
       })
+
+      let children = this.$refs.tree.$el.children
+      if (children.length > 0) {
+        this.refreshStatus(children)
+      }
     },
 
     // action from pushed log
@@ -121,6 +122,17 @@ export default {
       }
     },
 
+    refreshStatus(treeNodes) {
+      for (let tn of treeNodes) {
+        this.fillInStatusColor(tn)
+
+        let children = this.getChildrenNodes(tn)
+        if (children.length > 0) {
+          this.refreshStatus(children)
+        }
+      }
+    },
+
     onTreeExpanded() {
       if (this.nodes.length === 0) {
         return
@@ -140,6 +152,7 @@ export default {
     cleanTreeviewElement(treeNodes) {
       for (let tn of treeNodes) {
         this.removeNodeLevelOrButtonFromTreeNode(tn)
+        this.fillInStatusColor(tn)
 
         let children = this.getChildrenNodes(tn)
         if (children.length > 0) {
@@ -167,13 +180,31 @@ export default {
       }
     },
 
+    fillInStatusColor(treeNode) {
+      const nodeRoot = treeNode.children[0];
+      if (!nodeRoot) {
+        return
+      }
+
+      const stepId = this.findIdFromLoggingItem(nodeRoot)
+      const nodePath = this.pathIdMapping[stepId]
+      const wrapper = this.steps[nodePath]
+
+      if (!wrapper || !wrapper.status) {
+        return
+      }
+
+      this.addStatusDiv(nodeRoot, wrapper)
+      this.addDotIndicator(nodeRoot, wrapper)
+    },
+
     getChildrenNodes(treeNode) {
       if (treeNode.children.length !== 2) {
         return []
       }
 
       const el = treeNode.children[1]
-      if(el.classList.contains('v-treeview-node__children')) {
+      if (el.classList.contains('v-treeview-node__children')) {
         return el.children
       }
 
@@ -186,6 +217,60 @@ export default {
 
     isToggleBtn(el) {
       return el.classList.contains('v-treeview-node__toggle')
+    },
+
+    findIdFromLoggingItem(node) {
+      let el = node.getElementsByClassName('step-logging-item')
+      return el[0].id;
+    },
+
+    addStatusDiv(nodeRoot, wrapper) {
+      const div = document.createElement('div')
+      div.classList.add("status")
+      div.style.backgroundColor = wrapper.status.config.style.fill
+
+      const levels = nodeRoot.getElementsByClassName('v-treeview-node__level')
+      if (levels && levels.length > 0) {
+        this.removeElementsByClass(nodeRoot, 'status')
+        nodeRoot.prepend(div)
+        return
+      }
+
+      wrapper.showStatus = true
+    },
+
+    addDotIndicator(nodeRoot, wrapper) {
+      const levels = nodeRoot.getElementsByClassName('v-treeview-node__level')
+      if (!levels) {
+        return
+      }
+
+      for (const level of levels) {
+        this.removeElementsByClass(level, 'dot-ind')
+        level.appendChild(this.getDotIndicator(wrapper))
+      }
+    },
+
+    getDotIndicator(wrapper) {
+      const div = document.createElement('div')
+      div.style.border = '2px'
+      div.style.borderStyle = 'dotted'
+      div.style.color = wrapper.status.config.style.fill
+      div.style.width = '100%'
+      div.style.marginLeft = '2px'
+      div.classList.add('dot-ind')
+      return div
+    },
+
+    removeElementsByClass(el, className) {
+      let all = el.getElementsByClassName(className)
+      if (!all) {
+        return
+      }
+
+      for (let item of all) {
+        item.remove()
+      }
     }
   }
 }
@@ -200,6 +285,23 @@ export default {
 
     .v-treeview-node__content {
       margin-left: 0;
+    }
+
+    .v-treeview-node__level {
+      max-height: 40px;
+      min-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .status {
+      position: absolute;
+      min-width: 4px;
+      max-width: 4px;
+      top: 0;
+      bottom: 0;
+      left: 0;
     }
   }
 }

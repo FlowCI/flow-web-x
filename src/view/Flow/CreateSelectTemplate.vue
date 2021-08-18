@@ -29,7 +29,6 @@
 </template>
 
 <script>
-  import axios from 'axios'
   import actions from '@/store/actions'
   import { mapState } from 'vuex'
 
@@ -44,12 +43,15 @@
         required: true,
         type: Function
       },
+      loading: {
+        required: true,
+        type: Boolean
+      }
     },
     data() {
       return {
         selected: 0,
         blankValue: -1,
-        loading: false
       }
     },
     mounted() {
@@ -58,35 +60,26 @@
     computed: {
       ...mapState({
         showCreateFlow: state => state.g.showCreateFlow,
-        templates: state => state.flows.templates
+        templates: state => state.flows.templates,
+        settings: state => state.settings.instance
       })
     },
     watch: {
       showCreateFlow() {
         // reset
         this.selected = 0
-        this.loading = false
       }
     },
     methods: {
       async onFinishClick() {
-        let yaml = ''
-        let err = ''
+        let desc = "blank"
 
         // load yaml
         if (this.selected !== this.blankValue) {
-          try {
-            this.loading = true
-            const url = this.templates[this.selected].url
-            const response = await axios.get(url)
-            yaml = response.data;
-          } catch (error) {
-            err = error
-          }
+          desc = this.templates[this.selected].desc
         }
 
-        this.loading = false
-        this.onNextClick({yaml, err})
+        this.onNextClick(desc)
       }
     }
   }

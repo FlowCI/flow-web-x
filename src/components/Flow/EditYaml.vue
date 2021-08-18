@@ -94,9 +94,10 @@
     methods: {
       reload () {
         this.$store.dispatch(actions.flows.yml.load, this.flow.name)
-          .then()
+          .then() // handled on watch yml
           .catch((e) => {
             console.log(e.message)
+            this.editor.setValue('')
           })
       },
 
