@@ -105,12 +105,6 @@
                   <span class="ml-1">s</span>
                 </span>
               </v-col>
-
-              <v-col cols="1" class="caption" v-else>
-                <v-btn icon x-small>
-                  <v-icon small>mdi-minus</v-icon>
-                </v-btn>
-              </v-col>
             </v-row>
           </template>
         </v-expansion-panel-header>
