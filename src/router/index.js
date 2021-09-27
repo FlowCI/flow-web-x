@@ -34,7 +34,8 @@ import SettingsConfigHome from '@/view/Settings/Config/Index'
 import SettingsConfigNew from '@/view/Settings/Config/New'
 import SettingsConfigEdit from '@/view/Settings/Config/Edit'
 
-import SystemSettingsHome from '@/view/Settings/System/Index'
+import SettingsPluginHome from '@/view/Settings/Plugin/Index'
+import SettingsSystemHome from '@/view/Settings/System/Index'
 
 Vue.use(Router)
 
@@ -184,9 +185,14 @@ export default new Router({
         },
 
         {
+          path: 'plugins',
+          name: 'PluginSettingsHome',
+          component: SettingsPluginHome
+        },
+        {
           path: 'system',
           name: 'SystemSettingsHome',
-          component: SystemSettingsHome
+          component: SettingsSystemHome
         }
       ]
     }

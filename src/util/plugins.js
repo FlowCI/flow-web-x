@@ -1,3 +1,5 @@
+import { timeFormat } from "./time"
+
 export const TagNotification = 'notification'
 
 export class PluginWrapper {
@@ -19,11 +21,11 @@ export class PluginWrapper {
   }
 
   get docker() {
-    return this.plugin.docker
+    return this.plugin.meta.docker
   }
 
   get icon() {
-    return this.plugin.icon
+    return this.plugin.meta.icon
   }
 
   get version() {
@@ -38,16 +40,12 @@ export class PluginWrapper {
     return this.plugin.source
   }
 
-  get inputs() {
-    return this.plugin.inputs
-  }
-
   get isDefaultIcon() {
-    return !this.plugin.icon
+    return !this.plugin.meta.icon
   }
 
   get isHttpLinkIcon() {
-    const pathOrLink = this.plugin.icon
+    const pathOrLink = this.plugin.meta.icon
     if (!pathOrLink) {
       return false
     }
@@ -56,11 +54,22 @@ export class PluginWrapper {
   }
 
   get isRepoSrcIcon() {
-    const pathOrLink = this.plugin.icon
+    const pathOrLink = this.plugin.meta.icon
     if (!pathOrLink) {
       return false
     }
 
     return !this.isHttpLinkIcon
+  }
+
+  get syncTime() {
+    if (this.plugin.syncTime) {
+      return timeFormat(this.plugin.syncTime)
+    }
+    return '-'
+  }
+
+  get synced() {
+    return this.plugin.synced
   }
 }

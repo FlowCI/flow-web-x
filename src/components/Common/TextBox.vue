@@ -70,6 +70,10 @@ export default {
     }
   },
   watch: {
+    value(val) {
+      this.adaptor = val
+    },
+
     adaptor(val) {
       this.$emit('input', val)
     }
