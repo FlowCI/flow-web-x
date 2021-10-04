@@ -160,11 +160,12 @@ export default {
   settings: {
     li: {
       profile: 'Profile',
-      users: 'Users',
+      users: 'User',
       security: 'Security',
-      agent: 'Agents',
-      secret: 'Secrets',
+      agent: 'Agent',
+      secret: 'Secret',
       config: 'Config',
+      plugin: 'Plugin',
       system: 'System'
     },
 

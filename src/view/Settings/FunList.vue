@@ -48,6 +48,10 @@
             path: 'configs'
           },
           {
+            i18n: 'settings.li.plugin',
+            path: 'plugins'
+          },
+          {
             i18n: 'settings.li.system',
             path: 'system'
           }

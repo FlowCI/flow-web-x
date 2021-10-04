@@ -163,6 +163,7 @@ export default {
       agent: 'Agents',
       secret: '秘钥管理',
       config: '配置管理',
+      plugin: '插件',
       system: '系统设置'
     },
 

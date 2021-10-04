@@ -86,11 +86,11 @@
               </v-col>
 
               <v-col cols="1" class="caption" v-if="wrapper.isFinished && showLog">
-                <v-btn icon x-small @click="onLogDownload" v-if="wrapper.isSuccess">
+                <v-btn icon x-small @click="onLogDownload" v-if="wrapper.isSuccess || wrapper.isFailure">
                   <v-icon small>mdi-download</v-icon>
                 </v-btn>
 
-                <v-tooltip bottom v-else-if="wrapper.isFailure">
+                <v-tooltip bottom v-if="wrapper.isFailure">
                   <template v-slot:activator="{ on }">
                     <v-btn icon x-small @click="onRerunClick" v-on="on">
                       <v-icon small>mdi-restart</v-icon>
@@ -98,10 +98,6 @@
                   </template>
                   <div>{{ $t('job.hint.rerun_step') }}</div>
                 </v-tooltip>
-
-                <v-btn icon x-small v-else>
-                  <v-icon small>mdi-minus</v-icon>
-                </v-btn>
 
                 <span>
                   <v-icon class="ml-2" x-small>mdi-clock-outline</v-icon>
