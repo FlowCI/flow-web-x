@@ -24,7 +24,6 @@
     <v-tab-item value="tab-config">
       <settings-config-tab :flow="flow"
                            :steps="steps"
-                           :notifications="notifications"
       ></settings-config-tab>
     </v-tab-item>
     <v-tab-item value="tab-users">
@@ -52,7 +51,6 @@
     computed: {
       ...mapState({
         steps: state => state.flows.steps,
-        notifications: state => state.flows.notifications,
         flow: state => state.flows.selected.obj
       }),
       name() {

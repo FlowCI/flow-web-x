@@ -55,10 +55,6 @@
       steps: {
         required: true,
         type: Array
-      },
-      notifications: {
-        required: true,
-        type: Array
       }
     },
     components: {
@@ -160,13 +156,6 @@
             return true
           }
         }
-
-        for (let n of this.notifications) {
-          if (n.plugin && n.plugin === plugin.name) {
-            return true
-          }
-        }
-
         return false
       },
 

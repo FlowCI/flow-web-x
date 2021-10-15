@@ -13,7 +13,6 @@ const state = {
   itemsByCredential: [],
   users: [], // flow users
   steps: [], // flow steps from yml
-  notifications: [], // flow notification from yml
   templates: []
 }
 
@@ -162,7 +161,6 @@ const mutations = {
 
   setYmlObj (state, flowNode) {
     state.steps = flowNode.children
-    state.notifications = flowNode.notifications
   }
 }
 
