@@ -166,7 +166,8 @@ export default {
       secret: 'Secret',
       config: 'Config',
       plugin: 'Plugin',
-      system: 'System'
+      system: 'System',
+      notify: 'Notification'
     },
 
     profile: {

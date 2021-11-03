@@ -164,7 +164,8 @@ export default {
       secret: '秘钥管理',
       config: '配置管理',
       plugin: '插件',
-      system: '系统设置'
+      system: '系统设置',
+      notify: '通知'
     },
 
     profile: {

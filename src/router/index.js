@@ -35,6 +35,9 @@ import SettingsConfigNew from '@/view/Settings/Config/New'
 import SettingsConfigEdit from '@/view/Settings/Config/Edit'
 
 import SettingsPluginHome from '@/view/Settings/Plugin/Index'
+
+import SettingsNotificationHome from '@/view/Settings/Notification/Index'
+
 import SettingsSystemHome from '@/view/Settings/System/Index'
 
 Vue.use(Router)
@@ -189,6 +192,13 @@ export default new Router({
           name: 'PluginSettingsHome',
           component: SettingsPluginHome
         },
+
+        {
+          path: 'notifications',
+          name: 'SettingsNotificationHome',
+          component: SettingsNotificationHome
+        },
+
         {
           path: 'system',
           name: 'SystemSettingsHome',
