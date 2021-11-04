@@ -11,6 +11,10 @@
   border-bottom: 1px solid #e1e4e8
 }
 
+.bottom-border-large {
+  border-bottom: 3px solid #BDBDBD
+}
+
 .left-border {
   border-left: 1px solid #e1e4e8
 }
@@ -40,6 +44,11 @@
 .loading-anim {
   animation: loader 1s infinite;
   display: flex;
+}
+
+.v-subheader-thin {
+  padding: 0;
+  height: auto !important;
 }
 
 @-moz-keyframes loader {

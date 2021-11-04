@@ -37,6 +37,7 @@ import SettingsConfigEdit from '@/view/Settings/Config/Edit'
 import SettingsPluginHome from '@/view/Settings/Plugin/Index'
 
 import SettingsNotificationHome from '@/view/Settings/Notification/Index'
+import SettingsNotificationNew from '@/view/Settings/Notification/New'
 
 import SettingsSystemHome from '@/view/Settings/System/Index'
 
@@ -197,6 +198,11 @@ export default new Router({
           path: 'notifications',
           name: 'SettingsNotificationHome',
           component: SettingsNotificationHome
+        },
+        {
+          path: 'notifications/new',
+          name: 'SettingsNotificationNew',
+          component: SettingsNotificationNew
         },
 
         {

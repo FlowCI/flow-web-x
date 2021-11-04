@@ -58,7 +58,7 @@
 
 <script>
   import actions from '@/store/actions'
-  import ConfigSmtp from './Smtp'
+  import ConfigSmtp from './SmtpSettings'
   import ConfigFreeText from './FreeText'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'

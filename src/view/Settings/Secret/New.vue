@@ -1,20 +1,21 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="9">
-        <v-form ref="nameForm" lazy-validation>
+    <v-form ref="nameForm" lazy-validation>
+      <v-row>
+        <v-col cols="9">
           <text-box label="Name"
                     :rules="nameRules"
                     v-model="name"
           ></text-box>
-        </v-form>
+          <text-select :items="categories"
+                       label="Category"
+                       v-model="category"
+          ></text-select>
+        </v-col>
+      </v-row>
+    </v-form>
 
-        <text-select :items="categories"
-                     label="Category"
-                     v-model="category"
-        ></text-select>
-      </v-col>
-    </v-row>
+    <v-divider></v-divider>
 
     <v-form ref="contentForm" lazy-validation>
       <v-row>
@@ -73,11 +74,11 @@ import {
   CategoriesSelection,
   CATEGORY_ANDROID_SIGN,
   CATEGORY_AUTH,
+  CATEGORY_KUBE_CONFIG,
   CATEGORY_SSH_RSA,
-  CATEGORY_TOKEN,
-  CATEGORY_KUBE_CONFIG
+  CATEGORY_TOKEN
 } from '@/util/secrets'
-import { secretAndConfigNameRules } from '@/util/rules'
+import {secretAndConfigNameRules} from '@/util/rules'
 
 export default {
   name: 'SettingsSecretNew',

@@ -168,6 +168,12 @@ export default {
       notify: '通知'
     },
 
+    common: {
+      name_required: '请输入名称',
+      name_size: '名称长度应当在 2 - 20 字符',
+      name_rule: '名称只允许 a-z, A-Z, 0-9, _, -',
+    },
+
     profile: {
       password_not_empty: '请输入密码',
       password_not_same: '密码不配备'
@@ -175,6 +181,10 @@ export default {
 
     hint: {
       agent_disabled: '提示: 主机已禁用'
+    },
+
+    notification: {
+      email_settings: '邮件通知配置'
     }
   },
 

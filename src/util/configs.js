@@ -6,7 +6,7 @@ export const SECURE_SSL = 'SSL'
 export const SECURE_TLS = 'TLS'
 
 export const CategoriesSelection = [
-  {name: 'Smtp', value: CATEGORY_SMTP, icon: 'mdi-email-outline'},
+  {name: 'SMTP', value: CATEGORY_SMTP, icon: 'mdi-email-outline'},
   {name: 'Text', value: CATEGORY_TEXT, icon: 'mdi-text'},
 ]
 

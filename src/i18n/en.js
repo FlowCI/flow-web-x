@@ -177,6 +177,10 @@ export default {
 
     hint: {
       agent_disabled: 'Hint: The host is disabled'
+    },
+
+    notification: {
+      email_settings: 'Email Settings'
     }
   },
 
