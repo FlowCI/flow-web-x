@@ -187,30 +187,23 @@ export default {
         name: this.name
       }
 
+      let action = ''
+
       if (this.isSshRsa) {
         payload.publicKey = this.instance.pair.publicKey
         payload.privateKey = this.instance.pair.privateKey
-        this.$store.dispatch(actions.secrets.createRsa, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createRsa
       }
 
       if (this.isAuth) {
         payload.username = this.instance.pair.username
         payload.password = this.instance.pair.password
-        this.$store.dispatch(actions.secrets.createAuth, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createAuth
       }
 
       if (this.isToken) {
         payload.token = this.instance.token.data
-        this.$store.dispatch(actions.secrets.createToken, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createToken
       }
 
       if (this.isAndroidSign) {
@@ -222,22 +215,19 @@ export default {
 
         payload.keyStore = this.instance.keyStore
         payload.option = option
-
-        this.$store.dispatch(actions.secrets.createAndroidSign, payload).then(() => {
-          this.onBackClick()
-        })
-
-        return
+        action = actions.secrets.createAndroidSign
       }
 
       if (this.isKubeconfig) {
         payload.content = this.instance.content.data
-        this.$store.dispatch(actions.secrets.createKubeConfig, payload).then(() => {
-          this.onBackClick()
-        }).catch((e) => {
-          this.error = e.message
-        })
+        action = actions.secrets.createKubeConfig
       }
+
+      this.$store.dispatch(action, payload).then(() => {
+        this.onBackClick()
+      }).catch((e) => {
+        this.error = e.message
+      })
     }
   }
 }

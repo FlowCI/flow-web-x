@@ -100,8 +100,17 @@ export default {
     saveSmtp: 'configs/saveSmtp',
     saveText: 'configs/saveText',
     list: 'configs/list',
+    listSmtp: 'configs/listSmtp',
     get: 'configs/get',
     delete: 'configs/delete'
+  },
+
+  notifications: {
+    saveEmail: 'notifications/saveEmail',
+    saveWebhook: 'notifications/saveWebhook',
+    list: 'notifications/list',
+    get: 'notifications/get',
+    delete: 'notifications/delete'
   },
 
   users: {

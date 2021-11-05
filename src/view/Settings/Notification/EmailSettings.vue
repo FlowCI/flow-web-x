@@ -39,7 +39,7 @@
                   :rules="rules.required('Email to is required')"
         ></text-box>
       </v-col>
-      <v-col cols="3" class="align-center">
+      <v-col cols="3" class="align-center" v-if="showToFlowUsers">
         <v-checkbox class="ml-1 mt-8"
                     label="To all flow users"
                     v-model="toAllFlowUser"
@@ -51,10 +51,12 @@
 </template>
 
 <script>
+import actions from '@/store/actions'
 import TextBox from '@/components/Common/TextBox'
 import TextSelect from '@/components/Common/TextSelect'
 import {TO_ALL_FLOW_USERS} from '@/util/notifications'
 import {required} from '@/util/rules'
+import {mapState} from "vuex";
 
 export default {
   name: "EmailSettings",
@@ -67,16 +69,27 @@ export default {
       type: Object,
       required: true
     },
+    showToFlowUsers: {
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {
       TO_ALL_FLOW_USERS,
       toAllFlowUser: false,
-      smtpList: [],
       rules: {
         required
       }
     }
+  },
+  mounted() {
+    this.$store.dispatch(actions.configs.listSmtp).then();
+  },
+  computed: {
+    ...mapState({
+      smtpList: state => state.configs.items
+    })
   },
   methods: {
     onToAllFlowUserChange(val) {

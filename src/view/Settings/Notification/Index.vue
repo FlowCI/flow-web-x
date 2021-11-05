@@ -5,6 +5,27 @@
       :loading="loading"
       hide-default-footer
   >
+    <template v-slot:item="{item}">
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>
+          <v-icon small class="mr-2">{{ Categories[item.category].icon }}</v-icon>
+          <span class="caption">{{ Categories[item.category].name }}</span>
+        </td>
+        <td>
+          {{ item.trigger }}
+        </td>
+        <td>{{ timeFormatInMins(item.createdAt) }}</td>
+        <td>{{ item.createdBy }}</td>
+        <td>
+          <v-btn icon class="ma-0" @click="onEditClick(item)">
+            <v-icon small>mdi-pencil</v-icon>
+          </v-btn>
+        </td>
+      </tr>
+    </template>
+
+
     <template slot="no-data">
       <v-alert :value="true">
         <v-icon small>mdi-alert-outline</v-icon>
@@ -15,6 +36,11 @@
 </template>
 
 <script>
+import actions from '@/store/actions'
+import {mapState} from "vuex"
+import {Categories} from "@/util/notifications"
+import { timeFormatInMins } from "@/util/time"
+
 export default {
   name: "SettingsNotificationHome",
   mounted() {
@@ -22,10 +48,14 @@ export default {
       navs: [{text: this.$t('settings.li.notify')}],
       showAddBtn: true
     })
+
+    this.$store.dispatch(actions.notifications.list).then();
   },
   data() {
     return {
+      Categories,
       loading: false,
+      timeFormatInMins,
       headers: [
         {text: 'Name', value: 'name', align: 'left'},
         {text: 'Category', value: 'category'},
@@ -34,8 +64,12 @@ export default {
         {text: 'Created By', value: 'createdBy'},
         {text: '', align: 'right'}
       ],
-      notifications: []
     }
+  },
+  computed: {
+    ...mapState({
+      notifications: state => state.notifications.items
+    })
   },
   methods: {
     onAddBtnClick() {
@@ -43,6 +77,10 @@ export default {
         name: 'SettingsNotificationNew'
       })
     },
+
+    onEditClick() {
+
+    }
   }
 }
 </script>

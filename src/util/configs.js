@@ -12,7 +12,7 @@ export const CategoriesSelection = [
 
 export const Categories = {
   [CATEGORY_SMTP]: {
-    name: 'Smtp',
+    name: 'SMTP',
     icon: 'mdi-email-outline'
   },
   [CATEGORY_TEXT]: {

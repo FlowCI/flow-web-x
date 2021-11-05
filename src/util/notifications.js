@@ -1,3 +1,4 @@
+import {CATEGORY_SMTP, CATEGORY_TEXT} from "@/util/configs";
 
 export const CATEGORY_EMAIL = 'Email'
 export const CATEGORY_WEBHOOK = 'WebHook'
@@ -13,6 +14,17 @@ export const CategorySelection = [
   {name: 'Email', value: CATEGORY_EMAIL, icon: 'mdi-email-outline'},
   {name: 'WebHook', value: CATEGORY_WEBHOOK, icon: 'mdi-webhook'},
 ]
+
+export const Categories = {
+  [CATEGORY_EMAIL]: {
+    name: 'Email',
+    icon: 'mdi-email-outline'
+  },
+  [CATEGORY_WEBHOOK]: {
+    name: 'WebHook',
+    icon: 'mdi-webhook'
+  }
+}
 
 export const TriggerSelection = [
   {name: 'On Job Finished', value: TRIGGER_ON_JOB_FINISHED, icon: ''}

@@ -24,10 +24,19 @@
     <v-form ref="contentForm" lazy-validation>
       <v-row v-if="category === CATEGORY_EMAIL">
         <v-col>
-          <email-settings v-model="objs[CATEGORY_EMAIL]"></email-settings>
+          <email-settings
+              v-model="objs[CATEGORY_EMAIL]"
+              :show-to-flow-users="trigger === TRIGGER_ON_JOB_FINISHED"
+          ></email-settings>
         </v-col>
       </v-row>
     </v-form>
+
+    <v-row no-gutters dense v-if="error">
+      <v-col cols="9">
+        <span class="error--text">Error: {{ error }}</span>
+      </v-col>
+    </v-row>
 
     <v-row>
       <v-col cols="9" class="text-end">
@@ -35,18 +44,24 @@
         <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
-
   </div>
 </template>
 
 <script>
+import actions from '@/store/actions'
 import {required} from '@/util/rules'
 import TextBox from '@/components/Common/TextBox'
 import TextSelect from '@/components/Common/TextSelect'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
-import {CATEGORY_EMAIL, CATEGORY_WEBHOOK, CategorySelection, TRIGGER_ON_JOB_FINISHED, TriggerSelection} from '@/util/notifications'
+import {
+  CATEGORY_EMAIL,
+  CATEGORY_WEBHOOK,
+  CategorySelection,
+  TRIGGER_ON_JOB_FINISHED,
+  TriggerSelection
+} from '@/util/notifications'
 
 export default {
   name: "SettingsNotificationNew",
@@ -59,6 +74,7 @@ export default {
   },
   data() {
     return {
+      error: '',
       rules: {
         required
       },
@@ -66,6 +82,7 @@ export default {
       categories: CategorySelection,
       CATEGORY_EMAIL,
       CATEGORY_WEBHOOK,
+      TRIGGER_ON_JOB_FINISHED,
       types: [
         {
           text: 'On Job Finished',
@@ -83,9 +100,7 @@ export default {
           subject: '',
           smtp: '',
         },
-        [CATEGORY_WEBHOOK]: {
-
-        }
+        [CATEGORY_WEBHOOK]: {}
       }
     }
   },
@@ -112,10 +127,33 @@ export default {
       if (!this.$refs.contentForm.validate()) {
         return
       }
+
+      const payload = {
+        name: this.name,
+        category: this.category,
+        trigger: this.trigger
+      }
+
+      let action = ''
+
+      if (this.category === CATEGORY_EMAIL) {
+        let es = this.objs[CATEGORY_EMAIL];
+        payload.from = es.from
+        payload.to = es.to
+        payload.subject = es.subject
+        payload.smtpConfig = es.smtp
+        action = actions.notifications.saveEmail
+      }
+
+      this.$store.dispatch(action, payload).then(() => {
+        this.onBackClick()
+      }).catch(e => {
+        this.error = e.message
+      })
     },
 
     onBackClick() {
-
+      this.$router.push('/settings/notifications')
     }
   }
 }
