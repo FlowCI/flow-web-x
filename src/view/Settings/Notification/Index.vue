@@ -9,8 +9,8 @@
       <tr>
         <td>{{ item.name }}</td>
         <td>
-          <v-icon small class="mr-2">{{ Categories[item.category].icon }}</v-icon>
-          <span class="caption">{{ Categories[item.category].name }}</span>
+          <v-icon small class="mr-2">{{ getCategory(item).icon }}</v-icon>
+          <span class="caption">{{ getCategory(item).name }}</span>
         </td>
         <td>
           {{ item.trigger }}
@@ -72,14 +72,23 @@ export default {
     })
   },
   methods: {
+    getCategory(item) {
+      return Categories[item.category] || {name: '', icon: ''}
+    },
+
     onAddBtnClick() {
       this.$router.push({
         name: 'SettingsNotificationNew'
       })
     },
 
-    onEditClick() {
-
+    onEditClick(item) {
+      this.$router.push({
+        name: 'SettingsNotificationEdit',
+        params: {
+          name: item.name
+        }
+      })
     }
   }
 }

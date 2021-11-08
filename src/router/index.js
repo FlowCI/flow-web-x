@@ -38,6 +38,7 @@ import SettingsPluginHome from '@/view/Settings/Plugin/Index'
 
 import SettingsNotificationHome from '@/view/Settings/Notification/Index'
 import SettingsNotificationNew from '@/view/Settings/Notification/New'
+import SettingsNotificationEdit from '@/view/Settings/Notification/Edit'
 
 import SettingsSystemHome from '@/view/Settings/System/Index'
 
@@ -170,6 +171,7 @@ export default new Router({
           props: true
         },
 
+        // config settings
         {
           path: 'configs',
           name: 'SettingsConfigHome',
@@ -188,12 +190,14 @@ export default new Router({
           props: true
         },
 
+        // plugin settings
         {
           path: 'plugins',
           name: 'PluginSettingsHome',
           component: SettingsPluginHome
         },
 
+        // notification settings
         {
           path: 'notifications',
           name: 'SettingsNotificationHome',
@@ -204,7 +208,14 @@ export default new Router({
           name: 'SettingsNotificationNew',
           component: SettingsNotificationNew
         },
+        {
+          path: 'notifications/edit',
+          name: 'SettingsNotificationEdit',
+          component: SettingsNotificationEdit,
+          props: true
+        },
 
+        // system settings
         {
           path: 'system',
           name: 'SystemSettingsHome',

@@ -10,7 +10,7 @@
       <v-col cols="9">
         <text-select :items="smtpList"
                      label="SMTP Config"
-                     v-model="value.smtp"
+                     v-model="value.smtpConfig"
                      :rules="rules.required('SMTP config is required')"
         ></text-select>
       </v-col>
@@ -51,12 +51,10 @@
 </template>
 
 <script>
-import actions from '@/store/actions'
 import TextBox from '@/components/Common/TextBox'
 import TextSelect from '@/components/Common/TextSelect'
 import {TO_ALL_FLOW_USERS} from '@/util/notifications'
 import {required} from '@/util/rules'
-import {mapState} from "vuex";
 
 export default {
   name: "EmailSettings",
@@ -69,6 +67,10 @@ export default {
       type: Object,
       required: true
     },
+    smtpList: {
+      type: Array,
+      required: true
+    },
     showToFlowUsers: {
       type: Boolean,
       required: true
@@ -77,19 +79,11 @@ export default {
   data() {
     return {
       TO_ALL_FLOW_USERS,
-      toAllFlowUser: false,
+      toAllFlowUser: this.value.toFlowUsers,
       rules: {
         required
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch(actions.configs.listSmtp).then();
-  },
-  computed: {
-    ...mapState({
-      smtpList: state => state.configs.items
-    })
   },
   methods: {
     onToAllFlowUserChange(val) {

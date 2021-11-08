@@ -4,17 +4,17 @@
       <v-row>
         <v-col cols="9">
           <text-box label="Name"
-                    :rules="rules.required('Name is required')"
+                    :readonly="true"
                     v-model="obj.name"
           ></text-box>
-          <text-select :items="triggers"
-                       label="Trigger"
-                       v-model="obj.trigger"
-          ></text-select>
-          <text-select :items="categories"
-                       label="Category"
-                       v-model="obj.category"
-          ></text-select>
+          <text-box readonly
+                    label="Trigger"
+                    v-model="obj.trigger"
+          ></text-box>
+          <text-box readonly
+                    label="Category"
+                    v-model="obj.category"
+          ></text-box>
         </v-col>
       </v-row>
     </v-form>
@@ -42,6 +42,19 @@
     <v-row>
       <v-col cols="9" class="text-end">
         <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+
+        <confirm-btn :text="$t('delete')"
+                     icon="mdi-delete"
+                     color="error"
+                     clazz="mr-5"
+                     @click="onDeleteClick">
+          <template v-slot:title>
+            <span class="red--text subheading">
+              Delete the notification {{ obj.name }}?
+            </span>
+          </template>
+        </confirm-btn>
+
         <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
@@ -52,7 +65,7 @@
 import actions from '@/store/actions'
 import {required} from '@/util/rules'
 import TextBox from '@/components/Common/TextBox'
-import TextSelect from '@/components/Common/TextSelect'
+import ConfirmBtn from '@/components/Common/ConfirmBtn'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
@@ -66,13 +79,19 @@ import {
 import {mapState} from "vuex";
 
 export default {
-  name: "SettingsNotificationNew",
+  name: "SettingsNotificationEdit",
   components: {
+    ConfirmBtn,
     TextBox,
-    TextSelect,
     SaveBtn,
     BackBtn,
     EmailSettings,
+  },
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
   },
   data() {
     return {
@@ -91,18 +110,7 @@ export default {
           value: 'OnJobFinished',
           desc: ''
         }
-      ],
-      obj: {
-        name: '',
-        category: CATEGORY_EMAIL,
-        trigger: TRIGGER_ON_JOB_FINISHED,
-        // email properties
-        from: '',
-        to: '',
-        subject: '',
-        smtpConfig: '',
-        // webhook properties
-      },
+      ]
     }
   },
   mounted() {
@@ -111,18 +119,25 @@ export default {
       showAddBtn: false
     })
 
-    this.$store.dispatch(actions.configs.listSmtp).then()
+    // load smtp list first
+    this.$store.dispatch(actions.configs.listSmtp).then(() => {
+      this.$store.dispatch(actions.notifications.get, this.name).then(() => {
+        // console.log(this.obj)
+      })
+    })
   },
   computed: {
     ...mapState({
+      obj: state => state.notifications.loaded,
       smtpList: state => state.configs.items
     }),
+
     navs() {
       return [
         {text: this.$t('settings.li.notify'), href: '#/settings/notifications'},
-        {text: this.$t('new')}
+        {text: this.name}
       ]
-    },
+    }
   },
   methods: {
     onSaveClick() {
@@ -139,11 +154,18 @@ export default {
         action = actions.notifications.saveEmail
       }
 
-      this.$store.dispatch(action, this.obj).then(() => {
-        this.onBackClick()
-      }).catch(e => {
-        this.error = e.message
-      })
+      this.$store.dispatch(action, this.obj)
+          .then(() => {
+            this.showSnackBar(`Notification ${this.obj.name} has been saved`)
+            this.onBackClick()
+          })
+          .catch(e => {
+            this.error = e.message
+          })
+    },
+
+    onDeleteClick() {
+
     },
 
     onBackClick() {
