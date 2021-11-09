@@ -57,7 +57,7 @@ const actions = {
     await http.delete(`notifications/${name}`, (c) => {
       commit('remove', c)
     })
-  },
+  }
 }
 
 export const Store = {

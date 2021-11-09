@@ -165,7 +165,14 @@ export default {
     },
 
     onDeleteClick() {
-
+      this.$store.dispatch(actions.notifications.delete, this.obj.name)
+          .then(() => {
+            this.showSnackBar(`Notification ${this.obj.name} has been deleted`)
+            this.onBackClick()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
     },
 
     onBackClick() {
