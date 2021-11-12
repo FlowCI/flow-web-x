@@ -180,6 +180,9 @@ export default {
     },
 
     trigger: {
+      name: 'Trigger name',
+      action: 'Action',
+      category: 'Category',
       email_settings: 'Email Settings'
     }
   },

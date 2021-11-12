@@ -9,11 +9,11 @@
       <tr>
         <td>{{ item.name }}</td>
         <td>
-          <v-icon small class="mr-2">{{ getCategory(item).icon }}</v-icon>
-          <span class="caption">{{ getCategory(item).name }}</span>
+          {{ item.action }}
         </td>
         <td>
-          {{ item.action }}
+          <v-icon small class="mr-2">{{ getCategory(item).icon }}</v-icon>
+          <span class="caption">{{ getCategory(item).name }}</span>
         </td>
         <td>{{ timeFormatInMins(item.createdAt) }}</td>
         <td>{{ item.createdBy }}</td>
@@ -57,9 +57,9 @@ export default {
       loading: false,
       timeFormatInMins,
       headers: [
-        {text: 'Name', value: 'name', align: 'left'},
-        {text: 'Category', value: 'category'},
-        {text: 'Action', value: 'action'},
+        {text: this.$t('settings.trigger.name'), value: 'name', align: 'left'},
+        {text: this.$t('settings.trigger.action'), value: 'action'},
+        {text: this.$t('settings.trigger.category'), value: 'category'},
         {text: 'Created At', value: 'createdAt'},
         {text: 'Created By', value: 'createdBy'},
         {text: '', align: 'right'}

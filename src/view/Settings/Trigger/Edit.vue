@@ -3,16 +3,16 @@
     <v-form ref="nameForm" lazy-validation>
       <v-row>
         <v-col cols="9">
-          <text-box label="Name"
+          <text-box :label="$t('settings.trigger.name')"
                     :readonly="true"
                     v-model="obj.name"
           ></text-box>
           <text-box readonly
-                    label="Action"
+                    :label="$t('settings.trigger.action')"
                     v-model="obj.action"
           ></text-box>
           <text-box readonly
-                    label="Category"
+                    :label="$t('settings.trigger.category')"
                     v-model="obj.category"
           ></text-box>
         </v-col>
