@@ -165,7 +165,7 @@ export default {
       config: '配置管理',
       plugin: '插件',
       system: '系统设置',
-      notify: '通知'
+      trigger: '触发器'
     },
 
     common: {
@@ -183,7 +183,7 @@ export default {
       agent_disabled: '提示: 主机已禁用'
     },
 
-    notification: {
+    trigger: {
       email_settings: '邮件通知配置'
     }
   },

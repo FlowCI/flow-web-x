@@ -167,7 +167,7 @@ export default {
       config: 'Config',
       plugin: 'Plugin',
       system: 'System',
-      notify: 'Trigger'
+      trigger: 'Trigger'
     },
 
     profile: {
@@ -179,7 +179,7 @@ export default {
       agent_disabled: 'Hint: The host is disabled'
     },
 
-    notification: {
+    trigger: {
       email_settings: 'Email Settings'
     }
   },

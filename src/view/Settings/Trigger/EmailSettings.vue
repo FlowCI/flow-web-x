@@ -2,7 +2,7 @@
   <v-container class="pa-0">
     <v-row>
       <v-col cols="9">
-        <v-subheader class="v-subheader-thin">{{ $t('settings.notification.email_settings') }}</v-subheader>
+        <v-subheader class="v-subheader-thin">{{ $t('settings.trigger.email_settings') }}</v-subheader>
       </v-col>
     </v-row>
 

@@ -132,7 +132,7 @@ export default {
 
     navs() {
       return [
-        {text: this.$t('settings.li.notify'), href: '#/settings/triggers'},
+        {text: this.$t('settings.li.trigger'), href: '#/settings/triggers'},
         {text: this.name}
       ]
     }

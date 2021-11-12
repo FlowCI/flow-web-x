@@ -45,7 +45,7 @@ export default {
   name: "SettingsTriggerHome",
   mounted() {
     this.$emit('onConfigNav', {
-      navs: [{text: this.$t('settings.li.notify')}],
+      navs: [{text: this.$t('settings.li.trigger')}],
       showAddBtn: true
     })
 

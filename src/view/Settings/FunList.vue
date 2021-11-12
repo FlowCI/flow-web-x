@@ -62,7 +62,7 @@
             icon: 'mdi-puzzle-outline'
           },
           {
-            i18n: 'settings.li.notify',
+            i18n: 'settings.li.trigger',
             path: 'triggers',
             icon: 'mdi-bell-outline'
           },
