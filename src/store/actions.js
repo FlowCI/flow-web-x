@@ -105,12 +105,12 @@ export default {
     delete: 'configs/delete'
   },
 
-  notifications: {
-    saveEmail: 'notifications/saveEmail',
-    saveWebhook: 'notifications/saveWebhook',
-    list: 'notifications/list',
-    get: 'notifications/get',
-    delete: 'notifications/delete'
+  triggers: {
+    saveEmail: 'triggers/saveEmail',
+    saveWebhook: 'triggers/saveWebhook',
+    list: 'triggers/list',
+    get: 'triggers/get',
+    delete: 'triggers/delete'
   },
 
   users: {

@@ -1,7 +1,7 @@
 <template>
   <v-data-table
       :headers="headers"
-      :items="notifications"
+      :items="triggers"
       :loading="loading"
       hide-default-footer
   >
@@ -13,7 +13,7 @@
           <span class="caption">{{ getCategory(item).name }}</span>
         </td>
         <td>
-          {{ item.trigger }}
+          {{ item.action }}
         </td>
         <td>{{ timeFormatInMins(item.createdAt) }}</td>
         <td>{{ item.createdBy }}</td>
@@ -38,18 +38,18 @@
 <script>
 import actions from '@/store/actions'
 import {mapState} from "vuex"
-import {Categories} from "@/util/notifications"
+import {Categories} from "@/util/triggers"
 import { timeFormatInMins } from "@/util/time"
 
 export default {
-  name: "SettingsNotificationHome",
+  name: "SettingsTriggerHome",
   mounted() {
     this.$emit('onConfigNav', {
       navs: [{text: this.$t('settings.li.notify')}],
       showAddBtn: true
     })
 
-    this.$store.dispatch(actions.notifications.list).then();
+    this.$store.dispatch(actions.triggers.list).then();
   },
   data() {
     return {
@@ -59,7 +59,7 @@ export default {
       headers: [
         {text: 'Name', value: 'name', align: 'left'},
         {text: 'Category', value: 'category'},
-        {text: 'Trigger', value: 'trigger'},
+        {text: 'Action', value: 'action'},
         {text: 'Created At', value: 'createdAt'},
         {text: 'Created By', value: 'createdBy'},
         {text: '', align: 'right'}
@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     ...mapState({
-      notifications: state => state.notifications.items
+      triggers: state => state.triggers.items
     })
   },
   methods: {
@@ -78,13 +78,13 @@ export default {
 
     onAddBtnClick() {
       this.$router.push({
-        name: 'SettingsNotificationNew'
+        name: 'SettingsTriggerNew'
       })
     },
 
     onEditClick(item) {
       this.$router.push({
-        name: 'SettingsNotificationEdit',
+        name: 'SettingsTriggerEdit',
         params: {
           name: item.name
         }

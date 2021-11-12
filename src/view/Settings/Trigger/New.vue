@@ -7,9 +7,9 @@
                     :rules="rules.required('Name is required')"
                     v-model="obj.name"
           ></text-box>
-          <text-select :items="triggers"
-                       label="Trigger"
-                       v-model="obj.trigger"
+          <text-select :items="actions"
+                       label="Action"
+                       v-model="obj.action"
           ></text-select>
           <text-select :items="categories"
                        label="Category"
@@ -27,7 +27,7 @@
           <email-settings
               v-model="obj"
               :smtp-list="smtpList"
-              :show-to-flow-users="obj.trigger === TRIGGER_ON_JOB_FINISHED"
+              :show-to-flow-users="obj.action === TRIGGER_ON_JOB_FINISHED"
           ></email-settings>
         </v-col>
       </v-row>
@@ -57,16 +57,16 @@ import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
 import {
+  ActionSelection,
   CATEGORY_EMAIL,
   CATEGORY_WEBHOOK,
   CategorySelection,
   TRIGGER_ON_JOB_FINISHED,
-  TriggerSelection
-} from '@/util/notifications'
+} from '@/util/triggers'
 import {mapState} from "vuex";
 
 export default {
-  name: "SettingsNotificationNew",
+  name: "SettingsTriggerNew",
   components: {
     TextBox,
     TextSelect,
@@ -80,7 +80,7 @@ export default {
       rules: {
         required
       },
-      triggers: TriggerSelection,
+      actions: ActionSelection,
       categories: CategorySelection,
       CATEGORY_EMAIL,
       CATEGORY_WEBHOOK,
@@ -119,7 +119,7 @@ export default {
     }),
     navs() {
       return [
-        {text: this.$t('settings.li.notify'), href: '#/settings/notifications'},
+        {text: this.$t('settings.li.notify'), href: '#/settings/triggers'},
         {text: this.$t('new')}
       ]
     },
@@ -136,7 +136,7 @@ export default {
 
       let action = ''
       if (this.obj.category === CATEGORY_EMAIL) {
-        action = actions.notifications.saveEmail
+        action = actions.triggers.saveEmail
       }
 
       this.$store.dispatch(action, this.obj).then(() => {
@@ -147,7 +147,7 @@ export default {
     },
 
     onBackClick() {
-      this.$router.push('/settings/notifications')
+      this.$router.push('/settings/triggers')
     }
   }
 }

@@ -30,31 +30,31 @@ const mutations = {
 
 const actions = {
   async list({commit}) {
-    await http.get('notifications', (list) => {
+    await http.get('triggers', (list) => {
       commit('list', list)
     })
   },
 
   async get({commit}, name) {
-    await http.get(`notifications/${name}`, (n) => {
+    await http.get(`triggers/${name}`, (n) => {
       commit('loaded', n)
     })
   },
 
   async saveEmail({commit}, payload) {
-    await http.post(`notifications/email`, (n) => {
+    await http.post(`triggers/email`, (n) => {
       commit('add', n)
     }, payload)
   },
 
   async saveWebhook({commit}, payload) {
-    await http.post(`notifications/webhook`, (n) => {
+    await http.post(`triggers/webhook`, (n) => {
       commit('add', n)
     }, payload)
   },
 
   async delete({commit}, name) {
-    await http.delete(`notifications/${name}`, (c) => {
+    await http.delete(`triggers/${name}`, (c) => {
       commit('remove', c)
     })
   }

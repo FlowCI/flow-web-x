@@ -1,5 +1,3 @@
-import {CATEGORY_SMTP, CATEGORY_TEXT} from "@/util/configs";
-
 export const CATEGORY_EMAIL = 'Email'
 export const CATEGORY_WEBHOOK = 'WebHook'
 
@@ -26,6 +24,6 @@ export const Categories = {
   }
 }
 
-export const TriggerSelection = [
+export const ActionSelection = [
   {name: 'On Job Finished', value: TRIGGER_ON_JOB_FINISHED, icon: ''}
 ]

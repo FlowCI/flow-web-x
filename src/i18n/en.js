@@ -167,7 +167,7 @@ export default {
       config: 'Config',
       plugin: 'Plugin',
       system: 'System',
-      notify: 'Notification'
+      notify: 'Trigger'
     },
 
     profile: {

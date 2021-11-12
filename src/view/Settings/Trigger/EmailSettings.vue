@@ -53,7 +53,7 @@
 <script>
 import TextBox from '@/components/Common/TextBox'
 import TextSelect from '@/components/Common/TextSelect'
-import {TO_ALL_FLOW_USERS} from '@/util/notifications'
+import {TO_ALL_FLOW_USERS} from '@/util/triggers'
 import {required} from '@/util/rules'
 
 export default {

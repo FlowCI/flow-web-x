@@ -63,7 +63,7 @@
           },
           {
             i18n: 'settings.li.notify',
-            path: 'notifications',
+            path: 'triggers',
             icon: 'mdi-bell-outline'
           },
           {

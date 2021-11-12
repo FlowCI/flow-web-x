@@ -8,8 +8,8 @@
                     v-model="obj.name"
           ></text-box>
           <text-box readonly
-                    label="Trigger"
-                    v-model="obj.trigger"
+                    label="Action"
+                    v-model="obj.action"
           ></text-box>
           <text-box readonly
                     label="Category"
@@ -27,7 +27,7 @@
           <email-settings
               v-model="obj"
               :smtp-list="smtpList"
-              :show-to-flow-users="obj.trigger === TRIGGER_ON_JOB_FINISHED"
+              :show-to-flow-users="obj.action === TRIGGER_ON_JOB_FINISHED"
           ></email-settings>
         </v-col>
       </v-row>
@@ -74,8 +74,7 @@ import {
   CATEGORY_WEBHOOK,
   CategorySelection,
   TRIGGER_ON_JOB_FINISHED,
-  TriggerSelection
-} from '@/util/notifications'
+} from '@/util/triggers'
 import {mapState} from "vuex";
 
 export default {
@@ -99,7 +98,6 @@ export default {
       rules: {
         required
       },
-      triggers: TriggerSelection,
       categories: CategorySelection,
       CATEGORY_EMAIL,
       CATEGORY_WEBHOOK,
@@ -121,20 +119,20 @@ export default {
 
     // load smtp list first
     this.$store.dispatch(actions.configs.listSmtp).then(() => {
-      this.$store.dispatch(actions.notifications.get, this.name).then(() => {
+      this.$store.dispatch(actions.triggers.get, this.name).then(() => {
         // console.log(this.obj)
       })
     })
   },
   computed: {
     ...mapState({
-      obj: state => state.notifications.loaded,
+      obj: state => state.triggers.loaded,
       smtpList: state => state.configs.items
     }),
 
     navs() {
       return [
-        {text: this.$t('settings.li.notify'), href: '#/settings/notifications'},
+        {text: this.$t('settings.li.notify'), href: '#/settings/triggers'},
         {text: this.name}
       ]
     }
@@ -151,7 +149,7 @@ export default {
 
       let action = ''
       if (this.obj.category === CATEGORY_EMAIL) {
-        action = actions.notifications.saveEmail
+        action = actions.triggers.saveEmail
       }
 
       this.$store.dispatch(action, this.obj)
@@ -165,7 +163,7 @@ export default {
     },
 
     onDeleteClick() {
-      this.$store.dispatch(actions.notifications.delete, this.obj.name)
+      this.$store.dispatch(actions.triggers.delete, this.obj.name)
           .then(() => {
             this.showSnackBar(`Notification ${this.obj.name} has been deleted`)
             this.onBackClick()
@@ -176,7 +174,7 @@ export default {
     },
 
     onBackClick() {
-      this.$router.push('/settings/notifications')
+      this.$router.push('/settings/triggers')
     }
   }
 }

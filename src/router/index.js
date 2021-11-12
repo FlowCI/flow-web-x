@@ -36,9 +36,9 @@ import SettingsConfigEdit from '@/view/Settings/Config/Edit'
 
 import SettingsPluginHome from '@/view/Settings/Plugin/Index'
 
-import SettingsNotificationHome from '@/view/Settings/Notification/Index'
-import SettingsNotificationNew from '@/view/Settings/Notification/New'
-import SettingsNotificationEdit from '@/view/Settings/Notification/Edit'
+import SettingsTriggerHome from '@/view/Settings/Trigger/Index'
+import SettingsTriggerNew from '@/view/Settings/Trigger/New'
+import SettingsTriggerEdit from '@/view/Settings/Trigger/Edit'
 
 import SettingsSystemHome from '@/view/Settings/System/Index'
 
@@ -197,21 +197,21 @@ export default new Router({
           component: SettingsPluginHome
         },
 
-        // notification settings
+        // trigger settings
         {
-          path: 'notifications',
-          name: 'SettingsNotificationHome',
-          component: SettingsNotificationHome
+          path: 'triggers',
+          name: 'SettingsTriggerHome',
+          component: SettingsTriggerHome
         },
         {
-          path: 'notifications/new',
-          name: 'SettingsNotificationNew',
-          component: SettingsNotificationNew
+          path: 'triggers/new',
+          name: 'SettingsTriggerNew',
+          component: SettingsTriggerNew
         },
         {
-          path: 'notifications/edit',
-          name: 'SettingsNotificationEdit',
-          component: SettingsNotificationEdit,
+          path: 'triggers/edit',
+          name: 'SettingsTriggerEdit',
+          component: SettingsTriggerEdit,
           props: true
         },
 
