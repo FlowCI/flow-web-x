@@ -183,7 +183,8 @@ export default {
       name: 'Trigger name',
       action: 'Action',
       category: 'Category',
-      email_settings: 'Email Settings'
+      email_settings: 'Email Settings',
+      webhook_settings: 'Webhook Settings'
     }
   },
 

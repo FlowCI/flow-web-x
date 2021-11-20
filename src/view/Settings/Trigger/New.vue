@@ -31,6 +31,12 @@
           ></email-settings>
         </v-col>
       </v-row>
+
+      <v-row v-if="obj.category === CATEGORY_WEBHOOK">
+        <v-col>
+          <webhook-settings></webhook-settings>
+        </v-col>
+      </v-row>
     </v-form>
 
     <v-row no-gutters dense v-if="error">
@@ -56,6 +62,7 @@ import TextSelect from '@/components/Common/TextSelect'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
+import WebhookSettings from './WebhookSettings'
 import {
   ActionSelection,
   CATEGORY_EMAIL,
@@ -73,6 +80,7 @@ export default {
     SaveBtn,
     BackBtn,
     EmailSettings,
+    WebhookSettings
   },
   data() {
     return {

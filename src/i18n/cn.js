@@ -187,7 +187,8 @@ export default {
       name: '触发器名称',
       action: '触发事件',
       category: '触发种类',
-      email_settings: '邮件通知配置'
+      email_settings: '邮件通知配置',
+      webhook_settings: 'Webhook 配置'
     }
   },
 
