@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import {WebhookHelper} from '@/util/triggers'
+
 export default {
   name: "KeyValueTable",
   props: {
@@ -52,7 +54,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      WebhookHelper
+    }
   },
   methods: {
     onAddClick(item) {
@@ -75,7 +79,7 @@ export default {
       }
 
       this.toNoErrorStatus(item)
-      this.items.push({key: '', value: '', keyError: false, valueError: false, showAddBtn: true})
+      this.items.push(this.WebhookHelper.NewKvItem())
       item.showAddBtn = false
     },
 
@@ -83,7 +87,7 @@ export default {
       this.items.splice(index, 1)
 
       if (this.items.length === 0) {
-        this.items.push({key: '', value: '', keyError: false, valueError: false, showAddBtn: true})
+        this.items.push(this.WebhookHelper.NewKvItem())
         return
       }
 

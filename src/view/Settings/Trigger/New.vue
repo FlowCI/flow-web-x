@@ -34,7 +34,7 @@
 
       <v-row v-if="obj.category === CATEGORY_WEBHOOK">
         <v-col>
-          <webhook-settings></webhook-settings>
+          <webhook-settings v-model="obj"></webhook-settings>
         </v-col>
       </v-row>
     </v-form>
@@ -69,6 +69,8 @@ import {
   CATEGORY_WEBHOOK,
   CategorySelection,
   TRIGGER_ON_JOB_FINISHED,
+  NewEmptyObj,
+  WebhookHelper
 } from '@/util/triggers'
 import {mapState} from "vuex";
 
@@ -100,17 +102,7 @@ export default {
           desc: ''
         }
       ],
-      obj: {
-        name: '',
-        category: CATEGORY_EMAIL,
-        trigger: TRIGGER_ON_JOB_FINISHED,
-        // email properties
-        from: '',
-        to: '',
-        subject: '',
-        smtpConfig: '',
-        // webhook properties
-      },
+      obj: NewEmptyObj()
     }
   },
   mounted() {
@@ -145,6 +137,11 @@ export default {
       let action = ''
       if (this.obj.category === CATEGORY_EMAIL) {
         action = actions.triggers.saveEmail
+      }
+
+      if (this.obj.category === CATEGORY_WEBHOOK) {
+        action = actions.triggers.saveWebhook
+        WebhookHelper.SetParamsAndHeaderFromKvItems(this.obj)
       }
 
       this.$store.dispatch(action, this.obj).then(() => {

@@ -22,11 +22,13 @@
 
           <!-- params tab-->
           <v-tab-item>
-            <key-value-table :items="params"></key-value-table>
+            <key-value-table :items="value.paramItems"></key-value-table>
           </v-tab-item>
 
           <!-- headers tab-->
-          <v-tab-item>2</v-tab-item>
+          <v-tab-item>
+            <key-value-table :items="value.headerItems"></key-value-table>
+          </v-tab-item>
 
           <!-- body tab-->
           <v-tab-item>3</v-tab-item>
@@ -44,13 +46,16 @@ export default {
   components: {
     KeyValueTable
   },
-  data() {
-    return {
-      tab: null,
-      params: [{key: '', value: '', keyError: false, valueError: false, showAddBtn: true}]
+  props: {
+    value: {
+      type: Object,
+      required: true
     }
   },
-  methods: {
+  data() {
+    return {
+      tab: null
+    }
   }
 }
 </script>
