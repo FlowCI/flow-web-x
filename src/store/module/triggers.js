@@ -1,4 +1,5 @@
 import http from '../http'
+import {WebhookHelper} from "@/util/triggers";
 
 const state = {
   items: [],
@@ -20,6 +21,7 @@ const mutations = {
   },
 
   loaded(state, n) {
+    WebhookHelper.SetKvItemsFromParamsAndHeader(n)
     state.loaded = n
   },
 

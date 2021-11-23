@@ -145,6 +145,7 @@ export default {
       }
 
       this.$store.dispatch(action, this.obj).then(() => {
+        this.showSnackBar(`Trigger ${this.obj.name} has been created`)
         this.onBackClick()
       }).catch(e => {
         this.error = e.message

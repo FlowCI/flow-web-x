@@ -31,6 +31,12 @@
           ></email-settings>
         </v-col>
       </v-row>
+
+      <v-row v-if="obj.category === CATEGORY_WEBHOOK">
+        <v-col>
+          <webhook-settings v-model="obj"></webhook-settings>
+        </v-col>
+      </v-row>
     </v-form>
 
     <v-row no-gutters dense v-if="error">
@@ -69,11 +75,13 @@ import ConfirmBtn from '@/components/Common/ConfirmBtn'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
+import WebhookSettings from './WebhookSettings'
 import {
   CATEGORY_EMAIL,
   CATEGORY_WEBHOOK,
   CategorySelection,
   TRIGGER_ON_JOB_FINISHED,
+  WebhookHelper
 } from '@/util/triggers'
 import {mapState} from "vuex";
 
@@ -85,6 +93,7 @@ export default {
     SaveBtn,
     BackBtn,
     EmailSettings,
+    WebhookSettings
   },
   props: {
     name: {
@@ -152,9 +161,14 @@ export default {
         action = actions.triggers.saveEmail
       }
 
+      if (this.obj.category === CATEGORY_WEBHOOK) {
+        action = actions.triggers.saveWebhook
+        WebhookHelper.SetParamsAndHeaderFromKvItems(this.obj)
+      }
+
       this.$store.dispatch(action, this.obj)
           .then(() => {
-            this.showSnackBar(`Notification ${this.obj.name} has been saved`)
+            this.showSnackBar(`Trigger ${this.obj.name} has been saved`)
             this.onBackClick()
           })
           .catch(e => {
