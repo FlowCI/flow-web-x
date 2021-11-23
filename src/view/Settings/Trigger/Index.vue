@@ -29,7 +29,7 @@
     <template slot="no-data">
       <v-alert :value="true">
         <v-icon small>mdi-alert-outline</v-icon>
-        <span class="caption ml-1">Click '+' to create a notification</span>
+        <span class="caption ml-1">Click '+' to create a trigger</span>
       </v-alert>
     </template>
   </v-data-table>

@@ -56,7 +56,7 @@
                      @click="onDeleteClick">
           <template v-slot:title>
             <span class="red--text subheading">
-              Delete the notification {{ obj.name }}?
+              Delete the trigger {{ obj.name }}?
             </span>
           </template>
         </confirm-btn>
@@ -86,7 +86,7 @@ import {
 import {mapState} from "vuex";
 
 export default {
-  name: "SettingsNotificationEdit",
+  name: "SettingsTriggerEdit",
   components: {
     ConfirmBtn,
     TextBox,
@@ -179,7 +179,7 @@ export default {
     onDeleteClick() {
       this.$store.dispatch(actions.triggers.delete, this.obj.name)
           .then(() => {
-            this.showSnackBar(`Notification ${this.obj.name} has been deleted`)
+            this.showSnackBar(`Trigger ${this.obj.name} has been deleted`)
             this.onBackClick()
           })
           .catch((err) => {
