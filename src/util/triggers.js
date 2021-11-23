@@ -85,7 +85,7 @@ export function NewEmptyObj() {
     smtpConfig: '',
     // webhook properties
     url: '',
-    httpMethod: '',
+    httpMethod: 'GET',
     params: {},
     headers: {},
     body: ''
