@@ -5,6 +5,7 @@
 <script>
 import CodeMirror from 'codemirror'
 import 'codemirror/mode/yaml/yaml'
+import "codemirror/mode/javascript/javascript"
 
 export default {
   name: 'DataEditor',

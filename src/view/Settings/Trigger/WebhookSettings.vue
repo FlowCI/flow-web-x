@@ -31,7 +31,9 @@
           </v-tab-item>
 
           <!-- body tab-->
-          <v-tab-item>3</v-tab-item>
+          <v-tab-item>
+            <data-editor mode="json" v-model="value.body"></data-editor>
+          </v-tab-item>
         </v-tabs-items>
       </v-col>
     </v-row>
@@ -40,10 +42,12 @@
 
 <script>
 import KeyValueTable from "@/view/Settings/Trigger/KeyValueTable";
+import DataEditor from "@/components/Settings/DataEditor";
 
 export default {
   name: "WebhookSettings",
   components: {
+    DataEditor,
     KeyValueTable
   },
   props: {
