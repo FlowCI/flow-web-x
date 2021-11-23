@@ -39,7 +39,7 @@
         </v-col>
 
         <v-col cols="9" v-if="isKubeconfig">
-          <kube-config-editor :model="instance"></kube-config-editor>
+          <data-editor v-model="instance.content.data" mode="yaml"></data-editor>
         </v-col>
       </v-row>
     </v-form>
@@ -64,7 +64,7 @@ import SshRsaEditor from '@/components/Common/SshRsaEditor'
 import AuthEditor from '@/components/Common/AuthEditor'
 import TokenEditor from '@/components/Common/TokenEditor'
 import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
-import KubeConfigEditor from '@/components/Settings/KubeConfigEditor'
+import DataEditor from '@/components/Settings/DataEditor'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import TextBox from '@/components/Common/TextBox'
@@ -91,7 +91,7 @@ export default {
     SaveBtn,
     BackBtn,
     AndroidSignEditor,
-    KubeConfigEditor
+    DataEditor
   },
   data() {
     return {

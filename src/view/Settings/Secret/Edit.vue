@@ -5,8 +5,8 @@
         <text-box label="Name" readonly v-model="name"></text-box>
         <text-box label="Category"
                   readonly
-                  :prepend-inner-icon="Categories[secretObj.category].icon"
-                  v-model="Categories[secretObj.category].name"
+                  :prepend-inner-icon="category.icon"
+                  v-model="category.name"
         ></text-box>
       </v-col>
     </v-row>
@@ -38,8 +38,11 @@
         <android-sign-editor :is-read-only="true" :model="instance"></android-sign-editor>
       </v-col>
 
-      <v-col cols="9" v-if="isKubeconfig">
-        <kube-config-editor :is-read-only="true" :model="instance"></kube-config-editor>
+      <v-col cols="9" v-if="isKubeConfig">
+        <data-editor :is-read-only="true"
+                     mode="yaml"
+                     v-model="instance.content.data"
+        ></data-editor>
       </v-col>
     </v-row>
 
@@ -84,18 +87,18 @@ import AuthEditor from '@/components/Common/AuthEditor'
 import TokenEditor from '@/components/Common/TokenEditor'
 import TextBox from '@/components/Common/TextBox'
 import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
-import KubeConfigEditor from '@/components/Settings/KubeConfigEditor'
+import DataEditor from '@/components/Settings/DataEditor'
 import BackBtn from '@/components/Settings/BackBtn'
 import ConfirmBtn from '@/components/Common/ConfirmBtn'
 import {
   Categories,
-  CATEGORY_AUTH,
-  CATEGORY_SSH_RSA,
-  CATEGORY_TOKEN,
   CATEGORY_ANDROID_SIGN,
-  CATEGORY_KUBE_CONFIG
+  CATEGORY_AUTH,
+  CATEGORY_KUBE_CONFIG,
+  CATEGORY_SSH_RSA,
+  CATEGORY_TOKEN
 } from '@/util/secrets'
-import { mapState } from 'vuex'
+import {mapState} from 'vuex'
 
 export default {
   name: 'SettingsSecretEdit',
@@ -106,20 +109,13 @@ export default {
     AuthEditor,
     TokenEditor,
     AndroidSignEditor,
-    KubeConfigEditor,
+    DataEditor,
     BackBtn
   },
   props: {
-    secretObj: {
-      type: Object,
-      required: false,
-      default() {
-        return {
-          name: '',
-          privateKey: '',
-          publicKey: '',
-        }
-      }
+    name: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -133,11 +129,15 @@ export default {
       navs: this.navs,
       showAddBtn: false
     })
-    this.$store.dispatch(actions.flows.listByCredential, this.name).then()
+
+    this.$store.dispatch(actions.secrets.get, this.name).then(() => {
+      this.$store.dispatch(actions.flows.listByCredential, this.name).then()
+    })
   },
   computed: {
     ...mapState({
-      connectedFlows: state => state.flows.itemsByCredential
+      connectedFlows: state => state.flows.itemsByCredential,
+      secretObj: state => state.secrets.loaded
     }),
 
     navs() {
@@ -147,8 +147,8 @@ export default {
       ]
     },
 
-    name() {
-      return this.secretObj.name
+    category() {
+      return Categories[this.secretObj.category] || {icon: '', name: ''}
     },
 
     isSshRsa() {
@@ -167,7 +167,7 @@ export default {
       return this.secretObj.category === CATEGORY_ANDROID_SIGN
     },
 
-    isKubeconfig() {
+    isKubeConfig() {
       return this.secretObj.category === CATEGORY_KUBE_CONFIG
     },
 
@@ -187,7 +187,7 @@ export default {
         }
       }
 
-      if (this.isToken || this.isAndroidSign || this.isKubeconfig) {
+      if (this.isToken || this.isAndroidSign || this.isKubeConfig) {
         return this.secretObj
       }
 
