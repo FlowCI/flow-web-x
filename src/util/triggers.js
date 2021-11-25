@@ -1,10 +1,10 @@
 export const CATEGORY_EMAIL = 'Email'
 export const CATEGORY_WEBHOOK = 'WebHook'
 
-export const TRIGGER_ON_JOB_FINISHED = "OnJobFinished"
-export const TRIGGER_ON_AGENT_STATUS_CHANGE = "OnAgentStatusChange"
-export const TRIGGER_ON_USER_CREATED = "OnUserCreated"
-export const TRIGGER_ON_USER_ADDED_TO_FLOW = "OnUserAddedToFlow"
+export const EVENT_ON_JOB_FINISHED = "OnJobFinished"
+export const EVENT_ON_AGENT_STATUS_CHANGE = "OnAgentStatusChange"
+export const EVENT_ON_USER_CREATED = "OnUserCreated"
+export const EVENT_ON_USER_ADDED_TO_FLOW = "OnUserAddedToFlow"
 
 export const TO_ALL_FLOW_USERS = "FLOW_USERS"
 
@@ -24,8 +24,8 @@ export const Categories = {
   }
 }
 
-export const ActionSelection = [
-  {name: 'On Job Finished', value: TRIGGER_ON_JOB_FINISHED, icon: ''}
+export const EventSelection = [
+  {name: 'On Job Finished', value: EVENT_ON_JOB_FINISHED, icon: ''}
 ]
 
 export const WebhookHelper = {
@@ -77,7 +77,7 @@ export function NewEmptyObj() {
   const obj = {
     name: '',
     category: CATEGORY_EMAIL,
-    trigger: TRIGGER_ON_JOB_FINISHED,
+    event: EVENT_ON_JOB_FINISHED,
     // email properties
     from: '',
     to: '',

@@ -160,14 +160,13 @@ export default {
   settings: {
     li: {
       profile: 'Profile',
-      users: 'User',
-      security: 'Security',
-      agent: 'Agent',
-      secret: 'Secret',
-      config: 'Config',
-      plugin: 'Plugin',
+      users: 'Users',
+      agent: 'Agents',
+      secret: 'Secrets',
+      config: 'Configs',
+      plugin: 'Plugins',
       system: 'System',
-      trigger: 'Trigger'
+      trigger: 'Triggers'
     },
 
     profile: {
@@ -181,7 +180,7 @@ export default {
 
     trigger: {
       name: 'Trigger name',
-      action: 'Action',
+      event: 'Event',
       category: 'Category',
       email_settings: 'Email Settings',
       webhook_settings: 'Webhook Settings'

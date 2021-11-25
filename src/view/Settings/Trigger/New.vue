@@ -7,9 +7,9 @@
                     :rules="rules.required('Name is required')"
                     v-model="obj.name"
           ></text-box>
-          <text-select :items="actions"
-                       :label="$t('settings.trigger.action')"
-                       v-model="obj.action"
+          <text-select :items="events"
+                       :label="$t('settings.trigger.event')"
+                       v-model="obj.event"
           ></text-select>
           <text-select :items="categories"
                        :label="$t('settings.trigger.category')"
@@ -27,7 +27,7 @@
           <email-settings
               v-model="obj"
               :smtp-list="smtpList"
-              :show-to-flow-users="obj.action === TRIGGER_ON_JOB_FINISHED"
+              :show-to-flow-users="obj.event === EVENT_ON_JOB_FINISHED"
           ></email-settings>
         </v-col>
       </v-row>
@@ -64,13 +64,12 @@ import BackBtn from '@/components/Settings/BackBtn'
 import EmailSettings from './EmailSettings'
 import WebhookSettings from './WebhookSettings'
 import {
-  ActionSelection,
   CATEGORY_EMAIL,
   CATEGORY_WEBHOOK,
   CategorySelection,
-  TRIGGER_ON_JOB_FINISHED,
+  EVENT_ON_JOB_FINISHED,
   NewEmptyObj,
-  WebhookHelper
+  WebhookHelper, EventSelection
 } from '@/util/triggers'
 import {mapState} from "vuex";
 
@@ -90,11 +89,11 @@ export default {
       rules: {
         required
       },
-      actions: ActionSelection,
+      events: EventSelection,
       categories: CategorySelection,
       CATEGORY_EMAIL,
       CATEGORY_WEBHOOK,
-      TRIGGER_ON_JOB_FINISHED,
+      EVENT_ON_JOB_FINISHED,
       types: [
         {
           text: 'On Job Finished',

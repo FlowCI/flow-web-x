@@ -8,8 +8,8 @@
                     v-model="obj.name"
           ></text-box>
           <text-box readonly
-                    :label="$t('settings.trigger.action')"
-                    v-model="obj.action"
+                    :label="$t('settings.trigger.event')"
+                    v-model="obj.event"
           ></text-box>
           <text-box readonly
                     :label="$t('settings.trigger.category')"
@@ -27,7 +27,7 @@
           <email-settings
               v-model="obj"
               :smtp-list="smtpList"
-              :show-to-flow-users="obj.action === TRIGGER_ON_JOB_FINISHED"
+              :show-to-flow-users="obj.action === EVENT_ON_JOB_FINISHED"
           ></email-settings>
         </v-col>
       </v-row>
@@ -80,7 +80,7 @@ import {
   CATEGORY_EMAIL,
   CATEGORY_WEBHOOK,
   CategorySelection,
-  TRIGGER_ON_JOB_FINISHED,
+  EVENT_ON_JOB_FINISHED,
   WebhookHelper
 } from '@/util/triggers'
 import {mapState} from "vuex";
@@ -110,7 +110,7 @@ export default {
       categories: CategorySelection,
       CATEGORY_EMAIL,
       CATEGORY_WEBHOOK,
-      TRIGGER_ON_JOB_FINISHED,
+      EVENT_ON_JOB_FINISHED,
       types: [
         {
           text: 'On Job Finished',

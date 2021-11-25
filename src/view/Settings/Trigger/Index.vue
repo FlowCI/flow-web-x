@@ -9,7 +9,7 @@
       <tr>
         <td>{{ item.name }}</td>
         <td>
-          {{ item.action }}
+          {{ item.event }}
         </td>
         <td>
           <v-icon small class="mr-2">{{ getCategory(item).icon }}</v-icon>
@@ -58,7 +58,7 @@ export default {
       timeFormatInMins,
       headers: [
         {text: this.$t('settings.trigger.name'), value: 'name', align: 'left'},
-        {text: this.$t('settings.trigger.action'), value: 'action'},
+        {text: this.$t('settings.trigger.event'), value: 'event'},
         {text: this.$t('settings.trigger.category'), value: 'category'},
         {text: 'Created At', value: 'createdAt'},
         {text: 'Created By', value: 'createdBy'},
