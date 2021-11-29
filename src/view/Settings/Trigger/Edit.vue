@@ -1,69 +1,84 @@
 <template>
   <div>
-    <v-form ref="nameForm" lazy-validation>
-      <v-row>
-        <v-col cols="9">
-          <text-box :label="$t('settings.trigger.name')"
-                    :readonly="true"
-                    v-model="obj.name"
-          ></text-box>
-          <text-box readonly
-                    :label="$t('settings.trigger.event')"
-                    v-model="obj.event"
-          ></text-box>
-          <text-box readonly
-                    :label="$t('settings.trigger.category')"
-                    v-model="obj.category"
-          ></text-box>
-        </v-col>
-      </v-row>
-    </v-form>
+    <v-tabs v-model="tab">
+      <v-tab>Settings</v-tab>
+      <v-tab>Deliveries</v-tab>
+    </v-tabs>
 
     <v-divider></v-divider>
 
-    <v-form ref="contentForm" lazy-validation>
-      <v-row v-if="obj.category === CATEGORY_EMAIL">
-        <v-col>
-          <email-settings
-              v-model="obj"
-              :smtp-list="smtpList"
-              :show-to-flow-users="obj.action === EVENT_ON_JOB_FINISHED"
-          ></email-settings>
-        </v-col>
-      </v-row>
+    <v-tabs-items v-model="tab">
+      <!-- settings tab-->
+      <v-tab-item>
+        <v-row>
+          <v-col cols="9">
+            <text-box :label="$t('settings.trigger.name')"
+                      :readonly="true"
+                      v-model="obj.name"
+            ></text-box>
+            <text-box readonly
+                      :label="$t('settings.trigger.event')"
+                      v-model="obj.event"
+            ></text-box>
+            <text-box readonly
+                      :label="$t('settings.trigger.category')"
+                      v-model="obj.category"
+            ></text-box>
+          </v-col>
+        </v-row>
 
-      <v-row v-if="obj.category === CATEGORY_WEBHOOK">
-        <v-col>
-          <webhook-settings v-model="obj"></webhook-settings>
-        </v-col>
-      </v-row>
-    </v-form>
+        <v-divider></v-divider>
 
-    <v-row no-gutters dense v-if="error">
-      <v-col cols="9">
-        <span class="error--text">Error: {{ error }}</span>
-      </v-col>
-    </v-row>
+        <v-form ref="contentForm" lazy-validation>
+          <v-row v-if="obj.category === CATEGORY_EMAIL">
+            <v-col>
+              <email-settings
+                  v-model="obj"
+                  :smtp-list="smtpList"
+                  :show-to-flow-users="obj.action === EVENT_ON_JOB_FINISHED"
+              ></email-settings>
+            </v-col>
+          </v-row>
 
-    <v-row>
-      <v-col cols="9" class="text-end">
-        <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+          <v-row v-if="obj.category === CATEGORY_WEBHOOK">
+            <v-col>
+              <webhook-settings v-model="obj"></webhook-settings>
+            </v-col>
+          </v-row>
+        </v-form>
 
-        <confirm-btn :text="$t('delete')"
-                     icon="mdi-delete"
-                     color="error"
-                     clazz="mr-5"
-                     @click="onDeleteClick">
-          <template v-slot:title>
+        <v-row no-gutters dense v-if="error">
+          <v-col cols="9">
+            <span class="error--text">Error: {{ error }}</span>
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col cols="9" class="text-end">
+            <back-btn :on-click="onBackClick" class="mr-5"></back-btn>
+
+            <confirm-btn :text="$t('delete')"
+                         icon="mdi-delete"
+                         color="error"
+                         clazz="mr-5"
+                         @click="onDeleteClick">
+              <template v-slot:title>
             <span class="red--text subheading">
               Delete the trigger {{ obj.name }}?
             </span>
-          </template>
-        </confirm-btn>
+              </template>
+            </confirm-btn>
 
-        <save-btn :on-click="onSaveClick"></save-btn>
-      </v-col>
-    </v-row>
+            <save-btn :on-click="onSaveClick"></save-btn>
+          </v-col>
+        </v-row>
+      </v-tab-item>
+
+      <!-- deliveries tab -->
+      <v-tab-item>
+        aa
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
@@ -103,6 +118,7 @@ export default {
   },
   data() {
     return {
+      tab: null,
       error: '',
       rules: {
         required
@@ -148,10 +164,6 @@ export default {
   },
   methods: {
     onSaveClick() {
-      if (!this.$refs.nameForm.validate()) {
-        return
-      }
-
       if (!this.$refs.contentForm.validate()) {
         return
       }

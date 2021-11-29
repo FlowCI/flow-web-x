@@ -1,14 +1,10 @@
 <template>
   <v-list class="pa-0 func-list full-size">
-    <v-subheader class="grey lighten-2">
-      <span class="font-weight-bold">{{ $t('menu.settings') }}</span>
-    </v-subheader>
-
     <v-list-item-group v-model="selected" color="primary" active-class="on-active">
-      <v-list-item v-for="item in items"
+      <v-list-item v-for="(item, index) in items"
                    :key="item.path"
                    dense
-                   class="bottom-border left-border"
+                   :class="[ index === 0 ? 'top-border bottom-border' : 'bottom-border', 'left-border']"
                    @click="onMenuItemClick(item.path)">
 
         <v-list-item-icon>
