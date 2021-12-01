@@ -3,7 +3,15 @@ import {WebhookHelper} from "@/util/triggers";
 
 const state = {
   items: [],
-  loaded: {}
+  loaded: {},
+  delivery: {
+    items: [],
+    pagination: {
+      page: 0,
+      size: 10,
+      total: 0
+    }
+  }
 }
 
 const mutations = {
@@ -27,6 +35,15 @@ const mutations = {
 
   list(state, notifications) {
     state.items = notifications
+  },
+
+  updateDeliveries(state, page) {
+    console.log(page)
+
+    state.delivery.items = page.content
+    state.delivery.pagination.page = page.number
+    state.delivery.pagination.size = page.size
+    state.delivery.pagination.total = page.totalElements
   }
 }
 
@@ -59,6 +76,18 @@ const actions = {
     await http.delete(`triggers/${name}`, (c) => {
       commit('remove', c)
     })
+  },
+
+  async deliveries({commit, state}, {name, page, size}) {
+    await http.get(`triggers/${name}/deliveries`,
+      (items) => {
+        commit('updateDeliveries', items)
+      },
+      {
+        page: page - 1,
+        size
+      }
+    )
   }
 }
 

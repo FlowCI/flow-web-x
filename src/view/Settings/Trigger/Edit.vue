@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-tabs v-model="tab">
-      <v-tab>Settings</v-tab>
-      <v-tab>Deliveries</v-tab>
+      <v-tab class="caption">Settings</v-tab>
+      <v-tab class="caption">Recent Deliveries</v-tab>
     </v-tabs>
 
     <v-divider></v-divider>
@@ -76,7 +76,7 @@
 
       <!-- deliveries tab -->
       <v-tab-item>
-        aa
+          <delivery-table :name="name"></delivery-table>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -99,10 +99,12 @@ import {
   WebhookHelper
 } from '@/util/triggers'
 import {mapState} from "vuex";
+import DeliveryTable from "@/view/Settings/Trigger/DeliveryTable";
 
 export default {
   name: "SettingsTriggerEdit",
   components: {
+    DeliveryTable,
     ConfirmBtn,
     TextBox,
     SaveBtn,

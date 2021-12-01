@@ -63,8 +63,6 @@ export default {
     steps: {
       get: 'steps/get',
       update: 'steps/update',
-      getTasks: 'steps/getTasks',
-      updateTasks: 'steps/updateTasks',
     },
     logs: {
       push: 'logs/push',
@@ -110,7 +108,8 @@ export default {
     saveWebhook: 'triggers/saveWebhook',
     list: 'triggers/list',
     get: 'triggers/get',
-    delete: 'triggers/delete'
+    delete: 'triggers/delete',
+    deliveries: 'triggers/deliveries'
   },
 
   users: {

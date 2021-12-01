@@ -122,15 +122,6 @@ export const subscribeTopic = {
     })
   },
 
-  // subscribe tasks changes
-  tasks(jobId, store) {
-    subscribe(`/topic/tasks/${jobId}`, (data) => {
-      let message = JSON.parse(data.body)
-      let tasks = message.body
-      store.dispatch(actions.jobs.steps.updateTasks, tasks)
-    })
-  },
-
   // subscribe realtime logging without vuex store since performance
   logs(jobId, store) {
     subscribe(`/topic/logs/${jobId}`, (data) => {
@@ -192,10 +183,6 @@ export const unsubscribeTopic = {
 
   steps(jobId) {
     unsubscribe(`/topic/steps/${jobId}`)
-  },
-
-  tasks(jobId) {
-    unsubscribe(`/topic/tasks/${jobId}`)
   },
 
   logs(jobId) {
