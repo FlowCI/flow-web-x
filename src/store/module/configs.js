@@ -29,8 +29,14 @@ const mutations = {
 }
 
 const actions = {
-  list({commit}) {
-    http.get('configs', (list) => {
+  async list({commit}) {
+    await http.get('configs', (list) => {
+      commit('list', list)
+    })
+  },
+
+  async listSmtp({commit}) {
+    await http.get('configs?category=SMTP', (list) => {
       commit('list', list)
     })
   },

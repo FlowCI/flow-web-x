@@ -1,6 +1,5 @@
 import http from '../http'
 import {browserDownload} from '../util'
-import vars from '../../util/vars'
 
 const emptyFunc = () => {
 }

@@ -63,8 +63,6 @@ export default {
     steps: {
       get: 'steps/get',
       update: 'steps/update',
-      getTasks: 'steps/getTasks',
-      updateTasks: 'steps/updateTasks',
     },
     logs: {
       push: 'logs/push',
@@ -100,8 +98,18 @@ export default {
     saveSmtp: 'configs/saveSmtp',
     saveText: 'configs/saveText',
     list: 'configs/list',
+    listSmtp: 'configs/listSmtp',
     get: 'configs/get',
     delete: 'configs/delete'
+  },
+
+  triggers: {
+    saveEmail: 'triggers/saveEmail',
+    saveWebhook: 'triggers/saveWebhook',
+    list: 'triggers/list',
+    get: 'triggers/get',
+    delete: 'triggers/delete',
+    deliveries: 'triggers/deliveries'
   },
 
   users: {

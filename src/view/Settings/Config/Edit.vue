@@ -58,7 +58,7 @@
 
 <script>
   import actions from '@/store/actions'
-  import ConfigSmtp from './Smtp'
+  import ConfigSmtp from './SmtpSettings'
   import ConfigFreeText from './FreeText'
   import ConfirmBtn from '@/components/Common/ConfirmBtn'
   import TextBox from '@/components/Common/TextBox'
@@ -126,6 +126,7 @@
       onDeleteClick() {
         this.$store.dispatch(actions.configs.delete, this.configObj.name)
           .then(() => {
+            this.showSnackBar(`Config ${this.configObj.name} has been deleted`)
             this.onBackClick()
           })
           .catch((err) => {
@@ -137,6 +138,7 @@
         let params = {name: this.configObj.name, payload: this.configObj}
         this.$store.dispatch(this.actionMap[this.configObj.category], params)
           .then(() => {
+            this.showSnackBar(`Config ${this.configObj.name} has been saved`)
             this.onBackClick()
           })
           .catch(e => {

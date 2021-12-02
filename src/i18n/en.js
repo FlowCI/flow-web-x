@@ -160,13 +160,13 @@ export default {
   settings: {
     li: {
       profile: 'Profile',
-      users: 'User',
-      security: 'Security',
-      agent: 'Agent',
-      secret: 'Secret',
-      config: 'Config',
-      plugin: 'Plugin',
-      system: 'System'
+      users: 'Users',
+      agent: 'Agents',
+      secret: 'Secrets',
+      config: 'Configs',
+      plugin: 'Plugins',
+      system: 'System',
+      trigger: 'Triggers'
     },
 
     profile: {
@@ -176,6 +176,14 @@ export default {
 
     hint: {
       agent_disabled: 'Hint: The host is disabled'
+    },
+
+    trigger: {
+      name: 'Trigger name',
+      event: 'Event',
+      category: 'Category',
+      email_settings: 'Email Settings',
+      webhook_settings: 'Webhook Settings'
     }
   },
 

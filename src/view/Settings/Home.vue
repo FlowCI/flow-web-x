@@ -7,7 +7,7 @@
 
       <v-col class="ml-2 pa-0" cols="9">
         <v-card class="full-size">
-          <v-card-title class="pa-0 bottom-border">
+          <v-card-title class="pa-0 bottom-border-large">
             <v-breadcrumbs :items="navs" divider=">">
               <template v-slot:item="{item}">
                 <v-breadcrumbs-item

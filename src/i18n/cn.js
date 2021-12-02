@@ -164,7 +164,14 @@ export default {
       secret: '秘钥管理',
       config: '配置管理',
       plugin: '插件',
-      system: '系统设置'
+      system: '系统设置',
+      trigger: '触发器'
+    },
+
+    common: {
+      name_required: '请输入名称',
+      name_size: '名称长度应当在 2 - 20 字符',
+      name_rule: '名称只允许 a-z, A-Z, 0-9, _, -',
     },
 
     profile: {
@@ -174,6 +181,14 @@ export default {
 
     hint: {
       agent_disabled: '提示: 主机已禁用'
+    },
+
+    trigger: {
+      name: '触发器名称',
+      event: '触发事件',
+      category: '触发种类',
+      email_settings: '邮件通知配置',
+      webhook_settings: 'Webhook 配置'
     }
   },
 
