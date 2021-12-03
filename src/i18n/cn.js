@@ -28,7 +28,7 @@ export default {
   edit: '编辑',
 
   createAdmin: {
-    created: '默认的管理员已经创建成功, 请用 {0} 登录'
+    created: '默认的管理员已经创建成功, 请用 <span class="font-weight-bold">{0}</span> 登录'
   },
 
   menu: {

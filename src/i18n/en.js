@@ -28,7 +28,7 @@ export default {
   edit: 'Edit',
 
   createAdmin: {
-    created: 'The default admin user is created, please login with email {0}'
+    created: 'The default admin user is created, please login with email: <span class="font-weight-bold">{0}</span>'
   },
 
   menu: {
