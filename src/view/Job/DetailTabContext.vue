@@ -131,6 +131,7 @@ export default {
     },
 
     getTagData() {
+      let tag = this.wrapper.pushOrTag
       return [
         {
           key: 'Repo',
@@ -142,16 +143,11 @@ export default {
         },
         {
           key: 'Tag',
-          value: this.wrapper.branch
+          value: tag.branch
         },
         {
-          key: 'Commit ID',
-          value: this.wrapper.commitId,
-          link: this.wrapper.commitUrl
-        },
-        {
-          key: 'Commit Message',
-          value: this.wrapper.commitMsg
+          key: 'Commits',
+          value: tag.commit_list,
         }
       ]
     },
