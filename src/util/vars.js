@@ -26,23 +26,22 @@ export default {
 
   git: {
     url: 'FLOWCI_GIT_URL',
-    branch: 'FLOWCI_GIT_BRANCH',
     credential: 'FLOWCI_GIT_CREDENTIAL',
 
     source: 'FLOWCI_GIT_SOURCE',
     event: 'FLOWCI_GIT_EVENT',
-    author: 'FLOWCI_GIT_AUTHOR',
     compare_url: 'FLOWCI_GIT_COMPARE_URL',
 
-    commit: {
-      id: 'FLOWCI_GIT_COMMIT_ID',
+    push: {
+      author: 'FLOWCI_GIT_AUTHOR',
       message: 'FLOWCI_GIT_COMMIT_MESSAGE',
-      time: 'FLOWCI_GIT_COMMIT_TIME',
-      url: 'FLOWCI_GIT_COMMIT_URL',
-      number: 'FLOWCI_GIT_COMMIT_NUM'
+      branch: 'FLOWCI_GIT_BRANCH',
+      commit_total: 'FLOWCI_GIT_COMMIT_TOTAL',
+      commit_list: 'FLOWCI_GIT_COMMIT_LIST'
     },
 
     pr: {
+      author: 'FLOWCI_GIT_AUTHOR',
       title: 'FLOWCI_GIT_PR_TITLE',
       message: 'FLOWCI_GIT_PR_MESSAGE',
       url: 'FLOWCI_GIT_PR_URL',

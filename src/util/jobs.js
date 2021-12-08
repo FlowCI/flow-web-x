@@ -48,28 +48,8 @@ export class JobWrapper {
     return this.context[vars.git.credential] || '-'
   }
 
-  get commitId() {
-    return this.context[vars.git.commit.id]
-  }
-
-  get commitMsg() {
-    return this.context[vars.git.commit.message]
-  }
-
-  get commitUrl() {
-    return this.context[vars.git.commit.url]
-  }
-
-  get commitNum() {
-    return this.context[vars.git.commit.number]
-  }
-
   get fromNow() {
     return timeFormatFromNow(this.job.createdAt)
-  }
-
-  get branch() {
-    return this.context[vars.git.branch]
   }
 
   get buildNumber() {
@@ -172,6 +152,27 @@ export class JobWrapper {
     return this.job.yamlRepoBranch
   }
 
+  get pushOrTag() {
+    let commitListB64 = this.context[vars.git.push.commit_list]
+    let commitList = []
+    if (commitListB64) {
+      try {
+        commitList = JSON.parse(atob(commitListB64))
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    return {
+      branch: this.context[vars.git.push.branch],
+      message: this.context[vars.git.push.message],
+      author: this.context[vars.git.push.author],
+      commit_total: this.context[vars.git.push.commit_total],
+      commit_list: commitList,
+      head_commit: commitList.length === 0 ? {id: '', message: ''} : commitList[0]
+    }
+  }
+
   get prTitle() {
     return this.context[vars.git.pr.title]
   }
@@ -205,8 +206,7 @@ export class JobWrapper {
   }
 
   get hasGitCommitInfo() {
-    return this.context[vars.git.commit.id]
-      && this.context[vars.git.commit.message]
+    return this.context[vars.git.push.message]
   }
 
   get isPushTrigger() {
