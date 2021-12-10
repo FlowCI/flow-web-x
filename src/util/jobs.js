@@ -26,6 +26,23 @@ export const TRIGGER_SCHEDULER = 'SCHEDULER'
 export class JobWrapper {
   constructor(job) {
     this.job = job
+
+    this.builtInVarList = []
+    this.customVarList = []
+
+    Object.keys(this.context).forEach(key => {
+      let value = this.context[key]
+      if (value === '') {
+        return
+      }
+
+      if (key.startsWith('FLOWCI_')) {
+        this.builtInVarList.push({key: key, value: value})
+        return
+      }
+
+      this.customVarList.push({key: key, value: value})
+    })
   }
 
   get context() {
@@ -86,16 +103,11 @@ export class JobWrapper {
     return status
   }
 
-  get customVarList() {
-    const contextAsPairList = []
-
-    Object.keys(this.context).forEach(key => {
-      if (!key.startsWith('FLOWCI_')) {
-        contextAsPairList.push({key: key, value: this.context[key]})
-      }
-    })
-
-    return contextAsPairList
+  get vars() {
+    return {
+      builtIn: this.builtInVarList,
+      custom: this.customVarList
+    }
   }
 
   get duration() {

@@ -6,6 +6,7 @@
         :items="value.data"
         class="mb-2 bottom-border"
         v-show="value.show"
+        disable-pagination
         hide-default-footer
         hide-default-header>
 
@@ -20,7 +21,9 @@
               <v-col cols="2" class="caption">
                 <span>{{ item.key }}</span>
               </v-col>
-              <v-col class="caption">
+              <v-col class="caption d-flex">
+                <div class="vertical-bar mr-4" v-if="value.showBar"></div>
+
                 <div v-if="item.value instanceof Array">
                     <div v-for="(itemOfArray, index) of item.value" :key="index">
                       <span>-</span>
@@ -31,7 +34,7 @@
 
                 <div v-else>
                   <a v-if="item.link" :href="item.link" target="_blank">{{ item.value }}</a>
-                  <span v-if="!item.link">{{ item.value }}</span>
+                  <span  class="d-inline-block text-truncate" style="max-width: 800px;" v-if="!item.link">{{ item.value }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -85,7 +88,15 @@ export default {
         variables: {
           name: 'Variables',
           show: true,
-          data: this.wrapper.customVarList
+          data: this.wrapper.vars.custom,
+          showBar: true
+        },
+
+        builtInVars: {
+          name: 'Built In Variables',
+          show: true,
+          data: this.wrapper.vars.builtIn,
+          showBar: true
         }
       }
     }
@@ -205,5 +216,11 @@ export default {
   line-height: 30px;
   vertical-align: middle;
   background-color: #E0E0E0;
+}
+
+.vertical-bar {
+  display: flex;
+  height: 20px;
+  border-left: 1px solid #c6c6cb;
 }
 </style>

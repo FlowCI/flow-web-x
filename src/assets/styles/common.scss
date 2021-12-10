@@ -55,6 +55,14 @@
   height: auto !important;
 }
 
+.if-overflow {
+  float: left;
+  width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @-moz-keyframes loader {
   from {
     transform: rotate(0);
