@@ -32,6 +32,10 @@ export class JobWrapper {
 
     Object.keys(this.context).forEach(key => {
       let value = this.context[key]
+      if (key === '_TYPE_') {
+        return
+      }
+
       if (value === '') {
         return
       }
