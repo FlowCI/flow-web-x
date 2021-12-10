@@ -26,6 +26,27 @@ export const TRIGGER_SCHEDULER = 'SCHEDULER'
 export class JobWrapper {
   constructor(job) {
     this.job = job
+
+    this.builtInVarList = []
+    this.customVarList = []
+
+    Object.keys(this.context).forEach(key => {
+      let value = this.context[key]
+      if (key === '_TYPE_') {
+        return
+      }
+
+      if (value === '') {
+        return
+      }
+
+      if (key.startsWith('FLOWCI_')) {
+        this.builtInVarList.push({key: key, value: value})
+        return
+      }
+
+      this.customVarList.push({key: key, value: value})
+    })
   }
 
   get context() {
@@ -48,28 +69,8 @@ export class JobWrapper {
     return this.context[vars.git.credential] || '-'
   }
 
-  get commitId() {
-    return this.context[vars.git.commit.id]
-  }
-
-  get commitMsg() {
-    return this.context[vars.git.commit.message]
-  }
-
-  get commitUrl() {
-    return this.context[vars.git.commit.url]
-  }
-
-  get commitNum() {
-    return this.context[vars.git.commit.number]
-  }
-
   get fromNow() {
     return timeFormatFromNow(this.job.createdAt)
-  }
-
-  get branch() {
-    return this.context[vars.git.branch]
   }
 
   get buildNumber() {
@@ -106,16 +107,11 @@ export class JobWrapper {
     return status
   }
 
-  get customVarList() {
-    const contextAsPairList = []
-
-    Object.keys(this.context).forEach(key => {
-      if (!key.startsWith('FLOWCI_')) {
-        contextAsPairList.push({key: key, value: this.context[key]})
-      }
-    })
-
-    return contextAsPairList
+  get vars() {
+    return {
+      builtIn: this.builtInVarList,
+      custom: this.customVarList
+    }
   }
 
   get duration() {
@@ -172,6 +168,27 @@ export class JobWrapper {
     return this.job.yamlRepoBranch
   }
 
+  get pushOrTag() {
+    let commitListB64 = this.context[vars.git.push.commit_list]
+    let commitList = []
+    if (commitListB64) {
+      try {
+        commitList = JSON.parse(atob(commitListB64))
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    return {
+      branch: this.context[vars.git.push.branch],
+      message: this.context[vars.git.push.message],
+      author: this.context[vars.git.push.author],
+      commit_total: this.context[vars.git.push.commit_total],
+      commit_list: commitList,
+      head_commit: commitList.length === 0 ? {id: '', message: ''} : commitList[0]
+    }
+  }
+
   get prTitle() {
     return this.context[vars.git.pr.title]
   }
@@ -205,8 +222,7 @@ export class JobWrapper {
   }
 
   get hasGitCommitInfo() {
-    return this.context[vars.git.commit.id]
-      && this.context[vars.git.commit.message]
+    return this.context[vars.git.push.message]
   }
 
   get isPushTrigger() {

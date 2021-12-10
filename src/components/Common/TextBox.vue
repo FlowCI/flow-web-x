@@ -1,6 +1,9 @@
 <template>
   <div class="text-box">
-    <v-subheader>{{ label }}</v-subheader>
+    <v-subheader>
+      <span>{{ label }}</span>
+      <span v-if="desc" class="ml-2">({{ desc }})</span>
+    </v-subheader>
     <v-text-field
         solo
         dense
@@ -26,6 +29,10 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    desc: {
+      type: String,
+      required: false
     },
     value: {
       type: [Number, String]
