@@ -27,6 +27,7 @@ export default {
   git: {
     url: 'FLOWCI_GIT_URL',
     credential: 'FLOWCI_GIT_CREDENTIAL',
+    branch: 'FLOWCI_GIT_BRANCH',
 
     source: 'FLOWCI_GIT_SOURCE',
     event: 'FLOWCI_GIT_EVENT',
