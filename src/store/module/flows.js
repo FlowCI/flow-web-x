@@ -190,7 +190,7 @@ const actions = {
       })
   },
 
-  async confirm ({commit}, {wrapper, desc}) {
+  async confirm ({commit}, {wrapper, title}) {
     let gitSettings = {
       gitUrl: wrapper.gitUrl,
       secret: wrapper.secret
@@ -203,7 +203,7 @@ const actions = {
           console.log('[DONE]: confirmed')
           commit('add', new FlowWrapper(flow))
         },
-        {desc}
+        {title}
       )
     }
 

@@ -4,11 +4,44 @@
       {{ $t('flow.create_git_hint') }}
     </v-card-subtitle>
     <v-card-text>
-      <v-radio-group v-model="selected" :mandatory="true" dense>
-        <v-radio :label="$t('flow.create_blank_template')" :value="blankValue"></v-radio>
-        <v-divider class="my-1"></v-divider>
-        <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n"></v-radio>
-      </v-radio-group>
+<!--      <v-radio-group v-model="selected" :mandatory="true" dense>-->
+<!--        <v-radio :label="$t('flow.create_blank_template')" :value="blankValue"></v-radio>-->
+<!--        <v-divider class="my-1"></v-divider>-->
+<!--        <v-radio v-for="(t, n) in templates" :key="t.desc" :label="t.desc" :value="n"></v-radio>-->
+<!--      </v-radio-group>-->
+
+      <v-list>
+        <v-list-item-group v-model="selected">
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-icon x-large>{{ getIcon() }}</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content class="ml-3">
+              <v-list-item-title v-text="$t('flow.create_blank_template_title')"></v-list-item-title>
+              <v-list-item-subtitle v-text="$t('flow.create_blank_template_desc')"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <template v-for="(tmp, index) in templates">
+            <v-list-item :key="tmp.title">
+              <v-list-item-avatar>
+                <v-icon x-large>{{ getIcon(tmp) }}</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content class="ml-3">
+                <v-list-item-title v-text="tmp.title"></v-list-item-title>
+                <v-list-item-subtitle v-text="tmp.desc"></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-divider
+                v-if="index < templates.length - 1"
+                :key="index"
+            ></v-divider>
+          </template>
+        </v-list-item-group>
+      </v-list>
     </v-card-text>
     <v-card-actions>
       <v-btn small
@@ -52,6 +85,17 @@
       return {
         selected: 0,
         blankValue: -1,
+        icons: {
+          'Hello World': 'mdi-code-braces',
+          'Maven': '$vuetify.icons.maven',
+          'Android': '$vuetify.icons.android',
+          '.NetCore': '$vuetify.icons.dotnetcore',
+          'Golang': '$vuetify.icons.golang',
+          'PHP': '$vuetify.icons.php',
+          'npm': '$vuetify.icons.npm',
+          'Ruby': '$vuetify.icons.ruby',
+          'Python': '$vuetify.icons.python',
+        }
       }
     },
     mounted() {
@@ -71,15 +115,26 @@
       }
     },
     methods: {
-      async onFinishClick() {
-        let desc = "blank"
-
-        // load yaml
-        if (this.selected !== this.blankValue) {
-          desc = this.templates[this.selected].desc
+      getIcon(template) {
+        if (!template) {
+          return 'mdi-code-braces'
         }
 
-        this.onNextClick(desc)
+        for (let key of Object.keys(this.icons)) {
+          if (template.title.includes(key)) {
+            return this.icons[key]
+          }
+        }
+        return 'mdi-code-braces'
+      },
+
+      async onFinishClick() {
+        let title = "_blank_"
+        if (this.selected > 0) {
+          title = this.templates[this.selected - 1].title
+        }
+
+        this.onNextClick(title)
       }
     }
   }
