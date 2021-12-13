@@ -34,7 +34,7 @@
 
                 <div v-else>
                   <a v-if="item.link" :href="item.link" target="_blank">{{ item.value }}</a>
-                  <span  class="d-inline-block text-truncate" style="max-width: 800px;" v-if="!item.link">{{ item.value }}</span>
+                  <span class="d-inline-block overflow-x-auto" style="width: 800px;" v-if="!item.link">{{ item.value }}</span>
                 </div>
               </v-col>
             </v-row>

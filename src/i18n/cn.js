@@ -42,7 +42,7 @@ export default {
 
   flow: {
     name: '工作流',
-    create: '创建工作流',
+    create: '创建一个工作流',
     search: '输入关键词搜索',
     settings: '设置',
     statistic: '统计',
@@ -60,7 +60,8 @@ export default {
     create_title_yml: '配置 YML',
     create_btn_finish: '完成创建',
     create_git_hint: '提示: Git 仓库可已在创建完成后配置',
-    create_blank_template: '不选择 (可稍后在 工作流 -> 设置 中配置)',
+    create_blank_template_title: '不使用模版',
+    create_blank_template_desc: '只创建一个 Flow， YAML 配置可稍后在 "工作流 -> 设置" 中配置',
 
     delete_btn: '删除当前 Flow',
     delete_desc: '删除当前 Flow 后无法恢复，请谨慎操作',

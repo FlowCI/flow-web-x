@@ -114,10 +114,10 @@
           },
 
           // step 2
-          2: (desc) => {
+          2: (title) => {
             // send confirm
             this.loading = true
-            let payload = {wrapper: this.flow, desc}
+            let payload = {wrapper: this.flow, title}
             this.$store.dispatch(actions.flows.confirm, payload)
                 .then(() => {
                   this.onCancelClick()

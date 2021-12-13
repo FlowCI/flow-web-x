@@ -21,6 +21,15 @@ import './assets/styles/style.scss'
 import 'xterm/css/xterm.css'
 import G6 from "@antv/g6"
 
+import AndroidIcon from '@/components/Icons/Android'
+import DotnetCoreIcon from '@/components/Icons/DotnetCore'
+import GolangIcon from '@/components/Icons/Golang'
+import MavenIcon from '@/components/Icons/Maven'
+import NpmIcon from '@/components/Icons/Npm'
+import PhpIcon from '@/components/Icons/Php'
+import RubyIcon from '@/components/Icons/Ruby'
+import PythonIcon from '@/components/Icons/Python'
+
 Vue.config.productionTip = false
 VueClipboard.config.autoSetContainer = true
 
@@ -163,6 +172,32 @@ new Vue({
   vuetify: new Vuetify({
     icons: {
       iconfont: 'mdi',
+      values: {
+        android: {
+          component: AndroidIcon
+        },
+        dotnetcore: {
+          component: DotnetCoreIcon
+        },
+        golang: {
+          component: GolangIcon
+        },
+        maven: {
+          component: MavenIcon
+        },
+        npm: {
+          component: NpmIcon
+        },
+        php: {
+          component: PhpIcon
+        },
+        ruby: {
+          component: RubyIcon
+        },
+        python: {
+          component: PythonIcon
+        }
+      }
     },
   }),
   router,
