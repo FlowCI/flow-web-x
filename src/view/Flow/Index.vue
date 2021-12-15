@@ -38,7 +38,7 @@
               class="white--text"
               @click="onSettingsClick"
           >
-            <v-icon class="mr-1">mdi-settings</v-icon>
+            <v-icon class="mr-1">mdi-cog</v-icon>
             {{ $t('flow.settings') }}
           </v-btn>
         </v-toolbar-items>

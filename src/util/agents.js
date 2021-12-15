@@ -123,7 +123,7 @@ export class AgentWrapper {
   }
 
   get url() {
-    return this.agent.url ? this.agent.url : 'unknown'
+    return this.agent.url ? this.agent.url : 'n/a'
   }
 
   get jobId() {

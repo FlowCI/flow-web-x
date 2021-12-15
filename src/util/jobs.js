@@ -2,7 +2,7 @@ import vars from '@/util/vars'
 import {timeDurationInSeconds, timeFormat, timeFormatFromNow} from "./time"
 
 // status
-const STATUS_UNKNOWN = 'UNKNOWN'
+const STATUS_UNKNOWN = 'n/a'
 const STATUS_PENDING = 'PENDING'
 const STATUS_LOADING = 'LOADING'
 const STATUS_CREATED = 'CREATED'
@@ -291,7 +291,7 @@ export const mapping = {
     },
 
     [STATUS_RUNNING]: {
-      icon: 'mdi-settings',
+      icon: 'mdi-cog',
       class: ['blue--text text--lighten-1', 'rotate'],
       text: 'Running',
       bg: '#42A5F5',

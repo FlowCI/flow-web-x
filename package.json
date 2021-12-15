@@ -13,10 +13,10 @@
   "dependencies": {
     "@antv/g6": "^4.0.3",
     "@mdi/js": "^5.9.55",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "babel-polyfill": "^6.26.0",
     "blueimp-md5": "^2.11.0",
-    "codemirror": "^5.57.0",
+    "codemirror": "^5.64.0",
     "core-js": "^2.6.5",
     "cronstrue": "^1.96.0",
     "echarts": "^4.3.0",
@@ -24,7 +24,7 @@
     "google-protobuf": "^3.11.4",
     "js-base64": "^2.4.9",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "marked": "^0.7.0",
     "moment": "^2.22.2",
     "monaco-editor": "^0.17.0",
@@ -43,7 +43,7 @@
     "xterm-addon-unicode11": "^0.2.0"
   },
   "devDependencies": {
-    "@mdi/font": "^4.9.95",
+    "@mdi/font": "^6.5.95",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-plugin-unit-mocha": "^3.7.0",

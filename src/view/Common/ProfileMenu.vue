@@ -15,7 +15,7 @@
 
       <v-list-item @click="onSettingsClick">
         <v-list-item-icon class="mr-3">
-          <v-icon>mdi-settings</v-icon>
+          <v-icon>mdi-cog</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>{{ $t('menu.settings') }}</v-list-item-title>

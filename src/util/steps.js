@@ -235,7 +235,7 @@ export const mapping = {
   },
 
   [STATUS_WAITING_AGENT]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'waiting for agent',
     config: {
       style: {
@@ -245,7 +245,7 @@ export const mapping = {
   },
 
   [STATUS_RUNNING]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'running',
     config: {
       style: {
@@ -255,7 +255,7 @@ export const mapping = {
   },
 
   [STATUS_KILLING]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'killing',
     config: {
       style: {

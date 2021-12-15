@@ -65,7 +65,7 @@
           {
             i18n: 'settings.li.system',
             path: 'system',
-            icon: 'mdi-settings'
+            icon: 'mdi-cog'
           }
         ]
       }
