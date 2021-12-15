@@ -193,7 +193,7 @@ export default {
         },
         {
           key: 'Status',
-          value: this.wrapper.isPrOpenedTrigger ? 'Opened' : (this.wrapper.isPrMergedTrigger ? 'Merged' : '-')
+          value: this.wrapper.isPrOpenedTrigger ? 'Opened' : (this.wrapper.isPrMergedTrigger ? 'Merged' : 'n/a')
         },
         {
           key: 'Message',

@@ -66,7 +66,7 @@ export class PluginWrapper {
     if (this.plugin.syncTime) {
       return timeFormat(this.plugin.syncTime)
     }
-    return '-'
+    return 'n/a'
   }
 
   get synced() {

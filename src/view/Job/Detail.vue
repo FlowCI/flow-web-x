@@ -92,7 +92,7 @@
         showTty: false,
         ttyPath: '',
         agentIcons: icons,
-        duration: '-',
+        duration: 'n/a',
         durationInterval: null,
       }
     },
