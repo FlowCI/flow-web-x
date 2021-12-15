@@ -19,8 +19,10 @@
           <td>
             <v-row no-gutters>
               <v-col cols="2" class="caption">
-                <span>{{ item.key }}</span>
+                <a v-if="item.key_link" :href="item.key_link" target="_blank">{{ item.key }}</a>
+                <span v-else>{{ item.key }}</span>
               </v-col>
+
               <v-col class="caption d-flex">
                 <div class="vertical-bar mr-4" v-if="value.showBar"></div>
 
@@ -33,8 +35,8 @@
                 </div>
 
                 <div v-else>
-                  <a v-if="item.link" :href="item.link" target="_blank">{{ item.value }}</a>
-                  <span class="d-inline-block overflow-x-auto" style="width: 800px;" v-if="!item.link">{{ item.value }}</span>
+                  <a v-if="item.value_link" :href="item.value_link" target="_blank">{{ item.value }}</a>
+                  <span class="d-inline-block overflow-x-auto" style="width: 800px;" v-else>{{ item.value }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -47,6 +49,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: 'JobDetailInfo',
   data() {
@@ -59,6 +63,10 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      relatedJobs: state => state.jobs.relatedJobs,
+    }),
+
     contextData() {
       return {
         agent: {
@@ -83,6 +91,12 @@ export default {
           name: 'Git Pull Request Info',
           show: this.wrapper.isPrOpenedTrigger || this.wrapper.isPrClosedTrigger,
           data: this.getPrData()
+        },
+
+        relatedJobs: {
+          name: 'Related jobs for this git event',
+          show: this.relatedJobs.length > 0,
+          data: this.getRelatedJobsData()
         },
 
         variables: {
@@ -188,7 +202,7 @@ export default {
         {
           key: 'PR Number',
           value: this.wrapper.prNumber,
-          link: this.wrapper.prUrl
+          value_link: this.wrapper.prUrl
         },
         {
           key: 'PR Head Repo/Branch',
@@ -199,6 +213,20 @@ export default {
           value: this.wrapper.prBaseRepo + ' / ' + this.wrapper.prBaseBranch
         }
       ]
+    },
+
+    getRelatedJobsData() {
+      let list = []
+      for (let jobDesc of this.relatedJobs) {
+        if (jobDesc.id === this.wrapper.id) {
+          continue
+        }
+
+        let desc = `${jobDesc.flowName} / #${jobDesc.buildNumber}`
+        let link = `#/flows/${jobDesc.flowName}/jobs/${jobDesc.buildNumber}`
+        list.push({key: desc, value: '', key_link: link})
+      }
+      return list
     }
   }
 }

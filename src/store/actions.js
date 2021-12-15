@@ -48,6 +48,7 @@ export default {
     rerun: 'jobs/rerun',
     cancel: 'jobs/cancel',
     list: 'jobs/list',
+    related: 'jobs/related',
     statusUpdate: 'jobs/statusUpdate',
     select: 'jobs/select',
     getYml: 'jobs/getYml',

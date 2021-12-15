@@ -49,6 +49,10 @@ export class JobWrapper {
     })
   }
 
+  get id() {
+    return this.job.id
+  }
+
   get context() {
     return this.job.context || {}
   }
