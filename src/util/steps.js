@@ -61,14 +61,14 @@ export class StepWrapper {
 
   get startAt() {
     if (!this.step.startAt) {
-      return '-'
+      return 'n/a'
     }
     return moment(this.step.startAt)
   }
 
   get finishAt() {
     if (!this.step.finishAt) {
-      return '-'
+      return 'n/a'
     }
     return moment(this.step.finishAt)
   }
@@ -158,7 +158,7 @@ export class StepWrapper {
     if (this.step.startAt && this.step.finishAt) {
       return timeDurationInSeconds(this.step.finishAt, this.step.startAt)
     }
-    return '-'
+    return 'n/a'
   }
 
   get exitCode() {

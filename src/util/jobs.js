@@ -49,6 +49,10 @@ export class JobWrapper {
     })
   }
 
+  get id() {
+    return this.job.id
+  }
+
   get context() {
     return this.job.context || {}
   }
@@ -62,11 +66,11 @@ export class JobWrapper {
   }
 
   get gitUrl() {
-    return this.context[vars.git.url]
+    return this.context[vars.git.url] || 'n/a'
   }
 
   get gitCredential() {
-    return this.context[vars.git.credential] || '-'
+    return this.context[vars.git.credential] || 'n/a'
   }
 
   get fromNow() {
@@ -90,7 +94,7 @@ export class JobWrapper {
   }
 
   get triggerBy() {
-    return this.context[vars.job.triggerBy] || '-'
+    return this.context[vars.job.triggerBy] || 'n/a'
   }
 
   get status() {
@@ -124,14 +128,14 @@ export class JobWrapper {
 
   get finishedAtInStr() {
     if (!this.isFinished) {
-      return '-'
+      return 'n/a'
     }
 
     if (this.job.finishAt) {
       return timeFormat(this.job.finishAt)
     }
 
-    return '-'
+    return 'n/a'
   }
 
   get isFinished() {
@@ -143,9 +147,9 @@ export class JobWrapper {
 
   get snapshots() {
     return this.job.snapshots || {
-      '-': {
-        name: '-',
-        os: '-',
+      'n/a': {
+        name: 'n/a',
+        os: 'n/a',
         cpuNum: 0,
         cpuUsage: 0,
         freeMemory: 0,

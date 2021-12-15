@@ -99,7 +99,7 @@ export default {
     return {
       showTty: false,
       agentIcons: icons,
-      duration: '-',
+      duration: 'n/a',
       durationInterval: null,
     }
   },

@@ -18,7 +18,8 @@ const state = {
   latest: [], // latest job object array
   reports: [],
   reportUrlPath: '',
-  artifacts: []
+  artifacts: [],
+  relatedJobs: [],
 }
 
 const mutations = {
@@ -41,6 +42,10 @@ const mutations = {
     state.pagination.page = page.number
     state.pagination.size = page.size
     state.pagination.total = page.totalElements
+  },
+
+  related(state, jobs) {
+    state.relatedJobs = jobs
   },
 
   setLatest(state, job) {
@@ -121,6 +126,7 @@ const actions = {
     const url = `jobs/${jobId}/desc`
     return http.get(url, onCallback)
   },
+
   /**
    * Start a new job
    */
@@ -164,6 +170,12 @@ const actions = {
         size
       }
     )
+  },
+
+  related({commit, state}, {flow, buildNumber}) {
+    return http.get(`jobs/${flow}/${buildNumber}/related`, (jobs) => {
+      commit('related', jobs)
+    })
   },
 
   /**
