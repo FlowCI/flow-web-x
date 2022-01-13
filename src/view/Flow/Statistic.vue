@@ -89,7 +89,7 @@
     data () {
       return {
         echartsInstances: {},
-        min: moment().subtract(31, 'days').format('YYYY-MM-DD'),
+        min: moment().subtract(30, 'days').format('YYYY-MM-DD'),
         max: moment().format('YYYY-MM-DD'),
         fromDate: moment().subtract(7, 'days'),
         fromDateMenu: false,
