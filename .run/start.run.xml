@@ -8,7 +8,7 @@
     <node-interpreter value="project" />
     <package-manager value="npm" />
     <envs>
-      <env name="VUE_APP_API_URL" value="http://192.168.31.110:8080" />
+      <env name="VUE_APP_API_URL" value="http://192.168.31.173:8080" />
     </envs>
     <method v="2" />
   </configuration>

@@ -8,7 +8,7 @@ CURRENT_DIR 	:= $(shell pwd)
 DOCKER_VOLUME	:= -v $(CURRENT_DIR):/ws
 DOCKER_IMG		:= node:14
 DOCKER_RUN 		:= docker run -it --rm -w /ws $(DOCKER_VOLUME) --network host $(DOCKER_IMG)
-DOCKER_BUILD	:= docker build -f ./Dockerfile -t flowci/web:latest -t flowci/web:$(tag) .
+DOCKER_BUILD	:= docker buildx build -f ./Dockerfile --platform linux/arm64,linux/amd64 --push -t flowci/web:latest -t flowci/web:$(tag) .
 
 .PHONY: build clean image
 
