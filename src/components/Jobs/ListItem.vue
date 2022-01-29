@@ -40,7 +40,7 @@
           </div>
         </v-col>
 
-        <v-col cols="4">
+        <v-col cols="6">
           <v-list-item-subtitle>
             <div class="commit-text caption"> {{ wrapper.pushOrTag.head_commit.message }}</div>
             <a :href="wrapper.pushOrTag.head_commit.url" class="caption"
@@ -66,6 +66,26 @@
           <v-list-item-subtitle>
             <a :href="wrapper.prUrl" target="_blank" class="caption">#{{ wrapper.prNumber }}</a>
             <span class="ml-1 caption">{{ wrapper.prTitle }}</span>
+          </v-list-item-subtitle>
+        </v-col>
+      </v-row>
+
+      <!-- for patchset -->
+      <v-row align-center
+             no-gutters
+             v-if="wrapper.isPatchsetTrigger">
+        <v-col cols="4">
+          <v-list-item-subtitle>
+            <span class="caption">
+              <a :href="wrapper.patchSet.patchUrl" target="_blank">{{ wrapper.patchSet.ref }}</a>
+              &#8594;
+              {{ wrapper.patchSet.branch }}
+            </span>
+          </v-list-item-subtitle>
+        </v-col>
+        <v-col cols="6">
+          <v-list-item-subtitle>
+            <div class="ml-1 caption">{{ wrapper.patchSet.subject }}</div>
           </v-list-item-subtitle>
         </v-col>
       </v-row>

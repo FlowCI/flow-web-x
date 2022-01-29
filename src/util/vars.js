@@ -54,6 +54,24 @@ export default {
       base_repo: 'FLOWCI_GIT_PR_BASE_REPO_NAME',
       base_branch: 'FLOWCI_GIT_PR_BASE_REPO_BRANCH',
       base_commit: 'FLOWCI_GIT_PR_BASE_REPO_COMMIT'
+    },
+
+    patchset: {
+      subject: 'FLOWCI_GIT_PATCHSET_SUBJECT',
+      message: 'FLOWCI_GIT_PATCHSET_MESSAGE',
+      project: 'FLOWCI_GIT_PATCHSET_PROJECT',
+      branch: 'FLOWCI_GIT_PATCHSET_BRANCH',
+      changeId: 'FLOWCI_GIT_PATCHSET_CHANGE_ID',
+      changeNum: 'FLOWCI_GIT_PATCHSET_CHANGE_NUM',
+      changeUrl: 'FLOWCI_GIT_PATCHSET_CHANGE_URL',
+      patchNum: 'FLOWCI_GIT_PATCHSET_PATCH_NUM',
+      patchUrl: 'FLOWCI_GIT_PATCHSET_PATCH_URL',
+      revision: 'FLOWCI_GIT_PATCHSET_REVISION',
+      ref: 'FLOWCI_GIT_PATCHSET_REF',
+      createAt: 'FLOWCI_GIT_PATCHSET_CREATE_TIME',
+      insertSize: 'FLOWCI_GIT_PATCHSET_INSERT_SIZE',
+      deleteSize: 'FLOWCI_GIT_PATCHSET_DELETE_SIZE',
+      author: 'FLOWCI_GIT_PATCHSET_AUTHOR'
     }
   }
 }

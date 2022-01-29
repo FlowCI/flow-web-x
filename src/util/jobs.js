@@ -19,6 +19,7 @@ export const TRIGGER_PUSH = 'PUSH'
 export const TRIGGER_PR_OPENED = 'PR_OPENED'
 export const TRIGGER_PR_MERGED = 'PR_MERGED'
 export const TRIGGER_TAG = 'TAG'
+export const TRIGGER_PATCHSET = 'PATCHSET'
 export const TRIGGER_MANUAL = 'MANUAL'
 export const TRIGGER_API = 'API'
 export const TRIGGER_SCHEDULER = 'SCHEDULER'
@@ -193,6 +194,26 @@ export class JobWrapper {
     }
   }
 
+  get patchSet() {
+    return {
+      subject: this.context[vars.git.patchset.subject],
+      message: this.context[vars.git.patchset.message],
+      project: this.context[vars.git.patchset.project],
+      branch:  this.context[vars.git.patchset.branch],
+      changeId: this.context[vars.git.patchset.changeId],
+      changeNum: this.context[vars.git.patchset.changeNum],
+      changeUrl: this.context[vars.git.patchset.changeUrl],
+      patchNum: this.context[vars.git.patchset.patchNum],
+      patchUrl: this.context[vars.git.patchset.patchUrl],
+      revision: this.context[vars.git.patchset.revision],
+      ref: this.context[vars.git.patchset.ref],
+      createAt: this.context[vars.git.patchset.createAt],
+      insertSize: this.context[vars.git.patchset.insertSize],
+      deleteSize: this.context[vars.git.patchset.deleteSize],
+      author: this.context[vars.git.patchset.author],
+    }
+  }
+
   get prTitle() {
     return this.context[vars.git.pr.title]
   }
@@ -243,6 +264,10 @@ export class JobWrapper {
 
   get isPrMergedTrigger() {
     return this.trigger === TRIGGER_PR_MERGED
+  }
+
+  get isPatchsetTrigger() {
+    return this.trigger === TRIGGER_PATCHSET
   }
 
   get isRunning() {
@@ -360,6 +385,11 @@ export const mapping = {
     [TRIGGER_TAG]: {
       text: 'tag',
       icon: 'flow-icon-tag'
+    },
+
+    [TRIGGER_PATCHSET]: {
+      text: 'patchset',
+      icon: 'flow-icon-git-commit'
     },
 
     [TRIGGER_MANUAL]: {
