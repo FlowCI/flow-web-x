@@ -76,6 +76,7 @@
              v-if="wrapper.isPatchsetTrigger">
         <v-col cols="4">
           <v-list-item-subtitle>
+            <v-icon small class="mr-1">mdi-source-branch</v-icon>
             <span class="caption">
               <a :href="wrapper.patchSet.patchUrl" target="_blank">{{ wrapper.patchSet.ref }}</a>
               &#8594;
