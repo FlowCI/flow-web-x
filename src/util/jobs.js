@@ -1,5 +1,5 @@
 import vars from '@/util/vars'
-import {timeDurationInSeconds, timeFormat, timeFormatFromNow} from "./time"
+import {timeDurationInSeconds, timeFormat, unixTimeFormat, timeFormatFromNow} from "./time"
 
 // status
 const STATUS_UNKNOWN = 'n/a'
@@ -195,7 +195,11 @@ export class JobWrapper {
   }
 
   get patchSet() {
+    console.log(this.context[vars.git.patchset.changeStatus])
+
     return {
+      isMerged: this.context[vars.git.patchset.changeStatus] === 'MERGED',
+      isUpdate: this.context[vars.git.patchset.changeStatus] === 'NEW',
       subject: this.context[vars.git.patchset.subject],
       message: this.context[vars.git.patchset.message],
       project: this.context[vars.git.patchset.project],
@@ -203,11 +207,12 @@ export class JobWrapper {
       changeId: this.context[vars.git.patchset.changeId],
       changeNum: this.context[vars.git.patchset.changeNum],
       changeUrl: this.context[vars.git.patchset.changeUrl],
+      changeStatus: this.context[vars.git.patchset.changeStatus],
       patchNum: this.context[vars.git.patchset.patchNum],
       patchUrl: this.context[vars.git.patchset.patchUrl],
       revision: this.context[vars.git.patchset.revision],
       ref: this.context[vars.git.patchset.ref],
-      createAt: this.context[vars.git.patchset.createAt],
+      createAt: unixTimeFormat(this.context[vars.git.patchset.createAt]),
       insertSize: this.context[vars.git.patchset.insertSize],
       deleteSize: this.context[vars.git.patchset.deleteSize],
       author: this.context[vars.git.patchset.author],

@@ -240,9 +240,17 @@ export default {
           value: this.wrapper.patchSet.project
         },
         {
+          key: 'Branch',
+          value: this.wrapper.patchSet.branch
+        },
+        {
           key: 'Patch',
-          value: `${this.wrapper.patchSet.ref} -> ${this.wrapper.patchSet.branch}`,
+          value: this.wrapper.patchSet.ref,
           value_link: this.wrapper.patchSet.patchUrl
+        },
+        {
+          key: 'Is merged',
+          value: this.wrapper.patchSet.isMerged,
         },
         {
           key: 'Change ID / Number',

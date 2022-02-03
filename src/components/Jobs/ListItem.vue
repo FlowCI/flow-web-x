@@ -79,7 +79,8 @@
             <v-icon small class="mr-1">mdi-source-branch</v-icon>
             <span class="caption">
               <a :href="wrapper.patchSet.patchUrl" target="_blank">{{ wrapper.patchSet.ref }}</a>
-              &#8594;
+              <span v-if="wrapper.patchSet.isMerged">&#8594;</span>
+              <span v-if="wrapper.patchSet.isUpdate" class="ml-2">|</span>
               {{ wrapper.patchSet.branch }}
             </span>
           </v-list-item-subtitle>

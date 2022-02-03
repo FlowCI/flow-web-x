@@ -8,6 +8,10 @@ export function timeFormat(date) {
   return moment(date).format('YYYY-MM-DD kk:mm:ss')
 }
 
+export function unixTimeFormat(date) {
+  return moment.unix(date).format('YYYY-MM-DD kk:mm:ss')
+}
+
 export function timeFormatInMins(date) {
   return moment(date).format('YYYY-MM-DD kk:mm')
 }
