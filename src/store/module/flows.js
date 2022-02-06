@@ -1,4 +1,5 @@
 import http from '../http'
+import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
 
 const state = {
@@ -318,7 +319,7 @@ const actions = {
     }
 
     return http.get(`flows/${name}/yml/default`, (base64Yml) => {
-      commit('setYml', atob(base64Yml))
+      commit('setYml', util.base64ToUtf8(base64Yml))
     })
   },
 
@@ -332,7 +333,7 @@ const actions = {
         commit('setYml', yml)
       },
       {
-        data: btoa(yml)
+        data: util.utf8ToBase64(yml)
       })
   },
 

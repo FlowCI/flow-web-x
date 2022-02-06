@@ -1,5 +1,6 @@
 import http from '../http'
 import {browserDownload} from '../util'
+import util from '@/util/common'
 
 const emptyFunc = () => {
 }
@@ -118,7 +119,7 @@ const actions = {
   getYml({commit}, {flow, buildNumber}) {
     const url = `jobs/${flow}/${buildNumber}/yml`
     return http.get(url, (base64Yml) => {
-      commit('updateYml', atob(base64Yml))
+      commit('updateYml', util.base64ToUtf8(base64Yml))
     })
   },
 
