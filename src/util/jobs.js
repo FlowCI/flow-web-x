@@ -275,6 +275,10 @@ export class JobWrapper {
     return this.trigger === TRIGGER_PATCHSET
   }
 
+  get isManualKindTrigger() {
+    return this.trigger === TRIGGER_MANUAL || this.trigger === TRIGGER_API || this.trigger === TRIGGER_SCHEDULER
+  }
+
   get isRunning() {
     return this.status.text === STATUS_RUNNING
   }

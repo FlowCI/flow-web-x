@@ -27,7 +27,7 @@
       <!-- for push and tag -->
       <v-row align="center"
              no-gutters
-             v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
+             v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || (wrapper.hasGitCommitInfo && wrapper.isManualKindTrigger)">
         <v-col cols="4">
           <div>
             <v-icon small class="mr-1" v-if="wrapper.pushOrTag.branch">mdi-source-branch</v-icon>

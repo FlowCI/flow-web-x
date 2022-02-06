@@ -77,7 +77,7 @@ export default {
 
         push: {
           name: 'Git Push Info',
-          show: this.wrapper.isPushTrigger || this.wrapper.hasGitCommitInfo,
+          show: this.wrapper.isPushTrigger || (this.wrapper.hasGitCommitInfo && this.wrapper.isManualKindTrigger),
           data: this.getPushData()
         },
 
