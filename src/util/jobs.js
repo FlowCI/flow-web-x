@@ -195,8 +195,6 @@ export class JobWrapper {
   }
 
   get patchSet() {
-    console.log(this.context[vars.git.patchset.changeStatus])
-
     return {
       isMerged: this.context[vars.git.patchset.changeStatus] === 'MERGED',
       isUpdate: this.context[vars.git.patchset.changeStatus] === 'NEW',
