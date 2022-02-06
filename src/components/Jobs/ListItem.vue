@@ -27,7 +27,7 @@
       <!-- for push and tag -->
       <v-row align="center"
              no-gutters
-             v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || wrapper.hasGitCommitInfo">
+             v-if="wrapper.isPushTrigger || wrapper.isTagTrigger || (wrapper.hasGitCommitInfo && wrapper.isManualKindTrigger)">
         <v-col cols="4">
           <div>
             <v-icon small class="mr-1" v-if="wrapper.pushOrTag.branch">mdi-source-branch</v-icon>
@@ -40,7 +40,7 @@
           </div>
         </v-col>
 
-        <v-col cols="4">
+        <v-col cols="6">
           <v-list-item-subtitle>
             <div class="commit-text caption"> {{ wrapper.pushOrTag.head_commit.message }}</div>
             <a :href="wrapper.pushOrTag.head_commit.url" class="caption"
@@ -66,6 +66,28 @@
           <v-list-item-subtitle>
             <a :href="wrapper.prUrl" target="_blank" class="caption">#{{ wrapper.prNumber }}</a>
             <span class="ml-1 caption">{{ wrapper.prTitle }}</span>
+          </v-list-item-subtitle>
+        </v-col>
+      </v-row>
+
+      <!-- for patchset -->
+      <v-row align-center
+             no-gutters
+             v-if="wrapper.isPatchsetTrigger">
+        <v-col cols="4">
+          <v-list-item-subtitle>
+            <v-icon small class="mr-1">mdi-source-branch</v-icon>
+            <span class="caption">
+              <a :href="wrapper.patchSet.patchUrl" target="_blank">{{ wrapper.patchSet.ref }}</a>
+              <span v-if="wrapper.patchSet.isMerged">&#8594;</span>
+              <span v-if="wrapper.patchSet.isUpdate" class="ml-2">|</span>
+              {{ wrapper.patchSet.branch }}
+            </span>
+          </v-list-item-subtitle>
+        </v-col>
+        <v-col cols="6">
+          <v-list-item-subtitle>
+            <div class="ml-1 caption">{{ wrapper.patchSet.subject }}</div>
           </v-list-item-subtitle>
         </v-col>
       </v-row>

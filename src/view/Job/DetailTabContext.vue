@@ -18,7 +18,7 @@
         <tr>
           <td>
             <v-row no-gutters>
-              <v-col cols="2" class="caption">
+              <v-col cols="3" class="caption">
                 <a v-if="item.key_link" :href="item.key_link" target="_blank">{{ item.key }}</a>
                 <span v-else>{{ item.key }}</span>
               </v-col>
@@ -77,7 +77,7 @@ export default {
 
         push: {
           name: 'Git Push Info',
-          show: this.wrapper.isPushTrigger || this.wrapper.hasGitCommitInfo,
+          show: this.wrapper.isPushTrigger || (this.wrapper.hasGitCommitInfo && this.wrapper.isManualKindTrigger),
           data: this.getPushData()
         },
 
@@ -91,6 +91,12 @@ export default {
           name: 'Git Pull Request Info',
           show: this.wrapper.isPrOpenedTrigger || this.wrapper.isPrClosedTrigger,
           data: this.getPrData()
+        },
+
+        patchset: {
+          name: 'Git Patchset Update Info',
+          show: this.wrapper.isPatchsetTrigger,
+          data: this.getPatchset()
         },
 
         relatedJobs: {
@@ -211,6 +217,52 @@ export default {
         {
           key: 'PR Base Repo/Branch',
           value: this.wrapper.prBaseRepo + ' / ' + this.wrapper.prBaseBranch
+        }
+      ]
+    },
+
+    getPatchset() {
+      return [
+        {
+          key: 'Repo',
+          value: this.wrapper.gitUrl
+        },
+        {
+          key: 'Credential',
+          value: this.wrapper.gitCredential
+        },
+        {
+          key: 'Subject',
+          value: this.wrapper.patchSet.subject
+        },
+        {
+          key: 'Project',
+          value: this.wrapper.patchSet.project
+        },
+        {
+          key: 'Branch',
+          value: this.wrapper.patchSet.branch
+        },
+        {
+          key: 'Patch',
+          value: this.wrapper.patchSet.ref,
+          value_link: this.wrapper.patchSet.patchUrl
+        },
+        {
+          key: 'Is merged',
+          value: this.wrapper.patchSet.isMerged,
+        },
+        {
+          key: 'Change ID / Number',
+          value: `${this.wrapper.patchSet.changeId} / ${this.wrapper.patchSet.changeNum}`
+        },
+        {
+          key: 'Created At',
+          value: this.wrapper.patchSet.createAt
+        },
+        {
+          key: 'Delta',
+          value: `+ ${this.wrapper.patchSet.insertSize} / - ${this.wrapper.patchSet.deleteSize}`
         }
       ]
     },
