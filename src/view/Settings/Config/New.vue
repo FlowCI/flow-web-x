@@ -109,7 +109,7 @@
     },
     methods: {
       onBackClick() {
-        this.$router.push('/settings/configs')
+        this.$router.replace('/settings/configs')
       },
 
       onSaveClick() {

@@ -156,5 +156,10 @@ export default {
   settings: {
     get: 'settings/get',
     save: 'settings/save'
+  },
+
+  git: {
+    list: 'git/list',
+    save: 'git/save'
   }
 }

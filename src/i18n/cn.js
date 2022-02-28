@@ -166,7 +166,8 @@ export default {
       config: '配置管理',
       plugin: '插件',
       system: '系统设置',
-      trigger: '触发器'
+      trigger: '触发器',
+      git: 'Git 设置',
     },
 
     common: {
