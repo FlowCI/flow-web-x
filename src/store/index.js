@@ -18,6 +18,7 @@ import { Store as ConfigStore } from './module/configs'
 import { Store as TtyStore } from './module/tty'
 import { Store as SettingStore } from './module/settings'
 import { Store as TriggerStore } from './module/triggers'
+import { Store as GitStore } from './module/git'
 
 Vue.use(Vuex)
 
@@ -39,7 +40,8 @@ const store = new Vuex.Store({
     'configs': ConfigStore,
     'tty': TtyStore,
     'settings': SettingStore,
-    'triggers': TriggerStore
+    'triggers': TriggerStore,
+    'git': GitStore
   }
 })
 

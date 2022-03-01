@@ -63,6 +63,11 @@
             icon: 'mdi-bell-outline'
           },
           {
+            i18n: 'settings.li.git',
+            path: 'git',
+            icon: 'mdi-git'
+          },
+          {
             i18n: 'settings.li.system',
             path: 'system',
             icon: 'mdi-cog'

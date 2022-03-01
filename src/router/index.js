@@ -40,6 +40,10 @@ import SettingsTriggerHome from '@/view/Settings/Trigger/Index'
 import SettingsTriggerNew from '@/view/Settings/Trigger/New'
 import SettingsTriggerEdit from '@/view/Settings/Trigger/Edit'
 
+import SettingsGitHome from '@/view/Settings/Git/Index'
+import SettingsGitNew from '@/view/Settings/Git/New'
+import SettingsGitEdit from '@/view/Settings/Git/Edit'
+
 import SettingsSystemHome from '@/view/Settings/System/Index'
 
 Vue.use(Router)
@@ -212,6 +216,24 @@ export default new Router({
           path: 'triggers/edit',
           name: 'SettingsTriggerEdit',
           component: SettingsTriggerEdit,
+          props: true
+        },
+
+        // git settings
+        {
+          path: 'git',
+          name: 'SettingsGitHome',
+          component: SettingsGitHome
+        },
+        {
+          path: 'git/new',
+          name: 'SettingsGitNew',
+          component: SettingsGitNew
+        },
+        {
+          path: 'git/edit',
+          name: 'SettingsGitEdit',
+          component: SettingsGitEdit,
           props: true
         },
 

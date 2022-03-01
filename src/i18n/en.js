@@ -167,6 +167,7 @@ export default {
       config: 'Configs',
       plugin: 'Plugins',
       system: 'System',
+      git: 'Git',
       trigger: 'Triggers'
     },
 
