@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     onGitSourceChange() {
-      console.log(this.selected.source)
     },
 
     onBackClick() {

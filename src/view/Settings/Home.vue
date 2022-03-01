@@ -20,7 +20,7 @@
             </v-breadcrumbs>
             <v-btn icon
                    v-if="showAddBtn"
-                   @click="$refs.childView.onAddBtnClick"
+                   @click="onAddBtnClick"
             >
               <v-icon>mdi-plus-box</v-icon>
             </v-btn>
@@ -59,6 +59,13 @@
       onConfigNav (val) {
         this.navs = val.navs
         this.showAddBtn = val.showAddBtn
+      },
+
+      onAddBtnClick() {
+        const func = this.$refs.childView.onAddBtnClick
+        if (func) {
+          func()
+        }
       }
     }
   }

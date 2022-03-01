@@ -12,7 +12,12 @@
         </td>
         <td>{{ item.secret }}</td>
         <td>{{ timeFormatInMins(item.updatedAt) }}</td>
-        <td>{{ item.createdBy }}</td>
+        <td>{{ item.updatedBy }}</td>
+        <td>
+          <v-btn icon class="ma-0" @click="onEditClick(item)">
+            <v-icon small>mdi-pencil</v-icon>
+          </v-btn>
+        </td>
       </tr>
     </template>
   </v-data-table>
@@ -41,11 +46,13 @@ export default {
     return {
       timeFormatInMins,
       sources: GitSources,
+      loading: false,
       headers: [
         {text: 'Git Source', sortable: true, value: 'name'},
         {text: 'Secret', value: 'secret'},
         {text: 'Updated At', value: 'updatedAt'},
-        {text: 'By', value: 'updatedBy'},
+        {text: 'Updated By', value: 'updatedBy'},
+        {text: '', align: 'right'}
       ],
     }
   },
@@ -60,6 +67,15 @@ export default {
         name: 'SettingsGitNew'
       })
     },
+
+    onEditClick(item) {
+      this.$router.push({
+        name: 'SettingsGitEdit',
+        params: {
+          gitObj: item
+        }
+      })
+    }
   }
 }
 </script>

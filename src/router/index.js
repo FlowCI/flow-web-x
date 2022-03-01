@@ -233,7 +233,8 @@ export default new Router({
         {
           path: 'git/edit',
           name: 'SettingsGitEdit',
-          component: SettingsGitEdit
+          component: SettingsGitEdit,
+          props: true
         },
 
         // system settings

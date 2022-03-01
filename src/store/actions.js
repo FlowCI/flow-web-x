@@ -160,6 +160,7 @@ export default {
 
   git: {
     list: 'git/list',
-    save: 'git/save'
+    save: 'git/save',
+    delete: 'git/delete'
   }
 }

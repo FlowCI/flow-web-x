@@ -13,6 +13,15 @@ const mutations = {
   add(state, git) {
     state.items.push(git)
   },
+
+  delete(state, source) {
+    for (let i = 0; i < state.items.length; i++) {
+      if (state.items[i].source === source) {
+        state.items.splice(i, 1)
+        return
+      }
+    }
+  }
 }
 
 const actions = {
@@ -26,6 +35,12 @@ const actions = {
     await http.post(`gitconfig`, (item) => {
       commit('add', item)
     }, payload)
+  },
+
+  async delete({commit}, source) {
+    await http.delete(`gitconfig/${source}`, () => {
+      commit('delete', source)
+    })
   }
 }
 
