@@ -80,7 +80,7 @@
             <span class="caption">
               <a :href="wrapper.patchSet.patchUrl" target="_blank">{{ wrapper.patchSet.ref }}</a>
               <span v-if="wrapper.patchSet.isMerged">&#8594;</span>
-              <span v-if="wrapper.patchSet.isUpdate" class="ml-2">|</span>
+              <span v-if="wrapper.patchSet.isUpdate" class="ml-2">/</span>
               {{ wrapper.patchSet.branch }}
             </span>
           </v-list-item-subtitle>
