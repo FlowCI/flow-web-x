@@ -5,19 +5,30 @@
         <text-select :items="gitSourceList"
                      label="Git Source"
                      v-model="selected.source"
-                     :onChange="onGitSourceChange"
+                     :on-change="onGitSourceChange"
         ></text-select>
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="7">
-        <text-select :items="secretNameList"
-                     label="Secret"
-                     v-model="selected.secret"
-        ></text-select>
-      </v-col>
-    </v-row>
+    <v-form ref="hostForm" lazy-validation>
+      <v-row v-if="selected.source === GIT_SOURCE_GERRIT">
+        <v-col cols="7">
+          <text-box label="Host"
+                    :rules="httpUrl"
+                    v-model="selected.host"
+          ></text-box>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="7">
+          <text-select :items="secretNameList"
+                       label="Secret"
+                       v-model="selected.secret"
+          ></text-select>
+        </v-col>
+      </v-row>
+    </v-form>
 
     <v-row no-gutters dense v-if="error">
       <v-col cols="9">
@@ -38,35 +49,52 @@
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import TextSelect from '@/components/Common/TextSelect'
-import {GitSourceSelection, GIT_SOURCE_GITHUB} from '@/util/git'
+import TextBox from '@/components/Common/TextBox'
+import {GIT_SOURCE_GERRIT, GIT_SOURCE_GITHUB, GitSourceSelection} from '@/util/git'
 import {mapState} from "vuex";
 import actions from "@/store/actions";
-import {CATEGORY_TOKEN} from "@/util/secrets";
+import {CATEGORY_AUTH, CATEGORY_TOKEN} from "@/util/secrets";
+import {httpUrl} from "@/util/rules"
 
 export default {
   name: "SettingsGitNew",
   components: {
     TextSelect,
+    TextBox,
     SaveBtn,
     BackBtn
   },
   data() {
     return {
       gitSourceList: GitSourceSelection,
+      GIT_SOURCE_GERRIT,
+      httpUrl: httpUrl("invalid url"),
       selected: {
         source: GIT_SOURCE_GITHUB,
-        secret: ''
+        secret: '',
+        host: '',
       },
       error: null
     }
   },
   mounted() {
-    this.loadRelatedSecret()
+    this.$emit('onConfigNav', {
+      navs: this.navs,
+      showAddBtn: false
+    })
+    this.loadRelatedSecret(this.selected.source)
   },
   computed: {
     ...mapState({
       secrets: state => state.secrets.items
     }),
+
+    navs() {
+      return [
+        {text: this.$t('settings.li.git'), href: '#/settings/git'},
+        {text: this.$t('new')}
+      ]
+    },
 
     secretNameList() {
       const nameList = []
@@ -77,7 +105,9 @@ export default {
     }
   },
   methods: {
-    onGitSourceChange() {
+    onGitSourceChange(val) {
+      this.$refs.hostForm.reset()
+      this.loadRelatedSecret(val)
     },
 
     onBackClick() {
@@ -86,6 +116,10 @@ export default {
     },
 
     onSaveClick() {
+      if (!this.$refs.hostForm.validate()) {
+        return
+      }
+
       this.$store.dispatch(actions.git.save, this.selected)
           .then(() => {
             this.onBackClick()
@@ -95,9 +129,14 @@ export default {
           })
     },
 
-    loadRelatedSecret() {
-      if (this.selected.source === GIT_SOURCE_GITHUB) {
+    loadRelatedSecret(source) {
+      if (source === GIT_SOURCE_GITHUB) {
         this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_TOKEN).then()
+        return
+      }
+
+      if (source === GIT_SOURCE_GERRIT) {
+        this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_AUTH).then()
       }
     }
   }
