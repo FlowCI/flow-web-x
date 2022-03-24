@@ -11,7 +11,7 @@
     </v-row>
 
     <v-form ref="hostForm" lazy-validation>
-      <v-row v-if="selected.source === GIT_SOURCE_GERRIT">
+      <v-row v-if="showHostField">
         <v-col cols="7">
           <text-box label="Host"
                     :rules="httpUrl"
@@ -50,7 +50,7 @@ import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import TextSelect from '@/components/Common/TextSelect'
 import TextBox from '@/components/Common/TextBox'
-import {GIT_SOURCE_GERRIT, GIT_SOURCE_GITHUB, GitSourceSelection} from '@/util/git'
+import {GIT_SOURCE_GERRIT, GIT_SOURCE_GITHUB, GIT_SOURCE_GITLAB, GIT_SOURCE_GOGS, GitSourceSelection} from '@/util/git'
 import {mapState} from "vuex";
 import actions from "@/store/actions";
 import {CATEGORY_AUTH, CATEGORY_TOKEN} from "@/util/secrets";
@@ -68,6 +68,8 @@ export default {
     return {
       gitSourceList: GitSourceSelection,
       GIT_SOURCE_GERRIT,
+      GIT_SOURCE_GITLAB,
+      GIT_SOURCE_GOGS,
       httpUrl: httpUrl("invalid url"),
       selected: {
         source: GIT_SOURCE_GITHUB,
@@ -94,6 +96,12 @@ export default {
         {text: this.$t('settings.li.git'), href: '#/settings/git'},
         {text: this.$t('new')}
       ]
+    },
+
+    showHostField() {
+      return this.selected.source === GIT_SOURCE_GERRIT ||
+          this.selected.source === GIT_SOURCE_GITLAB ||
+          this.selected.source === GIT_SOURCE_GOGS
     },
 
     secretNameList() {
@@ -130,7 +138,7 @@ export default {
     },
 
     loadRelatedSecret(source) {
-      if (source === GIT_SOURCE_GITHUB) {
+      if (source === GIT_SOURCE_GITHUB || source === GIT_SOURCE_GITLAB) {
         this.$store.dispatch(actions.secrets.listNameOnly, CATEGORY_TOKEN).then()
         return
       }
