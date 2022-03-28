@@ -3,15 +3,19 @@
     <v-tabs-slider color="#757575"></v-tabs-slider>
 
     <v-tab href="#tab-options">
+      <v-icon small class="mr-1">mdi-tune-variant</v-icon>
       {{ $t('flow.tab.options') }}
     </v-tab>
     <v-tab href="#tab-env">
+      <v-icon small class="mr-1">mdi-variable</v-icon>
       {{ $t('flow.tab.variables') }}
     </v-tab>
     <v-tab href="#tab-config">
+      <v-icon small class="mr-1">mdi-code-tags</v-icon>
       {{ $t('flow.tab.yaml') }}
     </v-tab>
     <v-tab href="#tab-users">
+      <v-icon small class="mr-1">mdi-account-multiple-plus-outline</v-icon>
       {{ $t('flow.tab.members') }}
     </v-tab>
 
@@ -24,7 +28,6 @@
     <v-tab-item value="tab-config">
       <settings-config-tab :flow="flow"
                            :steps="steps"
-                           :notifications="notifications"
       ></settings-config-tab>
     </v-tab-item>
     <v-tab-item value="tab-users">
@@ -52,7 +55,6 @@
     computed: {
       ...mapState({
         steps: state => state.flows.steps,
-        notifications: state => state.flows.notifications,
         flow: state => state.flows.selected.obj
       }),
       name() {

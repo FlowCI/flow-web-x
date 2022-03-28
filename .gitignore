@@ -7,4 +7,3 @@ coverage
 .yarn-cache
 deploy.sh
 .vscode/
-.run/

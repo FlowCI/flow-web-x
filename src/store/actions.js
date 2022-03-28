@@ -48,6 +48,7 @@ export default {
     rerun: 'jobs/rerun',
     cancel: 'jobs/cancel',
     list: 'jobs/list',
+    related: 'jobs/related',
     statusUpdate: 'jobs/statusUpdate',
     select: 'jobs/select',
     getYml: 'jobs/getYml',
@@ -63,8 +64,6 @@ export default {
     steps: {
       get: 'steps/get',
       update: 'steps/update',
-      getTasks: 'steps/getTasks',
-      updateTasks: 'steps/updateTasks',
     },
     logs: {
       push: 'logs/push',
@@ -100,8 +99,18 @@ export default {
     saveSmtp: 'configs/saveSmtp',
     saveText: 'configs/saveText',
     list: 'configs/list',
+    listSmtp: 'configs/listSmtp',
     get: 'configs/get',
     delete: 'configs/delete'
+  },
+
+  triggers: {
+    saveEmail: 'triggers/saveEmail',
+    saveWebhook: 'triggers/saveWebhook',
+    list: 'triggers/list',
+    get: 'triggers/get',
+    delete: 'triggers/delete',
+    deliveries: 'triggers/deliveries'
   },
 
   users: {
@@ -147,5 +156,11 @@ export default {
   settings: {
     get: 'settings/get',
     save: 'settings/save'
+  },
+
+  git: {
+    list: 'git/list',
+    save: 'git/save',
+    delete: 'git/delete'
   }
 }

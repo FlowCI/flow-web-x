@@ -38,11 +38,11 @@
       <profile-menu v-if="canDisplay"></profile-menu>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container fluid fill-height>
         <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
 
     <!--footer-->
     <v-footer class="caption" app>

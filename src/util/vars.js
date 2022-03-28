@@ -26,23 +26,23 @@ export default {
 
   git: {
     url: 'FLOWCI_GIT_URL',
-    branch: 'FLOWCI_GIT_BRANCH',
     credential: 'FLOWCI_GIT_CREDENTIAL',
+    branch: 'FLOWCI_GIT_BRANCH',
 
     source: 'FLOWCI_GIT_SOURCE',
     event: 'FLOWCI_GIT_EVENT',
-    author: 'FLOWCI_GIT_AUTHOR',
     compare_url: 'FLOWCI_GIT_COMPARE_URL',
 
-    commit: {
-      id: 'FLOWCI_GIT_COMMIT_ID',
+    push: {
+      author: 'FLOWCI_GIT_AUTHOR',
       message: 'FLOWCI_GIT_COMMIT_MESSAGE',
-      time: 'FLOWCI_GIT_COMMIT_TIME',
-      url: 'FLOWCI_GIT_COMMIT_URL',
-      number: 'FLOWCI_GIT_COMMIT_NUM'
+      branch: 'FLOWCI_GIT_BRANCH',
+      commit_total: 'FLOWCI_GIT_COMMIT_TOTAL',
+      commit_list: 'FLOWCI_GIT_COMMIT_LIST'
     },
 
     pr: {
+      author: 'FLOWCI_GIT_AUTHOR',
       title: 'FLOWCI_GIT_PR_TITLE',
       message: 'FLOWCI_GIT_PR_MESSAGE',
       url: 'FLOWCI_GIT_PR_URL',
@@ -54,6 +54,25 @@ export default {
       base_repo: 'FLOWCI_GIT_PR_BASE_REPO_NAME',
       base_branch: 'FLOWCI_GIT_PR_BASE_REPO_BRANCH',
       base_commit: 'FLOWCI_GIT_PR_BASE_REPO_COMMIT'
+    },
+
+    patchset: {
+      subject: 'FLOWCI_GIT_PATCHSET_SUBJECT',
+      message: 'FLOWCI_GIT_PATCHSET_MESSAGE',
+      project: 'FLOWCI_GIT_PATCHSET_PROJECT',
+      branch: 'FLOWCI_GIT_PATCHSET_BRANCH',
+      changeId: 'FLOWCI_GIT_PATCHSET_CHANGE_ID',
+      changeNum: 'FLOWCI_GIT_PATCHSET_CHANGE_NUM',
+      changeUrl: 'FLOWCI_GIT_PATCHSET_CHANGE_URL',
+      changeStatus: 'FLOWCI_GIT_PATCHSET_CHANGE_STATUS',
+      patchNum: 'FLOWCI_GIT_PATCHSET_PATCH_NUM',
+      patchUrl: 'FLOWCI_GIT_PATCHSET_PATCH_URL',
+      revision: 'FLOWCI_GIT_PATCHSET_PATCH_REVISION',
+      ref: 'FLOWCI_GIT_PATCHSET_PATCH_REF',
+      createAt: 'FLOWCI_GIT_PATCHSET_CREATE_TIME',
+      insertSize: 'FLOWCI_GIT_PATCHSET_INSERT_SIZE',
+      deleteSize: 'FLOWCI_GIT_PATCHSET_DELETE_SIZE',
+      author: 'FLOWCI_GIT_PATCHSET_AUTHOR'
     }
   }
 }

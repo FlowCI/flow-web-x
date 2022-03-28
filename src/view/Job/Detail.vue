@@ -92,7 +92,7 @@
         showTty: false,
         ttyPath: '',
         agentIcons: icons,
-        duration: '-',
+        duration: 'n/a',
         durationInterval: null,
       }
     },
@@ -110,7 +110,6 @@
     },
     destroyed() {
       unsubscribeTopic.steps(this.job.id)
-      unsubscribeTopic.tasks(this.job.id)
       unsubscribeTopic.logs(this.job.id)
     },
     computed: {
@@ -143,7 +142,6 @@
       // subscribe steps change when job been loaded
       job(obj) {
         subscribeTopic.steps(obj.id, this.$store)
-        subscribeTopic.tasks(obj.id, this.$store)
         subscribeTopic.logs(obj.id, this.$store)
       },
 
@@ -167,8 +165,8 @@
       load() {
         let payload = {flow: this.flow, buildNumber: this.number}
         this.$store.dispatch(actions.jobs.select, payload).then()
+        this.$store.dispatch(actions.jobs.related, payload).then()
         this.$store.dispatch(actions.jobs.steps.get, payload).then()
-        this.$store.dispatch(actions.jobs.steps.getTasks, payload).then()
         this.$store.dispatch(actions.jobs.reports.list, payload).then()
       },
 

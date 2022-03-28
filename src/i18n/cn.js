@@ -28,7 +28,7 @@ export default {
   edit: '编辑',
 
   createAdmin: {
-    created: '默认的管理员已经创建成功, 请用 {0} 登录'
+    created: '默认的管理员已经创建成功, 请用 <span class="font-weight-bold">{0}</span> 登录'
   },
 
   menu: {
@@ -42,7 +42,7 @@ export default {
 
   flow: {
     name: '工作流',
-    create: '创建工作流',
+    create: '创建一个工作流',
     search: '输入关键词搜索',
     settings: '设置',
     statistic: '统计',
@@ -60,7 +60,8 @@ export default {
     create_title_yml: '配置 YML',
     create_btn_finish: '完成创建',
     create_git_hint: '提示: Git 仓库可已在创建完成后配置',
-    create_blank_template: '不选择 (可稍后在 工作流 -> 设置 中配置)',
+    create_blank_template_title: '不使用模版',
+    create_blank_template_desc: '只创建一个 Flow， YAML 配置可稍后在 "工作流 -> 设置" 中配置',
 
     delete_btn: '删除当前 Flow',
     delete_desc: '删除当前 Flow 后无法恢复，请谨慎操作',
@@ -164,7 +165,15 @@ export default {
       secret: '秘钥管理',
       config: '配置管理',
       plugin: '插件',
-      system: '系统设置'
+      system: '系统设置',
+      trigger: '触发器',
+      git: 'Git 设置',
+    },
+
+    common: {
+      name_required: '请输入名称',
+      name_size: '名称长度应当在 2 - 20 字符',
+      name_rule: '名称只允许 a-z, A-Z, 0-9, _, -',
     },
 
     profile: {
@@ -174,6 +183,14 @@ export default {
 
     hint: {
       agent_disabled: '提示: 主机已禁用'
+    },
+
+    trigger: {
+      name: '触发器名称',
+      event: '触发事件',
+      category: '触发种类',
+      email_settings: '邮件通知配置',
+      webhook_settings: 'Webhook 配置'
     }
   },
 

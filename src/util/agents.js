@@ -51,7 +51,7 @@ export class AgentWrapper {
 
   constructor(agent) {
     this.agent = agent ? agent : emptyObject
-    this.descText = '-'
+    this.descText = 'n/a'
   }
 
   get isAgent() {
@@ -123,7 +123,7 @@ export class AgentWrapper {
   }
 
   get url() {
-    return this.agent.url ? this.agent.url : 'unknown'
+    return this.agent.url ? this.agent.url : 'n/a'
   }
 
   get jobId() {
@@ -176,7 +176,7 @@ export class AgentWrapper {
 
   fetchResource(field) {
     if (this.agent.resource[field] === 0) {
-      return '-'
+      return 'n/a'
     }
 
     return this.agent.resource[field]

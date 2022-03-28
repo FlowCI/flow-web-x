@@ -1,4 +1,5 @@
 import http from '../http'
+import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
 
 const state = {
@@ -13,7 +14,6 @@ const state = {
   itemsByCredential: [],
   users: [], // flow users
   steps: [], // flow steps from yml
-  notifications: [], // flow notification from yml
   templates: []
 }
 
@@ -162,7 +162,6 @@ const mutations = {
 
   setYmlObj (state, flowNode) {
     state.steps = flowNode.children
-    state.notifications = flowNode.notifications
   }
 }
 
@@ -192,7 +191,7 @@ const actions = {
       })
   },
 
-  async confirm ({commit}, {wrapper, desc}) {
+  async confirm ({commit}, {wrapper, title}) {
     let gitSettings = {
       gitUrl: wrapper.gitUrl,
       secret: wrapper.secret
@@ -205,7 +204,7 @@ const actions = {
           console.log('[DONE]: confirmed')
           commit('add', new FlowWrapper(flow))
         },
-        {desc}
+        {title}
       )
     }
 
@@ -320,7 +319,7 @@ const actions = {
     }
 
     return http.get(`flows/${name}/yml/default`, (base64Yml) => {
-      commit('setYml', atob(base64Yml))
+      commit('setYml', util.base64ToUtf8(base64Yml))
     })
   },
 
@@ -334,7 +333,7 @@ const actions = {
         commit('setYml', yml)
       },
       {
-        data: btoa(yml)
+        data: util.utf8ToBase64(yml)
       })
   },
 

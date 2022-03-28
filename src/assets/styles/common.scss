@@ -7,8 +7,16 @@
   width: 100%;
 }
 
+.top-border {
+  border-top: 1px solid #e1e4e8
+}
+
 .bottom-border {
   border-bottom: 1px solid #e1e4e8
+}
+
+.bottom-border-large {
+  border-bottom: 3px solid #BDBDBD
 }
 
 .left-border {
@@ -40,6 +48,19 @@
 .loading-anim {
   animation: loader 1s infinite;
   display: flex;
+}
+
+.v-subheader-thin {
+  padding: 0;
+  height: auto !important;
+}
+
+.if-overflow {
+  float: left;
+  width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @-moz-keyframes loader {

@@ -5,19 +5,17 @@
 <script>
 import CodeMirror from 'codemirror'
 import 'codemirror/mode/yaml/yaml'
+import "codemirror/mode/javascript/javascript"
 
 export default {
-  name: 'KubeConfigEditor',
+  name: 'DataEditor',
   props: {
-    /**
-     * Ex: {
-     *   content: {
-     *     data: 'xxx',
-     *   }
-     * }
-     */
-    model: {
-      type: Object,
+    value: {
+      type: String,
+      required: true
+    },
+    mode: {
+      type: String,
       required: true
     },
     isReadOnly: {
@@ -30,23 +28,29 @@ export default {
     return {
       CodeMirror,
       instance: null,
+      adaptor: this.value
     }
   },
   mounted() {
     this.instance = CodeMirror.fromTextArea(this.$refs.codemirror, {
       lineNumbers: true,
-      mode: 'yaml',
+      mode: this.mode,
       theme: 'base16-light',
       tabSize: 2,
       readOnly: this.isReadOnly
     })
 
-    this.instance.getDoc().setValue(this.model.content.data)
+    this.instance.getDoc().setValue(this.adaptor)
     this.instance.on('change', this.onChange)
+  },
+  watch: {
+    adaptor(val) {
+      this.$emit('input', val)
+    }
   },
   methods: {
     onChange(instance, data) {
-      this.model.content.data = instance.getValue()
+      this.adaptor = instance.getValue()
     }
   }
 }

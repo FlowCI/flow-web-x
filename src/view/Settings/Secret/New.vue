@@ -1,20 +1,21 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="9">
-        <v-form ref="nameForm" lazy-validation>
+    <v-form ref="nameForm" lazy-validation>
+      <v-row>
+        <v-col cols="9">
           <text-box label="Name"
                     :rules="nameRules"
                     v-model="name"
           ></text-box>
-        </v-form>
+          <text-select :items="categories"
+                       label="Category"
+                       v-model="category"
+          ></text-select>
+        </v-col>
+      </v-row>
+    </v-form>
 
-        <text-select :items="categories"
-                     label="Category"
-                     v-model="category"
-        ></text-select>
-      </v-col>
-    </v-row>
+    <v-divider></v-divider>
 
     <v-form ref="contentForm" lazy-validation>
       <v-row>
@@ -38,7 +39,7 @@
         </v-col>
 
         <v-col cols="9" v-if="isKubeconfig">
-          <kube-config-editor :model="instance"></kube-config-editor>
+          <data-editor v-model="instance.content.data" mode="yaml"></data-editor>
         </v-col>
       </v-row>
     </v-form>
@@ -63,7 +64,7 @@ import SshRsaEditor from '@/components/Common/SshRsaEditor'
 import AuthEditor from '@/components/Common/AuthEditor'
 import TokenEditor from '@/components/Common/TokenEditor'
 import AndroidSignEditor from '@/components/Settings/AndroidSignEditor'
-import KubeConfigEditor from '@/components/Settings/KubeConfigEditor'
+import DataEditor from '@/components/Settings/DataEditor'
 import SaveBtn from '@/components/Settings/SaveBtn'
 import BackBtn from '@/components/Settings/BackBtn'
 import TextBox from '@/components/Common/TextBox'
@@ -73,11 +74,11 @@ import {
   CategoriesSelection,
   CATEGORY_ANDROID_SIGN,
   CATEGORY_AUTH,
+  CATEGORY_KUBE_CONFIG,
   CATEGORY_SSH_RSA,
-  CATEGORY_TOKEN,
-  CATEGORY_KUBE_CONFIG
+  CATEGORY_TOKEN
 } from '@/util/secrets'
-import { secretAndConfigNameRules } from '@/util/rules'
+import {secretAndConfigNameRules} from '@/util/rules'
 
 export default {
   name: 'SettingsSecretNew',
@@ -90,7 +91,7 @@ export default {
     SaveBtn,
     BackBtn,
     AndroidSignEditor,
-    KubeConfigEditor
+    DataEditor
   },
   data() {
     return {
@@ -186,30 +187,23 @@ export default {
         name: this.name
       }
 
+      let action = ''
+
       if (this.isSshRsa) {
         payload.publicKey = this.instance.pair.publicKey
         payload.privateKey = this.instance.pair.privateKey
-        this.$store.dispatch(actions.secrets.createRsa, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createRsa
       }
 
       if (this.isAuth) {
         payload.username = this.instance.pair.username
         payload.password = this.instance.pair.password
-        this.$store.dispatch(actions.secrets.createAuth, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createAuth
       }
 
       if (this.isToken) {
         payload.token = this.instance.token.data
-        this.$store.dispatch(actions.secrets.createToken, payload).then(() => {
-          this.onBackClick()
-        })
-        return
+        action = actions.secrets.createToken
       }
 
       if (this.isAndroidSign) {
@@ -221,22 +215,19 @@ export default {
 
         payload.keyStore = this.instance.keyStore
         payload.option = option
-
-        this.$store.dispatch(actions.secrets.createAndroidSign, payload).then(() => {
-          this.onBackClick()
-        })
-
-        return
+        action = actions.secrets.createAndroidSign
       }
 
       if (this.isKubeconfig) {
         payload.content = this.instance.content.data
-        this.$store.dispatch(actions.secrets.createKubeConfig, payload).then(() => {
-          this.onBackClick()
-        }).catch((e) => {
-          this.error = e.message
-        })
+        action = actions.secrets.createKubeConfig
       }
+
+      this.$store.dispatch(action, payload).then(() => {
+        this.onBackClick()
+      }).catch((e) => {
+        this.error = e.message
+      })
     }
   }
 }

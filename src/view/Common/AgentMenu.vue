@@ -164,15 +164,7 @@ export default {
 
     loadFlowNameAndBuildNumber(wrapper) {
       const callback = (obj) => {
-        let desc = '-'
-
-        // find flow name since name could be change..
-        for (let flow of this.flows) {
-          if (flow.id === obj.flowId) {
-            desc = `${flow.name}/#${obj.buildNumber}`
-            break
-          }
-        }
+        let desc = `${obj.flowName}/#${obj.buildNumber}`
 
         // update item list
         for (let item of this.items) {

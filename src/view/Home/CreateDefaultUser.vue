@@ -59,7 +59,7 @@
     >
       <v-card>
         <v-card-text class="pt-3">
-          <span :class="message.color">{{ message.text }}</span>
+          <p :class="message.color" v-html="message.text"></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

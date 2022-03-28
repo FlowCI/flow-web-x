@@ -1,6 +1,6 @@
 import http from '../http'
 import {browserDownload} from '../util'
-import vars from '../../util/vars'
+import util from '@/util/common'
 
 const emptyFunc = () => {
 }
@@ -19,7 +19,8 @@ const state = {
   latest: [], // latest job object array
   reports: [],
   reportUrlPath: '',
-  artifacts: []
+  artifacts: [],
+  relatedJobs: [],
 }
 
 const mutations = {
@@ -42,6 +43,10 @@ const mutations = {
     state.pagination.page = page.number
     state.pagination.size = page.size
     state.pagination.total = page.totalElements
+  },
+
+  related(state, jobs) {
+    state.relatedJobs = jobs
   },
 
   setLatest(state, job) {
@@ -114,7 +119,7 @@ const actions = {
   getYml({commit}, {flow, buildNumber}) {
     const url = `jobs/${flow}/${buildNumber}/yml`
     return http.get(url, (base64Yml) => {
-      commit('updateYml', atob(base64Yml))
+      commit('updateYml', util.base64ToUtf8(base64Yml))
     })
   },
 
@@ -122,6 +127,7 @@ const actions = {
     const url = `jobs/${jobId}/desc`
     return http.get(url, onCallback)
   },
+
   /**
    * Start a new job
    */
@@ -165,6 +171,12 @@ const actions = {
         size
       }
     )
+  },
+
+  related({commit, state}, {flow, buildNumber}) {
+    return http.get(`jobs/${flow}/${buildNumber}/related`, (jobs) => {
+      commit('related', jobs)
+    })
   },
 
   /**

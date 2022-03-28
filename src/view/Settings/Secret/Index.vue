@@ -85,7 +85,7 @@
         this.$router.push({
           name: 'SettingsSecretEdit',
           params: {
-            secretObj: secret
+            name: secret.name
           }
         })
       }

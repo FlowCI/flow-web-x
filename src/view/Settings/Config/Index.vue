@@ -12,8 +12,8 @@
           <v-icon small class="mr-2">{{ getCategoryData(item.category).icon }}</v-icon>
           <span class="caption">{{ getCategoryData(item.category).name }}</span>
         </td>
-        <td>{{ timeFormatInMins(item.createdAt) }}</td>
-        <td>{{ item.createdBy }}</td>
+        <td>{{ timeFormatInMins(item.updatedAt) }}</td>
+        <td>{{ item.updatedBy }}</td>
         <td>
           <v-btn icon class="ma-0" @click="onEditClick(item)">
             <v-icon small>mdi-pencil</v-icon>
@@ -47,8 +47,8 @@
         headers: [
           {text: 'Name', value: 'name', align: 'left'},
           {text: 'Category', value: 'category'},
-          {text: 'Created At', value: 'createdAt'},
-          {text: 'Created By', value: 'createdBy'},
+          {text: 'Updated At', value: 'updatedAt'},
+          {text: 'Updated By', value: 'updatedBy'},
           {text: '', align: 'right'}
         ]
       }

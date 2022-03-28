@@ -1,9 +1,13 @@
 <template>
   <div class="text-box">
-    <v-subheader>{{ label }}</v-subheader>
+    <v-subheader>
+      <span>{{ label }}</span>
+      <span v-if="desc" class="ml-2">({{ desc }})</span>
+    </v-subheader>
     <v-text-field
         solo
         dense
+        :disabled="disable"
         :readonly="readonly"
         v-model="adaptor"
         :rules="rules"
@@ -26,6 +30,10 @@ export default {
       type: String,
       required: true
     },
+    desc: {
+      type: String,
+      required: false
+    },
     value: {
       type: [Number, String]
     },
@@ -35,6 +43,11 @@ export default {
       default: ''
     },
     readonly: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    disable: {
       type: Boolean,
       required: false,
       default: false
@@ -120,11 +133,18 @@ export default {
   .input-focus {
     background-color: white !important;
     border: 1px solid #64B5F6 !important;
+    -webkit-box-shadow: inset 0 1px 0 rgba(180, 206, 241, 1) !important;
     box-shadow: 0 0 6px rgb(180, 206, 241, 1) !important;
   }
 
   .v-text-field__details {
     margin-bottom: 0 !important;
+  }
+
+  .v-input--is-disabled {
+    .v-input__slot {
+      border: 1px solid #BDBDBD !important;
+    }
   }
 }
 </style>

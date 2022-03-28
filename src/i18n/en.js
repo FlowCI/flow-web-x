@@ -28,7 +28,7 @@ export default {
   edit: 'Edit',
 
   createAdmin: {
-    created: 'The default admin user is created, please login with email {0}'
+    created: 'The default admin user is created, please login with email: <span class="font-weight-bold">{0}</span>'
   },
 
   menu: {
@@ -42,7 +42,7 @@ export default {
 
   flow: {
     name: 'flow',
-    create: 'Create Flow',
+    create: 'Create a Flow',
     search: 'Search by key words',
     settings: 'Settings',
     statistic: 'Statistic',
@@ -60,7 +60,8 @@ export default {
     create_title_yml: 'Config YML',
     create_btn_finish: 'Finish',
     create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
-    create_blank_template: 'blank (updated at Flows -> Settings later)',
+    create_blank_template_title: 'Do not use template',
+    create_blank_template_desc: 'Create a flow only, the YAML configuration could be defined from "flow -> settings" later',
 
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',
@@ -160,13 +161,14 @@ export default {
   settings: {
     li: {
       profile: 'Profile',
-      users: 'User',
-      security: 'Security',
-      agent: 'Agent',
-      secret: 'Secret',
-      config: 'Config',
-      plugin: 'Plugin',
-      system: 'System'
+      users: 'Users',
+      agent: 'Agents',
+      secret: 'Secrets',
+      config: 'Configs',
+      plugin: 'Plugins',
+      system: 'System',
+      git: 'Git',
+      trigger: 'Triggers'
     },
 
     profile: {
@@ -176,6 +178,14 @@ export default {
 
     hint: {
       agent_disabled: 'Hint: The host is disabled'
+    },
+
+    trigger: {
+      name: 'Trigger name',
+      event: 'Event',
+      category: 'Category',
+      email_settings: 'Email Settings',
+      webhook_settings: 'Webhook Settings'
     }
   },
 

@@ -15,21 +15,16 @@
       </v-row>
     </v-form>
 
+    <v-divider></v-divider>
+
     <v-form ref="contentForm" lazy-validation>
       <v-row v-if="isSmtpConfig">
-        <v-col cols="9">
-          <v-divider></v-divider>
-        </v-col>
         <v-col cols="9">
           <config-smtp :config="config"></config-smtp>
         </v-col>
       </v-row>
 
       <v-row v-if="isTextConfig">
-        <v-col cols="9">
-          <v-divider></v-divider>
-        </v-col>
-
         <v-col cols="9">
           <config-free-text :config="config"></config-free-text>
         </v-col>
@@ -47,7 +42,7 @@
 
 <script>
   import actions from '@/store/actions'
-  import ConfigSmtp from './Smtp'
+  import ConfigSmtp from './SmtpSettings'
   import ConfigFreeText from './FreeText'
   import TextBox from '@/components/Common/TextBox'
   import TextSelect from '@/components/Common/TextSelect'
@@ -114,7 +109,7 @@
     },
     methods: {
       onBackClick() {
-        this.$router.push('/settings/configs')
+        this.$router.replace('/settings/configs')
       },
 
       onSaveClick() {

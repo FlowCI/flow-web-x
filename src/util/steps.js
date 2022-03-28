@@ -61,14 +61,14 @@ export class StepWrapper {
 
   get startAt() {
     if (!this.step.startAt) {
-      return '-'
+      return 'n/a'
     }
     return moment(this.step.startAt)
   }
 
   get finishAt() {
     if (!this.step.finishAt) {
-      return '-'
+      return 'n/a'
     }
     return moment(this.step.finishAt)
   }
@@ -158,7 +158,7 @@ export class StepWrapper {
     if (this.step.startAt && this.step.finishAt) {
       return timeDurationInSeconds(this.step.finishAt, this.step.startAt)
     }
-    return '-'
+    return 'n/a'
   }
 
   get exitCode() {
@@ -235,7 +235,7 @@ export const mapping = {
   },
 
   [STATUS_WAITING_AGENT]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'waiting for agent',
     config: {
       style: {
@@ -245,7 +245,7 @@ export const mapping = {
   },
 
   [STATUS_RUNNING]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'running',
     config: {
       style: {
@@ -255,7 +255,7 @@ export const mapping = {
   },
 
   [STATUS_KILLING]: {
-    icon: 'mdi-settings rotate blue--text',
+    icon: 'mdi-cog rotate blue--text',
     text: 'killing',
     config: {
       style: {
