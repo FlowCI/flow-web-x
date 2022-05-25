@@ -63,6 +63,8 @@ export default {
     create_blank_template_title: '不使用模版',
     create_blank_template_desc: '只创建一个 Flow， YAML 配置可稍后在 "工作流 -> 设置" 中配置',
 
+    update_btn: '更新设置',
+
     delete_btn: '删除当前 Flow',
     delete_desc: '删除当前 Flow 后无法恢复，请谨慎操作',
 

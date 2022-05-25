@@ -63,6 +63,8 @@ export default {
     create_blank_template_title: 'Do not use template',
     create_blank_template_desc: 'Create a flow only, the YAML configuration could be defined from "flow -> settings" later',
 
+    update_btn: 'Update Settings',
+
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',
 
