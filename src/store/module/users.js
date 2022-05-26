@@ -2,6 +2,7 @@ import http from '../http'
 import md5 from 'blueimp-md5'
 
 const state = {
+  actions: [],
   items: [], // user list
   total: 0
 }
@@ -17,6 +18,10 @@ const mutations = {
     state.total += 1
   },
 
+  saveActions(state, actions) {
+    state.actions = actions
+  },
+
   updateRole (state, {email, role}) {
     for (let item of state.items) {
       if (item.email === email) {
@@ -28,6 +33,13 @@ const mutations = {
 }
 
 const actions = {
+  async listActions({commit}) {
+    const onSuccess = (actions) => {
+      commit('saveActions', actions)
+    }
+    await http.get('users/actions', onSuccess)
+  },
+
   hasDefault({commit}, {onSuccess}) {
     return http.get('users/default', onSuccess)
   },
