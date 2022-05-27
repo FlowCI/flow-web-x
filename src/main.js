@@ -66,6 +66,14 @@ Vue.mixin({
     }
   },
   methods: {
+    hasPermission(role) {
+      if (this.user) {
+        return this.user.role === role
+      }
+
+      return false
+    },
+
     redirectToLogin() {
       if (!this.isLoginPage) {
         this.$router.replace('/login')

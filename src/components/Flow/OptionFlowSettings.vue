@@ -92,6 +92,7 @@
         <v-btn color="primary"
                @click="onUpdateClick"
                :loading="loading"
+               :disabled="!hasPermission('Admin')"
         >{{ $t('flow.update_btn') }}
         </v-btn>
       </v-col>
