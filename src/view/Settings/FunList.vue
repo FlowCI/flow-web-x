@@ -26,31 +26,43 @@
     data() {
       return {
         selected: 0,
-        items: [
+        itemsForDeveloper: [
           {
             i18n: 'settings.li.profile',
             path: 'profile',
-            icon: 'mdi-account-circle-outline'
+            icon: 'mdi-account-circle-outline',
+          },
+          {
+            i18n: 'settings.li.plugin',
+            path: 'plugins',
+            icon: 'mdi-puzzle-outline'
+          },
+        ],
+        itemsForAdmin: [
+          {
+            i18n: 'settings.li.profile',
+            path: 'profile',
+            icon: 'mdi-account-circle-outline',
           },
           {
             i18n: 'settings.li.users',
             path: 'users',
-            icon: 'mdi-account-multiple-outline'
+            icon: 'mdi-account-multiple-outline',
           },
           {
             i18n: 'settings.li.agent',
             path: 'agents',
-            icon: 'mdi-server'
+            icon: 'mdi-server',
           },
           {
             i18n: 'settings.li.secret',
             path: 'secrets',
-            icon: 'mdi-key'
+            icon: 'mdi-key',
           },
           {
             i18n: 'settings.li.config',
             path: 'configs',
-            icon: 'mdi-code-braces'
+            icon: 'mdi-code-braces',
           },
           {
             i18n: 'settings.li.plugin',
@@ -60,19 +72,27 @@
           {
             i18n: 'settings.li.trigger',
             path: 'triggers',
-            icon: 'mdi-bell-outline'
+            icon: 'mdi-bell-outline',
           },
           {
             i18n: 'settings.li.git',
             path: 'git',
-            icon: 'mdi-git'
+            icon: 'mdi-git',
           },
           {
             i18n: 'settings.li.system',
             path: 'system',
-            icon: 'mdi-cog'
+            icon: 'mdi-cog',
           }
         ]
+      }
+    },
+    computed: {
+      items() {
+        if (this.hasPermission('Admin')) {
+          return this.itemsForAdmin
+        }
+        return this.itemsForDeveloper
       }
     },
     methods: {

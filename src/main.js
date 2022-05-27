@@ -67,7 +67,11 @@ Vue.mixin({
   },
   methods: {
     hasPermission(role) {
-      return this.user.role === role
+      if (this.user) {
+        return this.user.role === role
+      }
+
+      return false
     },
 
     redirectToLogin() {
