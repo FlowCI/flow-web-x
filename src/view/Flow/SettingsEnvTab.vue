@@ -3,7 +3,7 @@
     <v-row align="center" no-gutters>
       <v-col>
         <span class="font-weight-bold title">Variables</span>
-        <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar">
+        <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar" v-if="hasPermission('Admin')">
           <v-icon class="font-weight-bold">mdi-plus-box</v-icon>
         </v-btn>
         <v-divider></v-divider>
@@ -64,7 +64,7 @@
         editable: true
       },
 
-      localVars: []
+      localVars: [],
     }),
     mounted() {
       this.loadLocalVars(this.flow)
@@ -81,13 +81,17 @@
     },
     methods: {
       loadLocalVars(flow) {
+        let permission = this.hasPermission('Admin')
+
         if (!flow.locally || Object.keys(flow.locally).length === 0) {
-          const copy = _.cloneDeep(this.empty)
-          this.localVars = [copy]
-          return
+          if (permission) {
+            const copy = _.cloneDeep(this.empty)
+            this.localVars = [copy]
+            return
+          }
         }
 
-        this.localVars = this.toVarObjectList(flow.locally, false)
+        this.localVars = this.toVarObjectList(flow.locally, permission)
       },
 
       toVarObjectList(varsMap, edit) {

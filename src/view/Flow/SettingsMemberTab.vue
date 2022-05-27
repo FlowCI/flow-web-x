@@ -16,7 +16,7 @@
             <v-list-item-subtitle v-text="item.role"></v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn icon @click="onAddClick(item)">
+            <v-btn icon @click="onAddClick(item)" v-if="hasPermission('Admin')">
               <v-icon small>mdi-plus-outline</v-icon>
             </v-btn>
           </v-list-item-action>
@@ -38,7 +38,7 @@
             <td class="text-xs-left">{{ item.email }}</td>
             <td>{{ item.role }}</td>
             <td class="text-xs-right">
-              <v-btn text icon class="ma-0" @click="onRemoveClick(item)">
+              <v-btn text icon class="ma-0" @click="onRemoveClick(item)" v-if="hasPermission('Admin')">
                 <v-icon small>mdi-trash-can-outline</v-icon>
               </v-btn>
             </td>

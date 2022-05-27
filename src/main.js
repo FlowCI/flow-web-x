@@ -67,7 +67,6 @@ Vue.mixin({
   },
   methods: {
     hasPermission(role) {
-      console.log(this.user.role)
       return this.user.role === role
     },
 

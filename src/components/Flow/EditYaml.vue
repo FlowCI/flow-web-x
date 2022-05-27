@@ -21,7 +21,9 @@
              tile
              class="action-btn"
              @click="onResetClick"
-             :disabled="!isCodeChange">
+             :disabled="!isCodeChange"
+             v-if="hasPermission('Admin')"
+      >
         {{ $t('reset') }}
       </v-btn>
 
@@ -29,7 +31,9 @@
              tile
              class="action-btn"
              @click="onSaveClick"
-             :disabled="!isCodeChange">
+             :disabled="!isCodeChange"
+             v-if="hasPermission('Admin')"
+      >
         {{ $t('save') }}
       </v-btn>
 
@@ -64,7 +68,7 @@
         lineNumbers: 'on',
         roundedSelection: false,
         scrollBeyondLastLine: false,
-        readOnly: false,
+        readOnly: !this.hasPermission('Admin'),
         automaticLayout: true,
         theme: 'vs-dark'
       })
