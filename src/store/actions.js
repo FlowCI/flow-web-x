@@ -117,7 +117,6 @@ export default {
     hasDefault: 'users/hasDefault',
     createDefault: 'users/createDefault',
 
-    actions: `users/listActions`,
     listAll: 'users/listAll',
     create: 'users/create',
     changePassword: 'users/changePassword',

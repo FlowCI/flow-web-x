@@ -5,7 +5,7 @@
            small
            @click="onTestClick"
            :loading="loading"
-           :disabled="loading"
+           :disabled="loading || disabled"
     >
       {{ $t('test') }}
 
@@ -40,6 +40,12 @@
         type: Function,
         default () {
           return true
+        }
+      },
+      disabled: {
+        type: Boolean,
+        default() {
+          return false;
         }
       }
     },

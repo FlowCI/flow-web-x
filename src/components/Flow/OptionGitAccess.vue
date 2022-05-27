@@ -43,7 +43,10 @@
 
     <v-row>
       <v-col cols="11">
-        <git-test-btn :wrapper="wrapper" :onBeforeTest="onTestClick"></git-test-btn>
+        <git-test-btn :wrapper="wrapper"
+                      :onBeforeTest="onTestClick"
+                      :disabled="!hasPermission('Admin')"
+        ></git-test-btn>
       </v-col>
     </v-row>
   </v-form>

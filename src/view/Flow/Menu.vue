@@ -47,7 +47,7 @@
 
     <!-- button to create-->
     <v-list-item>
-      <v-list-item-content class="btn-create">
+      <v-list-item-content class="btn-create" v-if="hasPermission('Admin')">
         <flow-create-dialog></flow-create-dialog>
       </v-list-item-content>
     </v-list-item>

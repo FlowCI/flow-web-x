@@ -122,10 +122,6 @@
         subscribeTopic.jobs(this.$store)
         subscribeTopic.hosts(this.$store)
 
-        this.$store.dispatch(actions.users.actions).catch((e) => {
-          console.log(e)
-        })
-
         this.$store.dispatch(actions.settings.get).catch((e) => {
           console.log(e)
         })

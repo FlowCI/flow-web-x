@@ -30,7 +30,7 @@
     </v-row>
 
     <!-- Danger Zone -->
-    <v-row no-gutters>
+    <v-row no-gutters v-if="hasPermission('Admin')">
       <v-col cols="12" class="mt-4 mb-1">
         <span class="font-weight-black title">Danger Zone</span>
       </v-col>
