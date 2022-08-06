@@ -1,75 +1,105 @@
 <template>
-  <v-list class="flow-menu">
-    <v-subheader class="title">
+  <v-card class="elevation-0 flow-menu">
+    <v-sheet class="pa-3 grey lighten-3">
       <v-text-field
-          :placeholder="$t('flow.search')"
-          single-line
-          append-icon="mdi-magnify"
-          v-model="searchVal"/>
-    </v-subheader>
+          v-model="search"
+          :label="$t('flow.search')"
+          flat
+          solo
+          hide-details
+          clearable
+          clear-icon="mdi-close-circle-outline"
+      ></v-text-field>
+    </v-sheet>
 
-    <v-list-item-group v-model="selected" class="group">
-      <v-list-item v-for="item in items"
-                   :key="item.id"
-                   class="mx-1 mb-2 pa-0 item"
-                   @click="onItemClick(item)">
-        <div :class="['status', 'mr-2', item.successRateColor]"></div>
+    <v-card-text class="px-1">
+      <v-treeview
+          activatable
+          hoverable
+          item-key="id"
+          :items="items"
+          :search="search"
+          :filter="filter"
+          @update:active="onItemClick"
+      >
+        <template v-slot:prepend="{ item }">
+          <v-icon :color="item.successRateColor">mdi-alpha-f</v-icon>
+        </template>
 
-        <v-list-item-content>
-          <v-list-item-title>
-            <span class="body-2 font-weight-bold">{{ item.name }}</span>
-            <v-tooltip bottom v-if="item.cron">
-              <template v-slot:activator="{ on }">
-                <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>
-              </template>
-              <span class="caption">{{ item.cron }}</span>
-              <span class="caption ml-1">({{ getCronDesc(item.cron, $i18n.locale) }})</span>
-            </v-tooltip>
-          </v-list-item-title>
-        </v-list-item-content>
+        <template v-slot:label="{ item }">
+          <a>{{ item.name }}</a>
+        </template>
 
-        <v-list-item-icon>
-          <span class="caption">#{{ item.latestJob.buildNumber }}</span>
-        </v-list-item-icon>
+      </v-treeview>
+    </v-card-text>
+  </v-card>
 
-        <v-progress-linear
-            v-if="item.latestJob.isRunning"
-            :color="item.successRateColor"
-            buffer-value="100"
-            height="2"
-            background-opacity="0.3"
-            striped
-            indeterminate
-            class="progressbar"
-        ></v-progress-linear>
-      </v-list-item>
-    </v-list-item-group>
 
-    <!-- button to create-->
-    <v-list-item>
-      <v-list-item-content class="btn-create" v-if="hasPermission('Admin')">
-        <flow-create-dialog></flow-create-dialog>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+<!--  <v-list class="flow-menu">-->
+
+
+<!--    <v-list-item-group v-model="selected" class="group">-->
+<!--      <v-list-item v-for="item in items"-->
+<!--                   :key="item.id"-->
+<!--                   class="mx-1 mb-2 pa-0 item"-->
+<!--                   @click="onItemClick(item)">-->
+<!--        <div :class="['status', 'mr-2', item.successRateColor]"></div>-->
+
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>-->
+<!--            <span class="body-2 font-weight-bold">{{ item.name }}</span>-->
+<!--            <v-tooltip bottom v-if="item.cron">-->
+<!--              <template v-slot:activator="{ on }">-->
+<!--                <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>-->
+<!--              </template>-->
+<!--              <span class="caption">{{ item.cron }}</span>-->
+<!--              <span class="caption ml-1">({{ getCronDesc(item.cron, $i18n.locale) }})</span>-->
+<!--            </v-tooltip>-->
+<!--          </v-list-item-title>-->
+<!--        </v-list-item-content>-->
+
+<!--        <v-list-item-icon>-->
+<!--          <span class="caption">#{{ item.latestJob.buildNumber }}</span>-->
+<!--        </v-list-item-icon>-->
+
+<!--        <v-progress-linear-->
+<!--            v-if="item.latestJob.isRunning"-->
+<!--            :color="item.successRateColor"-->
+<!--            buffer-value="100"-->
+<!--            height="2"-->
+<!--            background-opacity="0.3"-->
+<!--            striped-->
+<!--            indeterminate-->
+<!--            class="progressbar"-->
+<!--        ></v-progress-linear>-->
+<!--      </v-list-item>-->
+<!--    </v-list-item-group>-->
+
+<!--    &lt;!&ndash; button to create&ndash;&gt;-->
+<!--    <v-list-item>-->
+<!--      <v-list-item-content class="btn-create" v-if="hasPermission('Admin')">-->
+<!--        <flow-create-dialog></flow-create-dialog>-->
+<!--      </v-list-item-content>-->
+<!--    </v-list-item>-->
+<!--  </v-list>-->
 </template>
 
 <script>
 import {getCronDesc} from '@/util/flows'
 import {mapState} from 'vuex'
-import FlowCreateDialog from './CreateDialog'
+// import FlowCreateDialog from './CreateDialog'
 import actions from '@/store/actions'
 
 export default {
   name: 'FlowMenu',
   components: {
-    FlowCreateDialog
+    // FlowCreateDialog
   },
   data() {
     return {
-      getCronDesc,
-      searchVal: '',
+      search: null,
       items: [],
+      mapping: {}
     }
   },
   mounted() {
@@ -88,25 +118,14 @@ export default {
       return this.$route.params.id
     },
 
-    selected: {
-      get() {
-        for (let i = 0; i < this.items.length; i++) {
-          const item = this.items[i]
-          if (item.name === this.current) {
-            return i
-          }
-        }
-        return 0
-      },
-
-      set(newValue) {
-
-      }
+    filter () {
+      return (item, search, textKey) => (item[textKey] || '').toLowerCase().indexOf((search || '').toLowerCase()) > -1
     }
   },
   watch: {
     flows(items) {
       this.items = items
+      this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
     },
@@ -124,20 +143,24 @@ export default {
       deep: true,
       immediate: true
     },
-
-    searchVal(after) {
-      this.querySelections(after)
-    }
   },
   methods: {
-    onItemClick(flow) {
-      this.$router.push({path: `/flows/${flow.name}/jobs`})
+    createItemIdNameMapping(items) {
+      this.mapping = {}
+      for (let flow of items) {
+        this.mapping[flow.id] = flow
+      }
     },
 
-    querySelections(v) {
-      this.items = this.items.filter(e => {
-        return (e.name || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-      })
+    onItemClick(selection) {
+      if (selection.length === 0) {
+        // no changes
+        return
+      }
+
+      const flowId = selection[0]
+      const flow = this.mapping[flowId]
+      this.$router.push({path: `/flows/${flow.name}/jobs`})
     },
 
     fetchLatestStatus(items) {
@@ -184,41 +207,15 @@ export default {
 
 <style lang="scss">
 .flow-menu {
-  .title {
-    max-height: 80px;
-    min-height: 80px;
-  }
-
-  .status {
-    position: relative;
-    min-width: 6px;
-    max-width: 6px;
-    min-height: 50px;
-    max-height: 50px;
-  }
 
   .btn-create {
     align-items: center;
-  }
-
-  .v-list-item {
-    min-height: 50px;
-    max-height: 50px;
   }
 
   .progressbar {
     position: absolute;
     top: 49px;
     bottom: 0;
-  }
-
-  .item {
-    background: #FFFFFF;
-    border-bottom: 1px solid #F5F5F5;
-  }
-
-  .v-list-item__icon {
-    min-width: 32px !important;
   }
 }
 </style>
