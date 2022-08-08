@@ -12,18 +12,25 @@
       ></v-text-field>
     </v-sheet>
 
-    <v-card-text class="px-1">
+    <v-card-text class="px-0">
       <v-treeview
+          :dense="true"
           activatable
           hoverable
           item-key="id"
+          expand-icon="mdi-chevron-down"
           :items="items"
           :search="search"
           :filter="filter"
+          :open.sync="openIds"
           @update:active="onItemClick"
       >
-        <template v-slot:prepend="{ item }">
-          <v-icon :color="item.successRateColor">mdi-alpha-f</v-icon>
+        <template v-slot:prepend="{ item, open }">
+          <v-icon small v-if="item.children && item.children.length > 0">
+            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+          </v-icon>
+
+          <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
         </template>
 
         <template v-slot:label="{ item }">
@@ -33,55 +40,6 @@
       </v-treeview>
     </v-card-text>
   </v-card>
-
-
-<!--  <v-list class="flow-menu">-->
-
-
-<!--    <v-list-item-group v-model="selected" class="group">-->
-<!--      <v-list-item v-for="item in items"-->
-<!--                   :key="item.id"-->
-<!--                   class="mx-1 mb-2 pa-0 item"-->
-<!--                   @click="onItemClick(item)">-->
-<!--        <div :class="['status', 'mr-2', item.successRateColor]"></div>-->
-
-<!--        <v-list-item-content>-->
-<!--          <v-list-item-title>-->
-<!--            <span class="body-2 font-weight-bold">{{ item.name }}</span>-->
-<!--            <v-tooltip bottom v-if="item.cron">-->
-<!--              <template v-slot:activator="{ on }">-->
-<!--                <v-icon small class="mx-1" v-on="on">mdi-alarm</v-icon>-->
-<!--              </template>-->
-<!--              <span class="caption">{{ item.cron }}</span>-->
-<!--              <span class="caption ml-1">({{ getCronDesc(item.cron, $i18n.locale) }})</span>-->
-<!--            </v-tooltip>-->
-<!--          </v-list-item-title>-->
-<!--        </v-list-item-content>-->
-
-<!--        <v-list-item-icon>-->
-<!--          <span class="caption">#{{ item.latestJob.buildNumber }}</span>-->
-<!--        </v-list-item-icon>-->
-
-<!--        <v-progress-linear-->
-<!--            v-if="item.latestJob.isRunning"-->
-<!--            :color="item.successRateColor"-->
-<!--            buffer-value="100"-->
-<!--            height="2"-->
-<!--            background-opacity="0.3"-->
-<!--            striped-->
-<!--            indeterminate-->
-<!--            class="progressbar"-->
-<!--        ></v-progress-linear>-->
-<!--      </v-list-item>-->
-<!--    </v-list-item-group>-->
-
-<!--    &lt;!&ndash; button to create&ndash;&gt;-->
-<!--    <v-list-item>-->
-<!--      <v-list-item-content class="btn-create" v-if="hasPermission('Admin')">-->
-<!--        <flow-create-dialog></flow-create-dialog>-->
-<!--      </v-list-item-content>-->
-<!--    </v-list-item>-->
-<!--  </v-list>-->
 </template>
 
 <script>
@@ -98,8 +56,16 @@ export default {
   data() {
     return {
       search: null,
+      rootItem: {
+        id: "root_flow",
+        name: "flows",
+        open: true,
+        children: []
+      },
+      openIds: [],
       items: [],
-      mapping: {}
+      mappingWithId: {},
+      mappingWithName: {}
     }
   },
   mounted() {
@@ -120,11 +86,14 @@ export default {
 
     filter () {
       return (item, search, textKey) => (item[textKey] || '').toLowerCase().indexOf((search || '').toLowerCase()) > -1
-    }
+    },
   },
   watch: {
     flows(items) {
-      this.items = items
+      this.items = [this.rootItem]
+      this.rootItem.children = items
+      this.openIds = ["root_flow"]
+
       this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
@@ -146,9 +115,15 @@ export default {
   },
   methods: {
     createItemIdNameMapping(items) {
-      this.mapping = {}
+      this.mappingWithId = {}
+      this.mappingWithName = {}
+
+      this.mappingWithId[this.rootItem.id] = this.rootItem
+      this.mappingWithName[this.rootItem.name] = this.rootItem
+
       for (let flow of items) {
-        this.mapping[flow.id] = flow
+        this.mappingWithId[flow.id] = flow
+        this.mappingWithId[flow.id] = flow
       }
     },
 
@@ -159,7 +134,11 @@ export default {
       }
 
       const flowId = selection[0]
-      const flow = this.mapping[flowId]
+      if (flowId === "root_flow") {
+        return
+      }
+
+      const flow = this.mappingWithId[flowId]
       this.$router.push({path: `/flows/${flow.name}/jobs`})
     },
 
@@ -216,6 +195,21 @@ export default {
     position: absolute;
     top: 49px;
     bottom: 0;
+  }
+
+  .v-treeview-node__root {
+    .v-treeview-node__toggle {
+      width: 18px;
+      height: 18px;
+    }
+
+    .v-treeview-node__prepend {
+      margin-right: 0;
+    }
+
+    .v-treeview-node__level {
+      width: 16px
+    }
   }
 }
 </style>
