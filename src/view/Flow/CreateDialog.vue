@@ -1,12 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-    <template v-slot:activator="{ on }">
-      <v-btn small outlined v-on="on" block color="primary">
-        {{ $t('flow.create') }}
-        <v-icon small class="ml-1">flow-icon-control_point</v-icon>
-      </v-btn>
-    </template>
-
     <v-card>
       <!-- toolbar -->
       <v-toolbar dark color="primary">

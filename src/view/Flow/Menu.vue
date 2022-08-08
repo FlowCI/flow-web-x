@@ -12,6 +12,47 @@
       ></v-text-field>
     </v-sheet>
 
+    <v-card-title>
+      <a>flows</a>
+      <v-spacer></v-spacer>
+      <v-menu bottom
+              offset-y
+              rounded
+              v-if="hasPermission('Admin')"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+              dark
+              icon
+              v-bind="attrs"
+              v-on="on"
+          >
+            <v-icon color="primary">mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list dense>
+          <v-list-item link @click="onCreateFlow()">
+            <v-list-item-icon class="mr-1">
+              <v-icon>mdi-alpha-f</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title class="ml-1">
+              <v-list-item-title v-text="$t('flow.create')"></v-list-item-title>
+            </v-list-item-title>
+          </v-list-item>
+
+          <v-list-item link @click="onCreateGroup()">
+            <v-list-item-icon class="mx-1">
+              <v-icon small>mdi-folder</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>
+              <v-list-item-title v-text="$t('flow.create_group')"></v-list-item-title>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-card-title>
+
     <v-card-text class="px-0">
       <v-treeview
           :dense="true"
@@ -23,10 +64,11 @@
           :search="search"
           :filter="filter"
           :open.sync="openIds"
+          :active.sync="activeIds"
           @update:active="onItemClick"
       >
         <template v-slot:prepend="{ item, open }">
-          <v-icon small v-if="item.children && item.children.length > 0">
+          <v-icon v-if="item.children && item.children.length > 0">
             {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
           </v-icon>
 
@@ -36,34 +78,24 @@
         <template v-slot:label="{ item }">
           <a>{{ item.name }}</a>
         </template>
-
       </v-treeview>
     </v-card-text>
   </v-card>
 </template>
 
 <script>
-import {getCronDesc} from '@/util/flows'
 import {mapState} from 'vuex'
-// import FlowCreateDialog from './CreateDialog'
 import actions from '@/store/actions'
 
 export default {
   name: 'FlowMenu',
-  components: {
-    // FlowCreateDialog
-  },
   data() {
     return {
       search: null,
-      rootItem: {
-        id: "root_flow",
-        name: "flows",
-        open: true,
-        children: []
-      },
       openIds: [],
+      activeIds: [],
       items: [],
+      showMenu: false,
       mappingWithId: {},
       mappingWithName: {}
     }
@@ -84,19 +116,23 @@ export default {
       return this.$route.params.id
     },
 
-    filter () {
+    filter() {
       return (item, search, textKey) => (item[textKey] || '').toLowerCase().indexOf((search || '').toLowerCase()) > -1
     },
   },
   watch: {
     flows(items) {
-      this.items = [this.rootItem]
-      this.rootItem.children = items
-      this.openIds = ["root_flow"]
+      this.items = items
 
       this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
+
+      this.openIds = []
+      this.activeIds = []
+      if (this.current && this.mappingWithName[this.current]) {
+        this.activeIds.push(this.mappingWithName[this.current].id)
+      }
     },
 
     latest: {
@@ -118,12 +154,9 @@ export default {
       this.mappingWithId = {}
       this.mappingWithName = {}
 
-      this.mappingWithId[this.rootItem.id] = this.rootItem
-      this.mappingWithName[this.rootItem.name] = this.rootItem
-
       for (let flow of items) {
         this.mappingWithId[flow.id] = flow
-        this.mappingWithId[flow.id] = flow
+        this.mappingWithName[flow.name] = flow
       }
     },
 
@@ -140,6 +173,14 @@ export default {
 
       const flow = this.mappingWithId[flowId]
       this.$router.push({path: `/flows/${flow.name}/jobs`})
+    },
+
+    onCreateGroup() {
+
+    },
+
+    onCreateFlow() {
+      this.popCreateFlow(true)
     },
 
     fetchLatestStatus(items) {
@@ -204,7 +245,9 @@ export default {
     }
 
     .v-treeview-node__prepend {
-      margin-right: 0;
+      .v-icon {
+        font-size: 20px;
+      }
     }
 
     .v-treeview-node__level {

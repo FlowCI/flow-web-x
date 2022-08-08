@@ -42,7 +42,8 @@ export default {
 
   flow: {
     name: '工作流',
-    create: '创建一个工作流',
+    create: '创建工作流',
+    create_group: '创建 group',
     search: '输入关键词搜索',
     settings: '设置',
     statistic: '统计',
