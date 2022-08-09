@@ -2,7 +2,8 @@ export default {
   app: {
     setConnState: 'g/setConnectionState',
     showSnackbar: 'g/show',
-    popCreateFlow: 'g/popCreateFlow'
+    popCreateFlow: 'g/popCreateFlow',
+    popCreateGroup: 'g/popCreateGroup'
   },
 
   auth: {

@@ -176,7 +176,7 @@ export default {
     },
 
     onCreateGroup() {
-
+      this.popCreateGroup(true)
     },
 
     onCreateFlow() {

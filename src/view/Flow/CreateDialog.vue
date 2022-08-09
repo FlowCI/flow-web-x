@@ -47,7 +47,7 @@
   import { mapState } from 'vuex'
 
   export default {
-    name: 'FlowCreateDialog',
+    name: 'CreateFlowDialog',
     components: {
       CreateFlowName,
       CreateSelectTemplate

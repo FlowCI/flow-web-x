@@ -22,8 +22,12 @@
       <flow-menu></flow-menu>
     </v-navigation-drawer>
 
-    <flow-create-dialog></flow-create-dialog>
+    <!-- global dialogs -->
+    <create-flow-dialog></create-flow-dialog>
 
+    <create-flow-group-dialog></create-flow-group-dialog>
+
+    <!-- main app view -->
     <v-app-bar app
                :clipped-left="$vuetify.breakpoint.lgAndUp"
                color="grey lighten-4">
@@ -65,12 +69,14 @@
   import actions from '@/store/actions'
   import { mapState } from 'vuex'
   import { connect, subscribeTopic, unsubscribeTopic } from '@/store/subscribe'
-  import FlowCreateDialog from "@/view/Flow/CreateDialog";
+  import CreateFlowDialog from "@/view/Flow/CreateDialog";
+  import CreateFlowGroupDialog from "@/view/Flow/CreateGroupDialog";
 
   export default {
     name: 'App',
     components: {
-      FlowCreateDialog,
+      CreateFlowGroupDialog,
+      CreateFlowDialog,
       FlowMenu,
       AgentMenu,
       ProfileMenu,
