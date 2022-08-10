@@ -48,17 +48,24 @@
 </template>
 
 <script>
+  import {FlowWrapper} from "@/util/flows";
+
   export default {
     name: 'FlowSummaryCard',
     props: {
-      wrapper: {
+      item: {
         type: Object,
         required: true
       }
     },
+    data() {
+      return {
+        wrapper: new FlowWrapper(this.item)
+      }
+    },
     methods: {
       onTitleClick () {
-        this.$router.push({path: `/flows/${this.wrapper.name}/jobs`})
+        this.$router.push({path: `/flows/${this.item.name}/jobs`})
       }
     }
   }

@@ -1,14 +1,14 @@
 <template>
   <div class="overview">
     <v-row align="start" justify="start" class="mx-0">
-      <v-col v-for="flow in flows"
-             :key="flow.name"
+      <v-col v-for="item in flowItems"
+             :key="item.name"
              cols="3" md="4" lg="3" sm="2"
       >
-        <summary-card :wrapper="flow"/>
+        <summary-card :item="item" v-if="item.type === 'Flow'"/>
       </v-col>
 
-      <v-col cols="3" md="4" lg="3" sm="2" v-if="flows.length === 0">
+      <v-col cols="3" md="4" lg="3" sm="2" v-if="flowItems.length === 0">
         <v-card raised class="create">
           <v-card-title class="justify-center">
             <v-btn large outlined color="primary" @click="onCreateFlowClick">
@@ -24,9 +24,7 @@
 
 <script>
   import SummaryCard from '@/components/Flow/SummaryCard'
-  import { toWrapperList } from '@/util/flows'
   import { mapState } from 'vuex'
-  import actions from '@/store/actions'
 
   export default {
     name: 'FlowOverview',
@@ -35,7 +33,7 @@
     },
     computed: {
       ...mapState({
-        flows: state => state.flows.items,
+        flowItems: state => state.flowItems.items,
       })
     },
     methods: {

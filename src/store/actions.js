@@ -12,14 +12,17 @@ export default {
     logout: 'auth/logout'
   },
 
+  flowItems: {
+    list: 'flowItems/list',
+    reset: 'flowItems/reset',
+    exist: 'flowItems/exist',
+  },
+
   flows: {
-    reset: 'flows/reset',
-    exist: 'flows/exist',
     create: 'flows/create',
     createSshRsa: 'flows/createSshRsa',
     confirm: 'flows/confirm',
     update: 'flows/update',
-    list: 'flows/list',
     listByCredential: 'flows/listByCredential',
     select: 'flows/select',
     delete: 'flows/delete',

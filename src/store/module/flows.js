@@ -3,12 +3,10 @@ import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
 
 const state = {
-  items: [], // flow wrapper list
   editor: '',
   selected: {obj: {}, yml: ''},
   created: undefined, // created flow object with pending status
   sshRsa: {publicKey: '', privateKey: ''}, // created ssh-rsa
-  isExist: undefined, // result from action 'exist'
   gitTestMessage: undefined,  // git test message update
   gitBranches: [],
   itemsByCredential: [],
@@ -18,10 +16,6 @@ const state = {
 }
 
 const mutations = {
-  updateExist (state, isExist) {
-    state.isExist = isExist
-  },
-
   updateCreated (state, flow) {
     state.created = flow
   },
@@ -39,12 +33,6 @@ const mutations = {
   },
 
   update (state, updatedFlow) {
-    state.items.forEach((flow, index) => {
-      if (flow.id === updatedFlow.id) {
-        flow.rawInstance = updatedFlow
-      }
-    })
-
     if (state.selected.obj.id === updatedFlow.id) {
       state.selected.obj.rawInstance = updatedFlow
     }
@@ -60,10 +48,6 @@ const mutations = {
 
   setTemplates(state, templates) {
     state.templates = templates
-  },
-
-  list (state, items) {
-    state.items = items
   },
 
   listByCredential (state, items) {
@@ -271,16 +255,6 @@ const actions = {
     })
   },
 
-  exist ({commit}, name) {
-    return http.get(`flows/${name}/exist`, (boolVal) => {
-      commit('updateExist', boolVal)
-    })
-  },
-
-  reset ({commit}) {
-    commit('updateExist', undefined)
-  },
-
   async select ({commit, state}, name) {
     await http.get(`flows/${name}`, (flow) => {
       commit('select', new FlowWrapper(flow))
@@ -290,16 +264,6 @@ const actions = {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
-    })
-  },
-
-  list ({commit}) {
-    return http.get('flows', (flows) => {
-      let list = []
-      for (let flow of flows) {
-        list.push(new FlowWrapper(flow))
-      }
-      commit('list', list)
     })
   },
 

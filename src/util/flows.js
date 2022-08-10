@@ -17,6 +17,19 @@ export function getCronDesc(cron, local) {
   }
 }
 
+export function getColorOfSuccessRate(rate) {
+  for (let i = 0; i < ratio.length - 1; i++) {
+    const min = ratio[i]
+    const max = ratio[i + 1]
+
+    if (min < rate && rate <= max) {
+      return ratioColors[i]
+    }
+  }
+
+  return 'grey lighten-1'
+}
+
 export const gitTestStatus = {
   default: {
     class: [],
@@ -150,17 +163,7 @@ export class FlowWrapper {
   }
 
   get successRateColor() {
-    for (let i = 0; i < ratio.length - 1; i++) {
-      const min = ratio[i]
-      const max = ratio[i + 1]
-      const rate = this.successRate
-
-      if (min < rate && rate <= max) {
-        return ratioColors[i]
-      }
-    }
-
-    return 'grey lighten-1'
+    return getColorOfSuccessRate(this.successRate)
   }
 
   get isLoadYamlFromRepo() {

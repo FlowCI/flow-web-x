@@ -60,7 +60,7 @@
           hoverable
           item-key="id"
           expand-icon="mdi-chevron-down"
-          :items="items"
+          :items="tree"
           :search="search"
           :filter="filter"
           :open.sync="openIds"
@@ -86,6 +86,7 @@
 <script>
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
+import {getColorOfSuccessRate} from "@/util/flows"
 
 export default {
   name: 'FlowMenu',
@@ -94,19 +95,20 @@ export default {
       search: null,
       openIds: [],
       activeIds: [],
-      items: [],
+      tree: [],
       showMenu: false,
       mappingWithId: {},
-      mappingWithName: {}
+      mappingWithName: {},
+      getColorOfSuccessRate
     }
   },
   mounted() {
-    this.$store.dispatch(actions.flows.list).then()
+    this.$store.dispatch(actions.flowItems.list).then()
   },
   computed: {
     ...mapState({
-      flows: state => state.flows.items,
-      // to receive job updated event and show latest job status on flow list
+      flowItems: state => state.flowItems.items,
+      // to receive job updated event and show the latest job status on flow list
       latest: state => state.jobs.latest,
       statsTotal: state => state.stats.statsTotal
     }),
@@ -121,9 +123,8 @@ export default {
     },
   },
   watch: {
-    flows(items) {
-      this.items = items
-
+    flowItems(items) {
+      this.tree = this.createTreeFromItems(items)
       this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
@@ -150,13 +151,49 @@ export default {
     },
   },
   methods: {
+    createTreeFromItems(items) {
+      let groups = {}
+      let flows = {}
+
+      for (let item of items) {
+        if (item.type === 'Group') {
+          groups[item.id] = item
+          groups[item.id].children = []
+          continue
+        }
+
+        if (item.type === 'Flow') {
+          if (item.parentId) {
+            groups[item.parentId].children.push(item)
+            continue
+          }
+
+          item.successRate = 0.0
+          item.successRateColor = ''
+
+          flows[item.id] = item
+        }
+      }
+
+      let tree = []
+      for (const [key, value] of Object.entries(groups)) {
+        tree.push(value)
+      }
+
+      for (const [key, value] of Object.entries(flows)) {
+        tree.push(value)
+      }
+
+      return tree
+    },
+
     createItemIdNameMapping(items) {
       this.mappingWithId = {}
       this.mappingWithName = {}
 
-      for (let flow of items) {
-        this.mappingWithId[flow.id] = flow
-        this.mappingWithName[flow.name] = flow
+      for (let item of items) {
+        this.mappingWithId[item.id] = item
+        this.mappingWithName[item.name] = item
       }
     },
 
@@ -184,24 +221,24 @@ export default {
     },
 
     fetchLatestStatus(items) {
-      items.forEach((wrapper) => {
-        this.$store.dispatch(actions.jobs.latest, wrapper.name)
-            .then(() => {
-              for (let latest of this.latest) {
-                if (latest.flowId === wrapper.id) {
-                  wrapper.latestJob = latest
-                  break
-                }
-              }
-            })
-            .catch((e) => {
-            })
-      })
+      // items.forEach((wrapper) => {
+      //   this.$store.dispatch(actions.jobs.latest, wrapper.name)
+      //       .then(() => {
+      //         for (let latest of this.latest) {
+      //           if (latest.flowId === wrapper.id) {
+      //             wrapper.latestJob = latest
+      //             break
+      //           }
+      //         }
+      //       })
+      //       .catch((e) => {
+      //       })
+      // })
     },
 
     fetchTotalStats(items) {
-      items.forEach((wrapper) => {
-        let payload = {name: wrapper.name, metaType: 'default/ci_job_status'}
+      items.forEach((item) => {
+        let payload = {name: item.name, metaType: 'default/ci_job_status'}
         this.$store.dispatch(actions.stats.total, payload)
             .then(() => {
               let sum = 0.0
@@ -215,7 +252,8 @@ export default {
               let successPercent = (numOfSuccess / sum) * 100
               successPercent = successPercent.toFixed(0)
 
-              wrapper.successRate = successPercent
+              item.successRate = successPercent
+              item.successRateColor = getColorOfSuccessRate(successPercent)
             })
             .catch((e) => {
             })
