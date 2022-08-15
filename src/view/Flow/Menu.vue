@@ -86,7 +86,6 @@
 <script>
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
-import {getColorOfSuccessRate} from "@/util/flows"
 
 export default {
   name: 'FlowMenu',
@@ -99,7 +98,6 @@ export default {
       showMenu: false,
       mappingWithId: {},
       mappingWithName: {},
-      getColorOfSuccessRate
     }
   },
   mounted() {
@@ -125,6 +123,7 @@ export default {
   watch: {
     flowItems(items) {
       this.tree = this.createTreeFromItems(items)
+
       this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
@@ -139,10 +138,9 @@ export default {
     latest: {
       handler(after) {
         for (let latestJob of after) {
-          for (let flow of this.items) {
-            if (flow.id === latestJob.flowId) {
-              flow.latestJob = latestJob
-            }
+          const flow = this.mappingWithId[latestJob.flowId]
+          if (flow && flow.type === 'Flow') {
+            flow.latestJob = latestJob
           }
         }
       },
@@ -151,14 +149,13 @@ export default {
     },
   },
   methods: {
-    createTreeFromItems(items) {
+    createTreeFromItems(wrapperItems) {
       let groups = {}
       let flows = {}
 
-      for (let item of items) {
+      for (let item of wrapperItems) {
         if (item.type === 'Group') {
           groups[item.id] = item
-          groups[item.id].children = []
           continue
         }
 
@@ -167,9 +164,6 @@ export default {
             groups[item.parentId].children.push(item)
             continue
           }
-
-          item.successRate = 0.0
-          item.successRateColor = ''
 
           flows[item.id] = item
         }
@@ -221,19 +215,19 @@ export default {
     },
 
     fetchLatestStatus(items) {
-      // items.forEach((wrapper) => {
-      //   this.$store.dispatch(actions.jobs.latest, wrapper.name)
-      //       .then(() => {
-      //         for (let latest of this.latest) {
-      //           if (latest.flowId === wrapper.id) {
-      //             wrapper.latestJob = latest
-      //             break
-      //           }
-      //         }
-      //       })
-      //       .catch((e) => {
-      //       })
-      // })
+      items.forEach((wrapper) => {
+        this.$store.dispatch(actions.jobs.latest, wrapper.name)
+            .then(() => {
+              for (let latest of this.latest) {
+                if (latest.flowId === wrapper.id) {
+                  wrapper.latestJob = latest
+                  break
+                }
+              }
+            })
+            .catch((e) => {
+            })
+      })
     },
 
     fetchTotalStats(items) {
@@ -251,9 +245,7 @@ export default {
               let numOfSuccess = total.counter['SUCCESS']
               let successPercent = (numOfSuccess / sum) * 100
               successPercent = successPercent.toFixed(0)
-
               item.successRate = successPercent
-              item.successRateColor = getColorOfSuccessRate(successPercent)
             })
             .catch((e) => {
             })

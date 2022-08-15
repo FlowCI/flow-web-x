@@ -57,37 +57,30 @@ export const gitTestStatus = {
   }
 }
 
-export function toWrapperList(flows) {
+export function toWrapperList(flowItems) {
   let list = []
-  for (let flow of flows) {
-    list.push(new FlowWrapper(flow))
+  for (let item of flowItems) {
+    list.push(new FlowWrapper(item))
   }
   return list
 }
 
 export class FlowWrapper {
-  constructor(flow) {
-    this.flow = flow
+  constructor(item) {
+    this.flow = item
+    this.flow.children = []
     this.latestJobWrapper = new JobWrapper({buildNumber: 0}) // JobWrapper
     this.successPercentage = 0
-    this.sshObj = {
-      privateKey: '',
-      publicKey: ''
-    }
-    this.authObj = {
-      username: '',
-      password: ''
-    }
   }
 
   fetchVars(name) {
-    let locally = this.flow.locally
+    let locally = this.flow.vars
 
     if (locally && locally[name]) {
       return locally[name].data
     }
 
-    let variables = this.flow.variables
+    let variables = this.flow.readOnlyVars
     if (variables && variables[name]) {
       return variables[name]
     }
@@ -105,6 +98,18 @@ export class FlowWrapper {
 
   get name() {
     return this.flow.name
+  }
+
+  get type() {
+    return this.flow.type
+  }
+
+  get parentId() {
+    return this.flow.parentId
+  }
+
+  get children() {
+    return this.flow.children
   }
 
   get webhookStatus() {
@@ -130,28 +135,9 @@ export class FlowWrapper {
     return this.fetchVars(vars.git.credential)
   }
 
-  get ssh() {
-    return this.sshObj
-  }
-
-  get auth() {
-    return this.authObj
-  }
 
   get variables() {
     return this.flow.variables
-  }
-
-  get hasGitUrl() {
-    return this.gitUrl !== ''
-  }
-
-  get hasSSH() {
-    return this.ssh.privateKey !== '' && this.ssh.publicKey !== ''
-  }
-
-  get hasAuth() {
-    return this.authObj.username !== '' && this.authObj.password !== ''
   }
 
   get latestJob() {
@@ -159,7 +145,7 @@ export class FlowWrapper {
   }
 
   get successRate() {
-    return this.successPercentage || 0
+    return this.successPercentage || 0.0
   }
 
   get successRateColor() {

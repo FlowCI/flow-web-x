@@ -1,13 +1,14 @@
 import http from '../http'
+import {toWrapperList} from "@/util/flows";
 
 const state = {
-    items: [],
+    items: [], // FlowWrapper items
     isExist: false, // result from action 'exist'
 }
 
 const mutations = {
     onListed(state, items) {
-        state.items = items
+        state.items = toWrapperList(items)
     },
 
     updateExist (state, isExist) {

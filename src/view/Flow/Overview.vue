@@ -5,7 +5,7 @@
              :key="item.name"
              cols="3" md="4" lg="3" sm="2"
       >
-        <summary-card :item="item" v-if="item.type === 'Flow'"/>
+        <summary-card :wrapper="item" v-if="item.type === 'Flow'"/>
       </v-col>
 
       <v-col cols="3" md="4" lg="3" sm="2" v-if="flowItems.length === 0">
