@@ -18,7 +18,7 @@
           {{ $t('flow.create_title_name') }}
         </v-stepper-step>
         <v-stepper-content step="1">
-          <create-flow-name :on-next-click="onNextClick"></create-flow-name>
+          <input-flow-name :on-next-click="onNextClick"></input-flow-name>
         </v-stepper-content>
 
         <!-- step 2:  select a template -->
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import CreateFlowName from './CreateFlowName'
+  import InputFlowName from './InputFlowName'
   import CreateSelectTemplate from './CreateSelectTemplate'
   import actions from '@/store/actions'
   import { FlowWrapper } from '@/util/flows'
@@ -49,7 +49,7 @@
   export default {
     name: 'CreateFlowDialog',
     components: {
-      CreateFlowName,
+      InputFlowName,
       CreateSelectTemplate
     },
     data() {
@@ -111,7 +111,7 @@
             // send confirm
             this.loading = true
             let payload = {wrapper: this.flow, title}
-            this.$store.dispatch(actions.flows.confirm, payload)
+            this.$store.dispatch(actions.flows.create, payload)
                 .then(() => {
                   this.onCancelClick()
                   this.loading = false

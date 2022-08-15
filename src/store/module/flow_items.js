@@ -1,5 +1,5 @@
 import http from '../http'
-import {toWrapperList} from "@/util/flows";
+import {FlowWrapper, toWrapperList} from "@/util/flows";
 
 const state = {
     items: [], // FlowWrapper items
@@ -14,6 +14,10 @@ const mutations = {
     updateExist (state, isExist) {
         state.isExist = isExist
     },
+
+    addItem(state, item) {
+        state.items.push(new FlowWrapper(item))
+    }
 }
 
 const actions = {
@@ -32,6 +36,10 @@ const actions = {
     reset ({commit}) {
         commit('updateExist', undefined)
     },
+
+    add({commit}, item) {
+        commit('addItem', item)
+    }
 }
 
 /**

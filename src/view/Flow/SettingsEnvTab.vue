@@ -83,7 +83,7 @@
       loadLocalVars(flow) {
         let permission = this.hasPermission('Admin')
 
-        if (!flow.locally || Object.keys(flow.locally).length === 0) {
+        if (!flow.vars || Object.keys(flow.vars).length === 0) {
           if (permission) {
             const copy = _.cloneDeep(this.empty)
             this.localVars = [copy]

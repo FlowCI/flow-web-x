@@ -38,8 +38,8 @@ const mutations = {
     }
   },
 
-  select (state, flow) {
-    state.selected.obj = flow
+  select (state, flowWrapper) {
+    state.selected.obj = flowWrapper
   },
 
   setYml (state, yml) {
@@ -53,16 +53,12 @@ const mutations = {
   listByCredential (state, items) {
     state.itemsByCredential = items
   },
-
-  add (state, newFlow) {
-    state.items.push(newFlow)
-  },
-
-  delete (state, name) {
-    state.items = state.items.filter((val, _index, _array) => {
-      return val.name !== name
-    })
-  },
+  //
+  // delete (state, name) {
+  //   state.items = state.items.filter((val, _index, _array) => {
+  //     return val.name !== name
+  //   })
+  // },
 
   editor (state, res) {
     state.editor = res
@@ -150,12 +146,6 @@ const mutations = {
 }
 
 const actions = {
-  async create ({commit}, name) {
-    await http.post(`flows/${name}`, (flow) => {
-      commit('updateCreated', flow)
-    })
-  },
-
   async createSshRsa ({commit, state}) {
     await http.post('secrets/rsa/gen', (rsaKeyPair) => {
       commit('updateSshRsa', rsaKeyPair)
@@ -175,54 +165,17 @@ const actions = {
       })
   },
 
-  async confirm ({commit}, {wrapper, title}) {
-    let gitSettings = {
-      gitUrl: wrapper.gitUrl,
-      secret: wrapper.secret
-    }
-
-    const confirmFunc = async () => {
-      await http.post(
-        `flows/${wrapper.name}/confirm`,
+  async create ({commit, dispatch}, {wrapper, title}) {
+    await http.post(
+        `flows/${wrapper.name}`,
         (flow) => {
-          console.log('[DONE]: confirmed')
-          commit('add', new FlowWrapper(flow))
+          console.log(`flow ${wrapper.name} created`)
+          commit('updateCreated', flow)
+          dispatch('flowItems/add', flow, {root: true})
         },
         {title}
-      )
-    }
+    )
 
-    if (wrapper.hasSSH) {
-      await http.post(
-        `flows/${wrapper.name}/secret/rsa`,
-        (secret) => {
-          console.log('[DONE]: setup secret: ' + secret)
-          gitSettings.secret = secret
-        },
-        wrapper.ssh
-      ).then(() => {
-        console.log(gitSettings)
-        confirmFunc()
-      })
-      return
-    }
-
-    if (wrapper.hasAuth) {
-      await http.post(
-        `flows/${wrapper.name}/secret/auth`,
-        (secret) => {
-          console.log('[DONE]: setup secret: ' + secret)
-          gitSettings.secret = secret
-        },
-        wrapper.auth
-      ).then(() => {
-        console.log(gitSettings)
-        confirmFunc()
-      })
-      return
-    }
-
-    await confirmFunc()
   },
 
   async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout, cron}) {

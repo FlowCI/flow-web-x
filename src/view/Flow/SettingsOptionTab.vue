@@ -25,7 +25,7 @@
       </v-col>
 
       <v-col cols="7">
-        <option-git-access :flow="flow"></option-git-access>
+        <option-git-access :wrapper="flow"></option-git-access>
       </v-col>
     </v-row>
 
