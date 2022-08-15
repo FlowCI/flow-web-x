@@ -27,6 +27,14 @@ const mutations = {
 
     addItem(state, item) {
         state.items.push(new FlowWrapper(item))
+    },
+
+    delItem(state, wrapper) {
+        state.items = state.items.filter((val, _index, _array) => {
+            return val.name !== wrapper.name
+        })
+        delete state.mappingWithId[wrapper.id]
+        delete state.mappingWithId[wrapper.name]
     }
 }
 
@@ -49,6 +57,10 @@ const actions = {
 
     add({commit}, item) {
         commit('addItem', item)
+    },
+
+    remove({commit}, name) {
+        commit('delItem', name)
     }
 }
 

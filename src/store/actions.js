@@ -16,7 +16,8 @@ export default {
     list: 'flowItems/list',
     reset: 'flowItems/reset',
     exist: 'flowItems/exist',
-    add: 'flowItems/add'
+    add: 'flowItems/add',
+    remove: 'flowItems/remove'
   },
 
   flows: {

@@ -48,12 +48,6 @@ const mutations = {
   listByCredential (state, items) {
     state.itemsByCredential = items
   },
-  //
-  // delete (state, name) {
-  //   state.items = state.items.filter((val, _index, _array) => {
-  //     return val.name !== name
-  //   })
-  // },
 
   editor (state, res) {
     state.editor = res
@@ -129,10 +123,10 @@ const actions = {
     )
   },
 
-  async delete ({commit, state}, name) {
-    await http.delete(`flows/${name}`, () => {
-      commit('delete', name)
+  async delete ({commit, state, dispatch}, wrapper) {
+    await http.delete(`flows/${wrapper.name}`, () => {
       commit('select', {obj: {}, yml: ''})
+      dispatch('flowItems/remove', wrapper, {root: true})
     })
   },
 
