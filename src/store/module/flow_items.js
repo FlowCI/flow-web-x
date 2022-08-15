@@ -3,12 +3,22 @@ import {FlowWrapper, toWrapperList} from "@/util/flows";
 
 const state = {
     items: [], // FlowWrapper items
+    mappingWithId: {},
+    mappingWithName: {},
     isExist: false, // result from action 'exist'
 }
 
 const mutations = {
     onListed(state, items) {
         state.items = toWrapperList(items)
+
+        state.mappingWithId = {}
+        state.mappingWithName = {}
+
+        for (let wrapper of state.items) {
+            state.mappingWithId[wrapper.id] = wrapper
+            state.mappingWithName[wrapper.name] = wrapper
+        }
     },
 
     updateExist (state, isExist) {

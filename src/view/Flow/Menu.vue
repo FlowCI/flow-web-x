@@ -96,8 +96,6 @@ export default {
       activeIds: [],
       tree: [],
       showMenu: false,
-      mappingWithId: {},
-      mappingWithName: {},
     }
   },
   mounted() {
@@ -106,6 +104,8 @@ export default {
   computed: {
     ...mapState({
       flowItems: state => state.flowItems.items,
+      mappingWithId: state => state.flowItems.mappingWithId,
+      mappingWithName: state => state.flowItems.mappingWithName,
       // to receive job updated event and show the latest job status on flow list
       latest: state => state.jobs.latest,
       statsTotal: state => state.stats.statsTotal
@@ -124,7 +124,6 @@ export default {
     flowItems(items) {
       this.tree = this.createTreeFromItems(items)
 
-      this.createItemIdNameMapping(items)
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
 
@@ -179,16 +178,6 @@ export default {
       }
 
       return tree
-    },
-
-    createItemIdNameMapping(items) {
-      this.mappingWithId = {}
-      this.mappingWithName = {}
-
-      for (let item of items) {
-        this.mappingWithId[item.id] = item
-        this.mappingWithName[item.name] = item
-      }
     },
 
     onItemClick(selection) {

@@ -135,9 +135,12 @@ export class FlowWrapper {
     return this.fetchVars(vars.git.credential)
   }
 
+  get vars() {
+    return this.flow.vars
+  }
 
-  get variables() {
-    return this.flow.variables
+  get readOnlyVars() {
+    return this.flow.readOnlyVars
   }
 
   get latestJob() {
