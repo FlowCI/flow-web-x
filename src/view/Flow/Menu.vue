@@ -67,16 +67,17 @@
           :active.sync="activeIds"
           @update:active="onItemClick"
       >
-        <template v-slot:prepend="{ item, open }">
-          <v-icon v-if="item.children && item.children.length > 0">
-            {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
-          </v-icon>
-
-          <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
-        </template>
-
         <template v-slot:label="{ item }">
-          <a>{{ item.name }}</a>
+          <draggable @ended="onEnd">
+            <div>
+              <v-icon v-if="item.children && item.children.length > 0">
+                {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+              </v-icon>
+              <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
+              <a class="ml-2">{{ item.name }}</a>
+              <v-icon class="float-right">mdi-drag</v-icon>
+            </div>
+          </draggable>
         </template>
       </v-treeview>
     </v-card-text>
@@ -86,9 +87,13 @@
 <script>
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'FlowMenu',
+  components: {
+    draggable
+  },
   data() {
     return {
       search: null,
@@ -180,6 +185,12 @@ export default {
       return tree
     },
 
+    onEnd(a, b, c) {
+      console.log(a)
+      console.log(b)
+      console.log(c)
+    },
+
     onItemClick(selection) {
       if (selection.length === 0) {
         // no changes
@@ -192,6 +203,10 @@ export default {
       }
 
       const flow = this.mappingWithId[flowId]
+      if (this.current === flow.name) {
+        return
+      }
+
       this.$router.push({path: `/flows/${flow.name}/jobs`})
     },
 
