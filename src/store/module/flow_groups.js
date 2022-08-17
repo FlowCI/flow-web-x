@@ -1,21 +1,27 @@
 import http from '../http'
 
-const state = {
-    items: [],
-    mappingWithId: {}
-}
+const state = {}
 
-const mutations = {
-    onListed(state, group) {
-        state.mappingWithId[group.id] = group
-        state.items.push(group)
-    }
-}
+const mutations = {}
 
 const actions = {
-    async list ({commit}) {
-        await http.post(`flow_groups/${name}`, (group) => {
-            commit('onCreated', group)
-        })
-    },
+  async create({dispatch}, name) {
+    await http.post(`flow_groups/${name}`, (group) => {
+      dispatch('flowItems/add', group, {root: true})
+    })
+  },
+
+  delete(name) {
+
+  }
+}
+
+/**
+ * Export Vuex store object
+ */
+export const Store = {
+  namespaced: true,
+  state,
+  mutations,
+  actions
 }

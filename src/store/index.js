@@ -6,6 +6,7 @@ import { Store as AuthStore } from './module/auth'
 import { Store as ErrorStore } from './module/error'
 import { Store as FlowStore } from './module/flows'
 import { Store as FlowItemStore } from './module/flow_items'
+import { Store as FlowGroupStore } from './module/flow_groups'
 import { Store as JobStore } from './module/jobs'
 import { Store as StepStore } from './module/steps'
 import { Store as LogStore } from './module/logs'
@@ -30,6 +31,7 @@ const store = new Vuex.Store({
     'err': ErrorStore,
     'flows': FlowStore,
     'flowItems': FlowItemStore,
+    'flowGroups': FlowGroupStore,
     'jobs': JobStore,
     'steps': StepStore,
     'logs': LogStore,

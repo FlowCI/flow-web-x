@@ -49,6 +49,7 @@
 <script>
 import {mapState} from "vuex";
 import { flowNameRules } from '@/util/rules'
+import actions from "@/store/actions";
 
 export default {
   name: "CreateFlowGroupDialog",
@@ -82,6 +83,16 @@ export default {
     },
 
     onFinishClick() {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+
+      this.errorMsg = []
+
+      this.$store.dispatch(actions.flowGroups.create, this.name).then(() => {
+        this.name = ''
+        this.dialog = false
+      })
     },
 
     onBackClick() {

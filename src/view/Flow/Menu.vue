@@ -70,10 +70,11 @@
         <template v-slot:label="{ item }">
           <draggable @ended="onEnd">
             <div>
-              <v-icon v-if="item.children && item.children.length > 0">
+              <v-icon small v-if="item.type === 'Group'" class="ml-1">
                 {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
               </v-icon>
               <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
+
               <a class="ml-2">{{ item.name }}</a>
               <v-icon class="float-right">mdi-drag</v-icon>
             </div>
@@ -198,12 +199,12 @@ export default {
       }
 
       const flowId = selection[0]
-      if (flowId === "root_flow") {
+      const flow = this.mappingWithId[flowId]
+      if (this.current === flow.name) {
         return
       }
 
-      const flow = this.mappingWithId[flowId]
-      if (this.current === flow.name) {
+      if (flow.type === 'Group') {
         return
       }
 

@@ -20,6 +20,11 @@ export default {
     remove: 'flowItems/remove'
   },
 
+  flowGroups: {
+    create: 'flowGroups/create',
+    delete: 'flowGroups/delete'
+  },
+
   flows: {
     create: 'flows/create',
     createSshRsa: 'flows/createSshRsa',
