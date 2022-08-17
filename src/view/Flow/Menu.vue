@@ -67,41 +67,56 @@
           :active.sync="activeIds"
           @update:active="onItemClick"
       >
-        <template v-slot:label="{ item }">
-          <draggable @ended="onEnd">
-            <div>
-              <v-icon small v-if="item.type === 'Group'" class="ml-1">
-                {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
-              </v-icon>
-              <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
+        <template v-slot:label="{ item, open }">
+          <div draggable="true"
+               @dragstart="onItemDragStart"
+               @drop="onItemDrop"
+               @dragenter.prevent
+               @dragover.prevent
+               :id="item.id"
+          >
+            <v-icon small v-if="item.type === 'Group'" class="ml-1">
+              {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
+            </v-icon>
+            <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
 
-              <a class="ml-2">{{ item.name }}</a>
-              <v-icon class="float-right">mdi-drag</v-icon>
-            </div>
-          </draggable>
+            <a class="ml-2">{{ item.name }}</a>
+            <v-icon class="float-right">mdi-drag</v-icon>
+          </div>
         </template>
       </v-treeview>
     </v-card-text>
+
+    <flow-group-action-dialog title="Moving"
+                              :content="groupActionContent"
+                              :dialog="showGroupActionDialog"
+                              :on-confirm="onFlowMovingActionConfirm"
+                              :on-cancel="onFlowMovingActionCancel"
+    ></flow-group-action-dialog>
   </v-card>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
-import draggable from 'vuedraggable'
+import FlowGroupActionDialog from '@/components/Common/Dialog'
 
 export default {
   name: 'FlowMenu',
   components: {
-    draggable
+    FlowGroupActionDialog
   },
   data() {
     return {
+      showGroupActionDialog: false,
+      groupActionContent: '',
       search: null,
       openIds: [],
       activeIds: [],
       tree: [],
       showMenu: false,
+      dragStartId: '',
+      dropTargetId: ''
     }
   },
   mounted() {
@@ -186,10 +201,29 @@ export default {
       return tree
     },
 
-    onEnd(a, b, c) {
-      console.log(a)
-      console.log(b)
-      console.log(c)
+    onItemDragStart(event) {
+      if (event.target.id) {
+        this.dragStartId = event.target.id
+      }
+    },
+
+    onItemDrop(event) {
+      if (event.target.id) {
+        this.dragEndId = event.target.id
+      }
+
+      const srcItem = this.mappingWithId[this.dragStartId]
+      const targetItem = this.mappingWithId[this.dragEndId]
+
+      if (!srcItem || !targetItem) {
+        return
+      }
+
+      if (srcItem.type === 'Flow' && targetItem.type === 'Group') {
+        console.log('will move into the group ' + targetItem.name)
+        this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the group ${targetItem.name} ?`
+        this.showGroupActionDialog = true
+      }
     },
 
     onItemClick(selection) {
@@ -209,6 +243,14 @@ export default {
       }
 
       this.$router.push({path: `/flows/${flow.name}/jobs`})
+    },
+
+    onFlowMovingActionConfirm() {
+
+    },
+
+    onFlowMovingActionCancel() {
+      this.showGroupActionDialog = false
     },
 
     onCreateGroup() {
