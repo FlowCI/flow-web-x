@@ -93,6 +93,20 @@ const mutations = {
     state.items = state.items.filter((val, _index, _array) => {
       return val.name !== wrapper.name
     })
+    state.tree = state.tree.filter((val, _index, _array) => {
+      return val.name !== wrapper.name
+    })
+
+    if (wrapper.parentId) {
+      const parent = state.mappingWithId[wrapper.parentId]
+      for (let i = 0; i < parent.children.length; i++) {
+        if (parent.children[i].name === wrapper.name) {
+          parent.children.splice(i, 1)
+          break
+        }
+      }
+    }
+
     delete state.mappingWithId[wrapper.id]
     delete state.mappingWithId[wrapper.name]
   }
