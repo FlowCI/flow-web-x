@@ -57,14 +57,6 @@ export const gitTestStatus = {
   }
 }
 
-export function toWrapperList(flowItems) {
-  let list = []
-  for (let item of flowItems) {
-    list.push(new FlowWrapper(item))
-  }
-  return list
-}
-
 export class FlowWrapper {
   constructor(item) {
     this.flow = item

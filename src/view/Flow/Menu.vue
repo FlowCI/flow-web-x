@@ -60,7 +60,7 @@
           hoverable
           item-key="id"
           expand-icon="mdi-chevron-down"
-          :items="tree"
+          :items="flowTree"
           :search="search"
           :filter="filter"
           :open.sync="openIds"
@@ -113,7 +113,6 @@ export default {
       search: null,
       openIds: [],
       activeIds: [],
-      tree: [],
       showMenu: false,
       dragStartId: '',
       dropTargetId: ''
@@ -125,6 +124,7 @@ export default {
   computed: {
     ...mapState({
       flowItems: state => state.flowItems.items,
+      flowTree: state => state.flowItems.tree,
       mappingWithId: state => state.flowItems.mappingWithId,
       mappingWithName: state => state.flowItems.mappingWithName,
       // to receive job updated event and show the latest job status on flow list
@@ -143,8 +143,6 @@ export default {
   },
   watch: {
     flowItems(items) {
-      this.tree = this.createTreeFromItems(items)
-
       this.fetchLatestStatus(items)
       this.fetchTotalStats(items)
 
@@ -169,39 +167,6 @@ export default {
     },
   },
   methods: {
-    createTreeFromItems(wrapperItems) {
-      let groups = {}
-      let flows = {}
-
-      for (let item of wrapperItems) {
-        if (item.type === 'Group') {
-          groups[item.id] = item
-          continue
-        }
-
-        if (item.type === 'Flow') {
-          flows[item.id] = item
-        }
-      }
-
-      let tree = []
-      for (const [key, value] of Object.entries(groups)) {
-        tree.push(value)
-      }
-
-      for (const [key, value] of Object.entries(flows)) {
-        if (value.parentId) {
-          const group = groups[value.parentId]
-          group.children.push(value)
-          continue
-        }
-
-        tree.push(value)
-      }
-
-      return tree
-    },
-
     onItemDragStart(event) {
       if (event.target.id) {
         this.dragStartId = event.target.id

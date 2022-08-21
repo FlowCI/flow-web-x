@@ -1,8 +1,50 @@
 import http from '../http'
-import {FlowWrapper, toWrapperList} from "@/util/flows";
+import {FlowWrapper} from "@/util/flows";
+
+function toWrapperList(flowItems) {
+  let list = []
+  for (let item of flowItems) {
+    list.push(new FlowWrapper(item))
+  }
+  return list
+}
+
+function createTreeFromItems(wrapperItems) {
+  let groups = {}
+  let flows = {}
+
+  for (let item of wrapperItems) {
+    if (item.type === 'Group') {
+      groups[item.id] = item
+      continue
+    }
+
+    if (item.type === 'Flow') {
+      flows[item.id] = item
+    }
+  }
+
+  let tree = []
+  for (const [key, value] of Object.entries(groups)) {
+    tree.push(value)
+  }
+
+  for (const [key, value] of Object.entries(flows)) {
+    if (value.parentId) {
+      const group = groups[value.parentId]
+      group.children.push(value)
+      continue
+    }
+
+    tree.push(value)
+  }
+
+  return tree
+}
 
 const state = {
   items: [], // FlowWrapper items
+  tree: [],
   mappingWithId: {},
   mappingWithName: {},
   isExist: false, // result from action 'exist'
@@ -11,7 +53,6 @@ const state = {
 const mutations = {
   onListed(state, items) {
     state.items = toWrapperList(items)
-
     state.mappingWithId = {}
     state.mappingWithName = {}
 
@@ -19,6 +60,8 @@ const mutations = {
       state.mappingWithId[wrapper.id] = wrapper
       state.mappingWithName[wrapper.name] = wrapper
     }
+
+    state.tree = createTreeFromItems(state.items)
   },
 
   updateExist(state, isExist) {
@@ -26,16 +69,19 @@ const mutations = {
   },
 
   addItem(state, item) {
-    state.items.push(new FlowWrapper(item))
+    let wrapper = new FlowWrapper(item);
+    state.items.push(wrapper)
+    state.tree.push(wrapper)
   },
 
   addToParent(state, {from, to}) {
     const fromItem = state.mappingWithName[from]
     const toItem = state.mappingWithName[to]
 
-    for (let i = 0; i < state.items.length; i++) {
-      if (state.items[i].name === fromItem.name) {
-        state.items.splice(i, 1)
+    // update tree
+    for (let i = 0; i < state.tree.length; i++) {
+      if (state.tree[i].name === fromItem.name) {
+        state.tree.splice(i, 1)
         break
       }
     }
