@@ -180,11 +180,6 @@ export default {
         }
 
         if (item.type === 'Flow') {
-          if (item.parentId) {
-            groups[item.parentId].children.push(item)
-            continue
-          }
-
           flows[item.id] = item
         }
       }
@@ -195,6 +190,12 @@ export default {
       }
 
       for (const [key, value] of Object.entries(flows)) {
+        if (value.parentId) {
+          const group = groups[value.parentId]
+          group.children.push(value)
+          continue
+        }
+
         tree.push(value)
       }
 
@@ -216,6 +217,11 @@ export default {
       const targetItem = this.mappingWithId[this.dragEndId]
 
       if (!srcItem || !targetItem) {
+        return
+      }
+
+      if (srcItem.parentId === targetItem.id) {
+        console.log('item already in the parent item')
         return
       }
 
@@ -246,7 +252,17 @@ export default {
     },
 
     onFlowMovingActionConfirm() {
+      const srcItem = this.mappingWithId[this.dragStartId]
+      const targetItem = this.mappingWithId[this.dragEndId]
 
+      const payload = {
+        groupName: targetItem.name,
+        flowName: srcItem.name
+      }
+
+      this.$store.dispatch(actions.flowGroups.addToGroup, payload).then(() => {
+        this.showGroupActionDialog = false
+      })
     },
 
     onFlowMovingActionCancel() {

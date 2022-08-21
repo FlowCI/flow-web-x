@@ -11,6 +11,16 @@ const actions = {
     })
   },
 
+  async addToGroup({dispatch}, {groupName, flowName}) {
+    await http.post(`flow_groups/${groupName}/${flowName}`, () => {
+      dispatch('flowItems/addToParent', {from: flowName, to: groupName}, {root: true})
+    })
+  },
+
+  async removeFromGroup() {
+
+  },
+
   delete(name) {
 
   }
