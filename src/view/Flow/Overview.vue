@@ -1,7 +1,7 @@
 <template>
   <div class="overview">
     <v-row align="start" justify="start" class="mx-0">
-      <v-col v-for="item in flowItems"
+      <v-col v-for="item in items"
              :key="item.name"
              cols="3" md="4" lg="3" sm="2"
       >
@@ -31,10 +31,26 @@
     components: {
       SummaryCard
     },
+    data() {
+      return {
+        items: []
+      }
+    },
     computed: {
       ...mapState({
         flowItems: state => state.flowItems.items,
       })
+    },
+    watch: {
+      flowItems(items) {
+        this.items = []
+        for (const item of items) {
+          if (item.type === 'Flow') {
+            this.items.push(item)
+          }
+        }
+        console.log(this.items)
+      }
     },
     methods: {
       onCreateFlowClick() {
