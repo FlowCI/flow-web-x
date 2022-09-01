@@ -80,6 +80,10 @@ export class FlowWrapper {
     return ''
   }
 
+  get isRoot() {
+    return this.flow.id === -1
+  }
+
   get rawInstance() {
     return this.flow
   }
@@ -184,6 +188,10 @@ export class FlowWrapper {
     this.flow.variables[vars.git.url] = url
   }
 
+  set children(val) {
+    this.flow.children = val
+  }
+
   set ssh(sshObj) {
     this.sshObj = sshObj
   }
@@ -228,3 +236,9 @@ export class FlowWrapper {
     this.flow.stepTimeout = timeout
   }
 }
+
+export const Root = new FlowWrapper({
+  id: -1,
+  name: 'flows',
+  type: 'Group'
+})

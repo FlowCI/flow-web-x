@@ -1,5 +1,5 @@
 import http from '../http'
-import {FlowWrapper} from "@/util/flows";
+import {FlowWrapper, Root} from "@/util/flows";
 
 function toWrapperList(flowItems) {
   let list = []
@@ -24,9 +24,10 @@ function createTreeFromItems(wrapperItems) {
     }
   }
 
-  let tree = []
+  let root = Root
+
   for (const [key, value] of Object.entries(groups)) {
-    tree.push(value)
+    root.children.push(value)
   }
 
   for (const [key, value] of Object.entries(flows)) {
@@ -36,10 +37,10 @@ function createTreeFromItems(wrapperItems) {
       continue
     }
 
-    tree.push(value)
+    root.children.push(value)
   }
 
-  return tree
+  return [root]
 }
 
 const state = {

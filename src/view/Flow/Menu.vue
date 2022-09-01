@@ -12,47 +12,6 @@
       ></v-text-field>
     </v-sheet>
 
-    <v-card-title>
-      <a>flows</a>
-      <v-spacer></v-spacer>
-      <v-menu bottom
-              offset-y
-              rounded
-              v-if="hasPermission('Admin')"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-              dark
-              icon
-              v-bind="attrs"
-              v-on="on"
-          >
-            <v-icon color="primary">mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list dense>
-          <v-list-item link @click="onCreateFlow()">
-            <v-list-item-icon class="mr-1">
-              <v-icon>mdi-alpha-f</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title class="ml-1">
-              <v-list-item-title v-text="$t('flow.create')"></v-list-item-title>
-            </v-list-item-title>
-          </v-list-item>
-
-          <v-list-item link @click="onCreateGroup()">
-            <v-list-item-icon class="mx-1">
-              <v-icon small>mdi-folder</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>
-              <v-list-item-title v-text="$t('flow.create_group')"></v-list-item-title>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </v-card-title>
-
     <v-card-text class="px-0">
       <v-treeview
           :dense="true"
@@ -81,7 +40,47 @@
             <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
 
             <a class="ml-2">{{ item.name }}</a>
-            <v-icon class="float-right">mdi-drag</v-icon>
+
+            <v-menu bottom
+                    offset-y
+                    rounded
+                    class="float-right"
+                    v-if="hasPermission('Admin') && item.isRoot"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    dark
+                    icon
+                    v-bind="attrs"
+                    v-on="on"
+                    class="float-right"
+                >
+                  <v-icon color="primary">mdi-menu</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list dense>
+                <v-list-item link @click="onCreateFlow()">
+                  <v-list-item-icon class="mr-1">
+                    <v-icon>mdi-alpha-f</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title class="ml-1">
+                    <v-list-item-title v-text="$t('flow.create')"></v-list-item-title>
+                  </v-list-item-title>
+                </v-list-item>
+
+                <v-list-item link @click="onCreateGroup()">
+                  <v-list-item-icon class="mx-1">
+                    <v-icon small>mdi-folder</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>
+                    <v-list-item-title v-text="$t('flow.create_group')"></v-list-item-title>
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+
+            <v-icon class="float-right" v-else>mdi-drag</v-icon>
           </div>
         </template>
       </v-treeview>
