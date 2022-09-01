@@ -81,7 +81,7 @@ export class FlowWrapper {
   }
 
   get isRoot() {
-    return this.flow.id === -1
+    return this.flow.id === "-1"
   }
 
   get rawInstance() {
@@ -235,10 +235,14 @@ export class FlowWrapper {
   set stepTimeout(timeout) {
     this.flow.stepTimeout = timeout
   }
+
+  set parentId(id) {
+    this.flow.parentId = id
+  }
 }
 
 export const Root = new FlowWrapper({
-  id: -1,
+  id: "-1",
   name: 'flows',
   type: 'Group'
 })

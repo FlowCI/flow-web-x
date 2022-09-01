@@ -17,8 +17,10 @@ const actions = {
     })
   },
 
-  async removeFromGroup() {
-
+  async removeFromGroup({dispatch}, flowName) {
+    await http.delete(`flow_groups/ignore/${flowName}`, () => {
+      dispatch('flowItems/removeFromParent', flowName, {root: true})
+    })
   },
 
   delete(name) {

@@ -25,19 +25,20 @@ function createTreeFromItems(wrapperItems) {
   }
 
   let root = Root
+  root.children = []
 
   for (const [key, value] of Object.entries(groups)) {
     root.children.push(value)
   }
 
   for (const [key, value] of Object.entries(flows)) {
-    if (value.parentId) {
-      const group = groups[value.parentId]
-      group.children.push(value)
+    if (value.parentId === "-1") {
+      root.children.push(value)
       continue
     }
 
-    root.children.push(value)
+    const group = groups[value.parentId]
+    group.children.push(value)
   }
 
   return [root]
@@ -56,6 +57,9 @@ const mutations = {
     state.items = toWrapperList(items)
     state.mappingWithId = {}
     state.mappingWithName = {}
+
+    state.mappingWithId[Root.id] = Root
+    state.mappingWithName[Root.name] = Root
 
     for (let wrapper of state.items) {
       state.mappingWithId[wrapper.id] = wrapper
@@ -79,7 +83,7 @@ const mutations = {
     const fromItem = state.mappingWithName[from]
     const toItem = state.mappingWithName[to]
 
-    // update tree
+    // remove from parent
     for (let i = 0; i < state.tree.length; i++) {
       if (state.tree[i].name === fromItem.name) {
         state.tree.splice(i, 1)
@@ -87,7 +91,23 @@ const mutations = {
       }
     }
 
+    // add to parent
     toItem.children.push(fromItem)
+  },
+
+  removeFromParent(state, flowName) {
+    const item = state.mappingWithName[flowName]
+    const parent = state.mappingWithId[item.parentId]
+
+    for (let i = 0; parent.children.length; i++) {
+      if (parent.children[i].id === item.id) {
+        parent.children.splice(i, 1)
+        break
+      }
+    }
+
+    item.parentId = null
+    state.tree.push(item)
   },
 
   delItem(state, wrapper) {
@@ -136,6 +156,10 @@ const actions = {
 
   addToParent({commit}, {from, to}) {
     commit('addToParent', {from, to})
+  },
+
+  removeFromParent({commit}, flowName) {
+    commit('removeFromParent', flowName)
   },
 
   remove({commit}, name) {

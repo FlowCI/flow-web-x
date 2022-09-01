@@ -30,6 +30,8 @@
           <div draggable="true"
                @dragstart="onItemDragStart"
                @drop="onItemDrop"
+               @dragover="onDragOver"
+               @dragleave="onDragLeave"
                @dragenter.prevent
                @dragover.prevent
                :id="item.id"
@@ -44,7 +46,6 @@
             <v-menu bottom
                     offset-y
                     rounded
-                    class="float-right"
                     v-if="hasPermission('Admin') && item.isRoot"
             >
               <template v-slot:activator="{ on, attrs }">
@@ -53,7 +54,8 @@
                     icon
                     v-bind="attrs"
                     v-on="on"
-                    class="float-right"
+                    class="float-right menu-btn"
+                    small
                 >
                   <v-icon color="primary">mdi-menu</v-icon>
                 </v-btn>
@@ -172,14 +174,38 @@ export default {
       }
     },
 
+    onDragOver(event) {
+      if (!event.target.id) {
+        return
+      }
+
+      event.target.classList.add('dragging');
+    },
+
+    onDragLeave(event) {
+      if (!event.target.id) {
+        return
+      }
+
+      event.target.classList.remove('dragging');
+    },
+
     onItemDrop(event) {
+      event.target.classList.remove('dragging');
+
       if (event.target.id) {
         this.dragEndId = event.target.id
       }
 
       const srcItem = this.mappingWithId[this.dragStartId]
-      const targetItem = this.mappingWithId[this.dragEndId]
+      if (srcItem && this.dragEndId === "-1") {
+        console.log('move to root')
+        this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the root ?`
+        this.showGroupActionDialog = true
+        return
+      }
 
+      const targetItem = this.mappingWithId[this.dragEndId]
       if (!srcItem || !targetItem) {
         return
       }
@@ -217,13 +243,18 @@ export default {
 
     onFlowMovingActionConfirm() {
       const srcItem = this.mappingWithId[this.dragStartId]
-      const targetItem = this.mappingWithId[this.dragEndId]
+      if (this.dragEndId === "-1") {
+        this.$store.dispatch(actions.flowGroups.removeFromGroup, srcItem.name).then(() => {
+          this.showGroupActionDialog = false
+        })
+        return
+      }
 
+      const targetItem = this.mappingWithId[this.dragEndId]
       const payload = {
         groupName: targetItem.name,
         flowName: srcItem.name
       }
-
       this.$store.dispatch(actions.flowGroups.addToGroup, payload).then(() => {
         this.showGroupActionDialog = false
       })
@@ -284,6 +315,15 @@ export default {
 
 <style lang="scss">
 .flow-menu {
+
+  .dragging {
+    border: 2px dashed #0277BD;
+  }
+
+  .menu-btn {
+    max-height: 16px;
+    max-width: 16px;
+  }
 
   .btn-create {
     align-items: center;
