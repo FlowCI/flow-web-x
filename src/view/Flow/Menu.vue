@@ -148,6 +148,14 @@ export default {
       this.fetchTotalStats(items)
 
       this.openIds = []
+      this.openIds.push("-1")
+
+      for (let item of items) {
+        if (item.isGroup) {
+          this.openIds.push(item.id)
+        }
+      }
+
       this.activeIds = []
       if (this.current && this.mappingWithName[this.current]) {
         this.activeIds.push(this.mappingWithName[this.current].id)
@@ -158,7 +166,7 @@ export default {
       handler(after) {
         for (let latestJob of after) {
           const flow = this.mappingWithId[latestJob.flowId]
-          if (flow && flow.type === 'Flow') {
+          if (flow && flow.isFlow) {
             flow.latestJob = latestJob
           }
         }
@@ -179,7 +187,10 @@ export default {
         return
       }
 
-      event.target.classList.add('dragging');
+      let item = this.mappingWithId[event.target.id]
+      if (item && item.isGroup) {
+        event.target.classList.add('dragging');
+      }
     },
 
     onDragLeave(event) {
@@ -198,14 +209,8 @@ export default {
       }
 
       const srcItem = this.mappingWithId[this.dragStartId]
-      if (srcItem && this.dragEndId === "-1") {
-        console.log('move to root')
-        this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the root ?`
-        this.showGroupActionDialog = true
-        return
-      }
-
       const targetItem = this.mappingWithId[this.dragEndId]
+
       if (!srcItem || !targetItem) {
         return
       }
@@ -215,7 +220,14 @@ export default {
         return
       }
 
-      if (srcItem.type === 'Flow' && targetItem.type === 'Group') {
+      if (srcItem && targetItem.isRoot) {
+        console.log('move to root')
+        this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the root ?`
+        this.showGroupActionDialog = true
+        return
+      }
+
+      if (srcItem.isFlow && targetItem.isGroup ) {
         console.log('will move into the group ' + targetItem.name)
         this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the group ${targetItem.name} ?`
         this.showGroupActionDialog = true
@@ -243,14 +255,15 @@ export default {
 
     onFlowMovingActionConfirm() {
       const srcItem = this.mappingWithId[this.dragStartId]
-      if (this.dragEndId === "-1") {
+      const targetItem = this.mappingWithId[this.dragEndId]
+
+      if (targetItem.isRoot) {
         this.$store.dispatch(actions.flowGroups.removeFromGroup, srcItem.name).then(() => {
           this.showGroupActionDialog = false
         })
         return
       }
 
-      const targetItem = this.mappingWithId[this.dragEndId]
       const payload = {
         groupName: targetItem.name,
         flowName: srcItem.name

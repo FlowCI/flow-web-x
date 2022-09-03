@@ -80,6 +80,14 @@ export class FlowWrapper {
     return ''
   }
 
+  get isGroup() {
+    return this.flow.type === 'Group'
+  }
+
+  get isFlow() {
+    return this.flow.type === 'Flow'
+  }
+
   get isRoot() {
     return this.flow.id === "-1"
   }

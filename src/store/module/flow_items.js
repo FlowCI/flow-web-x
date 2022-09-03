@@ -83,10 +83,12 @@ const mutations = {
     const fromItem = state.mappingWithName[from]
     const toItem = state.mappingWithName[to]
 
+    const fromParentItem = state.mappingWithId[fromItem.parentId]
+
     // remove from parent
-    for (let i = 0; i < state.tree.length; i++) {
-      if (state.tree[i].name === fromItem.name) {
-        state.tree.splice(i, 1)
+    for (let i = 0; i < fromParentItem.children.length; i++) {
+      if (fromParentItem.children[i].name === fromItem.name) {
+        fromParentItem.children.splice(i, 1)
         break
       }
     }
