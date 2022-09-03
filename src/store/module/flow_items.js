@@ -76,7 +76,10 @@ const mutations = {
   addItem(state, item) {
     let wrapper = new FlowWrapper(item);
     state.items.push(wrapper)
-    state.tree.push(wrapper)
+
+    Root.children.push(wrapper)
+    state.mappingWithId[wrapper.id] = wrapper
+    state.mappingWithName[wrapper.name] = wrapper
   },
 
   addToParent(state, {from, to}) {
