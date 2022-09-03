@@ -32,7 +32,7 @@ function createTreeFromItems(wrapperItems) {
   }
 
   for (const [key, value] of Object.entries(flows)) {
-    if (value.parentId === "-1") {
+    if (value.parentId === Root.id) {
       root.children.push(value)
       continue
     }
@@ -94,22 +94,8 @@ const mutations = {
     }
 
     // add to parent
+    fromItem.parentId = toItem.id
     toItem.children.push(fromItem)
-  },
-
-  removeFromParent(state, flowName) {
-    const item = state.mappingWithName[flowName]
-    const parent = state.mappingWithId[item.parentId]
-
-    for (let i = 0; parent.children.length; i++) {
-      if (parent.children[i].id === item.id) {
-        parent.children.splice(i, 1)
-        break
-      }
-    }
-
-    item.parentId = null
-    state.tree.push(item)
   },
 
   delItem(state, wrapper) {

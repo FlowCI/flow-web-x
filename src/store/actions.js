@@ -19,14 +19,12 @@ export default {
     add: 'flowItems/add',
     remove: 'flowItems/remove',
     addToParent: 'flowItems/addToParent',
-    removeFromParent: 'flowItems/removeFromParent'
   },
 
   flowGroups: {
     create: 'flowGroups/create',
     delete: 'flowGroups/delete',
     addToGroup: 'flowGroups/addToGroup',
-    removeFromGroup: 'flowGroups/removeFromGroup'
   },
 
   flows: {

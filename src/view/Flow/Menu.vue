@@ -101,6 +101,7 @@
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
 import FlowGroupActionDialog from '@/components/Common/Dialog'
+import {Root} from "@/util/flows";
 
 export default {
   name: 'FlowMenu',
@@ -116,7 +117,8 @@ export default {
       activeIds: [],
       showMenu: false,
       dragStartId: '',
-      dropTargetId: ''
+      dropTargetId: '',
+      root: Root
     }
   },
   mounted() {
@@ -148,7 +150,7 @@ export default {
       this.fetchTotalStats(items)
 
       this.openIds = []
-      this.openIds.push("-1")
+      this.openIds.push(this.root.id)
 
       for (let item of items) {
         if (item.isGroup) {
@@ -220,13 +222,6 @@ export default {
         return
       }
 
-      if (srcItem && targetItem.isRoot) {
-        console.log('move to root')
-        this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the root ?`
-        this.showGroupActionDialog = true
-        return
-      }
-
       if (srcItem.isFlow && targetItem.isGroup ) {
         console.log('will move into the group ' + targetItem.name)
         this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the group ${targetItem.name} ?`
@@ -256,13 +251,6 @@ export default {
     onFlowMovingActionConfirm() {
       const srcItem = this.mappingWithId[this.dragStartId]
       const targetItem = this.mappingWithId[this.dragEndId]
-
-      if (targetItem.isRoot) {
-        this.$store.dispatch(actions.flowGroups.removeFromGroup, srcItem.name).then(() => {
-          this.showGroupActionDialog = false
-        })
-        return
-      }
 
       const payload = {
         groupName: targetItem.name,
