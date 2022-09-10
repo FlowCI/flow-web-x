@@ -112,6 +112,10 @@ export class FlowWrapper {
     return this.flow.parentId
   }
 
+  get parent() {
+    return this.flow.parent
+  }
+
   get children() {
     return this.flow.children
   }

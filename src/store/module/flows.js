@@ -138,7 +138,7 @@ const actions = {
   },
 
   async select ({commit, state}, name) {
-    await http.get(`flows/${name}`, (flow) => {
+    await http.get(`flows/${name}?group=true`, (flow) => {
       commit('select', new FlowWrapper(flow))
     })
 
