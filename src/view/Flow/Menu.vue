@@ -165,16 +165,15 @@ export default {
     },
 
     latest: {
-      handler(after) {
-        for (let latestJob of after) {
-          const flow = this.mappingWithId[latestJob.flowId]
+      handler(latestJobs) {
+        for (const [flowId, job] of Object.entries(latestJobs)) {
+          const flow = this.mappingWithId[flowId]
           if (flow && flow.isFlow) {
-            flow.latestJob = latestJob
+            flow.latestJob = job
           }
         }
       },
       deep: true,
-      immediate: true
     },
   },
   methods: {
@@ -222,7 +221,7 @@ export default {
         return
       }
 
-      if (srcItem.isFlow && targetItem.isGroup ) {
+      if (srcItem.isFlow && targetItem.isGroup) {
         console.log('will move into the group ' + targetItem.name)
         this.groupActionContent = `Do you want to move the flow ${srcItem.name} to the group ${targetItem.name} ?`
         this.showGroupActionDialog = true
@@ -274,19 +273,25 @@ export default {
     },
 
     fetchLatestStatus(items) {
-      items.forEach((wrapper) => {
-        this.$store.dispatch(actions.jobs.latest, wrapper.name)
-            .then(() => {
-              for (let latest of this.latest) {
-                if (latest.flowId === wrapper.id) {
-                  wrapper.latestJob = latest
-                  break
-                }
+      const idList = []
+      for (let flowWrapper of items) {
+        if (flowWrapper.isFlow) {
+          idList.push(flowWrapper.id)
+        }
+      }
+
+      this.$store.dispatch(actions.jobs.latestList, idList)
+          .then(() => {
+            for (let item of items) {
+              let latestJob = this.latest[item.id];
+              if (latestJob) {
+                item.latestJob = latestJob
               }
-            })
-            .catch((e) => {
-            })
-      })
+            }
+          })
+          .catch((e) => {
+            console.log(e)
+          })
     },
 
     fetchTotalStats(items) {

@@ -56,6 +56,7 @@ export default {
 
   jobs: {
     latest: 'jobs/latest',
+    latestList: 'jobs/latestList',
     start: 'jobs/start',
     create: 'jobs/create',
     rerun: 'jobs/rerun',

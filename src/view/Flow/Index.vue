@@ -107,8 +107,6 @@ export default {
     selected: {
       handler: function(val) {
         const flowWrapper = val.obj
-        console.log(flowWrapper)
-
         let route = this.$route
         let href = '#' + route.path
         this.navItems = [this.baseItem]
