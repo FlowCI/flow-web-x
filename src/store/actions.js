@@ -137,11 +137,10 @@ export default {
     changeRole: 'users/changeRole'
   },
 
-  stats: {
-    list: 'stats/list',
-    total: 'stats/total',
-    metaType: 'stats/metaType',
-    metaTypeList: 'stats/metaTypeList'
+  matrix: {
+    list: 'matrix/list',
+    total: 'matrix/total',
+    metaTypeList: 'matrix/metaTypeList'
   },
 
   plugins: {

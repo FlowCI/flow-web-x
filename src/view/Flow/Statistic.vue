@@ -108,8 +108,8 @@
     computed: {
       ...mapState({
         flow: state => state.flows.selected.obj,
-        metaTypeList: state => state.stats.metaTypeList,
-        statsList: state => state.stats.statsList,
+        metaTypeList: state => state.matrix.metaTypeList,
+        statsList: state => state.matrix.statsList,
       }),
       name () {
         return this.$route.params.id
@@ -170,7 +170,7 @@
         // load all stats type
         let name = this.flow.name
 
-        this.$store.dispatch(actions.stats.metaTypeList, name).then(() => {
+        this.$store.dispatch(actions.matrix.metaTypeList, name).then(() => {
           for (const t of this.metaTypeList) {
             // init echart instance
             let instance = this.echartsInstances[ t.name ]
@@ -196,7 +196,7 @@
         }
 
         // load statistic data list
-        this.$store.dispatch(actions.stats.list, params).then(() => {
+        this.$store.dispatch(actions.matrix.list, params).then(() => {
           // make data to map
           const structured = this.structureData(this.statsList)
 

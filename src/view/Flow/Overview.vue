@@ -1,11 +1,11 @@
 <template>
   <div class="overview">
     <v-row align="start" justify="start" class="mx-0">
-      <v-col v-for="item in flowItems"
+      <v-col v-for="item in items"
              :key="item.name"
              cols="3" md="4" lg="3" sm="2"
       >
-        <summary-card :wrapper="item" v-if="item.type === 'Flow'"/>
+        <summary-card :wrapper="item"/>
       </v-col>
 
       <v-col cols="3" md="4" lg="3" sm="2" v-if="flowItems.length === 0">
@@ -33,13 +33,22 @@
     },
     data() {
       return {
-        items: []
       }
     },
     computed: {
       ...mapState({
         flowItems: state => state.flowItems.items,
-      })
+      }),
+
+      items() {
+        let flows = []
+        for (let item of this.flowItems) {
+          if (item.isFlow) {
+            flows.push(item)
+          }
+        }
+        return flows;
+      }
     },
     methods: {
       onCreateFlowClick() {

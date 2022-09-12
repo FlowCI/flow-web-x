@@ -14,7 +14,7 @@ import { Store as AgentStore } from './module/agents'
 import { Store as HostStore } from './module/hosts'
 import { Store as SecretsStore } from './module/secrets'
 import { Store as UserStore } from './module/users'
-import { Store as StatsStore } from './module/stats'
+import { Store as MatrixStore } from './module/matrix'
 import { Store as PluginStore } from './module/plugins'
 import { Store as ConfigStore } from './module/configs'
 import { Store as TtyStore } from './module/tty'
@@ -39,7 +39,7 @@ const store = new Vuex.Store({
     'hosts': HostStore,
     'secrets': SecretsStore,
     'users': UserStore,
-    'stats': StatsStore,
+    'matrix': MatrixStore,
     'plugins': PluginStore,
     'configs': ConfigStore,
     'tty': TtyStore,

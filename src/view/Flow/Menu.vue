@@ -132,7 +132,7 @@ export default {
       mappingWithName: state => state.flowItems.mappingWithName,
       // to receive job updated event and show the latest job status on flow list
       latest: state => state.jobs.latest,
-      statsTotal: state => state.stats.statsTotal
+      statsTotal: state => state.matrix.statsTotal
     }),
 
     // current flow name
@@ -297,7 +297,7 @@ export default {
     fetchTotalStats(items) {
       items.forEach((item) => {
         let payload = {name: item.name, metaType: 'default/ci_job_status'}
-        this.$store.dispatch(actions.stats.total, payload)
+        this.$store.dispatch(actions.matrix.total, payload)
             .then(() => {
               let sum = 0.0
               let total = this.statsTotal
