@@ -109,7 +109,7 @@
       ...mapState({
         flow: state => state.flows.selected.obj,
         metaTypeList: state => state.matrix.metaTypeList,
-        statsList: state => state.matrix.statsList,
+        matrixList: state => state.matrix.matrixList,
       }),
       name () {
         return this.$route.params.id
@@ -198,7 +198,7 @@
         // load statistic data list
         this.$store.dispatch(actions.matrix.list, params).then(() => {
           // make data to map
-          const structured = this.structureData(this.statsList)
+          const structured = this.structureData(this.matrixList)
 
           // calculate percentage
           const calculated = this.calculate({

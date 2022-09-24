@@ -139,7 +139,7 @@ export default {
 
   matrix: {
     list: 'matrix/list',
-    total: 'matrix/total',
+    batchTotal: 'matrix/batchTotal',
     metaTypeList: 'matrix/metaTypeList'
   },
 

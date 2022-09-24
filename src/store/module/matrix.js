@@ -2,8 +2,8 @@ import http from '../http'
 
 const state = {
   metaTypeList: [],
-  statsList: [],
-  statsTotal: {}
+  matrixList: [],
+  matrixTotal: {} //
 }
 
 const mutations = {
@@ -12,12 +12,16 @@ const mutations = {
     state.metaTypeList = list
   },
 
-  updateStatsData (state, list) {
-    state.statsList = list
+  updateMatrixData (state, list) {
+    state.matrixList = list
   },
 
-  updateStatsTotal (stats, total) {
-    stats.statsTotal = total;
+  updateMatrixTotal (stats, matrixList) {
+    let matrixTotal = {}
+    for (let item of matrixList) {
+      matrixTotal[item.flowId] = item
+    }
+    stats.matrixTotal = matrixTotal;
   }
 }
 
@@ -29,14 +33,10 @@ const actions = {
     })
   },
 
-  async total({commit}, {name, metaType}) {
-    const params = {
-      t: metaType
-    }
-
-    await http.get(`flows/${name}/matrix/total`, (total) => {
-      commit('updateStatsTotal', total)
-    }, params)
+  async batchTotal({commit}, {flowIdList, metaType}) {
+    await http.post(`flows/matrix/batch/total?t=${metaType}`, (matrixList) => {
+      commit('updateMatrixTotal', matrixList)
+    }, flowIdList)
   },
 
   async list({commit}, {name, metaType, from, to}) {
@@ -46,8 +46,8 @@ const actions = {
       to
     }
 
-    await http.get(`flows/${name}/matrix`, (statsList) => {
-      commit('updateStatsData', statsList)
+    await http.get(`flows/${name}/matrix`, (matrixList) => {
+      commit('updateMatrixData', matrixList)
     }, params)
   }
 }

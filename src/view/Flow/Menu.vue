@@ -132,7 +132,7 @@ export default {
       mappingWithName: state => state.flowItems.mappingWithName,
       // to receive job updated event and show the latest job status on flow list
       latest: state => state.jobs.latest,
-      statsTotal: state => state.matrix.statsTotal
+      matrixTotal: state => state.matrix.matrixTotal
     }),
 
     // current flow name
@@ -295,25 +295,37 @@ export default {
     },
 
     fetchTotalStats(items) {
-      items.forEach((item) => {
-        let payload = {name: item.name, metaType: 'default/ci_job_status'}
-        this.$store.dispatch(actions.matrix.total, payload)
-            .then(() => {
-              let sum = 0.0
-              let total = this.statsTotal
+      const flowIdList = []
+      for (let flowWrapper of items) {
+        if (flowWrapper.isFlow) {
+          flowIdList.push(flowWrapper.id)
+        }
+      }
 
-              for (const category of Object.keys(total.counter)) {
-                sum += total.counter[category]
+      let payload = {flowIdList, metaType: 'default/ci_job_status'}
+
+      this.$store.dispatch(actions.matrix.batchTotal, payload)
+          .then(() => {
+
+            for (let item of items) {
+              let matrix = this.matrixTotal[item.id]
+              if (!matrix) {
+                continue
               }
 
-              let numOfSuccess = total.counter['SUCCESS']
+              let sum = 0.0
+              for (const category of Object.keys(matrix.counter)) {
+                sum += matrix.counter[category]
+              }
+
+              let numOfSuccess = matrix.counter['SUCCESS']
               let successPercent = (numOfSuccess / sum) * 100
               successPercent = successPercent.toFixed(0)
               item.successRate = successPercent
-            })
-            .catch((e) => {
-            })
-      })
+            }
+          })
+          .catch((e) => {
+          })
     }
   }
 }
