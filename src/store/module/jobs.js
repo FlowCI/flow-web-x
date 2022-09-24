@@ -16,7 +16,7 @@ const state = {
   JobsStatus: {},
   selected: {}, // current selected job
   yml: '',
-  latest: [], // latest job object array
+  latest: {}, // key is flow id, value is latest job
   reports: [],
   reportUrlPath: '',
   artifacts: [],
@@ -50,16 +50,13 @@ const mutations = {
   },
 
   setLatest(state, job) {
-    const latestList = state.latest
+    state.latest[job.flowId] = job
+  },
 
-    for (let i = 0; i < latestList.length; i++) {
-      if (latestList[i].id === job.id) {
-        latestList.splice(i, 1, job)
-        return
-      }
+  setLatestList(state, jobs) {
+    for (let job of jobs) {
+      state.latest[job.flowId] = job
     }
-
-    latestList.push(job)
   },
 
   updateStatus(state, updatedJob) {
@@ -79,6 +76,9 @@ const mutations = {
     if (state.selected && state.selected.id === updatedJob.id) {
       state.selected = updatedJob
     }
+
+    // update latest status
+    state.latest[updatedJob.flowId] = updatedJob
   },
 
   selected(state, job) {
@@ -114,6 +114,13 @@ const actions = {
     return http.get(url, (job) => {
       commit('setLatest', job)
     })
+  },
+
+  latestList({commit}, flowsIdList) {
+    const url = `jobs/batch/latest`
+    return http.post(url, (jobs) => {
+      commit('setLatestList', jobs)
+    }, flowsIdList)
   },
 
   getYml({commit}, {flow, buildNumber}) {

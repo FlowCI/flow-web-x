@@ -25,7 +25,7 @@
       </v-col>
 
       <v-col cols="7">
-        <option-git-access :flow="flow"></option-git-access>
+        <option-git-access :wrapper="flow"></option-git-access>
       </v-col>
     </v-row>
 
@@ -35,7 +35,7 @@
         <span class="font-weight-black title">Danger Zone</span>
       </v-col>
 
-      <v-col cols="7" class="danger-zone px-2">
+      <v-col cols="7" class="danger-zone pa-3">
         <option-delete-flow :flow="flow"></option-delete-flow>
       </v-col>
     </v-row>
@@ -76,6 +76,6 @@
   .danger-zone {
     border-style: solid;
     border-width: 2px;
-    border-color: red;
+    border-color: #e78372;
   }
 </style>

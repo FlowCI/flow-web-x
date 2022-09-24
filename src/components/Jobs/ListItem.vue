@@ -129,7 +129,7 @@ export default {
 
 <style lang="scss" scoped>
 .job-item {
-  min-height: 68px;
+  min-height: 80px;
 }
 
 .commit-text {

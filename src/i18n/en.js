@@ -41,8 +41,9 @@ export default {
   },
 
   flow: {
-    name: 'flow',
-    create: 'Create a Flow',
+    name: 'flows',
+    create: 'Create a flow',
+    create_group: 'Create a group',
     search: 'Search by key words',
     settings: 'Settings',
     statistic: 'Statistic',

@@ -62,47 +62,15 @@ export default {
   data() {
     return {
       baseItem: {text: 'flows', href: '#/flows'},
-      selectedBranch: 'master'
+      selectedBranch: 'master',
+      navItems: [],
     }
   },
   computed: {
     ...mapState({
-      agents: state => state.agents.items
+      agents: state => state.agents.items,
+      selected: state => state.flows.selected
     }),
-
-    navItems() {
-      let route = this.$route
-
-      if (route.name === 'Overview') {
-        return [this.baseItem]
-      }
-
-      // flow level
-      let href = '#' + route.path
-      let flowItem = {text: this.flowName, href}
-      this.setCurrentFlow()
-
-      if (route.name === 'Jobs') {
-        this.loadBranches()
-        return [this.baseItem, flowItem]
-      }
-
-      flowItem.href = `#/flows/${this.flowName}/jobs`
-
-      if (route.name === 'Settings') {
-        return [this.baseItem, flowItem, {text: 'settings', href}]
-      }
-
-      if (route.name === 'Statistic') {
-        return [this.baseItem, flowItem, {text: 'statistic', href}]
-      }
-
-      if (route.name === 'JobDetail') {
-        return [this.baseItem, flowItem, {text: '#' + this.buildNumber, href}]
-      }
-
-      return []
-    },
 
     showFlowAction() {
       return this.$route.name === 'Jobs'
@@ -114,6 +82,69 @@ export default {
 
     buildNumber() {
       return this.$route.params.num
+    }
+  },
+  mounted() {
+    if (this.$route.name === 'Overview') {
+      this.navItems = [this.baseItem]
+      return
+    }
+
+    this.setCurrentFlow()
+  },
+
+  watch: {
+    '$route' (route, from){
+      if (route.name === 'Overview') {
+        this.navItems = [this.baseItem]
+        return
+      }
+
+      // will trigger 'selected' watcher
+      this.setCurrentFlow()
+    },
+
+    selected: {
+      handler: function(val) {
+        const flowWrapper = val.obj
+        let route = this.$route
+        let href = '#' + route.path
+        this.navItems = [this.baseItem]
+
+        if (flowWrapper.parent) {
+          const p = {text: flowWrapper.parent.name, href}
+          this.navItems.push(p)
+        }
+
+        let flowItem = {text: flowWrapper.name, href}
+        this.navItems.push(flowItem)
+
+        if (route.name === 'Jobs') {
+          this.loadBranches()
+          return
+        }
+
+        flowItem.href = `#/flows/${flowWrapper.name}/jobs`
+
+        if (route.name === 'Settings') {
+          let settingsItem = {text: 'settings', href};
+          this.navItems.push(settingsItem)
+          return
+        }
+
+        if (route.name === 'Statistic') {
+          let statItem = {text: 'statistic', href};
+          this.navItems.push(statItem)
+          return
+        }
+
+        if (route.name === 'JobDetail') {
+          let detailItem = {text: '#' + this.buildNumber, href};
+          this.navItems.push(detailItem)
+        }
+      },
+      deep: true,
+      immediate: true
     }
   },
 

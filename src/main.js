@@ -87,6 +87,10 @@ Vue.mixin({
 
     popCreateFlow(boolVal) {
       this.$store.commit(actions.app.popCreateFlow, boolVal)
+    },
+
+    popCreateGroup(boolVal) {
+      this.$store.commit(actions.app.popCreateGroup, boolVal)
     }
   }
 })

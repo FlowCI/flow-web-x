@@ -13,6 +13,7 @@ export const Store = {
     },
 
     showCreateFlow: false,
+    showCreateGroup: false,
     staticBaseUrl: `${http.host}/static`
   },
   mutations: {
@@ -28,6 +29,10 @@ export const Store = {
 
     popCreateFlow(state, val) {
       state.showCreateFlow = val
+    },
+
+    popCreateGroup(state, val) {
+      state.showCreateGroup = val
     }
   }
 }

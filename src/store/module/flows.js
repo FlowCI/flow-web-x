@@ -3,12 +3,9 @@ import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
 
 const state = {
-  items: [], // flow wrapper list
   editor: '',
   selected: {obj: {}, yml: ''},
-  created: undefined, // created flow object with pending status
   sshRsa: {publicKey: '', privateKey: ''}, // created ssh-rsa
-  isExist: undefined, // result from action 'exist'
   gitTestMessage: undefined,  // git test message update
   gitBranches: [],
   itemsByCredential: [],
@@ -18,14 +15,6 @@ const state = {
 }
 
 const mutations = {
-  updateExist (state, isExist) {
-    state.isExist = isExist
-  },
-
-  updateCreated (state, flow) {
-    state.created = flow
-  },
-
   updateSshRsa (state, rsaKeyPair) {
     state.sshRsa = rsaKeyPair
   },
@@ -39,19 +28,13 @@ const mutations = {
   },
 
   update (state, updatedFlow) {
-    state.items.forEach((flow, index) => {
-      if (flow.id === updatedFlow.id) {
-        flow.rawInstance = updatedFlow
-      }
-    })
-
     if (state.selected.obj.id === updatedFlow.id) {
       state.selected.obj.rawInstance = updatedFlow
     }
   },
 
-  select (state, flow) {
-    state.selected.obj = flow
+  select (state, flowWrapper) {
+    state.selected.obj = flowWrapper
   },
 
   setYml (state, yml) {
@@ -62,22 +45,8 @@ const mutations = {
     state.templates = templates
   },
 
-  list (state, items) {
-    state.items = items
-  },
-
   listByCredential (state, items) {
     state.itemsByCredential = items
-  },
-
-  add (state, newFlow) {
-    state.items.push(newFlow)
-  },
-
-  delete (state, name) {
-    state.items = state.items.filter((val, _index, _array) => {
-      return val.name !== name
-    })
   },
 
   editor (state, res) {
@@ -101,77 +70,12 @@ const mutations = {
     state.users = state.users.filter((x) => !users.some((y) => x.id === y.id))
   },
 
-  addVar (state, {flow, name, value}) {
-    // update flow in items
-    for (let item of state.items) {
-      if (item.id !== flow.id) {
-        continue
-      }
-
-      if (!item.locally) {
-        item.locally = {}
-      }
-
-      item.locally[ name ] = value
-      break
-    }
-
-    // update flow if selected
-    const selected = state.selected.flow
-    if (!selected || !selected.id) {
-      return
-    }
-
-    if (selected.id === flow.id) {
-      if (!selected.locally) {
-        selected.locally = {}
-      }
-
-      selected.locally[ name ] = value
-    }
-  },
-
-  removeVar (state, {flow, name}) {
-    // update flow in items
-    for (let item of state.items) {
-      if (item.id !== flow.id) {
-        continue
-      }
-
-      if (!item.locally) {
-        break
-      }
-
-      delete item.locally[ name ]
-    }
-
-    // update flow if selected
-    const selected = state.selected.flow
-    if (!selected || !selected.id) {
-      return
-    }
-
-    if (selected.id === flow.id) {
-      if (!selected.locally) {
-        return
-      }
-
-      delete selected.locally[ name ]
-    }
-  },
-
   setYmlObj (state, flowNode) {
     state.steps = flowNode.children
   }
 }
 
 const actions = {
-  async create ({commit}, name) {
-    await http.post(`flows/${name}`, (flow) => {
-      commit('updateCreated', flow)
-    })
-  },
-
   async createSshRsa ({commit, state}) {
     await http.post('secrets/rsa/gen', (rsaKeyPair) => {
       commit('updateSshRsa', rsaKeyPair)
@@ -191,54 +95,16 @@ const actions = {
       })
   },
 
-  async confirm ({commit}, {wrapper, title}) {
-    let gitSettings = {
-      gitUrl: wrapper.gitUrl,
-      secret: wrapper.secret
-    }
-
-    const confirmFunc = async () => {
-      await http.post(
-        `flows/${wrapper.name}/confirm`,
+  async create ({commit, dispatch}, {wrapper, title}) {
+    await http.post(
+        `flows/${wrapper.name}`,
         (flow) => {
-          console.log('[DONE]: confirmed')
-          commit('add', new FlowWrapper(flow))
+          console.log(`flow ${wrapper.name} created`)
+          dispatch('flowItems/add', flow, {root: true})
         },
         {title}
-      )
-    }
+    )
 
-    if (wrapper.hasSSH) {
-      await http.post(
-        `flows/${wrapper.name}/secret/rsa`,
-        (secret) => {
-          console.log('[DONE]: setup secret: ' + secret)
-          gitSettings.secret = secret
-        },
-        wrapper.ssh
-      ).then(() => {
-        console.log(gitSettings)
-        confirmFunc()
-      })
-      return
-    }
-
-    if (wrapper.hasAuth) {
-      await http.post(
-        `flows/${wrapper.name}/secret/auth`,
-        (secret) => {
-          console.log('[DONE]: setup secret: ' + secret)
-          gitSettings.secret = secret
-        },
-        wrapper.auth
-      ).then(() => {
-        console.log(gitSettings)
-        confirmFunc()
-      })
-      return
-    }
-
-    await confirmFunc()
   },
 
   async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout, cron}) {
@@ -257,10 +123,10 @@ const actions = {
     )
   },
 
-  async delete ({commit, state}, name) {
-    await http.delete(`flows/${name}`, () => {
-      commit('delete', name)
+  async delete ({commit, state, dispatch}, wrapper) {
+    await http.delete(`flows/${wrapper.name}`, () => {
       commit('select', {obj: {}, yml: ''})
+      dispatch('flowItems/remove', wrapper, {root: true})
     })
   },
 
@@ -271,18 +137,8 @@ const actions = {
     })
   },
 
-  exist ({commit}, name) {
-    return http.get(`flows/${name}/exist`, (boolVal) => {
-      commit('updateExist', boolVal)
-    })
-  },
-
-  reset ({commit}) {
-    commit('updateExist', undefined)
-  },
-
   async select ({commit, state}, name) {
-    await http.get(`flows/${name}`, (flow) => {
+    await http.get(`flows/${name}?group=true`, (flow) => {
       commit('select', new FlowWrapper(flow))
     })
 
@@ -290,16 +146,6 @@ const actions = {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
-    })
-  },
-
-  list ({commit}) {
-    return http.get('flows', (flows) => {
-      let list = []
-      for (let flow of flows) {
-        list.push(new FlowWrapper(flow))
-      }
-      commit('list', list)
     })
   },
 
@@ -376,16 +222,18 @@ const actions = {
         type: type
       }
     }
+
     const onSuccess = () => {
-      commit('addVar', {flow, name, value})
+      // commit('addVar', {flow, name, value, type})
     }
+
     await http.post(`flows/${flow.name}/variables`, onSuccess, payload)
   },
 
   async removeVar ({commit}, {flow, name}) {
     const payload = [ name ]
     const onSuccess = () => {
-      commit('removeVar', {flow, name})
+      // commit('removeVar', {flow, name})
     }
     await http.delete(`flows/${flow.name}/variables`, onSuccess, payload)
   }

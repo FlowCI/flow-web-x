@@ -71,7 +71,7 @@
     },
     computed: {
       ymlVars() {
-        return this.toVarObjectList(this.flow.variables, false)
+        return this.toVarObjectList(this.flow.readOnlyVars, true)
       }
     },
     watch: {
@@ -83,7 +83,7 @@
       loadLocalVars(flow) {
         let permission = this.hasPermission('Admin')
 
-        if (!flow.locally || Object.keys(flow.locally).length === 0) {
+        if (!flow.vars || Object.keys(flow.vars).length === 0) {
           if (permission) {
             const copy = _.cloneDeep(this.empty)
             this.localVars = [copy]
@@ -91,16 +91,16 @@
           }
         }
 
-        this.localVars = this.toVarObjectList(flow.locally, permission)
+        this.localVars = this.toVarObjectList(flow.vars, !permission)
       },
 
-      toVarObjectList(varsMap, edit) {
+      toVarObjectList(varsMap, isReadOnly) {
         let list = []
 
         for (let name in varsMap) {
           let value = varsMap[name]
 
-          if (typeof (value) === 'string') {
+          if (isReadOnly) {
             list.push({
               name,
               value,
@@ -108,17 +108,16 @@
               edit: false,
               editable: false
             })
+            continue
           }
 
-          if (typeof (value) === 'object') {
-            list.push({
-              name,
-              value: value.data,
-              type: value.type,
-              edit: edit,
-              editable: value.editable
-            })
-          }
+          list.push({
+            name,
+            value: value.data,
+            type: value.type,
+            edit: false,
+            editable: true
+          })
         }
 
         return list

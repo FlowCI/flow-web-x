@@ -56,6 +56,10 @@
         required: true
       }
     },
+    data() {
+      return {
+      }
+    },
     methods: {
       onTitleClick () {
         this.$router.push({path: `/flows/${this.wrapper.name}/jobs`})
