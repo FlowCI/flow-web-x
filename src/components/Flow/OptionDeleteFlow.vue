@@ -70,7 +70,7 @@
           return
         }
 
-        this.$store.dispatch(actions.flows.delete, this.flow.name).then(() => {
+        this.$store.dispatch(actions.flows.delete, this.flow).then(() => {
           this.onCloseClick()
           this.$router.push({path: `/flows`})
         })

@@ -2,6 +2,7 @@ import http from '../http'
 import md5 from 'blueimp-md5'
 
 const state = {
+  current: {},
   items: [], // user list
   total: 0
 }
@@ -15,6 +16,10 @@ const mutations = {
   add (state, user) {
     state.items.push(user)
     state.total += 1
+  },
+
+  setCurrent(state, user) {
+    state.current = user
   },
 
   updateRole (state, {email, role}) {

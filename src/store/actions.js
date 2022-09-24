@@ -2,7 +2,8 @@ export default {
   app: {
     setConnState: 'g/setConnectionState',
     showSnackbar: 'g/show',
-    popCreateFlow: 'g/popCreateFlow'
+    popCreateFlow: 'g/popCreateFlow',
+    popCreateGroup: 'g/popCreateGroup'
   },
 
   auth: {
@@ -11,14 +12,26 @@ export default {
     logout: 'auth/logout'
   },
 
+  flowItems: {
+    list: 'flowItems/list',
+    reset: 'flowItems/reset',
+    exist: 'flowItems/exist',
+    add: 'flowItems/add',
+    remove: 'flowItems/remove',
+    addToParent: 'flowItems/addToParent',
+  },
+
+  flowGroups: {
+    create: 'flowGroups/create',
+    delete: 'flowGroups/delete',
+    addToGroup: 'flowGroups/addToGroup',
+  },
+
   flows: {
-    reset: 'flows/reset',
-    exist: 'flows/exist',
     create: 'flows/create',
     createSshRsa: 'flows/createSshRsa',
     confirm: 'flows/confirm',
     update: 'flows/update',
-    list: 'flows/list',
     listByCredential: 'flows/listByCredential',
     select: 'flows/select',
     delete: 'flows/delete',
@@ -43,6 +56,7 @@ export default {
 
   jobs: {
     latest: 'jobs/latest',
+    latestList: 'jobs/latestList',
     start: 'jobs/start',
     create: 'jobs/create',
     rerun: 'jobs/rerun',
@@ -123,11 +137,10 @@ export default {
     changeRole: 'users/changeRole'
   },
 
-  stats: {
-    list: 'stats/list',
-    total: 'stats/total',
-    metaType: 'stats/metaType',
-    metaTypeList: 'stats/metaTypeList'
+  matrix: {
+    list: 'matrix/list',
+    batchTotal: 'matrix/batchTotal',
+    metaTypeList: 'matrix/metaTypeList'
   },
 
   plugins: {

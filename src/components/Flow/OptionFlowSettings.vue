@@ -89,10 +89,11 @@
 
     <v-row>
       <v-col>
-        <v-btn color="success"
+        <v-btn color="primary"
                @click="onUpdateClick"
                :loading="loading"
-        >Update Settings
+               :disabled="!hasPermission('Admin')"
+        >{{ $t('flow.update_btn') }}
         </v-btn>
       </v-col>
     </v-row>

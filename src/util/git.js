@@ -7,8 +7,8 @@ export const GIT_SOURCE_GERRIT = "GERRIT"
 export const GitSourceSelection = [
   {name: 'GitHub', value: GIT_SOURCE_GITHUB, icon: 'mdi-github'},
   {name: 'GitLab', value: GIT_SOURCE_GITLAB, icon: 'mdi-gitlab'},
-  {name: 'Gogs', value: GIT_SOURCE_GOGS, icon: 'mdi-git'},
-  {name: 'Gitee', value: GIT_SOURCE_GITEE, icon: 'mdi-git'},
+  // {name: 'Gogs', value: GIT_SOURCE_GOGS, icon: 'mdi-git'},
+  // {name: 'Gitee', value: GIT_SOURCE_GITEE, icon: 'mdi-git'},
   {name: 'Gerrit', value: GIT_SOURCE_GERRIT, icon: 'mdi-git'}
 ]
 

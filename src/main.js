@@ -66,6 +66,14 @@ Vue.mixin({
     }
   },
   methods: {
+    hasPermission(role) {
+      if (this.user) {
+        return this.user.role === role
+      }
+
+      return false
+    },
+
     redirectToLogin() {
       if (!this.isLoginPage) {
         this.$router.replace('/login')
@@ -79,6 +87,10 @@ Vue.mixin({
 
     popCreateFlow(boolVal) {
       this.$store.commit(actions.app.popCreateFlow, boolVal)
+    },
+
+    popCreateGroup(boolVal) {
+      this.$store.commit(actions.app.popCreateGroup, boolVal)
     }
   }
 })

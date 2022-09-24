@@ -3,7 +3,7 @@
     <v-row align="center" no-gutters>
       <v-col>
         <span class="font-weight-bold title">Variables</span>
-        <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar">
+        <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar" v-if="hasPermission('Admin')">
           <v-icon class="font-weight-bold">mdi-plus-box</v-icon>
         </v-btn>
         <v-divider></v-divider>
@@ -64,14 +64,14 @@
         editable: true
       },
 
-      localVars: []
+      localVars: [],
     }),
     mounted() {
       this.loadLocalVars(this.flow)
     },
     computed: {
       ymlVars() {
-        return this.toVarObjectList(this.flow.variables, false)
+        return this.toVarObjectList(this.flow.readOnlyVars, true)
       }
     },
     watch: {
@@ -81,22 +81,26 @@
     },
     methods: {
       loadLocalVars(flow) {
-        if (!flow.locally || Object.keys(flow.locally).length === 0) {
-          const copy = _.cloneDeep(this.empty)
-          this.localVars = [copy]
-          return
+        let permission = this.hasPermission('Admin')
+
+        if (!flow.vars || Object.keys(flow.vars).length === 0) {
+          if (permission) {
+            const copy = _.cloneDeep(this.empty)
+            this.localVars = [copy]
+            return
+          }
         }
 
-        this.localVars = this.toVarObjectList(flow.locally, false)
+        this.localVars = this.toVarObjectList(flow.vars, !permission)
       },
 
-      toVarObjectList(varsMap, edit) {
+      toVarObjectList(varsMap, isReadOnly) {
         let list = []
 
         for (let name in varsMap) {
           let value = varsMap[name]
 
-          if (typeof (value) === 'string') {
+          if (isReadOnly) {
             list.push({
               name,
               value,
@@ -104,17 +108,16 @@
               edit: false,
               editable: false
             })
+            continue
           }
 
-          if (typeof (value) === 'object') {
-            list.push({
-              name,
-              value: value.data,
-              type: value.type,
-              edit: edit,
-              editable: value.editable
-            })
-          }
+          list.push({
+            name,
+            value: value.data,
+            type: value.type,
+            edit: false,
+            editable: true
+          })
         }
 
         return list

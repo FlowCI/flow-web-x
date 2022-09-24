@@ -1,12 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-    <template v-slot:activator="{ on }">
-      <v-btn small outlined v-on="on" block color="primary">
-        {{ $t('flow.create') }}
-        <v-icon small class="ml-1">flow-icon-control_point</v-icon>
-      </v-btn>
-    </template>
-
     <v-card>
       <!-- toolbar -->
       <v-toolbar dark color="primary">
@@ -25,7 +18,7 @@
           {{ $t('flow.create_title_name') }}
         </v-stepper-step>
         <v-stepper-content step="1">
-          <create-flow-name :on-next-click="onNextClick"></create-flow-name>
+          <input-flow-name :on-next-click="onNextClick"></input-flow-name>
         </v-stepper-content>
 
         <!-- step 2:  select a template -->
@@ -47,16 +40,16 @@
 </template>
 
 <script>
-  import CreateFlowName from './CreateFlowName'
+  import InputFlowName from './InputFlowName'
   import CreateSelectTemplate from './CreateSelectTemplate'
   import actions from '@/store/actions'
   import { FlowWrapper } from '@/util/flows'
   import { mapState } from 'vuex'
 
   export default {
-    name: 'FlowCreateDialog',
+    name: 'CreateFlowDialog',
     components: {
-      CreateFlowName,
+      InputFlowName,
       CreateSelectTemplate
     },
     data() {
@@ -118,7 +111,7 @@
             // send confirm
             this.loading = true
             let payload = {wrapper: this.flow, title}
-            this.$store.dispatch(actions.flows.confirm, payload)
+            this.$store.dispatch(actions.flows.create, payload)
                 .then(() => {
                   this.onCancelClick()
                   this.loading = false

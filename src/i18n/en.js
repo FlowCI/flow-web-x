@@ -41,8 +41,9 @@ export default {
   },
 
   flow: {
-    name: 'flow',
-    create: 'Create a Flow',
+    name: 'flows',
+    create: 'Create a flow',
+    create_group: 'Create a group',
     search: 'Search by key words',
     settings: 'Settings',
     statistic: 'Statistic',
@@ -62,6 +63,8 @@ export default {
     create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
     create_blank_template_title: 'Do not use template',
     create_blank_template_desc: 'Create a flow only, the YAML configuration could be defined from "flow -> settings" later',
+
+    update_btn: 'Update Settings',
 
     delete_btn: 'Delete This Flow',
     delete_desc: 'Once you delete a repository, there is no going back. Please be certain.',

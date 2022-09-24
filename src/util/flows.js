@@ -17,6 +17,19 @@ export function getCronDesc(cron, local) {
   }
 }
 
+export function getColorOfSuccessRate(rate) {
+  for (let i = 0; i < ratio.length - 1; i++) {
+    const min = ratio[i]
+    const max = ratio[i + 1]
+
+    if (min < rate && rate <= max) {
+      return ratioColors[i]
+    }
+  }
+
+  return 'grey lighten-1'
+}
+
 export const gitTestStatus = {
   default: {
     class: [],
@@ -44,42 +57,39 @@ export const gitTestStatus = {
   }
 }
 
-export function toWrapperList(flows) {
-  let list = []
-  for (let flow of flows) {
-    list.push(new FlowWrapper(flow))
-  }
-  return list
-}
-
 export class FlowWrapper {
-  constructor(flow) {
-    this.flow = flow
+  constructor(item) {
+    this.flow = item
+    this.flow.children = []
     this.latestJobWrapper = new JobWrapper({buildNumber: 0}) // JobWrapper
     this.successPercentage = 0
-    this.sshObj = {
-      privateKey: '',
-      publicKey: ''
-    }
-    this.authObj = {
-      username: '',
-      password: ''
-    }
   }
 
   fetchVars(name) {
-    let locally = this.flow.locally
+    let locally = this.flow.vars
 
     if (locally && locally[name]) {
       return locally[name].data
     }
 
-    let variables = this.flow.variables
+    let variables = this.flow.readOnlyVars
     if (variables && variables[name]) {
       return variables[name]
     }
 
     return ''
+  }
+
+  get isGroup() {
+    return this.flow.type === 'Group'
+  }
+
+  get isFlow() {
+    return this.flow.type === 'Flow'
+  }
+
+  get isRoot() {
+    return this.flow.id === "-1"
   }
 
   get rawInstance() {
@@ -92,6 +102,22 @@ export class FlowWrapper {
 
   get name() {
     return this.flow.name
+  }
+
+  get type() {
+    return this.flow.type
+  }
+
+  get parentId() {
+    return this.flow.parentId
+  }
+
+  get parent() {
+    return this.flow.parent
+  }
+
+  get children() {
+    return this.flow.children
   }
 
   get webhookStatus() {
@@ -117,28 +143,12 @@ export class FlowWrapper {
     return this.fetchVars(vars.git.credential)
   }
 
-  get ssh() {
-    return this.sshObj
+  get vars() {
+    return this.flow.vars
   }
 
-  get auth() {
-    return this.authObj
-  }
-
-  get variables() {
-    return this.flow.variables
-  }
-
-  get hasGitUrl() {
-    return this.gitUrl !== ''
-  }
-
-  get hasSSH() {
-    return this.ssh.privateKey !== '' && this.ssh.publicKey !== ''
-  }
-
-  get hasAuth() {
-    return this.authObj.username !== '' && this.authObj.password !== ''
+  get readOnlyVars() {
+    return this.flow.readOnlyVars
   }
 
   get latestJob() {
@@ -146,21 +156,11 @@ export class FlowWrapper {
   }
 
   get successRate() {
-    return this.successPercentage || 0
+    return this.successPercentage || 0.0
   }
 
   get successRateColor() {
-    for (let i = 0; i < ratio.length - 1; i++) {
-      const min = ratio[i]
-      const max = ratio[i + 1]
-      const rate = this.successRate
-
-      if (min < rate && rate <= max) {
-        return ratioColors[i]
-      }
-    }
-
-    return 'grey lighten-1'
+    return getColorOfSuccessRate(this.successRate)
   }
 
   get isLoadYamlFromRepo() {
@@ -198,6 +198,10 @@ export class FlowWrapper {
     }
 
     this.flow.variables[vars.git.url] = url
+  }
+
+  set children(val) {
+    this.flow.children = val
   }
 
   set ssh(sshObj) {
@@ -243,4 +247,14 @@ export class FlowWrapper {
   set stepTimeout(timeout) {
     this.flow.stepTimeout = timeout
   }
+
+  set parentId(id) {
+    this.flow.parentId = id
+  }
 }
+
+export const Root = new FlowWrapper({
+  id: "-1",
+  name: 'flows',
+  type: 'Group'
+})

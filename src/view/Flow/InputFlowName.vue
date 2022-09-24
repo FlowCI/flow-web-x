@@ -36,7 +36,7 @@
   import actions from '@/store/actions'
 
   export default {
-    name: 'CreateFlowName',
+    name: 'InputFlowName',
     props: {
       onNextClick: {
         required: true,
@@ -54,7 +54,7 @@
     computed: {
       ...mapState({
         showCreateFlow: state => state.g.showCreateFlow,
-        isExist: state => state.flows.isExist
+        isExist: state => state.flowItems.isExist
       })
     },
     watch: {
@@ -71,7 +71,7 @@
         }
 
         this.errorMsg = []
-        this.$store.dispatch(actions.flows.exist, this.name).then(() => {
+        this.$store.dispatch(actions.flowItems.exist, this.name).then(() => {
           this.onExistCallback(this.isExist)
         })
       },
@@ -82,14 +82,7 @@
           return
         }
 
-        if (val === false) {
-          this.$store.dispatch(actions.flows.create, this.name).then(() => {
-            this.onNextClick(this.name)
-            this.$store.dispatch(actions.flows.reset).then()
-          }).catch((error) => {
-            this.errorMsg.push(error.message)
-          })
-        }
+        this.onNextClick(this.name)
       }
     }
   }

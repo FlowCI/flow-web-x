@@ -43,7 +43,10 @@
 
     <v-row>
       <v-col cols="11">
-        <git-test-btn :wrapper="wrapper" :onBeforeTest="onTestClick"></git-test-btn>
+        <git-test-btn :wrapper="wrapper"
+                      :onBeforeTest="onTestClick"
+                      :disabled="!hasPermission('Admin')"
+        ></git-test-btn>
       </v-col>
     </v-row>
   </v-form>
@@ -53,14 +56,13 @@
 <script>
 import vars from '@/util/vars'
 import GitTestBtn from '@/components/Flow/GitTestBtn'
-import { FlowWrapper } from '@/util/flows'
 import { gitUrlRules } from '@/util/rules'
 import { mapState } from 'vuex'
 
 export default {
   name: 'OptionGitAccess',
   props: {
-    flow: {
+    wrapper: {
       required: true,
       type: Object
     }
@@ -90,10 +92,6 @@ export default {
     ...mapState({
       settings: state => state.settings.instance
     }),
-
-    wrapper() {
-      return new FlowWrapper(this.flow)
-    },
 
     webhook() {
       return this.settings.serverUrl + '/webhooks/' + this.wrapper.name

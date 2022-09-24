@@ -5,6 +5,8 @@ import { Store as Global } from './module/global'
 import { Store as AuthStore } from './module/auth'
 import { Store as ErrorStore } from './module/error'
 import { Store as FlowStore } from './module/flows'
+import { Store as FlowItemStore } from './module/flow_items'
+import { Store as FlowGroupStore } from './module/flow_groups'
 import { Store as JobStore } from './module/jobs'
 import { Store as StepStore } from './module/steps'
 import { Store as LogStore } from './module/logs'
@@ -12,7 +14,7 @@ import { Store as AgentStore } from './module/agents'
 import { Store as HostStore } from './module/hosts'
 import { Store as SecretsStore } from './module/secrets'
 import { Store as UserStore } from './module/users'
-import { Store as StatsStore } from './module/stats'
+import { Store as MatrixStore } from './module/matrix'
 import { Store as PluginStore } from './module/plugins'
 import { Store as ConfigStore } from './module/configs'
 import { Store as TtyStore } from './module/tty'
@@ -28,6 +30,8 @@ const store = new Vuex.Store({
     'auth': AuthStore,
     'err': ErrorStore,
     'flows': FlowStore,
+    'flowItems': FlowItemStore,
+    'flowGroups': FlowGroupStore,
     'jobs': JobStore,
     'steps': StepStore,
     'logs': LogStore,
@@ -35,7 +39,7 @@ const store = new Vuex.Store({
     'hosts': HostStore,
     'secrets': SecretsStore,
     'users': UserStore,
-    'stats': StatsStore,
+    'matrix': MatrixStore,
     'plugins': PluginStore,
     'configs': ConfigStore,
     'tty': TtyStore,
