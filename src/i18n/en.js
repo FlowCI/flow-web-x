@@ -53,6 +53,9 @@ export default {
     flow_name: 'Flow name',
     git_yaml: 'Is load YAML from Git (.flowci.yaml)',
 
+    option_vars_customized: 'Customized',
+    option_vars_in_yml: 'YAML variables',
+
     create_title_name: 'Enter Flow Name',
     create_title_select_template: 'Select YAML Template',
     create_title_git_url: 'Config Git URL',
@@ -82,6 +85,7 @@ export default {
       options: 'Options',
       variables: 'Variables',
       yaml: 'YAML',
+      plugins: 'Plugins',
       notification: 'Notification',
       members: 'Members',
     },

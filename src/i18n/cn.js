@@ -53,6 +53,9 @@ export default {
     flow_name: '工作流名称',
     git_yaml: '是否从 Git 仓库中获取 YAML 配置 (.flowci.yaml)',
 
+    option_vars_customized: 'Customized',
+    option_vars_in_yml: 'YAML variables',
+
     create_title_name: '输入工作流名称',
     create_title_select_template: '选择 YAML 模板',
     create_title_git_url: '配置 Git URL',
@@ -82,6 +85,7 @@ export default {
       options: '设置',
       variables: '环境变量',
       yaml: 'YAML 配置',
+      plugins: 'Plugins',
       notification: '消息通知',
       members: '成员',
     },

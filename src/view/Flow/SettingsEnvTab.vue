@@ -2,7 +2,7 @@
   <div class="pa-3">
     <v-row align="center" no-gutters>
       <v-col>
-        <span class="font-weight-bold title">Variables</span>
+        <span class="font-weight-bold title">{{ $t('flow.option_vars_customized') }}</span>
         <v-btn small icon class="ml-2 pb-1" @click="onAddLocalVar" v-if="hasPermission('Admin')">
           <v-icon class="font-weight-bold">mdi-plus-box</v-icon>
         </v-btn>
@@ -23,7 +23,7 @@
 
     <v-row>
       <v-col>
-        <span class="font-weight-bold title">In YAML</span>
+        <span class="font-weight-bold title">{{ $t('flow.option_vars_in_yml') }}</span>
         <v-divider></v-divider>
       </v-col>
     </v-row>

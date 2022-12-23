@@ -4,7 +4,7 @@ import {FlowWrapper} from "@/util/flows";
 
 const state = {
   editor: '',
-  selected: {obj: {}, yml: ''},
+  selected: {obj: {}, ymlList: []},
   sshRsa: {publicKey: '', privateKey: ''}, // created ssh-rsa
   gitTestMessage: undefined,  // git test message update
   gitBranches: [],
@@ -37,8 +37,8 @@ const mutations = {
     state.selected.obj = flowWrapper
   },
 
-  setYml (state, yml) {
-    state.selected.yml = yml
+  setYml (state, ymlList) {
+    state.selected.ymlList = ymlList
   },
 
   setTemplates(state, templates) {
@@ -142,7 +142,7 @@ const actions = {
       commit('select', new FlowWrapper(flow))
     })
 
-    await http.get(`flows/${name}/yml/default/obj`, (flowNode) => {
+    await http.get(`flows/${name}/yml/steps`, (flowNode) => {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
@@ -164,8 +164,8 @@ const actions = {
       return
     }
 
-    return http.get(`flows/${name}/yml/default`, (base64Yml) => {
-      commit('setYml', util.base64ToUtf8(base64Yml))
+    return http.get(`flows/${name}/yml`, (ymlList) => {
+      commit('setYml', ymlList)
     })
   },
 

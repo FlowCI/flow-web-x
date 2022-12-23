@@ -1,7 +1,10 @@
 <template>
   <v-card flat>
     <v-card-text class="pa-1">
-      <div id="yml-editor"></div>
+      <div>
+        test
+      </div>
+
 
       <div class="info-message" v-if="flow.yamlFromRepo">
         <span class="px-5 py-1">{{ $t('flow.hint.yaml_from_git', [flow.yamlRepoBranch]) }}</span>
@@ -42,83 +45,71 @@
 </template>
 
 <script>
-  import * as monaco from 'monaco-editor'
-  import { mapState } from 'vuex'
-  import actions from '@/store/actions'
+import * as monaco from 'monaco-editor'
+import {mapState} from 'vuex'
+import actions from '@/store/actions'
 
-  export default {
-    name: 'EditYaml',
-    props: {
-      flow: {
-        required: true,
-        type: Object
-      }
+export default {
+  name: 'EditYaml',
+  props: {
+    flow: {
+      required: true,
+      type: Object
+    }
+  },
+  data() {
+    return {
+      ymlFiles: ['.flowci.yml', '.flowci-env.yml'],
+      currentFile: null,
+      errorOnSave: '',
+      isCodeChange: false
+    }
+  },
+  mounted() {
+    this.reload()
+  },
+  computed: {
+    ...mapState({
+      ymlList: state => state.flows.selected.ymlList
+    }),
+
+    name() {
+      return this.flow.name
+    }
+  },
+  watch: {
+    yml(after) {
+      this.editor.setValue(after)
     },
-    data () {
-      return {
-        editor: {},
-        errorOnSave: '',
-        isCodeChange: false
-      }
-    },
-    mounted () {
-      this.editor = monaco.editor.create(document.getElementById('yml-editor'), {
-        value: this.yml,
-        language: 'yaml',
-        lineNumbers: 'on',
-        roundedSelection: false,
-        scrollBeyondLastLine: false,
-        readOnly: !this.hasPermission('Admin'),
-        automaticLayout: true,
-        theme: 'vs-dark'
-      })
 
-      this.editor.onDidChangeModelContent(this.onCodeChange)
-
+    flow() {
       this.reload()
-    },
-    computed: {
-      ...mapState({
-        yml: state => state.flows.selected.yml
-      }),
-
-      name () {
-        return this.flow.name
-      }
-    },
-    watch: {
-      yml (after) {
-        this.editor.setValue(after)
-      },
-
-      flow () {
-        this.reload()
-      }
-    },
-    methods: {
-      reload () {
-        this.$store.dispatch(actions.flows.yml.load, this.flow.name)
+    }
+  },
+  methods: {
+    reload() {
+      this.$store.dispatch(actions.flows.yml.load, this.flow.name)
           .then() // handled on watch yml
           .catch((e) => {
             console.log(e.message)
             this.editor.setValue('')
           })
-      },
+    },
 
-      onCodeChange (e) {
-        this.isCodeChange = true
-      },
+    onCodeChange(e) {
+      this.isCodeChange = true
+    },
 
-      onResetClick () {
-        this.editor.setValue(this.yml)
-        this.isCodeChange = false
-      },
+    onResetClick() {
+      this.editor.setValue(this.yml)
+      this.isCodeChange = false
+    },
 
-      onSaveClick () {
-        this.errorOnSave = ''
+    onSaveClick() {
+      this.errorOnSave = ''
 
-        const payload = {name: this.name, yml: this.editor.getValue()}
-        this.$store.dispatch(actions.flows.yml.save, payload)
+      const payload = {name: this.name, yml: this.editor.getValue()}
+      this.$store.dispatch(actions.flows.yml.save, payload)
           .then(() => {
             this.isCodeChange = false
 
@@ -128,17 +119,17 @@
           .catch((err) => {
             this.errorOnSave = err.message
           })
-      }
     }
   }
+}
 </script>
 
 <style scoped>
-  #yml-editor {
-    min-height: 650px;
-  }
+#yml-editor {
+  min-height: 650px;
+}
 
-  .action-btn {
-    min-width: 200px !important;
-  }
+.action-btn {
+  min-width: 200px !important;
+}
 </style>
