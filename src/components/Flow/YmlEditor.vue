@@ -1,5 +1,5 @@
 <template>
-  <div id="yml-editor"></div>
+  <div :id="id"></div>
 </template>
 
 <script>
@@ -8,6 +8,10 @@ import * as monaco from "monaco-editor";
 export default {
   name: "YmlEditor",
   props: {
+    id: {
+      required: true,
+      type: String
+    },
     raw: {
       required: true,
       type: String
@@ -23,7 +27,7 @@ export default {
     }
   },
   mounted () {
-    this.editor = monaco.editor.create(document.getElementById('yml-editor'), {
+    this.editor = monaco.editor.create(document.getElementById(this.id), {
       value: this.raw,
       language: 'yaml',
       lineNumbers: 'on',
@@ -38,7 +42,5 @@ export default {
 </script>
 
 <style scoped>
-  #yml-editor {
-    min-height: 650px;
-  }
+
 </style>

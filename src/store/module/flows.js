@@ -38,6 +38,10 @@ const mutations = {
   },
 
   setYml (state, ymlList) {
+    for (let ymlObj of ymlList) {
+      ymlObj.raw = atob(ymlObj.rawInB64)
+    }
+
     state.selected.ymlList = ymlList
   },
 
@@ -166,6 +170,20 @@ const actions = {
 
     return http.get(`flows/${name}/yml`, (ymlList) => {
       commit('setYml', ymlList)
+    })
+  },
+
+  addYml ({commit, state}, name) {
+    return new Promise((resolve, reject) => {
+      for (let ymlObj of state.selected.ymlList) {
+        if (ymlObj.name === name) {
+          reject('Duplicated yml name')
+          return
+        }
+      }
+
+      state.selected.ymlList.push({name: name, yml: ''})
+      resolve()
     })
   },
 
