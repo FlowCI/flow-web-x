@@ -6,6 +6,10 @@ export const GIT_TEST_FETCHING = 'FETCHING'
 export const GIT_TEST_DONE = 'DONE'
 export const GIT_TEST_ERROR = 'ERROR'
 
+export const DEFAULT_YAML_NAME = '.flowci.yml'
+
+export const DEFAULT_YAML_NAME_LEGACY = 'default'
+
 const ratio = [0, 20, 50, 85, 100]
 const ratioColors = ['red lighten-1', 'orange lighten-1', 'light-green darken-1', 'green darken-1']
 

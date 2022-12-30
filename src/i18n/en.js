@@ -26,6 +26,7 @@ export default {
   branch: 'Branch',
   new: 'New',
   edit: 'Edit',
+  rename: 'Rename',
 
   createAdmin: {
     created: 'The default admin user is created, please login with email: <span class="font-weight-bold">{0}</span>'

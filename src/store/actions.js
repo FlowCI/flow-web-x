@@ -48,7 +48,8 @@ export default {
     yml: {
       load: 'flows/loadYml',
       save: 'flows/saveYml',
-      add: 'flows/addYml'
+      add: 'flows/addYml',
+      delete: 'flows/delYml'
     },
     gitTestStart: 'flows/gitTestStart',
     gitTestUpdate: 'flows/gitTestUpdate',

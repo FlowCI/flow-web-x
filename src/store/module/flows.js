@@ -37,7 +37,8 @@ const mutations = {
     state.selected.obj = flowWrapper
   },
 
-  setYml (state, ymlList) {
+  setYml (state, ymlObj) {
+    let ymlList = ymlObj.list
     for (let ymlObj of ymlList) {
       ymlObj.raw = atob(ymlObj.rawInB64)
     }
@@ -168,8 +169,8 @@ const actions = {
       return
     }
 
-    return http.get(`flows/${name}/yml`, (ymlList) => {
-      commit('setYml', ymlList)
+    return http.get(`flows/${name}/yml`, (ymlObj) => {
+      commit('setYml', ymlObj)
     })
   },
 
@@ -182,7 +183,21 @@ const actions = {
         }
       }
 
-      state.selected.ymlList.push({name: name, yml: ''})
+      state.selected.ymlList.push({name, raw: ''})
+      resolve()
+    })
+  },
+
+  delYml ({commit, state}, ymlObj) {
+    return new Promise((resolve) => {
+      let list = state.selected.ymlList;
+
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].name === ymlObj.name) {
+          list.splice(i, 1)
+          break
+        }
+      }
       resolve()
     })
   },
@@ -192,7 +207,7 @@ const actions = {
       return
     }
 
-    await http.post(`flows/${name}/yml/default`,
+    await http.post(`flows/${name}/yml`,
       () => {
         commit('setYml', yml)
       },

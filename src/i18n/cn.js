@@ -26,6 +26,7 @@ export default {
   branch: '分支',
   new: '新建',
   edit: '编辑',
+  rename: 'Rename',
 
   createAdmin: {
     created: '默认的管理员已经创建成功, 请用 <span class="font-weight-bold">{0}</span> 登录'

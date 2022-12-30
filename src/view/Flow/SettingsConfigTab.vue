@@ -10,14 +10,39 @@
             :href="'#' + item.name"
         >
           <v-spacer></v-spacer>
-          <span>{{ item.name }}</span>
+          {{ item.name }}
           <v-spacer></v-spacer>
-          <v-btn icon small>
-            <v-icon small>mdi-close</v-icon>
-          </v-btn>
+
+          <v-menu v-if="item.name !== DEFAULT_YAML_NAME">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on" small>
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list dense>
+              <v-list-item dense @click="onYmlDeleteClick(item)">
+                <v-list-item-icon class="mr-1">
+                  <v-icon small>mdi-close</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>
+                  {{ $t('delete') }}
+                </v-list-item-title>
+              </v-list-item>
+
+              <v-list-item dense @click="onYmlRenameClick(item)">
+                <v-list-item-icon class="mr-1">
+                  <v-icon small>mdi-pencil</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>
+                  {{ $t('rename') }}
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-tab>
 
-        <v-btn icon @click="onAddYml">
+        <v-btn icon @click="onAddYmlClick" class="mt-2">
           <v-icon>mdi-plus-box</v-icon>
         </v-btn>
       </v-tabs>
@@ -44,7 +69,7 @@
       </div>
     </v-card-text>
 
-    <v-card-actions class="mt-2">
+    <v-card-actions class="mt-2 mx-6">
       <a href="https://github.com/FlowCI/templates" target="_blank">{{ $t('flow.more_template') }}</a>
 
       <v-spacer></v-spacer>
@@ -68,8 +93,56 @@
       >
         {{ $t('save') }}
       </v-btn>
-
     </v-card-actions>
+
+    <!--delete confirm dialog-->
+    <confirm-dialog
+        v-model="deleteConfirmDialog.show"
+        :text="$t('delete')"
+        @confirm="onYmlDeleteConfirmClick"
+    >
+      <template v-slot:content>
+        Delete the YAML file <span class="font-weight-bold">{{ deleteConfirmDialog.ymlObj.name }}</span>?
+      </template>
+    </confirm-dialog>
+
+    <!--add yml dialog-->
+    <confirm-dialog
+        v-model="addYmlDialog.show"
+        :text="$t('confirm')"
+        @cancel="onAddYmlCancelClick"
+        @confirm="onAddYmlConfirmClick"
+    >
+      <template v-slot:content>
+        <div>
+          Add an new YAML file
+        </div>
+        <div>
+          <text-box label=""
+                    v-model="addYmlDialog.name"
+          ></text-box>
+        </div>
+      </template>
+    </confirm-dialog>
+
+    <!--edit yml name dialog-->
+    <confirm-dialog
+        v-model="editNameDialog.show"
+        :text="$t('confirm')"
+        @cancel="onYmlRenameCancelClick"
+        @confirm="onYmlRenameConfirmClick"
+    >
+      <template v-slot:content>
+        <div>
+          Edit the YAML file name <span class="font-weight-bold">{{ editNameDialog.ymlObj.name }}</span>
+        </div>
+        <div>
+          <text-box label=""
+                    v-model="editNameDialog.name"
+          ></text-box>
+        </div>
+      </template>
+    </confirm-dialog>
   </v-card>
 </template>
 
@@ -77,6 +150,9 @@
 import YmlEditor from '@/components/Flow/YmlEditor'
 import {mapState} from "vuex";
 import actions from "@/store/actions";
+import {DEFAULT_YAML_NAME} from "@/util/flows";
+import ConfirmDialog from "@/components/Common/ConfirmDialog.vue";
+import TextBox from "@/components/Common/TextBox.vue";
 
 export default {
   name: 'SettingsConfigTab',
@@ -92,13 +168,30 @@ export default {
     }
   },
   components: {
-    YmlEditor
+    ConfirmDialog,
+    YmlEditor,
+    TextBox
   },
   data() {
     return {
+      deleteConfirmDialog: {
+        show: false,
+        ymlObj: {name: ''}
+      },
+      editNameDialog: {
+        show: false,
+        ymlObj: {name: ''},
+        name: ''
+      },
+      addYmlDialog: {
+        show: false,
+        name: ''
+      },
       tab: null,
+      watchCodeChange: false,
       isCodeChange: false,
       errorOnSave: '',
+      DEFAULT_YAML_NAME: DEFAULT_YAML_NAME
     }
   },
   mounted() {
@@ -113,21 +206,75 @@ export default {
       return this.flow.name
     }
   },
+  watch: {
+    ymlList: {
+      deep: true,
+      handler() {
+        if (this.watchCodeChange) {
+          this.isCodeChange = true
+        }
+      }
+    }
+  },
   methods: {
     reload() {
       this.$store.dispatch(actions.flows.yml.load, this.flow.name)
-          .then() // handled on watch yml
+          .then(() => {
+            this.watchCodeChange = true
+          })
           .catch((e) => {
             console.log(e.message)
           })
     },
 
-    onAddYml() {
-      this.$store.dispatch(actions.flows.yml.add, 'envs')
-          .then()
+    onAddYmlClick() {
+      this.addYmlDialog.show = true
+      this.addYmlDialog.name = ''
+    },
+
+    onAddYmlCancelClick() {
+      this.addYmlDialog.show = false
+      this.addYmlDialog.name = ''
+    },
+
+    onAddYmlConfirmClick() {
+      this.$store.dispatch(actions.flows.yml.add, this.addYmlDialog.name)
+          .then(() => {
+            this.onAddYmlCancelClick()
+          })
           .catch(e => {
             this.errorOnSave = e
           })
+    },
+
+    onYmlDeleteClick(yml) {
+      this.deleteConfirmDialog.show = true
+      this.deleteConfirmDialog.ymlObj = yml
+    },
+
+    onYmlDeleteConfirmClick() {
+      this.$store.dispatch(actions.flows.yml.delete, this.deleteConfirmDialog.ymlObj)
+          .then(() => {
+            this.deleteConfirmDialog.show = false
+            this.deleteConfirmDialog.ymlObj = {name: ''}
+          })
+    },
+
+    onYmlRenameClick(yml) {
+      this.editNameDialog.show = true
+      this.editNameDialog.ymlObj = yml
+      this.editNameDialog.name = yml.name
+    },
+
+    onYmlRenameCancelClick() {
+      this.editNameDialog.show = false
+      this.editNameDialog.ymlObj = {name: ''}
+      this.editNameDialog.name = ''
+    },
+
+    onYmlRenameConfirmClick() {
+      this.editNameDialog.ymlObj.name = this.editNameDialog.name
+      this.onYmlRenameCancelClick()
     },
 
     onSaveClick() {
@@ -144,10 +291,6 @@ export default {
           .catch((err) => {
             this.errorOnSave = err.message
           })
-    },
-
-    onCodeChange(e) {
-      this.isCodeChange = true
     },
 
     onResetClick() {
@@ -170,6 +313,7 @@ export default {
   .tab-active {
     color: #757575 !important;
   }
+
   .action-btn {
     min-width: 200px !important;
   }
