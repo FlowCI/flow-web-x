@@ -1,6 +1,7 @@
 import http from '../http'
 import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
+import _ from 'lodash'
 
 const state = {
   editor: '',
@@ -40,7 +41,7 @@ const mutations = {
   setYml (state, ymlObj) {
     let ymlList = ymlObj.list
     for (let ymlObj of ymlList) {
-      ymlObj.raw = atob(ymlObj.rawInB64)
+      ymlObj.raw = util.base64ToUtf8(ymlObj.rawInB64)
     }
 
     state.selected.ymlList = ymlList
@@ -202,18 +203,18 @@ const actions = {
     })
   },
 
-  async saveYml ({commit, state}, {name, yml}) {
-    if (!name || !yml) {
-      return
+  async saveYml ({commit, state}, {name, ymlList}) {
+    const list = _.cloneDeep(ymlList)
+    for (let item of list) {
+      item.rawInB64 = util.utf8ToBase64(item.raw)
+      item.raw = null
     }
 
     await http.post(`flows/${name}/yml`,
       () => {
-        commit('setYml', yml)
+        commit('setYml', {list: list})
       },
-      {
-        data: util.utf8ToBase64(yml)
-      })
+      list)
   },
 
   async templates({commit}) {

@@ -54,8 +54,10 @@
                     class="yml-editor"
         >
           <yml-editor :id="item.name"
-                      :is-read-only="false"
+                      :is-read-only="!hasPermission('Admin')"
                       :raw="item.raw"
+                      :object="item"
+                      @change="onYmlChange"
           ></yml-editor>
         </v-tab-item>
       </v-tabs-items>
@@ -221,6 +223,7 @@ export default {
       this.$store.dispatch(actions.flows.yml.load, this.flow.name)
           .then(() => {
             this.watchCodeChange = true
+            this.isCodeChange = false
           })
           .catch((e) => {
             console.log(e.message)
@@ -277,10 +280,14 @@ export default {
       this.onYmlRenameCancelClick()
     },
 
+    onYmlChange(updated, ymlObj) {
+      ymlObj.raw = updated
+    },
+
     onSaveClick() {
       this.errorOnSave = ''
 
-      const payload = {name: this.name, yml: this.editor.getValue()}
+      const payload = {name: this.name, ymlList: this.ymlList}
       this.$store.dispatch(actions.flows.yml.save, payload)
           .then(() => {
             this.isCodeChange = false
@@ -289,14 +296,14 @@ export default {
             this.$store.dispatch(actions.flows.select, this.name).then()
           })
           .catch((err) => {
+            console.log(err)
             this.errorOnSave = err.message
           })
     },
 
     onResetClick() {
-      this.editor.setValue(this.yml)
-      this.isCodeChange = false
-    },
+      this.reload()
+    }
   }
 }
 </script>

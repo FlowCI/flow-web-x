@@ -19,6 +19,10 @@ export default {
     isReadOnly: {
       required: true,
       type: Boolean
+    },
+    object: {
+      required: false,
+      type: Object
     }
   },
   data () {
@@ -37,7 +41,15 @@ export default {
       automaticLayout: true,
       theme: 'vs-dark'
     })
+
+    this.editor.onDidChangeModelContent(this.onCodeChange)
   },
+  methods: {
+    onCodeChange() {
+      let value = this.editor.getValue()
+      this.$emit('change', value, this.object)
+    }
+  }
 }
 </script>
 
