@@ -20,6 +20,7 @@
             slider-size="10"
             class="tab-inactive"
             v-model="tab"
+            background-color="grey lighten-4"
             active-class="tab-active">
       <v-tabs-slider color="#757575"></v-tabs-slider>
 
@@ -43,7 +44,7 @@
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab" class="mt-3">
+    <v-tabs-items v-model="tab" class="mt-1">
       <v-tab-item value="summary">
         <detail-tab-summary :on-debug-click="onDebugClick"/>
       </v-tab-item>
@@ -198,10 +199,6 @@
 
     .v-tabs-slider-wrapper {
       height: 3px !important;
-    }
-
-    .v-tabs-bar {
-      background: #FAFAFA !important;
     }
 
     .v-tab {

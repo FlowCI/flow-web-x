@@ -15,7 +15,7 @@ const state = {
   },
   JobsStatus: {},
   selected: {}, // current selected job
-  yml: '',
+  jobYml: {list: []},
   latest: {}, // key is flow id, value is latest job
   reports: [],
   reportUrlPath: '',
@@ -89,8 +89,11 @@ const mutations = {
     state.JobsStatus = res
   },
 
-  updateYml(state, yml) {
-    state.yml = yml
+  updateYml(state, jobYml) {
+    for (let item of jobYml.list) {
+      item.raw = util.base64ToUtf8(item.rawInB64)
+    }
+    state.jobYml = jobYml
   },
 
   setReports(state, reports) {
@@ -125,8 +128,8 @@ const actions = {
 
   getYml({commit}, {flow, buildNumber}) {
     const url = `jobs/${flow}/${buildNumber}/yml`
-    return http.get(url, (base64Yml) => {
-      commit('updateYml', util.base64ToUtf8(base64Yml))
+    return http.get(url, (jobYml) => {
+      commit('updateYml', jobYml)
     })
   },
 
