@@ -196,6 +196,7 @@
   .job-detail {
     height: 100%;
     position: relative;
+    overflow: auto;
 
     .v-tabs-slider-wrapper {
       height: 3px !important;
