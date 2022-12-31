@@ -45,10 +45,10 @@
   },
   "devDependencies": {
     "@mdi/font": "^6.5.95",
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-plugin-unit-mocha": "^3.7.0",
-    "@vue/cli-service": "^4.1.2",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-unit-mocha": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.1",
     "chai": "^4.1.2",
@@ -56,10 +56,10 @@
     "eslint-plugin-vue": "^5.0.0",
     "iscroll": "^5.2.0",
     "sass": "^1.32.6",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^13.2.0",
     "style-resources-loader": "^1.2.1",
     "vue-template-compiler": "^2.5.21",
-    "webpack": "^4.39.3"
+    "webpack": "^5.75.0"
   },
   "postcss": {
     "plugins": {
