@@ -18,8 +18,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="onCancelClick">{{ $t('cancel') }}</v-btn>
-          <v-btn outlined color="error" @click="onConfirmClick">{{ text }}</v-btn>
+          <v-btn text :color="cancelBtnColor" @click="onCancelClick">{{ $t('cancel') }}</v-btn>
+          <v-btn text :color="confirmBtnColor" @click="onConfirmClick">{{ text }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -45,6 +45,20 @@ export default {
       type: String,
       required: true
     },
+    cancelBtnColor: {
+      type: String,
+      required: false,
+      default() {
+        return 'grey'
+      }
+    },
+    confirmBtnColor: {
+      type: String,
+      required: false,
+      default() {
+        return 'primary'
+      }
+    }
   },
   methods: {
     onCancelClick() {

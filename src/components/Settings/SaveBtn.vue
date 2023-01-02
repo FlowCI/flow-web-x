@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="primary" @click="onClick" :small="small">
+  <v-btn color="primary" text @click="onClick" :small="small">
     {{ $t(text) }}<v-icon dark right small>{{ icon }}</v-icon>
   </v-btn>
 </template>

@@ -76,8 +76,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn color="secondary"
-             tile
+      <v-btn color="primary"
+             text
              class="action-btn"
              @click="onResetClick"
              :disabled="!isCodeChange"
@@ -87,7 +87,7 @@
       </v-btn>
 
       <v-btn color="primary"
-             tile
+             text
              class="action-btn"
              @click="onSaveClick"
              :disabled="!isCodeChange"
@@ -101,6 +101,7 @@
     <confirm-dialog
         v-model="deleteConfirmDialog.show"
         :text="$t('delete')"
+        confirm-btn-color="error"
         @confirm="onYmlDeleteConfirmClick"
     >
       <template v-slot:content>
