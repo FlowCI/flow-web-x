@@ -14,6 +14,10 @@
       <v-icon small class="mr-1">mdi-code-tags</v-icon>
       {{ $t('flow.tab.yaml') }}
     </v-tab>
+    <v-tab href="#tab-plugins">
+      <v-icon small class="mr-1">mdi-code-tags</v-icon>
+      {{ $t('flow.tab.plugins') }}
+    </v-tab>
     <v-tab href="#tab-users">
       <v-icon small class="mr-1">mdi-account-multiple-plus-outline</v-icon>
       {{ $t('flow.tab.members') }}
@@ -26,9 +30,10 @@
       <settings-env-tab :flow="flow"></settings-env-tab>
     </v-tab-item>
     <v-tab-item value="tab-config">
-      <settings-config-tab :flow="flow"
-                           :steps="steps"
-      ></settings-config-tab>
+      <settings-config-tab :flow="flow" :steps="steps"></settings-config-tab>
+    </v-tab-item>
+    <v-tab-item value="tab-plugins">
+      <plugins :flow="flow" :steps="steps"></plugins>
     </v-tab-item>
     <v-tab-item value="tab-users">
       <settings-member-tab :flow="flow"></settings-member-tab>
@@ -37,58 +42,60 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import actions from '@/store/actions'
-  import SettingsOptionTab from '@/view/Flow/SettingsOptionTab'
-  import SettingsEnvTab from '@/view/Flow/SettingsEnvTab'
-  import SettingsConfigTab from '@/view/Flow/SettingsConfigTab'
-  import SettingsMemberTab from '@/view/Flow/SettingsMemberTab'
+import {mapState} from 'vuex'
+import actions from '@/store/actions'
+import SettingsOptionTab from '@/view/Flow/SettingsOptionTab'
+import SettingsEnvTab from '@/view/Flow/SettingsEnvTab'
+import SettingsConfigTab from '@/view/Flow/SettingsConfigTab'
+import SettingsMemberTab from '@/view/Flow/SettingsMemberTab'
+import Plugins from '@/components/Flow/Plugins'
 
-  export default {
-    name: 'FlowSettings',
-    components: {
-      SettingsConfigTab,
-      SettingsEnvTab,
-      SettingsOptionTab,
-      SettingsMemberTab,
-    },
-    computed: {
-      ...mapState({
-        steps: state => state.flows.steps,
-        flow: state => state.flows.selected.obj
-      }),
-      name() {
-        return this.$route.params.id
-      }
-    },
-    watch: {
-      name(after) {
-        if (after !== this.flow.name) {
-          this.$store.dispatch(actions.flows.select, after).then()
-        }
-      }
-    },
-    methods: {
-      onBackClick() {
-        this.$router.push({path: `/flows/${this.name}/jobs`})
+export default {
+  name: 'FlowSettings',
+  components: {
+    SettingsConfigTab,
+    SettingsEnvTab,
+    SettingsOptionTab,
+    SettingsMemberTab,
+    Plugins
+  },
+  computed: {
+    ...mapState({
+      steps: state => state.flows.steps,
+      flow: state => state.flows.selected.obj
+    }),
+    name() {
+      return this.$route.params.id
+    }
+  },
+  watch: {
+    name(after) {
+      if (after !== this.flow.name) {
+        this.$store.dispatch(actions.flows.select, after).then()
       }
     }
+  },
+  methods: {
+    onBackClick() {
+      this.$router.push({path: `/flows/${this.name}/jobs`})
+    }
   }
+}
 </script>
 
 <style lang="scss">
-  .flow-settings {
-    height: 100%;
-    position: relative;
+.flow-settings {
+  height: 100%;
+  position: relative;
 
-    .v-tab {
-      margin-left: 0 !important;
-      max-width: 200px !important;
-      font-weight: bold;
-    }
-
-    .tab-active {
-      color: #757575 !important;
-    }
+  .v-tab {
+    margin-left: 0 !important;
+    max-width: 200px !important;
+    font-weight: bold;
   }
+
+  .tab-active {
+    color: #757575 !important;
+  }
+}
 </style>

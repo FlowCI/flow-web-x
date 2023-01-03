@@ -21,7 +21,7 @@
     </v-form>
 
     <v-row>
-      <v-col cols="9" class="text-end">
+      <v-col cols="8" class="text-end">
         <save-btn :on-click="onSaveClick"></save-btn>
       </v-col>
     </v-row>
