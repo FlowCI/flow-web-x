@@ -1,8 +1,8 @@
 <template>
   <v-card class="full-size pt-0 flow-main">
-    <v-card-title class="title pa-0 mx-2 bottom-border">
+    <v-card-title class="title pa-0 bottom-border">
       <v-toolbar flat bottom>
-        <v-toolbar-title class="d-flex">
+        <v-toolbar-title class="d-flex mx-1">
           <v-icon small class="mr-3">flow-icon-layergroup</v-icon>
 
           <v-breadcrumbs :items="navItems" class="pa-0">
@@ -45,7 +45,7 @@
       </v-toolbar>
     </v-card-title>
 
-    <v-card-text class="content px-1 pb-0">
+    <v-card-text class="content pa-0">
       <router-view></router-view>
     </v-card-text>
   </v-card>

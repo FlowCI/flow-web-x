@@ -88,25 +88,29 @@
       </v-treeview>
     </v-card-text>
 
-    <flow-group-action-dialog title="Moving"
-                              :content="groupActionContent"
-                              :dialog="showGroupActionDialog"
-                              :on-confirm="onFlowMovingActionConfirm"
-                              :on-cancel="onFlowMovingActionCancel"
-    ></flow-group-action-dialog>
+    <confirm-dialog v-model="showGroupActionDialog"
+                    :text="$t('confirm')"
+                    @click="onFlowMovingActionConfirm">
+      <template v-slot:title>
+        <span>Moving</span>
+      </template>
+      <template v-slot:content>
+        {{ groupActionContent }}
+      </template>
+    </confirm-dialog>
   </v-card>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import actions from '@/store/actions'
-import FlowGroupActionDialog from '@/components/Common/Dialog'
+import ConfirmDialog from '@/components/Common/ConfirmDialog.vue'
 import {Root} from "@/util/flows";
 
 export default {
   name: 'FlowMenu',
   components: {
-    FlowGroupActionDialog
+    ConfirmDialog
   },
   data() {
     return {
@@ -258,10 +262,6 @@ export default {
       this.$store.dispatch(actions.flowGroups.addToGroup, payload).then(() => {
         this.showGroupActionDialog = false
       })
-    },
-
-    onFlowMovingActionCancel() {
-      this.showGroupActionDialog = false
     },
 
     onCreateGroup() {

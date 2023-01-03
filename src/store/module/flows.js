@@ -1,10 +1,11 @@
 import http from '../http'
 import util from "@/util/common"
 import {FlowWrapper} from "@/util/flows";
+import _ from 'lodash'
 
 const state = {
   editor: '',
-  selected: {obj: {}, yml: ''},
+  selected: {obj: {}, ymlList: []},
   sshRsa: {publicKey: '', privateKey: ''}, // created ssh-rsa
   gitTestMessage: undefined,  // git test message update
   gitBranches: [],
@@ -37,8 +38,13 @@ const mutations = {
     state.selected.obj = flowWrapper
   },
 
-  setYml (state, yml) {
-    state.selected.yml = yml
+  setYml (state, ymlObj) {
+    let ymlList = ymlObj.list
+    for (let ymlObj of ymlList) {
+      ymlObj.raw = util.base64ToUtf8(ymlObj.rawInB64)
+    }
+
+    state.selected.ymlList = ymlList
   },
 
   setTemplates(state, templates) {
@@ -142,7 +148,7 @@ const actions = {
       commit('select', new FlowWrapper(flow))
     })
 
-    await http.get(`flows/${name}/yml/default/obj`, (flowNode) => {
+    await http.get(`flows/${name}/yml/steps`, (flowNode) => {
       commit('setYmlObj', flowNode)
     }).catch((e) => {
       console.log(e.message)
@@ -164,23 +170,51 @@ const actions = {
       return
     }
 
-    return http.get(`flows/${name}/yml/default`, (base64Yml) => {
-      commit('setYml', util.base64ToUtf8(base64Yml))
+    return http.get(`flows/${name}/yml`, (ymlObj) => {
+      commit('setYml', ymlObj)
     })
   },
 
-  async saveYml ({commit, state}, {name, yml}) {
-    if (!name || !yml) {
-      return
+  addYml ({commit, state}, name) {
+    return new Promise((resolve, reject) => {
+      for (let ymlObj of state.selected.ymlList) {
+        if (ymlObj.name === name) {
+          reject('Duplicated yml name')
+          return
+        }
+      }
+
+      state.selected.ymlList.push({name, raw: ''})
+      resolve()
+    })
+  },
+
+  delYml ({commit, state}, ymlObj) {
+    return new Promise((resolve) => {
+      let list = state.selected.ymlList;
+
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].name === ymlObj.name) {
+          list.splice(i, 1)
+          break
+        }
+      }
+      resolve()
+    })
+  },
+
+  async saveYml ({commit, state}, {name, ymlList}) {
+    const list = _.cloneDeep(ymlList)
+    for (let item of list) {
+      item.rawInB64 = util.utf8ToBase64(item.raw)
+      item.raw = null
     }
 
-    await http.post(`flows/${name}/yml/default`,
+    await http.post(`flows/${name}/yml`,
       () => {
-        commit('setYml', yml)
+        commit('setYml', {list: list})
       },
-      {
-        data: util.utf8ToBase64(yml)
-      })
+      list)
   },
 
   async templates({commit}) {

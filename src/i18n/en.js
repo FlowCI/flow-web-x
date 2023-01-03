@@ -26,6 +26,7 @@ export default {
   branch: 'Branch',
   new: 'New',
   edit: 'Edit',
+  rename: 'Rename',
 
   createAdmin: {
     created: 'The default admin user is created, please login with email: <span class="font-weight-bold">{0}</span>'
@@ -52,6 +53,9 @@ export default {
     cron_task: 'Cron Task',
     flow_name: 'Flow name',
     git_yaml: 'Is load YAML from Git (.flowci.yaml)',
+
+    option_vars_customized: 'Customized',
+    option_vars_in_yml: 'YAML variables',
 
     create_title_name: 'Enter Flow Name',
     create_title_select_template: 'Select YAML Template',
@@ -82,6 +86,7 @@ export default {
       options: 'Options',
       variables: 'Variables',
       yaml: 'YAML',
+      plugins: 'Plugins',
       notification: 'Notification',
       members: 'Members',
     },
