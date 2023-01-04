@@ -90,7 +90,7 @@
 
     <confirm-dialog v-model="showGroupActionDialog"
                     :text="$t('confirm')"
-                    @click="onFlowMovingActionConfirm">
+                    @confirm="onFlowMovingActionConfirm">
       <template v-slot:title>
         <span>Moving</span>
       </template>
