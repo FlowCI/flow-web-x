@@ -5,7 +5,7 @@
   "author": "Yang Guo <32008001@qq.com>",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve --port 3000 --host 0.0.0.0",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve --port 3000 --host 0.0.0.0",
     "build": "VUE_APP_API_URL=http://replace:me vue-cli-service build --mode production",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
