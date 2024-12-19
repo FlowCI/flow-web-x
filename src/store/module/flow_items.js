@@ -1,44 +1,31 @@
 import http from '../http'
-import {FlowWrapper, Root} from "@/util/flows";
+import {FlowWrapper} from "@/util/flows";
 
-function toWrapperList(flowItems) {
+function toWrapperList(flowList) {
   let list = []
-  for (let item of flowItems) {
+  for (let item of flowList) {
+    console.log(item)
     list.push(new FlowWrapper(item))
   }
   return list
 }
 
 function createTreeFromItems(wrapperItems) {
-  let groups = {}
-  let flows = {}
+  // key = id, value = flow wrapper
+  let maps = {}
 
   for (let item of wrapperItems) {
-    if (item.type === 'Group') {
-      groups[item.id] = item
+    maps[item.id] = item
+  }
+
+  for (let item of wrapperItems) {
+    if (item.isRoot) {
+      var root = item
       continue
     }
 
-    if (item.type === 'Flow') {
-      flows[item.id] = item
-    }
-  }
-
-  let root = Root
-  root.children = []
-
-  for (const [key, value] of Object.entries(groups)) {
-    root.children.push(value)
-  }
-
-  for (const [key, value] of Object.entries(flows)) {
-    if (value.parentId === Root.id) {
-      root.children.push(value)
-      continue
-    }
-
-    const group = groups[value.parentId]
-    group.children.push(value)
+    let parent = maps[item.parentId]
+    parent.children.push(item)
   }
 
   return [root]
@@ -47,39 +34,18 @@ function createTreeFromItems(wrapperItems) {
 const state = {
   items: [], // FlowWrapper items
   tree: [],
-  mappingWithId: {},
-  mappingWithName: {},
   isExist: false, // result from action 'exist'
 }
 
 const mutations = {
   onListed(state, items) {
     state.items = toWrapperList(items)
-    state.mappingWithId = {}
-    state.mappingWithName = {}
-
-    state.mappingWithId[Root.id] = Root
-    state.mappingWithName[Root.name] = Root
-
-    for (let wrapper of state.items) {
-      state.mappingWithId[wrapper.id] = wrapper
-      state.mappingWithName[wrapper.name] = wrapper
-    }
-
     state.tree = createTreeFromItems(state.items)
-  },
-
-  updateExist(state, isExist) {
-    state.isExist = isExist
   },
 
   addItem(state, item) {
     let wrapper = new FlowWrapper(item);
     state.items.push(wrapper)
-
-    Root.children.push(wrapper)
-    state.mappingWithId[wrapper.id] = wrapper
-    state.mappingWithName[wrapper.name] = wrapper
   },
 
   addToParent(state, {from, to}) {
@@ -126,14 +92,8 @@ const mutations = {
 
 const actions = {
   async list({commit}) {
-    await http.get(`flows`, (items) => {
+    await http.get(`/v2/flows`, (items) => {
       commit('onListed', items)
-    })
-  },
-
-  async exist({commit}, name) {
-    await http.get(`flows/${name}/exist`, (boolVal) => {
-      commit('updateExist', boolVal)
     })
   },
 

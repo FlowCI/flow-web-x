@@ -85,43 +85,44 @@ instance.interceptors.request.use(
       return config
     }
 
-    if (helper.tokenHasExpired(tokens.token)) {
+    // if (helper.tokenHasExpired(tokens.token)) {
+    //
+    //   // the current request should go into waiting list
+    //   if (window.isRefreshing) {
+    //     return await new Promise((resolve, reject) => {
+    //       // console.log(`URL : ${config.url} waiting`)
+    //       waitingForToken.push((newToken) => {
+    //         config.headers.Token = newToken
+    //         resolve(config)
+    //       })
+    //     })
+    //   }
+    //
+    //   // request new token by refresh token
+    //   else {
+    //     window.isRefreshing = true
+    //     let response = await axios.post(`${url}/auth/refresh`, tokens)
+    //
+    //     if (response.data.code === code.ok) {
+    //       const newToken = response.data.data.token
+    //       newTokenCommit(newToken, tokens.refreshToken)
+    //
+    //       waitingForToken.map(sb => sb(newToken))
+    //       waitingForToken = []
+    //       window.isRefreshing = false
+    //
+    //       config.headers.Token = newToken
+    //       return config
+    //     } else {
+    //       errorCommit(code.error.auth, 'Invalid refresh token, should login again')
+    //       window.isRefreshing = false
+    //       return false
+    //     }
+    //   }
+    // }
 
-      // the current request should go into waiting list
-      if (window.isRefreshing) {
-        return await new Promise((resolve, reject) => {
-          // console.log(`URL : ${config.url} waiting`)
-          waitingForToken.push((newToken) => {
-            config.headers.Token = newToken
-            resolve(config)
-          })
-        })
-      }
-
-      // request new token by refresh token
-      else {
-        window.isRefreshing = true
-        let response = await axios.post(`${url}/auth/refresh`, tokens)
-
-        if (response.data.code === code.ok) {
-          const newToken = response.data.data.token
-          newTokenCommit(newToken, tokens.refreshToken)
-
-          waitingForToken.map(sb => sb(newToken))
-          waitingForToken = []
-          window.isRefreshing = false
-
-          config.headers.Token = newToken
-          return config
-        } else {
-          errorCommit(code.error.auth, 'Invalid refresh token, should login again')
-          window.isRefreshing = false
-          return false
-        }
-      }
-    }
-
-    config.headers.Token = tokens.token
+    // config.headers.Token = tokens.token
+    config.headers.Token = "FLOWCI_TEST_TOKEN"
     return config
   }
 )
@@ -141,21 +142,23 @@ instance.interceptors.response.use(
       }
     }
 
-    const apiMsg = response.data
+    console.log("API response --> ")
+    console.log(response)
 
     // should redirect to login page and login again
-    if (apiMsg.code === code.error.auth) {
+    if (response.status === code.error.auth) {
       errorCommit(code.error.auth, 'Failed to auth, should login again')
     }
 
-    if (apiMsg.code !== code.ok) {
+    if (response.status !== code.ok) {
       return Promise.reject({
         code: apiMsg.code,
         message: apiMsg.message
       })
     }
 
-    return {data: apiMsg.data}
+    const apiMsg = response.data
+    return {data: apiMsg}
   },
 
   (error) => {
@@ -167,6 +170,8 @@ const handleResponse = (r, onSuccess) => {
   if (!r) {
     return
   }
+
+  console.log(r)
 
   let {data, file} = r
   file ? onSuccess(data, file) : onSuccess(data)
@@ -187,7 +192,10 @@ const http = {
     const config = _.cloneDeep(helper.config)
     config.params = params
 
+    console.log(url)
+
     return instance.get(url, config).then((r) => {
+      console.log(r)
       handleResponse(r, onSuccess)
     })
   },

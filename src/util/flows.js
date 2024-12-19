@@ -64,13 +64,13 @@ export const gitTestStatus = {
 export class FlowWrapper {
   constructor(item) {
     this.flow = item
-    this.flow.children = []
+    this.childList = []
     this.latestJobWrapper = new JobWrapper({buildNumber: 0}) // JobWrapper
     this.successPercentage = 0
   }
 
   fetchVars(name) {
-    let locally = this.flow.vars
+    let locally = this.flow.variables
 
     if (locally && locally[name]) {
       return locally[name].data
@@ -85,15 +85,15 @@ export class FlowWrapper {
   }
 
   get isGroup() {
-    return this.flow.type === 'Group'
+    return this.flow.type === 'GROUP'
   }
 
   get isFlow() {
-    return this.flow.type === 'Flow'
+    return this.flow.type === 'FLOW'
   }
 
   get isRoot() {
-    return this.flow.id === "-1"
+    return this.flow.id === this.flow.parentId
   }
 
   get rawInstance() {
@@ -121,7 +121,7 @@ export class FlowWrapper {
   }
 
   get children() {
-    return this.flow.children
+    return this.childList
   }
 
   get webhookStatus() {
@@ -256,9 +256,3 @@ export class FlowWrapper {
     this.flow.parentId = id
   }
 }
-
-export const Root = new FlowWrapper({
-  id: "-1",
-  name: 'flows',
-  type: 'Group'
-})

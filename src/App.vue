@@ -98,18 +98,18 @@
     },
     watch: {
       connection(isConnected) {
-        if (isConnected) {
-          console.log(this.$route.path)
-          if (this.$route.path === '/loading') {
-            this.$router.replace('/login')
-            return
-          }
+        // if (isConnected) {
+        //   console.log(this.$route.path)
+        //   if (this.$route.path === '/loading') {
+        //     this.$router.replace('/login')
+        //     return
+        //   }
+        //
+        //   this.init()
+        //   return
+        // }
 
-          this.init()
-          return
-        }
-
-        this.$router.replace('/loading')
+        // this.$router.replace('/loading')
       }
     },
     computed: {
@@ -119,7 +119,9 @@
       }),
 
       canDisplay() {
-        return !this.isLoginPage && this.connection
+        return true
+        // TODO: need to check login and connection
+        // return !this.isLoginPage && this.connection
       }
     },
     methods: {
@@ -128,13 +130,13 @@
       },
 
       init() {
-        subscribeTopic.agents(this.$store)
-        subscribeTopic.jobs(this.$store)
-        subscribeTopic.hosts(this.$store)
+        // subscribeTopic.agents(this.$store)
+        // subscribeTopic.jobs(this.$store)
+        // subscribeTopic.hosts(this.$store)
 
-        this.$store.dispatch(actions.settings.get).catch((e) => {
-          console.log(e)
-        })
+        // this.$store.dispatch(actions.settings.get).catch((e) => {
+        //   console.log(e)
+        // })
       }
     }
   }

@@ -36,7 +36,7 @@
                @dragover.prevent
                :id="item.id"
           >
-            <v-icon small v-if="item.type === 'Group'" class="ml-1">
+            <v-icon small v-if="item.isGroup" class="ml-1">
               {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
             </v-icon>
             <v-icon v-else :color="item.successRateColor">mdi-alpha-f</v-icon>
@@ -122,7 +122,6 @@ export default {
       showMenu: false,
       dragStartId: '',
       dropTargetId: '',
-      root: Root
     }
   },
   mounted() {
@@ -150,22 +149,22 @@ export default {
   },
   watch: {
     flowItems(items) {
-      this.fetchLatestStatus(items)
-      this.fetchTotalStats(items)
-
-      this.openIds = []
-      this.openIds.push(this.root.id)
-
-      for (let item of items) {
-        if (item.isGroup) {
-          this.openIds.push(item.id)
-        }
-      }
-
-      this.activeIds = []
-      if (this.current && this.mappingWithName[this.current]) {
-        this.activeIds.push(this.mappingWithName[this.current].id)
-      }
+      // this.fetchLatestStatus(items)
+      // this.fetchTotalStats(items)
+      //
+      // this.openIds = []
+      // this.openIds.push(this.root.id)
+      //
+      // for (let item of items) {
+      //   if (item.isGroup) {
+      //     this.openIds.push(item.id)
+      //   }
+      // }
+      //
+      // this.activeIds = []
+      // if (this.current && this.mappingWithName[this.current]) {
+      //   this.activeIds.push(this.mappingWithName[this.current].id)
+      // }
     },
 
     latest: {
@@ -244,7 +243,7 @@ export default {
         return
       }
 
-      if (flow.type === 'Group') {
+      if (flow.isGroup) {
         return
       }
 

@@ -103,14 +103,16 @@ const actions = {
 
   async create ({commit, dispatch}, {wrapper, title}) {
     await http.post(
-        `flows/${wrapper.name}`,
+        `/v2/flows`,
         (flow) => {
           console.log(`flow ${wrapper.name} created`)
           dispatch('flowItems/add', flow, {root: true})
         },
-        {title}
+        {
+          name: wrapper.name,
+          template: title
+        }
     )
-
   },
 
   async update({commit}, {name, isYamlFromRepo, yamlRepoBranch, jobTimeout, stepTimeout, cron}) {
@@ -218,7 +220,7 @@ const actions = {
   },
 
   async templates({commit}) {
-    await http.get(`flows/templates`,
+    await http.get(`/v2/flows/templates`,
         (list) => {
           commit('setTemplates', list)
         })

@@ -15,7 +15,7 @@
 
         <!-- step 1: given a name -->
         <v-stepper-step :complete="step > 1" step="1">
-          {{ $t('flow.create_title_name') }}
+          {{ $t('flow.create_title_name') }} : {{  }}
         </v-stepper-step>
         <v-stepper-content step="1">
           <input-flow-name :on-next-click="onNextClick"></input-flow-name>

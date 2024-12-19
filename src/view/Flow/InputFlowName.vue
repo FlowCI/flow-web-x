@@ -71,19 +71,8 @@
         }
 
         this.errorMsg = []
-        this.$store.dispatch(actions.flowItems.exist, this.name).then(() => {
-          this.onExistCallback(this.isExist)
-        })
-      },
-
-      onExistCallback(val) {
-        if (val === true) {
-          this.errorMsg.push(this.$t('flow.hint.name_duplicate'))
-          return
-        }
-
         this.onNextClick(this.name)
-      }
+      },
     }
   }
 </script>

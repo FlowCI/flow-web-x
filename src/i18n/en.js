@@ -65,7 +65,7 @@ export default {
     create_title_yml: 'Config YML',
     create_btn_finish: 'Finish',
     create_git_hint: 'hint: Git repo url and webhook can be configured afterward',
-    create_blank_template_title: 'Do not use template',
+    create_blank_template_title: 'No Templates',
     create_blank_template_desc: 'Create a flow only, the YAML configuration could be defined from "flow -> settings" later',
 
     update_btn: 'Update Settings',
